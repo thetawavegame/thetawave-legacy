@@ -1,11 +1,13 @@
 use amethyst::core::{Transform, timing::Time, nalgebra::Vector3};
-use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage, Entities, LazyUpdate, ReadExpect};
+use amethyst::ecs::{Join, Read, System, WriteStorage, Entities, LazyUpdate, ReadExpect};
 use amethyst::input::InputHandler;
 
-use crate::space_shooter::{Spaceship, GAME_WIDTH, GAME_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT, fire_blast, BlastResource};
+use crate::entities::fire_blast;
+use crate::components::Spaceship;
+use crate::resources::BlastResource;
+
 
 pub struct SpaceshipSystem;
-
 impl<'s> System<'s> for SpaceshipSystem {
 
     type SystemData = (

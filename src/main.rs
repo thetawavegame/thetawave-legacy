@@ -2,17 +2,20 @@ extern crate amethyst;
 
 use amethyst::{
     prelude::*,
-    renderer::{DisplayConfig, DrawFlat2D, Pipeline, PosNormTex, RenderBundle, Stage},
+    renderer::{DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage},
     utils::application_root_dir,
-    ui::{DrawUi, UiBundle},
+    ui::{DrawUi},
     core::transform::TransformBundle,
     input::InputBundle,
 };
 
 mod space_shooter;
 mod systems;
-use crate::space_shooter::SpaceShooter;
 
+pub mod components;
+pub mod resources;
+pub mod entities;
+use crate::space_shooter::SpaceShooter;
 
 
 fn main() -> amethyst::Result<()> {

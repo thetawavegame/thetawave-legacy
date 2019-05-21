@@ -1,10 +1,11 @@
 use amethyst::core::transform::Transform;
 use amethyst::ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read};
 use amethyst::core::timing::Time;
-use crate::space_shooter::{Blast, GAME_HEIGHT};
+use crate::space_shooter::{GAME_HEIGHT};
+use crate::components::Blast;
+
 
 pub struct BlastSystem;
-
 impl<'s> System<'s> for BlastSystem {
 
     type SystemData = (
