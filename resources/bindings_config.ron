@@ -1,0 +1,17 @@
+(
+    axes: {
+        "player_x": Emulated(
+            pos: Key(D),
+            neg: Key(A),
+        ),
+        "player_y": Emulated(
+            pos: Key(W),
+            neg: Key(S),
+        ),
+    },
+    actions: {
+        "shoot": [
+            [Key(Space)]
+        ],
+    },
+)
