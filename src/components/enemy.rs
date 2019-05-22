@@ -6,6 +6,9 @@ pub struct Enemy {
     pub height: f32,
     pub speed: f32,
     pub fire_speed: f32,
+    pub health: i32,
+    pub hitbox_width: f32,
+    pub hitbox_height: f32,
 }
 
 impl Component for Enemy {

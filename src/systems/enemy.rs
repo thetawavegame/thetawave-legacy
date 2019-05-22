@@ -24,9 +24,10 @@ impl<'s> System<'s> for EnemySystem {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &enemys, &mut transforms).join() {
             enemy_transform.translate_y(-1.0 * enemy_component.speed * time.delta_seconds());
 
-            if enemy_transform.translation()[1] < 0.0 {
+            if enemy_transform.translation()[1] < 0.0 || enemy_component.health < 0 {
                 let _result = entities.delete(enemy_entity);
             }
+
         }
 
     }

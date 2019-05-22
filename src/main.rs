@@ -52,7 +52,8 @@ fn main() -> amethyst::Result<()> {
             .with(systems::SpaceshipSystem, "spaceship_system", &[])
             .with(systems::BlastSystem, "blast_system", &[])
             .with(systems::EnemySystem, "enemy_system", &[])
-            .with(systems::SpawnerSystem, "spawner_system", &[]);
+            .with(systems::SpawnerSystem, "spawner_system", &[])
+            .with(systems::PlayerHitSystem, "player_hit_system", &[]);
 
     let mut game = Application::new("./", SpaceShooter, game_data)?;
 

@@ -10,7 +10,7 @@ use crate::{
 };
 
 
-const SPAWN_INTERVAL: f32 = 0.8;
+const SPAWN_INTERVAL: f32 = 1.0;
 
 
 pub fn initialise_spawner(world: &mut World) {

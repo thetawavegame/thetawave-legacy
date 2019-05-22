@@ -15,8 +15,11 @@ use crate::{
 
 const ENEMY_HEIGHT: f32 = 18.0;
 pub const ENEMY_WIDTH: f32 = 18.0;
-const ENEMY_SPEED: f32 = 70.0;
+const ENEMY_SPEED: f32 = 40.0;
 const ENEMY_FIRE_SPEED: f32 = 0.5;
+const ENEMY_HEALTH: i32 = 100;
+const ENEMY_HITBOX_WIDTH: f32 = 14.0;
+const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 
 
 pub fn initialise_enemy_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> EnemyResource {
@@ -41,7 +44,15 @@ pub fn spawn_enemy(entities: &Entities, enemy_resource: &ReadExpect<EnemyResourc
     };
 
     lazy_update.insert(enemy_entity, sprite_render);
-    lazy_update.insert(enemy_entity, Enemy {height: ENEMY_HEIGHT, width: ENEMY_WIDTH, speed: ENEMY_SPEED, fire_speed: ENEMY_FIRE_SPEED});
+    lazy_update.insert(enemy_entity, Enemy {
+        height: ENEMY_HEIGHT,
+        width: ENEMY_WIDTH,
+        speed: ENEMY_SPEED,
+        fire_speed: ENEMY_FIRE_SPEED,
+        health: ENEMY_HEALTH,
+        hitbox_height: ENEMY_HITBOX_HEIGHT,
+        hitbox_width: ENEMY_HITBOX_WIDTH,
+    });
     lazy_update.insert(enemy_entity, local_transform);
     lazy_update.insert(enemy_entity, Transparent);
     lazy_update.insert(enemy_entity, Flipped::Vertical);
