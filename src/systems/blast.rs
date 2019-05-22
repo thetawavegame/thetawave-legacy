@@ -1,8 +1,15 @@
-use amethyst::core::transform::Transform;
-use amethyst::ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read};
-use amethyst::core::timing::Time;
-use crate::space_shooter::{GAME_HEIGHT};
-use crate::components::Blast;
+use amethyst::{
+    core::{
+        transform::Transform,
+        timing::Time,
+    },
+    ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read},
+};
+
+use crate::{
+    space_shooter::GAME_HEIGHT,
+    components::Blast,
+};
 
 
 pub struct BlastSystem;

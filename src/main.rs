@@ -2,7 +2,7 @@ extern crate amethyst;
 
 use amethyst::{
     prelude::*,
-    renderer::{DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage},
+    renderer::{DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage, ALPHA, ColorMask},
     utils::application_root_dir,
     ui::{DrawUi},
     core::transform::TransformBundle,
@@ -28,10 +28,11 @@ fn main() -> amethyst::Result<()> {
 
     let config = DisplayConfig::load(&path);
 
-    let pipe = Pipeline::build().with_stage(
+    let pipe = Pipeline::build()
+        .with_stage(
         Stage::with_backbuffer()
             .clear_target([0.0, 0.0, 0.0, 1.0], 1.0)
-            .with_pass(DrawFlat2D::new())
+            .with_pass(DrawFlat2D::new().with_transparency(ColorMask::all(), ALPHA, None))
             .with_pass(DrawUi::new()),
     );
 
@@ -43,9 +44,15 @@ fn main() -> amethyst::Result<()> {
         .with_bindings_from_file(bindings_path)?;
 
     let game_data =
-        GameDataBuilder::default().with_bundle(RenderBundle::new(pipe, Some(config)).with_sprite_sheet_processor())?.with_bundle(
-            TransformBundle::new())?.with_bundle(input_bundle)?.with(systems::SpaceshipSystem, "spaceship_system", &[])
-            .with(systems::BlastSystem, "blast_system", &[]);
+        GameDataBuilder::default()
+            .with_bundle(RenderBundle::new(pipe, Some(config))
+            .with_sprite_sheet_processor()
+            .with_sprite_visibility_sorting(&[]))?
+            .with_bundle(TransformBundle::new())?.with_bundle(input_bundle)?
+            .with(systems::SpaceshipSystem, "spaceship_system", &[])
+            .with(systems::BlastSystem, "blast_system", &[])
+            .with(systems::EnemySystem, "enemy_system", &[])
+            .with(systems::SpawnerSystem, "spawner_system", &[]);
 
     let mut game = Application::new("./", SpaceShooter, game_data)?;
 

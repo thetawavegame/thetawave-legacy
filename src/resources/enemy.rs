@@ -5,8 +5,7 @@ use amethyst::{
 
 
 #[derive(Clone)]
-pub struct BlastResource {
+pub struct EnemyResource {
     pub sprite_sheet: Handle<SpriteSheet>,
     pub sprite_number: usize,
 }
-

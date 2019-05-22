@@ -1,10 +1,16 @@
-use amethyst::ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect};
-use amethyst::core::transform::Transform;
-use amethyst::core::nalgebra::Vector3;
-use amethyst::renderer::{SpriteSheetHandle, SpriteRender};
+use amethyst::{
+    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::{SpriteSheetHandle, SpriteRender, Transparent},
+    core::{
+        transform::Transform,
+        nalgebra::Vector3,
+    },
+};
 
-use crate::components::Blast;
-use crate::resources::BlastResource;
+use crate::{
+    components::Blast,
+    resources::BlastResource,
+};
 
 
 const BLAST_STARTING_SPEED: f32 = 100.0;
@@ -34,5 +40,6 @@ pub fn fire_blast(entities: &Entities, blast_resource: &ReadExpect<BlastResource
     lazy_update.insert(blast_entity, sprite_render);
     lazy_update.insert(blast_entity, Blast {speed: BLAST_STARTING_SPEED});
     lazy_update.insert(blast_entity, local_transform);
+    lazy_update.insert(blast_entity, Transparent);
 
 }

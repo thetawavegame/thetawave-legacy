@@ -1,10 +1,14 @@
-use amethyst::prelude::Builder;
-use amethyst::ecs::prelude::{World};
-use amethyst::core::transform::Transform;
-use amethyst::renderer::{SpriteRender, SpriteSheetHandle};
+use amethyst::{
+    prelude::Builder,
+    ecs::prelude::World,
+    core::transform::Transform,
+    renderer::{SpriteRender, SpriteSheetHandle, Transparent},
+};
 
-use crate::components::Spaceship;
-use crate::space_shooter::{GAME_HEIGHT, GAME_WIDTH};
+use crate::{
+    components::Spaceship,
+    space_shooter::{GAME_WIDTH, GAME_HEIGHT},
+};
 
 
 const SPACESHIP_HEIGHT: f32 = 18.0;
@@ -20,7 +24,7 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetH
     local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT / 6.0, 0.0);
 
     let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle,
+        sprite_sheet: sprite_sheet_handle.clone(),
         sprite_number: 0,
     };
 
@@ -35,5 +39,6 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetH
             fire_reset_timer: 0.0,
         })
         .with(local_transform)
+        .with(Transparent)
         .build();
 }
