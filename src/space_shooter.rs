@@ -8,7 +8,9 @@ use amethyst::{
     },
 };
 
-use crate::entities::{initialise_blast_resource, initialise_spaceship, initialise_enemy_resource, initialise_spawner};
+use crate::entities::{initialise_blast_resource, initialise_spaceship, initialise_enemy_resource, initialise_spawner, initialise_explosion_resource};
+use crate::components::Explosion;
+use crate::resources::ExplosionResource;
 //use crate::components::Enemy;
 
 
@@ -24,8 +26,8 @@ impl SimpleState for SpaceShooter {
 
         //world.register::<Spaceship>();
         //world.register::<Blast>();
-        //world.register::<Transparent>();
         initialise_spaceship(world, sprite_sheet_handle.clone());
+        initialise_explosion_resource(world, sprite_sheet_handle.clone());
         initialise_blast_resource(world, sprite_sheet_handle.clone());
         initialise_enemy_resource(world, sprite_sheet_handle.clone());
         initialise_spawner(world);
@@ -40,7 +42,7 @@ fn load_spritesheet(world: &mut World) -> SpriteSheetHandle {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            "texture/space_shooter_spritesheet.png",
+            "texture/space_shooter_spritesheet_1.png",
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),

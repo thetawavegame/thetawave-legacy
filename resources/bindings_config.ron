@@ -16,5 +16,11 @@
         "spawn_enemy": [
             [Key(Q)]
         ],
+        "barrel_left": [
+            [Key(Left)]
+        ],
+        "barrel_right": [
+            [Key(Right)]
+        ],
     },
 )

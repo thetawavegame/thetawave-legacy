@@ -16,6 +16,13 @@ pub struct Spaceship {
     pub damage: i32,
     pub x_velocity: f32,
     pub y_velocity: f32,
+    pub barrel_cooldown: f32,
+    pub barrel_reset_timer: f32,
+    pub barrel_speed: f32,
+    pub barrel_action_left: bool,
+    pub barrel_action_right: bool,
+    pub barrel_duration: f32,
+    pub barrel_action_timer: f32,
 }
 
 impl Component for Spaceship {

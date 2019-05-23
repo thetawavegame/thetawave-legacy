@@ -15,18 +15,21 @@ const SPACESHIP_HEIGHT: f32 = 18.0;
 const SPACESHIP_WIDTH: f32 = 18.0;
 const SPACESHIP_ACCELERATION_X: f32 = 2.0;
 const SPACESHIP_DECELERATION_X: f32 = 0.5;
-const SPACESHIP_ACCELERATION_Y: f32 = 3.0;
+const SPACESHIP_ACCELERATION_Y: f32 = 4.0;
 const SPACESHIP_DECELERATION_Y: f32 = 1.0;
 const SPACESHIP_MAX_SPEED: f32 = 70.0;
-const SPACESHIP_STARTING_FIRE_SPEED: f32 = 0.2;
+const SPACESHIP_STARTING_FIRE_SPEED: f32 = 0.3;
 const SPACESHIP_STARTING_DAMAGE: i32 = 40;
+const SPACESHIP_BARREL_COOLDOWN: f32 = 3.0;
+const SPACESHIP_BARREL_SPEED: f32 = 150.0;
+const SPACESHIP_BARREL_DURATION: f32 = 0.3;
 
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
 
     //create transform
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT / 6.0, 0.0);
+    local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT / 6.0, 0.9);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),
@@ -51,6 +54,13 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetH
             damage: SPACESHIP_STARTING_DAMAGE,
             x_velocity: 0.0,
             y_velocity: 0.0,
+            barrel_cooldown: SPACESHIP_BARREL_COOLDOWN,
+            barrel_reset_timer: 0.0,
+            barrel_speed: SPACESHIP_BARREL_SPEED,
+            barrel_action_right: false,
+            barrel_action_left: false,
+            barrel_duration: SPACESHIP_BARREL_DURATION,
+            barrel_action_timer: SPACESHIP_BARREL_DURATION,
         })
         .with(local_transform)
         .with(Transparent)

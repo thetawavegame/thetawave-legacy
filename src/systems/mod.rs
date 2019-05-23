@@ -3,6 +3,7 @@ mod blast;
 mod enemy;
 mod spawner;
 mod player_hit;
+mod explosion;
 
 pub use self::{
     blast::BlastSystem,
@@ -10,4 +11,5 @@ pub use self::{
     enemy::EnemySystem,
     spawner::SpawnerSystem,
     player_hit::PlayerHitSystem,
+    explosion::ExplosionSystem,
 };

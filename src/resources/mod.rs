@@ -1,7 +1,7 @@
-mod blast;
+mod sprite;
 mod enemy;
 
 pub use self::{
-    blast::BlastResource,
+    sprite::{BlastResource, ExplosionResource},
     enemy::EnemyResource,
 };
