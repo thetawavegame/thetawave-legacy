@@ -8,7 +8,7 @@ use amethyst::{
     },
 };
 
-use crate::entities::{initialise_blast_resource, initialise_spaceship, initialise_enemy_resource, initialise_spawner, initialise_explosion_resource};
+use crate::entities::{initialise_blast_resource, initialise_spaceship, initialise_enemy_resource, initialise_spawner, initialise_explosion_resource, initialise_item_resource};
 use crate::components::Explosion;
 use crate::resources::ExplosionResource;
 //use crate::components::Enemy;
@@ -22,11 +22,13 @@ pub struct SpaceShooter;
 impl SimpleState for SpaceShooter {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
-        let sprite_sheet_handle = load_spritesheet(world);
+        let sprite_sheet_handle = load_spritesheet(world, "space_shooter_spritesheet_1.png", "space_shooter_spritesheet.ron");
+        let item_sprite_sheet_handle = load_spritesheet(world, "item_spritesheet.png", "item_spritesheet.ron");
 
         //world.register::<Spaceship>();
         //world.register::<Blast>();
         initialise_spaceship(world, sprite_sheet_handle.clone());
+        initialise_item_resource(world, item_sprite_sheet_handle.clone());
         initialise_explosion_resource(world, sprite_sheet_handle.clone());
         initialise_blast_resource(world, sprite_sheet_handle.clone());
         initialise_enemy_resource(world, sprite_sheet_handle.clone());
@@ -36,13 +38,13 @@ impl SimpleState for SpaceShooter {
 
 }
 
-fn load_spritesheet(world: &mut World) -> SpriteSheetHandle {
+fn load_spritesheet(world: &mut World, spritesheet: &str, spritesheet_ron: &str) -> SpriteSheetHandle {
 
     let texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            "texture/space_shooter_spritesheet_1.png",
+            format!("texture/{}", spritesheet),
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),
@@ -53,7 +55,7 @@ fn load_spritesheet(world: &mut World) -> SpriteSheetHandle {
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
     loader.load(
-        "texture/space_shooter_spritesheet.ron",
+        format!("texture/{}", spritesheet_ron),
         SpriteSheetFormat,
         texture_handle,
         (),

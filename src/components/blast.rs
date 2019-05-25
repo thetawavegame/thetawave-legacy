@@ -6,7 +6,7 @@ pub struct Blast {
     pub speed: f32,
     pub collision: bool,
     pub hitbox_radius: f32,
-    pub damage: i32,
+    pub damage: f32,
     pub x_velocity: f32,
     pub y_velocity: f32,
     pub velocity_factor: f32,

@@ -3,35 +3,34 @@ use amethyst::{
     ecs::prelude::{Entities,Join, ReadStorage, System, WriteStorage},
 };
 
-use crate::components::{Enemy, Blast};
+use crate::components::{Spaceship, Enemy};
 
-pub struct PlayerHitSystem;
-impl<'s> System<'s> for PlayerHitSystem {
+pub struct BarrelRollSystem;
+impl<'s> System<'s> for BarrelRollSystem {
 
     type SystemData = (
         Entities<'s>,
+        ReadStorage<'s, Spaceship>,
         WriteStorage<'s, Enemy>,
-        WriteStorage<'s, Blast>,
         ReadStorage<'s, Transform>,
     );
 
-    fn run(&mut self, (entities, mut enemies, mut blasts, transforms): Self::SystemData) {
-        for (enemy, enemy_transform) in (&mut enemies, &transforms).join() {
+    fn run(&mut self, (entities, spaceships, mut enemies, transforms): Self::SystemData) {
+        for (spaceship, spaceship_transform) in (&spaceships, &transforms).join() {
 
-            let enemy_x = enemy_transform.translation().x;
-            let enemy_y = enemy_transform.translation().y;
+            let spaceship_x = spaceship_transform.translation().x;
+            let spaceship_y = spaceship_transform.translation().y;
 
-            for (blast_entity, blast, blast_transform) in (&*entities, &mut blasts, &transforms).join() {
+            for (enemy, enemy_transform) in (&mut enemies, &transforms).join() {
 
-                let blast_x = blast_transform.translation().x;
-                let blast_y = blast_transform.translation().y;
+                let enemy_x = enemy_transform.translation().x;
+                let enemy_y = enemy_transform.translation().y;
 
-                if hitbox_collide(blast_x, blast_y, enemy_x, enemy_y, blast.hitbox_radius, blast.hitbox_radius, enemy.hitbox_width, enemy.hitbox_height) {
-                    blast.collision = true;
-                    let _result = entities.delete(blast_entity);
-                    enemy.health -= blast.damage;
+
+                if (spaceship.barrel_action_right || spaceship.barrel_action_left) && hitbox_collide(spaceship_x, spaceship_y, enemy_x, enemy_y, spaceship.hitbox_width, spaceship.hitbox_height, enemy.hitbox_width, enemy.hitbox_height) {
+                    println!("collision");
+                    enemy.health -= spaceship.barrel_damage;
                 }
-
             }
 
 

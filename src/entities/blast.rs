@@ -28,7 +28,7 @@ pub fn initialise_blast_resource(world: &mut World, sprite_sheet_handle: SpriteS
     blast_resource
 }
 
-pub fn fire_blast(entities: &Entities, blast_resource: &ReadExpect<BlastResource>, fire_position: Vector3<f32>, damage: i32, x_velocity: f32, y_velocity: f32, lazy_update: &ReadExpect<LazyUpdate>) {
+pub fn fire_blast(entities: &Entities, blast_resource: &ReadExpect<BlastResource>, fire_position: Vector3<f32>, damage: f32, x_velocity: f32, y_velocity: f32, lazy_update: &ReadExpect<LazyUpdate>) {
     let blast_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();

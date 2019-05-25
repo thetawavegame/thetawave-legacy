@@ -17,7 +17,7 @@ const ENEMY_HEIGHT: f32 = 18.0;
 pub const ENEMY_WIDTH: f32 = 18.0;
 const ENEMY_SPEED: f32 = 40.0;
 const ENEMY_FIRE_SPEED: f32 = 0.5;
-const ENEMY_HEALTH: i32 = 100;
+const ENEMY_HEALTH: f32 = 100.0;
 const ENEMY_HITBOX_WIDTH: f32 = 14.0;
 const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 

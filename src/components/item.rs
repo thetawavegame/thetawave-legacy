@@ -1,16 +1,16 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
+use std::collections::HashMap;
 
 
-pub struct Enemy {
+pub struct Item {
     pub width: f32,
     pub height: f32,
-    pub speed: f32,
-    pub fire_speed: f32,
-    pub health: f32,
     pub hitbox_width: f32,
     pub hitbox_height: f32,
+    pub stat_effects: HashMap<&'static str, f32>,
 }
 
-impl Component for Enemy {
+impl Component for Item {
     type Storage = DenseVecStorage<Self>;
 }
+
