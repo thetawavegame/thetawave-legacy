@@ -1,9 +1,8 @@
 use amethyst::{
     core::{
-        transform::Transform,
         timing::Time,
     },
-    ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read},
+    ecs::prelude::{Entities, Join, System, WriteStorage, Read},
 };
 
 use crate::{
@@ -28,8 +27,6 @@ impl<'s> System<'s> for ExplosionSystem {
             }else {
                 let _result = entities.delete(explosion_entity);
             }
-
-
         }
     }
 }

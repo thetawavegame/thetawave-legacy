@@ -1,6 +1,6 @@
 use amethyst::{
-    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteSheetHandle, SpriteRender, Transparent, Flipped},
+    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender, Transparent, Flipped},
     core::{
         transform::Transform,
         nalgebra::Vector3,
@@ -8,8 +8,8 @@ use amethyst::{
 };
 
 use crate::{
-    components::Enemy,
-    resources::EnemyResource,
+    components::{Enemy, EnemySpawner},
+    resources::SpriteResource,
 };
 
 
@@ -22,17 +22,7 @@ const ENEMY_HITBOX_WIDTH: f32 = 14.0;
 const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 
 
-pub fn initialise_enemy_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> EnemyResource {
-    let enemy_resource = EnemyResource {
-        sprite_sheet: sprite_sheet_handle,
-        sprite_number: 2,
-    };
-
-    world.add_resource(enemy_resource.clone());
-    enemy_resource
-}
-
-pub fn spawn_enemy(entities: &Entities, enemy_resource: &ReadExpect<EnemyResource>, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
+pub fn spawn_enemy(entities: &Entities, enemy_resource: &ReadExpect<SpriteResource>, sprite_number: usize, spawn_position: Vector3<f32>, enemy_spawner: &mut EnemySpawner, lazy_update: &ReadExpect<LazyUpdate>) {
     let enemy_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();
@@ -40,7 +30,7 @@ pub fn spawn_enemy(entities: &Entities, enemy_resource: &ReadExpect<EnemyResourc
 
     let sprite_render = SpriteRender {
         sprite_sheet: enemy_resource.sprite_sheet.clone(),
-        sprite_number: enemy_resource.sprite_number,
+        sprite_number: sprite_number,
     };
 
     lazy_update.insert(enemy_entity, sprite_render);
@@ -56,5 +46,8 @@ pub fn spawn_enemy(entities: &Entities, enemy_resource: &ReadExpect<EnemyResourc
     lazy_update.insert(enemy_entity, local_transform);
     lazy_update.insert(enemy_entity, Transparent);
     lazy_update.insert(enemy_entity, Flipped::Vertical);
+
+    enemy_spawner.enemies_spawned += 1;
+    println!("Enemies spawned: {}", enemy_spawner.enemies_spawned);
 
 }

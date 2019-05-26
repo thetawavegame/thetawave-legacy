@@ -1,7 +1,7 @@
 mod blast;
 mod spaceship;
 mod enemy;
-mod spawner;
+mod enemy_spawner;
 mod explosion;
 mod item;
 
@@ -9,7 +9,7 @@ pub use self::{
     blast::Blast,
     spaceship::Spaceship,
     enemy::Enemy,
-    spawner::Spawner,
+    enemy_spawner::EnemySpawner,
     explosion::Explosion,
     item::Item,
 };

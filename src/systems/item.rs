@@ -2,12 +2,14 @@ use amethyst::{
     core::{
         transform::Transform,
         timing::Time,
-        nalgebra::Vector3,
     },
     ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read, ReadExpect, LazyUpdate},
 };
 
-use crate::components::{Item, Spaceship};
+use crate::{
+    components::{Item, Spaceship},
+    systems::hitbox_collide,
+};
 
 
 pub struct ItemSystem;
@@ -17,12 +19,12 @@ impl<'s> System<'s> for ItemSystem {
         Entities<'s>,
         WriteStorage<'s, Item>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, Transform>,
+        ReadStorage<'s, Transform>,
         Read<'s, Time>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut items, mut spaceships, mut transforms, time, lazy_update): Self::SystemData) {
+    fn run(&mut self, (entities, mut items, mut spaceships, transforms, time, lazy_update): Self::SystemData) {
         for (spaceship, spaceship_transform) in (&mut spaceships, &transforms).join() {
 
             let spaceship_x = spaceship_transform.translation().x;
@@ -51,18 +53,4 @@ impl<'s> System<'s> for ItemSystem {
 
     }
 }
-
-fn hitbox_collide(mut x1: f32, mut y1: f32, mut x2: f32, mut y2: f32, hitbox_width_1: f32, hitbox_height_1: f32, hitbox_width_2: f32, hitbox_height_2: f32) -> bool {
-
-    x1 -= hitbox_width_1 / 2.0;
-    y1 -= hitbox_height_1 / 2.0;
-
-    x2 -= hitbox_width_2 / 2.0;
-    y2 -= hitbox_height_2 / 2.0 ;
-
-
-    x1 < (x2 + hitbox_width_2) && (x1 + hitbox_width_1) > x2 && y1 < (y2 + hitbox_height_2) && (y1 + hitbox_height_1) > y2
-    //(x1 + hitbox_width_1 / 2.0) > (x2 - hitbox_width_2 / 2.0) && (x1 - hitbox_width_1 / 2.0) < (x2 + hitbox_width_2 / 2.0) && (y1 - hitbox_height_1 / 2.0) > (y2 + hitbox_height_2 / 2.0) && (y1 + hitbox_height_1 / 2.0) < (y2 - hitbox_height_2)
-}
-
 

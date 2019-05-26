@@ -5,7 +5,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::Spawner,
+    components::EnemySpawner,
     space_shooter::{GAME_HEIGHT, GAME_WIDTH},
 };
 
@@ -21,9 +21,10 @@ pub fn initialise_spawner(world: &mut World) {
 
     world
         .create_entity()
-        .with(Spawner {
+        .with(EnemySpawner {
             spawn_timer: 0.0,
             spawn_interval: SPAWN_INTERVAL,
+            enemies_spawned: 0,
         })
         .with(local_transform)
         .build();

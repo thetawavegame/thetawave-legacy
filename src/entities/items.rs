@@ -1,6 +1,6 @@
 use amethyst::{
-    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteSheetHandle, SpriteRender, Transparent, Flipped},
+    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender, Transparent},
     core::{
         transform::Transform,
         nalgebra::Vector3,
@@ -9,8 +9,9 @@ use amethyst::{
 
 use crate::{
     components::Item,
-    resources::ItemResource,
+    resources::SpriteResource,
 };
+
 use std::collections::HashMap;
 
 
@@ -20,28 +21,7 @@ const ITEM_HITBOX_WIDTH: f32 = 4.0;
 const ITEM_HITBOX_HEIGHT: f32 = 4.0;
 
 
-
-pub fn initialise_item_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> ItemResource {
-
-    let item_resource = ItemResource {
-        sprite_sheet: sprite_sheet_handle,
-    };
-
-    world.add_resource(item_resource.clone());
-    item_resource
-}
-
-pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<ItemResource>, sprite_number: usize, stat_effects: HashMap<&'static str, f32>,spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
-
-
-    /*
-    let mut steel_barrel_data: HashMap<&'static str, f32> = HashMap::new();
-    steel_barrel_data.insert("barrel_damage", 60.0);
-    */
-
-
-
-
+pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<SpriteResource>, sprite_number: usize, stat_effects: HashMap<&'static str, f32>,spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
     let item_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();

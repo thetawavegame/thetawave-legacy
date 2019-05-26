@@ -29,7 +29,6 @@ const SPACESHIP_BARREL_DURATION: f32 = 0.3;
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
 
-    //create transform
     let mut local_transform = Transform::default();
     local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT / 6.0, 0.9);
 

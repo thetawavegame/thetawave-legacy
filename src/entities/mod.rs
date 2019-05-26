@@ -1,16 +1,29 @@
+use crate::resources::SpriteResource;
+use amethyst::ecs::prelude::World;
+use amethyst::renderer::SpriteSheetHandle;
+
 pub mod blast;
 pub mod spaceship;
 pub mod enemy;
-pub mod spawner;
+pub mod enemy_spawner;
 pub mod explosion;
 pub mod items;
 
 pub use self::{
-    blast::{initialise_blast_resource, fire_blast},
+    blast::{fire_blast},
+
     spaceship::initialise_spaceship,
-    enemy::{initialise_enemy_resource, spawn_enemy, ENEMY_WIDTH},
-    spawner::initialise_spawner,
-    explosion::{initialise_explosion_resource, spawn_explosion},
-    items::{initialise_item_resource},
+    enemy::{spawn_enemy, ENEMY_WIDTH},
+    enemy_spawner::initialise_spawner,
+    explosion::{spawn_explosion},
 
 };
+
+pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> SpriteResource {
+    let sprite_resource = SpriteResource {
+        sprite_sheet: sprite_sheet_handle,
+    };
+
+    world.add_resource(sprite_resource.clone());
+    sprite_resource
+}

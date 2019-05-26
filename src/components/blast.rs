@@ -4,7 +4,6 @@ use amethyst::ecs::prelude::{Component, DenseVecStorage};
 #[derive(Clone)]
 pub struct Blast {
     pub speed: f32,
-    pub collision: bool,
     pub hitbox_radius: f32,
     pub damage: f32,
     pub x_velocity: f32,
