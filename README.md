@@ -22,3 +22,26 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - Plasma Blast: increases fire rate and damage
 - Hazardous Reactor: increases maximum speed
 - Warp Thruster: increases acceleration and deceleration
+
+# TODOS
+
+## Core Mechanics
+- [ ] player health and damage
+- [ ] enemy pool
+- [ ] enemy variety
+- [ ] enemy blasts
+- [ ] barrel roll invincibility
+## Visual and Audio
+- [ ] player HUD (health bar, defence health bar, acceleration, velocity)
+- [ ] pause menu
+- [ ] display resolutions options
+- [ ] player movement animation
+- [ ] player barrel roll animation
+- [ ] damage feedback
+## Gameplay
+- [ ] penalty for letting enemies past you
+- [ ] levels with end bosses
+- [ ] specific item spawn times
+- [ ] mini challenges for rewards or penalties (example: certain ships to let past you unharmed)
+- [ ] defence objective
+
