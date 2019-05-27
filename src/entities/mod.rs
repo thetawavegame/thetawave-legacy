@@ -14,7 +14,7 @@ pub use self::{
     blast::{fire_blast},
     spaceship::initialise_spaceship,
     enemy::{spawn_enemy, ENEMY_WIDTH},
-    enemy_spawner::initialise_spawner,
+    enemy_spawner::initialise_enemy_spawner,
     explosion::{spawn_explosion},
     item_spawner::initialise_item_spawner,
     items::spawn_item,

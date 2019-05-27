@@ -8,7 +8,7 @@ use amethyst::{
     },
 };
 
-use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_spawner, initialise_item_spawner};
+use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner};
 use crate::components::ItemSpawner;
 
 
@@ -27,7 +27,7 @@ impl SimpleState for SpaceShooter {
         world.register::<ItemSpawner>();
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
-        initialise_spawner(world);
+        initialise_enemy_spawner(world);
         initialise_item_spawner(world);
         initialise_camera(world);
     }
