@@ -45,7 +45,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     new_x, transform.translation()[1], transform.translation()[2],
                 );
 
-                spawn_enemy(&entities, &enemy_resource, 2, spawn_position, spawner, &lazy_update);
+                spawn_enemy(&entities, &enemy_resource, &mut spawner.enemy_pool, spawn_position, &lazy_update);
 
                 spawner.spawn_timer = spawner.spawn_interval;
             }

@@ -7,8 +7,10 @@ use amethyst::{
     }
 };
 
+use rand::seq::SliceRandom;
+
 use crate::{
-    components::{Enemy, EnemySpawner},
+    components::{Enemy, EnemySpawner, EnemyPool},
     resources::SpriteResource,
 };
 
@@ -21,34 +23,26 @@ const ENEMY_HEALTH: f32 = 100.0;
 const ENEMY_HITBOX_WIDTH: f32 = 14.0;
 const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 
-
-pub fn spawn_enemy(entities: &Entities, enemy_resource: &ReadExpect<SpriteResource>, sprite_number: usize, spawn_position: Vector3<f32>, enemy_spawner: &mut EnemySpawner, lazy_update: &ReadExpect<LazyUpdate>) {
+pub fn spawn_enemy(entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, enemy_pool: &mut EnemyPool, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
     let enemy_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();
     local_transform.set_position(spawn_position);
 
+    //get a random item from the enemy pool and then remove it from the pool
+    let random_enemy_name = enemy_pool.available_enemies.choose(&mut rand::thread_rng()).cloned().unwrap();
+    let random_enemy = enemy_pool.enemies[&random_enemy_name].clone();
+
     let sprite_render = SpriteRender {
-        sprite_sheet: enemy_resource.sprite_sheet.clone(),
-        sprite_number: sprite_number,
+        sprite_sheet: sprite_resource.sprite_sheet.clone(),
+        sprite_number: random_enemy.sprite_index,
     };
 
     lazy_update.insert(enemy_entity, sprite_render);
-    lazy_update.insert(enemy_entity, Enemy {
-        height: ENEMY_HEIGHT,
-        width: ENEMY_WIDTH,
-        speed: ENEMY_SPEED,
-        fire_speed: ENEMY_FIRE_SPEED,
-        health: ENEMY_HEALTH,
-        hitbox_height: ENEMY_HITBOX_HEIGHT,
-        hitbox_width: ENEMY_HITBOX_WIDTH,
-        barrel_damaged: false,
-    });
+    lazy_update.insert(enemy_entity, random_enemy);
     lazy_update.insert(enemy_entity, local_transform);
     lazy_update.insert(enemy_entity, Transparent);
     lazy_update.insert(enemy_entity, Flipped::Vertical);
 
-    enemy_spawner.enemies_spawned += 1;
-    println!("Enemies spawned: {}", enemy_spawner.enemies_spawned);
-
 }
+
