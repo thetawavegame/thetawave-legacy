@@ -7,13 +7,12 @@ use amethyst::{
     }
 };
 
+use rand::seq::SliceRandom;
+
 use crate::{
     resources::SpriteResource,
+    components::ItemPool,
 };
-
-use rand::seq::SliceRandom;
-use crate::components::ItemPool;
-
 
 
 pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<SpriteResource>, item_pool: &mut ItemPool, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {

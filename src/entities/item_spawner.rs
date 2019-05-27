@@ -14,7 +14,6 @@ use std::{
     vec::Vec,
 };
 
-//const ITEM_POOL_LENGTH: usize = 1;
 const ITEM_HEIGHT: f32 = 14.0;
 pub const ITEM_WIDTH: f32 = 14.0;
 const ITEM_HITBOX_WIDTH: f32 = 4.0;
@@ -92,13 +91,13 @@ pub fn initialise_item_spawner(world: &mut World) {
     items.insert("hazardous_reactor".to_string(), hazardous_reactor);
     items.insert("warp_thruster".to_string(), warp_thruster);
 
-    let mut local_transform = Transform::default();
-    local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
-
     let item_pool = ItemPool {
         available_items: item_list,
         items: items,
     };
+
+    let mut local_transform = Transform::default();
+    local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
 
     world
         .create_entity()

@@ -3,29 +3,12 @@ use std::{
     collections::{HashMap},
     vec::Vec,
 };
-use crate::components::Item;
 
-
-/*
-//Item pool info
-let mut stat_effects = HashMap::new();
-stat_effects.insert(
-    "barrel_damage",
-    60.0
-);
-*/
 
 pub struct ItemPool {
     pub available_items: Vec<String>,
-    //pub item_stat_effects: HashMap<String, HashMap<String, f32>>,
     pub items: HashMap<String, Item>
 }
-
-/*
-impl Component for ItemPool {
-    type Storage = DenseVecStorage<Self>;
-}
-*/
 
 pub struct ItemSpawner {
     pub item_pool: ItemPool,
@@ -34,5 +17,20 @@ pub struct ItemSpawner {
 }
 
 impl Component for ItemSpawner {
+    type Storage = DenseVecStorage<Self>;
+}
+
+#[derive(Clone)]
+pub struct Item {
+    pub width: f32,
+    pub height: f32,
+    pub hitbox_width: f32,
+    pub hitbox_height: f32,
+    pub stat_effects: HashMap<String, f32>,
+    pub sprite_index: usize,
+    pub speed: f32,
+}
+
+impl Component for Item {
     type Storage = DenseVecStorage<Self>;
 }
