@@ -26,9 +26,6 @@ impl<'s> System<'s> for ItemSystem {
     fn run(&mut self, (entities, mut items, mut spaceships, mut transforms, time): Self::SystemData) {
         for spaceship in (&mut spaceships).join() {
 
-            //let spaceship_x = spaceship_transform.translation().x;
-            //let spaceship_y = spaceship_transform.translation().y;
-
             for (item_entity, item, item_transform) in (&*entities, &mut items, &mut transforms).join() {
 
                 let item_x = item_transform.translation().x;
@@ -40,6 +37,28 @@ impl<'s> System<'s> for ItemSystem {
                     //add stats to spaceship
                     if item.stat_effects.contains_key("barrel_damage") {
                         spaceship.barrel_damage += item.stat_effects["barrel_damage"];
+                    }
+
+                    if item.stat_effects.contains_key("fire_speed") {
+                        spaceship.fire_speed += item.stat_effects["fire_speed"];
+                    }
+
+                    if item.stat_effects.contains_key("damage") {
+                        spaceship.damage += item.stat_effects["damage"];
+                    }
+
+                    if item.stat_effects.contains_key("max_speed") {
+                        spaceship.max_speed += item.stat_effects["max_speed"];
+                    }
+
+                    if item.stat_effects.contains_key("acceleration") {
+                        spaceship.acceleration_x += item.stat_effects["acceleration"];
+                        spaceship.acceleration_y += item.stat_effects["acceleration"];
+                    }
+
+                    if item.stat_effects.contains_key("deceleration") {
+                        spaceship.deceleration_x += item.stat_effects["deceleration"];
+                        spaceship.deceleration_y += item.stat_effects["deceleration"];
                     }
 
                     let _result = entities.delete(item_entity);
