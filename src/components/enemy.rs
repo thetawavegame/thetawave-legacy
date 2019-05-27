@@ -9,6 +9,7 @@ pub struct Enemy {
     pub health: f32,
     pub hitbox_width: f32,
     pub hitbox_height: f32,
+    pub barrel_damaged: bool,
 }
 
 impl Component for Enemy {

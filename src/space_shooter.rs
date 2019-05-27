@@ -8,8 +8,8 @@ use amethyst::{
     },
 };
 
-use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_spawner};
-//use crate::components::Enemy;
+use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_spawner, initialise_item_spawner};
+use crate::components::ItemSpawner;
 
 
 pub const GAME_HEIGHT: f32 = 250.0;
@@ -24,9 +24,11 @@ impl SimpleState for SpaceShooter {
 
         //world.register::<Spaceship>();
         //world.register::<Blast>();
+        world.register::<ItemSpawner>();
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
         initialise_spawner(world);
+        initialise_item_spawner(world);
         initialise_camera(world);
     }
 

@@ -3,7 +3,7 @@ use amethyst::{
         Transform,
         timing::Time,
     },
-    ecs::{Join, Read, System, WriteStorage, LazyUpdate, ReadExpect},
+    ecs::{Join, Read, System, WriteStorage},
     input::InputHandler,
 };
 
@@ -20,10 +20,9 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
         WriteStorage<'s, Spaceship>,
         Read<'s, InputHandler<String, String>>,
         Read<'s, Time>,
-        ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (mut transforms, mut spaceships, input, time, lazy_update): Self::SystemData) {
+    fn run(&mut self, (mut transforms, mut spaceships, input, time): Self::SystemData) {
 
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;

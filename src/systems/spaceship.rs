@@ -10,7 +10,7 @@ use amethyst::{
 
 use crate::{
     entities::{fire_blast},
-    components::{Spaceship},
+    components::{Spaceship, Enemy},
     resources::{SpriteResource},
 };
 
@@ -22,13 +22,14 @@ impl<'s> System<'s> for SpaceshipSystem {
         Entities<'s>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, Enemy>,
         Read<'s, InputHandler<String, String>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut transforms, mut spaceships, input, time, sprite_resource, lazy_update): Self::SystemData) {
+    fn run(&mut self, (entities, mut transforms, mut spaceships, mut enemies, input, time, sprite_resource, lazy_update): Self::SystemData) {
 
         let mut shoot = input.action_is_down("shoot").unwrap();
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
@@ -36,6 +37,9 @@ impl<'s> System<'s> for SpaceshipSystem {
 
 
         for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
+
+            spaceship.pos_x = transform.translation().x;
+            spaceship.pos_y= transform.translation().y;
 
             //firing cooldown
             if spaceship.fire_reset_timer > 0.0 {
@@ -74,6 +78,10 @@ impl<'s> System<'s> for SpaceshipSystem {
                     spaceship.barrel_action_left = false;
                     spaceship.barrel_action_right = false;
                     spaceship.barrel_reset_timer = spaceship.barrel_cooldown;
+                    for enemy in (&mut enemies).join() {
+                        enemy.barrel_damaged = false;
+                    }
+
                 }
 
             }

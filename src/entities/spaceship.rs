@@ -63,6 +63,8 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetH
             barrel_duration: SPACESHIP_BARREL_DURATION,
             barrel_action_timer: SPACESHIP_BARREL_DURATION,
             barrel_damage: 0.0,
+            pos_x: local_transform.translation().x,
+            pos_y: local_transform.translation().y,
         })
         .with(local_transform)
         .with(Transparent)

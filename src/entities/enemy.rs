@@ -42,6 +42,7 @@ pub fn spawn_enemy(entities: &Entities, enemy_resource: &ReadExpect<SpriteResour
         health: ENEMY_HEALTH,
         hitbox_height: ENEMY_HITBOX_HEIGHT,
         hitbox_width: ENEMY_HITBOX_WIDTH,
+        barrel_damaged: false,
     });
     lazy_update.insert(enemy_entity, local_transform);
     lazy_update.insert(enemy_entity, Transparent);

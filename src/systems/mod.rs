@@ -7,6 +7,7 @@ mod explosion;
 mod item;
 mod barrel_roll;
 mod spaceship_movement;
+mod item_spawn;
 
 pub use self::{
     blast::BlastSystem,
@@ -18,6 +19,7 @@ pub use self::{
     item::ItemSystem,
     barrel_roll::BarrelRollSystem,
     spaceship_movement::SpaceshipMovementSystem,
+    item_spawn::ItemSpawnSystem,
 };
 
 pub fn hitbox_collide(mut x1: f32, mut y1: f32, mut x2: f32, mut y2: f32, hitbox_width_1: f32, hitbox_height_1: f32, hitbox_width_2: f32, hitbox_height_2: f32) -> bool {

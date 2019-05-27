@@ -3,7 +3,7 @@ use amethyst::{
         transform::Transform,
         timing::Time,
     },
-    ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read, ReadExpect, LazyUpdate},
+    ecs::prelude::{Entities, Join, System, WriteStorage, Read},
 };
 
 use crate::{
@@ -19,31 +19,32 @@ impl<'s> System<'s> for ItemSystem {
         Entities<'s>,
         WriteStorage<'s, Item>,
         WriteStorage<'s, Spaceship>,
-        ReadStorage<'s, Transform>,
+        WriteStorage<'s, Transform>,
         Read<'s, Time>,
-        ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut items, mut spaceships, transforms, time, lazy_update): Self::SystemData) {
-        for (spaceship, spaceship_transform) in (&mut spaceships, &transforms).join() {
+    fn run(&mut self, (entities, mut items, mut spaceships, mut transforms, time): Self::SystemData) {
+        for spaceship in (&mut spaceships).join() {
 
-            let spaceship_x = spaceship_transform.translation().x;
-            let spaceship_y = spaceship_transform.translation().y;
+            //let spaceship_x = spaceship_transform.translation().x;
+            //let spaceship_y = spaceship_transform.translation().y;
 
-            for (item_entity, item, item_transform) in (&*entities, &mut items, &transforms).join() {
+            for (item_entity, item, item_transform) in (&*entities, &mut items, &mut transforms).join() {
 
                 let item_x = item_transform.translation().x;
                 let item_y = item_transform.translation().y;
 
-                if hitbox_collide(item_x, item_y, spaceship_x, spaceship_y, item.hitbox_width, item.hitbox_height, spaceship.hitbox_width, spaceship.hitbox_height) {
+                if hitbox_collide(item_x, item_y, spaceship.pos_x, spaceship.pos_y, item.hitbox_width, item.hitbox_height, spaceship.hitbox_width, spaceship.hitbox_height) {
+
 
                     //add stats to spaceship
                     if item.stat_effects.contains_key("barrel_damage") {
-                        println!("stat effect added!");
                         spaceship.barrel_damage += item.stat_effects["barrel_damage"];
                     }
 
                     let _result = entities.delete(item_entity);
+                }else {
+                    item_transform.translate_y(-1.0 * item.speed * time.delta_seconds());
                 }
 
             }
