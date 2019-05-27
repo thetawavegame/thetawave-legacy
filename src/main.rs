@@ -11,10 +11,10 @@ use amethyst::{
 
 mod space_shooter;
 mod systems;
-
 pub mod components;
 pub mod resources;
 pub mod entities;
+
 use crate::space_shooter::SpaceShooter;
 
 

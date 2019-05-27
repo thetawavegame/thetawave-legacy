@@ -7,9 +7,11 @@ use amethyst::{
     ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read, ReadExpect, LazyUpdate},
 };
 
-use crate::components::Enemy;
-use crate::entities::spawn_explosion;
-use crate::resources::{SpriteResource};
+use crate::{
+    components::Enemy,
+    entities::spawn_explosion,
+    resources::SpriteResource,
+};
 
 
 pub struct EnemySystem;

@@ -7,14 +7,14 @@ use amethyst::{
     ecs::{Join, Read, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
 };
 
+use rand::{thread_rng, Rng};
+
 use crate::{
     entities::{spawn_item, ENEMY_WIDTH},
     components::ItemSpawner,
     resources::SpriteResource,
     space_shooter::GAME_WIDTH,
 };
-
-use rand::{thread_rng, Rng};
 
 
 pub struct ItemSpawnSystem;
