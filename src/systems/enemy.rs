@@ -36,7 +36,7 @@ impl<'s> System<'s> for EnemySystem {
                     enemy_transform.translation()[0], enemy_transform.translation()[1], 0.0,
                 );
 
-                spawn_explosion(&entities, &sprite_resource, 3,explosion_position, &lazy_update);
+                spawn_explosion(&entities, &sprite_resource, 4,explosion_position, &lazy_update);
             }
 
             if enemy_transform.translation()[1] < 0.0 || enemy_component.health < 0.0 {

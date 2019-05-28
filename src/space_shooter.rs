@@ -4,8 +4,10 @@ use amethyst::{
     prelude::*,
     renderer::{
         Camera, PngFormat, Projection, SpriteSheet,
-        SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata,
+        SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata, VirtualKeyCode,
     },
+    input::is_key_down,
+
 };
 
 use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner};
@@ -25,6 +27,7 @@ impl SimpleState for SpaceShooter {
         //world.register::<Spaceship>();
         //world.register::<Blast>();
         world.register::<ItemSpawner>();
+        println!("in spaceshooter state");
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
         initialise_enemy_spawner(world);
@@ -32,6 +35,38 @@ impl SimpleState for SpaceShooter {
         initialise_camera(world);
     }
 
+    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> Trans<GameData<'static, 'static>, StateEvent> {
+
+        if let StateEvent::Window(event) = &event {
+            if is_key_down(&event, VirtualKeyCode::Escape) {
+                return Trans::Push(Box::new(PausedState));
+            }
+        }
+        Trans::None
+    }
+
+}
+
+pub struct PausedState;
+
+impl SimpleState for PausedState {
+
+    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        println!("paused state");
+    }
+
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+       println!("exit paused state");
+    }
+
+    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> Trans<GameData<'static, 'static>, StateEvent>  {
+        if let StateEvent::Window(event) = &event {
+            if is_key_down(&event, VirtualKeyCode::Escape) {
+                return Trans::Pop;
+            }
+        }
+        Trans::None
+    }
 }
 
 fn load_spritesheet(world: &mut World, spritesheet: &str, spritesheet_ron: &str) -> SpriteSheetHandle {

@@ -40,7 +40,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: steel_barrel_stat_effects,
-        sprite_index: 4,
+        sprite_index: 5,
         speed: ITEM_SPEED,
     };
 
@@ -54,7 +54,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: plasma_blasts_stat_effects,
-        sprite_index: 5,
+        sprite_index: 6,
         speed: ITEM_SPEED,
     };
 
@@ -67,7 +67,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: hazardous_reactor_stat_effects,
-        sprite_index: 6,
+        sprite_index: 7,
         speed: ITEM_SPEED,
     };
 
@@ -81,7 +81,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: warp_thruster_stat_effects,
-        sprite_index: 7,
+        sprite_index: 8,
         speed: ITEM_SPEED,
     };
 
