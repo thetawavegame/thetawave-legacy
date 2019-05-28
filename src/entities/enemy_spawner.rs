@@ -21,21 +21,34 @@ const ENEMY_FIRE_SPEED: f32 = 0.5;
 const ENEMY_HEALTH: f32 = 100.0;
 const ENEMY_HITBOX_WIDTH: f32 = 14.0;
 const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
-const SPAWN_INTERVAL: f32 = 1.0;
+const SPAWN_INTERVAL: f32 = 1.5;
 
 
 pub fn initialise_enemy_spawner(world: &mut World) {
 
     let enemy_list: Vec<String> = vec![
+        "pawn".to_string(),
         "drone".to_string(),
     ];
+
+    let pawn = Enemy {
+        width: ENEMY_WIDTH,
+        height: ENEMY_HEIGHT,
+        speed: ENEMY_SPEED - 10.0,
+        fire_speed: ENEMY_FIRE_SPEED,
+        health: ENEMY_HEALTH,
+        hitbox_width: ENEMY_HITBOX_WIDTH,
+        hitbox_height: ENEMY_HITBOX_HEIGHT,
+        barrel_damaged: false,
+        sprite_index: 1,
+    };
 
     let drone = Enemy {
         width: ENEMY_WIDTH,
         height: ENEMY_HEIGHT,
         speed: ENEMY_SPEED,
         fire_speed: ENEMY_FIRE_SPEED,
-        health: ENEMY_HEALTH,
+        health: ENEMY_HEALTH - 50.0,
         hitbox_width: ENEMY_HITBOX_WIDTH,
         hitbox_height: ENEMY_HITBOX_HEIGHT,
         barrel_damaged: false,
@@ -43,6 +56,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
     };
 
     let mut enemies = HashMap::new();
+    enemies.insert("pawn".to_string(), pawn);
     enemies.insert("drone".to_string(), drone);
 
     let enemy_pool = EnemyPool {
