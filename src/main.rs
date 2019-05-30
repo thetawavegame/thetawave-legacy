@@ -10,7 +10,7 @@ use amethyst::{
 };
 
 mod space_shooter;
-mod systems;
+pub mod systems;
 pub mod components;
 pub mod resources;
 pub mod entities;
@@ -48,19 +48,10 @@ fn main() -> amethyst::Result<()> {
             .with_bundle(RenderBundle::new(pipe, Some(config))
             .with_sprite_sheet_processor()
             .with_sprite_visibility_sorting(&[]))?
-            .with_bundle(TransformBundle::new())?.with_bundle(input_bundle)?
-            .with(systems::SpaceshipSystem, "spaceship_system", &[])
-            .with(systems::BlastSystem, "blast_system", &[])
-            .with(systems::EnemySystem, "enemy_system", &[])
-            .with(systems::SpawnerSystem, "spawner_system", &[])
-            .with(systems::PlayerHitSystem, "player_hit_system", &[])
-            .with(systems::ExplosionSystem, "explosion_system", &[])
-            .with(systems::ItemSystem, "item_system", &[])
-            .with(systems::BarrelRollSystem, "barrel_roll_system", &[])
-            .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
-            .with(systems::ItemSpawnSystem, "item_spawn_system", &[]);
+            .with_bundle(TransformBundle::new())?
+            .with_bundle(input_bundle)?;
 
-    let mut game = Application::new("./", SpaceShooter, game_data)?;
+    let mut game = Application::new("./", SpaceShooter::default(), game_data)?;
 
     game.run();
 

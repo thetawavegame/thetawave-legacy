@@ -7,9 +7,10 @@ use amethyst::{
         SpriteSheetFormat, SpriteSheetHandle, Texture, TextureMetadata, VirtualKeyCode,
     },
     input::is_key_down,
-
+    ecs::prelude::{Dispatcher, DispatcherBuilder}
 };
 
+use crate::systems;
 use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner};
 use crate::components::ItemSpawner;
 
@@ -18,11 +19,37 @@ pub const GAME_HEIGHT: f32 = 250.0;
 pub const GAME_WIDTH: f32 = 250.0;
 
 
-pub struct SpaceShooter;
+pub struct SpaceShooter {
+    dispatcher: Dispatcher<'static, 'static>,
+}
+
+impl Default for SpaceShooter {
+    fn default() -> Self {
+        SpaceShooter {
+            dispatcher: DispatcherBuilder::new()
+                .with(systems::SpaceshipSystem, "spaceship_system", &[])
+                .with(systems::BlastSystem, "blast_system", &[])
+                .with(systems::EnemySystem, "enemy_system", &[])
+                .with(systems::SpawnerSystem, "spawner_system", &[])
+                .with(systems::PlayerHitSystem, "player_hit_system", &[])
+                .with(systems::ExplosionSystem, "explosion_system", &[])
+                .with(systems::ItemSystem, "item_system", &[])
+                .with(systems::BarrelRollSystem, "barrel_roll_system", &[])
+                .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
+                .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
+                .build(),
+        }
+    }
+}
+
 impl SimpleState for SpaceShooter {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+
+
         let world = data.world;
         let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
+
+        self.dispatcher.setup(&mut world.res);
 
         //world.register::<Spaceship>();
         //world.register::<Blast>();
@@ -35,7 +62,12 @@ impl SimpleState for SpaceShooter {
         initialise_camera(world);
     }
 
-    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> Trans<GameData<'static, 'static>, StateEvent> {
+    fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        self.dispatcher.dispatch(&mut data.world.res);
+        Trans::None
+    }
+
+    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
 
         if let StateEvent::Window(event) = &event {
             if is_key_down(&event, VirtualKeyCode::Escape) {
@@ -44,6 +76,7 @@ impl SimpleState for SpaceShooter {
         }
         Trans::None
     }
+
 
 }
 
@@ -59,7 +92,7 @@ impl SimpleState for PausedState {
        println!("exit paused state");
     }
 
-    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> Trans<GameData<'static, 'static>, StateEvent>  {
+    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans  {
         if let StateEvent::Window(event) = &event {
             if is_key_down(&event, VirtualKeyCode::Escape) {
                 return Trans::Pop;
