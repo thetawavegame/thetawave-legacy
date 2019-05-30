@@ -28,7 +28,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 ## Core Mechanics
 - [ ] player health and damage
 - [x] enemy pool
-- [ ] enemy variety
+- [x] enemy variety
 - [ ] enemy blasts
 - [ ] barrel roll invincibility
 ## Visual and Audio
