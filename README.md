@@ -15,6 +15,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - Space: fire blast
 - Left: barrel roll left
 - Right: barrel roll right
+- Escape: pause
 
 # Items
 
@@ -29,7 +30,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - [ ] player health and damage
 - [x] enemy pool
 - [x] enemy variety
-- [ ] enemy blasts
+- [x] enemy blasts
 - [ ] barrel roll invincibility
 ## Visual and Audio
 - [ ] player HUD (health bar, defence health bar, acceleration, velocity)
