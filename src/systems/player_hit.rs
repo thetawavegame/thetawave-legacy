@@ -27,14 +27,15 @@ impl<'s> System<'s> for PlayerHitSystem {
 
             for (blast_entity, blast, blast_transform) in (&*entities, &mut blasts, &transforms).join() {
 
-                let blast_x = blast_transform.translation().x;
-                let blast_y = blast_transform.translation().y;
+                if blast.allied {
+                    let blast_x = blast_transform.translation().x;
+                    let blast_y = blast_transform.translation().y;
 
-                if hitbox_collide(blast_x, blast_y, enemy_x, enemy_y, blast.hitbox_radius, blast.hitbox_radius, enemy.hitbox_width, enemy.hitbox_height) {
-                    let _result = entities.delete(blast_entity);
-                    enemy.health -= blast.damage;
+                    if hitbox_collide(blast_x, blast_y, enemy_x, enemy_y, blast.hitbox_radius, blast.hitbox_radius, enemy.hitbox_width, enemy.hitbox_height) {
+                        let _result = entities.delete(blast_entity);
+                        enemy.health -= blast.damage;
+                    }
                 }
-
             }
         }
     }

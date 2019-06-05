@@ -13,8 +13,8 @@ pub mod item_spawner;
 pub use self::{
     blast::{fire_blast},
     spaceship::initialise_spaceship,
-    enemy::{spawn_enemy, ENEMY_WIDTH},
-    enemy_spawner::initialise_enemy_spawner,
+    enemy::{spawn_enemy},
+    enemy_spawner::{initialise_enemy_spawner, ENEMY_WIDTH},
     explosion::{spawn_explosion},
     item_spawner::initialise_item_spawner,
     items::spawn_item,

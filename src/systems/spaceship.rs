@@ -91,7 +91,7 @@ impl<'s> System<'s> for SpaceshipSystem {
                     transform.translation()[0], transform.translation()[1] + spaceship.height / 2.0, 0.1,
                 );
 
-                fire_blast(&entities, &sprite_resource, 3, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, &lazy_update);
+                fire_blast(&entities, &sprite_resource, 3, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);
                 spaceship.fire_reset_timer = spaceship.fire_speed;
             }
 

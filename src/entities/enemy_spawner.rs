@@ -17,11 +17,12 @@ use std::{
 const ENEMY_HEIGHT: f32 = 18.0;
 pub const ENEMY_WIDTH: f32 = 18.0;
 const ENEMY_SPEED: f32 = 40.0;
-const ENEMY_FIRE_SPEED: f32 = 0.5;
+const ENEMY_FIRE_SPEED: f32 = 3.0;
 const ENEMY_HEALTH: f32 = 100.0;
 const ENEMY_HITBOX_WIDTH: f32 = 14.0;
 const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 const SPAWN_INTERVAL: f32 = 1.5;
+const ENEMY_FIRE_DELAY: f32 = 1.0;
 
 
 pub fn initialise_enemy_spawner(world: &mut World) {
@@ -41,6 +42,9 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_height: ENEMY_HITBOX_HEIGHT,
         barrel_damaged: false,
         sprite_index: 1,
+        fires: true,
+        fire_reset_timer: ENEMY_FIRE_DELAY,
+        blast_speed: -50.0,
     };
 
     let drone = Enemy {
@@ -53,6 +57,9 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_height: ENEMY_HITBOX_HEIGHT,
         barrel_damaged: false,
         sprite_index: 2,
+        fires: false,
+        fire_reset_timer: 0.0,
+        blast_speed: 0.0,
     };
 
     let mut enemies = HashMap::new();
