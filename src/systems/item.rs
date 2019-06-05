@@ -64,6 +64,10 @@ impl<'s> System<'s> for ItemSystem {
                     let _result = entities.delete(item_entity);
                 }else {
                     item_transform.translate_y(-1.0 * item.speed * time.delta_seconds());
+
+                    if item_transform.translation()[1] < 0.0 {
+                        let _result = entities.delete(item_entity);
+                    }
                 }
 
             }

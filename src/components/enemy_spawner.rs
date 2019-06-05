@@ -27,12 +27,15 @@ pub struct Enemy {
     pub width: f32,
     pub height: f32,
     pub speed: f32,
-    pub fire_speed: f32,
     pub health: f32,
     pub hitbox_width: f32,
     pub hitbox_height: f32,
     pub barrel_damaged: bool,
     pub sprite_index: usize,
+    pub fires: bool,
+    pub fire_speed: f32,
+    pub fire_reset_timer: f32,
+    pub blast_speed: f32,
 }
 
 impl Component for Enemy {

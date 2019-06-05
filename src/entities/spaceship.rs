@@ -65,6 +65,7 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetH
             barrel_damage: 0.0,
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
+            blast_speed: 100.0,
         })
         .with(local_transform)
         .with(Transparent)

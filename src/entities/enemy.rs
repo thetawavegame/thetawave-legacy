@@ -10,18 +10,10 @@ use amethyst::{
 use rand::seq::SliceRandom;
 
 use crate::{
-    components::{Enemy, EnemySpawner, EnemyPool},
+    components::{EnemyPool},
     resources::SpriteResource,
 };
 
-
-const ENEMY_HEIGHT: f32 = 18.0;
-pub const ENEMY_WIDTH: f32 = 18.0;
-const ENEMY_SPEED: f32 = 40.0;
-const ENEMY_FIRE_SPEED: f32 = 0.5;
-const ENEMY_HEALTH: f32 = 100.0;
-const ENEMY_HITBOX_WIDTH: f32 = 14.0;
-const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 
 pub fn spawn_enemy(entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, enemy_pool: &mut EnemyPool, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
     let enemy_entity: Entity = entities.create();

@@ -53,7 +53,7 @@ impl SimpleState for SpaceShooter {
 
         //world.register::<Spaceship>();
         //world.register::<Blast>();
-        world.register::<ItemSpawner>();
+        //world.register::<ItemSpawner>();
         println!("in spaceshooter state");
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);

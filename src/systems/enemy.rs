@@ -4,7 +4,7 @@ use amethyst::{
         timing::Time,
         nalgebra::Vector3,
     },
-    ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read, ReadExpect, LazyUpdate},
+    ecs::prelude::{Entities, Join, System, WriteStorage, Read, ReadExpect, LazyUpdate},
 };
 
 use crate::{
@@ -12,6 +12,7 @@ use crate::{
     entities::spawn_explosion,
     resources::SpriteResource,
 };
+use crate::entities::fire_blast;
 
 
 pub struct EnemySystem;
@@ -19,16 +20,36 @@ impl<'s> System<'s> for EnemySystem {
 
     type SystemData = (
         Entities<'s>,
-        ReadStorage<'s, Enemy>,
+        WriteStorage<'s, Enemy>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, enemys, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
-        for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &enemys, &mut transforms).join() {
+    fn run(&mut self, (entities, mut enemys, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
+        for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
+
             enemy_transform.translate_y(-1.0 * enemy_component.speed * time.delta_seconds());
+
+            //if the enemy can shoot
+            if enemy_component.fires {
+
+                //firing cooldown
+                if enemy_component.fire_reset_timer > 0.0 {
+                    enemy_component.fire_reset_timer -= time.delta_seconds();
+                }else {
+                    println!("enemy fire!");
+                    let fire_position = Vector3::new(
+                        enemy_transform.translation()[0], enemy_transform.translation()[1] - enemy_component.height / 2.0, 0.1,
+                    );
+
+                    fire_blast(&entities, &sprite_resource, 9, fire_position, 0.0, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
+                    //fire_blast(&entities, &sprite_resource, 9, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, true, &lazy_update);
+
+                    enemy_component.fire_reset_timer = enemy_component.fire_speed;
+                }
+            }
 
             if enemy_component.health < 0.0 {
 

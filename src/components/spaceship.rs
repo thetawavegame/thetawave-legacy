@@ -26,6 +26,7 @@ pub struct Spaceship {
     pub barrel_damage: f32,
     pub pos_x: f32,
     pub pos_y: f32,
+    pub blast_speed: f32,
 }
 
 impl Component for Spaceship {

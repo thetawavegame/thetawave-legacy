@@ -9,6 +9,7 @@ pub struct Blast {
     pub x_velocity: f32,
     pub y_velocity: f32,
     pub velocity_factor: f32,
+    pub allied: bool,
 }
 
 impl Component for Blast {
