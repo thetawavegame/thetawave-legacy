@@ -1,7 +1,7 @@
 # Space Shooter
 
 This game was made with the [amethyst](https://amethyst.rs/) engine. It is inspired by games like Raiden and The Binding of Isaac.
-
+![Alt text](https://giant.gfycat.com/CheeryGlaringAardwolf.gif)
 ![Alt Text](https://giant.gfycat.com/InsignificantFlimsyAegeancat.gif)
 
 # To Run
