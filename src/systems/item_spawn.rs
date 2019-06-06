@@ -15,6 +15,7 @@ use crate::{
     resources::SpriteResource,
     space_shooter::GAME_WIDTH,
 };
+use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X};
 
 
 pub struct ItemSpawnSystem;
@@ -36,9 +37,13 @@ impl<'s> System<'s> for ItemSpawnSystem {
             if spawner.spawn_timer > 0.0 {
                 spawner.spawn_timer -= time.delta_seconds();
             } else {
-                let max_width = GAME_WIDTH - ENEMY_WIDTH;
-                let min_width = ENEMY_WIDTH;
-                let new_x = ENEMY_WIDTH + thread_rng().gen::<f32>()* (max_width - min_width);
+                //let max_width = GAME_WIDTH - ENEMY_WIDTH;
+                //let min_width = ENEMY_WIDTH;
+                //let new_x = ENEMY_WIDTH + thread_rng().gen::<f32>()* (max_width - min_width);
+
+                let max_width = ARENA_MAX_X - ENEMY_WIDTH;
+                let min_width = ARENA_MIN_X + ENEMY_WIDTH;
+                let new_x = ARENA_MIN_X + ENEMY_WIDTH + thread_rng().gen::<f32>()* (max_width - min_width);
 
 
                 let spawn_position = Vector3::new(

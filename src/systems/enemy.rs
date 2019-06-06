@@ -13,6 +13,7 @@ use crate::{
     resources::SpriteResource,
 };
 use crate::entities::fire_blast;
+use crate::space_shooter::ARENA_MIN_Y;
 
 
 pub struct EnemySystem;
@@ -60,7 +61,7 @@ impl<'s> System<'s> for EnemySystem {
                 spawn_explosion(&entities, &sprite_resource, 4,explosion_position, &lazy_update);
             }
 
-            if enemy_transform.translation()[1] < 0.0 || enemy_component.health < 0.0 {
+            if enemy_transform.translation()[1] < ARENA_MIN_Y || enemy_component.health < 0.0 {
                 let _result = entities.delete(enemy_entity);
 
             }

@@ -11,12 +11,21 @@ use amethyst::{
 };
 
 use crate::systems;
-use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner};
-use crate::components::ItemSpawner;
+use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background};
+use crate::components::{ItemSpawner, SidePanel, Background};
 
+//GAME_HEIGHT and _WIDTH should be  half the resolution
+pub const GAME_WIDTH: f32 = 360.0;
+pub const GAME_HEIGHT: f32 = 270.0;
 
-pub const GAME_HEIGHT: f32 = 250.0;
-pub const GAME_WIDTH: f32 = 250.0;
+pub const ARENA_MIN_Y: f32 = 0.0;
+pub const ARENA_MAX_Y: f32 = GAME_HEIGHT - ARENA_MIN_Y;
+
+pub const ARENA_MIN_X: f32 = GAME_WIDTH / 8.0;
+pub const ARENA_MAX_X: f32 = GAME_WIDTH - ARENA_MIN_X;
+
+pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
+pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
 
 
 pub struct SpaceShooter {
@@ -48,13 +57,15 @@ impl SimpleState for SpaceShooter {
 
         let world = data.world;
         let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
+        let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
 
         self.dispatcher.setup(&mut world.res);
 
-        //world.register::<Spaceship>();
-        //world.register::<Blast>();
-        //world.register::<ItemSpawner>();
         println!("in spaceshooter state");
+        world.register::<SidePanel>();
+        world.register::<Background>();
+        initialise_side_panels(world);
+        initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
         initialise_enemy_spawner(world);

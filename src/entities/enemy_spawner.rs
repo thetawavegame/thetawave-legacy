@@ -13,6 +13,7 @@ use std::{
     collections::HashMap,
     vec::Vec,
 };
+use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
 
 const ENEMY_HEIGHT: f32 = 18.0;
 pub const ENEMY_WIDTH: f32 = 18.0;
@@ -44,7 +45,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         sprite_index: 1,
         fires: true,
         fire_reset_timer: ENEMY_FIRE_DELAY,
-        blast_speed: -50.0,
+        blast_speed: -60.0,
     };
 
     let drone = Enemy {
@@ -73,7 +74,8 @@ pub fn initialise_enemy_spawner(world: &mut World) {
 
     //create transform
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
+    //local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
+    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y, 0.0);
 
     world
         .create_entity()
