@@ -7,7 +7,7 @@ use amethyst::{
 
 use crate::{
     components::Spaceship,
-    space_shooter::{GAME_WIDTH, GAME_HEIGHT},
+    space_shooter::{GAME_WIDTH, GAME_HEIGHT, ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT},
 };
 
 
@@ -30,7 +30,8 @@ const SPACESHIP_BARREL_DURATION: f32 = 0.3;
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
 
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT / 6.0, 0.9);
+    //local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT / 6.0, 0.9);
+    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MIN_Y + (ARENA_HEIGHT / 6.0), 0.9);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),

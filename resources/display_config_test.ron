@@ -1,8 +1,8 @@
 (
   title: "space_shooter",
-  dimensions: Some((640, 480)),
-  max_dimensions: Some((640, 480)),
-  min_dimensions: Some((640, 480)),
+  dimensions: Some((960, 720)),
+  max_dimensions: Some((960, 720)),
+  min_dimensions: Some((960, 720)),
   fullscreen: false,
   multisampling: 0,
   visibility: true,

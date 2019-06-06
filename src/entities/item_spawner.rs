@@ -13,6 +13,7 @@ use std::{
     collections::HashMap,
     vec::Vec,
 };
+use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
 
 const ITEM_HEIGHT: f32 = 14.0;
 pub const ITEM_WIDTH: f32 = 14.0;
@@ -97,7 +98,8 @@ pub fn initialise_item_spawner(world: &mut World) {
     };
 
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
+    //local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
+    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y, 0.0);
 
     world
         .create_entity()

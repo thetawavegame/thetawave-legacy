@@ -10,6 +10,7 @@ use crate::{
     components::{Item, Spaceship},
     systems::hitbox_collide,
 };
+use crate::space_shooter::ARENA_MIN_Y;
 
 
 pub struct ItemSystem;
@@ -65,7 +66,7 @@ impl<'s> System<'s> for ItemSystem {
                 }else {
                     item_transform.translate_y(-1.0 * item.speed * time.delta_seconds());
 
-                    if item_transform.translation()[1] < 0.0 {
+                    if item_transform.translation()[1] < ARENA_MIN_Y {
                         let _result = entities.delete(item_entity);
                     }
                 }

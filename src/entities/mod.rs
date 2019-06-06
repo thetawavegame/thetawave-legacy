@@ -9,6 +9,8 @@ pub mod enemy_spawner;
 pub mod explosion;
 pub mod items;
 pub mod item_spawner;
+pub mod side_panel;
+pub mod background;
 
 pub use self::{
     blast::{fire_blast},
@@ -18,6 +20,8 @@ pub use self::{
     explosion::{spawn_explosion},
     item_spawner::initialise_item_spawner,
     items::spawn_item,
+    side_panel::initialise_side_panels,
+    background::initialise_background,
 };
 
 pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> SpriteResource {
