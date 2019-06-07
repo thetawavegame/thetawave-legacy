@@ -7,7 +7,7 @@ use amethyst::{
 
 use crate::{
     components::Spaceship,
-    space_shooter::{GAME_WIDTH, GAME_HEIGHT, ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT},
+    space_shooter::{ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT},
 };
 
 
@@ -25,6 +25,7 @@ const SPACESHIP_STARTING_DAMAGE: f32 = 40.0;
 const SPACESHIP_BARREL_COOLDOWN: f32 = 0.5;
 const SPACESHIP_BARREL_SPEED: f32 = 180.0;
 const SPACESHIP_BARREL_DURATION: f32 = 0.3;
+const SPACESHIP_HEALTH: f32 = 400.0;
 
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
@@ -67,6 +68,8 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetH
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
             blast_speed: 100.0,
+            max_health: SPACESHIP_HEALTH,
+            health: SPACESHIP_HEALTH,
         })
         .with(local_transform)
         .with(Transparent)

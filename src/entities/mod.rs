@@ -11,6 +11,8 @@ pub mod items;
 pub mod item_spawner;
 pub mod side_panel;
 pub mod background;
+pub mod health_bar;
+pub mod health_unit;
 
 pub use self::{
     blast::{fire_blast},
@@ -22,6 +24,8 @@ pub use self::{
     items::spawn_item,
     side_panel::initialise_side_panels,
     background::initialise_background,
+    health_bar::initialise_health_bar,
+    health_unit::spawn_health_unit,
 };
 
 pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> SpriteResource {

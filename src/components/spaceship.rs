@@ -27,6 +27,8 @@ pub struct Spaceship {
     pub pos_x: f32,
     pub pos_y: f32,
     pub blast_speed: f32,
+    pub max_health: f32,
+    pub health: f32,
 }
 
 impl Component for Spaceship {

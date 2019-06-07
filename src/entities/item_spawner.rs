@@ -6,7 +6,6 @@ use amethyst::{
 use crate::{
     components::ItemPool,
     components::{ItemSpawner, Item},
-    space_shooter::{GAME_WIDTH, GAME_HEIGHT},
 };
 
 use std::{

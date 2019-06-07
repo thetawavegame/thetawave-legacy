@@ -7,7 +7,6 @@ use amethyst::{
 };
 
 use crate::{
-    space_shooter::GAME_HEIGHT,
     components::Blast,
 };
 use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_Y, ARENA_MAX_X, ARENA_MIN_X};

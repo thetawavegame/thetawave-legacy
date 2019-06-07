@@ -6,7 +6,6 @@ use amethyst::{
 
 use crate::{
     components::{EnemySpawner, Enemy, EnemyPool},
-    space_shooter::{GAME_HEIGHT, GAME_WIDTH},
 };
 
 use std::{
@@ -46,6 +45,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         fires: true,
         fire_reset_timer: ENEMY_FIRE_DELAY,
         blast_speed: -60.0,
+        blast_damage: 20.0,
     };
 
     let drone = Enemy {
@@ -61,6 +61,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         fires: false,
         fire_reset_timer: 0.0,
         blast_speed: 0.0,
+        blast_damage: 0.0,
     };
 
     let mut enemies = HashMap::new();

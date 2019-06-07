@@ -13,7 +13,6 @@ use crate::{
     entities::{spawn_enemy, ENEMY_WIDTH},
     components::EnemySpawner,
     resources::SpriteResource,
-    space_shooter::GAME_WIDTH,
 };
 use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X};
 

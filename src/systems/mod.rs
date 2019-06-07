@@ -8,6 +8,8 @@ mod item;
 mod barrel_roll;
 mod spaceship_movement;
 mod item_spawn;
+mod enemy_hit;
+mod health_bar;
 
 pub use self::{
     blast::BlastSystem,
@@ -20,6 +22,8 @@ pub use self::{
     barrel_roll::BarrelRollSystem,
     spaceship_movement::SpaceshipMovementSystem,
     item_spawn::ItemSpawnSystem,
+    enemy_hit::EnemyHitSystem,
+    health_bar::HealthBarSystem,
 };
 
 
