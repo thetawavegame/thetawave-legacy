@@ -5,6 +5,8 @@ mod explosion;
 mod item_spawner;
 mod side_panel;
 mod background;
+mod health_bar;
+mod health_unit;
 
 pub use self::{
     blast::Blast,
@@ -14,4 +16,6 @@ pub use self::{
     item_spawner::{Item, ItemSpawner, ItemPool},
     side_panel::{SidePanel},
     background::{Background},
+    health_bar::{HealthBar},
+    health_unit::{HealthUnit},
 };

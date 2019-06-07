@@ -11,8 +11,8 @@ use amethyst::{
 };
 
 use crate::systems;
-use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background};
-use crate::components::{ItemSpawner, SidePanel, Background};
+use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_health_bar};
+use crate::components::{SidePanel, Background, HealthBar, HealthUnit};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution
 pub const GAME_WIDTH: f32 = 360.0;
@@ -41,11 +41,13 @@ impl Default for SpaceShooter {
                 .with(systems::EnemySystem, "enemy_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::PlayerHitSystem, "player_hit_system", &[])
+                .with(systems::EnemyHitSystem, "enemy_hit_system", &[])
                 .with(systems::ExplosionSystem, "explosion_system", &[])
                 .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::BarrelRollSystem, "barrel_roll_system", &[])
                 .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
+                .with(systems::HealthBarSystem, "health_bar_system", &[])
                 .build(),
         }
     }
@@ -63,8 +65,11 @@ impl SimpleState for SpaceShooter {
 
         println!("in spaceshooter state");
         world.register::<SidePanel>();
+        //world.register::<HealthBar>();
+        world.register::<HealthUnit>();
         world.register::<Background>();
         initialise_side_panels(world);
+        initialise_health_bar(world);
         initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
@@ -95,13 +100,16 @@ pub struct PausedState;
 
 impl SimpleState for PausedState {
 
+    /*
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         println!("paused state");
     }
 
+
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
        println!("exit paused state");
     }
+    */
 
     fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans  {
         if let StateEvent::Window(event) = &event {
@@ -140,7 +148,7 @@ fn load_spritesheet(world: &mut World, spritesheet: &str, spritesheet_ron: &str)
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
-    transform.set_z(1.0);
+    transform.set_z(10.0);
 
     world.create_entity().with(Camera::from(Projection::orthographic(
         0.0,

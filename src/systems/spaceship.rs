@@ -105,6 +105,10 @@ impl<'s> System<'s> for SpaceshipSystem {
                 spaceship.barrel_action_timer = spaceship.barrel_duration;
             }
 
+            if spaceship.health < 0.0 {
+                spaceship.health = 0.0;
+            }
+
         }
     }
 }

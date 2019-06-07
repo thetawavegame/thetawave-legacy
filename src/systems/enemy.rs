@@ -45,8 +45,7 @@ impl<'s> System<'s> for EnemySystem {
                         enemy_transform.translation()[0], enemy_transform.translation()[1] - enemy_component.height / 2.0, 0.1,
                     );
 
-                    fire_blast(&entities, &sprite_resource, 9, fire_position, 0.0, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
-                    //fire_blast(&entities, &sprite_resource, 9, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, true, &lazy_update);
+                    fire_blast(&entities, &sprite_resource, 9, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
 
                     enemy_component.fire_reset_timer = enemy_component.fire_speed;
                 }
