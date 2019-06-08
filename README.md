@@ -29,7 +29,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 # TODOS
 
 ## Core Mechanics
-- [ ] player health and damage
+- [x] player health and damage
 - [x] enemy pool
 - [x] enemy variety
 - [x] enemy blasts
