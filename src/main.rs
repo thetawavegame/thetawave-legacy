@@ -24,7 +24,7 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let path = format!(
-        "{}/resources/display_config_test.ron",
+        "{}/resources/display_config_960.ron",
         application_root_dir()
     );
 

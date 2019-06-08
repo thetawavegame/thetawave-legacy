@@ -13,6 +13,8 @@ pub mod side_panel;
 pub mod background;
 pub mod health_bar;
 pub mod health_unit;
+pub mod defense_bar;
+pub mod defense_unit;
 
 pub use self::{
     blast::{fire_blast},
@@ -26,6 +28,8 @@ pub use self::{
     background::initialise_background,
     health_bar::initialise_health_bar,
     health_unit::spawn_health_unit,
+    defense_bar::initialise_defense_bar,
+    defense_unit::spawn_defense_unit,
 };
 
 pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> SpriteResource {

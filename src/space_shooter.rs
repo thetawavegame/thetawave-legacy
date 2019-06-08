@@ -11,8 +11,8 @@ use amethyst::{
 };
 
 use crate::systems;
-use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_health_bar};
-use crate::components::{SidePanel, Background, HealthBar, HealthUnit};
+use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_health_bar, initialise_defense_bar};
+use crate::components::{Background};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution
 pub const GAME_WIDTH: f32 = 360.0;
@@ -48,6 +48,7 @@ impl Default for SpaceShooter {
                 .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::HealthBarSystem, "health_bar_system", &[])
+                .with(systems::DefenseBarSystem, "defense_bar_system", &[])
                 .build(),
         }
     }
@@ -58,17 +59,14 @@ impl SimpleState for SpaceShooter {
 
 
         let world = data.world;
-        let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
+        let sprite_sheet_handle = load_spritesheet(world, "spritesheet_1.png", "spritesheet.ron");
         let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
 
         self.dispatcher.setup(&mut world.res);
 
-        println!("in spaceshooter state");
-        world.register::<SidePanel>();
-        //world.register::<HealthBar>();
-        world.register::<HealthUnit>();
         world.register::<Background>();
         initialise_side_panels(world);
+        initialise_defense_bar(world);
         initialise_health_bar(world);
         initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, sprite_sheet_handle.clone());
