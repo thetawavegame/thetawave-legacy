@@ -1,9 +1,8 @@
 use amethyst::{
     core::{
-        timing::Time,
         nalgebra::Vector3,
     },
-    ecs::prelude::{Entities, Join, System, WriteStorage, ReadStorage, Read, ReadExpect, LazyUpdate},
+    ecs::prelude::{Entities, Join, System, WriteStorage, ReadStorage, ReadExpect, LazyUpdate},
 };
 
 use crate::{
@@ -26,15 +25,14 @@ impl<'s> System<'s> for HealthBarSystem {
     );
 
     fn run(&mut self, (entities, mut health_bars, spaceships, sprite_resource, lazy_update): Self::SystemData) {
-        for (health_bar) in (&mut health_bars).join() {
+        for health_bar in (&mut health_bars).join() {
 
-            for (spaceship) in (&spaceships).join() {
+            for spaceship in (&spaceships).join() {
                 let health_divisor = spaceship.max_health/63.0;
                 let mut health_unit_num = ((spaceship.health) / health_divisor).ceil() as usize;
                 if spaceship.health <= 0.0 {
                     health_unit_num = 0;
                 }
-                println!("health units: {}", health_unit_num);
 
                 //push units on
                 if health_unit_num > health_bar.health_stack.len() {

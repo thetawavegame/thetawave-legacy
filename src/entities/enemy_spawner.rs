@@ -23,6 +23,7 @@ const ENEMY_HITBOX_WIDTH: f32 = 14.0;
 const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 const SPAWN_INTERVAL: f32 = 1.5;
 const ENEMY_FIRE_DELAY: f32 = 1.0;
+const ENEMY_DEFENSE_DAMAGE: f32 = 50.0;
 
 
 pub fn initialise_enemy_spawner(world: &mut World) {
@@ -46,6 +47,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         fire_reset_timer: ENEMY_FIRE_DELAY,
         blast_speed: -60.0,
         blast_damage: 20.0,
+        defense_damage: ENEMY_DEFENSE_DAMAGE,
     };
 
     let drone = Enemy {
@@ -62,6 +64,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         fire_reset_timer: 0.0,
         blast_speed: 0.0,
         blast_damage: 0.0,
+        defense_damage: ENEMY_DEFENSE_DAMAGE - 20.0,
     };
 
     let mut enemies = HashMap::new();

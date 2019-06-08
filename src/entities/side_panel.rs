@@ -3,18 +3,17 @@ use amethyst::{
     ecs::prelude::World,
     core::transform::Transform,
     renderer::{PngFormat, Texture, TextureMetadata, ScreenDimensions},
-    ui::{UiImage, UiTransform, Anchor},
     assets::{AssetStorage, Loader},
 };
 
 use crate::{
-    components::SidePanel,
+    space_shooter::{ARENA_MAX_X, ARENA_HEIGHT}
 };
 
 
 pub fn initialise_side_panels(world: &mut World) {
 
-    let image = {
+    let image_left = {
         let loader = world.read_resource::<Loader>();
         let side_panel_image = loader.load(
             "texture/side_panel_metal.png",
@@ -45,25 +44,21 @@ pub fn initialise_side_panels(world: &mut World) {
     println!("screen width: {} screen height: {}", screen_width, screen_height);
 
 
-    let local_transform_left = UiTransform::new("Left".to_string(), Anchor::TopLeft, ((screen_width/8.0)/2.0), (screen_height/2.0), 0.0,screen_width/8.0, screen_height, 0);
-    let local_transform_right = UiTransform::new("Right".to_string(), Anchor::TopRight, (screen_width-((screen_width/8.0)/2.0)), (screen_height/2.0), 0.0,screen_width/8.0, screen_height, 0);
+    let mut local_transform_left = Transform::default();
+    local_transform_left.set_xyz((45.0/2.0)- 1.0, (ARENA_HEIGHT/2.0) - 1.0, 9.0);
 
+    let mut local_transform_right = Transform::default();
+    local_transform_right.set_xyz(ARENA_MAX_X + (45.0/2.0)- 1.0, (ARENA_HEIGHT/2.0) - 1.0, 9.0);
 
     world
         .create_entity()
         .with(local_transform_left)
-        .with(UiImage {
-            texture: image.clone(),
-        })
-        .with(SidePanel{})
+        .with(image_left)
         .build();
 
     world
         .create_entity()
         .with(local_transform_right)
-        .with(UiImage {
-            texture: image_right.clone(),
-        })
-        .with(SidePanel{})
+        .with(image_right)
         .build();
 }

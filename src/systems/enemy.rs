@@ -8,7 +8,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::Enemy,
+    components::{Enemy, DefenseBar},
     entities::spawn_explosion,
     resources::SpriteResource,
 };
@@ -22,13 +22,14 @@ impl<'s> System<'s> for EnemySystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Enemy>,
+        WriteStorage<'s, DefenseBar>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut enemys, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
+    fn run(&mut self, (entities, mut enemys, mut defense_bars, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
 
             enemy_transform.translate_y(-1.0 * enemy_component.speed * time.delta_seconds());
@@ -61,6 +62,12 @@ impl<'s> System<'s> for EnemySystem {
             }
 
             if enemy_transform.translation()[1] < ARENA_MIN_Y || enemy_component.health < 0.0 {
+                if enemy_transform.translation()[1] < ARENA_MIN_Y {
+                    for defense_bar in (&mut defense_bars).join() {
+                        defense_bar.defense -= enemy_component.defense_damage;
+                    }
+
+                }
                 let _result = entities.delete(enemy_entity);
 
             }

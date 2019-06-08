@@ -3,10 +3,9 @@ mod spaceship;
 mod enemy_spawner;
 mod explosion;
 mod item_spawner;
-mod side_panel;
 mod background;
 mod health_bar;
-mod health_unit;
+mod defense_bar;
 
 pub use self::{
     blast::Blast,
@@ -14,8 +13,7 @@ pub use self::{
     enemy_spawner::{Enemy, EnemySpawner, EnemyPool},
     explosion::Explosion,
     item_spawner::{Item, ItemSpawner, ItemPool},
-    side_panel::{SidePanel},
     background::{Background},
     health_bar::{HealthBar},
-    health_unit::{HealthUnit},
+    defense_bar::{DefenseBar},
 };

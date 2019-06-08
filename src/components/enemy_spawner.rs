@@ -37,6 +37,7 @@ pub struct Enemy {
     pub fire_reset_timer: f32,
     pub blast_speed: f32,
     pub blast_damage: f32,
+    pub defense_damage: f32,
 }
 
 impl Component for Enemy {
