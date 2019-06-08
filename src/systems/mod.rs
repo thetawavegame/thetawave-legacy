@@ -11,6 +11,7 @@ mod item_spawn;
 mod enemy_hit;
 mod health_bar;
 mod defense_bar;
+mod spaceship_enemy_collision;
 
 pub use self::{
     blast::BlastSystem,
@@ -26,6 +27,7 @@ pub use self::{
     enemy_hit::EnemyHitSystem,
     health_bar::HealthBarSystem,
     defense_bar::DefenseBarSystem,
+    spaceship_enemy_collision::SpaceshipEnemyCollisionSystem,
 };
 
 

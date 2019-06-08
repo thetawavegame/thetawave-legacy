@@ -32,6 +32,19 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
             let spaceship_x = transform.translation().x;
             let spaceship_y = transform.translation().y;
 
+            if spaceship.current_velocity_x > spaceship.knockback_max_speed {
+                spaceship.current_velocity_x = spaceship.knockback_max_speed;
+            }
+            if spaceship.current_velocity_x < ((-1.0)*spaceship.knockback_max_speed) {
+                spaceship.current_velocity_x = (-1.0)*spaceship.knockback_max_speed;
+            }
+            if spaceship.current_velocity_y > spaceship.knockback_max_speed {
+                spaceship.current_velocity_y = spaceship.knockback_max_speed;
+            }
+            if spaceship.current_velocity_y < ((-1.0)*spaceship.knockback_max_speed) {
+                spaceship.current_velocity_y = (-1.0)*spaceship.knockback_max_speed;
+            }
+
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {
 

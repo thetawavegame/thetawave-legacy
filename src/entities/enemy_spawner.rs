@@ -16,7 +16,6 @@ use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
 
 const ENEMY_HEIGHT: f32 = 18.0;
 pub const ENEMY_WIDTH: f32 = 18.0;
-const ENEMY_SPEED: f32 = 40.0;
 const ENEMY_FIRE_SPEED: f32 = 3.0;
 const ENEMY_HEALTH: f32 = 100.0;
 const ENEMY_HITBOX_WIDTH: f32 = 14.0;
@@ -24,6 +23,13 @@ const ENEMY_HITBOX_HEIGHT: f32 = 14.0;
 const SPAWN_INTERVAL: f32 = 1.5;
 const ENEMY_FIRE_DELAY: f32 = 1.0;
 const ENEMY_DEFENSE_DAMAGE: f32 = 50.0;
+const ENEMY_MAX_SPEED: f32 = 40.0;
+const ENEMY_ACCELERATION_X: f32 = 2.0;
+const ENEMY_DECELERATION_X: f32 = 1.0;
+const ENEMY_ACCELERATION_Y: f32 = 4.0;
+const ENEMY_DECELERATION_Y: f32 = 1.0;
+const ENEMY_MAX_KNOCKBACK_SPEED: f32 = 100.0;
+const ENEMY_COLLISION_DAMAGE: f32 = 30.0;
 
 
 pub fn initialise_enemy_spawner(world: &mut World) {
@@ -36,7 +42,6 @@ pub fn initialise_enemy_spawner(world: &mut World) {
     let pawn = Enemy {
         width: ENEMY_WIDTH,
         height: ENEMY_HEIGHT,
-        speed: ENEMY_SPEED - 10.0,
         fire_speed: ENEMY_FIRE_SPEED,
         health: ENEMY_HEALTH,
         hitbox_width: ENEMY_HITBOX_WIDTH,
@@ -48,12 +53,20 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         blast_speed: -60.0,
         blast_damage: 20.0,
         defense_damage: ENEMY_DEFENSE_DAMAGE,
+        max_speed: ENEMY_MAX_SPEED - 10.0,
+        current_velocity_x: 0.0,
+        current_velocity_y: (-1.0)*(ENEMY_MAX_SPEED- 10.0),
+        acceleration_x: ENEMY_ACCELERATION_X,
+        deceleration_x: ENEMY_DECELERATION_X,
+        acceleration_y: ENEMY_ACCELERATION_Y,
+        deceleration_y: ENEMY_DECELERATION_Y,
+        knockback_max_speed: ENEMY_MAX_KNOCKBACK_SPEED,
+        collision_damage: ENEMY_COLLISION_DAMAGE,
     };
 
     let drone = Enemy {
         width: ENEMY_WIDTH,
         height: ENEMY_HEIGHT,
-        speed: ENEMY_SPEED,
         fire_speed: ENEMY_FIRE_SPEED,
         health: ENEMY_HEALTH - 50.0,
         hitbox_width: ENEMY_HITBOX_WIDTH,
@@ -65,6 +78,15 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         blast_speed: 0.0,
         blast_damage: 0.0,
         defense_damage: ENEMY_DEFENSE_DAMAGE - 20.0,
+        max_speed: ENEMY_MAX_SPEED,
+        current_velocity_x: 0.0,
+        current_velocity_y: (-1.0)*ENEMY_MAX_SPEED,
+        acceleration_x: ENEMY_ACCELERATION_X,
+        deceleration_x: ENEMY_DECELERATION_X,
+        acceleration_y: ENEMY_ACCELERATION_Y,
+        deceleration_y: ENEMY_DECELERATION_Y,
+        knockback_max_speed: ENEMY_MAX_KNOCKBACK_SPEED,
+        collision_damage: ENEMY_COLLISION_DAMAGE,
     };
 
     let mut enemies = HashMap::new();
