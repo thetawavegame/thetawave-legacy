@@ -23,12 +23,14 @@ pub struct Spaceship {
     pub barrel_action_right: bool,
     pub barrel_duration: f32,
     pub barrel_action_timer: f32,
-    pub barrel_damage: f32,
     pub pos_x: f32,
     pub pos_y: f32,
     pub blast_speed: f32,
     pub max_health: f32,
     pub health: f32,
+    pub knockback_max_speed: f32,
+    pub steel_barrel: bool,
+    pub collision_damage: f32,
 }
 
 impl Component for Spaceship {

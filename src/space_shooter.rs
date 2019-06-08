@@ -49,6 +49,7 @@ impl Default for SpaceShooter {
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::HealthBarSystem, "health_bar_system", &[])
                 .with(systems::DefenseBarSystem, "defense_bar_system", &[])
+                .with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
                 .build(),
         }
     }

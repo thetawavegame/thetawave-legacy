@@ -20,12 +20,14 @@ const SPACESHIP_DECELERATION_X: f32 = 1.0;
 const SPACESHIP_ACCELERATION_Y: f32 = 4.0;
 const SPACESHIP_DECELERATION_Y: f32 = 1.0;
 const SPACESHIP_MAX_SPEED: f32 = 70.0;
+const SPACESHIP_MAX_KNOCKBACK_SPEED: f32 = 100.0;
 const SPACESHIP_STARTING_FIRE_SPEED: f32 = 0.3;
 const SPACESHIP_STARTING_DAMAGE: f32 = 40.0;
 const SPACESHIP_BARREL_COOLDOWN: f32 = 0.5;
 const SPACESHIP_BARREL_SPEED: f32 = 180.0;
 const SPACESHIP_BARREL_DURATION: f32 = 0.3;
 const SPACESHIP_HEALTH: f32 = 400.0;
+const SPACESHIP_COLLISION_DAMAGE: f32 = 50.0;
 
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
@@ -64,12 +66,14 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetH
             barrel_action_left: false,
             barrel_duration: SPACESHIP_BARREL_DURATION,
             barrel_action_timer: SPACESHIP_BARREL_DURATION,
-            barrel_damage: 0.0,
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
             blast_speed: 100.0,
             max_health: SPACESHIP_HEALTH,
             health: SPACESHIP_HEALTH,
+            knockback_max_speed: SPACESHIP_MAX_KNOCKBACK_SPEED,
+            steel_barrel: false,
+            collision_damage: SPACESHIP_COLLISION_DAMAGE,
         })
         .with(local_transform)
         .with(Transparent)

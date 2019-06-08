@@ -37,7 +37,7 @@ impl<'s> System<'s> for ItemSystem {
 
                     //add stats to spaceship
                     if item.stat_effects.contains_key("barrel_damage") {
-                        spaceship.barrel_damage += item.stat_effects["barrel_damage"];
+                        spaceship.steel_barrel = true;
                     }
 
                     if item.stat_effects.contains_key("fire_speed") {

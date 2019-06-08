@@ -32,7 +32,56 @@ impl<'s> System<'s> for EnemySystem {
     fn run(&mut self, (entities, mut enemys, mut defense_bars, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
 
-            enemy_transform.translate_y(-1.0 * enemy_component.speed * time.delta_seconds());
+            let enemy_x = enemy_transform.translation().x;
+            let enemy_y = enemy_transform.translation().y;
+
+            if enemy_component.current_velocity_x > enemy_component.knockback_max_speed {
+                enemy_component.current_velocity_x = enemy_component.knockback_max_speed;
+            }
+            if enemy_component.current_velocity_x < ((-1.0)*enemy_component.knockback_max_speed) {
+                enemy_component.current_velocity_x = (-1.0)*enemy_component.knockback_max_speed;
+            }
+            if enemy_component.current_velocity_y > enemy_component.knockback_max_speed {
+                enemy_component.current_velocity_y = enemy_component.knockback_max_speed;
+            }
+            if enemy_component.current_velocity_y < ((-1.0)*enemy_component.knockback_max_speed) {
+                enemy_component.current_velocity_y = (-1.0)*enemy_component.knockback_max_speed;
+            }
+
+            if enemy_component.current_velocity_y > enemy_component.max_speed {
+                enemy_component.current_velocity_y -= enemy_component.deceleration_y;
+            }
+            if enemy_component.current_velocity_y < ((-1.0)*enemy_component.max_speed) {
+                enemy_component.current_velocity_y += enemy_component.deceleration_y;
+            }
+
+            //if there is movement in the x direction
+            if enemy_component.current_velocity_x > 0.0 {
+                if enemy_component.current_velocity_y < 0.0 {
+                    enemy_component.current_velocity_y += enemy_component.deceleration_y;
+                }
+                enemy_component.current_velocity_x -= enemy_component.deceleration_x;
+            }else if enemy_component.current_velocity_x < 0.0 {
+                if enemy_component.current_velocity_y < 0.0 {
+                    enemy_component.current_velocity_y += enemy_component.deceleration_y;
+                }
+                enemy_component.current_velocity_x += enemy_component.deceleration_x;
+            }
+
+            //move in the -y direction
+            /*
+            if enemy_component.current_velocity_y > (-1.0 * enemy_component.max_speed) && (enemy_component.current_velocity_x == 0.0) {
+                enemy_component.current_velocity_y -= enemy_component.acceleration_y;
+            }
+            */
+
+            if enemy_component.current_velocity_y > (-1.0 * enemy_component.max_speed) {
+                enemy_component.current_velocity_y -= enemy_component.acceleration_y;
+            }
+
+            //transform the spaceship in x and y by the currrent velocity in x and y
+            enemy_transform.set_x(enemy_x + (enemy_component.current_velocity_x) * time.delta_seconds());
+            enemy_transform.set_y(enemy_y + (enemy_component.current_velocity_y) * time.delta_seconds());
 
             //if the enemy can shoot
             if enemy_component.fires {

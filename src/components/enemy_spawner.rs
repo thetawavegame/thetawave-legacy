@@ -26,7 +26,6 @@ impl Component for EnemySpawner {
 pub struct Enemy {
     pub width: f32,
     pub height: f32,
-    pub speed: f32,
     pub health: f32,
     pub hitbox_width: f32,
     pub hitbox_height: f32,
@@ -38,6 +37,17 @@ pub struct Enemy {
     pub blast_speed: f32,
     pub blast_damage: f32,
     pub defense_damage: f32,
+    pub max_speed: f32,
+    pub current_velocity_x: f32,
+    pub current_velocity_y: f32,
+    pub acceleration_x: f32,
+    pub acceleration_y: f32,
+    pub deceleration_x: f32,
+    pub deceleration_y: f32,
+    pub knockback_max_speed: f32,
+    pub collision_damage: f32,
+
+
 }
 
 impl Component for Enemy {
