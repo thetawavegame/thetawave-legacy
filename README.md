@@ -2,7 +2,7 @@
 
 This game was made with the [amethyst](https://amethyst.rs/) engine. It is inspired by games like Raiden and The Binding of Isaac.
 
-![Alt text](https://giant.gfycat.com/CheeryGlaringAardwolf.gif)
+![Alt text](https://giant.gfycat.com/WateryAbsoluteCardinal.gif)
 
 # To Run
 
@@ -21,7 +21,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 
 # Items
 
-- Steel Barrel: damages enemies when you barrel roll through them
+- Steel Barrel: gives player collision damage immunity while barrel rolling
 - Plasma Blast: increases fire rate and damage
 - Hazardous Reactor: increases maximum speed
 - Warp Thruster: increases acceleration and deceleration
@@ -33,9 +33,12 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - [x] enemy pool
 - [x] enemy variety
 - [x] enemy blasts
-- [ ] barrel roll invincibility
+- [ ] barrel roll blast immunity
+- [x] collisions
 ## Visual and Audio
-- [ ] player HUD (health bar, defence health bar, acceleration, velocity)
+- [x] health bar
+- [x] defense bar
+- [ ] barrel roll cooldown bar
 - [ ] pause menu
 - [ ] display resolutions options
 - [ ] player movement animation
