@@ -74,5 +74,11 @@
             width: 4,
             height: 1,
         ),
+        (
+            x: 64,
+            y: 90,
+            width: 1,
+            height: 4,
+        ),
     ],
 )

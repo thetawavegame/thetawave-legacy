@@ -1,6 +1,6 @@
 use amethyst::{
     ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent, Flipped},
+    renderer::{SpriteRender, Transparent, Flipped, },
     core::{
         transform::Transform,
         nalgebra::Vector3,

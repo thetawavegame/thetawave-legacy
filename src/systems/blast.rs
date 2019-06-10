@@ -25,8 +25,12 @@ impl<'s> System<'s> for BlastSystem {
     fn run(&mut self, (entities, blasts, mut transforms, time): Self::SystemData) {
         for (blast_entity, blast_component, blast_transform) in (&*entities, &blasts, &mut transforms).join() {
 
-            if blast_transform.translation()[1] > ARENA_MAX_Y || blast_transform.translation()[1] < ARENA_MIN_Y || blast_transform.translation()[0] > ARENA_MAX_X || blast_transform.translation()[0] < ARENA_MIN_X {
-                let _result = entities.delete(blast_entity);
+            if  (blast_transform.translation()[1] - (blast_component.hitbox_radius/2.0)) > ARENA_MAX_Y ||
+                (blast_transform.translation()[1] + (blast_component.hitbox_radius/2.0)) < ARENA_MIN_Y ||
+                (blast_transform.translation()[0] - (blast_component.hitbox_radius/2.0)) > ARENA_MAX_X ||
+                (blast_transform.translation()[0] + (blast_component.hitbox_radius/2.0)) < ARENA_MIN_X
+            {
+                entities.delete(blast_entity);
             }
 
             blast_transform.translate_x(blast_component.x_velocity * blast_component.velocity_factor * time.delta_seconds());

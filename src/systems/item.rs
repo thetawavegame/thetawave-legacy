@@ -36,7 +36,7 @@ impl<'s> System<'s> for ItemSystem {
 
 
                     //add stats to spaceship
-                    if item.stat_effects.contains_key("barrel_damage") {
+                    if item.stat_effects.contains_key("barrel_immunity") {
                         spaceship.steel_barrel = true;
                     }
 

@@ -37,7 +37,7 @@ impl<'s> System<'s> for HealthBarSystem {
                 //push units on
                 if health_unit_num > health_bar.health_stack.len() {
                     let health_position = Vector3::new(
-                        health_bar.x_pos, health_bar.y_pos, 9.9,
+                        health_bar.x_pos, health_bar.y_pos, 0.9,
                     );
                     health_bar.y_pos += 1.0;
                     health_bar.health_stack.push(spawn_health_unit(&entities, &sprite_resource, 10, health_position, &lazy_update));

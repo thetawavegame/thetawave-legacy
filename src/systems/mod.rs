@@ -5,13 +5,14 @@ mod enemy_spawn;
 mod player_hit;
 mod explosion;
 mod item;
-mod barrel_roll;
 mod spaceship_movement;
 mod item_spawn;
 mod enemy_hit;
 mod health_bar;
 mod defense_bar;
+mod roll_bar;
 mod spaceship_enemy_collision;
+
 
 pub use self::{
     blast::BlastSystem,
@@ -21,12 +22,12 @@ pub use self::{
     player_hit::PlayerHitSystem,
     explosion::ExplosionSystem,
     item::ItemSystem,
-    barrel_roll::BarrelRollSystem,
     spaceship_movement::SpaceshipMovementSystem,
     item_spawn::ItemSpawnSystem,
     enemy_hit::EnemyHitSystem,
     health_bar::HealthBarSystem,
     defense_bar::DefenseBarSystem,
+    roll_bar::RollBarSystem,
     spaceship_enemy_collision::SpaceshipEnemyCollisionSystem,
 };
 
