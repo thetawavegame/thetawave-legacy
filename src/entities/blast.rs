@@ -13,7 +13,6 @@ use crate::{
 };
 
 
-//const BLAST_STARTING_SPEED: f32 = 100.0;
 const BLAST_HITBOX_RADIUS: f32 = 2.0;
 const BLAST_VELOCITY_FACTOR: f32 = 0.5;
 

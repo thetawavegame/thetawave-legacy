@@ -12,15 +12,22 @@ use std::{
     collections::HashMap,
     vec::Vec,
 };
+
 use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
+
 
 const ITEM_HEIGHT: f32 = 14.0;
 pub const ITEM_WIDTH: f32 = 14.0;
 const ITEM_HITBOX_WIDTH: f32 = 4.0;
 const ITEM_HITBOX_HEIGHT: f32 = 4.0;
 const ITEM_SPEED: f32 = 70.0;
-
 const SPAWN_INTERVAL: f32 = 10.0;
+
+const STEEL_BARREL_SPRITE_INDEX: usize = 5;
+const PLASMA_BLASTS_SPRITE_INDEX: usize = 6;
+const HAZARDOUS_REACTOR_SPRITE_INDEX: usize = 7;
+const WARP_THRUSTER_SPRITE_INDEX: usize = 8;
+
 
 pub fn initialise_item_spawner(world: &mut World) {
 
@@ -32,7 +39,7 @@ pub fn initialise_item_spawner(world: &mut World) {
     ];
 
     let mut steel_barrel_stat_effects = HashMap::new();
-    steel_barrel_stat_effects.insert("barrel_damage".to_string(), 60.0);
+    steel_barrel_stat_effects.insert("barrel_immunity".to_string(), 1.0);
 
     let steel_barrel = Item {
         width: ITEM_WIDTH,
@@ -40,7 +47,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: steel_barrel_stat_effects,
-        sprite_index: 5,
+        sprite_index: STEEL_BARREL_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };
 
@@ -54,7 +61,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: plasma_blasts_stat_effects,
-        sprite_index: 6,
+        sprite_index: PLASMA_BLASTS_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };
 
@@ -67,7 +74,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: hazardous_reactor_stat_effects,
-        sprite_index: 7,
+        sprite_index: HAZARDOUS_REACTOR_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };
 
@@ -81,7 +88,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: warp_thruster_stat_effects,
-        sprite_index: 8,
+        sprite_index: WARP_THRUSTER_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };
 
@@ -97,7 +104,6 @@ pub fn initialise_item_spawner(world: &mut World) {
     };
 
     let mut local_transform = Transform::default();
-    //local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
     local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y, 0.0);
 
     world

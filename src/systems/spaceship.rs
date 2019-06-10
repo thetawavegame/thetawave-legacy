@@ -88,7 +88,7 @@ impl<'s> System<'s> for SpaceshipSystem {
 
             if shoot && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
                 let fire_position = Vector3::new(
-                    transform.translation()[0], transform.translation()[1] + spaceship.height / 2.0, 0.1,
+                    transform.translation()[0], transform.translation()[1] + spaceship.height / 2.0, 0.8,
                 );
 
                 fire_blast(&entities, &sprite_resource, 3, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);

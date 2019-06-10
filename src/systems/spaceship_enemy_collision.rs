@@ -30,9 +30,8 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                 if spaceship.barrel_action_left {
                     spaceship.barrel_action_right = true;
                     spaceship.barrel_action_left = false;
-                }else {
-                    spaceship.current_velocity_x = spaceship.current_velocity_x.abs();
                 }
+                spaceship.current_velocity_x = spaceship.current_velocity_x.abs();
             }else if (spaceship_x + (spaceship.width/2.0)) > ARENA_MAX_X {
                 if spaceship.barrel_action_right {
                     spaceship.barrel_action_left = true;
@@ -56,44 +55,38 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                 }
 
                 if hitbox_collide(enemy_x, enemy_y, spaceship_x, spaceship_y, enemy.hitbox_width, enemy.hitbox_height, spaceship.hitbox_width, spaceship.hitbox_height) {
+                    let mut enemy_dead = false;
+                    if enemy.health <= 0.0 {
+                        enemy_dead = true;
+                    }
 
                     enemy.health -= spaceship.collision_damage;
 
                     if spaceship.barrel_action_left {
-
-                        if !spaceship.steel_barrel {
-                            spaceship.health -= enemy.collision_damage;
-                        }
-
                         spaceship.barrel_action_right = true;
                         spaceship.barrel_action_left = false;
 
-
-
-                        let temp_velocity_y = spaceship.current_velocity_y;
-                        spaceship.current_velocity_y += enemy.current_velocity_y;
-
-                        enemy.current_velocity_x = (-(1.0) * enemy.current_velocity_x) - spaceship.barrel_speed;
-                        enemy.current_velocity_y += temp_velocity_y;
-
-
                     }else if spaceship.barrel_action_right {
-
-                        if !spaceship.steel_barrel {
-                            spaceship.health -= enemy.collision_damage;
-                        }
-
                         spaceship.barrel_action_left = true;
                         spaceship.barrel_action_right = false;
 
-                        let temp_velocity_y = spaceship.current_velocity_y;
-                        spaceship.current_velocity_y += enemy.current_velocity_y;
+                    }
 
-                        enemy.current_velocity_x = (-(1.0) * enemy.current_velocity_x) + spaceship.barrel_speed;
-                        enemy.current_velocity_y += temp_velocity_y;
-
-                    }else {
+                    if !spaceship.steel_barrel && !enemy_dead {
                         spaceship.health -= enemy.collision_damage;
+                    }else if !spaceship.barrel_action_left && !spaceship.barrel_action_right && !enemy_dead {
+                        spaceship.health -= enemy.collision_damage;
+                    }
+
+                    let temp_velocity_x = spaceship.current_velocity_x;
+                    spaceship.current_velocity_x = ((-(1.0) * spaceship.current_velocity_x) + enemy.current_velocity_x);
+                    enemy.current_velocity_x = ((-(1.0) * enemy.current_velocity_x) + temp_velocity_x);
+
+                    let temp_velocity_y = spaceship.current_velocity_y;
+                    spaceship.current_velocity_y = ((-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y);
+                    enemy.current_velocity_y = ((-(1.0) * enemy.current_velocity_y) + temp_velocity_y);
+                    /*
+                    if enemy.health > 0.0 {
                         let temp_velocity_x = spaceship.current_velocity_x;
                         spaceship.current_velocity_x = ((-(1.0) * spaceship.current_velocity_x) + enemy.current_velocity_x);
                         enemy.current_velocity_x = ((-(1.0) * enemy.current_velocity_x) + temp_velocity_x);
@@ -101,21 +94,11 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                         let temp_velocity_y = spaceship.current_velocity_y;
                         spaceship.current_velocity_y = ((-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y);
                         enemy.current_velocity_y = ((-(1.0) * enemy.current_velocity_y) + temp_velocity_y);
+                    }else{
+                        spaceship.current_velocity_x += enemy.current_velocity_x/2.0;
+                        spaceship.current_velocity_y += enemy.current_velocity_y/2.0;
                     }
-
-                    println!("spaceship height: {}", (spaceship_y + (spaceship.hitbox_height/2.0)));
-                    println!("enemy height: {}", (enemy_y));
-                    if (spaceship_y + (spaceship.hitbox_height/2.0)) <= (enemy_y) {
-                        if enemy.current_velocity_y < 100.0 {
-                            enemy.current_velocity_y = 100.0;
-                        }
-                    }
-
-                    if (spaceship_y - (spaceship.hitbox_height/2.0)) >= (enemy_y) {
-                        if enemy.current_velocity_y < -100.0 {
-                            enemy.current_velocity_y = -100.0;
-                        }
-                    }
+                    */
                 }
             }
         }

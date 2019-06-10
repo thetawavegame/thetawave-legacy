@@ -35,6 +35,7 @@ impl<'s> System<'s> for EnemySystem {
             let enemy_x = enemy_transform.translation().x;
             let enemy_y = enemy_transform.translation().y;
 
+            //if current velocity is greater than the maximum knockback speed immediately set speed to the maximum knockback speed
             if enemy_component.current_velocity_x > enemy_component.knockback_max_speed {
                 enemy_component.current_velocity_x = enemy_component.knockback_max_speed;
             }
@@ -48,6 +49,7 @@ impl<'s> System<'s> for EnemySystem {
                 enemy_component.current_velocity_y = (-1.0)*enemy_component.knockback_max_speed;
             }
 
+            //if the current velocity is greater than the max velocity decelerate until at max velocity
             if enemy_component.current_velocity_y > enemy_component.max_speed {
                 enemy_component.current_velocity_y -= enemy_component.deceleration_y;
             }
@@ -55,7 +57,7 @@ impl<'s> System<'s> for EnemySystem {
                 enemy_component.current_velocity_y += enemy_component.deceleration_y;
             }
 
-            //if there is movement in the x direction
+            //if there any velocity in x direction decelerate in y and decelerate in x
             if enemy_component.current_velocity_x > 0.0 {
                 if enemy_component.current_velocity_y < 0.0 {
                     enemy_component.current_velocity_y += enemy_component.deceleration_y;
@@ -68,13 +70,7 @@ impl<'s> System<'s> for EnemySystem {
                 enemy_component.current_velocity_x += enemy_component.deceleration_x;
             }
 
-            //move in the -y direction
-            /*
-            if enemy_component.current_velocity_y > (-1.0 * enemy_component.max_speed) && (enemy_component.current_velocity_x == 0.0) {
-                enemy_component.current_velocity_y -= enemy_component.acceleration_y;
-            }
-            */
-
+            //accelerate in -y direction
             if enemy_component.current_velocity_y > (-1.0 * enemy_component.max_speed) {
                 enemy_component.current_velocity_y -= enemy_component.acceleration_y;
             }
@@ -101,6 +97,7 @@ impl<'s> System<'s> for EnemySystem {
                 }
             }
 
+            //spawn explosion if health is less than 0
             if enemy_component.health < 0.0 {
 
                 let explosion_position = Vector3::new(
@@ -110,6 +107,7 @@ impl<'s> System<'s> for EnemySystem {
                 spawn_explosion(&entities, &sprite_resource, 4,explosion_position, &lazy_update);
             }
 
+            //remove enemy and modify defense value if necessary
             if enemy_transform.translation()[1] < ARENA_MIN_Y || enemy_component.health < 0.0 {
                 if enemy_transform.translation()[1] < ARENA_MIN_Y {
                     for defense_bar in (&mut defense_bars).join() {
@@ -117,7 +115,8 @@ impl<'s> System<'s> for EnemySystem {
                     }
 
                 }
-                let _result = entities.delete(enemy_entity);
+
+                entities.delete(enemy_entity);
 
             }
         }

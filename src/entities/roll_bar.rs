@@ -4,22 +4,22 @@ use amethyst::{
 };
 
 use crate::{
-    components::HealthBar,
+    components::RollBar,
 };
 
 
-const X_POSITION: f32 = 332.0;
-const Y_POSITION: f32 = 200.0;
+const X_POSITION: f32 = 324.0;
+const Y_POSITION: f32 = 177.0;
 
 
-pub fn initialise_health_bar(world: &mut World) {
+pub fn initialise_roll_bar(world: &mut World) {
 
     world
         .create_entity()
-        .with(HealthBar{
+        .with(RollBar{
             x_pos: X_POSITION,
             y_pos: Y_POSITION,
-            health_stack: vec![],
+            roll_stack: vec![],
         })
         .build();
 }

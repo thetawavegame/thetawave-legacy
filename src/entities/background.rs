@@ -6,16 +6,13 @@ use amethyst::{
 };
 
 use crate::{
-    components::Background,
     space_shooter::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
 };
 
 
 pub fn initialise_background(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
 
-
     let mut local_transform = Transform::default();
-    //local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT / 6.0, 0.9);
     local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH/2.0), ARENA_HEIGHT/2.0, 0.0);
 
     let sprite_render = SpriteRender {
@@ -26,7 +23,6 @@ pub fn initialise_background(world: &mut World, sprite_sheet_handle: SpriteSheet
     world
         .create_entity()
         .with(sprite_render)
-        .with(Background {})
         .with(local_transform)
         .with(Transparent)
         .build();

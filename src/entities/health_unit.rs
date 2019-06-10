@@ -12,7 +12,6 @@ use crate::{
 };
 
 
-
 pub fn spawn_health_unit(entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, sprite_number: usize, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) -> Entity {
     let health_unit_entitiy: Entity = entities.create();
 

@@ -12,6 +12,7 @@ use crate::{
     components::Explosion,
 };
 
+
 const EXPLOSION_DURATION: f32 = 0.3;
 
 

@@ -48,13 +48,11 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {
 
-                transform.set_x(spaceship_x - (spaceship.barrel_speed) * time.delta_seconds());
-                transform.set_y(spaceship_y + (spaceship.current_velocity_y) * time.delta_seconds());
+                spaceship.current_velocity_x = -1.0 * spaceship.barrel_speed;
 
             } else if spaceship.barrel_action_right {
 
-                transform.set_x(spaceship_x + (spaceship.barrel_speed) * time.delta_seconds());
-                transform.set_y(spaceship_y + (spaceship.current_velocity_y) * time.delta_seconds());
+                spaceship.current_velocity_x = spaceship.barrel_speed;
 
             } else {
                 //conditions for acceleration and deceleration in x
@@ -79,10 +77,10 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
                     spaceship.current_velocity_y += spaceship.deceleration_y;
                 }
 
-                //transform the spaceship in x and y by the currrent velocity in x and y
-                transform.set_x(spaceship_x + (spaceship.current_velocity_x) * time.delta_seconds());
-                transform.set_y(spaceship_y + (spaceship.current_velocity_y) * time.delta_seconds());
             }
+
+            transform.set_x(spaceship_x + (spaceship.current_velocity_x) * time.delta_seconds());
+            transform.set_y(spaceship_y + (spaceship.current_velocity_y) * time.delta_seconds());
         }
     }
 }
