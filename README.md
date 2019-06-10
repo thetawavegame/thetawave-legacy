@@ -38,7 +38,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 ## Visual and Audio
 - [x] health bar
 - [x] defense bar
-- [ ] barrel roll cooldown bar
+- [x] barrel roll cooldown bar
 - [ ] pause menu
 - [ ] display resolutions options
 - [ ] player movement animation
@@ -46,8 +46,19 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - [ ] damage feedback
 ## Gameplay
 - [x] penalty for letting enemies past you
+- [ ] health pickups
 - [ ] levels with end bosses
 - [ ] specific item spawn times
 - [ ] mini challenges for rewards or penalties (example: certain ships to let past you unharmed)
 - [ ] defence objective
-
+## Items
+### Passive 
+- [ ] reduce barrel roll cooldown
+- [ ] increase max health
+- [ ] increase max defense
+- [ ] trail behind player that does damage
+- [ ] increase knockback of enemies
+### Active
+- [ ] gravity gun effect with enemies
+- [ ] shield
+- [ ] speed boost
