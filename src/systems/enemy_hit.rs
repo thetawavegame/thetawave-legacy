@@ -31,7 +31,7 @@ impl<'s> System<'s> for EnemyHitSystem {
                     let blast_x = blast_transform.translation().x;
                     let blast_y = blast_transform.translation().y;
 
-                    if hitbox_collide(blast_x, blast_y, spaceship_x, spaceship_y, blast.hitbox_radius, blast.hitbox_radius, spaceship.hitbox_width, spaceship.hitbox_height) {
+                    if hitbox_collide(blast_x, blast_y, spaceship_x, spaceship_y, blast.hitbox_radius, blast.hitbox_radius, spaceship.hitbox_width, spaceship.hitbox_height) && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
                         let _result = entities.delete(blast_entity);
                         spaceship.health -= blast.damage;
                         println!("Player Health: {}", spaceship.health);
