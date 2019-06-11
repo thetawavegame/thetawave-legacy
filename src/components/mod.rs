@@ -6,6 +6,7 @@ mod item_spawner;
 mod health_bar;
 mod defense_bar;
 mod roll_bar;
+mod consumable_pool;
 
 pub use self::{
     blast::Blast,
@@ -16,4 +17,5 @@ pub use self::{
     health_bar::{HealthBar},
     defense_bar::{DefenseBar},
     roll_bar::{RollBar},
+    consumable_pool::{Consumable, ConsumablePool}
 };

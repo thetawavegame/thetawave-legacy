@@ -5,6 +5,8 @@ use std::{
     vec::Vec,
 };
 
+use crate::components::ConsumablePool;
+
 
 pub struct EnemyPool {
     pub available_enemies: Vec<String>,
@@ -46,8 +48,8 @@ pub struct Enemy {
     pub deceleration_y: f32,
     pub knockback_max_speed: f32,
     pub collision_damage: f32,
-
-
+    pub consumable_pool: ConsumablePool,
+    pub drop_chance: f32,
 }
 
 impl Component for Enemy {

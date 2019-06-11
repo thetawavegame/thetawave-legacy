@@ -1,6 +1,6 @@
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::{Entities,Join, ReadStorage, System, WriteStorage},
+    ecs::prelude::{Join, ReadStorage, System, WriteStorage},
 };
 
 use crate::{
@@ -74,31 +74,17 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
                     if !spaceship.steel_barrel && !enemy_dead {
                         spaceship.health -= enemy.collision_damage;
-                    }else if !spaceship.barrel_action_left && !spaceship.barrel_action_right && !enemy_dead {
+                    }else if !spaceship.barrel_action_left && !spaceship.barrel_action_right{
                         spaceship.health -= enemy.collision_damage;
                     }
 
                     let temp_velocity_x = spaceship.current_velocity_x;
-                    spaceship.current_velocity_x = ((-(1.0) * spaceship.current_velocity_x) + enemy.current_velocity_x);
-                    enemy.current_velocity_x = ((-(1.0) * enemy.current_velocity_x) + temp_velocity_x);
+                    spaceship.current_velocity_x = (-(1.0) * spaceship.current_velocity_x) + enemy.current_velocity_x;
+                    enemy.current_velocity_x = (-(1.0) * enemy.current_velocity_x) + temp_velocity_x;
 
                     let temp_velocity_y = spaceship.current_velocity_y;
-                    spaceship.current_velocity_y = ((-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y);
-                    enemy.current_velocity_y = ((-(1.0) * enemy.current_velocity_y) + temp_velocity_y);
-                    /*
-                    if enemy.health > 0.0 {
-                        let temp_velocity_x = spaceship.current_velocity_x;
-                        spaceship.current_velocity_x = ((-(1.0) * spaceship.current_velocity_x) + enemy.current_velocity_x);
-                        enemy.current_velocity_x = ((-(1.0) * enemy.current_velocity_x) + temp_velocity_x);
-
-                        let temp_velocity_y = spaceship.current_velocity_y;
-                        spaceship.current_velocity_y = ((-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y);
-                        enemy.current_velocity_y = ((-(1.0) * enemy.current_velocity_y) + temp_velocity_y);
-                    }else{
-                        spaceship.current_velocity_x += enemy.current_velocity_x/2.0;
-                        spaceship.current_velocity_y += enemy.current_velocity_y/2.0;
-                    }
-                    */
+                    spaceship.current_velocity_y = (-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y;
+                    enemy.current_velocity_y = (-(1.0) * enemy.current_velocity_y) + temp_velocity_y;
                 }
             }
         }

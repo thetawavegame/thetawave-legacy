@@ -10,6 +10,7 @@ use crate::{
     components::{Item, Spaceship},
     systems::hitbox_collide,
 };
+
 use crate::space_shooter::ARENA_MIN_Y;
 
 
@@ -36,8 +37,8 @@ impl<'s> System<'s> for ItemSystem {
 
 
                     //add stats to spaceship
-                    if item.stat_effects.contains_key("barrel_immunity") {
-                        spaceship.steel_barrel = true;
+                    if item.bool_effects.contains_key("barrel_immunity") {
+                        spaceship.steel_barrel = item.bool_effects["barrel_immunity"];
                     }
 
                     if item.stat_effects.contains_key("fire_speed") {

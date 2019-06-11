@@ -38,22 +38,25 @@ pub fn initialise_item_spawner(world: &mut World) {
         "warp_thruster".to_string(),
     ];
 
-    let mut steel_barrel_stat_effects = HashMap::new();
-    steel_barrel_stat_effects.insert("barrel_immunity".to_string(), 1.0);
+    //let mut steel_barrel_stat_effects = HashMap::new();
+    //steel_barrel_stat_effects.insert("barrel_immunity".to_string(), 1.0);
+    let mut steel_barrel_bool_effects = HashMap::new();
+    steel_barrel_bool_effects.insert("barrel_immunity".to_string(), true);
 
     let steel_barrel = Item {
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
-        stat_effects: steel_barrel_stat_effects,
+        stat_effects: HashMap::new(),
+        bool_effects: steel_barrel_bool_effects,
         sprite_index: STEEL_BARREL_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };
 
     let mut plasma_blasts_stat_effects = HashMap::new();
-    plasma_blasts_stat_effects.insert("fire_speed".to_string(), -0.15);
-    plasma_blasts_stat_effects.insert("damage".to_string(), 20.0);
+    plasma_blasts_stat_effects.insert("fire_speed".to_string(), -0.05);
+    plasma_blasts_stat_effects.insert("damage".to_string(), 5.0);
 
     let plasma_blasts = Item {
         width: ITEM_WIDTH,
@@ -61,6 +64,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: plasma_blasts_stat_effects,
+        bool_effects: HashMap::new(),
         sprite_index: PLASMA_BLASTS_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };
@@ -74,6 +78,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: hazardous_reactor_stat_effects,
+        bool_effects: HashMap::new(),
         sprite_index: HAZARDOUS_REACTOR_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };
@@ -88,6 +93,7 @@ pub fn initialise_item_spawner(world: &mut World) {
         hitbox_width: ITEM_HITBOX_WIDTH,
         hitbox_height: ITEM_HITBOX_HEIGHT,
         stat_effects: warp_thruster_stat_effects,
+        bool_effects: HashMap::new(),
         sprite_index: WARP_THRUSTER_SPRITE_INDEX,
         speed: ITEM_SPEED,
     };

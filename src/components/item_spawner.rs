@@ -27,6 +27,7 @@ pub struct Item {
     pub hitbox_width: f32,
     pub hitbox_height: f32,
     pub stat_effects: HashMap<String, f32>,
+    pub bool_effects: HashMap<String, bool>,
     pub sprite_index: usize,
     pub speed: f32,
 }

@@ -12,6 +12,8 @@ mod health_bar;
 mod defense_bar;
 mod roll_bar;
 mod spaceship_enemy_collision;
+mod enemy_enemy_collision;
+mod consumable;
 
 
 pub use self::{
@@ -29,6 +31,8 @@ pub use self::{
     defense_bar::DefenseBarSystem,
     roll_bar::RollBarSystem,
     spaceship_enemy_collision::SpaceshipEnemyCollisionSystem,
+    enemy_enemy_collision::EnemyEnemyCollisionSystem,
+    consumable::ConsumableSystem,
 };
 
 
