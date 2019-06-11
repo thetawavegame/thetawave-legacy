@@ -80,5 +80,17 @@
             width: 1,
             height: 4,
         ),
+        (
+            x: 56,
+            y: 78,
+            width: 12,
+            height: 12,
+        ),
+        (
+            x: 56,
+            y: 66,
+            width: 12,
+            height: 12,
+        ),
     ],
 )

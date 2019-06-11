@@ -29,6 +29,9 @@ impl<'s> System<'s> for RollBarSystem {
             for spaceship in (&spaceships).join() {
                 let roll_divisor = spaceship.barrel_cooldown/28.0;
                 let mut roll_unit_num = ((spaceship.barrel_cooldown - spaceship.barrel_reset_timer) / roll_divisor).ceil() as usize;
+                if spaceship.barrel_action_left || spaceship.barrel_action_right {
+                    roll_unit_num = 0;
+                }
 
                 //push units on
                 if roll_unit_num > roll_bar.roll_stack.len() {

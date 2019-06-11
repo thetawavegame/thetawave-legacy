@@ -30,7 +30,7 @@ impl<'s> System<'s> for BlastSystem {
                 (blast_transform.translation()[0] - (blast_component.hitbox_radius/2.0)) > ARENA_MAX_X ||
                 (blast_transform.translation()[0] + (blast_component.hitbox_radius/2.0)) < ARENA_MIN_X
             {
-                entities.delete(blast_entity);
+                let _result = entities.delete(blast_entity);
             }
 
             blast_transform.translate_x(blast_component.x_velocity * blast_component.velocity_factor * time.delta_seconds());

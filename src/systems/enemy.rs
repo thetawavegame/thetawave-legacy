@@ -7,9 +7,11 @@ use amethyst::{
     ecs::prelude::{Entities, Join, System, WriteStorage, Read, ReadExpect, LazyUpdate},
 };
 
+use rand::{thread_rng, Rng};
+
 use crate::{
     components::{Enemy, DefenseBar},
-    entities::spawn_explosion,
+    entities::{spawn_explosion, spawn_consumable},
     resources::SpriteResource,
 };
 use crate::entities::fire_blast;
@@ -105,6 +107,14 @@ impl<'s> System<'s> for EnemySystem {
                 );
 
                 spawn_explosion(&entities, &sprite_resource, 4,explosion_position, &lazy_update);
+
+                //chance to spawn consumable
+                if thread_rng().gen::<f32>() < enemy_component.drop_chance {
+                    println!("drop!");
+                    spawn_consumable(&entities, &sprite_resource, &mut enemy_component.consumable_pool,explosion_position, &lazy_update);
+                }else {
+                    println!("no drop!");
+                }
             }
 
             //remove enemy and modify defense value if necessary
@@ -116,7 +126,7 @@ impl<'s> System<'s> for EnemySystem {
 
                 }
 
-                entities.delete(enemy_entity);
+                let _result = entities.delete(enemy_entity);
 
             }
         }

@@ -6,6 +6,7 @@ use amethyst::{
 
 use crate::{
     components::{EnemySpawner, Enemy, EnemyPool},
+    components::{ConsumablePool, Consumable},
 };
 
 use std::{
@@ -13,6 +14,16 @@ use std::{
     vec::Vec,
 };
 use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
+
+const CONSUMABLE_WIDTH: f32 = 12.0;
+const CONSUMABLE_HEIGHT: f32 = 12.0;
+const CONSUMABLE_HITBOX_WIDTH: f32 = 10.0;
+const CONSUMABLE_HITBOX_HEIGHT: f32 = 10.0;
+const CONSUMABLE_HEALTH_VALUE: f32 = 30.0;
+const CONSUMABLE_DEFENSE_VALUE: f32 = 70.0;
+const CONSUMABLE_SPEED: f32 = 35.0;
+const CONSUMABLE_HEALTH_RATIO: usize = 5;
+const CONSUMABLE_DEFENSE_RATIO: usize = 1;
 
 const ENEMY_HEIGHT: f32 = 18.0;
 pub const ENEMY_WIDTH: f32 = 18.0;
@@ -30,14 +41,65 @@ const ENEMY_ACCELERATION_Y: f32 = 4.0;
 const ENEMY_DECELERATION_Y: f32 = 1.0;
 const ENEMY_MAX_KNOCKBACK_SPEED: f32 = 100.0;
 const ENEMY_COLLISION_DAMAGE: f32 = 30.0;
+const ENEMY_DROP_CHANCE: f32 = 0.10;
+
+const ENEMY_PAWN_RATIO: usize = 1;
+const ENEMY_DRONE_RATIO: usize = 2;
 
 
 pub fn initialise_enemy_spawner(world: &mut World) {
 
-    let enemy_list: Vec<String> = vec![
-        "pawn".to_string(),
-        "drone".to_string(),
-    ];
+    //create consumables
+    let mut consumables_list: Vec<String> = vec![];
+
+    for _ in 0..CONSUMABLE_HEALTH_RATIO {
+        consumables_list.push("health".to_string());
+    }
+    for _ in 0..CONSUMABLE_DEFENSE_RATIO {
+        consumables_list.push("defense".to_string());
+    }
+
+    let health_consumable = Consumable {
+        width: CONSUMABLE_WIDTH,
+        height: CONSUMABLE_HEIGHT,
+        hitbox_width: CONSUMABLE_HITBOX_WIDTH,
+        hitbox_height: CONSUMABLE_HITBOX_HEIGHT,
+        health_value: CONSUMABLE_HEALTH_VALUE,
+        defense_value: 0.0,
+        sprite_index: 13,
+        speed: CONSUMABLE_SPEED,
+    };
+
+    let defense_consumable = Consumable {
+        width: CONSUMABLE_WIDTH,
+        height: CONSUMABLE_HEIGHT,
+        hitbox_width: CONSUMABLE_HITBOX_WIDTH,
+        hitbox_height: CONSUMABLE_HITBOX_HEIGHT,
+        health_value: 0.0,
+        defense_value: CONSUMABLE_DEFENSE_VALUE,
+        sprite_index: 14,
+        speed: CONSUMABLE_SPEED,
+    };
+
+    let mut consumables = HashMap::new();
+    consumables.insert("health".to_string(), health_consumable);
+    consumables.insert("defense".to_string(), defense_consumable);
+
+    //create consumable pools for enemies
+    let standard_pool = ConsumablePool {
+        available_consumables: consumables_list,
+        consumables: consumables,
+    };
+
+
+    let mut enemy_list: Vec<String> = vec![];
+
+    for _ in 0..ENEMY_PAWN_RATIO {
+        enemy_list.push("pawn".to_string());
+    }
+    for _ in 0..ENEMY_DRONE_RATIO {
+        enemy_list.push("drone".to_string());
+    }
 
     let pawn = Enemy {
         width: ENEMY_WIDTH,
@@ -62,6 +124,8 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         deceleration_y: ENEMY_DECELERATION_Y,
         knockback_max_speed: ENEMY_MAX_KNOCKBACK_SPEED,
         collision_damage: ENEMY_COLLISION_DAMAGE,
+        consumable_pool: standard_pool.clone(),
+        drop_chance: ENEMY_DROP_CHANCE,
     };
 
     let drone = Enemy {
@@ -87,6 +151,8 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         deceleration_y: ENEMY_DECELERATION_Y,
         knockback_max_speed: ENEMY_MAX_KNOCKBACK_SPEED,
         collision_damage: ENEMY_COLLISION_DAMAGE,
+        consumable_pool: standard_pool.clone(),
+        drop_chance: ENEMY_DROP_CHANCE,
     };
 
     let mut enemies = HashMap::new();

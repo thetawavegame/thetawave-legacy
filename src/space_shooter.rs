@@ -38,6 +38,7 @@ impl Default for SpaceShooter {
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
+                .with(systems::ConsumableSystem, "consumable_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::PlayerHitSystem, "player_hit_system", &[])
                 .with(systems::EnemyHitSystem, "enemy_hit_system", &[])
@@ -49,6 +50,7 @@ impl Default for SpaceShooter {
                 .with(systems::DefenseBarSystem, "defense_bar_system", &[])
                 .with(systems::RollBarSystem, "roll_bar_system", &[])
                 .with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
+                .with(systems::EnemyEnemyCollisionSystem, "enemy_enemy_collision_system", &[])
                 .build(),
         }
     }

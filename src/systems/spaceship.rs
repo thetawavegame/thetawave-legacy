@@ -107,7 +107,10 @@ impl<'s> System<'s> for SpaceshipSystem {
 
             if spaceship.health < 0.0 {
                 spaceship.health = 0.0;
+            }else if spaceship.health > spaceship.max_health {
+                spaceship.health = spaceship.max_health;
             }
+
 
         }
     }
