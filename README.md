@@ -46,7 +46,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - [ ] damage feedback
 ## Gameplay
 - [x] penalty for letting enemies past you
-- [ ] health pickups
+- [x] health pickups
 - [ ] levels with end bosses
 - [ ] specific item spawn times
 - [ ] mini challenges for rewards or penalties (example: certain ships to let past you unharmed)
