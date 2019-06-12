@@ -2,7 +2,7 @@
 
 This game was made with the [amethyst](https://amethyst.rs/) engine. It is inspired by games like Raiden and The Binding of Isaac.
 
-![Alt text](https://giant.gfycat.com/WateryAbsoluteCardinal.gif)
+![Alt text](https://gfycat.com/greenwindingaltiplanochinchillamouse)
 
 # To Run
 
