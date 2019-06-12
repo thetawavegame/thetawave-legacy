@@ -38,8 +38,6 @@ pub fn initialise_item_spawner(world: &mut World) {
         "warp_thruster".to_string(),
     ];
 
-    //let mut steel_barrel_stat_effects = HashMap::new();
-    //steel_barrel_stat_effects.insert("barrel_immunity".to_string(), 1.0);
     let mut steel_barrel_bool_effects = HashMap::new();
     steel_barrel_bool_effects.insert("barrel_immunity".to_string(), true);
 

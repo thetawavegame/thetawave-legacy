@@ -11,9 +11,9 @@ use amethyst::{
 };
 
 use crate::systems;
-use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_health_bar, initialise_defense_bar, initialise_roll_bar, initialise_defense};
+use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
 
-//GAME_HEIGHT and _WIDTH should be  half the resolution
+//GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
 pub const GAME_HEIGHT: f32 = 270.0;
 
@@ -25,6 +25,8 @@ pub const ARENA_MAX_X: f32 = GAME_WIDTH - ARENA_MIN_X;
 
 pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
 pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
+
+pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
 
 
 pub struct SpaceShooter {
@@ -46,9 +48,7 @@ impl Default for SpaceShooter {
                 .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
-                .with(systems::HealthBarSystem, "health_bar_system", &[])
-                .with(systems::DefenseBarSystem, "defense_bar_system", &[])
-                .with(systems::RollBarSystem, "roll_bar_system", &[])
+                .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
                 .with(systems::EnemyEnemyCollisionSystem, "enemy_enemy_collision_system", &[])
                 .build(),
@@ -67,10 +67,11 @@ impl SimpleState for SpaceShooter {
 
         self.dispatcher.setup(&mut world.res);
 
-        initialise_defense_bar(world);
+        //initialise_defense_bar(world);
         initialise_defense(world);
-        initialise_health_bar(world);
-        initialise_roll_bar(world);
+        //initialise_health_bar(world);
+        //initialise_roll_bar(world);
+        initialise_status_bars(world);
         initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);

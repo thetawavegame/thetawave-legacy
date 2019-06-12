@@ -15,6 +15,7 @@ use std::{
 };
 use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
 
+
 const CONSUMABLE_WIDTH: f32 = 12.0;
 const CONSUMABLE_HEIGHT: f32 = 12.0;
 const CONSUMABLE_HITBOX_WIDTH: f32 = 10.0;
@@ -26,7 +27,7 @@ const CONSUMABLE_HEALTH_RATIO: usize = 5;
 const CONSUMABLE_DEFENSE_RATIO: usize = 1;
 
 const ENEMY_HEIGHT: f32 = 18.0;
-pub const ENEMY_WIDTH: f32 = 18.0;
+const ENEMY_WIDTH: f32 = 18.0;
 const ENEMY_FIRE_SPEED: f32 = 3.0;
 const ENEMY_HEALTH: f32 = 100.0;
 const ENEMY_HITBOX_WIDTH: f32 = 14.0;
@@ -42,9 +43,17 @@ const ENEMY_DECELERATION_Y: f32 = 1.0;
 const ENEMY_MAX_KNOCKBACK_SPEED: f32 = 100.0;
 const ENEMY_COLLISION_DAMAGE: f32 = 30.0;
 const ENEMY_DROP_CHANCE: f32 = 0.09;
+const ENEMY_BLAST_SPEED: f32 = -60.0;
+const ENEMY_BLAST_DAMAGE: f32 = 30.0;
 
 const ENEMY_PAWN_RATIO: usize = 1;
 const ENEMY_DRONE_RATIO: usize = 2;
+
+const PAWN_SPRITE_INDEX: usize = 1;
+const DRONE_SPRITE_INDEX: usize = 2;
+
+const HEALTH_CONSUMABLE_SPRITE_INDEX: usize = 13;
+const DEFENSE_CONSUMABLE_SPRITE_INDEX: usize = 14;
 
 
 pub fn initialise_enemy_spawner(world: &mut World) {
@@ -66,7 +75,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_height: CONSUMABLE_HITBOX_HEIGHT,
         health_value: CONSUMABLE_HEALTH_VALUE,
         defense_value: 0.0,
-        sprite_index: 13,
+        sprite_index: HEALTH_CONSUMABLE_SPRITE_INDEX,
         speed: CONSUMABLE_SPEED,
     };
 
@@ -77,7 +86,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_height: CONSUMABLE_HITBOX_HEIGHT,
         health_value: 0.0,
         defense_value: CONSUMABLE_DEFENSE_VALUE,
-        sprite_index: 14,
+        sprite_index: DEFENSE_CONSUMABLE_SPRITE_INDEX,
         speed: CONSUMABLE_SPEED,
     };
 
@@ -109,11 +118,11 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_width: ENEMY_HITBOX_WIDTH,
         hitbox_height: ENEMY_HITBOX_HEIGHT,
         barrel_damaged: false,
-        sprite_index: 1,
+        sprite_index: PAWN_SPRITE_INDEX,
         fires: true,
         fire_reset_timer: ENEMY_FIRE_DELAY,
-        blast_speed: -60.0,
-        blast_damage: 20.0,
+        blast_speed: ENEMY_BLAST_SPEED,
+        blast_damage: ENEMY_BLAST_DAMAGE,
         defense_damage: ENEMY_DEFENSE_DAMAGE,
         max_speed: ENEMY_MAX_SPEED - 10.0,
         current_velocity_x: 0.0,
@@ -136,7 +145,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_width: ENEMY_HITBOX_WIDTH,
         hitbox_height: ENEMY_HITBOX_HEIGHT,
         barrel_damaged: false,
-        sprite_index: 2,
+        sprite_index: DRONE_SPRITE_INDEX,
         fires: false,
         fire_reset_timer: 0.0,
         blast_speed: 0.0,
@@ -166,7 +175,6 @@ pub fn initialise_enemy_spawner(world: &mut World) {
 
     //create transform
     let mut local_transform = Transform::default();
-    //local_transform.set_xyz(GAME_WIDTH / 2.0, GAME_HEIGHT, 0.0);
     local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y, 0.0);
 
     world

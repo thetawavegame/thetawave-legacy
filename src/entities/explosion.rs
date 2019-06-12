@@ -27,7 +27,6 @@ pub fn spawn_explosion(entities: &Entities, explosion_resource: &ReadExpect<Spri
         sprite_number: sprite_number,
     };
 
-
     lazy_update.insert(explosion_entitiy, sprite_render);
     lazy_update.insert(explosion_entitiy, Explosion{duration: EXPLOSION_DURATION});
     lazy_update.insert(explosion_entitiy, local_transform);

@@ -5,11 +5,9 @@ mod spaceship;
 mod enemy_spawner;
 mod explosion;
 mod item_spawner;
-mod health_bar;
-mod defense_bar;
-mod roll_bar;
 mod consumable_pool;
 mod defense;
+mod status_bar;
 
 pub use self::{
     blast::Blast,
@@ -17,12 +15,12 @@ pub use self::{
     enemy_spawner::{Enemy, EnemySpawner, EnemyPool},
     explosion::Explosion,
     item_spawner::{Item, ItemSpawner, ItemPool},
-    health_bar::{HealthBar},
-    defense_bar::{DefenseBar},
-    roll_bar::{RollBar},
     consumable_pool::{Consumable, ConsumablePool},
     defense::Defense,
+    status_bar::{StatusBar, StatusType},
 };
+
+
 
 pub trait Rigidbody {
 
@@ -91,6 +89,7 @@ pub trait Rigidbody {
             self.set_current_velocity_y(-1.0 * self.knockback_max_speed());
         }
     }
+
 }
 
 pub trait Fires {

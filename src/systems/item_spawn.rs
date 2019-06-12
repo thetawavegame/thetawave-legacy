@@ -10,11 +10,11 @@ use amethyst::{
 use rand::{thread_rng, Rng};
 
 use crate::{
-    entities::{spawn_item, ENEMY_WIDTH},
+    entities::{spawn_item},
     components::ItemSpawner,
     resources::SpriteResource,
 };
-use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X};
+use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET};
 
 
 pub struct ItemSpawnSystem;
@@ -37,9 +37,9 @@ impl<'s> System<'s> for ItemSpawnSystem {
                 spawner.spawn_timer -= time.delta_seconds();
             } else {
 
-                let max_width = ARENA_MAX_X - ENEMY_WIDTH;
-                let min_width = ARENA_MIN_X + ENEMY_WIDTH;
-                let new_x = ARENA_MIN_X + ENEMY_WIDTH + thread_rng().gen::<f32>()* (max_width - min_width);
+                let max_width = ARENA_MAX_X - ARENA_SPAWN_OFFSET;
+                let min_width = ARENA_MIN_X + ARENA_SPAWN_OFFSET;
+                let new_x = ARENA_MIN_X + ARENA_SPAWN_OFFSET + thread_rng().gen::<f32>()* (max_width - min_width);
 
 
                 let spawn_position = Vector3::new(
