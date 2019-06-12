@@ -27,14 +27,15 @@ impl<'s> System<'s> for EnemyHitSystem {
 
             for (blast_entity, blast, blast_transform) in (&*entities, &mut blasts, &transforms).join() {
 
+                //first check if the blast is allied with the player
                 if !blast.allied {
                     let blast_x = blast_transform.translation().x;
                     let blast_y = blast_transform.translation().y;
 
+                    //if the blast collides with the player and the player is not currently barrel rolling the blast hits
                     if hitbox_collide(blast_x, blast_y, spaceship_x, spaceship_y, blast.hitbox_radius, blast.hitbox_radius, spaceship.hitbox_width, spaceship.hitbox_height) && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
                         let _result = entities.delete(blast_entity);
                         spaceship.health -= blast.damage;
-                        println!("Player Health: {}", spaceship.health);
                     }
                 }
             }

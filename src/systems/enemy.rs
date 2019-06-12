@@ -10,12 +10,14 @@ use amethyst::{
 use rand::{thread_rng, Rng};
 
 use crate::{
-    components::{Enemy, DefenseBar},
+    components::{Enemy, DefenseBar, Rigidbody},
     entities::{spawn_explosion, spawn_consumable},
     resources::SpriteResource,
 };
 use crate::entities::fire_blast;
 use crate::space_shooter::ARENA_MIN_Y;
+
+const ENEMY_BLAST_SPRITE_NUMBER: usize = 9;
 
 
 pub struct EnemySystem;
@@ -37,19 +39,8 @@ impl<'s> System<'s> for EnemySystem {
             let enemy_x = enemy_transform.translation().x;
             let enemy_y = enemy_transform.translation().y;
 
-            //if current velocity is greater than the maximum knockback speed immediately set speed to the maximum knockback speed
-            if enemy_component.current_velocity_x > enemy_component.knockback_max_speed {
-                enemy_component.current_velocity_x = enemy_component.knockback_max_speed;
-            }
-            if enemy_component.current_velocity_x < ((-1.0)*enemy_component.knockback_max_speed) {
-                enemy_component.current_velocity_x = (-1.0)*enemy_component.knockback_max_speed;
-            }
-            if enemy_component.current_velocity_y > enemy_component.knockback_max_speed {
-                enemy_component.current_velocity_y = enemy_component.knockback_max_speed;
-            }
-            if enemy_component.current_velocity_y < ((-1.0)*enemy_component.knockback_max_speed) {
-                enemy_component.current_velocity_y = (-1.0)*enemy_component.knockback_max_speed;
-            }
+            //limit the maximum knockback
+            enemy_component.limit_knockback();
 
             //if the current velocity is greater than the max velocity decelerate until at max velocity
             if enemy_component.current_velocity_y > enemy_component.max_speed {
@@ -73,13 +64,10 @@ impl<'s> System<'s> for EnemySystem {
             }
 
             //accelerate in -y direction
-            if enemy_component.current_velocity_y > (-1.0 * enemy_component.max_speed) {
-                enemy_component.current_velocity_y -= enemy_component.acceleration_y;
-            }
+            enemy_component.accelerate(0.0, -1.0);
 
             //transform the spaceship in x and y by the currrent velocity in x and y
-            enemy_transform.set_x(enemy_x + (enemy_component.current_velocity_x) * time.delta_seconds());
-            enemy_transform.set_y(enemy_y + (enemy_component.current_velocity_y) * time.delta_seconds());
+            enemy_component.update_position(enemy_transform, time.delta_seconds());
 
             //if the enemy can shoot
             if enemy_component.fires {
@@ -88,12 +76,11 @@ impl<'s> System<'s> for EnemySystem {
                 if enemy_component.fire_reset_timer > 0.0 {
                     enemy_component.fire_reset_timer -= time.delta_seconds();
                 }else {
-                    println!("enemy fire!");
                     let fire_position = Vector3::new(
                         enemy_transform.translation()[0], enemy_transform.translation()[1] - enemy_component.height / 2.0, 0.1,
                     );
 
-                    fire_blast(&entities, &sprite_resource, 9, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
+                    fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_NUMBER, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
 
                     enemy_component.fire_reset_timer = enemy_component.fire_speed;
                 }
@@ -110,10 +97,7 @@ impl<'s> System<'s> for EnemySystem {
 
                 //chance to spawn consumable
                 if thread_rng().gen::<f32>() < enemy_component.drop_chance {
-                    println!("drop!");
                     spawn_consumable(&entities, &sprite_resource, &mut enemy_component.consumable_pool,explosion_position, &lazy_update);
-                }else {
-                    println!("no drop!");
                 }
             }
 

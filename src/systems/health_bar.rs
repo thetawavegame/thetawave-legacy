@@ -29,7 +29,6 @@ impl<'s> System<'s> for HealthBarSystem {
 
             for spaceship in (&spaceships).join() {
                 let health_divisor = spaceship.max_health/63.0;
-                //println!("spaceship health: {}", spaceship.health);
                 let mut health_unit_num = ((spaceship.health) / health_divisor).ceil() as usize;
                 if spaceship.health <= 0.0 {
                     health_unit_num = 0;
@@ -37,7 +36,6 @@ impl<'s> System<'s> for HealthBarSystem {
 
                 //push units on
                 if health_unit_num > health_bar.health_stack.len() {
-                    println!("adding health");
                     let health_position = Vector3::new(
                         health_bar.x_pos, health_bar.y_pos, 0.9,
                     );
