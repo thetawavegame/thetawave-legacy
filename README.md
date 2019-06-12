@@ -33,7 +33,7 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - [x] enemy pool
 - [x] enemy variety
 - [x] enemy blasts
-- [ ] barrel roll blast immunity
+- [x] barrel roll blast immunity
 - [x] collisions
 ## Visual and Audio
 - [x] health bar
