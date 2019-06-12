@@ -8,7 +8,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{Spaceship},
+    components::{Spaceship, Rigidbody},
 };
 
 
@@ -29,58 +29,18 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
 
         for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
 
-            let spaceship_x = transform.translation().x;
-            let spaceship_y = transform.translation().y;
-
-            if spaceship.current_velocity_x > spaceship.knockback_max_speed {
-                spaceship.current_velocity_x = spaceship.knockback_max_speed;
-            }
-            if spaceship.current_velocity_x < ((-1.0)*spaceship.knockback_max_speed) {
-                spaceship.current_velocity_x = (-1.0)*spaceship.knockback_max_speed;
-            }
-            if spaceship.current_velocity_y > spaceship.knockback_max_speed {
-                spaceship.current_velocity_y = spaceship.knockback_max_speed;
-            }
-            if spaceship.current_velocity_y < ((-1.0)*spaceship.knockback_max_speed) {
-                spaceship.current_velocity_y = (-1.0)*spaceship.knockback_max_speed;
-            }
+            spaceship.limit_knockback();
 
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {
-
-                spaceship.current_velocity_x = -1.0 * spaceship.barrel_speed;
-
+                spaceship.set_current_velocity_x(-1.0 * spaceship.barrel_speed);
             } else if spaceship.barrel_action_right {
-
-                spaceship.current_velocity_x = spaceship.barrel_speed;
-
+                spaceship.set_current_velocity_x(spaceship.barrel_speed);
             } else {
-                //conditions for acceleration and deceleration in x
-                if x_move > 0.0 && spaceship.current_velocity_x < spaceship.max_speed {
-                    spaceship.current_velocity_x += spaceship.acceleration_x;
-                } else if x_move < 0.0 && spaceship.current_velocity_x > (-1.0 * spaceship.max_speed) {
-                    spaceship.current_velocity_x -= spaceship.acceleration_x;
-                } else if x_move == 0.0 && spaceship.current_velocity_x > 0.0 {
-                    spaceship.current_velocity_x -= spaceship.deceleration_x;
-                } else if x_move == 0.0 && spaceship.current_velocity_x < 0.0 {
-                    spaceship.current_velocity_x += spaceship.deceleration_x;
-                }
-
-                //conditions for acceleration and deceleration in y
-                if y_move > 0.0 && spaceship.current_velocity_y < spaceship.max_speed {
-                    spaceship.current_velocity_y += spaceship.acceleration_y;
-                } else if y_move < 0.0 && spaceship.current_velocity_y > (-1.0 * spaceship.max_speed) {
-                    spaceship.current_velocity_y -= spaceship.acceleration_y;
-                } else if y_move == 0.0 && spaceship.current_velocity_y > 0.0 {
-                    spaceship.current_velocity_y -= spaceship.deceleration_y;
-                } else if y_move == 0.0 && spaceship.current_velocity_y < 0.0 {
-                    spaceship.current_velocity_y += spaceship.deceleration_y;
-                }
-
+                spaceship.accelerate(x_move, y_move);
             }
 
-            transform.set_x(spaceship_x + (spaceship.current_velocity_x) * time.delta_seconds());
-            transform.set_y(spaceship_y + (spaceship.current_velocity_y) * time.delta_seconds());
+            spaceship.update_position(transform, time.delta_seconds());
         }
     }
 }

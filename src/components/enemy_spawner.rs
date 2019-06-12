@@ -5,7 +5,7 @@ use std::{
     vec::Vec,
 };
 
-use crate::components::ConsumablePool;
+use crate::components::{ConsumablePool, Rigidbody};
 
 
 pub struct EnemyPool {
@@ -50,6 +50,26 @@ pub struct Enemy {
     pub collision_damage: f32,
     pub consumable_pool: ConsumablePool,
     pub drop_chance: f32,
+}
+
+impl Rigidbody for Enemy{
+    fn current_velocity_x(&self) ->  f32 {
+        self.current_velocity_x
+    }
+    fn current_velocity_y(&self) -> f32 {
+        self.current_velocity_y
+    }
+    fn acceleration_x(&self) -> f32 { self.acceleration_x }
+    fn acceleration_y(&self) -> f32 { self.acceleration_y }
+    fn deceleration_x(&self) -> f32 { self.deceleration_x }
+    fn deceleration_y(&self) -> f32 { self.deceleration_y }
+    fn max_speed(&self) -> f32 { self.max_speed }
+    fn knockback_max_speed(&self) -> f32 { self.knockback_max_speed }
+
+    fn set_current_velocity_y(&mut self, value: f32) {
+        self.current_velocity_y = value;
+    }
+    fn set_current_velocity_x(&mut self, value: f32) { self.current_velocity_x = value; }
 }
 
 impl Component for Enemy {
