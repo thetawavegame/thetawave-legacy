@@ -5,7 +5,7 @@ use std::{
     vec::Vec,
 };
 
-use crate::components::{ConsumablePool, Rigidbody};
+use crate::components::{ConsumablePool, Rigidbody, Fires};
 
 
 pub struct EnemyPool {
@@ -70,6 +70,11 @@ impl Rigidbody for Enemy{
         self.current_velocity_y = value;
     }
     fn set_current_velocity_x(&mut self, value: f32) { self.current_velocity_x = value; }
+}
+
+impl Fires for Enemy {
+    fn fire_reset_timer(&self) -> f32 { self.fire_reset_timer }
+    fn set_fire_reset_timer(&mut self, value: f32) { self.fire_reset_timer = value; }
 }
 
 impl Component for Enemy {

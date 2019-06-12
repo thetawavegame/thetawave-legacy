@@ -7,7 +7,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{Consumable, Spaceship, DefenseBar},
+    components::{Consumable, Spaceship, Defense},
     systems::hitbox_collide,
 };
 
@@ -21,12 +21,12 @@ impl<'s> System<'s> for ConsumableSystem {
         Entities<'s>,
         WriteStorage<'s, Consumable>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, DefenseBar>,
+        WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (entities, mut consumables, mut spaceships, mut defense_bars, mut transforms, time): Self::SystemData) {
+    fn run(&mut self, (entities, mut consumables, mut spaceships, mut defenses, mut transforms, time): Self::SystemData) {
         for spaceship in (&mut spaceships).join() {
 
             for (consumable_entity, consumable, consumable_transform) in (&*entities, &mut consumables, &mut transforms).join() {
@@ -38,8 +38,8 @@ impl<'s> System<'s> for ConsumableSystem {
 
                     spaceship.health += consumable.health_value;
 
-                    for defense_bar in (&mut defense_bars).join() {
-                        defense_bar.defense += consumable.defense_value;
+                    for defense in (&mut defenses).join() {
+                        defense.defense += consumable.defense_value;
                     }
 
 

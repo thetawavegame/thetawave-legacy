@@ -9,6 +9,7 @@ mod health_bar;
 mod defense_bar;
 mod roll_bar;
 mod consumable_pool;
+mod defense;
 
 pub use self::{
     blast::Blast,
@@ -20,6 +21,7 @@ pub use self::{
     defense_bar::{DefenseBar},
     roll_bar::{RollBar},
     consumable_pool::{Consumable, ConsumablePool},
+    defense::Defense,
 };
 
 pub trait Rigidbody {
@@ -88,5 +90,18 @@ pub trait Rigidbody {
         if self.current_velocity_y() < -1.0 * self.knockback_max_speed() {
             self.set_current_velocity_y(-1.0 * self.knockback_max_speed());
         }
+    }
+}
+
+pub trait Fires {
+    fn fire_reset_timer(&self) -> f32;
+    fn set_fire_reset_timer(&mut self, value: f32);
+
+    fn fire_cooldown(&mut self, dt: f32) -> bool {
+        if self.fire_reset_timer() > 0.0 {
+            self.set_fire_reset_timer(self.fire_reset_timer() - dt);
+            return true;
+        }
+        return false;
     }
 }

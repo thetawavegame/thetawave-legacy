@@ -10,14 +10,17 @@ use amethyst::{
 use rand::{thread_rng, Rng};
 
 use crate::{
-    components::{Enemy, DefenseBar, Rigidbody},
+    components::{Enemy, Defense, Rigidbody, Fires},
     entities::{spawn_explosion, spawn_consumable},
     resources::SpriteResource,
 };
 use crate::entities::fire_blast;
 use crate::space_shooter::ARENA_MIN_Y;
 
-const ENEMY_BLAST_SPRITE_NUMBER: usize = 9;
+const ENEMY_BLAST_SPRITE_INDEX: usize = 9;
+const EXPLOSION_SPRITE_INDEX: usize = 4;
+
+const EXPLOSION_Z: f32 = 0.0;
 
 
 pub struct EnemySystem;
@@ -26,14 +29,14 @@ impl<'s> System<'s> for EnemySystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Enemy>,
-        WriteStorage<'s, DefenseBar>,
+        WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut enemys, mut defense_bars, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
+    fn run(&mut self, (entities, mut enemys, mut defenses, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
 
             let enemy_x = enemy_transform.translation().x;
@@ -72,15 +75,12 @@ impl<'s> System<'s> for EnemySystem {
             //if the enemy can shoot
             if enemy_component.fires {
 
-                //firing cooldown
-                if enemy_component.fire_reset_timer > 0.0 {
-                    enemy_component.fire_reset_timer -= time.delta_seconds();
-                }else {
+                if !enemy_component.fire_cooldown(time.delta_seconds()) {
                     let fire_position = Vector3::new(
                         enemy_transform.translation()[0], enemy_transform.translation()[1] - enemy_component.height / 2.0, 0.1,
                     );
 
-                    fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_NUMBER, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
+                    fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_INDEX, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
 
                     enemy_component.fire_reset_timer = enemy_component.fire_speed;
                 }
@@ -89,23 +89,23 @@ impl<'s> System<'s> for EnemySystem {
             //spawn explosion if health is less than 0
             if enemy_component.health < 0.0 {
 
-                let explosion_position = Vector3::new(
-                    enemy_transform.translation()[0], enemy_transform.translation()[1], 0.0,
+                let death_position = Vector3::new(
+                    enemy_transform.translation()[0], enemy_transform.translation()[1], EXPLOSION_Z,
                 );
 
-                spawn_explosion(&entities, &sprite_resource, 4,explosion_position, &lazy_update);
+                spawn_explosion(&entities, &sprite_resource, EXPLOSION_SPRITE_INDEX,death_position, &lazy_update);
 
                 //chance to spawn consumable
                 if thread_rng().gen::<f32>() < enemy_component.drop_chance {
-                    spawn_consumable(&entities, &sprite_resource, &mut enemy_component.consumable_pool,explosion_position, &lazy_update);
+                    spawn_consumable(&entities, &sprite_resource, &mut enemy_component.consumable_pool, death_position, &lazy_update);
                 }
             }
 
             //remove enemy and modify defense value if necessary
             if enemy_transform.translation()[1] < ARENA_MIN_Y || enemy_component.health < 0.0 {
                 if enemy_transform.translation()[1] < ARENA_MIN_Y {
-                    for defense_bar in (&mut defense_bars).join() {
-                        defense_bar.defense -= enemy_component.defense_damage;
+                    for defense in (&mut defenses).join() {
+                        defense.defense -= enemy_component.defense_damage;
                     }
 
                 }

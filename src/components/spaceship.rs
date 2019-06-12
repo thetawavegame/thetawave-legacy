@@ -2,7 +2,7 @@ use amethyst::{
     ecs::prelude::{Component, DenseVecStorage},
     core::Transform,
 };
-use crate::components::Rigidbody;
+use crate::components::{Rigidbody, Fires};
 
 
 
@@ -39,13 +39,9 @@ pub struct Spaceship {
     pub collision_damage: f32,
 }
 
-impl Rigidbody for Spaceship{
-    fn current_velocity_x(&self) ->  f32 {
-        self.current_velocity_x
-    }
-    fn current_velocity_y(&self) -> f32 {
-        self.current_velocity_y
-    }
+impl Rigidbody for Spaceship {
+    fn current_velocity_x(&self) ->  f32 { self.current_velocity_x }
+    fn current_velocity_y(&self) -> f32 { self.current_velocity_y }
     fn acceleration_x(&self) -> f32 { self.acceleration_x }
     fn acceleration_y(&self) -> f32 { self.acceleration_y }
     fn deceleration_x(&self) -> f32 { self.deceleration_x }
@@ -55,6 +51,11 @@ impl Rigidbody for Spaceship{
 
     fn set_current_velocity_y(&mut self, value: f32) { self.current_velocity_y = value; }
     fn set_current_velocity_x(&mut self, value: f32) { self.current_velocity_x = value; }
+}
+
+impl Fires for Spaceship {
+    fn fire_reset_timer(&self) -> f32 { self.fire_reset_timer }
+    fn set_fire_reset_timer(&mut self, value: f32) { self.fire_reset_timer = value; }
 }
 
 impl Component for Spaceship {
