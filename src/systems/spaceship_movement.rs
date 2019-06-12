@@ -30,6 +30,7 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
         for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
 
             spaceship.limit_knockback();
+            //TODO differentiate between limiting knockback and limiting max speed if needed
 
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {

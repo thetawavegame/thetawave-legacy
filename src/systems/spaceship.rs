@@ -10,7 +10,7 @@ use amethyst::{
 
 use crate::{
     entities::{fire_blast},
-    components::{Spaceship, Enemy},
+    components::{Spaceship, Enemy, Fires},
     resources::{SpriteResource},
 };
 
@@ -31,7 +31,7 @@ impl<'s> System<'s> for SpaceshipSystem {
 
     fn run(&mut self, (entities, mut transforms, mut spaceships, mut enemies, input, time, sprite_resource, lazy_update): Self::SystemData) {
 
-        let mut shoot = input.action_is_down("shoot").unwrap();
+        let mut shoot_action = input.action_is_down("shoot").unwrap();
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right= input.action_is_down("barrel_right").unwrap();
 
@@ -42,10 +42,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             spaceship.pos_y= transform.translation().y;
 
             //firing cooldown
-            if spaceship.fire_reset_timer > 0.0 {
-                spaceship.fire_reset_timer -= time.delta_seconds();
-                shoot = false;
-            }
+            let cooldown = spaceship.fire_cooldown(time.delta_seconds());
 
             //barrel roll input cooldown
             if spaceship.barrel_reset_timer > 0.0 && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
@@ -86,7 +83,7 @@ impl<'s> System<'s> for SpaceshipSystem {
 
             }
 
-            if shoot && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
+            if !cooldown && shoot_action && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
                 let fire_position = Vector3::new(
                     transform.translation()[0], transform.translation()[1] + spaceship.height / 2.0, 0.8,
                 );
