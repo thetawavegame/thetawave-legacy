@@ -8,12 +8,10 @@ mod item;
 mod spaceship_movement;
 mod item_spawn;
 mod enemy_hit;
-mod health_bar;
-mod defense_bar;
-mod roll_bar;
 mod spaceship_enemy_collision;
 mod enemy_enemy_collision;
 mod consumable;
+mod status_bar;
 
 
 pub use self::{
@@ -27,12 +25,10 @@ pub use self::{
     spaceship_movement::SpaceshipMovementSystem,
     item_spawn::ItemSpawnSystem,
     enemy_hit::EnemyHitSystem,
-    health_bar::HealthBarSystem,
-    defense_bar::DefenseBarSystem,
-    roll_bar::RollBarSystem,
     spaceship_enemy_collision::SpaceshipEnemyCollisionSystem,
     enemy_enemy_collision::EnemyEnemyCollisionSystem,
     consumable::ConsumableSystem,
+    status_bar::StatusBarSystem,
 };
 
 

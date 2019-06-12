@@ -26,8 +26,6 @@ pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<SpriteResource
     let random_item = item_pool.items[&random_item_name].clone();
     item_pool.available_items.retain(|x| x != &random_item_name);
 
-
-
     let sprite_render = SpriteRender {
         sprite_sheet: item_resource.sprite_sheet.clone(),
         sprite_number: random_item.sprite_index,
