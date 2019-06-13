@@ -1,14 +1,5 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
-use std::{
-    collections::{HashMap},
-    vec::Vec,
-};
 
-#[derive(Clone)]
-pub struct ConsumablePool {
-    pub available_consumables: Vec<String>,
-    pub consumables: HashMap<String, Consumable>
-}
 
 #[derive(Clone)]
 pub struct Consumable {

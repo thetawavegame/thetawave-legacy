@@ -5,19 +5,21 @@ mod spaceship;
 mod enemy_spawner;
 mod explosion;
 mod item_spawner;
-mod consumable_pool;
+mod consumable;
 mod defense;
 mod status_bar;
+mod spawner;
 
 pub use self::{
     blast::Blast,
     spaceship::{Spaceship},
-    enemy_spawner::{Enemy, EnemySpawner, EnemyPool},
+    enemy_spawner::{Enemy, EnemySpawner, EnemyType},
     explosion::Explosion,
-    item_spawner::{Item, ItemSpawner, ItemPool},
-    consumable_pool::{Consumable, ConsumablePool},
+    item_spawner::{Item, ItemSpawner},
+    consumable::{Consumable},
     defense::Defense,
     status_bar::{StatusBar, StatusType},
+    spawner::Pool,
 };
 
 
@@ -87,6 +89,21 @@ pub trait Rigidbody {
         }
         if self.current_velocity_y() < -1.0 * self.knockback_max_speed() {
             self.set_current_velocity_y(-1.0 * self.knockback_max_speed());
+        }
+    }
+
+    fn limit_speed(&mut self) {
+        if self.current_velocity_x() > self.max_speed() {
+            self.decelerate_x(-1.0);
+        }
+        if self.current_velocity_x() < -1.0 * self.max_speed() {
+            self.decelerate_x(1.0);
+        }
+        if self.current_velocity_y() > self.max_speed() {
+            self.decelerate_y(-1.0);
+        }
+        if self.current_velocity_y() < -1.0 * self.max_speed() {
+            self.decelerate_y(1.0);
         }
     }
 

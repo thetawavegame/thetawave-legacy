@@ -5,8 +5,8 @@ use amethyst::{
 };
 
 use crate::{
-    components::{EnemySpawner, Enemy, EnemyPool},
-    components::{ConsumablePool, Consumable},
+    components::{EnemySpawner, Enemy, EnemyType},
+    components::{Pool, Consumable},
 };
 
 use std::{
@@ -95,9 +95,9 @@ pub fn initialise_enemy_spawner(world: &mut World) {
     consumables.insert("defense".to_string(), defense_consumable);
 
     //create consumable pools for enemies
-    let standard_pool = ConsumablePool {
-        available_consumables: consumables_list,
-        consumables: consumables,
+    let standard_pool = Pool {
+        spawn_list: consumables_list,
+        spawns: consumables,
     };
 
 
@@ -111,6 +111,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
     }
 
     let pawn = Enemy {
+        enemy_type: EnemyType::Pawn,
         width: ENEMY_WIDTH,
         height: ENEMY_HEIGHT,
         fire_speed: ENEMY_FIRE_SPEED,
@@ -138,6 +139,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
     };
 
     let drone = Enemy {
+        enemy_type: EnemyType::Drone,
         width: ENEMY_WIDTH,
         height: ENEMY_HEIGHT,
         fire_speed: ENEMY_FIRE_SPEED,
@@ -168,9 +170,9 @@ pub fn initialise_enemy_spawner(world: &mut World) {
     enemies.insert("pawn".to_string(), pawn);
     enemies.insert("drone".to_string(), drone);
 
-    let enemy_pool = EnemyPool {
-        available_enemies: enemy_list,
-        enemies: enemies,
+    let enemy_pool = Pool {
+        spawn_list: enemy_list,
+        spawns: enemies,
     };
 
     //create transform

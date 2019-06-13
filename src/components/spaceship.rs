@@ -1,10 +1,7 @@
 use amethyst::{
     ecs::prelude::{Component, DenseVecStorage},
-    core::Transform,
 };
 use crate::components::{Rigidbody, Fires};
-
-
 
 
 pub struct Spaceship {

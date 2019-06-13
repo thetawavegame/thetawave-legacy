@@ -1,5 +1,4 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage, Entity};
-use std::vec::Vec;
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
 
 pub struct Defense {

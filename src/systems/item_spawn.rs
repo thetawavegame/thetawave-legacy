@@ -46,7 +46,7 @@ impl<'s> System<'s> for ItemSpawnSystem {
                     new_x, transform.translation()[1], transform.translation()[2],
                 );
 
-                if spawner.item_pool.available_items.len() > 0 {
+                if spawner.item_pool.spawn_list.len() > 0 {
                     spawn_item(&entities, &sprite_resource, &mut spawner.item_pool, spawn_position, &lazy_update);
                 }
 

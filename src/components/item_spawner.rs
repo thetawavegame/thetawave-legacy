@@ -4,14 +4,11 @@ use std::{
     vec::Vec,
 };
 
+use crate::components::Pool;
 
-pub struct ItemPool {
-    pub available_items: Vec<String>,
-    pub items: HashMap<String, Item>
-}
 
 pub struct ItemSpawner {
-    pub item_pool: ItemPool,
+    pub item_pool: Pool<Item>,
     pub spawn_timer: f32,
     pub spawn_interval: f32,
 }
