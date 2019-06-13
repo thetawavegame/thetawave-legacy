@@ -33,16 +33,11 @@ impl<'s> System<'s> for SpawnerSystem {
     fn run(&mut self, (entities, mut transforms, mut spawners, time, enemy_resource, lazy_update): Self::SystemData) {
 
         for (spawner, transform) in (&mut spawners, &mut transforms).join() {
-            if spawner.can_spawn(time.delta_seconds()) {
-
-                let max_width = ARENA_MAX_X - ARENA_SPAWN_OFFSET;
-                let min_width = ARENA_MIN_X + ARENA_SPAWN_OFFSET;
-                let new_x = ARENA_MIN_X + ARENA_SPAWN_OFFSET + thread_rng().gen::<f32>()* (max_width - min_width);
+            if let Some(new_x) = spawner.can_spawn(time.delta_seconds()) {
 
                 let spawn_position = Vector3::new(
-                    new_x, transform.translation()[1], transform.translation()[2],
+                    new_x, transform.translation()[1], transform.translation()[2]
                 );
-
                 spawn_enemy(&entities, &enemy_resource, &mut spawner.pool, spawn_position, &lazy_update);
             }
         }
