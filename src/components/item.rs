@@ -4,18 +4,6 @@ use std::{
     vec::Vec,
 };
 
-use crate::components::Pool;
-
-
-pub struct ItemSpawner {
-    pub item_pool: Pool<Item>,
-    pub spawn_timer: f32,
-    pub spawn_interval: f32,
-}
-
-impl Component for ItemSpawner {
-    type Storage = DenseVecStorage<Self>;
-}
 
 #[derive(Clone)]
 pub struct Item {

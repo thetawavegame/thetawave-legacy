@@ -5,23 +5,13 @@ use std::{
     vec::Vec,
 };
 
-use crate::components::{Consumable, Rigidbody, Fires, Pool};
+use crate::components::{Pool, Consumable, Rigidbody, Fires};
+
 
 #[derive(Clone)]
 pub enum EnemyType {
     Pawn,
     Drone,
-}
-
-pub struct EnemySpawner {
-    pub enemy_pool: Pool<Enemy>,
-    pub spawn_timer: f32,
-    pub spawn_interval: f32,
-    pub enemies_spawned: u32,
-}
-
-impl Component for EnemySpawner {
-    type Storage = DenseVecStorage<Self>;
 }
 
 #[derive(Clone)]
