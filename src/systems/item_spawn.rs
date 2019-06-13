@@ -33,10 +33,7 @@ impl<'s> System<'s> for ItemSpawnSystem {
     fn run(&mut self, (entities, mut transforms, mut spawners, time, sprite_resource, lazy_update): Self::SystemData) {
 
         for (spawner, transform) in (&mut spawners, &mut transforms).join() {
-            if spawner.spawn_timer > 0.0 {
-                spawner.spawn_timer -= time.delta_seconds();
-            } else {
-
+            if spawner.can_spawn(time.delta_seconds()) {
                 let max_width = ARENA_MAX_X - ARENA_SPAWN_OFFSET;
                 let min_width = ARENA_MIN_X + ARENA_SPAWN_OFFSET;
                 let new_x = ARENA_MIN_X + ARENA_SPAWN_OFFSET + thread_rng().gen::<f32>()* (max_width - min_width);
@@ -46,11 +43,7 @@ impl<'s> System<'s> for ItemSpawnSystem {
                     new_x, transform.translation()[1], transform.translation()[2],
                 );
 
-                if spawner.pool.spawn_list.len() > 0 {
-                    spawn_item(&entities, &sprite_resource, &mut spawner.pool, spawn_position, &lazy_update);
-                }
-
-                spawner.spawn_timer = spawner.spawn_interval;
+                spawn_item(&entities, &sprite_resource, &mut spawner.pool, spawn_position, &lazy_update);
             }
         }
     }
