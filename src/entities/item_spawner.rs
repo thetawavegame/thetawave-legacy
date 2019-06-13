@@ -5,7 +5,7 @@ use amethyst::{
 
 use crate::{
     components::Pool,
-    components::{ItemSpawner, Item},
+    components::{Spawner, Item},
 };
 
 use std::{
@@ -112,10 +112,11 @@ pub fn initialise_item_spawner(world: &mut World) {
 
     world
         .create_entity()
-        .with(ItemSpawner {
-            item_pool: item_pool,
+        .with(Spawner {
+            pool: item_pool,
             spawn_interval: SPAWN_INTERVAL,
             spawn_timer: SPAWN_INTERVAL,
+            spawn_counter: 0,
         })
         .with(local_transform)
         .build();

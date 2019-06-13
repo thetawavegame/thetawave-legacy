@@ -5,7 +5,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{EnemySpawner, Enemy, EnemyType},
+    components::{Spawner, Enemy, EnemyType},
     components::{Pool, Consumable},
 };
 
@@ -181,11 +181,11 @@ pub fn initialise_enemy_spawner(world: &mut World) {
 
     world
         .create_entity()
-        .with(EnemySpawner {
-            enemy_pool: enemy_pool,
+        .with(Spawner {
+            pool: enemy_pool,
             spawn_timer: 0.0,
             spawn_interval: SPAWN_INTERVAL,
-            enemies_spawned: 0,
+            spawn_counter: 0,
         })
         .with(local_transform)
         .build();

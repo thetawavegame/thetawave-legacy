@@ -2,9 +2,9 @@ use amethyst::core::Transform;
 
 mod blast;
 mod spaceship;
-mod enemy_spawner;
+mod enemy;
 mod explosion;
-mod item_spawner;
+mod item;
 mod consumable;
 mod defense;
 mod status_bar;
@@ -13,13 +13,13 @@ mod spawner;
 pub use self::{
     blast::Blast,
     spaceship::{Spaceship},
-    enemy_spawner::{Enemy, EnemySpawner, EnemyType},
+    enemy::{Enemy, EnemyType},
     explosion::Explosion,
-    item_spawner::{Item, ItemSpawner},
+    item::{Item},
     consumable::{Consumable},
     defense::Defense,
     status_bar::{StatusBar, StatusType},
-    spawner::Pool,
+    spawner::{Pool, Spawner},
 };
 
 

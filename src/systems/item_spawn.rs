@@ -11,7 +11,7 @@ use rand::{thread_rng, Rng};
 
 use crate::{
     entities::{spawn_item},
-    components::ItemSpawner,
+    components::{Spawner, Item},
     resources::SpriteResource,
 };
 use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET};
@@ -24,7 +24,7 @@ impl<'s> System<'s> for ItemSpawnSystem {
     type SystemData  = (
         Entities<'s>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, ItemSpawner>,
+        WriteStorage<'s, Spawner<Item>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
@@ -46,8 +46,8 @@ impl<'s> System<'s> for ItemSpawnSystem {
                     new_x, transform.translation()[1], transform.translation()[2],
                 );
 
-                if spawner.item_pool.spawn_list.len() > 0 {
-                    spawn_item(&entities, &sprite_resource, &mut spawner.item_pool, spawn_position, &lazy_update);
+                if spawner.pool.spawn_list.len() > 0 {
+                    spawn_item(&entities, &sprite_resource, &mut spawner.pool, spawn_position, &lazy_update);
                 }
 
                 spawner.spawn_timer = spawner.spawn_interval;
