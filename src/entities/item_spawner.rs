@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::ItemPool,
+    components::Pool,
     components::{ItemSpawner, Item},
 };
 
@@ -102,9 +102,9 @@ pub fn initialise_item_spawner(world: &mut World) {
     items.insert("hazardous_reactor".to_string(), hazardous_reactor);
     items.insert("warp_thruster".to_string(), warp_thruster);
 
-    let item_pool = ItemPool {
-        available_items: item_list,
-        items: items,
+    let item_pool = Pool {
+        spawn_list: item_list,
+        spawns: items,
     };
 
     let mut local_transform = Transform::default();

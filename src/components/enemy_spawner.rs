@@ -5,16 +5,16 @@ use std::{
     vec::Vec,
 };
 
-use crate::components::{ConsumablePool, Rigidbody, Fires};
+use crate::components::{Consumable, Rigidbody, Fires, Pool};
 
-
-pub struct EnemyPool {
-    pub available_enemies: Vec<String>,
-    pub enemies: HashMap<String, Enemy>,
+#[derive(Clone)]
+pub enum EnemyType {
+    Pawn,
+    Drone,
 }
 
 pub struct EnemySpawner {
-    pub enemy_pool: EnemyPool,
+    pub enemy_pool: Pool<Enemy>,
     pub spawn_timer: f32,
     pub spawn_interval: f32,
     pub enemies_spawned: u32,
@@ -48,8 +48,9 @@ pub struct Enemy {
     pub deceleration_y: f32,
     pub knockback_max_speed: f32,
     pub collision_damage: f32,
-    pub consumable_pool: ConsumablePool,
+    pub consumable_pool: Pool<Consumable>,
     pub drop_chance: f32,
+    pub enemy_type: EnemyType,
 }
 
 impl Rigidbody for Enemy{

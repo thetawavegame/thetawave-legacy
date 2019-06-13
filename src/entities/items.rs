@@ -7,24 +7,24 @@ use amethyst::{
     }
 };
 
-use rand::seq::SliceRandom;
-
 use crate::{
     resources::SpriteResource,
-    components::ItemPool,
+    components::{Pool, Item},
 };
 
+use rand::seq::SliceRandom;
 
-pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<SpriteResource>, item_pool: &mut ItemPool, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
+
+pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<SpriteResource>, item_pool: &mut Pool<Item>, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
     let item_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();
     local_transform.set_position(spawn_position);
 
     //get a random item from the item pool and then remove it from the pool
-    let random_item_name = item_pool.available_items.choose(&mut rand::thread_rng()).cloned().unwrap();
-    let random_item = item_pool.items[&random_item_name].clone();
-    item_pool.available_items.retain(|x| x != &random_item_name);
+    let random_item_name = item_pool.spawn_list.choose(&mut rand::thread_rng()).cloned().unwrap();
+    let random_item = item_pool.spawns[&random_item_name].clone();
+    item_pool.spawn_list.retain(|x| x != &random_item_name);
 
     let sprite_render = SpriteRender {
         sprite_sheet: item_resource.sprite_sheet.clone(),

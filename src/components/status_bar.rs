@@ -19,13 +19,3 @@ pub struct StatusBar {
 impl Component for StatusBar {
     type Storage = DenseVecStorage<Self>;
 }
-
-/*
-pub struct StatusUnit {
-    pub status_type: StatusType,
-}
-
-impl Component for StatusUnit {
-    type Storage = DenseVecStorage<Self>;
-}
-*/

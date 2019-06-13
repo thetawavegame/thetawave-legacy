@@ -29,7 +29,12 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
 
         for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
 
+            //if the spaceships speed is greater than knockback max speed, immediately set velocity to knockback_max_speed
             spaceship.limit_knockback();
+
+            //if the spaceships speed is greater than its max speed, decelerate to equal max_speed
+            spaceship.limit_speed();
+
             //TODO differentiate between limiting knockback and limiting max speed if needed
 
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally

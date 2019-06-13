@@ -31,7 +31,7 @@ impl<'s> System<'s> for SpaceshipSystem {
 
     fn run(&mut self, (entities, mut transforms, mut spaceships, mut enemies, input, time, sprite_resource, lazy_update): Self::SystemData) {
 
-        let mut shoot_action = input.action_is_down("shoot").unwrap();
+        let shoot_action = input.action_is_down("shoot").unwrap();
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right= input.action_is_down("barrel_right").unwrap();
 
