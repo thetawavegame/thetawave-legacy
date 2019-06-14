@@ -76,23 +76,13 @@ impl<'s> System<'s> for EnemySystem {
             //behavior for enemies based on its enemy_type attribute
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
-
-                    if !enemy_component.fire_cooldown(time.delta_seconds()) {
-                        let fire_position = Vector3::new(
-                            enemy_transform.translation()[0], enemy_transform.translation()[1] - enemy_component.height / 2.0, 0.1,
-                        );
-
+                    if let Some(fire_position) = enemy_component.fire_cooldown(enemy_transform, -1.0 * enemy_component.height / 2.0, time.delta_seconds()) {
                         fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_INDEX, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
-
-                        enemy_component.fire_reset_timer = enemy_component.fire_speed;
                     }
-
                 }
 
                 EnemyType::Drone => {}
             }
-
-            
         }
     }
 }

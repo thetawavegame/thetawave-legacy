@@ -35,5 +35,4 @@ pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<SpriteResource
     lazy_update.insert(item_entity, random_item);
     lazy_update.insert(item_entity, local_transform);
     lazy_update.insert(item_entity, Transparent);
-
 }

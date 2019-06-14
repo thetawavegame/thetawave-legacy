@@ -21,13 +21,10 @@ impl<'s> System<'s> for PlayerHitSystem {
 
     fn run(&mut self, (entities, mut enemies, mut blasts, transforms): Self::SystemData) {
         for (enemy, enemy_transform) in (&mut enemies, &transforms).join() {
-
-            let enemy_x = enemy_transform.translation().x;
-            let enemy_y = enemy_transform.translation().y;
-
             for (blast_entity, blast, blast_transform) in (&*entities, &mut blasts, &transforms).join() {
-
                 if blast.allied {
+                    let enemy_x = enemy_transform.translation().x;
+                    let enemy_y = enemy_transform.translation().y;
                     let blast_x = blast_transform.translation().x;
                     let blast_y = blast_transform.translation().y;
 
