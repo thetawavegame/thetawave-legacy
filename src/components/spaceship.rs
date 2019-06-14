@@ -52,6 +52,7 @@ impl Rigidbody for Spaceship {
 
 impl Fires for Spaceship {
     fn fire_reset_timer(&self) -> f32 { self.fire_reset_timer }
+    fn fire_speed(&self) -> f32 { self.fire_speed }
     fn set_fire_reset_timer(&mut self, value: f32) { self.fire_reset_timer = value; }
 }
 

@@ -44,7 +44,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             spaceship.pos_y= transform.translation().y;
 
             //firing cooldown
-            let fire_cooldown = spaceship.fire_cooldown(time.delta_seconds());
+            //let fire_cooldown = spaceship.fire_cooldown(time.delta_seconds());
 
             //barrel roll input cooldown
             if spaceship.barrel_input_cooldown(time.delta_seconds()) {
@@ -59,13 +59,10 @@ impl<'s> System<'s> for SpaceshipSystem {
             }
             
             //conditions for firing a blast
-            if !fire_cooldown && shoot_action && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
-                let fire_position = Vector3::new(
-                    transform.translation()[0], transform.translation()[1] + spaceship.height / 2.0, PLAYER_BLAST_Z,
-                );
-
-                fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);
-                spaceship.fire_reset_timer = spaceship.fire_speed;
+            if !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action {
+                if let Some(fire_position) = spaceship.fire_cooldown(transform, spaceship.height / 2.0, time.delta_seconds()) {
+                    fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);
+                }
             }
 
             if barrel_left {
