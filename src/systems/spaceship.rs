@@ -10,10 +10,12 @@ use amethyst::{
 
 use crate::{
     entities::{fire_blast},
-    components::{Spaceship, Enemy, Fires},
+    components::{Spaceship, Enemy, Fires, Living},
     resources::{SpriteResource},
 };
 
+const PLAYER_BLAST_Z: f32 = 0.8;
+const PLAYER_BLAST_SPRITE_INDEX: usize = 3;
 
 pub struct SpaceshipSystem;
 impl<'s> System<'s> for SpaceshipSystem {
@@ -42,53 +44,27 @@ impl<'s> System<'s> for SpaceshipSystem {
             spaceship.pos_y= transform.translation().y;
 
             //firing cooldown
-            let cooldown = spaceship.fire_cooldown(time.delta_seconds());
+            let fire_cooldown = spaceship.fire_cooldown(time.delta_seconds());
 
             //barrel roll input cooldown
-            if spaceship.barrel_reset_timer > 0.0 && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
-                spaceship.barrel_reset_timer -= time.delta_seconds();
+            if spaceship.barrel_input_cooldown(time.delta_seconds()) {
                 barrel_left = false;
                 barrel_right = false;
             }
 
             //barrel roll action cooldown
-            if spaceship.barrel_action_left || spaceship.barrel_action_right {
-
-                //if currently barrel rolling can't initiate another barrel roll
+            if spaceship.barrel_action_cooldown(time.delta_seconds()) {
                 barrel_left = false;
                 barrel_right = false;
-
-                //countdown to end of barrel roll if time left else set velocity to the appropriate max speed, stop the action, and reset cooldown
-                if spaceship.barrel_action_timer > 0.0 {
-                    spaceship.barrel_action_timer -= time.delta_seconds();
-                }else {
-
-
-                    if spaceship.barrel_action_left {
-                        spaceship.current_velocity_x = -1.0 * spaceship.max_speed;
-                    }
-
-                    if spaceship.barrel_action_right {
-                        spaceship.current_velocity_x = spaceship.max_speed;
-                    }
-
-                    spaceship.barrel_action_left = false;
-                    spaceship.barrel_action_right = false;
-                    spaceship.barrel_reset_timer = spaceship.barrel_cooldown;
-                    for enemy in (&mut enemies).join() {
-                        enemy.barrel_damaged = false;
-                    }
-
-                }
-
             }
-
-            if !cooldown && shoot_action && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
+            
+            //conditions for firing a blast
+            if !fire_cooldown && shoot_action && !spaceship.barrel_action_left && !spaceship.barrel_action_right {
                 let fire_position = Vector3::new(
-                    transform.translation()[0], transform.translation()[1] + spaceship.height / 2.0, 0.8,
+                    transform.translation()[0], transform.translation()[1] + spaceship.height / 2.0, PLAYER_BLAST_Z,
                 );
 
-                fire_blast(&entities, &sprite_resource, 3, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);
+                fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);
                 spaceship.fire_reset_timer = spaceship.fire_speed;
             }
 
@@ -102,13 +78,7 @@ impl<'s> System<'s> for SpaceshipSystem {
                 spaceship.barrel_action_timer = spaceship.barrel_duration;
             }
 
-            if spaceship.health < 0.0 {
-                spaceship.health = 0.0;
-            }else if spaceship.health > spaceship.max_health {
-                spaceship.health = spaceship.max_health;
-            }
-
-
+            spaceship.constrain_health(); 
         }
     }
 }

@@ -32,7 +32,7 @@ impl<'a, T> Component for Spawner<T> where T: Send + Sync + 'static {
 
 impl<'a, T> Spawner<T> where T: Send + Sync + 'static {
 
-    //updates or resets the spawn timer, returns true if can spawn, false if can't
+    //updates or resets the spawn timer, returns Option of new x position
     pub fn can_spawn(&mut self, dt: f32) -> Option<f32> {
         if self.pool.spawn_list.len() == 0 {
             return None;

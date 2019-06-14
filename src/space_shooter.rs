@@ -51,6 +51,7 @@ impl Default for SpaceShooter {
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
                 .with(systems::EnemyEnemyCollisionSystem, "enemy_enemy_collision_system", &[])
+                .with(systems::DefenseSystem, "defense_system", &[])
                 .build(),
         }
     }

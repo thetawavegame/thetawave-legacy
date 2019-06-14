@@ -21,7 +21,6 @@ pub struct Enemy {
     pub health: f32,
     pub hitbox_width: f32,
     pub hitbox_height: f32,
-    pub barrel_damaged: bool,
     pub sprite_index: usize,
     pub fires: bool,
     pub fire_speed: f32,

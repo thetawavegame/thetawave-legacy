@@ -12,6 +12,7 @@ mod spaceship_enemy_collision;
 mod enemy_enemy_collision;
 mod consumable;
 mod status_bar;
+mod defense;
 
 
 pub use self::{
@@ -29,6 +30,7 @@ pub use self::{
     enemy_enemy_collision::EnemyEnemyCollisionSystem,
     consumable::ConsumableSystem,
     status_bar::StatusBarSystem,
+    defense::DefenseSystem
 };
 
 

@@ -1,7 +1,7 @@
 use amethyst::{
     ecs::prelude::{Component, DenseVecStorage},
 };
-use crate::components::{Rigidbody, Fires};
+use crate::components::{Rigidbody, Fires, Living};
 
 
 pub struct Spaceship {
@@ -55,6 +55,49 @@ impl Fires for Spaceship {
     fn set_fire_reset_timer(&mut self, value: f32) { self.fire_reset_timer = value; }
 }
 
+impl Living for Spaceship {
+    fn health(&self) -> f32 { self.health }
+    fn max_health(&self) -> f32 { self.max_health }
+    fn set_health(&mut self, value: f32) { self.health = value; }
+}
+
 impl Component for Spaceship {
     type Storage = DenseVecStorage<Self>;
+}
+
+impl Spaceship {
+    
+    pub fn barrel_input_cooldown(&mut self, dt: f32) -> bool {
+        if self.barrel_reset_timer > 0.0 && !self.barrel_action_left && !self.barrel_action_right {
+            self.barrel_reset_timer -= dt;
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    pub fn barrel_action_cooldown(&mut self, dt: f32) -> bool {
+        if self.barrel_action_left || self.barrel_action_right {
+            //update the cooldown
+            if self.barrel_action_timer > 0.0 {
+                self.barrel_action_timer -= dt;
+            }else {
+                if self.barrel_action_left {
+                    self.current_velocity_x = -1.0 * self.max_speed;
+                }
+
+                if self.barrel_action_right {
+                    self.current_velocity_x = self.max_speed;
+                }
+
+                self.barrel_action_left = false;
+                self.barrel_action_right = false;
+                self.barrel_reset_timer = self.barrel_cooldown;
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
