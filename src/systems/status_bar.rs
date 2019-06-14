@@ -33,97 +33,31 @@ impl<'s> System<'s> for StatusBarSystem {
     fn run(&mut self, (entities, mut status_bars, spaceships, mut defenses, sprite_resource, lazy_update): Self::SystemData) {
         for status_bar in (&mut status_bars).join() {
 
-
             match status_bar.status_type {
-
 
                  StatusType::Health => {
                     for spaceship in (&spaceships).join() {
-                        let status_divisor = spaceship.max_health / status_bar.unit_limit;
-                        let mut status_unit_num = ((spaceship.health) / status_divisor).ceil() as usize;
-                        if spaceship.health <= 0.0 {
-                            status_unit_num = 0;
-                        }
-
-                        //push units on
-                        if status_unit_num > status_bar.status_unit_stack.len() {
-                            let status_position = Vector3::new(
-                                status_bar.x_pos, status_bar.y_pos, Z,
-                            );
-                            status_bar.y_pos += 1.0;
+                        if let Some(status_position) = status_bar.update_units_y(spaceship.max_health, spaceship.health, &entities) {
                             status_bar.status_unit_stack.push(spawn_status_unit(&entities, &sprite_resource, HEALTH_SPRITE_INDEX, status_position, &lazy_update));
-                        }
-
-                        if status_unit_num < status_bar.status_unit_stack.len() {
-                            if let Some(unit) = status_bar.status_unit_stack.pop() {
-                                let _result = entities.delete(unit);
-                                status_bar.y_pos -= 1.0;
-                            }
                         }
                     }
                 }
 
                 StatusType::Defense => {
                     for defense in (&mut defenses).join() {
-                        //ensure that defense stays between 0 and max defense
-                        if defense.defense < 0.0 {
-                            defense.defense = 0.0;
-                        } else if defense.defense > defense.max_defense {
-                            defense.defense = defense.max_defense;
-                        }
-
-                        //find the number of points per unit in the bar and the number of units needed
-                        let status_divisor = defense.max_defense / status_bar.unit_limit;
-                        let status_unit_num = ((defense.defense) / status_divisor).ceil() as usize;
-
-
-                        //push units onto stack if needed
-                        if status_unit_num > status_bar.status_unit_stack.len() {
-                            let status_position = Vector3::new(
-                                status_bar.x_pos, status_bar.y_pos, Z,
-                            );
-                            status_bar.y_pos += 1.0;
+                        if let Some(status_position) = status_bar.update_units_y(defense.max_defense, defense.defense, &entities) {
                             status_bar.status_unit_stack.push(spawn_status_unit(&entities, &sprite_resource, DEFENSE_SPRITE_INDEX, status_position, &lazy_update));
-                        }
-
-                        //delete units from stack if needed
-                        if status_unit_num < status_bar.status_unit_stack.len() {
-                            if let Some(unit) = status_bar.status_unit_stack.pop() {
-                                let _result = entities.delete(unit);
-                                status_bar.y_pos -= 1.0;
-                            }
                         }
                     }
                 }
-
 
                 StatusType::Roll => {
                     for spaceship in (&spaceships).join() {
-                        let status_divisor = spaceship.barrel_cooldown/status_bar.unit_limit;
-                        let mut status_unit_num = ((spaceship.barrel_cooldown - spaceship.barrel_reset_timer) / status_divisor).ceil() as usize;
-                        if spaceship.barrel_action_left || spaceship.barrel_action_right {
-                            status_unit_num = 0;
-                        }
-
-                        //push units on
-                        if status_unit_num > status_bar.status_unit_stack.len() {
-                            let status_position = Vector3::new(
-                                status_bar.x_pos, status_bar.y_pos, Z,
-                            );
-                            status_bar.x_pos += 1.0;
+                        if let Some(status_position) = status_bar.update_units_x(spaceship.barrel_cooldown, (spaceship.barrel_cooldown - spaceship.barrel_reset_timer), &entities) {
                             status_bar.status_unit_stack.push(spawn_status_unit(&entities, &sprite_resource, ROLL_SPRITE_INDEX, status_position, &lazy_update));
-                        }
-
-                        if status_unit_num < status_bar.status_unit_stack.len() {
-                            if let Some(unit) = status_bar.status_unit_stack.pop() {
-                                status_bar.x_pos -= 1.0;
-                                let _result = entities.delete(unit);
-                            }
-
                         }
                     }
                 }
-
             }
         }
     }

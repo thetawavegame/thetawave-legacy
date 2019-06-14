@@ -71,11 +71,13 @@ impl<'s> System<'s> for SpaceshipSystem {
             if barrel_left {
                 spaceship.barrel_action_left = true;
                 spaceship.barrel_action_timer = spaceship.barrel_duration;
+                spaceship.barrel_reset_timer = spaceship.barrel_cooldown;
             }
 
             if barrel_right {
                 spaceship.barrel_action_right = true;
                 spaceship.barrel_action_timer = spaceship.barrel_duration;
+                spaceship.barrel_reset_timer = spaceship.barrel_cooldown;
             }
 
             spaceship.constrain_health(); 

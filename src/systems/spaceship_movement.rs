@@ -35,8 +35,6 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
             //if the spaceships speed is greater than its max speed, decelerate to equal max_speed
             spaceship.limit_speed();
 
-            //TODO differentiate between limiting knockback and limiting max speed if needed
-
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {
                 spaceship.set_current_velocity_x(-1.0 * spaceship.barrel_speed);

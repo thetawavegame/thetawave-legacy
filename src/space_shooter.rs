@@ -68,10 +68,7 @@ impl SimpleState for SpaceShooter {
 
         self.dispatcher.setup(&mut world.res);
 
-        //initialise_defense_bar(world);
         initialise_defense(world);
-        //initialise_health_bar(world);
-        //initialise_roll_bar(world);
         initialise_status_bars(world);
         initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, sprite_sheet_handle.clone());
@@ -96,8 +93,6 @@ impl SimpleState for SpaceShooter {
         }
         Trans::None
     }
-
-
 }
 
 pub struct PausedState;
