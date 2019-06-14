@@ -1,6 +1,6 @@
 # Space Shooter
 
-This game was made with the [amethyst](https://amethyst.rs/) engine. It is inspired by games like Raiden and The Binding of Isaac.
+This game was made with the [amethyst](https://amethyst.rs/) engine. It is inspired by games like Raiden and The Binding of Isaac. Checkout my development journey on my [youtube](https://www.youtube.com/watch?v=OtN5vL80u4Q&list=PL4Dmmk1VXA5p0tVmxNUr8j0ly5ERbL1hN) channel and my write-up about using Amethyst on my [website](https://micronote.tech/2019/06/Space-Shooter-Game/).
 
 ![Alt text](https://giant.gfycat.com/GreenWindingAltiplanochinchillamouse.gif)
 
@@ -34,7 +34,8 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - [x] enemy variety
 - [x] enemy blasts
 - [x] barrel roll blast immunity
-- [x] collisions
+- [x] spaceship to enemy collisions
+- [ ] enemy to enemy collisions
 ## Visual and Audio
 - [x] health bar
 - [x] defense bar
