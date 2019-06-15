@@ -38,7 +38,6 @@ impl Default for SpaceShooter {
         SpaceShooter {
             dispatcher: DispatcherBuilder::new()
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
-                .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
                 .with(systems::ConsumableSystem, "consumable_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
@@ -52,6 +51,7 @@ impl Default for SpaceShooter {
                 .with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
                 .with(systems::EnemyEnemyCollisionSystem, "enemy_enemy_collision_system", &[])
                 .with(systems::DefenseSystem, "defense_system", &[])
+                .with(systems::BlastSystem, "blast_system", &[])
                 .build(),
         }
     }
