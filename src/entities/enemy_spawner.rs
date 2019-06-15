@@ -55,6 +55,8 @@ const DRONE_SPRITE_INDEX: usize = 2;
 const HEALTH_CONSUMABLE_SPRITE_INDEX: usize = 13;
 const DEFENSE_CONSUMABLE_SPRITE_INDEX: usize = 14;
 
+const SPAWNER_Y_OFFSET: f32 = 20.0;
+
 
 pub fn initialise_enemy_spawner(world: &mut World) {
 
@@ -175,7 +177,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
 
     //create transform
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y, 0.0);
+    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y + SPAWNER_Y_OFFSET, 0.0);
 
     world
         .create_entity()
