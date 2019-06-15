@@ -43,6 +43,9 @@ impl<'s> System<'s> for EnemySystem {
             enemy_component.limit_knockback();
             enemy_component.limit_speed();
 
+            //constrain in arena
+            enemy_component.constrain_to_arena(enemy_transform); 
+
             //accelerate in -y direction
             enemy_component.accelerate(0.0, -1.0);
 

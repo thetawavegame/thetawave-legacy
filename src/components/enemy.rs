@@ -1,11 +1,17 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage};
+use amethyst::{
+    ecs::prelude::{Component, DenseVecStorage},
+    core::Transform,
+};
 
 use std::{
     collections::{HashMap},
     vec::Vec,
 };
 
-use crate::components::{Pool, Consumable, Rigidbody, Fires};
+use crate::{
+    components::{Pool, Consumable, Rigidbody, Fires},
+    space_shooter::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
+};
 
 
 #[derive(Clone)]
@@ -70,4 +76,14 @@ impl Fires for Enemy {
 
 impl Component for Enemy {
     type Storage = DenseVecStorage<Self>;
+}
+
+impl Enemy {
+    pub fn constrain_to_arena(&mut self, transform: &mut Transform) {
+        let enemy_x = transform.translation().x;
+        let enemy_y = transform.translation().y;
+        if (enemy_x - (self.width/2.0)) < ARENA_MIN_X || (enemy_x + (self.width/2.0)) > ARENA_MAX_X {
+            self.current_velocity_x = (-1.0) * self.current_velocity_x;
+        }
+    }
 }

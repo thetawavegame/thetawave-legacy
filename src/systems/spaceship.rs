@@ -43,9 +43,6 @@ impl<'s> System<'s> for SpaceshipSystem {
             spaceship.pos_x = transform.translation().x;
             spaceship.pos_y= transform.translation().y;
 
-            //firing cooldown
-            //let fire_cooldown = spaceship.fire_cooldown(time.delta_seconds());
-
             //barrel roll input cooldown
             if spaceship.barrel_input_cooldown(time.delta_seconds()) {
                 barrel_left = false;

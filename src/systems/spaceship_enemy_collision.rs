@@ -25,34 +25,10 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
             let spaceship_x = spaceship_transform.translation().x;
             let spaceship_y = spaceship_transform.translation().y;
 
-            //spaceship collision with border
-            if (spaceship_x - (spaceship.width/2.0)) < ARENA_MIN_X {
-                if spaceship.barrel_action_left {
-                    spaceship.barrel_action_right = true;
-                    spaceship.barrel_action_left = false;
-                }
-                spaceship.current_velocity_x = spaceship.current_velocity_x.abs();
-            }else if (spaceship_x + (spaceship.width/2.0)) > ARENA_MAX_X {
-                if spaceship.barrel_action_right {
-                    spaceship.barrel_action_left = true;
-                    spaceship.barrel_action_right = false;
-                }
-                spaceship.current_velocity_x = (-1.0) * spaceship.current_velocity_x.abs();
-            }else if (spaceship_y - (spaceship.height/2.0)) < ARENA_MIN_Y {
-                spaceship.current_velocity_y = spaceship.current_velocity_y.abs();
-            }else if (spaceship_y + (spaceship.height/2.0)) > ARENA_MAX_Y {
-                spaceship.current_velocity_y = (-1.0) * spaceship.current_velocity_y.abs();
-            }
-
             for (enemy, enemy_transform) in (&mut enemies, &transforms).join() {
 
                 let enemy_x = enemy_transform.translation().x;
                 let enemy_y = enemy_transform.translation().y;
-
-                //enemy collision with border
-                if (enemy_x - (enemy.width/2.0)) < ARENA_MIN_X || (enemy_x + (enemy.width/2.0)) > ARENA_MAX_X {
-                    enemy.current_velocity_x = (-1.0) * enemy.current_velocity_x;
-                }
 
                 if hitbox_collide(enemy_x, enemy_y, spaceship_x, spaceship_y, enemy.hitbox_width, enemy.hitbox_height, spaceship.hitbox_width, spaceship.hitbox_height) {
                     let mut enemy_dead = false;
