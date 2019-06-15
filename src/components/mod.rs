@@ -121,26 +121,18 @@ pub trait Fires {
     fn fire_speed(&self) -> f32;
     fn set_fire_reset_timer(&mut self, value: f32);
 
-    /*
-    fn fire_cooldown(&mut self, dt: f32) -> bool {
-        if self.fire_reset_timer() > 0.0 {
-            self.set_fire_reset_timer(self.fire_reset_timer() - dt);
-            return true;
-        }
-        return false;
-    }
-    */
-
-    fn fire_cooldown(&mut self, transform: &mut Transform, offset: f32, dt: f32) -> Option<Vector3<f32>> {
+    fn fire_cooldown(&mut self, transform: &mut Transform, offset: f32, fire: bool, dt: f32) -> Option<Vector3<f32>> {
         if self.fire_reset_timer() > 0.0 {
             self.set_fire_reset_timer(self.fire_reset_timer() - dt);
             return None;
-        }else {
+        }else if fire {
             self.set_fire_reset_timer(self.fire_speed());
             let fire_position = Vector3::new(
                 transform.translation()[0], transform.translation()[1] + offset, BLAST_Z,
             );
             return Some(fire_position);
+        }else {
+            return None
         }
     }
 }

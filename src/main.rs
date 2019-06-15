@@ -1,5 +1,6 @@
+/*
 #![windows_subsystem = "windows"]
-
+*/
 extern crate amethyst;
 
 use amethyst::{
@@ -21,7 +22,10 @@ use crate::space_shooter::SpaceShooter;
 
 
 fn main() -> amethyst::Result<()> {
-    amethyst::start_logger(Default::default());
+    //start logging
+    let mut log = amethyst::LoggerConfig::default();
+    log.level_filter = amethyst::LogLevelFilter::Warn;
+    amethyst::start_logger(log);
 
     let path = format!(
         "{}/resources/display_config_960.ron",

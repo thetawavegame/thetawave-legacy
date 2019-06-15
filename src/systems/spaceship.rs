@@ -58,11 +58,8 @@ impl<'s> System<'s> for SpaceshipSystem {
                 barrel_right = false;
             }
             
-            //conditions for firing a blast
-            if !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action {
-                if let Some(fire_position) = spaceship.fire_cooldown(transform, spaceship.height / 2.0, time.delta_seconds()) {
-                    fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);
-                }
+            if let Some(fire_position) = spaceship.fire_cooldown(transform, spaceship.height / 2.0, !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action, time.delta_seconds()) {
+                fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, &lazy_update);
             }
 
             if barrel_left {
