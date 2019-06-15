@@ -9,7 +9,10 @@ use amethyst::{
 
 use crate::{
     components::{Spaceship, Rigidbody},
+    
 };
+
+use crate::space_shooter::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y};
 
 
 pub struct SpaceshipMovementSystem;
@@ -28,6 +31,9 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
         let y_move = input.axis_value("player_y").unwrap() as f32;
 
         for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
+
+            //keep spaceship with bounds of arena
+            spaceship.constrain_to_arena(transform);
 
             //if the spaceships speed is greater than knockback max speed, immediately set velocity to knockback_max_speed
             spaceship.limit_knockback();

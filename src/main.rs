@@ -1,6 +1,5 @@
-/*
 #![windows_subsystem = "windows"]
-*/
+
 extern crate amethyst;
 
 use amethyst::{
