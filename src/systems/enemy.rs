@@ -50,7 +50,7 @@ impl<'s> System<'s> for EnemySystem {
             enemy_component.update_position(enemy_transform, time.delta_seconds());
 
             //conditions for despawning
-            if enemy_transform.translation()[1] < ARENA_MIN_Y {
+            if enemy_transform.translation()[1] + enemy_component.height/2.0 < ARENA_MIN_Y {
                 
                 //defense is damage is enemy gets past
                 for defense in (&mut defenses).join() {

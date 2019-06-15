@@ -21,14 +21,12 @@ impl<'s> System<'s> for EnemyHitSystem {
 
     fn run(&mut self, (entities, mut spaceships, mut blasts, transforms): Self::SystemData) {
         for (spaceship, spaceship_transform) in (&mut spaceships, &transforms).join() {
-
-            let spaceship_x = spaceship_transform.translation().x;
-            let spaceship_y = spaceship_transform.translation().y;
-
             for (blast_entity, blast, blast_transform) in (&*entities, &mut blasts, &transforms).join() {
 
                 //first check if the blast is allied with the player
                 if !blast.allied {
+                    let spaceship_x = spaceship_transform.translation().x;
+                    let spaceship_y = spaceship_transform.translation().y;
                     let blast_x = blast_transform.translation().x;
                     let blast_y = blast_transform.translation().y;
 

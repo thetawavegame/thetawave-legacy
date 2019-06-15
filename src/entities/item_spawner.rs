@@ -28,6 +28,7 @@ const PLASMA_BLASTS_SPRITE_INDEX: usize = 6;
 const HAZARDOUS_REACTOR_SPRITE_INDEX: usize = 7;
 const WARP_THRUSTER_SPRITE_INDEX: usize = 8;
 
+const SPAWNER_Y_OFFSET: f32 = 20.0;
 
 pub fn initialise_item_spawner(world: &mut World) {
 
@@ -108,7 +109,7 @@ pub fn initialise_item_spawner(world: &mut World) {
     };
 
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y, 0.0);
+    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y + SPAWNER_Y_OFFSET, 0.0);
 
     world
         .create_entity()
