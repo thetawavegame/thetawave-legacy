@@ -1,6 +1,6 @@
 use amethyst::{
     ecs::prelude::{Component, DenseVecStorage, Entity, Entities},
-    core::nalgebra::Vector3,
+    core::math::Vector3,
 };
 use std::vec::Vec;
 

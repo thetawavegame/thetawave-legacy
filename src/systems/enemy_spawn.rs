@@ -2,7 +2,7 @@ use amethyst::{
     core::{
         Transform,
         timing::Time,
-        nalgebra::Vector3,
+        math::Vector3,
     },
     ecs::{Join, Read, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
 };
