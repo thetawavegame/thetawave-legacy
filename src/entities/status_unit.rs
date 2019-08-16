@@ -3,7 +3,7 @@ use amethyst::{
     renderer::{SpriteRender},
     core::{
         transform::Transform,
-        nalgebra::Vector3,
+        math::Vector3,
     },
 };
 
@@ -16,7 +16,7 @@ pub fn spawn_status_unit(entities: &Entities, sprite_resource: &ReadExpect<Sprit
     let status_unit_entitiy: Entity = entities.create();
 
     let mut local_transform = Transform::default();
-    local_transform.set_position(spawn_position);
+    local_transform.set_translation(spawn_position);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_resource.sprite_sheet.clone(),

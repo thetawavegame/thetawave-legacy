@@ -1,7 +1,4 @@
 use amethyst::{
-    core::{
-        nalgebra::Vector3,
-    },
     ecs::prelude::{Entities, Join, System, WriteStorage, ReadStorage, ReadExpect, LazyUpdate},
 };
 

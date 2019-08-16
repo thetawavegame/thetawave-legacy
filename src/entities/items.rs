@@ -3,7 +3,7 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
     core::{
         transform::Transform,
-        nalgebra::Vector3,
+        math::Vector3,
     }
 };
 
@@ -19,7 +19,7 @@ pub fn spawn_item(entities: &Entities, item_resource: &ReadExpect<SpriteResource
     let item_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();
-    local_transform.set_position(spawn_position);
+    local_transform.set_translation(spawn_position);
 
     //get a random item from the item pool and then remove it from the pool
     let random_item_name = item_pool.spawn_list.choose(&mut rand::thread_rng()).cloned().unwrap();

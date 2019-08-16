@@ -2,7 +2,8 @@ use amethyst::{
     prelude::Builder,
     ecs::prelude::World,
     core::transform::Transform,
-    renderer::{SpriteRender, SpriteSheetHandle, Transparent},
+    renderer::{SpriteRender, SpriteSheet, Transparent},
+    assets::Handle,
 };
 
 use crate::{
@@ -30,10 +31,10 @@ const HEALTH: f32 = 400.0;
 const COLLISION_DAMAGE: f32 = 50.0;
 
 
-pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
+pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
 
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MIN_Y + (ARENA_HEIGHT / 6.0), 0.9);
+    local_transform.set_translation_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MIN_Y + (ARENA_HEIGHT / 6.0), 0.9);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),

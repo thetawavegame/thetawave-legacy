@@ -2,10 +2,9 @@ use amethyst::{
     core::{
         Transform,
         timing::Time,
-        nalgebra::Vector3,
     },
     ecs::{Join, Read, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
-    input::InputHandler,
+    input::{InputHandler, StringBindings},
 };
 
 use crate::{
@@ -25,7 +24,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Enemy>,
-        Read<'s, InputHandler<String, String>>,
+        Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
