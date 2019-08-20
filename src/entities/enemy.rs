@@ -20,6 +20,7 @@ pub fn spawn_enemy(entities: &Entities, sprite_resource: &ReadExpect<SpriteResou
 
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
+    local_transform.set_rotation_y_axis(3.14);
 
     //get a random item from the enemy pool and then remove it from the pool
     let random_enemy_name = enemy_pool.spawn_list.choose(&mut rand::thread_rng()).cloned().unwrap();
