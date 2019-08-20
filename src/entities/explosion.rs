@@ -3,7 +3,7 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
     core::{
         transform::Transform,
-        nalgebra::Vector3,
+        math::Vector3,
     },
 };
 
@@ -20,7 +20,7 @@ pub fn spawn_explosion(entities: &Entities, explosion_resource: &ReadExpect<Spri
     let explosion_entitiy: Entity = entities.create();
 
     let mut local_transform = Transform::default();
-    local_transform.set_position(spawn_position);
+    local_transform.set_translation(spawn_position);
 
     let sprite_render = SpriteRender {
         sprite_sheet: explosion_resource.sprite_sheet.clone(),

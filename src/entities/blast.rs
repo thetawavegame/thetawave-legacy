@@ -3,7 +3,7 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
     core::{
         transform::Transform,
-        nalgebra::Vector3,
+        math::Vector3,
     },
 };
 
@@ -21,7 +21,7 @@ pub fn fire_blast(entities: &Entities, blast_resource: &ReadExpect<SpriteResourc
     let blast_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();
-    local_transform.set_position(fire_position);
+    local_transform.set_translation(fire_position);
 
     let sprite_render = SpriteRender {
         sprite_sheet: blast_resource.sprite_sheet.clone(),

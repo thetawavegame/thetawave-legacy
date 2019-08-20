@@ -3,13 +3,24 @@
 extern crate amethyst;
 
 use amethyst::{
+    //rendy::sprite_visibility::SpriteVisibilitySortingSystem,
+    assets::Processor,
     prelude::*,
-    renderer::{DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage, ALPHA, ColorMask},
+    renderer::{
+        RenderingBundle,
+        SpriteSheet,
+        types::DefaultBackend,
+        plugins::{RenderFlat2D, RenderToWindow},
+        sprite_visibility::SpriteVisibilitySortingSystem,
+    },
+    window::{DisplayConfig},
     utils::application_root_dir,
-    ui::{DrawUi},
-    core::transform::TransformBundle,
-    input::InputBundle,
+    ui::{RenderUi, UiBundle, DrawUi},
+    core::{transform::TransformBundle, frame_limiter::FrameRateLimitStrategy},
+    input::{InputBundle, StringBindings},
 };
+
+use std::time::Duration;
 
 mod space_shooter;
 pub mod systems;
@@ -22,17 +33,16 @@ use crate::space_shooter::SpaceShooter;
 
 fn main() -> amethyst::Result<()> {
     //start logging
-    let mut log = amethyst::LoggerConfig::default();
-    log.level_filter = amethyst::LogLevelFilter::Warn;
-    amethyst::start_logger(log);
+    //let mut log = amethyst::LoggerConfig::default();
+    //log.level_filter = amethyst::LogLevelFilter::Warn;
+    amethyst::start_logger(Default::default());
 
-    let path = format!(
-        "{}/resources/display_config_960.ron",
-        application_root_dir()
-    );
+    println!("here!\n");
 
-    let config = DisplayConfig::load(&path);
+    let app_root = application_root_dir()?;
+    let display_config_path = app_root.join("resources/display_config_960.ron");
 
+/*
     let pipe = Pipeline::build()
         .with_stage(
         Stage::with_backbuffer()
@@ -40,23 +50,39 @@ fn main() -> amethyst::Result<()> {
             .with_pass(DrawFlat2D::new().with_transparency(ColorMask::all(), ALPHA, None))
             .with_pass(DrawUi::new()),
     );
+*/
 
-    let bindings_path = format!(
-        "{}/resources/bindings_config.ron", application_root_dir(),
-    );
-
-    let input_bundle = InputBundle::<String, String>::new()
+    let bindings_path = app_root.join("resources/bindings_config.ron");
+    let assets_path = app_root.join("assets/");
+/*
+    let input_bundle = InputBundle::<StringBindings>::new()
         .with_bindings_from_file(bindings_path)?;
+        */
 
-    let game_data =
-        GameDataBuilder::default()
-            .with_bundle(RenderBundle::new(pipe, Some(config))
-            .with_sprite_sheet_processor()
-            .with_sprite_visibility_sorting(&[]))?
+    let game_data = GameDataBuilder::default()
+            //.with_bundle(RenderBundle::new(pipe, Some(config))
             .with_bundle(TransformBundle::new())?
-            .with_bundle(input_bundle)?;
-
-    let mut game = Application::new("./", SpaceShooter::default(), game_data)?;
+            .with_bundle(
+                InputBundle::<StringBindings>::new().with_bindings_from_file(bindings_path)?,
+            )?
+            .with_bundle(
+                RenderingBundle::<DefaultBackend>::new()
+                    .with_plugin(
+                        RenderToWindow::from_config_path(display_config_path)
+                            .with_clear([0.0, 0.0, 0.0, 1.0]),
+                    )
+                    .with_plugin(RenderFlat2D::default())
+                    //.with_plugin(RenderUi::default()),
+            )?;
+    /*
+    let mut game = Application::build(assets_path, SpaceShooter::default())?
+        .with_frame_limit(
+            FrameRateLimitStrategy::SleepAndYield(Duration::from_millis(2)),
+            144,
+        )
+        .build(game_data)?;
+    */
+    let mut game = Application::new(assets_path, SpaceShooter::default(), game_data)?;
 
     game.run();
 

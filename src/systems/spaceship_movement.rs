@@ -4,7 +4,7 @@ use amethyst::{
         timing::Time,
     },
     ecs::{Join, Read, System, WriteStorage},
-    input::InputHandler,
+    input::{InputHandler, StringBindings},
 };
 
 use crate::{
@@ -21,7 +21,7 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
     type SystemData = (
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
-        Read<'s, InputHandler<String, String>>,
+        Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
     );
 

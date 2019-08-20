@@ -44,7 +44,7 @@ impl<'s> System<'s> for ConsumableSystem {
 
                     let _result = entities.delete(consumable_entity);
                 }else {
-                    consumable_transform.translate_y(-1.0 * consumable.speed * time.delta_seconds());
+                    consumable_transform.prepend_translation_y(-1.0 * consumable.speed * time.delta_seconds());
 
                     if consumable_transform.translation()[1] < ARENA_MIN_Y {
                         let _result = entities.delete(consumable_entity);

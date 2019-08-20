@@ -65,7 +65,7 @@ impl<'s> System<'s> for ItemSystem {
 
                     let _result = entities.delete(item_entity);
                 }else {
-                    item_transform.translate_y(-1.0 * item.speed * time.delta_seconds());
+                    item_transform.prepend_translation_y(-1.0 * item.speed * time.delta_seconds());
 
                     if item_transform.translation()[1] + item.height/2.0 < ARENA_MIN_Y {
                         let _result = entities.delete(item_entity);
