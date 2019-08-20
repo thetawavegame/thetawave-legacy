@@ -80,20 +80,20 @@ impl Spaceship {
                 self.barrel_action_right = true;
                 self.barrel_action_left= false;
             }
-            transform.set_x(ARENA_MIN_X + (self.width/2.0));
+            transform.set_translation_x(ARENA_MIN_X + (self.width/2.0));
             self.current_velocity_x = self.current_velocity_x.abs();
         }else if (spaceship_x + (self.width/2.0)) > ARENA_MAX_X {       //if colliding with right border of arena
             if self.barrel_action_right {
                 self.barrel_action_right = false;
                 self.barrel_action_left= true;
             }
-            transform.set_x(ARENA_MAX_X - (self.width/2.0));
+            transform.set_translation_x(ARENA_MAX_X - (self.width/2.0));
             self.current_velocity_x = -1.0 *  self.current_velocity_x.abs();
         }else if (spaceship_y - (self.height/2.0)) < ARENA_MIN_Y {      //if colliding with bottom of arena
-            transform.set_y(ARENA_MIN_Y + (self.height/2.0));
+            transform.set_translation_y(ARENA_MIN_Y + (self.height/2.0));
             self.current_velocity_y = self.current_velocity_y.abs();
         }else if (spaceship_y + (self.height/2.0)) > ARENA_MAX_Y {      //if colliding with bottom of arena
-            transform.set_y(ARENA_MAX_Y - (self.height/2.0));
+            transform.set_translation_y(ARENA_MAX_Y - (self.height/2.0));
             self.current_velocity_y = -1.0  * self.current_velocity_y.abs();
         }
 

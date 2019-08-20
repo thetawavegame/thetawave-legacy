@@ -177,7 +177,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
 
     //create transform
     let mut local_transform = Transform::default();
-    local_transform.set_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y + SPAWNER_Y_OFFSET, 0.0);
+    local_transform.set_translation_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MAX_Y + SPAWNER_Y_OFFSET, 0.0);
 
     world
         .create_entity()

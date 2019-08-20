@@ -33,8 +33,8 @@ impl<'s> System<'s> for BlastSystem {
                 let _result = entities.delete(blast_entity);
             }
 
-            blast_transform.translate_x(blast_component.x_velocity * blast_component.velocity_factor * time.delta_seconds());
-            blast_transform.translate_y((blast_component.y_velocity * blast_component.velocity_factor + blast_component.speed) * time.delta_seconds());
+            blast_transform.prepend_translation_x(blast_component.x_velocity * blast_component.velocity_factor * time.delta_seconds());
+            blast_transform.prepend_translation_y((blast_component.y_velocity * blast_component.velocity_factor + blast_component.speed) * time.delta_seconds());
         }
     }
 }

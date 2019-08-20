@@ -1,6 +1,7 @@
 use crate::resources::SpriteResource;
 use amethyst::ecs::prelude::World;
-use amethyst::renderer::SpriteSheetHandle;
+use amethyst::renderer::SpriteSheet;
+use amethyst::assets::{Handle};
 
 pub mod blast;
 pub mod spaceship;
@@ -32,7 +33,7 @@ pub use self::{
     status_unit::spawn_status_unit,
 };
 
-pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) -> SpriteResource {
+pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
     let sprite_resource = SpriteResource {
         sprite_sheet: sprite_sheet_handle,
     };

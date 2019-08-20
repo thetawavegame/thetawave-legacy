@@ -1,7 +1,7 @@
 use amethyst::{
     core::{
         transform::Transform,
-        nalgebra::Vector3,
+        math::Vector3,
     },
 };
 
@@ -46,8 +46,8 @@ pub trait Rigidbody {
     fn set_current_velocity_x(&mut self, value: f32);
 
     fn update_position(&self, transform: &mut Transform, dt: f32) {
-        transform.set_x(transform.translation().x + self.current_velocity_x()*dt);
-        transform.set_y(transform.translation().y + self.current_velocity_y()*dt);
+        transform.set_translation_x(transform.translation().x + self.current_velocity_x()*dt);
+        transform.set_translation_y(transform.translation().y + self.current_velocity_y()*dt);
     }
 
     fn accelerate_x(&mut self, direction: f32) {
