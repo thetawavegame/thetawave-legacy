@@ -1,12 +1,18 @@
 # Space Shooter
 
-This game was made with the [amethyst](https://amethyst.rs/) engine. It is inspired by games like Raiden and The Binding of Isaac. Checkout my development journey on my [youtube](https://www.youtube.com/watch?v=OtN5vL80u4Q&list=PL4Dmmk1VXA5p0tVmxNUr8j0ly5ERbL1hN) channel and my write-up about using Amethyst on my [website](https://micronote.tech/2019/06/Space-Shooter-Game/).
+# Project Introduction
+
+This game was made with the [Amethyst](https://amethyst.rs/) engine. It is inspired by games like Raiden and The Binding of Isaac. Checkout my development journey on my [youtube](https://www.youtube.com/watch?v=OtN5vL80u4Q&list=PL4Dmmk1VXA5p0tVmxNUr8j0ly5ERbL1hN) channel and my write-up about using Amethyst on my [website](https://micronote.tech/2019/06/Space-Shooter-Game/).
+
+# Game Introduction
+
+In this game you control a spaceship. Your goal is to defend an objective from the incoming invasion of enemy spaceships while not running out of health in the process. You can shoot the enemies with your spaceships blasters or ram into them with your barrel roll dealing damage to yourself in the process. How long can you last?
 
 ![Alt text](https://giant.gfycat.com/GreenWindingAltiplanochinchillamouse.gif)
 
 # To Run
 
-Clone this repository and enter `cargo run` in the root of its directory.
+Clone this repository and enter `cargo run` in the root of its directory. There is currently no metal integration, so it must be run on Windows or Linux.
 
 # Controls
 
@@ -63,3 +69,48 @@ Clone this repository and enter `cargo run` in the root of its directory.
 - [ ] gravity gun effect with enemies
 - [ ] shield
 - [ ] speed boost
+
+# MVP Specification
+
+**Inspirations**: Raiden, Binding of Isaac,
+**Genres**: Space shooter, Fantasy
+**Plot**: Under discussion
+
+## Setting
+
+The universe starting at Earth.
+
+## Camera
+
+Stationary, focused on the play arena.
+
+## Player Interaction
+
+Player can move, shoot, barrel roll and use other special abilities and items.
+
+## Game Mechanics
+
+- The goal of the game is to unlock all of the characters and beat all of the bosses for all characters.
+- The goal of any given run is to beat a final boss
+- The goal of any given level is to prevent enemies from getting to the bottom of the screen, depleting the "defense" bar while not having the player's "health" bar depleted.
+- The player loses health if their ship collides with an enemy blast or an enemy spaceship.
+- Each enemy type has a set amount of health that must be depleted to destroy them.
+- Each level has several phases where each phase has some degree of random generation. (See Level Phases)
+- Each level increases in difficulty.
+- Meeting certain objectives will lead to unlocks of other characters and items.
+- Enemies drop pickups and a currency which will need to be manually picked up by the player.
+
+## Level Phases
+A level features multiple phases. See example phase-map below.
+
+Enemies->Mini-game->Shop/Pitstop->Enemies->Boss
+
+In the "Enemies" phase an appropriately themed and appropriately difficult selection of enemies is chosen and total enemy count is determined. Enemies are then spawned at random from the selection and the player must deal with them until the number of enemies spawned reaches the total number of enemies for the level.
+
+The "Mini-game" phase will feature a challenge apart from shooting eneimes. This could be something like a large amount of asteroids spawning which the player will need to dodge.
+
+The "Shop/Pitstop" phase will be a point in the level where the player can spend their currency to buy items and pickups.
+
+The "Boss" phase will feature a super tough enemy that will serve as the toughest challenge in the level. Defeating the boss ends the level.
+
+
