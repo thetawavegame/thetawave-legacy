@@ -72,8 +72,10 @@ Clone this repository and enter `cargo run` in the root of its directory. There 
 
 # MVP Specification
 
-**Inspirations**: Raiden, Binding of Isaac,
+**Inspirations**: Raiden, Binding of Isaac
+
 **Genres**: Space shooter, Fantasy
+
 **Plot**: Under discussion
 
 ## Setting
