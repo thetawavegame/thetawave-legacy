@@ -1,9 +1,5 @@
 use amethyst::{
-    core::{
-        transform::Transform,
-        timing::Time,
-    },
-    ecs::prelude::{Entities, Join, System, WriteStorage, Read},
+    ecs::prelude::{Entities, Join, System, WriteStorage},
 };
 
 use crate::{

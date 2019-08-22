@@ -7,14 +7,11 @@ use amethyst::{
     ecs::{Join, Read, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
 };
 
-use rand::{thread_rng, Rng};
-
 use crate::{
     entities::{spawn_item},
     components::{Spawner, Item},
     resources::SpriteResource,
 };
-use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET};
 
 
 pub struct ItemSpawnSystem;
