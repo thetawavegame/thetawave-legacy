@@ -1,7 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use std::{
     collections::{HashMap},
-    vec::Vec,
 };
 
 

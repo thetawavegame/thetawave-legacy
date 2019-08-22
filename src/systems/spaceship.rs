@@ -13,7 +13,6 @@ use crate::{
     resources::{SpriteResource},
 };
 
-const PLAYER_BLAST_Z: f32 = 0.8;
 const PLAYER_BLAST_SPRITE_INDEX: usize = 3;
 
 pub struct SpaceshipSystem;

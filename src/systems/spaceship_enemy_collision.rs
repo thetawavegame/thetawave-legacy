@@ -7,7 +7,6 @@ use crate::{
     components::{Spaceship, Enemy},
     systems::hitbox_collide,
 };
-use crate::space_shooter::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y};
 
 
 pub struct SpaceshipEnemyCollisionSystem;

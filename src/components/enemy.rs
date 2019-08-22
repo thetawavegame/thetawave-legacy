@@ -3,14 +3,9 @@ use amethyst::{
     core::Transform,
 };
 
-use std::{
-    collections::{HashMap},
-    vec::Vec,
-};
-
 use crate::{
     components::{Pool, Consumable, Rigidbody, Fires},
-    space_shooter::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
+    space_shooter::{ARENA_MIN_X, ARENA_MAX_X},
 };
 
 
@@ -81,7 +76,6 @@ impl Component for Enemy {
 impl Enemy {
     pub fn constrain_to_arena(&mut self, transform: &mut Transform) {
         let enemy_x = transform.translation().x;
-        let enemy_y = transform.translation().y;
         if (enemy_x - (self.width/2.0)) < ARENA_MIN_X || (enemy_x + (self.width/2.0)) > ARENA_MAX_X {
             self.current_velocity_x = (-1.0) * self.current_velocity_x;
         }

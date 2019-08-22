@@ -31,7 +31,7 @@ impl StatusBar {
     pub fn update_units_x(&mut self, max_value: f32, current_value: f32, entities: &Entities) -> Option<Vector3<f32>> {
 
         let status_divisor = max_value / self.unit_limit;
-        let mut status_unit_num = (current_value / status_divisor).ceil() as usize;
+        let status_unit_num = (current_value / status_divisor).ceil() as usize;
 
         if status_unit_num > self.status_unit_stack.len() {
             let status_position = Vector3::new(
@@ -53,7 +53,7 @@ impl StatusBar {
     pub fn update_units_y(&mut self, max_value: f32, current_value: f32, entities: &Entities) -> Option<Vector3<f32>> {
 
         let status_divisor = max_value / self.unit_limit;
-        let mut status_unit_num = (current_value / status_divisor).ceil() as usize;
+        let status_unit_num = (current_value / status_divisor).ceil() as usize;
 
         if status_unit_num > self.status_unit_stack.len() {
             let status_position = Vector3::new(

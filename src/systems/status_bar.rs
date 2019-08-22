@@ -9,7 +9,6 @@ use crate::{
 };
 
 
-const Z: f32 = 0.9;
 const HEALTH_SPRITE_INDEX: usize = 10;
 const DEFENSE_SPRITE_INDEX: usize = 11;
 const ROLL_SPRITE_INDEX: usize = 12;
@@ -50,7 +49,7 @@ impl<'s> System<'s> for StatusBarSystem {
 
                 StatusType::Roll => {
                     for spaceship in (&spaceships).join() {
-                        if let Some(status_position) = status_bar.update_units_x(spaceship.barrel_cooldown, (spaceship.barrel_cooldown - spaceship.barrel_reset_timer), &entities) {
+                        if let Some(status_position) = status_bar.update_units_x(spaceship.barrel_cooldown, spaceship.barrel_cooldown - spaceship.barrel_reset_timer, &entities) {
                             status_bar.status_unit_stack.push(spawn_status_unit(&entities, &sprite_resource, ROLL_SPRITE_INDEX, status_position, &lazy_update));
                         }
                     }

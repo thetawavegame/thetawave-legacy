@@ -10,10 +10,11 @@ use amethyst::{
         is_key_down,
         VirtualKeyCode,
     },
-    ecs::prelude::{Dispatcher, DispatcherBuilder},
+    ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     renderer::{
         formats::texture::ImageFormat,
     },
+    shrev::EventChannel,
 };
 
 use crate::systems;
@@ -22,18 +23,25 @@ use crate::entities::{initialise_sprite_resource, initialise_spaceship, initiali
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
 pub const GAME_HEIGHT: f32 = 270.0;
-
 pub const ARENA_MIN_Y: f32 = 0.0;
 pub const ARENA_MAX_Y: f32 = GAME_HEIGHT - ARENA_MIN_Y;
-
 pub const ARENA_MIN_X: f32 = GAME_WIDTH / 8.0;
 pub const ARENA_MAX_X: f32 = GAME_WIDTH - ARENA_MIN_X;
-
 pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
 pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
-
 pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
 
+#[derive(Debug)]
+pub struct EnemyCollisionEvent {
+    pub entity_a: Entity,
+    pub entity_b: Entity,
+}
+
+impl EnemyCollisionEvent {
+    pub fn new(entity_a: Entity, entity_b: Entity) -> EnemyCollisionEvent {
+        EnemyCollisionEvent {entity_a, entity_b}
+    }
+}
 
 pub struct SpaceShooter {
     dispatcher: Dispatcher<'static, 'static>,
@@ -55,7 +63,8 @@ impl Default for SpaceShooter {
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
-                .with(systems::EnemyEnemyCollisionSystem, "enemy_enemy_collision_system", &[])
+                .with(systems::CollisionSystem, "collision_system", &[])
+                .with(systems::EnemyEnemyCollisionSystem::default(), "enemy_enemy_collision_system", &[])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
                 .build(),
@@ -73,6 +82,9 @@ impl SimpleState for SpaceShooter {
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
 
         self.dispatcher.setup(&mut world.res);
+
+        //add the event channels
+        //world.add_resource(EventChannel::<EnemyCollisionEvent>::new()); 
 
         initialise_defense(world);
         initialise_status_bars(world);
@@ -139,17 +151,6 @@ fn load_spritesheet(world: &mut World, spritesheet: &str, spritesheet_ron: &str)
 }
 
 fn initialise_camera(world: &mut World) {
-    /*
-    let mut transform = Transform::default();
-    transform.set_z(1.0);
-
-    world.create_entity().with(Camera::from(Projection::orthographic(
-        0.0,
-        GAME_WIDTH,
-        0.0,
-        GAME_HEIGHT,
-    ))).with(transform).build();
-    */
     let mut transform = Transform::default();
     transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 1.0);
 

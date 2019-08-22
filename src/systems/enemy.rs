@@ -4,7 +4,8 @@ use amethyst::{
         timing::Time,
         math::Vector3,
     },
-    ecs::prelude::{Entities, Join, System, WriteStorage, Read, ReadExpect, LazyUpdate},
+    ecs::prelude::{Entities, Join, System, WriteStorage, Read, ReadExpect, LazyUpdate, Write},
+    shrev::EventChannel,
 };
 
 use rand::{thread_rng, Rng};
@@ -15,7 +16,7 @@ use crate::{
     resources::SpriteResource,
 };
 use crate::entities::fire_blast;
-use crate::space_shooter::ARENA_MIN_Y;
+use crate::space_shooter::{ARENA_MIN_Y, EnemyCollisionEvent};
 
 const ENEMY_BLAST_SPRITE_INDEX: usize = 9;
 const EXPLOSION_SPRITE_INDEX: usize = 4;
@@ -34,10 +35,13 @@ impl<'s> System<'s> for EnemySystem {
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
+        //Write<'s, EventChannel<EnemyCollisionEvent>>,
     );
 
     fn run(&mut self, (entities, mut enemys, mut defenses, mut transforms, time, sprite_resource, lazy_update): Self::SystemData) {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
+
+            //enemy_collision_event_channel.single_write(EnemyCollisionEvent::A);
 
             //limit the maximum knockback and speed
             enemy_component.limit_knockback();
