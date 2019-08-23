@@ -13,7 +13,8 @@ mod enemy_enemy_collision;
 mod consumable;
 mod status_bar;
 mod defense;
-mod collision;
+mod collision_detection;
+mod collision_handler;
 
 
 pub use self::{
@@ -32,7 +33,8 @@ pub use self::{
     consumable::ConsumableSystem,
     status_bar::StatusBarSystem,
     defense::DefenseSystem,
-    collision::CollisionSystem,
+    collision_detection::CollisionDetectionSystem,
+    collision_handler::CollisionHandlerSystem,
 };
 
 

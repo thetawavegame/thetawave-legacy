@@ -32,14 +32,20 @@ pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
 pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
 
 #[derive(Debug)]
-pub struct EnemyCollisionEvent {
+pub struct CollisionEvent {
     pub entity_a: Entity,
+    pub type_a: String,
+    pub to_velocity_x_a: f32, //velocity of the entity acting on a
+    pub to_velocity_y_a: f32, 
     pub entity_b: Entity,
+    pub type_b: String,
+    pub to_velocity_x_b: f32, //velocity of the entity acting on b
+    pub to_velocity_y_b: f32,
 }
 
-impl EnemyCollisionEvent {
-    pub fn new(entity_a: Entity, entity_b: Entity) -> EnemyCollisionEvent {
-        EnemyCollisionEvent {entity_a, entity_b}
+impl CollisionEvent {
+    pub fn new(entity_a: Entity, type_a: String, to_velocity_x_a: f32, to_velocity_y_a: f32, entity_b: Entity, type_b: String, to_velocity_x_b: f32, to_velocity_y_b: f32) -> CollisionEvent {
+        CollisionEvent {entity_a, type_a, to_velocity_x_a, to_velocity_y_a, entity_b, type_b, to_velocity_x_b, to_velocity_y_b}
     }
 }
 
@@ -62,9 +68,10 @@ impl Default for SpaceShooter {
                 .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
+                .with(systems::CollisionDetectionSystem, "collision_detection_system", &[])
+                .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &[])
                 .with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
-                .with(systems::CollisionSystem, "collision_system", &[])
-                .with(systems::EnemyEnemyCollisionSystem::default(), "enemy_enemy_collision_system", &[])
+                //.with(systems::EnemyEnemyCollisionSystem::default(), "enemy_enemy_collision_system", &[])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
                 .build(),
