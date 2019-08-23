@@ -16,7 +16,7 @@ use crate::{
     resources::SpriteResource,
 };
 use crate::entities::fire_blast;
-use crate::space_shooter::{ARENA_MIN_Y, EnemyCollisionEvent};
+use crate::space_shooter::{ARENA_MIN_Y};
 
 const ENEMY_BLAST_SPRITE_INDEX: usize = 9;
 const EXPLOSION_SPRITE_INDEX: usize = 4;
