@@ -56,7 +56,7 @@ Clone this repository and enter `cargo run` in the root of its directory. There 
 - [x] health pickups
 - [ ] levels with end bosses
 - [ ] specific item spawn times
-- [ ] mini challenges for rewards or penalties (example: certain ships to let past you unharmed)
+- [x] mini challenges for rewards or penalties (example: certain ships to let past you unharmed)
 - [ ] defence objective
 ## Items
 ### Passive 
