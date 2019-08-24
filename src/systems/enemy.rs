@@ -4,8 +4,7 @@ use amethyst::{
         timing::Time,
         math::Vector3,
     },
-    ecs::prelude::{Entities, Join, System, WriteStorage, Read, ReadExpect, LazyUpdate, Write},
-    shrev::EventChannel,
+    ecs::prelude::{Entities, Join, System, WriteStorage, Read, ReadExpect, LazyUpdate},
 };
 
 use rand::{thread_rng, Rng};
@@ -89,6 +88,8 @@ impl<'s> System<'s> for EnemySystem {
                 }
 
                 EnemyType::Drone => {}
+
+                EnemyType::Hauler => {}
             }
         }
     }

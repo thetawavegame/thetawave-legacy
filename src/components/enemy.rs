@@ -13,6 +13,7 @@ use crate::{
 pub enum EnemyType {
     Pawn,
     Drone,
+    Hauler, //actually an ally
 }
 
 #[derive(Clone)]
