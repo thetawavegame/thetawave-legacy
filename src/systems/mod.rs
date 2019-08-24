@@ -8,8 +8,6 @@ mod item;
 mod spaceship_movement;
 mod item_spawn;
 mod enemy_hit;
-mod spaceship_enemy_collision;
-mod enemy_enemy_collision;
 mod consumable;
 mod status_bar;
 mod defense;
@@ -28,8 +26,6 @@ pub use self::{
     spaceship_movement::SpaceshipMovementSystem,
     item_spawn::ItemSpawnSystem,
     enemy_hit::EnemyHitSystem,
-    spaceship_enemy_collision::SpaceshipEnemyCollisionSystem,
-    enemy_enemy_collision::EnemyEnemyCollisionSystem,
     consumable::ConsumableSystem,
     status_bar::StatusBarSystem,
     defense::DefenseSystem,
