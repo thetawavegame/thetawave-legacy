@@ -41,7 +41,7 @@ Clone this repository and enter `cargo run` in the root of its directory. There 
 - [x] enemy blasts
 - [x] barrel roll blast immunity
 - [x] spaceship to enemy collisions
-- [ ] enemy to enemy collisions
+- [x] enemy to enemy collisions
 ## Visual and Audio
 - [x] health bar
 - [x] defense bar
