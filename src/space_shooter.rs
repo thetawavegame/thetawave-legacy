@@ -18,7 +18,7 @@ use amethyst::{
 };
 
 use crate::systems;
-use crate::entities::{initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
+use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -57,6 +57,7 @@ impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
             dispatcher: DispatcherBuilder::new()
+                .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
                 .with(systems::ConsumableSystem, "consumable_system", &[])
@@ -93,6 +94,7 @@ impl SimpleState for SpaceShooter {
         //add the event channels
         //world.add_resource(EventChannel::<EnemyCollisionEvent>::new()); 
 
+        initialise_gamemaster(world);
         initialise_defense(world);
         initialise_status_bars(world);
         initialise_background(world, background_sprite_sheet_handle);

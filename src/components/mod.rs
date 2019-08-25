@@ -14,6 +14,7 @@ mod consumable;
 mod defense;
 mod status_bar;
 mod spawner;
+mod gamemaster;
 
 pub use self::{
     blast::Blast,
@@ -25,6 +26,7 @@ pub use self::{
     defense::Defense,
     status_bar::{StatusBar, StatusType},
     spawner::{Pool, Spawner},
+    gamemaster::{GameMaster, Phase, PhaseType},
 };
 
 

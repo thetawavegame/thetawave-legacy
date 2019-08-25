@@ -35,7 +35,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
     fn run(&mut self, (enemy_collision_event_channel, mut spaceships, mut enemies, transforms, entities): Self::SystemData) {
 
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            println!("{:?}", event);
+            //println!("{:?}", event);
             
             for (spaceship, spaceship_transform, spaceship_entity) in (&mut spaceships, &transforms, &entities).join() {
                 for (enemy, enemy_transform, enemy_entity) in (&mut enemies, &transforms, &entities).join() {
@@ -57,7 +57,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                         if event.entity_a == enemy_entity {
 
                         
-                            println!("spaceship collision");
+                            //println!("spaceship collision");
                             let mut enemy_dead = false;
                             if enemy.health <= 0.0 {
                                 enemy_dead = true;
@@ -95,29 +95,5 @@ impl<'s> System<'s> for CollisionHandlerSystem {
             }
 
         }
-        /*
-        for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            //println!("Recieved an event: {:?}", event);
-            if event.type_b == "enemy"{
-                println!("enemy to enemy collision");
-                //handle enemy to enemy collision
-                for (enemy, enemy_transform, enemy_entity) in (&mut enemies, &transforms, &entities).join() {
-                    if enemy_entity == event.entity_a || enemy_entity == event.entity_b {
-                        
-                    }
-                }
-            }else if event.type_b == "spaceship"{
-                println!("enemy to spaceship collision");
-                //handle spaceship collision
-                for (spaceship, spaceship_transform) in (&mut spaceships, &transforms).join() {
-                    for (enemy, enemy_transform) in (&mut enemies, &transforms).join() {
-
-                    }
-                }
-            }
-
-        }
-        */
-        
     }
 }

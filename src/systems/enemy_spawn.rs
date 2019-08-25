@@ -4,12 +4,12 @@ use amethyst::{
         timing::Time,
         math::Vector3,
     },
-    ecs::{Join, Read, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
+    ecs::{Join, Read, ReadStorage, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
 };
 
 use crate::{
     entities::{spawn_enemy},
-    components::{Spawner, Enemy},
+    components::{Spawner, Enemy, GameMaster, PhaseType},
     resources::SpriteResource,
 };
 
@@ -24,19 +24,36 @@ impl<'s> System<'s> for SpawnerSystem {
         WriteStorage<'s, Spawner<Enemy>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
+        ReadStorage<'s, GameMaster>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut transforms, mut spawners, time, enemy_resource, lazy_update): Self::SystemData) {
+    fn run(&mut self, (entities, mut transforms, mut spawners, time, enemy_resource, gamemasters, lazy_update): Self::SystemData) {
+        for gamemaster in (gamemasters).join() {
 
-        for (spawner, transform) in (&mut spawners, &mut transforms).join() {
-            if let Some(new_x) = spawner.can_spawn(time.delta_seconds()) {
+            if gamemaster.phase_idx < gamemaster.last_phase {
+            
+                match gamemaster.phase_map[gamemaster.phase_idx].phase_type {
+                    PhaseType::Invasion => {
 
-                let spawn_position = Vector3::new(
-                    new_x, transform.translation()[1], transform.translation()[2]
-                );
-                spawn_enemy(&entities, &enemy_resource, &mut spawner.pool, spawn_position, &lazy_update);
+                        for (spawner, transform) in (&mut spawners, &mut transforms).join() {
+                            if let Some(new_x) = spawner.can_spawn(time.delta_seconds()) {
+
+                                let spawn_position = Vector3::new(
+                                    new_x, transform.translation()[1], transform.translation()[2]
+                                );
+                                spawn_enemy(&entities, &enemy_resource, &mut spawner.pool, spawn_position, &lazy_update);
+                            }
+                        }
+
+                    }
+
+                    PhaseType::Boss => {}
+
+                    PhaseType::Rest => {}
+                }
             }
         }
+
     }
 }
