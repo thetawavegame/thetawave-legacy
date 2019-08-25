@@ -13,6 +13,7 @@ mod status_bar;
 mod defense;
 mod collision_detection;
 mod collision_handler;
+mod gamemaster;
 
 
 pub use self::{
@@ -31,6 +32,7 @@ pub use self::{
     defense::DefenseSystem,
     collision_detection::CollisionDetectionSystem,
     collision_handler::CollisionHandlerSystem,
+    gamemaster::GameMasterSystem,
 };
 
 
