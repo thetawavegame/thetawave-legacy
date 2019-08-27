@@ -9,6 +9,7 @@ pub struct Consumable {
     pub hitbox_height: f32,
     pub health_value: f32,
     pub defense_value: f32,
+    pub money_value: usize,
     pub sprite_index: usize,
     pub speed: f32,
 }

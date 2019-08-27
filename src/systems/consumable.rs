@@ -37,6 +37,7 @@ impl<'s> System<'s> for ConsumableSystem {
                 if hitbox_collide(consumable_x, consumable_y, spaceship.pos_x, spaceship.pos_y, consumable.hitbox_width, consumable.hitbox_height, spaceship.hitbox_width, spaceship.hitbox_height) {
 
                     spaceship.health += consumable.health_value;
+                    spaceship.money += consumable.money_value;
 
                     for defense in (&mut defenses).join() {
                         defense.defense += consumable.defense_value;
