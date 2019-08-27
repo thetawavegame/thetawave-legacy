@@ -23,8 +23,10 @@ const CONSUMABLE_HITBOX_HEIGHT: f32 = 10.0;
 const CONSUMABLE_HEALTH_VALUE: f32 = 30.0;
 const CONSUMABLE_DEFENSE_VALUE: f32 = 70.0;
 const CONSUMABLE_SPEED: f32 = 35.0;
-const CONSUMABLE_HEALTH_RATIO: usize = 5;
-const CONSUMABLE_DEFENSE_RATIO: usize = 1;
+
+const CONSUMABLE_HEALTH_RATIO: usize = 22;
+const CONSUMABLE_DEFENSE_RATIO: usize = 3;
+const CONSUMABLE_MONEY_RATIO: usize = 75;
 
 const ENEMY_HEIGHT: f32 = 18.0;
 const ENEMY_WIDTH: f32 = 18.0;
@@ -42,7 +44,7 @@ const ENEMY_ACCELERATION_Y: f32 = 4.0;
 const ENEMY_DECELERATION_Y: f32 = 1.0;
 const ENEMY_MAX_KNOCKBACK_SPEED: f32 = 100.0;
 const ENEMY_COLLISION_DAMAGE: f32 = 30.0;
-const ENEMY_DROP_CHANCE: f32 = 0.09;
+const ENEMY_DROP_CHANCE: f32 = 0.2;
 const ENEMY_BLAST_SPEED: f32 = -60.0;
 const ENEMY_BLAST_DAMAGE: f32 = 30.0;
 
@@ -56,6 +58,7 @@ const HAULER_SPRITE_INDEX: usize = 15;
 
 const HEALTH_CONSUMABLE_SPRITE_INDEX: usize = 13;
 const DEFENSE_CONSUMABLE_SPRITE_INDEX: usize = 14;
+const MONEY_CONSUMABLE_SPRITE_INDEX: usize = 16;
 
 const SPAWNER_Y_OFFSET: f32 = 20.0;
 
@@ -71,6 +74,9 @@ pub fn initialise_enemy_spawner(world: &mut World) {
     for _ in 0..CONSUMABLE_DEFENSE_RATIO {
         consumables_list.push("defense".to_string());
     }
+    for _ in 0..CONSUMABLE_MONEY_RATIO {
+        consumables_list.push("money".to_string());
+    }
 
     let health_consumable = Consumable {
         width: CONSUMABLE_WIDTH,
@@ -79,6 +85,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_height: CONSUMABLE_HITBOX_HEIGHT,
         health_value: CONSUMABLE_HEALTH_VALUE,
         defense_value: 0.0,
+        money_value: 0,
         sprite_index: HEALTH_CONSUMABLE_SPRITE_INDEX,
         speed: CONSUMABLE_SPEED,
     };
@@ -90,13 +97,27 @@ pub fn initialise_enemy_spawner(world: &mut World) {
         hitbox_height: CONSUMABLE_HITBOX_HEIGHT,
         health_value: 0.0,
         defense_value: CONSUMABLE_DEFENSE_VALUE,
+        money_value: 0,
         sprite_index: DEFENSE_CONSUMABLE_SPRITE_INDEX,
+        speed: CONSUMABLE_SPEED,
+    };
+
+    let money_consumable = Consumable {
+        width: CONSUMABLE_WIDTH,
+        height: CONSUMABLE_HEIGHT,
+        hitbox_width: CONSUMABLE_HITBOX_WIDTH,
+        hitbox_height: CONSUMABLE_HITBOX_HEIGHT,
+        health_value: 0.0,
+        defense_value: 0.0,
+        money_value: 1,
+        sprite_index: MONEY_CONSUMABLE_SPRITE_INDEX,
         speed: CONSUMABLE_SPEED,
     };
 
     let mut consumables = HashMap::new();
     consumables.insert("health".to_string(), health_consumable);
     consumables.insert("defense".to_string(), defense_consumable);
+    consumables.insert("money".to_string(), money_consumable);
 
     //create consumable pools for enemies
     let standard_pool = Pool {

@@ -10,7 +10,7 @@ use crate::{
 
 const STARTING_TICK: usize = 0;
 const STARTING_PHASE_IDX: usize = 0;
-const LAST_PHASE_IDX: usize = 2;
+const LAST_PHASE_IDX: usize = 4;
 const TICK_LENGTH: f32 = 1.0;
 
 
@@ -20,7 +20,7 @@ pub fn initialise_gamemaster(world: &mut World) {
 
     let phase_1 = Phase {
         phase_type: PhaseType::Rest,
-        length: 10, 
+        length: 8, 
     };
 
     let phase_2 = Phase {
@@ -28,8 +28,21 @@ pub fn initialise_gamemaster(world: &mut World) {
         length: 60,
     };
 
+    let phase_3 = Phase {
+        phase_type: PhaseType::Rest,
+        length: 8, 
+    };
+
+    let phase_4 = Phase {
+        phase_type: PhaseType::Invasion,
+        length: 300,
+    };
+    
+    
     phase_map.push(phase_1);
     phase_map.push(phase_2);
+    phase_map.push(phase_3);
+    phase_map.push(phase_4);
 
 
     world

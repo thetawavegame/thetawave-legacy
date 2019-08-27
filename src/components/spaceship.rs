@@ -34,6 +34,7 @@ pub struct Spaceship {
     pub blast_speed: f32,
     pub max_health: f32,
     pub health: f32,
+    pub money: usize,
     pub knockback_max_speed: f32,
     pub steel_barrel: bool,
     pub collision_damage: f32,

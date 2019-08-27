@@ -23,18 +23,22 @@ impl<'s> System<'s> for GameMasterSystem {
         for gamemaster in (&mut gamemasters).join() {
             if gamemaster.tick_timer > 0.0 {
                 gamemaster.tick_timer -= time.delta_seconds();
-            } else if gamemaster.phase_idx < gamemaster.last_phase {
+            } else {
                 println!("phase index: {}\tcurrent_tick: {}", gamemaster.phase_idx, gamemaster.current_tick);
                 gamemaster.tick_timer = gamemaster.tick_length;
                 gamemaster.current_tick += 1;
-                if gamemaster.current_tick >= gamemaster.phase_map[gamemaster.phase_idx].length {
+
+                if gamemaster.phase_idx < gamemaster.last_phase && gamemaster.current_tick >= gamemaster.phase_map[gamemaster.phase_idx].length {
                     gamemaster.phase_idx += 1;
                     gamemaster.current_tick = 0;
                 }
-            } else {
+            }
+            /*
+            else {
                 println!("phase index: {}\tcurrent_tick: {}", gamemaster.phase_idx, gamemaster.current_tick);
                 gamemaster.current_tick += 1;
             }
+            */
         }
     }
 }
