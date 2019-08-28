@@ -14,7 +14,7 @@ In this game you control a spaceship. Your goal is to defend an objective from t
 
 To run on MacOSX make sure that XCode is installed and change the line in the Cargo.toml file:
 
-features = ["vulkan"] => features = ["metal"]
+`features = ["vulkan"]` => `features = ["metal"]`
 
 Leave everything as is if running on Windows or Linux and enter `cargo run` in the root of the project.
 
@@ -57,7 +57,7 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |:---:|:---:|:---:|
 |Drone|![drone_enemy](assets/texture/portraits/drone_portrait.png)|Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.|
 |Pawn|![pawn_enemy](assets/texture/portraits/pawn_portrait.png)|Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
-|Polyp|![pawn_enemy](assets/texture/portraits/polyp_portrait.png)|Coming soon.|
+|Flying Polyp|![pawn_enemy](assets/texture/portraits/polyp_portrait.png)|Coming soon.|
 
 # Allies
 
