@@ -48,6 +48,8 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |:---:|:---:|:---:|
 |Health Wrench|![health_wrench](assets/texture/portraits/health_wrench_portrait.png)|Grants health to the player.|
 |Defense Wrench|![defense_wrench](assets/texture/portraits/defense_wrench_portrait.png)|Grants defense.|
+|1x Currency|![money_1_wrench](assets/texture/portraits/money_1_portrait.png)|Grants 1 currency.|
+|5x Currency|![money_5_wrench](assets/texture/portraits/money_5_portrait.png)|Grants 5 currency.|
 
 # Enemies
 
@@ -55,6 +57,7 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |:---:|:---:|:---:|
 |Drone|![drone_enemy](assets/texture/portraits/drone_portrait.png)|Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.|
 |Pawn|![pawn_enemy](assets/texture/portraits/pawn_portrait.png)|Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
+|Polyp|![pawn_enemy](assets/texture/portraits/polyp_portrait.png)|Coming soon.|
 
 # Allies
 
@@ -62,6 +65,11 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |:---:|:---:|:---:|
 |Hauler|![hauler_ally](assets/texture/portraits/hauler_portrait.png)|Moves towards the bottom of the arena at a very reduced speed and grants defense on arrival.|
 
+# Bosses
+
+|Name|Image|Description|
+|:---:|:---:|:---:|
+|Repeater|![repeater_boss](assets/texture/portraits/repeater_portrait.png)|Coming soon.|
 
 # MVP Specification
 
@@ -145,5 +153,3 @@ The "Boss" phase will feature a super tough enemy that will serve as the toughes
 - [ ] gravity gun effect with enemies
 - [ ] shield
 - [ ] speed boost
-
-
