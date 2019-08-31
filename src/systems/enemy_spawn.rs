@@ -8,9 +8,10 @@ use amethyst::{
 };
 
 use crate::{
-    entities::{spawn_enemy},
+    entities::{spawn_enemy, spawn_boss},
     components::{Spawner, Enemy, GameMaster, PhaseType},
     resources::SpriteResource,
+    space_shooter::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
 };
 
 
@@ -24,12 +25,12 @@ impl<'s> System<'s> for SpawnerSystem {
         WriteStorage<'s, Spawner<Enemy>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
-        ReadStorage<'s, GameMaster>,
+        WriteStorage<'s, GameMaster>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut transforms, mut spawners, time, enemy_resource, gamemasters, lazy_update): Self::SystemData) {
-        for gamemaster in (gamemasters).join() {
+    fn run(&mut self, (entities, mut transforms, mut spawners, time, enemy_resource, mut gamemasters, lazy_update): Self::SystemData) {
+        for gamemaster in (&mut gamemasters).join() {
 
             if gamemaster.phase_idx < gamemaster.last_phase {
             
@@ -48,7 +49,16 @@ impl<'s> System<'s> for SpawnerSystem {
 
                     }
 
-                    PhaseType::Boss => {}
+                    PhaseType::Boss => {
+                        if !gamemaster.phase_map[gamemaster.phase_idx].boss_spawned {
+                            let spawn_position = Vector3::new(
+                                    ARENA_MIN_X + (ARENA_WIDTH/2.0), ARENA_HEIGHT/1.2, 0.0,
+                                );
+                            spawn_boss(&entities, &enemy_resource, spawn_position, &lazy_update);
+                            println!("repeater spawned!");
+                            gamemaster.phase_map[gamemaster.phase_idx].boss_spawned = true;
+                        }
+                    }
 
                     PhaseType::Rest => {}
                 }

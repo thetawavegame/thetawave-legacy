@@ -15,6 +15,7 @@ mod defense;
 mod status_bar;
 mod spawner;
 mod gamemaster;
+mod boss;
 
 pub use self::{
     blast::Blast,
@@ -27,6 +28,7 @@ pub use self::{
     status_bar::{StatusBar, StatusType},
     spawner::{Pool, Spawner},
     gamemaster::{GameMaster, Phase, PhaseType},
+    boss::{Boss, BossPart, BossType},
 };
 
 

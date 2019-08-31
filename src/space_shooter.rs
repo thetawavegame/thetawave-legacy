@@ -19,6 +19,7 @@ use amethyst::{
 
 use crate::systems;
 use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
+use crate::components::BossPart;
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -88,11 +89,13 @@ impl SimpleState for SpaceShooter {
         let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
         let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
+        //let repeater_boss_sprite_sheet_handle = load_spritesheet(world, "repeater_boss_spritesheet.png", "repeater_boss_spritesheet.ron");
 
         self.dispatcher.setup(&mut world.res);
 
         //add the event channels
         //world.add_resource(EventChannel::<EnemyCollisionEvent>::new()); 
+        world.register::<BossPart>();
 
         initialise_gamemaster(world);
         initialise_defense(world);
@@ -100,6 +103,7 @@ impl SimpleState for SpaceShooter {
         initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
+        //initialise_sprite_resource(world, repeater_boss_sprite_sheet_handle);
         initialise_enemy_spawner(world);
         initialise_item_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);

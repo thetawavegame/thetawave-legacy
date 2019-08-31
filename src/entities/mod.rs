@@ -17,6 +17,7 @@ pub mod defense;
 pub mod status_bar;
 pub mod status_unit;
 pub mod gamemaster;
+pub mod boss;
 
 pub use self::{
     blast::{fire_blast},
@@ -33,6 +34,7 @@ pub use self::{
     status_bar::initialise_status_bars,
     status_unit::spawn_status_unit,
     gamemaster::initialise_gamemaster,
+    boss::spawn_boss,
 };
 
 pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {

@@ -3,4 +3,5 @@
   dimensions: Some((960, 720)),
   max_dimensions: Some((960, 720)),
   min_dimensions: Some((960, 720)),
+  icon: Some("assets/texture/icon.png"),
 )
