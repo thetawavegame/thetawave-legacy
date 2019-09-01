@@ -1,13 +1,15 @@
 use std::iter::Cycle;
 use std::vec::IntoIter;
 
-use amethyst::assets::{AssetStorage, Loader};
+use amethyst::assets::{AssetStorage, Loader, Handle};
 use amethyst::audio::output::Output;
 use amethyst::audio::{AudioSink, Source, SourceHandle};
 use amethyst::ecs::prelude::World;
 
 pub struct Sounds {
     pub small_rock_sfx: SourceHandle,
+    pub large_rock_sfx: SourceHandle,
+    pub wrench_sfx: SourceHandle,
 }
 
 /// Loads an ogg audio track.
@@ -29,6 +31,8 @@ pub fn initialise_audio(world: &mut World) {
 
         let sound = Sounds {
             small_rock_sfx: load_audio_track(&loader, &world, "audio/small_rock.ogg"),
+            large_rock_sfx: load_audio_track(&loader, &world, "audio/large_rock.ogg"),
+            wrench_sfx: load_audio_track(&loader, &world, "audio/wrench.ogg"),
         };
 
         sound
@@ -39,9 +43,9 @@ pub fn initialise_audio(world: &mut World) {
     world.add_resource(sound_effects);
 }
 
-pub fn play_small_rock(sounds: &Sounds, storage: &AssetStorage<Source>, output: Option<&Output>) {
+pub fn play_sfx(sound: &Handle<Source>, storage: &AssetStorage<Source>, output: Option<&Output>) {
     if let Some(ref output) = output.as_ref() {
-        if let Some(sound) = storage.get(&sounds.small_rock_sfx) {
+        if let Some(sound) = storage.get(sound) {
             output.play_once(sound, 1.0);
         }
     }
