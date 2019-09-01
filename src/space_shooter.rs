@@ -14,7 +14,12 @@ use amethyst::{
     renderer::{
         formats::texture::ImageFormat,
     },
-    shrev::EventChannel,
+    ui::{
+        TtfFormat,
+        Anchor,
+        UiText,
+        UiTransform,
+    },
 };
 
 use crate::systems;
@@ -75,6 +80,7 @@ impl Default for SpaceShooter {
                 //.with(systems::EnemyEnemyCollisionSystem::default(), "enemy_enemy_collision_system", &[])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
+                .with(systems::StatTrackerSystem, "stat_tracker_system", &[])
                 .build(),
         }
     }
@@ -91,9 +97,7 @@ impl SimpleState for SpaceShooter {
 
         self.dispatcher.setup(&mut world.res);
 
-        //add the event channels
-        //world.add_resource(EventChannel::<EnemyCollisionEvent>::new()); 
-
+        initialise_ui(world);
         initialise_gamemaster(world);
         initialise_defense(world);
         initialise_status_bars(world);
@@ -168,4 +172,50 @@ fn initialise_camera(world: &mut World) {
         .with(Camera::standard_2d(GAME_WIDTH, GAME_HEIGHT))
         .with(transform)
         .build();
+}
+
+pub struct TrackedStats {
+    pub currency: Entity,
+}
+
+fn initialise_ui(world:  &mut World) {
+
+    //add currency icon
+
+    let image = world.read_resource::<Loader>().load(
+        "texture/currency_ui.png",
+        ImageFormat::default(),
+        (),
+        &world.read_resource::<AssetStorage<Texture>>(),
+    );
+    
+    let currency_icon_transform = UiTransform::new("currency_icon".to_string(), Anchor::MiddleRight, Anchor::MiddleRight, 0.0, 0.0, 0.9, 1.0, 1.0);
+    let currency_icon = world
+        .create_entity()
+        .with(currency_icon_transform)
+        .with(
+            image,
+        ).build();
+
+    let font = world.read_resource::<Loader>().load(
+        "font/Teko-SemiBold.ttf",
+        TtfFormat,
+        (),
+        &world.read_resource(),
+    );
+    let currency_count_transform = UiTransform::new("currency_count".to_string(), Anchor::BottomRight, Anchor::BottomRight, -10.0, 10.0, 0.9, 50.0, 45.0);
+    let currency_count = world
+        .create_entity()
+        .with(currency_count_transform)
+        .with(UiText::new(
+            font.clone(),
+            "x 0".to_string(),
+            [1.0, 1.0, 1.0, 1.0],
+            45.0
+        )).build();
+
+    world.add_resource(TrackedStats {
+        currency: currency_count
+    });
+    world.add_resource(currency_icon);
 }

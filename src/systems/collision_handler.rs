@@ -37,8 +37,8 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             //println!("{:?}", event);
             
-            for (spaceship, spaceship_transform, spaceship_entity) in (&mut spaceships, &transforms, &entities).join() {
-                for (enemy, enemy_transform, enemy_entity) in (&mut enemies, &transforms, &entities).join() {
+            for spaceship in (&mut spaceships).join() {
+                for (enemy, enemy_entity) in (&mut enemies, &entities).join() {
                     if event.type_b == "enemy" && event.type_a == "enemy" {
                         if event.entity_a == enemy_entity ||  event.entity_b == enemy_entity {
 

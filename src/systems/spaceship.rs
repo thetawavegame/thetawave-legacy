@@ -9,7 +9,7 @@ use amethyst::{
 
 use crate::{
     entities::{fire_blast},
-    components::{Spaceship, Enemy, Fires, Living},
+    components::{Spaceship, Fires, Living},
     resources::{SpriteResource},
 };
 
@@ -22,14 +22,13 @@ impl<'s> System<'s> for SpaceshipSystem {
         Entities<'s>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, Enemy>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
     );
 
-    fn run(&mut self, (entities, mut transforms, mut spaceships, mut enemies, input, time, sprite_resource, lazy_update): Self::SystemData) {
+    fn run(&mut self, (entities, mut transforms, mut spaceships, input, time, sprite_resource, lazy_update): Self::SystemData) {
 
         let shoot_action = input.action_is_down("shoot").unwrap();
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
