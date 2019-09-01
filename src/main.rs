@@ -1,6 +1,7 @@
 #![windows_subsystem = "windows"]
 
 extern crate amethyst;
+mod audio;
 
 use amethyst::{
     prelude::*,
@@ -13,6 +14,7 @@ use amethyst::{
     core::{transform::TransformBundle},
     input::{InputBundle, StringBindings},
     ui::{RenderUi, UiBundle},
+    audio::{AudioBundle},
 };
 
 mod space_shooter;
@@ -38,6 +40,7 @@ fn main() -> amethyst::Result<()> {
             .with_bundle(
                 InputBundle::<StringBindings>::new().with_bindings_from_file(bindings_path)?,
             )?
+            .with_bundle(AudioBundle::default())?
             .with_bundle(UiBundle::<StringBindings>::new())?
             .with_bundle(
                 RenderingBundle::<DefaultBackend>::new()
