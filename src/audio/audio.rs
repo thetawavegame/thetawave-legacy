@@ -10,6 +10,11 @@ pub struct Sounds {
     pub small_rock_sfx: SourceHandle,
     pub large_rock_sfx: SourceHandle,
     pub wrench_sfx: SourceHandle,
+    pub item_sfx: SourceHandle,
+    pub spaceship_laser_sfx: SourceHandle,
+    pub crash_sfx: SourceHandle,
+    pub explosion_sfx: SourceHandle,
+    pub spaceship_hit_sfx: SourceHandle,
 }
 
 /// Loads an ogg audio track.
@@ -33,6 +38,11 @@ pub fn initialise_audio(world: &mut World) {
             small_rock_sfx: load_audio_track(&loader, &world, "audio/small_rock.ogg"),
             large_rock_sfx: load_audio_track(&loader, &world, "audio/large_rock.ogg"),
             wrench_sfx: load_audio_track(&loader, &world, "audio/wrench.ogg"),
+            item_sfx: load_audio_track(&loader, &world, "audio/item.ogg"),
+            spaceship_laser_sfx: load_audio_track(&loader, &world, "audio/spaceship_laser.ogg"),
+            crash_sfx: load_audio_track(&loader, &world, "audio/crash.ogg"),
+            explosion_sfx: load_audio_track(&loader, &world, "audio/explosion.ogg"),
+            spaceship_hit_sfx: load_audio_track(&loader, &world, "audio/spaceship_hit.ogg"),
         };
 
         sound

@@ -3,12 +3,17 @@ use amethyst::{
         transform::Transform,
         timing::Time,
     },
-    ecs::prelude::{Entities, Join, System, WriteStorage, Read},
+    ecs::prelude::{Entities, Join, System, WriteStorage, Read, ReadExpect},
+    audio::{output::Output, Source},
+    assets::AssetStorage,
 };
+
+use std::ops::Deref;
 
 use crate::{
     components::{Item, Spaceship},
     systems::hitbox_collide,
+    audio::{play_sfx, Sounds},
 };
 
 use crate::space_shooter::ARENA_MIN_Y;
@@ -23,9 +28,12 @@ impl<'s> System<'s> for ItemSystem {
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
+        Read<'s, AssetStorage<Source>>,
+        ReadExpect<'s, Sounds>,
+        Option<Read<'s, Output>>
     );
 
-    fn run(&mut self, (entities, mut items, mut spaceships, mut transforms, time): Self::SystemData) {
+    fn run(&mut self, (entities, mut items, mut spaceships, mut transforms, time, storage, sounds, audio_output): Self::SystemData) {
         for spaceship in (&mut spaceships).join() {
 
             for (item_entity, item, item_transform) in (&*entities, &mut items, &mut transforms).join() {
@@ -62,6 +70,8 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.deceleration_x += item.stat_effects["deceleration"];
                         spaceship.deceleration_y += item.stat_effects["deceleration"];
                     }
+
+                    play_sfx(&sounds.item_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
 
                     let _result = entities.delete(item_entity);
                 }else {
