@@ -3,7 +3,7 @@ use amethyst::{
     ecs::prelude::World,
     core::transform::Transform,
     renderer::{SpriteRender, SpriteSheet},
-    assets::Handle,
+    assets::{Handle},
 };
 
 use crate::{

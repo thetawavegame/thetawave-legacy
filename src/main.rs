@@ -12,6 +12,7 @@ use amethyst::{
     utils::application_root_dir,
     core::{transform::TransformBundle},
     input::{InputBundle, StringBindings},
+    ui::{RenderUi, UiBundle},
 };
 
 mod space_shooter;
@@ -37,6 +38,7 @@ fn main() -> amethyst::Result<()> {
             .with_bundle(
                 InputBundle::<StringBindings>::new().with_bindings_from_file(bindings_path)?,
             )?
+            .with_bundle(UiBundle::<StringBindings>::new())?
             .with_bundle(
                 RenderingBundle::<DefaultBackend>::new()
                     .with_plugin(
@@ -44,6 +46,7 @@ fn main() -> amethyst::Result<()> {
                             .with_clear([0.0, 0.0, 0.0, 1.0]),
                     )
                     .with_plugin(RenderFlat2D::default())
+                    .with_plugin(RenderUi::default())
             )?;
     
     let mut game = Application::new(assets_path, SpaceShooter::default(), game_data)?;
