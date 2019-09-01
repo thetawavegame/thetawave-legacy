@@ -13,7 +13,7 @@ use std::ops::Deref;
 use crate::{
     components::{Consumable, Spaceship, Defense},
     systems::hitbox_collide,
-    audio::{play_small_rock, Sounds},
+    audio::{play_sfx, Sounds},
 };
 
 use crate::space_shooter::ARENA_MIN_Y;
@@ -48,9 +48,11 @@ impl<'s> System<'s> for ConsumableSystem {
                     spaceship.money += consumable.money_value;
 
                     if consumable.money_value == 1 {
-                        play_small_rock(&*sounds, &storage, audio_output.as_ref().map(|o| o.deref()));
+                        play_sfx(&sounds.small_rock_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
                     }else if consumable.money_value == 5 {
-                        play_small_rock(&*sounds, &storage, audio_output.as_ref().map(|o| o.deref()));
+                        play_sfx(&sounds.large_rock_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
+                    }else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
+                        play_sfx(&sounds.wrench_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
                     }
 
                     for defense in (&mut defenses).join() {
