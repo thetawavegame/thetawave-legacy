@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies.amethyst]
 version = "0.12"
-features = ["vulkan", "nightly"]
+features = ["vulkan"]
 
 [dependencies]
 rand = "0.6.5"
