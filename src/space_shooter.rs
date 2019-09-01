@@ -5,6 +5,7 @@ use amethyst::{
     renderer::{
         Camera, SpriteSheet,
         SpriteSheetFormat, Texture,
+        SpriteRender,
     },
     input::{
         is_key_down,
@@ -21,6 +22,8 @@ use amethyst::{
         UiTransform,
     },
 };
+
+use crate::audio::initialise_audio;
 
 use crate::systems;
 use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
@@ -95,8 +98,9 @@ impl SimpleState for SpaceShooter {
         let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
 
-        self.dispatcher.setup(&mut world.res);
 
+        self.dispatcher.setup(&mut world.res);
+        initialise_audio(world);
         initialise_ui(world);
         initialise_gamemaster(world);
         initialise_defense(world);
@@ -180,22 +184,41 @@ pub struct TrackedStats {
 
 fn initialise_ui(world:  &mut World) {
 
-    //add currency icon
+    let texture_handle = {
+        let loader = world.read_resource::<Loader>();
+        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
+        loader.load(
+            "texture/currency_ui.png",
+            ImageFormat::default(),
+            (),
+            &texture_storage,
+        )
+    };
 
-    let image = world.read_resource::<Loader>().load(
-        "texture/currency_ui.png",
-        ImageFormat::default(),
-        (),
-        &world.read_resource::<AssetStorage<Texture>>(),
-    );
+    let sprite_sheet_handle = {
+        let loader = world.read_resource::<Loader>();
+        let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
+        loader.load(
+            "texture/currency_ui.ron",
+            SpriteSheetFormat(texture_handle),
+            (),
+            &sprite_sheet_store,
+        )
+    };
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_number: 0,
+    };
     
-    let currency_icon_transform = UiTransform::new("currency_icon".to_string(), Anchor::MiddleRight, Anchor::MiddleRight, 0.0, 0.0, 0.9, 1.0, 1.0);
+    //let currency_icon_transform = UiTransform::new("currency_icon".to_string(), Anchor::MiddleRight, Anchor::MiddleRight, -10.0, 0.0, 0.9, 14.0, 14.0);
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(ARENA_MAX_X + 10.0, ARENA_MIN_Y + 12.5, 0.9);
+
     let currency_icon = world
         .create_entity()
-        .with(currency_icon_transform)
-        .with(
-            image,
-        ).build();
+        .with(sprite_render)
+        .with(local_transform).build();
 
     let font = world.read_resource::<Loader>().load(
         "font/Teko-SemiBold.ttf",
@@ -217,5 +240,5 @@ fn initialise_ui(world:  &mut World) {
     world.add_resource(TrackedStats {
         currency: currency_count
     });
-    world.add_resource(currency_icon);
+    //world.add_resource(currency_icon);
 }
