@@ -42,6 +42,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
 
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             //println!("{:?}", event);
+            play_sfx(&sounds.crash_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
             
             for spaceship in (&mut spaceships).join() {
                 for (enemy, enemy_entity) in (&mut enemies, &entities).join() {
@@ -52,12 +53,10 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                                 enemy.health -= spaceship.collision_damage;
                                 enemy.current_velocity_x = event.to_velocity_x_a;
                                 enemy.current_velocity_y = event.to_velocity_y_a;
-                                play_sfx(&sounds.crash_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
                             } else if event.entity_b == enemy_entity {
                                 enemy.health -= spaceship.collision_damage;
                                 enemy.current_velocity_x = event.to_velocity_x_b;
                                 enemy.current_velocity_y = event.to_velocity_y_b;
-                                play_sfx(&sounds.crash_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
                             }
 
                         }
@@ -96,8 +95,6 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                             let temp_velocity_y = spaceship.current_velocity_y;
                             spaceship.current_velocity_y = (-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y;
                             enemy.current_velocity_y = (-(1.0) * enemy.current_velocity_y) + temp_velocity_y;
-
-                            play_sfx(&sounds.crash_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
                         }
                     }
 
