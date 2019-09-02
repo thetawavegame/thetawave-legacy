@@ -3,13 +3,16 @@ use amethyst::{
     ecs::*,
     shrev::{EventChannel, ReaderId},
     core::transform::Transform,
-    
+    audio::{output::Output, Source},
+    assets::AssetStorage,
 };
 
+use std::ops::Deref;
 
 use crate::{
     space_shooter::CollisionEvent,
     components::{Spaceship, Enemy},
+    audio::{play_sfx, Sounds},
 };
 
 #[derive(Default)]
@@ -25,6 +28,9 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         WriteStorage<'s, Enemy>,
         ReadStorage<'s, Transform>,
         Entities<'s>,
+        Read<'s, AssetStorage<Source>>,
+        ReadExpect<'s, Sounds>,
+        Option<Read<'s, Output>>
     );
 
     fn setup(&mut self, res: &mut Resources) {
@@ -32,13 +38,14 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         self.event_reader = Some(res.fetch_mut::<EventChannel<CollisionEvent>>().register_reader());
     }
 
-    fn run(&mut self, (enemy_collision_event_channel, mut spaceships, mut enemies, transforms, entities): Self::SystemData) {
+    fn run(&mut self, (enemy_collision_event_channel, mut spaceships, mut enemies, transforms, entities,storage, sounds, audio_output ): Self::SystemData) {
 
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             //println!("{:?}", event);
+            play_sfx(&sounds.crash_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
             
-            for (spaceship, spaceship_transform, spaceship_entity) in (&mut spaceships, &transforms, &entities).join() {
-                for (enemy, enemy_transform, enemy_entity) in (&mut enemies, &transforms, &entities).join() {
+            for spaceship in (&mut spaceships).join() {
+                for (enemy, enemy_entity) in (&mut enemies, &entities).join() {
                     if event.type_b == "enemy" && event.type_a == "enemy" {
                         if event.entity_a == enemy_entity ||  event.entity_b == enemy_entity {
 

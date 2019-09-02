@@ -3,7 +3,7 @@ use amethyst::{
     ecs::prelude::World,
     core::transform::Transform,
     renderer::{SpriteRender, SpriteSheet},
-    assets::Handle,
+    assets::{Handle},
 };
 
 use crate::{
@@ -11,7 +11,7 @@ use crate::{
 };
 
 const WIDTH: f32 = 45.0;
-const Z: f32 = 0.9;
+const Z: f32 = 0.8;
 const LEFT_SPRITE_INDEX: usize = 0;
 const RIGHT_SPRITE_INDEX: usize = 1;
 
