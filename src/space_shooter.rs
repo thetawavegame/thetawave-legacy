@@ -209,14 +209,13 @@ fn initialise_ui(world:  &mut World) {
         sprite_number: 0,
     };
     
-    //let currency_icon_transform = UiTransform::new("currency_icon".to_string(), Anchor::MiddleRight, Anchor::MiddleRight, -10.0, 0.0, 0.9, 14.0, 14.0);
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(ARENA_MAX_X + 10.0, ARENA_MIN_Y + 12.5, 0.9);
 
-    let currency_icon = world
-        .create_entity()
+    world.create_entity()
         .with(sprite_render)
-        .with(local_transform).build();
+        .with(local_transform)
+        .build();
 
     let font = world.read_resource::<Loader>().load(
         "font/Teko-SemiBold.ttf",
