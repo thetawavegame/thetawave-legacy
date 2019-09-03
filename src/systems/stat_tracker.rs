@@ -1,5 +1,5 @@
 use amethyst::{
-    ecs::prelude::{Entities, Join, System, WriteStorage, ReadStorage, ReadExpect},
+    ecs::prelude::{Join, System, WriteStorage, ReadStorage, ReadExpect},
     ui::UiText,
 };
 
@@ -20,7 +20,7 @@ impl<'s> System<'s> for StatTrackerSystem {
 
     fn run(&mut self, (spaceships, mut ui_text, tracked_stats): Self::SystemData) {
 
-        for (spaceship) in (&spaceships).join() {
+        for spaceship in (&spaceships).join() {
             if let Some(text) = ui_text.get_mut(tracked_stats.currency) {
                 //text.text = spaceship.money.to_string();
                 text.text = format!("x {}", spaceship.money.to_string());
