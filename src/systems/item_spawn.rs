@@ -4,13 +4,13 @@ use amethyst::{
         timing::Time,
         math::Vector3,
     },
-    ecs::{Join, Read, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
+    ecs::{Join, Read, System, WriteStorage, ReadStorage, Entities, LazyUpdate, ReadExpect},
 };
 
 use crate::{
     entities::{spawn_item},
-    components::{Spawner, Item},
-    resources::SpriteResource,
+    components::{Spawner, ItemSpawnerTag},
+    resources::{SpriteResource, ItemPool},
 };
 
 
@@ -21,21 +21,25 @@ impl<'s> System<'s> for ItemSpawnSystem {
     type SystemData  = (
         Entities<'s>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, Spawner<Item>>,
+        WriteStorage<'s, Spawner>,
+        ReadStorage<'s, ItemSpawnerTag>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
+        ReadExpect<'s, ItemPool>
     );
 
-    fn run(&mut self, (entities, mut transforms, mut spawners, time, sprite_resource, lazy_update): Self::SystemData) {
+    fn run(&mut self, (entities, mut transforms, mut spawners, spawner_tag, time, sprite_resource, lazy_update, item_pool): Self::SystemData) {
 
-        for (spawner, transform) in (&mut spawners, &mut transforms).join() {
-            if let Some(new_x) = spawner.can_spawn(time.delta_seconds()) {
-
+        for (spawner, transform, _) in (&mut spawners, &mut transforms, &spawner_tag).join() {
+            if let Some((new_x, name)) = spawner.spawn_with_position(time.delta_seconds()) {
                 let spawn_position = Vector3::new(
                     new_x, transform.translation()[1], transform.translation()[2]
                 );
-                spawn_item(&entities, &sprite_resource, &mut spawner.pool, spawn_position, &lazy_update);
+                spawn_item(&entities, &sprite_resource, item_pool[name].clone(), spawn_position, &lazy_update);
+                let name = name.clone();// clone so i could borrow spawner
+                // only spawn one time for each item type
+                spawner.disable_item(&name);
             }
         }
     }

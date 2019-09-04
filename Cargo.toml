@@ -11,3 +11,4 @@ features = ["vulkan", "audio"]
 
 [dependencies]
 rand = "0.6.5"
+serde = "1"
