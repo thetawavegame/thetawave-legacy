@@ -1,41 +1,18 @@
 use amethyst::{
-    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent,},
-    core::{
-        transform::Transform,
-        math::Vector3,
-    }
+    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender},
+    core::math::Vector3
 };
-
-use rand::seq::SliceRandom;
 
 use crate::{
-    components::{Pool, Enemy},
     resources::SpriteResource,
+    components::Enemy,
 };
 
-
-pub fn spawn_enemy(entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, enemy_pool: &mut Pool<Enemy>, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
-    let enemy_entity: Entity = entities.create();
-
-    let mut local_transform = Transform::default();
-    local_transform.set_translation(spawn_position);
-    local_transform.set_rotation_y_axis(3.14);
-
-    //get a random item from the enemy pool and then remove it from the pool
-    let random_enemy_name = enemy_pool.spawn_list.choose(&mut rand::thread_rng()).cloned().unwrap();
-    let random_enemy = enemy_pool.spawns[&random_enemy_name].clone();
-
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprite_resource.sprite_sheet.clone(),
-        sprite_number: random_enemy.sprite_index,
+pub fn spawn_enemy(entities: &Entities, item_resource: &ReadExpect<SpriteResource>, item: Enemy, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {                                    
+    let sprite = SpriteRender {
+        sprite_sheet: item_resource.sprite_sheet.clone(),
+        sprite_number: item.sprite_index,
     };
-
-    lazy_update.insert(enemy_entity, sprite_render);
-    lazy_update.insert(enemy_entity, random_enemy);
-    lazy_update.insert(enemy_entity, local_transform);
-    lazy_update.insert(enemy_entity, Transparent);
-    //lazy_update.insert(enemy_entity, Flipped::Vertical); //flip sprite to correct orientation
-
+    super::spawn_sprite_entity(&entities, sprite, item, spawn_position, &lazy_update);
 }
-

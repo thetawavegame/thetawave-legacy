@@ -26,7 +26,8 @@ use amethyst::{
 use crate::audio::initialise_audio;
 
 use crate::systems;
-use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
+use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, 
+    initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
