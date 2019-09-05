@@ -1,0 +1,22 @@
+{
+    "defense": (
+        defense_value: 70,
+        sprite_index: 14,
+    ),
+    "money_1": (
+        width: 7,
+        height: 7,
+        hitbox_width: 6,
+        hitbox_height: 6,
+        money_value: 1,
+        sprite_index: 17,
+    ),
+    "money_5": (
+        money_value: 5,
+        sprite_index: 16,
+    ),
+    "health": (
+        health_value: 30,
+        sprite_index: 13,
+    ),
+}

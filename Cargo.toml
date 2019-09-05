@@ -6,7 +6,9 @@ edition = "2018"
 
 [dependencies.amethyst]
 version = "0.12"
-features = ["vulkan"]
+default-features = false
+features = ["vulkan", "audio"]
 
 [dependencies]
 rand = "0.6.5"
+serde = "1"

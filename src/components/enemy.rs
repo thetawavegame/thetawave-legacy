@@ -1,28 +1,33 @@
 use amethyst::{
-    ecs::prelude::{Component, DenseVecStorage},
+    ecs::prelude::{Component, DenseVecStorage, NullStorage},
     core::Transform,
 };
 
 use crate::{
-    components::{Pool, Consumable, Rigidbody, Fires},
+    components::{Rigidbody, Fires, SpawnProbabilities},
     space_shooter::{ARENA_MIN_X, ARENA_MAX_X},
 };
 
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub enum EnemyType {
     Pawn,
     Drone,
     Hauler, //actually an ally
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Enemy {
+    #[serde(default = "des_width")]
     pub width: f32,
+    #[serde(default = "des_height")]
     pub height: f32,
-    pub health: f32,
+    #[serde(default = "des_hitbox_width")]
     pub hitbox_width: f32,
+    #[serde(default = "des_hitbox_height")]
     pub hitbox_height: f32,
+    pub health: f32,
     pub sprite_index: usize,
     pub fires: bool,
     pub fire_speed: f32,
@@ -31,18 +36,35 @@ pub struct Enemy {
     pub blast_damage: f32,
     pub defense_damage: f32,
     pub max_speed: f32,
+    #[serde(default)]
     pub current_velocity_x: f32,
     pub current_velocity_y: f32,
+    #[serde(default = "des_acceleration_x")]
     pub acceleration_x: f32,
+    #[serde(default = "des_acceleration_y")]
     pub acceleration_y: f32,
+    #[serde(default = "des_deceleration_x")]
     pub deceleration_x: f32,
+    #[serde(default = "des_deceleration_y")]
     pub deceleration_y: f32,
+    #[serde(default = "des_knockback_max_speed")]
     pub knockback_max_speed: f32,
+    #[serde(default = "des_collision_damage")]
     pub collision_damage: f32,
-    pub consumable_pool: Pool<Consumable>,
-    pub drop_chance: f32,
+    pub collectables_probs: SpawnProbabilities,
     pub enemy_type: EnemyType,
 }
+
+fn des_width() -> f32 { 18.0 }
+fn des_height() -> f32 { 18.0 }
+fn des_hitbox_width() -> f32 { 14.0 }
+fn des_hitbox_height() -> f32 { 14.0 }
+fn des_acceleration_x() -> f32 { 2.0 }
+fn des_acceleration_y() -> f32 { 4.0 }
+fn des_deceleration_x() -> f32 { 1.0 }
+fn des_deceleration_y() -> f32 { 1.0 }
+fn des_knockback_max_speed() -> f32 { 100.0 }
+fn des_collision_damage() -> f32 { 30.0 }
 
 impl Rigidbody for Enemy{
     fn current_velocity_x(&self) ->  f32 {
@@ -81,4 +103,11 @@ impl Enemy {
             self.current_velocity_x = (-1.0) * self.current_velocity_x;
         }
     }
+}
+
+#[derive(Default)]
+pub struct EnemySpawnerTag;
+
+impl Component for EnemySpawnerTag {
+    type Storage = NullStorage<Self>;
 }

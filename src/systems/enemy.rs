@@ -9,11 +9,11 @@ use amethyst::{
     assets::AssetStorage,
 };
 
-use rand::{thread_rng, Rng};
 use std::ops::Deref;
+use std::collections::HashMap;
 
 use crate::{
-    components::{Enemy, Defense, Rigidbody, Fires, EnemyType},
+    components::{Enemy, Defense, Rigidbody, Fires, EnemyType, Consumable, choose_random_name},
     entities::{spawn_explosion, spawn_consumable},
     resources::SpriteResource,
     audio::{play_sfx, Sounds},
@@ -41,10 +41,11 @@ impl<'s> System<'s> for EnemySystem {
         ReadExpect<'s, LazyUpdate>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
-        Option<Read<'s, Output>>
+        Option<Read<'s, Output>>,
+        ReadExpect<'s, HashMap<String, Consumable>> // should create alias ConsumablePool
     );
 
-    fn run(&mut self, (entities, mut enemys, mut defenses, mut transforms, time, sprite_resource, lazy_update, storage, sounds, audio_output): Self::SystemData) {
+    fn run(&mut self, (entities, mut enemys, mut defenses, mut transforms, time, sprite_resource, lazy_update, storage, sounds, audio_output, consumable_pool): Self::SystemData) {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
 
             //enemy_collision_event_channel.single_write(EnemyCollisionEvent::A);
@@ -82,8 +83,9 @@ impl<'s> System<'s> for EnemySystem {
                 spawn_explosion(&entities, &sprite_resource, EXPLOSION_SPRITE_INDEX,death_position, &lazy_update);
                 play_sfx(&sounds.explosion_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
 
-                if thread_rng().gen::<f32>() < enemy_component.drop_chance {
-                    spawn_consumable(&entities, &sprite_resource, &mut enemy_component.consumable_pool, death_position, &lazy_update);
+                let name = choose_random_name(&enemy_component.collectables_probs);
+                if !name.is_empty() {
+                    spawn_consumable(&entities, &sprite_resource, consumable_pool[name].clone(), death_position, &lazy_update);
                 }
             }
 

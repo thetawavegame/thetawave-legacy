@@ -1,9 +1,6 @@
-use std::iter::Cycle;
-use std::vec::IntoIter;
-
 use amethyst::assets::{AssetStorage, Loader, Handle};
 use amethyst::audio::output::Output;
-use amethyst::audio::{AudioSink, Source, SourceHandle};
+use amethyst::audio::{Source, SourceHandle};
 use amethyst::ecs::prelude::World;
 
 pub struct Sounds {

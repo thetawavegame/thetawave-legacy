@@ -1,6 +1,8 @@
-#![windows_subsystem = "windows"]
+//#![windows_subsystem = "windows"]
 
 extern crate amethyst;
+extern crate serde;
+
 mod audio;
 
 use amethyst::{
@@ -24,7 +26,9 @@ pub mod resources;
 pub mod entities;
 
 use crate::space_shooter::SpaceShooter;
+use resources::{ItemPool, EnemyPool, ConsumablePool};
 
+use amethyst::config::Config;
 
 fn main() -> amethyst::Result<()> {
 
@@ -34,6 +38,13 @@ fn main() -> amethyst::Result<()> {
     let display_config_path = app_root.join("config").join("display_config_960.ron");
     let bindings_path = app_root.join("config").join("bindings_config.ron");
     let assets_path = app_root.join("assets");
+
+    let items = <ItemPool as Config>::load_no_fallback(assets_path.join("data").join("items.ron"))
+        .expect("failed to load game data");
+    let enemies = <EnemyPool as Config>::load_no_fallback(assets_path.join("data").join("enemies.ron"))
+        .expect("failed to load game data");
+    let consumables = <ConsumablePool as Config>::load_no_fallback(assets_path.join("data").join("consumables.ron"))
+        .expect("failed to load game data");
 
     let game_data = GameDataBuilder::default()
             .with_bundle(TransformBundle::new())?
@@ -51,8 +62,12 @@ fn main() -> amethyst::Result<()> {
                     .with_plugin(RenderFlat2D::default())
                     .with_plugin(RenderUi::default())
             )?;
-    
-    let mut game = Application::new(assets_path, SpaceShooter::default(), game_data)?;
+
+    let mut game = Application::build(assets_path, SpaceShooter::default())?
+        .with_resource(items)
+        .with_resource(enemies)
+        .with_resource(consumables)
+        .build(game_data)?;
 
     game.run();
 
