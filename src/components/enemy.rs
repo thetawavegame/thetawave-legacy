@@ -17,21 +17,15 @@ pub enum EnemyType {
     Hauler, //actually an ally
 }
 
-impl Default for EnemyType {
-    fn default() -> Self {
-        EnemyType::Pawn
-    }
-}
-
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Enemy {
-    #[serde(default)]
+    #[serde(default = "des_width")]
     pub width: f32,
-    #[serde(default)]
+    #[serde(default = "des_height")]
     pub height: f32,
-    #[serde(default)]
+    #[serde(default = "des_hitbox_width")]
     pub hitbox_width: f32,
-    #[serde(default)]
+    #[serde(default = "des_hitbox_height")]
     pub hitbox_height: f32,
     pub health: f32,
     pub sprite_index: usize,
@@ -45,51 +39,32 @@ pub struct Enemy {
     #[serde(default)]
     pub current_velocity_x: f32,
     pub current_velocity_y: f32,
-    #[serde(default)]
+    #[serde(default = "des_acceleration_x")]
     pub acceleration_x: f32,
-    #[serde(default)]
+    #[serde(default = "des_acceleration_y")]
     pub acceleration_y: f32,
-    #[serde(default)]
+    #[serde(default = "des_deceleration_x")]
     pub deceleration_x: f32,
-    #[serde(default)]
+    #[serde(default = "des_deceleration_y")]
     pub deceleration_y: f32,
-    #[serde(default)]
+    #[serde(default = "des_knockback_max_speed")]
     pub knockback_max_speed: f32,
-    #[serde(default)]
+    #[serde(default = "des_collision_damage")]
     pub collision_damage: f32,
     pub collectables_probs: SpawnProbabilities,
     pub enemy_type: EnemyType,
 }
 
-impl Default for Enemy {
-    fn default() -> Self {
-        Enemy {
-            width: 18.0,
-            height: 18.0,
-            hitbox_width: 14.0,
-            hitbox_height: 14.0,
-            health: 220.0,
-            sprite_index: 15,
-            fires: false,
-            fire_speed: 3.0,
-            fire_reset_timer: 1.0,
-            blast_speed: -60.0,
-            blast_damage: 30.0,
-            defense_damage: -100.0,
-            max_speed: 25.0,
-            current_velocity_x: 0.0,
-            current_velocity_y: -20.0,
-            acceleration_x: 2.0,
-            acceleration_y: 4.0,
-            deceleration_x: 1.0,
-            deceleration_y: 1.0,
-            knockback_max_speed: 100.0,
-            collision_damage: 30.0,
-            collectables_probs: Default::default(),
-            enemy_type: Default::default(),
-        }
-    }
-}
+fn des_width() -> f32 { 18.0 }
+fn des_height() -> f32 { 18.0 }
+fn des_hitbox_width() -> f32 { 14.0 }
+fn des_hitbox_height() -> f32 { 14.0 }
+fn des_acceleration_x() -> f32 { 2.0 }
+fn des_acceleration_y() -> f32 { 4.0 }
+fn des_deceleration_x() -> f32 { 1.0 }
+fn des_deceleration_y() -> f32 { 1.0 }
+fn des_knockback_max_speed() -> f32 { 100.0 }
+fn des_collision_damage() -> f32 { 30.0 }
 
 impl Rigidbody for Enemy{
     fn current_velocity_x(&self) ->  f32 {

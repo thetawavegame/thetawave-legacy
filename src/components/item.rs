@@ -7,38 +7,29 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Item {
-    #[serde(default)]
+    #[serde(default = "des_width")]
     pub width: f32,
-    #[serde(default)]
+    #[serde(default = "des_height")]
     pub height: f32,
-    #[serde(default)]
+    #[serde(default = "des_hitbox_width")]
     pub hitbox_width: f32,
-    #[serde(default)]
+    #[serde(default = "des_hitbox_height")]
     pub hitbox_height: f32,
-    #[serde(default)]
+    #[serde(default = "des_speed")]
     pub speed: f32,
     #[serde(default)]
     pub stat_effects: HashMap<String, f32>,
     #[serde(default)]
     pub bool_effects: HashMap<String, bool>,
-    // this field is required when deserializing
     pub sprite_index: usize,
 }
 
-impl Default for Item {
-    fn default() -> Self {
-        Item {
-            width: 14.0,
-            height: 14.0,
-            hitbox_width: 4.0,
-            hitbox_height: 4.0,
-            speed: 70.0,
-            stat_effects: Default::default(),
-            bool_effects: Default::default(),
-            sprite_index: 0
-        }
-    }
-}
+fn des_width() -> f32 { 14.0 }
+fn des_height() -> f32 { 14.0 }
+fn des_hitbox_width() -> f32 { 4.0 }
+fn des_hitbox_height() -> f32 { 4.0 }
+fn des_speed() -> f32 { 70.0 }
+
 
 impl Component for Item {
     type Storage = DenseVecStorage<Self>;

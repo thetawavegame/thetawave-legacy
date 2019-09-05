@@ -21,7 +21,7 @@ impl Spawner {
     /// create spawner instance
     /// ## Parameters
     /// * `probabilities` vector of names with probabilities, sum of probabilities doesn't need to be equal to 1.0,
-    /// * `interval` between spawns, it is updated when calling `can_spawn` function
+    /// * `interval` between spawns, it is updated when calling `spawn_with_position` function
     /// * `counter` total number of available spawns
     pub fn new(probabilities: SpawnProbabilities, interval: f32, counter: u32) -> Self {
         let prob_space = calculate_total_probabilities(&probabilities);
