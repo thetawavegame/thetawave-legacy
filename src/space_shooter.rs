@@ -79,7 +79,7 @@ impl Default for SpaceShooter {
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::CollisionDetectionSystem, "collision_detection_system", &[])
-                .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &[])
+                .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &["collision_detection_system"])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::StatTrackerSystem, "stat_tracker_system", &[])

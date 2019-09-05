@@ -1,7 +1,6 @@
 {
     "defense": (
         defense_value: 70,
-        speed: 10,
         sprite_index: 14,
     ),
     "money_1": (
