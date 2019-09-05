@@ -1,0 +1,28 @@
+{
+    "plasma_blasts": (
+        stat_effects: {
+            "fire_speed": -0.05,
+            "damage": 5,
+        },
+        sprite_index: 6,
+    ),
+    "warp_thruster": (
+        stat_effects: {
+            "deceleration": 1,
+            "acceleration": 1,
+        },
+        sprite_index: 8,
+    ),
+    "hazardous_reactor": (
+        stat_effects: {
+            "max_speed": 20,
+        },
+        sprite_index: 7,
+    ),
+    "steel_barrel": (
+        bool_effects: {
+            "barrel_immunity": true,
+        },
+        sprite_index: 5,
+    ),
+}

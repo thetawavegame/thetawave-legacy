@@ -1,21 +1,43 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage};
+use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
 use std::{
     collections::{HashMap},
 };
 
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Item {
+    #[serde(default = "des_width")]
     pub width: f32,
+    #[serde(default = "des_height")]
     pub height: f32,
+    #[serde(default = "des_hitbox_width")]
     pub hitbox_width: f32,
+    #[serde(default = "des_hitbox_height")]
     pub hitbox_height: f32,
+    #[serde(default = "des_speed")]
+    pub speed: f32,
+    #[serde(default)]
     pub stat_effects: HashMap<String, f32>,
+    #[serde(default)]
     pub bool_effects: HashMap<String, bool>,
     pub sprite_index: usize,
-    pub speed: f32,
 }
+
+fn des_width() -> f32 { 14.0 }
+fn des_height() -> f32 { 14.0 }
+fn des_hitbox_width() -> f32 { 4.0 }
+fn des_hitbox_height() -> f32 { 4.0 }
+fn des_speed() -> f32 { 70.0 }
+
 
 impl Component for Item {
     type Storage = DenseVecStorage<Self>;
+}
+
+#[derive(Default)]
+pub struct ItemSpawnerTag;
+
+impl Component for ItemSpawnerTag {
+    type Storage = NullStorage<Self>;
 }

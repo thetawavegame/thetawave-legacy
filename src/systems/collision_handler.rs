@@ -2,7 +2,6 @@ use amethyst::{
     ecs::prelude::{System, Read, Resources},
     ecs::*,
     shrev::{EventChannel, ReaderId},
-    core::transform::Transform,
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
@@ -26,7 +25,6 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         Read<'s, EventChannel<CollisionEvent>>,
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Enemy>,
-        ReadStorage<'s, Transform>,
         Entities<'s>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -38,7 +36,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         self.event_reader = Some(res.fetch_mut::<EventChannel<CollisionEvent>>().register_reader());
     }
 
-    fn run(&mut self, (enemy_collision_event_channel, mut spaceships, mut enemies, transforms, entities,storage, sounds, audio_output ): Self::SystemData) {
+    fn run(&mut self, (enemy_collision_event_channel, mut spaceships, mut enemies, entities,storage, sounds, audio_output ): Self::SystemData) {
 
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             //println!("{:?}", event);

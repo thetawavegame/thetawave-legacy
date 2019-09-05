@@ -26,7 +26,8 @@ use amethyst::{
 use crate::audio::initialise_audio;
 
 use crate::systems;
-use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
+use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, 
+    initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -78,7 +79,7 @@ impl Default for SpaceShooter {
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::CollisionDetectionSystem, "collision_detection_system", &[])
-                .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &[])
+                .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &["collision_detection_system"])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::StatTrackerSystem, "stat_tracker_system", &[])
@@ -209,14 +210,13 @@ fn initialise_ui(world:  &mut World) {
         sprite_number: 0,
     };
     
-    //let currency_icon_transform = UiTransform::new("currency_icon".to_string(), Anchor::MiddleRight, Anchor::MiddleRight, -10.0, 0.0, 0.9, 14.0, 14.0);
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(ARENA_MAX_X + 10.0, ARENA_MIN_Y + 12.5, 0.9);
 
-    let currency_icon = world
-        .create_entity()
+    world.create_entity()
         .with(sprite_render)
-        .with(local_transform).build();
+        .with(local_transform)
+        .build();
 
     let font = world.read_resource::<Loader>().load(
         "font/Teko-SemiBold.ttf",
