@@ -20,13 +20,13 @@ mod boss;
 pub use self::{
     blast::Blast,
     spaceship::{Spaceship},
-    enemy::{Enemy, EnemyType},
+    enemy::{Enemy, EnemyType, EnemySpawnerTag},
     explosion::Explosion,
-    item::{Item},
+    item::{Item, ItemSpawnerTag},
     consumable::{Consumable},
     defense::Defense,
     status_bar::{StatusBar, StatusType},
-    spawner::{Pool, Spawner},
+    spawner::{Spawner, SpawnProbabilities, choose_random_name},
     gamemaster::{GameMaster, Phase, PhaseType},
     boss::{Boss, BossPart, BossType},
 };

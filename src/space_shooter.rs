@@ -5,6 +5,7 @@ use amethyst::{
     renderer::{
         Camera, SpriteSheet,
         SpriteSheetFormat, Texture,
+        SpriteRender,
     },
     input::{
         is_key_down,
@@ -14,11 +15,19 @@ use amethyst::{
     renderer::{
         formats::texture::ImageFormat,
     },
-    shrev::EventChannel,
+    ui::{
+        TtfFormat,
+        Anchor,
+        UiText,
+        UiTransform,
+    },
 };
 
+use crate::audio::initialise_audio;
+
 use crate::systems;
-use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
+use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, 
+    initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
 use crate::components::BossPart;
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
@@ -71,11 +80,10 @@ impl Default for SpaceShooter {
                 .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::CollisionDetectionSystem, "collision_detection_system", &[])
-                .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &[])
-                //.with(systems::SpaceshipEnemyCollisionSystem, "spaceship_enemy_collision_system", &[])
-                //.with(systems::EnemyEnemyCollisionSystem::default(), "enemy_enemy_collision_system", &[])
+                .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &["collision_detection_system"])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
+                .with(systems::StatTrackerSystem, "stat_tracker_system", &[])
                 .build(),
         }
     }
@@ -91,12 +99,11 @@ impl SimpleState for SpaceShooter {
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
         //let repeater_boss_sprite_sheet_handle = load_spritesheet(world, "repeater_boss_spritesheet.png", "repeater_boss_spritesheet.ron");
 
+
         self.dispatcher.setup(&mut world.res);
-
-        //add the event channels
-        //world.add_resource(EventChannel::<EnemyCollisionEvent>::new()); 
         world.register::<BossPart>();
-
+        initialise_audio(world);
+        initialise_ui(world);
         initialise_gamemaster(world);
         initialise_defense(world);
         initialise_status_bars(world);
@@ -172,4 +179,68 @@ fn initialise_camera(world: &mut World) {
         .with(Camera::standard_2d(GAME_WIDTH, GAME_HEIGHT))
         .with(transform)
         .build();
+}
+
+pub struct TrackedStats {
+    pub currency: Entity,
+}
+
+fn initialise_ui(world:  &mut World) {
+
+    let texture_handle = {
+        let loader = world.read_resource::<Loader>();
+        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
+        loader.load(
+            "texture/currency_ui.png",
+            ImageFormat::default(),
+            (),
+            &texture_storage,
+        )
+    };
+
+    let sprite_sheet_handle = {
+        let loader = world.read_resource::<Loader>();
+        let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
+        loader.load(
+            "texture/currency_ui.ron",
+            SpriteSheetFormat(texture_handle),
+            (),
+            &sprite_sheet_store,
+        )
+    };
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_number: 0,
+    };
+    
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(ARENA_MAX_X + 10.0, ARENA_MIN_Y + 12.5, 0.9);
+
+    world.create_entity()
+        .with(sprite_render)
+        .with(local_transform)
+        .build();
+
+    let font = world.read_resource::<Loader>().load(
+        "font/Teko-SemiBold.ttf",
+        TtfFormat,
+        (),
+        &world.read_resource(),
+    );
+    let currency_count_transform = UiTransform::new("currency_count".to_string(), Anchor::BottomRight, Anchor::BottomRight, -10.0, 10.0, 0.9, 50.0, 45.0);
+    let currency_count = world
+        .create_entity()
+        .with(currency_count_transform)
+        .with(UiText::new(
+            font.clone(),
+            "x 0".to_string(),
+            [1.0, 1.0, 1.0, 1.0],
+            45.0
+        )).build();
+
+    world.add_resource(TrackedStats {
+        currency: currency_count
+    });
+    //world.add_resource(currency_icon);
 }
