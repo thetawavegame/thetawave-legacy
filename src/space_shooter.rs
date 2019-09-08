@@ -83,6 +83,7 @@ impl Default for SpaceShooter {
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::StatTrackerSystem, "stat_tracker_system", &[])
+                .with(systems::StoreSystem, "store_system", &[])
                 .build(),
         }
     }

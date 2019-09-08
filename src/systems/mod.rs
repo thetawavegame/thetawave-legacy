@@ -15,6 +15,7 @@ mod collision_detection;
 mod collision_handler;
 mod gamemaster;
 mod stat_tracker;
+mod store;
 
 
 pub use self::{
@@ -35,6 +36,7 @@ pub use self::{
     collision_handler::CollisionHandlerSystem,
     gamemaster::GameMasterSystem,
     stat_tracker::StatTrackerSystem,
+    store::StoreSystem,
 };
 
 

@@ -40,7 +40,7 @@ pub use self::{
     status_bar::initialise_status_bars,
     status_unit::spawn_status_unit,
     gamemaster::initialise_gamemaster,
-    store::initialise_store,
+    store::{initialise_store},
 };
 
 pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
