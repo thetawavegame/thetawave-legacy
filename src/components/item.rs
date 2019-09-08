@@ -5,7 +5,7 @@ use std::{
 
 use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Item {
     #[serde(default = "des_width")]
     pub width: f32,
@@ -17,6 +17,8 @@ pub struct Item {
     pub hitbox_height: f32,
     #[serde(default = "des_speed")]
     pub speed: f32,
+    #[serde(default = "des_price")]
+    pub price: usize,
     #[serde(default)]
     pub stat_effects: HashMap<String, f32>,
     #[serde(default)]
@@ -29,6 +31,7 @@ fn des_height() -> f32 { 14.0 }
 fn des_hitbox_width() -> f32 { 4.0 }
 fn des_hitbox_height() -> f32 { 4.0 }
 fn des_speed() -> f32 { 70.0 }
+fn des_price() -> usize { 10 }
 
 
 impl Component for Item {

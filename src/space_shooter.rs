@@ -27,7 +27,7 @@ use crate::audio::initialise_audio;
 
 use crate::systems;
 use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, 
-    initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
+    initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars, initialise_store};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -76,7 +76,7 @@ impl Default for SpaceShooter {
                 .with(systems::ExplosionSystem, "explosion_system", &[])
                 .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
-                .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
+                //.with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::CollisionDetectionSystem, "collision_detection_system", &[])
                 .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &["collision_detection_system"])
@@ -108,8 +108,9 @@ impl SimpleState for SpaceShooter {
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
         initialise_enemy_spawner(world);
-        initialise_item_spawner(world);
+        //initialise_item_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
+        initialise_store(world);
         initialise_camera(world);
     }
 
