@@ -185,7 +185,42 @@ pub struct TrackedStats {
 
 fn initialise_ui(world:  &mut World) {
 
-    let texture_handle = {
+    let item_slots_texture_handle = {
+        let loader = world.read_resource::<Loader>();
+        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
+        loader.load(
+            "texture/item_slots.png",
+            ImageFormat::default(),
+            (),
+            &texture_storage,
+        )
+    };
+
+    let item_slots_sprite_sheet_handle = {
+        let loader = world.read_resource::<Loader>();
+        let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
+        loader.load(
+            "texture/item_slots.ron",
+            SpriteSheetFormat(item_slots_texture_handle),
+            (),
+            &sprite_sheet_store,
+        )
+    };
+
+    let item_slots_sprite_render = SpriteRender {
+        sprite_sheet: item_slots_sprite_sheet_handle.clone(),
+        sprite_number: 0,
+    };
+
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(ARENA_MAX_X + 10.0 + 2.0, ARENA_MIN_Y + 29.0 + 25.0 + 2.0, 0.9);
+
+    world.create_entity()
+        .with(item_slots_sprite_render)
+        .with(local_transform)
+        .build();
+
+    let currency_texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
@@ -196,19 +231,19 @@ fn initialise_ui(world:  &mut World) {
         )
     };
 
-    let sprite_sheet_handle = {
+    let currency_sprite_sheet_handle = {
         let loader = world.read_resource::<Loader>();
         let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
         loader.load(
             "texture/currency_ui.ron",
-            SpriteSheetFormat(texture_handle),
+            SpriteSheetFormat(currency_texture_handle),
             (),
             &sprite_sheet_store,
         )
     };
 
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
+    let currency_sprite_render = SpriteRender {
+        sprite_sheet: currency_sprite_sheet_handle.clone(),
         sprite_number: 0,
     };
     
@@ -216,7 +251,7 @@ fn initialise_ui(world:  &mut World) {
     local_transform.set_translation_xyz(ARENA_MAX_X + 10.0, ARENA_MIN_Y + 12.5, 0.9);
 
     world.create_entity()
-        .with(sprite_render)
+        .with(currency_sprite_render)
         .with(local_transform)
         .build();
 

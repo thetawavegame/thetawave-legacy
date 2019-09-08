@@ -59,6 +59,11 @@ impl Store {
             self.choose_item_stock(item_pool);
             println!("store item stock: {:?}", self.item_inventory);
             println!("store item stock: {:?}", self.items);
+
+            //add item images to gui
+            for item in self.item_inventory.iter() {
+                println!("item: {:?}", item);
+            }
         }
     }
 
