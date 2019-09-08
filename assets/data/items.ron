@@ -4,6 +4,7 @@
             "fire_speed": -0.05,
             "damage": 5,
         },
+        price: 15,
         sprite_index: 6,
     ),
     "warp_thruster": (
@@ -17,12 +18,14 @@
         stat_effects: {
             "max_speed": 20,
         },
+        price: 7,
         sprite_index: 7,
     ),
     "steel_barrel": (
         bool_effects: {
             "barrel_immunity": true,
         },
+        price: 9,
         sprite_index: 5,
     ),
 }
