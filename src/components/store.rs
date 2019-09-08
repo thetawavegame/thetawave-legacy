@@ -10,6 +10,8 @@ pub type StockProbabilities = Vec<(String, f32)>;
 #[derive(Clone)]
 pub struct Store {
     pub items: StockProbabilities,
+    pub restock_timer: f32,
+    pub restock_interval: f32,
     pub item_inventory: Vec<Item>,
     pub consumable_inventory: Vec<Consumable>,
 }
@@ -19,12 +21,14 @@ impl Component for Store {
 }
 
 impl Store {
-    pub fn choose_item_stock(&mut self, world: &mut World) {
-        //choose 3 random items, /= probability by 2
-        let mut choose_pool = self.items.clone(); //copy pool
-        let item_pool = world.read_resource::<ItemPool>();
+
+    pub fn choose_item_stock(&mut self, item_pool: ItemPool) {
+        self.item_inventory = vec![];
+        let mut choose_pool = self.items.clone();
+        //let item_pool = world.read_resource::<ItemPool>();
+        //add three items to item_inventory
         for _ in 0..3 {
-            println!("item pool: {:?}", choose_pool);
+            //println!("item pool: {:?}", choose_pool);
             let total_probs = choose_pool.iter().fold(0.0, |sum, item| sum + item.1);
 
             //choose an item
@@ -37,10 +41,9 @@ impl Store {
                     ///println!("adding item to stock: {:?}", item_to_add);
                     choose_pool.retain(|element| element != &(name.clone(), value));
                     self.item_inventory.push(item_to_add.clone());
-                    //divide probability by 2
+
                     let item_index = self.items.iter().position(|element| element == &(name.clone(), value)).unwrap();
-                    println!("added item index: {}", item_index);
-                    self.items[item_index].1 /= 2.0;
+                    self.items[item_index].1 /= 2.0; //divide probability of appearing again by 2
                     break;
                 }
             }
@@ -48,27 +51,16 @@ impl Store {
 
     }
 
-
-    fn calclate_total_probabilities(items: &StockProbabilities) -> f32 {
-        items.iter().fold(0.0, |sum, item| sum + item.1)
-    }
-
-    fn choose_name_precalculated(total_probs: f32, items: &StockProbabilities) -> &String {
-        // pos is in [0..total_probs)
-        let pos = thread_rng().gen::<f32>() * total_probs;
-        let mut sum = 0.0;
-        for (name, value) in items {
-            sum += value;
-            if sum > pos {
-                return &name;
-            }
+    pub fn restock(&mut self, dt: f32, item_pool: ItemPool) {
+        if self.restock_timer > 0.0 {
+            self.restock_timer -= dt;
+        } else {
+            self.restock_timer += self.restock_interval;
+            self.choose_item_stock(item_pool);
+            println!("store item stock: {:?}", self.item_inventory);
+            println!("store item stock: {:?}", self.items);
         }
-        items
-            .last()
-            .map(|(name, _)| name)
-            .expect("invalid probabilities, cannot choose name")
     }
-
 
 }
 /*

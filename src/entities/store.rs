@@ -10,6 +10,8 @@ use crate::{
 
 pub type StockProbabilities = Vec<(String, f32)>;
 
+const RESTOCK_INTERVAL: f32 = 30.0;
+
 pub fn initialise_store(world: &mut World) {
 
     //add random items to stock
@@ -23,23 +25,20 @@ pub fn initialise_store(world: &mut World) {
 
     let mut store = Store {
         items: stock_list,
+        restock_timer: RESTOCK_INTERVAL,
+        restock_interval: RESTOCK_INTERVAL,
         item_inventory: vec![],
         consumable_inventory: vec![],
     };
 
-    store.choose_item_stock(world);
+    //store.choose_item_stock(world);
 
-    println!("store item stock: {:?}", store.item_inventory);
-    println!("store item stock: {:?}", store.items);
+    //println!("store item stock: {:?}", store.item_inventory);
+    //println!("store item stock: {:?}", store.items);
 
     //add random consumables to stock
-/*
     world
         .create_entity()
-        .with(Defense{
-            defense: DEFENSE,
-            max_defense: DEFENSE,
-        })
+        .with(store)
         .build();
-        */
 }
