@@ -10,7 +10,7 @@ use amethyst::{
 
 use crate::{
     resources::{SpriteResource, ItemPool},
-    components::Store
+    components::Store,
 };
 
 
@@ -33,7 +33,7 @@ pub fn initialise_store(world: &mut World) {
         items: stock_list,
         restock_timer: RESTOCK_INTERVAL,
         restock_interval: RESTOCK_INTERVAL,
-        item_inventory: vec![],
+        item_inventory: vec![None, None, None],
         item_icons: vec![],
         consumable_inventory: vec![],
     };
