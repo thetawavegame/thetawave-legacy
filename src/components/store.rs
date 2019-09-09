@@ -16,8 +16,11 @@ use amethyst::{
 use crate::{
     resources::{SpriteResource},
     space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_MAX_Y},
+    components::{Spaceship},
+    entities::spawn_item,
 };
 
+const ITEM_SPAWN_Y_OFFSET: f32 = 20.0;
 
 // each item has a customizable chance of appearing in the store, to make certain items more rare
 pub type StockProbabilities = Vec<(String, f32)>;
@@ -27,7 +30,7 @@ pub struct Store {
     pub items: StockProbabilities,
     pub restock_timer: f32,
     pub restock_interval: f32,
-    pub item_inventory: Vec<Item>,
+    pub item_inventory: Vec<Option<Item>>,
     pub item_icons: Vec<Entity>,
     pub consumable_inventory: Vec<Consumable>,
 }
@@ -56,7 +59,7 @@ impl Store {
                     let item_to_add = &item_pool[&name];
                     ///println!("adding item to stock: {:?}", item_to_add);
                     choose_pool.retain(|element| element != &(name.clone(), value));
-                    self.item_inventory.push(item_to_add.clone());
+                    self.item_inventory.push(Some(item_to_add.clone()));
 
                     let item_index = self.items.iter().position(|element| element == &(name.clone(), value)).unwrap();
                     self.items[item_index].1 /= 2.0; //divide probability of appearing again by 2
@@ -71,22 +74,39 @@ impl Store {
         if self.restock_timer > 0.0 {
             self.restock_timer -= dt;
         } else {
-            self.restock_timer += self.restock_interval;
+            self.restock_timer = self.restock_interval;
             self.choose_item_stock(item_pool);
             println!("store item stock: {:?}", self.item_inventory);
             println!("store item stock: {:?}", self.items);
 
             for item_icon in self.item_icons.iter() {
-                entities.delete(*item_icon);
+                let _res = entities.delete(*item_icon);
             }
 
             //add item images to gui
             for (i, item) in self.item_inventory.clone().iter().enumerate() {
-                println!("item: {:?}", item);
-                self.spawn_store_icon(entities, sprite_resource, lazy_update, i as f32, item.sprite_index);
+                if let Some(store_item) = item {
+                    println!("store_item: {:?}", store_item);
+                    self.spawn_store_icon(entities, sprite_resource, lazy_update, i as f32, store_item.sprite_index);
+                }
             }
 
             
+        }
+    }
+
+    pub fn purchase_item(&mut self, item_index: usize, entities: &Entities, spaceship: &mut Spaceship, sprite_resource: &ReadExpect<SpriteResource>, lazy_update: &ReadExpect<LazyUpdate>) {
+        if let Some(item) = &self.item_inventory[item_index] {
+            println!("spaceship funds: {} item price: {}", spaceship.money, item.price);
+            if spaceship.money >= item.price {
+                spaceship.money -= item.price;
+                spawn_item(entities, sprite_resource, item.clone(), Vector3::new(spaceship.pos_x, ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET, 0.0), lazy_update);
+                self.item_inventory[item_index] = None; //change item slot data to None
+                let _res = entities.delete(self.item_icons.remove(item_index)); //remove store icon 
+                println!("item purchased");
+            }else {
+                println!("don't have the funds");
+            }
         }
     }
 
@@ -94,7 +114,7 @@ impl Store {
         let store_icon_entity: Entity = entities.create();
 
         let mut local_transform = Transform::default();
-        local_transform.set_translation(Vector3::new(ARENA_MAX_X + 10.0 + 2.0, (ARENA_MIN_Y + 9.0 + 25.0 + 2.0) + (20.0 * index), 0.9));
+        local_transform.set_translation(Vector3::new(ARENA_MAX_X + 10.0 + 2.0, (ARENA_MIN_Y + 9.0 + 25.0 + 2.0) + (40.0 - (20.0 * index)), 0.9));
 
         let sprite_render = SpriteRender {
             sprite_sheet: sprite_resource.sprite_sheet.clone(),
@@ -108,47 +128,6 @@ impl Store {
 
     }
 }
-/*
-// spawn random item with position, if timer has expired
-    pub fn spawn_with_position(&mut self, dt: f32) -> Option<(f32, &String)> {
-        if self.timer > 0.0 || self.counter == 0 {
-            self.timer -= dt;
-            None
-        } else {
-            self.timer += self.interval;
-            self.counter -= 1;
-            Some((
-                choose_position(),
-                choose_name_precalculated(self.prob_space, &self.probabilities),
-            ))
-        }
-    }
-    /// disable specified item from spawning, at the same time increases all other items spawn rate
-    /// if all items are disabled, `spawn_with_position` will always return None
-    pub fn disable_item(&mut self, item: &String) {
-        match self.probabilities.iter_mut().find(|(name, _)| name == item) {
-            Some((_, prob)) => {
-                *prob = 0.0;
-                self.prob_space = calculate_total_probabilities(&self.probabilities);
-                if self.prob_space == 0.0 {
-                    self.counter = 0;
-                }
-            }
-            _ => {}
-        }
-    }
-
-    pub fn choose_random_name(probs: &SpawnProbabilities) -> &String {
-    choose_name_precalculated(calculate_total_probabilities(&probs), &probs)
-}
-
-fn choose_position() -> f32 {
-    let max_width = ARENA_MAX_X - ARENA_SPAWN_OFFSET;
-    let min_width = ARENA_MIN_X + ARENA_SPAWN_OFFSET;
-    ARENA_MIN_X + ARENA_SPAWN_OFFSET + thread_rng().gen::<f32>() * (max_width - min_width)
-}
-
-*/
 
 
 
