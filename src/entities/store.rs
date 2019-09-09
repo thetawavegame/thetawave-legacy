@@ -1,16 +1,22 @@
 use amethyst::{
     prelude::Builder,
-    ecs::prelude::World,
+    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender},
+    core::{
+        transform::Transform,
+        math::Vector3,
+    },
 };
 
 use crate::{
-    components::{Store},
-    resources::ItemPool,
+    resources::{SpriteResource, ItemPool},
+    components::Store
 };
+
 
 pub type StockProbabilities = Vec<(String, f32)>;
 
-const RESTOCK_INTERVAL: f32 = 30.0;
+const RESTOCK_INTERVAL: f32 = 10.0;
 
 pub fn initialise_store(world: &mut World) {
 
@@ -28,6 +34,7 @@ pub fn initialise_store(world: &mut World) {
         restock_timer: RESTOCK_INTERVAL,
         restock_interval: RESTOCK_INTERVAL,
         item_inventory: vec![],
+        item_icons: vec![],
         consumable_inventory: vec![],
     };
 
@@ -42,3 +49,5 @@ pub fn initialise_store(world: &mut World) {
         .with(store)
         .build();
 }
+
+
