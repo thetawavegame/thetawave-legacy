@@ -1,7 +1,22 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage, World};
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use crate::components::{Item, Consumable};
 use crate::resources::{ItemPool};
 use rand::{thread_rng, Rng};
+
+use amethyst::{
+    prelude::Builder,
+    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender},
+    core::{
+        transform::Transform,
+        math::Vector3,
+    },
+};
+
+use crate::{
+    resources::{SpriteResource},
+    space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_MAX_Y},
+};
 
 
 // each item has a customizable chance of appearing in the store, to make certain items more rare
@@ -13,6 +28,7 @@ pub struct Store {
     pub restock_timer: f32,
     pub restock_interval: f32,
     pub item_inventory: Vec<Item>,
+    pub item_icons: Vec<Entity>,
     pub consumable_inventory: Vec<Consumable>,
 }
 
@@ -51,7 +67,7 @@ impl Store {
 
     }
 
-    pub fn restock(&mut self, dt: f32, item_pool: ItemPool) {
+    pub fn restock(&mut self, dt: f32, item_pool: ItemPool, entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, lazy_update: &ReadExpect<LazyUpdate>) {
         if self.restock_timer > 0.0 {
             self.restock_timer -= dt;
         } else {
@@ -60,13 +76,37 @@ impl Store {
             println!("store item stock: {:?}", self.item_inventory);
             println!("store item stock: {:?}", self.items);
 
-            //add item images to gui
-            for item in self.item_inventory.iter() {
-                println!("item: {:?}", item);
+            for item_icon in self.item_icons.iter() {
+                entities.delete(*item_icon);
             }
+
+            //add item images to gui
+            for (i, item) in self.item_inventory.clone().iter().enumerate() {
+                println!("item: {:?}", item);
+                self.spawn_store_icon(entities, sprite_resource, lazy_update, i as f32, item.sprite_index);
+            }
+
+            
         }
     }
 
+    pub fn spawn_store_icon(&mut self, entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, lazy_update: &ReadExpect<LazyUpdate>, index: f32, sprite_index: usize){
+        let store_icon_entity: Entity = entities.create();
+
+        let mut local_transform = Transform::default();
+        local_transform.set_translation(Vector3::new(ARENA_MAX_X + 10.0 + 2.0, (ARENA_MIN_Y + 9.0 + 25.0 + 2.0) + (20.0 * index), 0.9));
+
+        let sprite_render = SpriteRender {
+            sprite_sheet: sprite_resource.sprite_sheet.clone(),
+            sprite_number: sprite_index,
+        };
+        
+        lazy_update.insert(store_icon_entity, sprite_render);
+        lazy_update.insert(store_icon_entity, local_transform);
+
+        self.item_icons.push(store_icon_entity);
+
+    }
 }
 /*
 // spawn random item with position, if timer has expired
