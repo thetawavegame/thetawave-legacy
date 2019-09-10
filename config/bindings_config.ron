@@ -22,13 +22,13 @@
         "barrel_right": [
             [Key(Right)]
         ],
-        "buy_1": [
+        "buy_0": [
             [Key(Key1)]
         ],
-        "buy_2": [
+        "buy_1": [
             [Key(Key2)]
         ],
-        "buy_3": [
+        "buy_2": [
             [Key(Key3)]
         ],
     },

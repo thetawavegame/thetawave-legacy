@@ -24,6 +24,7 @@ pub struct Item {
     #[serde(default)]
     pub bool_effects: HashMap<String, bool>,
     pub sprite_index: usize,
+    pub name: String,
 }
 
 fn des_width() -> f32 { 14.0 }
