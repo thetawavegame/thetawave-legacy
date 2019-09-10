@@ -82,8 +82,8 @@ impl Default for SpaceShooter {
                 .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &["collision_detection_system"])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
-                .with(systems::StatTrackerSystem, "stat_tracker_system", &[])
                 .with(systems::StoreSystem, "store_system", &[])
+                .with(systems::StatTrackerSystem, "stat_tracker_system", &["store_system", "spaceship_system", "consumable_system"])
                 .build(),
         }
     }
@@ -93,7 +93,7 @@ impl SimpleState for SpaceShooter {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
 
 
-        let world = data.world;
+        let mut world = data.world;
         let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
         let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");

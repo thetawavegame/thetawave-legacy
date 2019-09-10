@@ -28,7 +28,7 @@ const BARREL_COOLDOWN: f32 = 1.0;
 const BARREL_SPEED: f32 = 180.0;
 const BARREL_DURATION: f32 = 0.3;
 const HEALTH: f32 = 400.0;
-const MONEY: usize = 50;
+const MONEY: usize = 20;
 const COLLISION_DAMAGE: f32 = 50.0;
 
 

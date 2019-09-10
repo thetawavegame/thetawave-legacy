@@ -6,6 +6,7 @@
         },
         price: 15,
         sprite_index: 6,
+        name: "plasma_blasts",
     ),
     "warp_thruster": (
         stat_effects: {
@@ -13,6 +14,7 @@
             "acceleration": 1,
         },
         sprite_index: 8,
+        name: "warp_thruster",
     ),
     "hazardous_reactor": (
         stat_effects: {
@@ -20,6 +22,7 @@
         },
         price: 7,
         sprite_index: 7,
+        name: "hazardous_reactor",
     ),
     "steel_barrel": (
         bool_effects: {
@@ -27,5 +30,6 @@
         },
         price: 9,
         sprite_index: 5,
+        name: "steel_barrel",
     ),
 }
