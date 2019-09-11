@@ -1,14 +1,9 @@
 use amethyst::{
     prelude::Builder,
-    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender},
-    core::{
-        transform::Transform,
-        math::Vector3,
-    },
+    ecs::prelude::{World},
 };
 use crate::{
-    resources::{SpriteResource, ItemPool},
+    resources::{ItemPool},
     components::Store,
 };
 
@@ -23,7 +18,7 @@ pub fn initialise_store(world: &mut World) {
         .map(|(key,_)| (key.clone(), 1.0)) // all with same probability
         .collect();
 
-    let mut store = Store {
+    let store = Store {
         items: stock_list,
         restock_timer: RESTOCK_INTERVAL,
         restock_interval: RESTOCK_INTERVAL,

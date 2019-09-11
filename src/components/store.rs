@@ -1,6 +1,5 @@
 use amethyst::{
-    prelude::Builder,
-    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect, Component, DenseVecStorage},
+    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect, Component, DenseVecStorage},
     renderer::{SpriteRender},
     core::{
         transform::Transform,
@@ -11,7 +10,7 @@ use rand::{thread_rng, Rng};
 use crate::{
     components::{Item, Consumable, Spaceship},
     resources::{ItemPool, SpriteResource},
-    space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_MAX_Y},
+    space_shooter::{ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
     entities::spawn_item,
 };
 
@@ -56,7 +55,7 @@ impl Store {
                     choose_pool.retain(|element| element != &(name.clone(), value));
                     //self.item_inventory.push(Some(item_to_add.clone()));
                     self.item_inventory[i] = Some(item_to_add.clone());
-                    println!("added {} to slot #{}", item_to_add.clone().name, i);
+                    //println!("added {} to slot #{}", item_to_add.clone().name, i);
 
                     let item_index = self.items.iter().position(|element| element == &(name.clone(), value)).unwrap();
                     self.items[item_index].1 /= 2.0; //divide probability of appearing again by 2
