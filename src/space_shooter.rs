@@ -101,7 +101,7 @@ impl SimpleState for SpaceShooter {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
 
 
-        let mut world = data.world;
+        let world = data.world;
         let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
         let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
@@ -283,7 +283,7 @@ fn initialise_ui(world:  &mut World) {
             20.0
         )).build();
 
-    let item_price_1_transform = UiTransform::new("item_price_1".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 130.0, 0.9, 50.0, 45.0);
+    let item_price_1_transform = UiTransform::new("item_price_0".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 130.0, 0.9, 50.0, 45.0);
     let item_price_1 = world
         .create_entity()
         .with(item_price_1_transform)
@@ -294,7 +294,7 @@ fn initialise_ui(world:  &mut World) {
             15.0
         )).build();
 
-    let item_price_2_transform = UiTransform::new("item_price_2".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 90.0, 0.9, 50.0, 45.0);
+    let item_price_2_transform = UiTransform::new("item_price_1".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 90.0, 0.9, 50.0, 45.0);
     let item_price_2 = world
         .create_entity()
         .with(item_price_2_transform)
@@ -305,7 +305,7 @@ fn initialise_ui(world:  &mut World) {
             15.0
         )).build();
 
-    let item_price_3_transform = UiTransform::new("item_price_3".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 50.0, 0.9, 50.0, 45.0);
+    let item_price_3_transform = UiTransform::new("item_price_2".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 50.0, 0.9, 50.0, 45.0);
     let item_price_3 = world
         .create_entity()
         .with(item_price_3_transform)

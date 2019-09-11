@@ -30,7 +30,7 @@ use amethyst::config::Config;
 
 fn main() -> amethyst::Result<()> {
 
-    //amethyst::start_logger(Default::default());
+    amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
     let display_config_path = app_root.join("config").join("display_config_960.ron");

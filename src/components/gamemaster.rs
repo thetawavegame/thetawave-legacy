@@ -32,7 +32,7 @@ impl GameMaster {
         if self.tick_timer > 0.0 {
             self.tick_timer -= dt;
         } else {
-            //println!("phase index: {}\tcurrent_tick: {}", self.phase_idx, self.current_tick);
+            println!("phase index: {}\tcurrent_tick: {}", self.phase_idx, self.current_tick);
             self.tick_timer = self.tick_length;
             self.current_tick += 1;
 

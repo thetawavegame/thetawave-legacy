@@ -1,16 +1,12 @@
 use amethyst::{
     core::{
-        Transform,
         timing::Time,
-        math::Vector3,
     },
     ecs::{
-        prelude::World,
         Join,
         Read,
         System,
         WriteStorage,
-        ReadStorage,
         Entities,
         LazyUpdate,
         ReadExpect,
@@ -21,8 +17,7 @@ use amethyst::{
 };
 use std::ops::Deref;
 use crate::{
-    entities::{spawn_item},
-    components::{Spawner, GameMaster, PhaseType, Store, Spaceship},
+    components::{Store, Spaceship},
     resources::{SpriteResource, ItemPool},
     audio::{play_sfx, Sounds},
 };
@@ -51,7 +46,7 @@ impl<'s> System<'s> for StoreSystem {
         let buy_1_action = input.action_is_down("buy_1").unwrap();
         let buy_2_action = input.action_is_down("buy_2").unwrap();
 
-        for (store) in (&mut stores).join() {
+        for store in (&mut stores).join() {
             store.restock(time.delta_seconds(), item_pool.clone(), &entities, &sprite_resource, &lazy_update);
 
             for spaceship in (&mut spaceships).join() {
