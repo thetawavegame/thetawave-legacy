@@ -8,9 +8,7 @@ use amethyst::{
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
-
 use std::ops::Deref;
-
 use crate::{
     entities::{fire_blast},
     components::{Spaceship, Fires, Living},
@@ -21,6 +19,7 @@ use crate::{
 const PLAYER_BLAST_SPRITE_INDEX: usize = 3;
 
 pub struct SpaceshipSystem;
+
 impl<'s> System<'s> for SpaceshipSystem {
 
     type SystemData = (

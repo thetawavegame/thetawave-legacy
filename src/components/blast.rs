@@ -1,6 +1,5 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-
 #[derive(Clone)]
 pub struct Blast {
     pub speed: f32,

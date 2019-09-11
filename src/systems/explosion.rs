@@ -4,13 +4,12 @@ use amethyst::{
     },
     ecs::prelude::{Entities, Join, System, WriteStorage, Read},
 };
-
 use crate::{
     components::Explosion,
 };
 
-
 pub struct ExplosionSystem;
+
 impl<'s> System<'s> for ExplosionSystem {
 
     type SystemData = (

@@ -5,12 +5,10 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet, Transparent},
     assets::Handle,
 };
-
 use crate::{
     components::Spaceship,
     space_shooter::{ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT},
 };
-
 
 const HEIGHT: f32 = 18.0;
 const WIDTH: f32 = 18.0;
@@ -30,7 +28,6 @@ const BARREL_DURATION: f32 = 0.3;
 const HEALTH: f32 = 400.0;
 const MONEY: usize = 20;
 const COLLISION_DAMAGE: f32 = 50.0;
-
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
 

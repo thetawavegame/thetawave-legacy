@@ -5,14 +5,13 @@ use amethyst::{
     },
     ecs::prelude::{Entities, Join, System, ReadStorage, WriteStorage, Read},
 };
-
 use crate::{
     components::Blast,
+    space_shooter::{ARENA_MAX_Y, ARENA_MIN_Y, ARENA_MAX_X, ARENA_MIN_X},
 };
-use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_Y, ARENA_MAX_X, ARENA_MIN_X};
-
 
 pub struct BlastSystem;
+
 impl<'s> System<'s> for BlastSystem {
 
     type SystemData = (

@@ -4,23 +4,28 @@ use amethyst::{
         timing::Time,
         math::Vector3,
     },
-    ecs::{Join, Read, System, WriteStorage, ReadStorage, Entities, LazyUpdate, ReadExpect},
-    ecs::prelude::World,
+    ecs::{
+        prelude::World,
+        Join,
+        Read,
+        System,
+        WriteStorage,
+        ReadStorage,
+        Entities,
+        LazyUpdate,
+        ReadExpect,
+    },
     input::{InputHandler, StringBindings},
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
-
+use std::ops::Deref;
 use crate::{
     entities::{spawn_item},
     components::{Spawner, GameMaster, PhaseType, Store, Spaceship},
     resources::{SpriteResource, ItemPool},
     audio::{play_sfx, Sounds},
 };
-
-use std::ops::Deref;
-
-
 
 pub struct StoreSystem;
 
@@ -64,8 +69,6 @@ impl<'s> System<'s> for StoreSystem {
                     }
                 }
             }
-
         }
-
     }
 }

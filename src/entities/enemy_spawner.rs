@@ -1,16 +1,18 @@
-use amethyst::{core::transform::Transform, ecs::prelude::World, prelude::Builder};
-
-use crate::components::{EnemySpawnerTag, Spawner};
-
-use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
+use amethyst::{
+    core::transform::Transform,
+    ecs::prelude::World,
+    prelude::Builder
+};
+use crate::{
+    components::{EnemySpawnerTag, Spawner},
+    space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH},
+};
 
 const SPAWN_INTERVAL: f32 = 1.5;
 const SPAWN_COUNTER: u32 = 100;
-
 const ENEMY_PAWN_RATIO: f32 = 50.0;
 const ENEMY_DRONE_RATIO: f32 = 100.0;
 const ENEMY_HAULER_RATIO: f32 = 5.0;
-
 const SPAWNER_Y_OFFSET: f32 = 20.0;
 
 pub fn initialise_enemy_spawner(world: &mut World) {

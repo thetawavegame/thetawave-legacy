@@ -32,4 +32,9 @@
         sprite_index: 5,
         name: "steel_barrel",
     ),
+    "quadrupedal_tentaclover": (
+        price: 12,
+        sprite_index: 18,
+        name: "quadrupedal_tentaclover",
+    ),
 }

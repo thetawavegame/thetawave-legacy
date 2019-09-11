@@ -6,13 +6,11 @@ use amethyst::{
     },
     ecs::{Join, Read, ReadStorage, System, WriteStorage, Entities, LazyUpdate, ReadExpect},
 };
-
 use crate::{
     entities::{spawn_enemy},
     components::{Spawner, EnemySpawnerTag, GameMaster, PhaseType},
     resources::{SpriteResource, EnemyPool},
 };
-
 
 pub struct SpawnerSystem;
 

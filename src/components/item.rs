@@ -29,11 +29,10 @@ pub struct Item {
 
 fn des_width() -> f32 { 14.0 }
 fn des_height() -> f32 { 14.0 }
-fn des_hitbox_width() -> f32 { 4.0 }
-fn des_hitbox_height() -> f32 { 4.0 }
+fn des_hitbox_width() -> f32 { 14.0 }
+fn des_hitbox_height() -> f32 { 14.0 }
 fn des_speed() -> f32 { 70.0 }
 fn des_price() -> usize { 10 }
-
 
 impl Component for Item {
     type Storage = DenseVecStorage<Self>;
