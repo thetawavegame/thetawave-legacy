@@ -153,3 +153,7 @@ The "Boss" phase will feature a super tough enemy that will serve as the toughes
 - [ ] gravity gun effect with enemies
 - [ ] shield
 - [ ] speed boost
+
+# Credits
+
+- Font: *Space Madness* by Robert Frye - [License](http://creativecommons.org/licenses/by/4.0/): Creative Commons: Attribution 4.0 International
