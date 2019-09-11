@@ -97,7 +97,6 @@ impl Spaceship {
             transform.set_translation_y(ARENA_MAX_Y - (self.height/2.0));
             self.current_velocity_y = -1.0  * self.current_velocity_y.abs();
         }
-
     }
     
     pub fn barrel_input_cooldown(&mut self, dt: f32) -> bool {

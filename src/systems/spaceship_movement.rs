@@ -6,14 +6,13 @@ use amethyst::{
     ecs::{Join, Read, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
-
 use crate::{
     components::{Spaceship, Rigidbody},
     
 };
 
-
 pub struct SpaceshipMovementSystem;
+
 impl<'s> System<'s> for SpaceshipMovementSystem {
 
     type SystemData = (

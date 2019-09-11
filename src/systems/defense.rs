@@ -1,13 +1,12 @@
 use amethyst::{
     ecs::prelude::{Join, System, WriteStorage},
 };
-
 use crate::{
     components::{Defense, Living},
 };
 
-
 pub struct DefenseSystem;
+
 impl<'s> System<'s> for DefenseSystem {
 
     type SystemData = WriteStorage<'s, Defense>;

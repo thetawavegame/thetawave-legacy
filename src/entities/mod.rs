@@ -1,13 +1,10 @@
-use crate::resources::SpriteResource;
-use amethyst::ecs::prelude::World;
-use amethyst::renderer::SpriteSheet;
-use amethyst::assets::{Handle};
-
 use amethyst::{
     core::{math::Vector3, transform::Transform},
-    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent},
+    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect, World},
+    renderer::{SpriteRender, Transparent, SpriteSheet},
+    assets::{Handle},
 };
+use crate::resources::SpriteResource;
 
 pub mod blast;
 pub mod spaceship;

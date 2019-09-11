@@ -2,11 +2,11 @@ use amethyst::{
     ecs::prelude::{World, Builder},
     core::transform::Transform,
 };
-
-use crate::components::{Spawner, ItemSpawnerTag};
-use crate::resources::ItemPool;
-
-use crate::space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH};
+use crate::{
+    components::{Spawner, ItemSpawnerTag},
+    resources::ItemPool,
+    space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH},
+};
 
 const SPAWN_INTERVAL: f32 = 10.0;
 const SPAWN_COUNT: u32 = 10;

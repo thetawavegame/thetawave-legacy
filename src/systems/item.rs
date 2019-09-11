@@ -7,9 +7,7 @@ use amethyst::{
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
-
 use std::ops::Deref;
-
 use crate::{
     components::{Item, Spaceship},
     systems::hitbox_collide,
@@ -18,8 +16,8 @@ use crate::{
 
 use crate::space_shooter::ARENA_MIN_Y;
 
-
 pub struct ItemSystem;
+
 impl<'s> System<'s> for ItemSystem {
 
     type SystemData = (
@@ -81,12 +79,8 @@ impl<'s> System<'s> for ItemSystem {
                         let _result = entities.delete(item_entity);
                     }
                 }
-
             }
-
-
         }
-
     }
 }
 

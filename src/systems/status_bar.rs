@@ -1,20 +1,18 @@
 use amethyst::{
     ecs::prelude::{Entities, Join, System, WriteStorage, ReadStorage, ReadExpect, LazyUpdate},
 };
-
 use crate::{
     components::{Spaceship, StatusBar, StatusType, Defense},
     entities::spawn_status_unit,
     resources::SpriteResource,
 };
 
-
 const HEALTH_SPRITE_INDEX: usize = 10;
 const DEFENSE_SPRITE_INDEX: usize = 11;
 const ROLL_SPRITE_INDEX: usize = 12;
 
-
 pub struct StatusBarSystem;
+
 impl<'s> System<'s> for StatusBarSystem {
 
     type SystemData = (

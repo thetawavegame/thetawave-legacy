@@ -6,13 +6,11 @@ use amethyst::{
     },
     ecs::{Join, Read, System, WriteStorage, ReadStorage, Entities, LazyUpdate, ReadExpect},
 };
-
 use crate::{
     entities::{spawn_item},
     components::{Spawner, ItemSpawnerTag, GameMaster, PhaseType},
     resources::{SpriteResource, ItemPool},
 };
-
 
 pub struct ItemSpawnSystem;
 
@@ -49,15 +47,12 @@ impl<'s> System<'s> for ItemSpawnSystem {
                                 spawner.disable_item(&name);
                             }
                         }
-
                     }
 
                     PhaseType::Boss => {}
-
                     PhaseType::Rest => {}
                 }
             }
         }
-
     }
 }

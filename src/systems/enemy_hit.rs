@@ -2,14 +2,13 @@ use amethyst::{
     core::transform::Transform,
     ecs::prelude::{Entities,Join, ReadStorage, System, WriteStorage},
 };
-
 use crate::{
     components::{Spaceship, Blast},
     systems::hitbox_collide,
 };
 
-
 pub struct EnemyHitSystem;
+
 impl<'s> System<'s> for EnemyHitSystem {
 
     type SystemData = (

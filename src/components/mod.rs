@@ -31,13 +31,9 @@ pub use self::{
     store::Store,
 };
 
-
 const BLAST_Z: f32 = 0.1;
 
-
 pub trait Rigidbody {
-
-    // Instance method signatures; these will return a string.
     fn current_velocity_x(&self) -> f32;
     fn current_velocity_y(&self) -> f32;
     fn acceleration_x(&self) -> f32;
@@ -117,7 +113,6 @@ pub trait Rigidbody {
             self.decelerate_y(1.0);
         }
     }
-
 }
 
 pub trait Fires {

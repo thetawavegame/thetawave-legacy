@@ -2,24 +2,19 @@ use amethyst::{
     prelude::Builder,
     ecs::prelude::World,
 };
-
 use crate::{
     components::{StatusBar, StatusType},
 };
 
-
 const HEALTH_X: f32 = 332.0;
 const HEALTH_Y: f32 = 200.0;
 const HEALTH_LIMIT: f32 = 63.0;
-
 const DEFENSE_X: f32 = 352.0;
 const DEFENSE_Y: f32 = 200.0;
 const DEFENSE_LIMIT: f32 = 63.0;
-
 const ROLL_X: f32 = 324.0;
 const ROLL_Y: f32 = 177.0;
 const ROLL_LIMIT: f32 = 28.0;
-
 
 pub fn initialise_status_bars(world: &mut World) {
 

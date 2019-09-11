@@ -22,12 +22,20 @@ use amethyst::{
         UiTransform,
     },
 };
-
-use crate::audio::initialise_audio;
-
-use crate::systems;
-use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, 
-    initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars, initialise_store};
+use crate::{
+    audio::initialise_audio,
+    systems,
+    entities::{initialise_gamemaster,
+               initialise_sprite_resource,
+               initialise_spaceship,
+               initialise_enemy_spawner,
+               initialise_side_panels,
+               initialise_background,
+               initialise_defense,
+               initialise_status_bars,
+               initialise_store
+    },
+};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -259,53 +267,53 @@ fn initialise_ui(world:  &mut World) {
         .build();
 
     let font = world.read_resource::<Loader>().load(
-        "font/Teko-SemiBold.ttf",
+        "font/SpaceMadness.ttf",
         TtfFormat,
         (),
         &world.read_resource(),
     );
-    let currency_count_transform = UiTransform::new("currency_count".to_string(), Anchor::BottomRight, Anchor::BottomRight, -8.0, 10.0, 0.9, 50.0, 45.0);
+    let currency_count_transform = UiTransform::new("currency_count".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 10.0, 0.9, 50.0, 45.0);
     let currency_count = world
         .create_entity()
         .with(currency_count_transform)
         .with(UiText::new(
             font.clone(),
-            "x 0".to_string(),
+            "x0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
-            45.0
+            20.0
         )).build();
 
-    let item_price_1_transform = UiTransform::new("item_price_1".to_string(), Anchor::BottomRight, Anchor::BottomRight, -7.0, 130.0, 0.9, 50.0, 45.0);
+    let item_price_1_transform = UiTransform::new("item_price_1".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 130.0, 0.9, 50.0, 45.0);
     let item_price_1 = world
         .create_entity()
         .with(item_price_1_transform)
         .with(UiText::new(
             font.clone(),
-            "₹0".to_string(),
+            "$0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
-            30.0
+            15.0
         )).build();
 
-    let item_price_2_transform = UiTransform::new("item_price_2".to_string(), Anchor::BottomRight, Anchor::BottomRight, -7.0, 90.0, 0.9, 50.0, 45.0);
+    let item_price_2_transform = UiTransform::new("item_price_2".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 90.0, 0.9, 50.0, 45.0);
     let item_price_2 = world
         .create_entity()
         .with(item_price_2_transform)
         .with(UiText::new(
             font.clone(),
-            "₹0".to_string(),
+            "$0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
-            30.0
+            15.0
         )).build();
 
-    let item_price_3_transform = UiTransform::new("item_price_3".to_string(), Anchor::BottomRight, Anchor::BottomRight, -7.0, 50.0, 0.9, 50.0, 45.0);
+    let item_price_3_transform = UiTransform::new("item_price_3".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 50.0, 0.9, 50.0, 45.0);
     let item_price_3 = world
         .create_entity()
         .with(item_price_3_transform)
         .with(UiText::new(
             font.clone(),
-            "₹0".to_string(),
+            "$0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
-            30.0
+            15.0
         )).build();
 
     world.add_resource(TrackedStats {

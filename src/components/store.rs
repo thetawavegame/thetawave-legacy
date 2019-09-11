@@ -1,22 +1,17 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage};
-use crate::components::{Item, Consumable};
-use crate::resources::{ItemPool};
-use rand::{thread_rng, Rng};
-
 use amethyst::{
     prelude::Builder,
-    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect},
+    ecs::prelude::{World, Entities, Entity, LazyUpdate, ReadExpect, Component, DenseVecStorage},
     renderer::{SpriteRender},
     core::{
         transform::Transform,
         math::Vector3,
     },
 };
-
+use rand::{thread_rng, Rng};
 use crate::{
-    resources::{SpriteResource},
+    components::{Item, Consumable, Spaceship},
+    resources::{ItemPool, SpriteResource},
     space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_MAX_Y},
-    components::{Spaceship},
     entities::spawn_item,
 };
 
