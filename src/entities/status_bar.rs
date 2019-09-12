@@ -15,6 +15,9 @@ const DEFENSE_LIMIT: f32 = 63.0;
 const ROLL_X: f32 = 324.0;
 const ROLL_Y: f32 = 177.0;
 const ROLL_LIMIT: f32 = 28.0;
+const RESTOCK_X: f32 = 324.0;//should appear in arena
+const RESTOCK_Y: f32 = 90.0;
+const RESTOCK_LIMIT: f32 = 28.0;
 
 pub fn initialise_status_bars(world: &mut World) {
 
@@ -51,6 +54,18 @@ pub fn initialise_status_bars(world: &mut World) {
             y_pos: ROLL_Y,
             status_unit_stack: vec![],
             unit_limit: ROLL_LIMIT,
+        })
+        .build();
+
+    //restock bar
+    world
+        .create_entity()
+        .with(StatusBar {
+            status_type: StatusType::Restock,
+            x_pos: RESTOCK_X,
+            y_pos: RESTOCK_Y,
+            status_unit_stack: vec![],
+            unit_limit: RESTOCK_LIMIT,
         })
         .build();
 
