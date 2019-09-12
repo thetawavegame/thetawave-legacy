@@ -1,10 +1,8 @@
-
 use amethyst::{
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender},
     core::math::Vector3
 };
-
 use crate::{
     resources::SpriteResource,
     components::Explosion,

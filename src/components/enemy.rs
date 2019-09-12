@@ -14,7 +14,7 @@ use serde::{Serialize, Deserialize};
 pub enum EnemyType {
     Pawn,
     Drone,
-    Hauler, //actually an ally
+    Hauler, //ally
 }
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -70,9 +70,11 @@ impl Rigidbody for Enemy{
     fn current_velocity_x(&self) ->  f32 {
         self.current_velocity_x
     }
+
     fn current_velocity_y(&self) -> f32 {
         self.current_velocity_y
     }
+
     fn acceleration_x(&self) -> f32 { self.acceleration_x }
     fn acceleration_y(&self) -> f32 { self.acceleration_y }
     fn deceleration_x(&self) -> f32 { self.deceleration_x }
@@ -83,6 +85,7 @@ impl Rigidbody for Enemy{
     fn set_current_velocity_y(&mut self, value: f32) {
         self.current_velocity_y = value;
     }
+
     fn set_current_velocity_x(&mut self, value: f32) { self.current_velocity_x = value; }
 }
 

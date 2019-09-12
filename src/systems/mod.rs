@@ -6,7 +6,6 @@ mod player_hit;
 mod explosion;
 mod item;
 mod spaceship_movement;
-mod item_spawn;
 mod enemy_hit;
 mod consumable;
 mod status_bar;
@@ -15,7 +14,7 @@ mod collision_detection;
 mod collision_handler;
 mod gamemaster;
 mod stat_tracker;
-
+mod store;
 
 pub use self::{
     blast::BlastSystem,
@@ -26,7 +25,6 @@ pub use self::{
     explosion::ExplosionSystem,
     item::ItemSystem,
     spaceship_movement::SpaceshipMovementSystem,
-    item_spawn::ItemSpawnSystem,
     enemy_hit::EnemyHitSystem,
     consumable::ConsumableSystem,
     status_bar::StatusBarSystem,
@@ -35,8 +33,8 @@ pub use self::{
     collision_handler::CollisionHandlerSystem,
     gamemaster::GameMasterSystem,
     stat_tracker::StatTrackerSystem,
+    store::StoreSystem,
 };
-
 
 pub fn hitbox_collide(mut x1: f32, mut y1: f32, mut x2: f32, mut y2: f32, hitbox_width_1: f32, hitbox_height_1: f32, hitbox_width_2: f32, hitbox_height_2: f32) -> bool {
     x1 -= hitbox_width_1 / 2.0;

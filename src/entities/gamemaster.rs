@@ -2,17 +2,14 @@ use amethyst::{
     prelude::Builder,
     ecs::prelude::World,
 };
-
 use crate::{
     components::{GameMaster, Phase, PhaseType},
 };
-
 
 const STARTING_TICK: usize = 0;
 const STARTING_PHASE_IDX: usize = 0;
 const LAST_PHASE_IDX: usize = 4;
 const TICK_LENGTH: f32 = 1.0;
-
 
 pub fn initialise_gamemaster(world: &mut World) {
 
@@ -38,12 +35,10 @@ pub fn initialise_gamemaster(world: &mut World) {
         length: 300,
     };
     
-    
     phase_map.push(phase_1);
     phase_map.push(phase_2);
     phase_map.push(phase_3);
     phase_map.push(phase_4);
-
 
     world
         .create_entity()

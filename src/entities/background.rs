@@ -5,14 +5,11 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet, Transparent},
     assets::Handle,
 };
-
 use crate::{
     space_shooter::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
 };
 
-
 const Z: f32 = 0.0;
-
 
 pub fn initialise_background(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
 

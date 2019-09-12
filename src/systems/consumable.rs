@@ -7,19 +7,16 @@ use amethyst::{
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
-
 use std::ops::Deref;
-
 use crate::{
     components::{Consumable, Spaceship, Defense},
     systems::hitbox_collide,
     audio::{play_sfx, Sounds},
+    space_shooter::ARENA_MIN_Y,
 };
 
-use crate::space_shooter::ARENA_MIN_Y;
-
-
 pub struct ConsumableSystem;
+
 impl<'s> System<'s> for ConsumableSystem {
 
     type SystemData = (

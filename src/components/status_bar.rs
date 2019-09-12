@@ -4,14 +4,13 @@ use amethyst::{
 };
 use std::vec::Vec;
 
-
 const Z: f32 = 0.9;
-
 
 pub enum StatusType {
     Health,
     Defense,
     Roll,
+    Restock,
 }
 
 pub struct StatusBar {

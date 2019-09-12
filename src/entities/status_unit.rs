@@ -6,11 +6,9 @@ use amethyst::{
         math::Vector3,
     },
 };
-
 use crate::{
     resources::SpriteResource,
 };
-
 
 pub fn spawn_status_unit(entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, sprite_number: usize, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) -> Entity {
     let status_unit_entitiy: Entity = entities.create();
@@ -22,7 +20,6 @@ pub fn spawn_status_unit(entities: &Entities, sprite_resource: &ReadExpect<Sprit
         sprite_sheet: sprite_resource.sprite_sheet.clone(),
         sprite_number: sprite_number,
     };
-
 
     lazy_update.insert(status_unit_entitiy, sprite_render);
     lazy_update.insert(status_unit_entitiy, local_transform);

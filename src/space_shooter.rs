@@ -22,12 +22,20 @@ use amethyst::{
         UiTransform,
     },
 };
-
-use crate::audio::initialise_audio;
-
-use crate::systems;
-use crate::entities::{initialise_gamemaster, initialise_sprite_resource, initialise_spaceship, initialise_enemy_spawner, 
-    initialise_item_spawner, initialise_side_panels, initialise_background, initialise_defense, initialise_status_bars};
+use crate::{
+    audio::initialise_audio,
+    systems,
+    entities::{initialise_gamemaster,
+               initialise_sprite_resource,
+               initialise_spaceship,
+               initialise_enemy_spawner,
+               initialise_side_panels,
+               initialise_background,
+               initialise_defense,
+               initialise_status_bars,
+               initialise_store
+    },
+};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -76,13 +84,14 @@ impl Default for SpaceShooter {
                 .with(systems::ExplosionSystem, "explosion_system", &[])
                 .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
-                .with(systems::ItemSpawnSystem, "item_spawn_system", &[])
+                //.with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::CollisionDetectionSystem, "collision_detection_system", &[])
                 .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &["collision_detection_system"])
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
-                .with(systems::StatTrackerSystem, "stat_tracker_system", &[])
+                .with(systems::StoreSystem, "store_system", &[])
+                .with(systems::StatTrackerSystem, "stat_tracker_system", &["store_system", "spaceship_system", "consumable_system"])
                 .build(),
         }
     }
@@ -108,8 +117,9 @@ impl SimpleState for SpaceShooter {
         initialise_spaceship(world, sprite_sheet_handle.clone());
         initialise_sprite_resource(world, sprite_sheet_handle);
         initialise_enemy_spawner(world);
-        initialise_item_spawner(world);
+        //initialise_item_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
+        initialise_store(world);
         initialise_camera(world);
     }
 
@@ -179,11 +189,49 @@ fn initialise_camera(world: &mut World) {
 
 pub struct TrackedStats {
     pub currency: Entity,
+    pub item_price_1: Entity,
+    pub item_price_2: Entity,
+    pub item_price_3: Entity,
 }
 
 fn initialise_ui(world:  &mut World) {
 
-    let texture_handle = {
+    let item_slots_texture_handle = {
+        let loader = world.read_resource::<Loader>();
+        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
+        loader.load(
+            "texture/item_slots.png",
+            ImageFormat::default(),
+            (),
+            &texture_storage,
+        )
+    };
+
+    let item_slots_sprite_sheet_handle = {
+        let loader = world.read_resource::<Loader>();
+        let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
+        loader.load(
+            "texture/item_slots.ron",
+            SpriteSheetFormat(item_slots_texture_handle),
+            (),
+            &sprite_sheet_store,
+        )
+    };
+
+    let item_slots_sprite_render = SpriteRender {
+        sprite_sheet: item_slots_sprite_sheet_handle.clone(),
+        sprite_number: 0,
+    };
+
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(ARENA_MAX_X + 10.0 + 2.0, ARENA_MIN_Y + 29.0 + 24.0, 0.9);
+
+    world.create_entity()
+        .with(item_slots_sprite_render)
+        .with(local_transform)
+        .build();
+
+    let currency_texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
@@ -194,19 +242,19 @@ fn initialise_ui(world:  &mut World) {
         )
     };
 
-    let sprite_sheet_handle = {
+    let currency_sprite_sheet_handle = {
         let loader = world.read_resource::<Loader>();
         let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
         loader.load(
             "texture/currency_ui.ron",
-            SpriteSheetFormat(texture_handle),
+            SpriteSheetFormat(currency_texture_handle),
             (),
             &sprite_sheet_store,
         )
     };
 
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
+    let currency_sprite_render = SpriteRender {
+        sprite_sheet: currency_sprite_sheet_handle.clone(),
         sprite_number: 0,
     };
     
@@ -214,29 +262,65 @@ fn initialise_ui(world:  &mut World) {
     local_transform.set_translation_xyz(ARENA_MAX_X + 10.0, ARENA_MIN_Y + 12.5, 0.9);
 
     world.create_entity()
-        .with(sprite_render)
+        .with(currency_sprite_render)
         .with(local_transform)
         .build();
 
     let font = world.read_resource::<Loader>().load(
-        "font/Teko-SemiBold.ttf",
+        "font/SpaceMadness.ttf",
         TtfFormat,
         (),
         &world.read_resource(),
     );
-    let currency_count_transform = UiTransform::new("currency_count".to_string(), Anchor::BottomRight, Anchor::BottomRight, -10.0, 10.0, 0.9, 50.0, 45.0);
+    let currency_count_transform = UiTransform::new("currency_count".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 10.0, 0.9, 50.0, 45.0);
     let currency_count = world
         .create_entity()
         .with(currency_count_transform)
         .with(UiText::new(
             font.clone(),
-            "x 0".to_string(),
+            "x0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
-            45.0
+            20.0
+        )).build();
+
+    let item_price_1_transform = UiTransform::new("item_price_0".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 130.0, 0.9, 50.0, 45.0);
+    let item_price_1 = world
+        .create_entity()
+        .with(item_price_1_transform)
+        .with(UiText::new(
+            font.clone(),
+            "$0".to_string(),
+            [1.0, 1.0, 1.0, 1.0],
+            15.0
+        )).build();
+
+    let item_price_2_transform = UiTransform::new("item_price_1".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 90.0, 0.9, 50.0, 45.0);
+    let item_price_2 = world
+        .create_entity()
+        .with(item_price_2_transform)
+        .with(UiText::new(
+            font.clone(),
+            "$0".to_string(),
+            [1.0, 1.0, 1.0, 1.0],
+            15.0
+        )).build();
+
+    let item_price_3_transform = UiTransform::new("item_price_2".to_string(), Anchor::BottomRight, Anchor::BottomRight, -6.0, 50.0, 0.9, 50.0, 45.0);
+    let item_price_3 = world
+        .create_entity()
+        .with(item_price_3_transform)
+        .with(UiText::new(
+            font.clone(),
+            "$0".to_string(),
+            [1.0, 1.0, 1.0, 1.0],
+            15.0
         )).build();
 
     world.add_resource(TrackedStats {
-        currency: currency_count
+        currency: currency_count,
+        item_price_1: item_price_1,
+        item_price_2: item_price_2,
+        item_price_3: item_price_3,
     });
     //world.add_resource(currency_icon);
 }

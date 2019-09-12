@@ -1,7 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
-
-use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET};
 use rand::{thread_rng, Rng};
+use crate::space_shooter::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET};
 
 pub type SpawnProbabilities = Vec<(String, f32)>;
 
@@ -49,6 +48,7 @@ impl Spawner {
             ))
         }
     }
+
     /// disable specified item from spawning, at the same time increases all other items spawn rate
     /// if all items are disabled, `spawn_with_position` will always return None
     pub fn disable_item(&mut self, item: &String) {

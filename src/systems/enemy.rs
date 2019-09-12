@@ -8,27 +8,24 @@ use amethyst::{
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
-
-use std::ops::Deref;
-use std::collections::HashMap;
-
+use std::{
+    ops::Deref,
+    collections::HashMap,
+};
 use crate::{
     components::{Enemy, Defense, Rigidbody, Fires, EnemyType, Consumable, choose_random_name},
-    entities::{spawn_explosion, spawn_consumable},
+    entities::{spawn_explosion, spawn_consumable, fire_blast},
     resources::SpriteResource,
     audio::{play_sfx, Sounds},
+    space_shooter::{ARENA_MIN_Y},
 };
-
-use crate::entities::fire_blast;
-use crate::space_shooter::{ARENA_MIN_Y};
 
 const ENEMY_BLAST_SPRITE_INDEX: usize = 9;
 const EXPLOSION_SPRITE_INDEX: usize = 4;
-
 const EXPLOSION_Z: f32 = 0.0;
 
-
 pub struct EnemySystem;
+
 impl<'s> System<'s> for EnemySystem {
 
     type SystemData = (

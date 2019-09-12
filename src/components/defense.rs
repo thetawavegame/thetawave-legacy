@@ -1,7 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use crate::components::Living;
 
-
 pub struct Defense {
     pub max_defense: f32,
     pub defense: f32,

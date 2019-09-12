@@ -3,7 +3,6 @@ use amethyst::{
     renderer::{SpriteRender},
     core::math::Vector3
 };
-
 use crate::{
     resources::SpriteResource,
     components::Item,

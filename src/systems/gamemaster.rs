@@ -4,13 +4,12 @@ use amethyst::{
     },
     ecs::prelude::{Join, System, Read, WriteStorage},
 };
-
 use crate::{
     components::{GameMaster},
 };
 
-
 pub struct GameMasterSystem;
+
 impl<'s> System<'s> for GameMasterSystem {
 
     type SystemData = (

@@ -110,5 +110,17 @@
             width: 7,
             height: 7,
         ),
+        (
+            x: 42,
+            y: 66,
+            width: 14,
+            height: 14,
+        ),
+        (
+            x: 65,
+            y: 90,
+            width: 1,
+            height: 4,
+        ),
     ],
 )
