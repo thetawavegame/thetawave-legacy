@@ -106,15 +106,15 @@ Player can move, shoot, barrel roll and use other special abilities and items.
 ## Level Phases
 A level features multiple phases. See example phase-map below.
 
-Enemies => Mini-Game => Shop => Enemies => Boss
+Rest => Invasion => Rest => Mini-Game => Rest => Boss
 
-In the "Enemies" phase an appropriately themed and appropriately difficult selection of enemies is chosen and total enemy count is determined. Enemies are then spawned at random from the selection and the player must deal with them until the number of enemies spawned reaches the total number of enemies for the level.
+In the "Invasion" phase an appropriately themed and appropriately difficult selection of enemies is chosen and total enemy count is determined. Enemies are then spawned at random from the selection and the player must deal with them until the number of enemies spawned reaches the total number of enemies for the level.
 
 The "Mini-Game" phase will feature a challenge apart from shooting eneimes. This could be something like a large amount of asteroids spawning which the player will need to dodge.
 
-The "Shop" phase will be a point in the level where the player can spend their currency to buy items and pickups.
-
 The "Boss" phase will feature a super tough enemy that will serve as the toughest challenge in the level. Defeating the boss ends the level.
+
+The "Rest" phase will give the player a chance to rest and collect themselves before the next phase.
 
 # TODOS
 
@@ -139,7 +139,7 @@ The "Boss" phase will feature a super tough enemy that will serve as the toughes
 - [x] penalty for letting enemies past you
 - [x] health pickups
 - [ ] levels with end bosses
-- [ ] specific item spawn times
+- [x] item purchasing through shop
 - [x] mini challenges for rewards or penalties (example: certain ships to let past you unharmed)
 - [x] defence objective
 ## Items
@@ -149,10 +149,13 @@ The "Boss" phase will feature a super tough enemy that will serve as the toughes
 - [ ] increase max defense
 - [ ] trail behind player that does damage
 - [ ] increase knockback of enemies
+- [ ] increase comsumable frequency
 ### Active
 - [ ] gravity gun effect with enemies
 - [ ] shield
 - [ ] speed boost
+## Characters
+- [ ] possession ability: can swap control to another ship by clicking on it
 
 # Credits
 
