@@ -6,7 +6,6 @@ mod player_hit;
 mod explosion;
 mod item;
 mod spaceship_movement;
-//mod item_spawn;
 mod enemy_hit;
 mod consumable;
 mod status_bar;
@@ -26,7 +25,6 @@ pub use self::{
     explosion::ExplosionSystem,
     item::ItemSystem,
     spaceship_movement::SpaceshipMovementSystem,
-    //item_spawn::ItemSpawnSystem,
     enemy_hit::EnemyHitSystem,
     consumable::ConsumableSystem,
     status_bar::StatusBarSystem,
