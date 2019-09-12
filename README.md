@@ -33,7 +33,7 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |Right|Barrel roll right.|
 |Escape|Pause the game.|
 |1|Buy shop item 1.|
-|2||Buy shop item 2.|
+|2|Buy shop item 2.|
 |3|Buy shop item 3.|
 
 # Items
