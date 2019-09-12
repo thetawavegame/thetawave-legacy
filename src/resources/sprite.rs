@@ -3,7 +3,6 @@ use amethyst::{
     renderer::SpriteSheet,
 };
 
-
 #[derive(Clone)]
 pub struct SpriteResource {
     pub sprite_sheet: Handle<SpriteSheet>,

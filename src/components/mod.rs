@@ -15,27 +15,25 @@ mod defense;
 mod status_bar;
 mod spawner;
 mod gamemaster;
+mod store;
 
 pub use self::{
     blast::Blast,
     spaceship::{Spaceship},
     enemy::{Enemy, EnemyType, EnemySpawnerTag},
     explosion::Explosion,
-    item::{Item, ItemSpawnerTag},
+    item::{Item},
     consumable::{Consumable},
     defense::Defense,
     status_bar::{StatusBar, StatusType},
     spawner::{Spawner, SpawnProbabilities, choose_random_name},
     gamemaster::{GameMaster, Phase, PhaseType},
+    store::Store,
 };
-
 
 const BLAST_Z: f32 = 0.1;
 
-
 pub trait Rigidbody {
-
-    // Instance method signatures; these will return a string.
     fn current_velocity_x(&self) -> f32;
     fn current_velocity_y(&self) -> f32;
     fn acceleration_x(&self) -> f32;
@@ -115,7 +113,6 @@ pub trait Rigidbody {
             self.decelerate_y(1.0);
         }
     }
-
 }
 
 pub trait Fires {

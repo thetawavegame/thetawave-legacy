@@ -4,17 +4,15 @@ use amethyst::{
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
-
 use std::ops::Deref;
-
 use crate::{
     components::{Enemy, Blast},
     systems::hitbox_collide,
     audio::{play_sfx, Sounds},
 };
 
-
 pub struct PlayerHitSystem;
+
 impl<'s> System<'s> for PlayerHitSystem {
 
     type SystemData = (

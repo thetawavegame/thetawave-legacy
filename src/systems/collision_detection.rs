@@ -4,8 +4,6 @@ use amethyst::{
     shrev::{EventChannel},
     
 };
-
-
 use crate::{
     components::{Enemy, Spaceship},
     systems::hitbox_collide,

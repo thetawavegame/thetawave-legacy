@@ -4,7 +4,9 @@
             "fire_speed": -0.05,
             "damage": 5,
         },
+        price: 15,
         sprite_index: 6,
+        name: "plasma_blasts",
     ),
     "warp_thruster": (
         stat_effects: {
@@ -12,17 +14,27 @@
             "acceleration": 1,
         },
         sprite_index: 8,
+        name: "warp_thruster",
     ),
     "hazardous_reactor": (
         stat_effects: {
             "max_speed": 20,
         },
+        price: 7,
         sprite_index: 7,
+        name: "hazardous_reactor",
     ),
     "steel_barrel": (
         bool_effects: {
             "barrel_immunity": true,
         },
+        price: 9,
         sprite_index: 5,
+        name: "steel_barrel",
+    ),
+    "quadrupedal_tentaclover": (
+        price: 12,
+        sprite_index: 18,
+        name: "quadrupedal_tentaclover",
     ),
 }

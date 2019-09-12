@@ -5,7 +5,6 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet},
     assets::{Handle},
 };
-
 use crate::{
     space_shooter::{ARENA_MAX_X, ARENA_HEIGHT}
 };
@@ -26,15 +25,6 @@ pub fn initialise_side_panels(world: &mut World, sprite_sheet_handle: Handle<Spr
         sprite_sheet: sprite_sheet_handle.clone(),
         sprite_number: RIGHT_SPRITE_INDEX,
     };
-
-
-    /*
-    let (screen_width, screen_height) = {
-        let dim = world.read_resource::<ScreenDimensions>();
-        (dim.width()+(dim.width()*(1.0/6.0)), dim.height()+(dim.height()*(1.0/6.0)))
-    };
-    println!("screen width: {} screen height: {}", screen_width, screen_height);
-*/
 
     let mut local_transform_left = Transform::default();
     local_transform_left.set_translation_xyz(WIDTH/2.0, (ARENA_HEIGHT/2.0) - 1.0, Z);

@@ -1,13 +1,10 @@
-use crate::resources::SpriteResource;
-use amethyst::ecs::prelude::World;
-use amethyst::renderer::SpriteSheet;
-use amethyst::assets::{Handle};
-
 use amethyst::{
     core::{math::Vector3, transform::Transform},
-    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent},
+    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect, World},
+    renderer::{SpriteRender, Transparent, SpriteSheet},
+    assets::{Handle},
 };
+use crate::resources::SpriteResource;
 
 pub mod blast;
 pub mod spaceship;
@@ -15,7 +12,6 @@ pub mod enemy;
 pub mod enemy_spawner;
 pub mod explosion;
 pub mod items;
-pub mod item_spawner;
 pub mod side_panel;
 pub mod background;
 pub mod consumable;
@@ -23,6 +19,7 @@ pub mod defense;
 pub mod status_bar;
 pub mod status_unit;
 pub mod gamemaster;
+pub mod store;
 
 pub use self::{
     blast::{fire_blast},
@@ -30,7 +27,6 @@ pub use self::{
     enemy::{spawn_enemy},
     enemy_spawner::{initialise_enemy_spawner },
     explosion::{spawn_explosion},
-    item_spawner::{initialise_item_spawner},
     items::spawn_item,
     side_panel::initialise_side_panels,
     background::initialise_background,
@@ -39,6 +35,7 @@ pub use self::{
     status_bar::initialise_status_bars,
     status_unit::spawn_status_unit,
     gamemaster::initialise_gamemaster,
+    store::{initialise_store},
 };
 
 pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
@@ -59,7 +56,6 @@ fn spawn_sprite_entity<T: Component + Send + Sync>(
 ) {
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
-    local_transform.set_rotation_y_axis(3.14);
     lazy_update
         .create_entity(entities)
         .with(sprite_render)

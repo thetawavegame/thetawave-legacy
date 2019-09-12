@@ -5,9 +5,7 @@ use amethyst::{
     audio::{output::Output, Source},
     assets::AssetStorage,
 };
-
 use std::ops::Deref;
-
 use crate::{
     space_shooter::CollisionEvent,
     components::{Spaceship, Enemy},
