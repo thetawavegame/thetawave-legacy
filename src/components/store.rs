@@ -119,7 +119,7 @@ impl Store {
         local_transform.set_translation(Vector3::new(ARENA_MAX_X + 10.0 + 2.0, (ARENA_MIN_Y + 32.0) + (40.0 - (19.0 * index)), 0.9));
 
         let sprite_render = SpriteRender {
-            sprite_sheet: sprite_resource.sprite_sheet.clone(),
+            sprite_sheet: sprite_resource.items_sprite_sheet.clone(),
             sprite_number: sprite_index,
         };
         
