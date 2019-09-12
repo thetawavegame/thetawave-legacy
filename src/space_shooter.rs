@@ -224,7 +224,7 @@ fn initialise_ui(world:  &mut World) {
     };
 
     let mut local_transform = Transform::default();
-    local_transform.set_translation_xyz(ARENA_MAX_X + 10.0 + 2.0, ARENA_MIN_Y + 29.0 + 25.0 + 2.0, 0.9);
+    local_transform.set_translation_xyz(ARENA_MAX_X + 10.0 + 2.0, ARENA_MIN_Y + 29.0 + 24.0, 0.9);
 
     world.create_entity()
         .with(item_slots_sprite_render)

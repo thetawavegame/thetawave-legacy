@@ -10,6 +10,7 @@ pub enum StatusType {
     Health,
     Defense,
     Roll,
+    Restock,
 }
 
 pub struct StatusBar {

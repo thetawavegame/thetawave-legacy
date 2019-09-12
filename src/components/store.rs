@@ -116,7 +116,7 @@ impl Store {
         let store_icon_entity: Entity = entities.create();
 
         let mut local_transform = Transform::default();
-        local_transform.set_translation(Vector3::new(ARENA_MAX_X + 10.0 + 2.0, (ARENA_MIN_Y + 9.0 + 25.0 + 2.0) + (40.0 - (20.0 * index)), 0.9));
+        local_transform.set_translation(Vector3::new(ARENA_MAX_X + 10.0 + 2.0, (ARENA_MIN_Y + 32.0) + (40.0 - (19.0 * index)), 0.9));
 
         let sprite_render = SpriteRender {
             sprite_sheet: sprite_resource.sprite_sheet.clone(),
