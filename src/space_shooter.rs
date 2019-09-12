@@ -109,6 +109,8 @@ impl SimpleState for SpaceShooter {
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
         let items_sprite_sheet_handle = load_spritesheet(world, "items_spritesheet.png", "items_spritesheet.ron");
         let consumables_sprite_sheet_handle = load_spritesheet(world, "consumables_spritesheet.png", "consumables_spritesheet.ron");
+        let status_bar_unit_sprite_sheet_handle = load_spritesheet(world, "status_bar_unit_spritesheet.png", "status_bar_unit_spritesheet.ron");
+        let enemies_sprite_sheet_handle = load_spritesheet(world, "enemies_spritesheet.png", "enemies_spritesheet.ron");
 
 
         self.dispatcher.setup(&mut world.res);
@@ -119,7 +121,7 @@ impl SimpleState for SpaceShooter {
         initialise_status_bars(world);
         initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, sprite_sheet_handle.clone());
-        initialise_sprite_resource(world, sprite_sheet_handle, items_sprite_sheet_handle, consumables_sprite_sheet_handle);
+        initialise_sprite_resource(world, sprite_sheet_handle, items_sprite_sheet_handle, consumables_sprite_sheet_handle, status_bar_unit_sprite_sheet_handle, enemies_sprite_sheet_handle);
         initialise_enemy_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
         initialise_store(world);

@@ -1,7 +1,7 @@
 {
     "drone": (
         health: 60,
-        sprite_index: 2,
+        sprite_index: 0,
         fires: false,
         fire_speed: 3,
         fire_reset_timer: 0,
@@ -43,7 +43,7 @@
         height: 36,
         hitbox_height: 28,
         health: 220,
-        sprite_index: 15,
+        sprite_index: 2,
         fires: false,
         fire_speed: 3,
         fire_reset_timer: 1,
