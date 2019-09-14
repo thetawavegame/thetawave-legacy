@@ -21,7 +21,7 @@ pub fn fire_blast(entities: &Entities, blast_resource: &ReadExpect<SpriteResourc
     local_transform.set_translation(fire_position);
 
     let sprite_render = SpriteRender {
-        sprite_sheet: blast_resource.sprite_sheet.clone(),
+        sprite_sheet: blast_resource.blasts_sprite_sheet.clone(),
         sprite_number: sprite_number,
     };
 

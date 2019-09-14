@@ -104,13 +104,15 @@ impl SimpleState for SpaceShooter {
 
 
         let world = data.world;
-        let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
         let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
         let items_sprite_sheet_handle = load_spritesheet(world, "items_spritesheet.png", "items_spritesheet.ron");
         let consumables_sprite_sheet_handle = load_spritesheet(world, "consumables_spritesheet.png", "consumables_spritesheet.ron");
         let status_bar_unit_sprite_sheet_handle = load_spritesheet(world, "status_bar_unit_spritesheet.png", "status_bar_unit_spritesheet.ron");
         let enemies_sprite_sheet_handle = load_spritesheet(world, "enemies_spritesheet.png", "enemies_spritesheet.ron");
+        let players_sprite_sheet_handle = load_spritesheet(world, "player_spritesheet.png", "player_spritesheet.ron");
+        let blasts_sprite_sheet_handle = load_spritesheet(world, "blasts_spritesheet.png", "blasts_spritesheet.ron");
+        let explosions_sprite_sheet_handle = load_spritesheet(world, "explosions_spritesheet.png", "explosions_spritesheet.ron");
 
 
         self.dispatcher.setup(&mut world.res);
@@ -120,8 +122,15 @@ impl SimpleState for SpaceShooter {
         initialise_defense(world);
         initialise_status_bars(world);
         initialise_background(world, background_sprite_sheet_handle);
-        initialise_spaceship(world, sprite_sheet_handle.clone());
-        initialise_sprite_resource(world, sprite_sheet_handle, items_sprite_sheet_handle, consumables_sprite_sheet_handle, status_bar_unit_sprite_sheet_handle, enemies_sprite_sheet_handle);
+        initialise_spaceship(world, players_sprite_sheet_handle.clone());
+        initialise_sprite_resource(world,
+                                   items_sprite_sheet_handle,
+                                   consumables_sprite_sheet_handle,
+                                   status_bar_unit_sprite_sheet_handle,
+                                   enemies_sprite_sheet_handle,
+                                   players_sprite_sheet_handle,
+                                   blasts_sprite_sheet_handle,
+                                   explosions_sprite_sheet_handle);
         initialise_enemy_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
         initialise_store(world);
