@@ -16,7 +16,7 @@ use crate::{
     audio::{play_sfx, Sounds},
 };
 
-const PLAYER_BLAST_SPRITE_INDEX: usize = 3;
+const PLAYER_BLAST_SPRITE_INDEX: usize = 0;
 
 pub struct SpaceshipSystem;
 

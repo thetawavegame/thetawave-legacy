@@ -20,8 +20,8 @@ use crate::{
     space_shooter::{ARENA_MIN_Y},
 };
 
-const ENEMY_BLAST_SPRITE_INDEX: usize = 9;
-const EXPLOSION_SPRITE_INDEX: usize = 4;
+const ENEMY_BLAST_SPRITE_INDEX: usize = 1;
+const EXPLOSION_SPRITE_INDEX: usize = 0;
 const EXPLOSION_Z: f32 = 0.0;
 
 pub struct EnemySystem;
