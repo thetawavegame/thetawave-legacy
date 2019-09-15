@@ -43,6 +43,9 @@
         name: "defense_satellite",
     ),
     "double_barrel": (
+        bool_effects: {
+            "double_blasts": true,
+        },
         price: 18,
         sprite_index: 6,
         name: "double_barrel",

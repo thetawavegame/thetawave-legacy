@@ -26,7 +26,7 @@ const BARREL_COOLDOWN: f32 = 1.0;
 const BARREL_SPEED: f32 = 180.0;
 const BARREL_DURATION: f32 = 0.3;
 const HEALTH: f32 = 400.0;
-const MONEY: usize = 20;
+const MONEY: usize = 100;
 const COLLISION_DAMAGE: f32 = 50.0;
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
@@ -72,6 +72,7 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             money: MONEY,
             knockback_max_speed: MAX_KNOCKBACK_SPEED,
             steel_barrel: false,
+            double_blasts: false,
             collision_damage: COLLISION_DAMAGE,
         })
         .with(local_transform)

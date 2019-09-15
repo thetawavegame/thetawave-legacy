@@ -22,12 +22,12 @@ pub fn initialise_gamemaster(world: &mut World) {
 
     let phase_2 = Phase {
         phase_type: PhaseType::Invasion,
-        length: 60,
+        length: 300,
     };
 
     let phase_3 = Phase {
         phase_type: PhaseType::Rest,
-        length: 8, 
+        length: 60,
     };
 
     let phase_4 = Phase {

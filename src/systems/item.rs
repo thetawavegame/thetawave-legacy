@@ -47,6 +47,10 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.steel_barrel = item.bool_effects["barrel_immunity"];
                     }
 
+                    if item.bool_effects.contains_key("double_blasts") {
+                        spaceship.double_blasts = item.bool_effects["double_blasts"];
+                    }
+
                     if item.stat_effects.contains_key("fire_speed") {
                         spaceship.fire_speed += item.stat_effects["fire_speed"];
                     }
