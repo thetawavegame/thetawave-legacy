@@ -100,6 +100,12 @@ impl Store {
                 println!("purchasing {} located in slot #{} for {}", item.name, item_index, item.price);
                 spaceship.money -= item.price;
                 spawn_item(entities, sprite_resource, item.clone(), Vector3::new(spaceship.pos_x, ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET, 0.0), lazy_update);
+                for (i, itm) in self.items.iter().enumerate() {
+                    if itm.0 == item.name {
+                        self.items[i].1 = 0.0; //set probability of appearing again to 0
+                        break;
+                    }
+                }
                 self.item_inventory[item_index] = None; //change item slot data to None
                 if let Some(item_icon_to_destroy) = self.item_icons[item_index] {
                     let _res = entities.delete(item_icon_to_destroy); //remove store icon
