@@ -32,5 +32,17 @@
             width: 14,
             height: 14,
         ),
+        (
+            x: 70,
+            y: 0,
+            width: 14,
+            height: 14,
+        ),
+        (
+            x: 84,
+            y: 0,
+            width: 14,
+            height: 14,
+        ),
     ],
 )

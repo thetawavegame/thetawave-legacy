@@ -37,4 +37,14 @@
         sprite_index: 4,
         name: "quadrupedal_tentaclover",
     ),
+    "defense_satellite": (
+        price: 11,
+        sprite_index: 5,
+        name: "defense_satellite",
+    ),
+    "double_barrel": (
+        price: 18,
+        sprite_index: 6,
+        name: "double_barrel",
+    ),
 }
