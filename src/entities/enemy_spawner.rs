@@ -9,7 +9,7 @@ use crate::{
 };
 
 const SPAWN_INTERVAL: f32 = 1.5;
-const SPAWN_COUNTER: u32 = 100;
+//const SPAWN_COUNTER: u32 = 100;
 const ENEMY_PAWN_RATIO: f32 = 50.0;
 const ENEMY_DRONE_RATIO: f32 = 100.0;
 const ENEMY_HAULER_RATIO: f32 = 5.0;
@@ -30,8 +30,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
                 ("drone".to_string(), ENEMY_DRONE_RATIO),
                 ("hauler".to_string(), ENEMY_HAULER_RATIO),
             ],
-            SPAWN_INTERVAL,
-            SPAWN_COUNTER,
+            SPAWN_INTERVAL
         ))
         .with(EnemySpawnerTag)
         .with(local_transform)

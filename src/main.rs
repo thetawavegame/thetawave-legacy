@@ -33,7 +33,7 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
-    let display_config_path = app_root.join("config").join("display_config_640.ron");
+    let display_config_path = app_root.join("config").join("display_config_960.ron");
     let bindings_path = app_root.join("config").join("bindings_config.ron");
     let assets_path = app_root.join("assets");
 
