@@ -15,26 +15,32 @@ pub fn initialise_gamemaster(world: &mut World) {
 
     let mut phase_map: Vec<Phase> = vec![];
 
-    let phase_1 = Phase {
+    let phase_0 = Phase {
         phase_type: PhaseType::Rest,
         length: 8, 
     };
 
-    let phase_2 = Phase {
+    let phase_1 = Phase {
         phase_type: PhaseType::Invasion,
-        length: 300,
-    };
-
-    let phase_3 = Phase {
-        phase_type: PhaseType::Rest,
         length: 60,
     };
 
-    let phase_4 = Phase {
-        phase_type: PhaseType::Invasion,
-        length: 300,
+    let phase_2 = Phase {
+        phase_type: PhaseType::Rest,
+        length: 8,
     };
-    
+
+    let phase_3 = Phase {
+        phase_type: PhaseType::Invasion,
+        length: 120,
+    };
+
+    let phase_4 = Phase {
+        phase_type: PhaseType::Rest,
+        length: 16,
+    };
+
+    phase_map.push(phase_0);
     phase_map.push(phase_1);
     phase_map.push(phase_2);
     phase_map.push(phase_3);
