@@ -14,5 +14,11 @@
             width: 4,
             height: 4,
         ),
+        (
+            x: 8,
+            y: 0,
+            width: 4,
+            height: 4,
+        ),
     ],
 )

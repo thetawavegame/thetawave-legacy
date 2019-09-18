@@ -69,6 +69,10 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.max_speed += item.stat_effects["max_speed"];
                     }
 
+                    if item.stat_effects.contains_key("crit_chance") {
+                        spaceship.crit_chance += item.stat_effects["crit_chance"];
+                    }
+
                     if item.stat_effects.contains_key("acceleration") {
                         spaceship.acceleration_x += item.stat_effects["acceleration"];
                         spaceship.acceleration_y += item.stat_effects["acceleration"];

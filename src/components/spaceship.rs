@@ -39,6 +39,7 @@ pub struct Spaceship {
     pub steel_barrel: bool,
     pub double_blasts: bool,
     pub collision_damage: f32,
+    pub crit_chance: f32,
 }
 
 impl Rigidbody for Spaceship {

@@ -33,6 +33,9 @@
         name: "steel_barrel",
     ),
     "quadrupedal_tentaclover": (
+        stat_effects: {
+            "crit_chance": 0.04,
+        },
         price: 12,
         sprite_index: 4,
         name: "quadrupedal_tentaclover",
