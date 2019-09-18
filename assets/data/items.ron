@@ -38,6 +38,9 @@
         name: "quadrupedal_tentaclover",
     ),
     "defense_satellite": (
+        stat_effects: {
+            "max_defense": 100,
+        },
         price: 11,
         sprite_index: 5,
         name: "defense_satellite",

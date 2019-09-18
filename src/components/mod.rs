@@ -140,6 +140,7 @@ pub trait Living {
     fn health(&self) -> f32;
     fn max_health(&self) -> f32;
     fn set_health(&mut self, value: f32);
+    fn set_max_health(&mut self, value: f32);
 
     fn constrain_health(&mut self) {
         if self.health() < 0.0 {

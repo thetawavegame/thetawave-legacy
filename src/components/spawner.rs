@@ -84,7 +84,6 @@ fn choose_name_precalculated(total_probs: f32, probs: &SpawnProbabilities) -> &S
         }
     }
 
-    println!("total probs, {} probs {:?}", total_probs, probs);
     probs
         .last()
         .map(|(name, _)| name)
