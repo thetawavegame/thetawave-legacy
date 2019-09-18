@@ -65,6 +65,7 @@ impl Living for Spaceship {
     fn health(&self) -> f32 { self.health }
     fn max_health(&self) -> f32 { self.max_health }
     fn set_health(&mut self, value: f32) { self.health = value; }
+    fn set_max_health(&mut self, value: f32) { self.max_health = value; }
 }
 
 impl Component for Spaceship {

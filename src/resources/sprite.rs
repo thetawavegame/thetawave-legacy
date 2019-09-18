@@ -15,14 +15,15 @@ pub struct SpriteResource {
     pub explosions_sprite_sheet: Handle<SpriteSheet>,
 }
 
-pub fn initialise_sprite_resource(world: &mut World,
-                                  items_sprite_sheet_handle: Handle<SpriteSheet>,
-                                  consumables_sprite_sheet_handle: Handle<SpriteSheet>,
-                                  status_bar_unit_sprite_sheet_handle: Handle<SpriteSheet>,
-                                  enemies_sprite_sheet_handle: Handle<SpriteSheet>,
-                                  players_sprite_sheet_handle: Handle<SpriteSheet>,
-                                  blasts_sprite_sheet_handle: Handle<SpriteSheet>,
-                                  explosions_sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
+pub fn initialise_sprite_resource(
+    world: &mut World,
+    items_sprite_sheet_handle: Handle<SpriteSheet>,
+    consumables_sprite_sheet_handle: Handle<SpriteSheet>,
+    status_bar_unit_sprite_sheet_handle: Handle<SpriteSheet>,
+    enemies_sprite_sheet_handle: Handle<SpriteSheet>,
+    players_sprite_sheet_handle: Handle<SpriteSheet>,
+    blasts_sprite_sheet_handle: Handle<SpriteSheet>,
+    explosions_sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
 
     let sprite_resource = SpriteResource {
         items_sprite_sheet: items_sprite_sheet_handle,

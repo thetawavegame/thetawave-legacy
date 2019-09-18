@@ -13,7 +13,7 @@ impl<'s> System<'s> for DefenseSystem {
 
     fn run(&mut self, mut defenses: Self::SystemData) {
         for defense in (&mut defenses).join() {
-            defense.constrain_health()
+            defense.constrain_health();
         }
 
     }
