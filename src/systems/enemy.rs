@@ -90,7 +90,7 @@ impl<'s> System<'s> for EnemySystem {
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
                     if let Some(fire_position) = enemy_component.fire_cooldown(enemy_transform, -1.0 * enemy_component.height / 2.0, true, time.delta_seconds()) {
-                        fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_INDEX, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
+                        fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_INDEX, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, 0.0, &lazy_update);
                     }
                 }
 
