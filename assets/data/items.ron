@@ -56,4 +56,17 @@
         sprite_index: 6,
         name: "double_barrel",
     ),
+    "yithian_plague": (
+        price: 14,
+        sprite_index: 7,
+        name: "yithian_plague",
+    ),
+    "spice": (
+        stat_effects: {
+            "barrel_cooldown": -0.5,
+        },
+        price: 8,
+        sprite_index: 8,
+        name: "spice",
+    ),
 }
