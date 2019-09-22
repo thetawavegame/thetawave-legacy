@@ -1,0 +1,43 @@
+#![enable(implicit_some)]
+/*!
+    @import /amethyst_assets/src/prefab/mod.rs#Prefab
+    @import ../../sphere/main.rs#MyPrefabData
+    Prefab<MyPrefabData>
+*/
+
+Prefab (
+    entities: [
+        (
+            data: (
+                graphics: (
+                    mesh: Shape((shape: Sphere(32, 32))),
+                    material: (
+                        albedo: File("texture/earth_sphere.jpg", (
+                            "IMAGE", (
+                                sampler_info: (
+                                    min_filter: Linear,
+                                    mag_filter: Linear,
+                                    mip_filter: Linear,
+                                    wrap_mode: (Tile, Tile, Tile),
+                                    lod_bias: (0),
+                                    lod_range: (
+                                        start: (0),
+                                        end: (8000),
+                                    ),
+                                    comparison: None,
+                                    border: (0),
+                                    anisotropic: On(8),
+                                ),
+                            ))
+                        )
+                    ),
+                ),
+                transform: (
+                    scale: (120.0, 120.0, 120.0),
+                    translation: (180.0, -35.0, -200.0)
+                ),
+            ),
+        ),
+
+    ],
+)
