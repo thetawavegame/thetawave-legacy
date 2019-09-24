@@ -15,6 +15,7 @@ mod collision_handler;
 mod gamemaster;
 mod stat_tracker;
 mod store;
+mod planets;
 
 pub use self::{
     blast::BlastSystem,
@@ -34,6 +35,7 @@ pub use self::{
     gamemaster::GameMasterSystem,
     stat_tracker::StatTrackerSystem,
     store::StoreSystem,
+    planets::PlanetsSystem,
 };
 
 pub fn hitbox_collide(mut x1: f32, mut y1: f32, mut x2: f32, mut y2: f32, hitbox_width_1: f32, hitbox_height_1: f32, hitbox_width_2: f32, hitbox_height_2: f32) -> bool {

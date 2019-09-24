@@ -1,5 +1,6 @@
 use amethyst::{
-    assets::{AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystem, RonFormat, Prefab},
+    assets::{AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystem, RonFormat, Prefab, AssetPrefab},
+    gltf::{GltfSceneAsset, GltfSceneFormat, GltfSceneLoaderSystem, GltfPrefab},
     core::transform::{Transform},
     prelude::*,
     renderer::{
@@ -45,12 +46,15 @@ use crate::{
                initialise_background,
                initialise_defense,
                initialise_status_bars,
-               initialise_store
+               initialise_store,
+               initialise_planet
     },
     resources::{
         initialise_sprite_resource,
     },
 };
+use std::fs::File;
+use std::f32::consts::{FRAC_PI_3};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -63,7 +67,7 @@ pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
 pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
 pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
 
-pub type PrefabData = BasicScenePrefab<(Vec<Position>, Vec<Normal>, Vec<TexCoord>)>;
+//pub type PrefabData = BasicScenePrefab<(Vec<Position>, Vec<Normal>, Vec<TexCoord>)>;
 
 #[derive(Debug)]
 pub struct CollisionEvent {
@@ -91,7 +95,9 @@ impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
             dispatcher: DispatcherBuilder::new()
-                .with(PrefabLoaderSystem::<PrefabData>::default(), "", &[])
+                //.with(PrefabLoaderSystem::<PrefabData>::default(), "", &[])
+                .with(GltfSceneLoaderSystem::default(), "gltf_system", &[])
+                .with(systems::PlanetsSystem, "planets_system", &[])
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
@@ -117,7 +123,6 @@ impl Default for SpaceShooter {
 
 impl SimpleState for SpaceShooter {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        println!("val: {}", ARENA_MIN_X + (ARENA_WIDTH/2.0));
 
         let world = data.world;
         //let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
@@ -132,31 +137,13 @@ impl SimpleState for SpaceShooter {
 
         self.dispatcher.setup(&mut world.res);
 
-        /*
-        let sphere_handle = world.exec(|loader: PrefabLoader<'_, PrefabData>| {
-            loader.load("prefabs/planet.ron", RonFormat, ());
-        });
-        */
-
-        /*
-        let mut sphere_transform = Transform::default();
-        //let sphere_mesh = Shape::Sphere(50, 50);
-        //let sphere_material = Material::
-        let mesh = world.exec(|loader: AssetLoaderSystemData<Mesh>| {
-            loader.load_from_data(
-                Shape::Sphere(100,100).generate::<Vec<PosNormTangTex>>(None).into(),
-                (),
-            )
-        });
-        */
-
-        //world.create_entity().with(mesh).with(sphere_transform).build();
-
         initialise_audio(world);
         initialise_ui(world);
         initialise_gamemaster(world);
         initialise_defense(world);
         initialise_status_bars(world);
+        initialise_planet(world, "earth_planet.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0), -1100.0, -1010.0, 1000.0, 135.0, 0.01);
+        initialise_planet(world, "sol_star.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0) - 5000.0, (ARENA_HEIGHT/2.0) + 3000.0, -15000.0, 1000.0, 0.0, 0.005);
         //initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, players_sprite_sheet_handle.clone());
         initialise_sprite_resource(world,
@@ -170,14 +157,6 @@ impl SimpleState for SpaceShooter {
         initialise_enemy_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
         initialise_store(world);
-
-        let sphere_handle = world.exec(|loader: PrefabLoader<'_, PrefabData>| {
-            loader.load("prefabs/planet.ron", RonFormat, ())
-        });
-
-        world.register::<Handle<Prefab<PrefabData>>>();
-        world.create_entity().with(sphere_handle).build();
-
         initialise_camera(world);
     }
 
@@ -237,6 +216,8 @@ fn load_spritesheet(world: &mut World, spritesheet: &str, spritesheet_ron: &str)
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
     transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 237.0);
+    //transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 400.0);
+    //transform.set_translation_xyz(0.0, 0.0, 500.0);
     //transform.set_translation_xyz(0.0, 0.0, 300.0);
     //transform.set_rotation_euler(0.0, 15.0_f32.to_radians(), 0.0);
     transform.set_rotation_euler(0.0, 0.0, 0.0);
@@ -245,9 +226,9 @@ fn initialise_camera(world: &mut World) {
         .create_entity()
         .with(Camera::from(camera::Projection::perspective(
            1.3,
-            1.0471975512,
+            FRAC_PI_3,
             0.1,
-            2000.0
+            20000.0
         )))
         .with(transform)
         .build();
