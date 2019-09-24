@@ -19,6 +19,7 @@ pub mod status_bar;
 pub mod status_unit;
 pub mod gamemaster;
 pub mod store;
+pub mod planet;
 
 pub use self::{
     blast::{fire_blast, fire_double_blast},
@@ -35,6 +36,7 @@ pub use self::{
     status_unit::spawn_status_unit,
     gamemaster::initialise_gamemaster,
     store::{initialise_store},
+    planet::{initialise_planet},
 };
 
 fn spawn_sprite_entity<T: Component + Send + Sync>(

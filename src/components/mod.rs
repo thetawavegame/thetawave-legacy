@@ -16,6 +16,7 @@ mod status_bar;
 mod spawner;
 mod gamemaster;
 mod store;
+mod planet;
 
 pub use self::{
     blast::Blast,
@@ -29,6 +30,7 @@ pub use self::{
     spawner::{Spawner, SpawnProbabilities, choose_random_name},
     gamemaster::{GameMaster, Phase, PhaseType},
     store::Store,
+    planet::Planet,
 };
 
 const BLAST_Z: f32 = 0.1;

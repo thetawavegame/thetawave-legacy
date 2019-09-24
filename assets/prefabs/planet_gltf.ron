@@ -1,0 +1,11 @@
+#![enable(implicit_some)]
+Prefab (
+    entities: [
+        (
+            data: (
+                gltf: File("data/scene.gltf", ()),
+                tag: (),
+            ),
+        ),
+    ],
+)
