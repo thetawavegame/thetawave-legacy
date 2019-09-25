@@ -17,7 +17,7 @@ pub fn spawn_status_unit(entities: &Entities, sprite_resource: &ReadExpect<Sprit
     local_transform.set_translation(spawn_position);
 
     let sprite_render = SpriteRender {
-        sprite_sheet: sprite_resource.sprite_sheet.clone(),
+        sprite_sheet: sprite_resource.status_bar_unit_sprite_sheet.clone(),
         sprite_number: sprite_number,
     };
 

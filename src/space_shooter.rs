@@ -1,11 +1,16 @@
 use amethyst::{
-    assets::{AssetStorage, Loader, Handle},
+    assets::{AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystem, RonFormat, Prefab, AssetPrefab},
+    gltf::{GltfSceneAsset, GltfSceneFormat, GltfSceneLoaderSystem, GltfPrefab},
     core::transform::{Transform},
     prelude::*,
     renderer::{
         Camera, SpriteSheet,
         SpriteSheetFormat, Texture,
         SpriteRender,
+        camera,
+        shape::Shape,
+        Material,
+        Mesh,
     },
     input::{
         is_key_down,
@@ -14,6 +19,12 @@ use amethyst::{
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     renderer::{
         formats::texture::ImageFormat,
+        rendy::mesh::{
+            Normal,
+            Position,
+            TexCoord,
+            PosNormTangTex,
+        },
     },
     ui::{
         TtfFormat,
@@ -21,21 +32,29 @@ use amethyst::{
         UiText,
         UiTransform,
     },
+    utils::{
+        scene::BasicScenePrefab
+    }
 };
 use crate::{
     audio::initialise_audio,
     systems,
     entities::{initialise_gamemaster,
-               initialise_sprite_resource,
                initialise_spaceship,
                initialise_enemy_spawner,
                initialise_side_panels,
                initialise_background,
                initialise_defense,
                initialise_status_bars,
-               initialise_store
+               initialise_store,
+               initialise_planet
+    },
+    resources::{
+        initialise_sprite_resource,
     },
 };
+use std::fs::File;
+use std::f32::consts::{FRAC_PI_3};
 
 //GAME_HEIGHT and _WIDTH should be  half the resolution?
 pub const GAME_WIDTH: f32 = 360.0;
@@ -47,6 +66,8 @@ pub const ARENA_MAX_X: f32 = GAME_WIDTH - ARENA_MIN_X;
 pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
 pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
 pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
+
+//pub type PrefabData = BasicScenePrefab<(Vec<Position>, Vec<Normal>, Vec<TexCoord>)>;
 
 #[derive(Debug)]
 pub struct CollisionEvent {
@@ -74,6 +95,9 @@ impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
             dispatcher: DispatcherBuilder::new()
+                //.with(PrefabLoaderSystem::<PrefabData>::default(), "", &[])
+                .with(GltfSceneLoaderSystem::default(), "gltf_system", &[])
+                .with(systems::PlanetsSystem, "planets_system", &[])
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
@@ -100,24 +124,37 @@ impl Default for SpaceShooter {
 impl SimpleState for SpaceShooter {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
 
-
         let world = data.world;
-        let sprite_sheet_handle = load_spritesheet(world, "spritesheet.png", "spritesheet.ron");
-        let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
+        //let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
         let side_panel_sprite_sheet_handle = load_spritesheet(world, "side_panel_spritesheet.png", "side_panel_spritesheet.ron");
-
+        let items_sprite_sheet_handle = load_spritesheet(world, "items_spritesheet.png", "items_spritesheet.ron");
+        let consumables_sprite_sheet_handle = load_spritesheet(world, "consumables_spritesheet.png", "consumables_spritesheet.ron");
+        let status_bar_unit_sprite_sheet_handle = load_spritesheet(world, "status_bar_unit_spritesheet.png", "status_bar_unit_spritesheet.ron");
+        let enemies_sprite_sheet_handle = load_spritesheet(world, "enemies_spritesheet.png", "enemies_spritesheet.ron");
+        let players_sprite_sheet_handle = load_spritesheet(world, "player_spritesheet.png", "player_spritesheet.ron");
+        let blasts_sprite_sheet_handle = load_spritesheet(world, "blasts_spritesheet.png", "blasts_spritesheet.ron");
+        let explosions_sprite_sheet_handle = load_spritesheet(world, "explosions_spritesheet.png", "explosions_spritesheet.ron");
 
         self.dispatcher.setup(&mut world.res);
+
         initialise_audio(world);
         initialise_ui(world);
         initialise_gamemaster(world);
         initialise_defense(world);
         initialise_status_bars(world);
-        initialise_background(world, background_sprite_sheet_handle);
-        initialise_spaceship(world, sprite_sheet_handle.clone());
-        initialise_sprite_resource(world, sprite_sheet_handle);
+        initialise_planet(world, "earth_planet.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0), -1100.0, -1010.0, 1000.0, 100.0, 0.01);
+        initialise_planet(world, "sol_star.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0) - 5000.0, (ARENA_HEIGHT/2.0) + 3000.0, -15000.0, 800.0, 0.0, 0.005);
+        //initialise_background(world, background_sprite_sheet_handle);
+        initialise_spaceship(world, players_sprite_sheet_handle.clone());
+        initialise_sprite_resource(world,
+                                   items_sprite_sheet_handle,
+                                   consumables_sprite_sheet_handle,
+                                   status_bar_unit_sprite_sheet_handle,
+                                   enemies_sprite_sheet_handle,
+                                   players_sprite_sheet_handle,
+                                   blasts_sprite_sheet_handle,
+                                   explosions_sprite_sheet_handle);
         initialise_enemy_spawner(world);
-        //initialise_item_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
         initialise_store(world);
         initialise_camera(world);
@@ -178,11 +215,21 @@ fn load_spritesheet(world: &mut World, spritesheet: &str, spritesheet_ron: &str)
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
-    transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 1.0);
+    transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 237.0);
+    //transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 400.0);
+    //transform.set_translation_xyz(0.0, 0.0, 500.0);
+    //transform.set_translation_xyz(0.0, 0.0, 300.0);
+    //transform.set_rotation_euler(0.0, 15.0_f32.to_radians(), 0.0);
+    transform.set_rotation_euler(0.0, 0.0, 0.0);
 
     world
         .create_entity()
-        .with(Camera::standard_2d(GAME_WIDTH, GAME_HEIGHT))
+        .with(Camera::from(camera::Projection::perspective(
+           1.3,
+            FRAC_PI_3,
+            0.1,
+            20000.0
+        )))
         .with(transform)
         .build();
 }

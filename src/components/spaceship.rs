@@ -37,7 +37,10 @@ pub struct Spaceship {
     pub money: usize,
     pub knockback_max_speed: f32,
     pub steel_barrel: bool,
+    pub double_blasts: bool,
     pub collision_damage: f32,
+    pub crit_chance: f32,
+    pub poison_chance: f32,
 }
 
 impl Rigidbody for Spaceship {
@@ -64,6 +67,7 @@ impl Living for Spaceship {
     fn health(&self) -> f32 { self.health }
     fn max_health(&self) -> f32 { self.max_health }
     fn set_health(&mut self, value: f32) { self.health = value; }
+    fn set_max_health(&mut self, value: f32) { self.max_health = value; }
 }
 
 impl Component for Spaceship {

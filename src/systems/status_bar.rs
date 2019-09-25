@@ -7,10 +7,10 @@ use crate::{
     resources::SpriteResource,
 };
 
-const HEALTH_SPRITE_INDEX: usize = 10;
-const DEFENSE_SPRITE_INDEX: usize = 11;
-const ROLL_SPRITE_INDEX: usize = 12;
-const RESTOCK_SPRITE_INDEX: usize = 19;
+const HEALTH_SPRITE_INDEX: usize = 0;
+const DEFENSE_SPRITE_INDEX: usize = 1;
+const ROLL_SPRITE_INDEX: usize = 2;
+const RESTOCK_SPRITE_INDEX: usize = 3;
 
 pub struct StatusBarSystem;
 

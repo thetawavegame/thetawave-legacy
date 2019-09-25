@@ -4,7 +4,6 @@ use amethyst::{
     renderer::{SpriteRender, Transparent, SpriteSheet},
     assets::{Handle},
 };
-use crate::resources::SpriteResource;
 
 pub mod blast;
 pub mod spaceship;
@@ -20,9 +19,10 @@ pub mod status_bar;
 pub mod status_unit;
 pub mod gamemaster;
 pub mod store;
+pub mod planet;
 
 pub use self::{
-    blast::{fire_blast},
+    blast::{fire_blast, fire_double_blast},
     spaceship::initialise_spaceship,
     enemy::{spawn_enemy},
     enemy_spawner::{initialise_enemy_spawner },
@@ -36,16 +36,8 @@ pub use self::{
     status_unit::spawn_status_unit,
     gamemaster::initialise_gamemaster,
     store::{initialise_store},
+    planet::{initialise_planet},
 };
-
-pub fn initialise_sprite_resource(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
-    let sprite_resource = SpriteResource {
-        sprite_sheet: sprite_sheet_handle,
-    };
-
-    world.add_resource(sprite_resource.clone());
-    sprite_resource
-}
 
 fn spawn_sprite_entity<T: Component + Send + Sync>(
     entities: &Entities,

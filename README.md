@@ -8,7 +8,7 @@ This game was made with the [Amethyst](https://amethyst.rs/) engine. It is inspi
 
 In this game you control a spaceship. Your goal is to defend an objective from the incoming invasion of enemy spaceships while not letting your health deplete in the process. You can shoot the enemies with your spaceships blasters or ram into them with your barrel roll dealing damage to yourself in the process. How long can you last?
 
-![Alt text](https://giant.gfycat.com/GreenWindingAltiplanochinchillamouse.gif)
+![Alt text](assets/gifs/gameplay.gif)
 
 # To Run
 
@@ -41,11 +41,16 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |Name|Image|Description|
 |:---:|:---:|:---:|
 |Steel Barrel|![steel_barrel](assets/texture/portraits/steel_barrel_portrait.png)|Gives player collision damage immunity while barrel rolling.|
-|Plasma Blast|![plasma_blast](assets/texture/portraits/plasma_blast_portrait.png)|Increases fire rate and damage.|
+|Plasma Blasts|![plasma_blast](assets/texture/portraits/plasma_blast_portrait.png)|Increases fire rate and damage.|
 |Hazardous Reactor|![hazardous_reactor](assets/texture/portraits/hazardous_reactor_portrait.png)|Increases maximum speed.|
 |Warp Thruster|![warp_thruster](assets/texture/portraits/warp_thruster_portrait.png)|Increases acceleration and deceleration.|
+|Quadrupedal Tentaclover|![quadrupedal_tentaclover](assets/texture/portraits/quadrupedal_tentaclover_portrait.png)|Grants chance to critical hit.|
+|Defense Satellite|![defense_satellite](assets/texture/portraits/defense_satellite_portrait.png)|Increases maximum defense.|
+|Double Barrel|![double_barrel](assets/texture/portraits/double_barrel_portrait.png)|Grants double blasts.|
+|Yithian Plague|![yithian_plague](assets/texture/portraits/yithian_plague_portrait.png)|Grants chance to poison.|
+|Spice|![spice](assets/texture/portraits/spice_portrait.png)|Decreases barrel roll cooldown time.|
 
-# Pickups
+# Consumables
 
 |Name|Image|Description|
 |:---:|:---:|:---:|
