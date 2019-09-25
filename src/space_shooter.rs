@@ -142,8 +142,8 @@ impl SimpleState for SpaceShooter {
         initialise_gamemaster(world);
         initialise_defense(world);
         initialise_status_bars(world);
-        initialise_planet(world, "earth_planet.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0), -1100.0, -1010.0, 1000.0, 135.0, 0.01);
-        initialise_planet(world, "sol_star.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0) - 5000.0, (ARENA_HEIGHT/2.0) + 3000.0, -15000.0, 1000.0, 0.0, 0.005);
+        initialise_planet(world, "earth_planet.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0), -1100.0, -1010.0, 1000.0, 100.0, 0.01);
+        initialise_planet(world, "sol_star.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0) - 5000.0, (ARENA_HEIGHT/2.0) + 3000.0, -15000.0, 800.0, 0.0, 0.005);
         //initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, players_sprite_sheet_handle.clone());
         initialise_sprite_resource(world,

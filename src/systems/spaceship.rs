@@ -61,9 +61,9 @@ impl<'s> System<'s> for SpaceshipSystem {
             
             if let Some(fire_position) = spaceship.fire_cooldown(transform, spaceship.height / 2.0, !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action, time.delta_seconds()) {
                 if spaceship.double_blasts {
-                    fire_double_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, spaceship.crit_chance, &lazy_update);
+                    fire_double_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, spaceship.crit_chance, spaceship.poison_chance, &lazy_update);
                 }else {
-                    fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, spaceship.crit_chance, &lazy_update);
+                    fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, spaceship.crit_chance, spaceship.poison_chance, &lazy_update);
                 }
                 play_sfx(&sounds.spaceship_laser_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
             }

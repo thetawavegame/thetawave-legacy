@@ -28,7 +28,7 @@ const BARREL_DURATION: f32 = 0.3;
 const HEALTH: f32 = 400.0;
 const MONEY: usize = 20;
 const COLLISION_DAMAGE: f32 = 50.0;
-const CRIT_CHANCE: f32 = 0.01;
+const CRIT_CHANCE: f32 = 0.0;
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
 
@@ -76,6 +76,7 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             double_blasts: false,
             collision_damage: COLLISION_DAMAGE,
             crit_chance: CRIT_CHANCE,
+            poison_chance: 0.0,
         })
         .with(local_transform)
         .with(Transparent)
