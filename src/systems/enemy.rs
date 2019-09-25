@@ -20,8 +20,8 @@ use crate::{
     space_shooter::{ARENA_MIN_Y},
 };
 
-const ENEMY_BLAST_SPRITE_INDEX: usize = 9;
-const EXPLOSION_SPRITE_INDEX: usize = 4;
+const ENEMY_BLAST_SPRITE_INDEX: usize = 1;
+const EXPLOSION_SPRITE_INDEX: usize = 0;
 const EXPLOSION_Z: f32 = 0.0;
 
 pub struct EnemySystem;
@@ -60,6 +60,8 @@ impl<'s> System<'s> for EnemySystem {
             //transform the spaceship in x and y by the currrent velocity in x and y
             enemy_component.update_position(enemy_transform, time.delta_seconds());
 
+            enemy_component.health -= enemy_component.poison;
+
             //conditions for despawning
             if enemy_transform.translation()[1] + enemy_component.height/2.0 < ARENA_MIN_Y {
                 
@@ -90,7 +92,7 @@ impl<'s> System<'s> for EnemySystem {
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
                     if let Some(fire_position) = enemy_component.fire_cooldown(enemy_transform, -1.0 * enemy_component.height / 2.0, true, time.delta_seconds()) {
-                        fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_INDEX, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, &lazy_update);
+                        fire_blast(&entities, &sprite_resource, ENEMY_BLAST_SPRITE_INDEX, fire_position, enemy_component.blast_damage, 0.0, 0.0, enemy_component.blast_speed, false, 0.0, 0.0, &lazy_update);
                     }
                 }
 

@@ -51,6 +51,8 @@ pub struct Enemy {
     pub knockback_max_speed: f32,
     #[serde(default = "des_collision_damage")]
     pub collision_damage: f32,
+    #[serde(default = "des_poison")]
+    pub poison: f32,
     pub collectables_probs: SpawnProbabilities,
     pub enemy_type: EnemyType,
 }
@@ -65,6 +67,7 @@ fn des_deceleration_x() -> f32 { 1.0 }
 fn des_deceleration_y() -> f32 { 1.0 }
 fn des_knockback_max_speed() -> f32 { 100.0 }
 fn des_collision_damage() -> f32 { 30.0 }
+fn des_poison() -> f32 { 0.0 }
 
 impl Rigidbody for Enemy{
     fn current_velocity_x(&self) ->  f32 {

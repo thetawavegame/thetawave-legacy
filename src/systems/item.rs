@@ -9,12 +9,13 @@ use amethyst::{
 };
 use std::ops::Deref;
 use crate::{
-    components::{Item, Spaceship},
+    components::{Item, Spaceship, Defense},
     systems::hitbox_collide,
     audio::{play_sfx, Sounds},
 };
 
 use crate::space_shooter::ARENA_MIN_Y;
+use crate::components::Living;
 
 pub struct ItemSystem;
 
@@ -24,6 +25,7 @@ impl<'s> System<'s> for ItemSystem {
         Entities<'s>,
         WriteStorage<'s, Item>,
         WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
         Read<'s, AssetStorage<Source>>,
@@ -31,20 +33,28 @@ impl<'s> System<'s> for ItemSystem {
         Option<Read<'s, Output>>
     );
 
-    fn run(&mut self, (entities, mut items, mut spaceships, mut transforms, time, storage, sounds, audio_output): Self::SystemData) {
-        for spaceship in (&mut spaceships).join() {
+    fn run(&mut self, (entities, mut items, mut spaceships, mut defenses, mut transforms, time, storage, sounds, audio_output): Self::SystemData) {
+        for (item_entity, item, item_transform) in (&*entities, &mut items, &mut transforms).join() {
+            let item_x = item_transform.translation().x;
+            let item_y = item_transform.translation().y;
 
-            for (item_entity, item, item_transform) in (&*entities, &mut items, &mut transforms).join() {
-
-                let item_x = item_transform.translation().x;
-                let item_y = item_transform.translation().y;
-
+            for spaceship in (&mut spaceships).join() {
                 if hitbox_collide(item_x, item_y, spaceship.pos_x, spaceship.pos_y, item.hitbox_width, item.hitbox_height, spaceship.hitbox_width, spaceship.hitbox_height) {
 
+                    if item.stat_effects.contains_key("max_defense") {
+                        for defense in (&mut defenses).join() {
+                            defense.set_max_health(defense.max_health() + item.stat_effects["max_defense"]);
+                            defense.set_health(defense.health() + item.stat_effects["max_defense"]);
+                        }
+                    }
 
                     //add stats to spaceship
                     if item.bool_effects.contains_key("barrel_immunity") {
                         spaceship.steel_barrel = item.bool_effects["barrel_immunity"];
+                    }
+
+                    if item.bool_effects.contains_key("double_blasts") {
+                        spaceship.double_blasts = item.bool_effects["double_blasts"];
                     }
 
                     if item.stat_effects.contains_key("fire_speed") {
@@ -58,6 +68,19 @@ impl<'s> System<'s> for ItemSystem {
                     if item.stat_effects.contains_key("max_speed") {
                         spaceship.max_speed += item.stat_effects["max_speed"];
                     }
+
+                    if item.stat_effects.contains_key("crit_chance") {
+                        spaceship.crit_chance += item.stat_effects["crit_chance"];
+                    }
+
+                    if item.stat_effects.contains_key("poison_chance") {
+                        spaceship.poison_chance += item.stat_effects["poison_chance"];
+                    }
+
+                    if item.stat_effects.contains_key("barrel_cooldown") {
+                        spaceship.barrel_cooldown += item.stat_effects["barrel_cooldown"];
+                    }
+
 
                     if item.stat_effects.contains_key("acceleration") {
                         spaceship.acceleration_x += item.stat_effects["acceleration"];

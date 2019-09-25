@@ -4,10 +4,12 @@ extern crate serde;
 
 use amethyst::{
     prelude::*,
+
+    assets::{AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystem, RonFormat, Prefab},
     renderer::{
         RenderingBundle,
         types::DefaultBackend,
-        plugins::{RenderFlat2D, RenderToWindow},
+        plugins::{RenderFlat2D, RenderToWindow, RenderShaded3D, RenderFlat3D},
     },
     utils::application_root_dir,
     core::{transform::TransformBundle},
@@ -33,7 +35,7 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
-    let display_config_path = app_root.join("config").join("display_config_640.ron");
+    let display_config_path = app_root.join("config").join("display_config_960.ron");
     let bindings_path = app_root.join("config").join("bindings_config.ron");
     let assets_path = app_root.join("assets");
 
@@ -57,7 +59,9 @@ fn main() -> amethyst::Result<()> {
                         RenderToWindow::from_config_path(display_config_path)
                             .with_clear([0.0, 0.0, 0.0, 1.0]),
                     )
+                    .with_plugin(RenderFlat3D::default())
                     .with_plugin(RenderFlat2D::default())
+                    //.with_plugin(RenderShaded3D::default())
                     .with_plugin(RenderUi::default())
             )?;
 

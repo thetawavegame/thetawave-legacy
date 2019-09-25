@@ -38,6 +38,7 @@ impl<'s> System<'s> for PlayerHitSystem {
                         let _result = entities.delete(blast_entity);
                         play_sfx(&sounds.spaceship_hit_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
                         enemy.health -= blast.damage;
+                        enemy.poison = blast.poison_damage;
                     }
                 }
             }

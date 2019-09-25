@@ -16,6 +16,7 @@ mod status_bar;
 mod spawner;
 mod gamemaster;
 mod store;
+mod planet;
 
 pub use self::{
     blast::Blast,
@@ -29,6 +30,7 @@ pub use self::{
     spawner::{Spawner, SpawnProbabilities, choose_random_name},
     gamemaster::{GameMaster, Phase, PhaseType},
     store::Store,
+    planet::Planet,
 };
 
 const BLAST_Z: f32 = 0.1;
@@ -140,6 +142,7 @@ pub trait Living {
     fn health(&self) -> f32;
     fn max_health(&self) -> f32;
     fn set_health(&mut self, value: f32);
+    fn set_max_health(&mut self, value: f32);
 
     fn constrain_health(&mut self) {
         if self.health() < 0.0 {
