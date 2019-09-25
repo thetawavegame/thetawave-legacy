@@ -34,7 +34,7 @@
     ),
     "quadrupedal_tentaclover": (
         stat_effects: {
-            "crit_chance": 0.04,
+            "crit_chance": 0.05,
         },
         price: 12,
         sprite_index: 4,
@@ -57,6 +57,9 @@
         name: "double_barrel",
     ),
     "yithian_plague": (
+        stat_effects: {
+            "poison_chance": 0.10,
+        },
         price: 14,
         sprite_index: 7,
         name: "yithian_plague",

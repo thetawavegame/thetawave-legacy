@@ -20,5 +20,11 @@
             width: 4,
             height: 4,
         ),
+        (
+            x: 12,
+            y: 0,
+            width: 4,
+            height: 4,
+        ),
     ],
 )

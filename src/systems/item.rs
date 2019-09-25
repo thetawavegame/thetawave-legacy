@@ -73,6 +73,10 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.crit_chance += item.stat_effects["crit_chance"];
                     }
 
+                    if item.stat_effects.contains_key("poison_chance") {
+                        spaceship.poison_chance += item.stat_effects["poison_chance"];
+                    }
+
                     if item.stat_effects.contains_key("barrel_cooldown") {
                         spaceship.barrel_cooldown += item.stat_effects["barrel_cooldown"];
                     }
