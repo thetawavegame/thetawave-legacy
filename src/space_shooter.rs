@@ -1,6 +1,6 @@
 use amethyst::{
-    assets::{AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystem, RonFormat, Prefab, AssetPrefab},
-    gltf::{GltfSceneAsset, GltfSceneFormat, GltfSceneLoaderSystem, GltfPrefab},
+    assets::{AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystemDesc, RonFormat, Prefab, AssetPrefab},
+    gltf::{GltfSceneAsset, GltfSceneFormat, GltfSceneLoaderSystemDesc, GltfPrefab},
     core::transform::{Transform},
     prelude::*,
     renderer::{
@@ -95,8 +95,6 @@ impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
             dispatcher: DispatcherBuilder::new()
-                //.with(PrefabLoaderSystem::<PrefabData>::default(), "", &[])
-                .with(GltfSceneLoaderSystem::default(), "gltf_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
@@ -135,7 +133,7 @@ impl SimpleState for SpaceShooter {
         let blasts_sprite_sheet_handle = load_spritesheet(world, "blasts_spritesheet.png", "blasts_spritesheet.ron");
         let explosions_sprite_sheet_handle = load_spritesheet(world, "explosions_spritesheet.png", "explosions_spritesheet.ron");
 
-        self.dispatcher.setup(&mut world.res);
+        self.dispatcher.setup(world);
 
         initialise_audio(world);
         initialise_ui(world);
@@ -161,7 +159,7 @@ impl SimpleState for SpaceShooter {
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        self.dispatcher.dispatch(&mut data.world.res);
+        self.dispatcher.dispatch(data.world);
         Trans::None
     }
 

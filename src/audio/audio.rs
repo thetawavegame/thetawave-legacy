@@ -6,7 +6,7 @@ use amethyst::{
         SourceHandle,
         OggFormat,
     },
-    ecs::prelude::World,
+    ecs::{World, WorldExt},
 };
 
 pub struct Sounds {

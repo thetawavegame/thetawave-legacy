@@ -35,6 +35,6 @@ pub fn initialise_sprite_resource(
         explosions_sprite_sheet: explosions_sprite_sheet_handle,
     };
 
-    world.add_resource(sprite_resource.clone());
+    world.insert(sprite_resource.clone());
     sprite_resource
 }

@@ -1,6 +1,6 @@
 use amethyst::{
     prelude::Builder,
-    ecs::prelude::{World},
+    ecs::{World, WorldExt},
 };
 use crate::{
     resources::{ItemPool},

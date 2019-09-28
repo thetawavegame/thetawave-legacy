@@ -1,7 +1,7 @@
 use amethyst::{
     gltf::{GltfSceneAsset, GltfSceneFormat},
     prelude::Builder,
-    ecs::prelude::World,
+    ecs::{World, WorldExt},
     core::transform::Transform,
     assets::{Handle, AssetStorage, Loader},
     core::math::Vector3,
