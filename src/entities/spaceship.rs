@@ -9,6 +9,7 @@ use crate::{
     components::Spaceship,
     space_shooter::{ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT},
 };
+use std::collections::HashMap;
 
 const HEIGHT: f32 = 18.0;
 const WIDTH: f32 = 18.0;
@@ -30,6 +31,10 @@ const MONEY: usize = 20;
 const COLLISION_DAMAGE: f32 = 50.0;
 const CRIT_CHANCE: f32 = 0.0;
 
+const PLAYER_BLAST_SPRITE_INDEX: usize = 0;
+const CRIT_SPRITE_INDEX: usize = 2;
+const POISON_SPRITE_INDEX: usize = 3;
+
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
 
     let mut local_transform = Transform::default();
@@ -39,6 +44,11 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         sprite_sheet: sprite_sheet_handle.clone(),
         sprite_number: 0,
     };
+
+    let mut blast_sprite_indicies = HashMap::new();
+    blast_sprite_indicies.insert("normal".to_string(), PLAYER_BLAST_SPRITE_INDEX);
+    blast_sprite_indicies.insert("crit".to_string(), CRIT_SPRITE_INDEX);
+    blast_sprite_indicies.insert("poison".to_string(), POISON_SPRITE_INDEX);
 
     world
         .create_entity()
@@ -77,6 +87,8 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             collision_damage: COLLISION_DAMAGE,
             crit_chance: CRIT_CHANCE,
             poison_chance: 0.0,
+            blast_sprite_indicies: blast_sprite_indicies,
+            allied: true,
         })
         .with(local_transform)
         .with(Transparent)

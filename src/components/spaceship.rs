@@ -6,6 +6,7 @@ use crate::{
     components::{Rigidbody, Fires, Living},
     space_shooter::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
 };
+use std::collections::HashMap;
 
 pub struct Spaceship {
     pub width: f32,
@@ -41,6 +42,8 @@ pub struct Spaceship {
     pub collision_damage: f32,
     pub crit_chance: f32,
     pub poison_chance: f32,
+    pub blast_sprite_indicies: HashMap<String, usize>,
+    pub allied: bool,
 }
 
 impl Rigidbody for Spaceship {
@@ -58,6 +61,16 @@ impl Rigidbody for Spaceship {
 }
 
 impl Fires for Spaceship {
+
+    fn blast_sprite_indicies(&self) -> HashMap<String, usize> { self.blast_sprite_indicies.clone() }
+    fn blast_damage(&self) -> f32 { self.damage }
+    fn crit_chance(&self) -> f32 { self.crit_chance }
+    fn poison_chance(&self) -> f32 { self.poison_chance }
+    fn blast_speed(&self) -> f32 { self.blast_speed }
+    fn velocity_x(&self) -> f32 { self.current_velocity_x }
+    fn velocity_y(&self) -> f32 { self.current_velocity_y }
+    fn allied(&self) -> bool { self.allied }
+
     fn fire_reset_timer(&self) -> f32 { self.fire_reset_timer }
     fn fire_speed(&self) -> f32 { self.fire_speed }
     fn set_fire_reset_timer(&mut self, value: f32) { self.fire_reset_timer = value; }
