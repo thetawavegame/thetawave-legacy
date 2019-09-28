@@ -1,5 +1,5 @@
 use amethyst::{
-    ecs::prelude::{System, Read, Resources},
+    ecs::{System, Read, World},
     ecs::*,
     shrev::{EventChannel, ReaderId},
     audio::{output::Output, Source},
@@ -29,9 +29,9 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         Option<Read<'s, Output>>
     );
 
-    fn setup(&mut self, res: &mut Resources) {
-        Self::SystemData::setup(res);
-        self.event_reader = Some(res.fetch_mut::<EventChannel<CollisionEvent>>().register_reader());
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(world.fetch_mut::<EventChannel<CollisionEvent>>().register_reader());
     }
 
     fn run(&mut self, (enemy_collision_event_channel, mut spaceships, mut enemies, entities,storage, sounds, audio_output ): Self::SystemData) {

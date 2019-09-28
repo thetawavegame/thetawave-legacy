@@ -16,6 +16,7 @@ use amethyst::{
     input::{InputBundle, StringBindings},
     ui::{RenderUi, UiBundle},
     audio::{AudioBundle},
+    gltf::{GltfSceneLoaderSystemDesc},
 };
 
 mod audio;
@@ -47,6 +48,7 @@ fn main() -> amethyst::Result<()> {
         .expect("failed to load game data");
 
     let game_data = GameDataBuilder::default()
+            .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])
             .with_bundle(TransformBundle::new())?
             .with_bundle(
                 InputBundle::<StringBindings>::new().with_bindings_from_file(bindings_path)?,

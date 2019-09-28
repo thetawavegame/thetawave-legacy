@@ -1,6 +1,6 @@
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::World,
+    ecs::{World, WorldExt},
     prelude::Builder
 };
 use crate::{
