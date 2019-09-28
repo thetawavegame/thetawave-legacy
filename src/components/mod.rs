@@ -32,6 +32,7 @@ pub use self::{
     store::Store,
     planet::Planet,
 };
+use std::collections::HashMap;
 
 const BLAST_Z: f32 = 0.1;
 
@@ -118,6 +119,16 @@ pub trait Rigidbody {
 }
 
 pub trait Fires {
+    fn blast_sprite_indicies(&self) -> HashMap<String, usize>;
+    fn blast_damage(&self) -> f32;
+    fn crit_chance(&self) -> f32;
+    fn poison_chance(&self) -> f32;
+    fn blast_speed(&self) -> f32;
+    fn velocity_x(&self) -> f32;
+    fn velocity_y(&self) -> f32;
+    fn allied(&self) -> bool;
+
+
     fn fire_reset_timer(&self) -> f32;
     fn fire_speed(&self) -> f32;
     fn set_fire_reset_timer(&mut self, value: f32);

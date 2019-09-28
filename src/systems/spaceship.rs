@@ -63,7 +63,7 @@ impl<'s> System<'s> for SpaceshipSystem {
                 if spaceship.double_blasts {
                     fire_double_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, spaceship.crit_chance, spaceship.poison_chance, &lazy_update);
                 }else {
-                    fire_blast(&entities, &sprite_resource, PLAYER_BLAST_SPRITE_INDEX, fire_position, spaceship.damage, spaceship.current_velocity_x, spaceship.current_velocity_y, spaceship.blast_speed, true, spaceship.crit_chance, spaceship.poison_chance, &lazy_update);
+                    fire_blast(&entities, &sprite_resource, spaceship, fire_position, &lazy_update)
                 }
                 play_sfx(&sounds.spaceship_laser_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
             }
