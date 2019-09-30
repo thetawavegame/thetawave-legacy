@@ -10,7 +10,7 @@ use amethyst::{
 };
 use std::ops::Deref;
 use crate::{
-    entities::{fire_blast, fire_double_blast},
+    entities::fire_blast,
     components::{Spaceship, Fires, Living},
     resources::{SpriteResource},
     audio::{play_sfx, Sounds},
