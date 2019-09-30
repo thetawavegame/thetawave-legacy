@@ -60,6 +60,8 @@ pub struct Enemy {
     pub crit_chance: f32,
     #[serde(default = "des_poison_chance")]
     pub poison_chance: f32,
+    #[serde(default = "des_blast_count")]
+    pub blast_count: usize,
     #[serde(default = "des_blast_sprite_indicies")]
     pub blast_sprite_indicies: HashMap<String, usize>,
     #[serde(default = "des_allied")]
@@ -81,6 +83,7 @@ fn des_collision_damage() -> f32 { 30.0 }
 fn des_poison() -> f32 { 0.0 }
 fn des_crit_chance() -> f32 { 0.0 }
 fn des_poison_chance() -> f32 { 0.0 }
+fn des_blast_count() -> usize { 1 }
 fn des_blast_sprite_indicies() -> HashMap<String, usize> {
     let mut blast_sprite_indicies = HashMap::new();
     blast_sprite_indicies.insert("normal".to_string(), ENEMY_BLAST_SPRITE_INDEX);
@@ -121,6 +124,7 @@ impl Fires for Enemy {
     fn velocity_x(&self) -> f32 { self.current_velocity_x }
     fn velocity_y(&self) -> f32 { self.current_velocity_y }
     fn allied(&self) -> bool { self.allied }
+    fn blast_count(&self) -> usize { self.blast_count }
 
 
     fn fire_reset_timer(&self) -> f32 { self.fire_reset_timer }
