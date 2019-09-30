@@ -127,6 +127,7 @@ pub trait Fires {
     fn velocity_x(&self) -> f32;
     fn velocity_y(&self) -> f32;
     fn allied(&self) -> bool;
+    fn blast_count(&self) -> usize;
 
 
     fn fire_reset_timer(&self) -> f32;

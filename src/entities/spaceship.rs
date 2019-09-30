@@ -83,7 +83,7 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             money: MONEY,
             knockback_max_speed: MAX_KNOCKBACK_SPEED,
             steel_barrel: false,
-            double_blasts: false,
+            blast_count: 1,
             collision_damage: COLLISION_DAMAGE,
             crit_chance: CRIT_CHANCE,
             poison_chance: 0.0,

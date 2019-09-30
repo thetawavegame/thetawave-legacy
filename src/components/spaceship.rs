@@ -38,7 +38,7 @@ pub struct Spaceship {
     pub money: usize,
     pub knockback_max_speed: f32,
     pub steel_barrel: bool,
-    pub double_blasts: bool,
+    pub blast_count: usize,
     pub collision_damage: f32,
     pub crit_chance: f32,
     pub poison_chance: f32,
@@ -70,6 +70,7 @@ impl Fires for Spaceship {
     fn velocity_x(&self) -> f32 { self.current_velocity_x }
     fn velocity_y(&self) -> f32 { self.current_velocity_y }
     fn allied(&self) -> bool { self.allied }
+    fn blast_count(&self) -> usize { self.blast_count }
 
     fn fire_reset_timer(&self) -> f32 { self.fire_reset_timer }
     fn fire_speed(&self) -> f32 { self.fire_speed }

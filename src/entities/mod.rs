@@ -22,7 +22,7 @@ pub mod store;
 pub mod planet;
 
 pub use self::{
-    blast::{fire_blast, fire_double_blast},
+    blast::fire_blast,
     spaceship::initialise_spaceship,
     enemy::{spawn_enemy},
     enemy_spawner::{initialise_enemy_spawner },
