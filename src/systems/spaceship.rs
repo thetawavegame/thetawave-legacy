@@ -16,8 +16,6 @@ use crate::{
     audio::{play_sfx, Sounds},
 };
 
-const PLAYER_BLAST_SPRITE_INDEX: usize = 0;
-
 pub struct SpaceshipSystem;
 
 impl<'s> System<'s> for SpaceshipSystem {
@@ -35,48 +33,69 @@ impl<'s> System<'s> for SpaceshipSystem {
         Option<Read<'s, Output>>
     );
 
-    fn run(&mut self, (entities, mut transforms, mut spaceships, input, time, sprite_resource, lazy_update, storage, sounds, audio_output): Self::SystemData) {
+    fn run(
+        &mut self,
+        (
+            entities,
+            mut transforms,
+            mut spaceships,
+            input,
+            time,
+            sprite_resource,
+            lazy_update,
+            storage,
+            sounds,
+            audio_output
+        ): Self::SystemData
+    ) {
 
+        // collect input bools
         let shoot_action = input.action_is_down("shoot").unwrap();
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right= input.action_is_down("barrel_right").unwrap();
 
 
         for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
+            // update pos_x and pos_y variables of spaceship
+            spaceship.update_location(transform.translation().x, transform.translation().y);
 
-            spaceship.pos_x = transform.translation().x;
-            spaceship.pos_y= transform.translation().y;
-
-            //barrel roll input cooldown
+            // barrel roll input cooldown
+            // amount of time until new barrel roll can be initiated
             if spaceship.barrel_input_cooldown(time.delta_seconds()) {
                 barrel_left = false;
                 barrel_right = false;
             }
 
             //barrel roll action cooldown
+            //amount of time until barrel roll is complete
             if spaceship.barrel_action_cooldown(time.delta_seconds()) {
                 barrel_left = false;
                 barrel_right = false;
             }
-            
-            if let Some(fire_position) = spaceship.fire_cooldown(transform, spaceship.height / 2.0, !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action, time.delta_seconds()) {
-                fire_blast(&entities, &sprite_resource, spaceship, fire_position, &lazy_update);
-                play_sfx(&sounds.spaceship_laser_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
+
+            // fires blast and plays effect if able
+            if let Some(fire_position) = spaceship.fire_cooldown(
+                transform, spaceship.height / 2.0,
+                !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action,
+                time.delta_seconds()
+            ) {
+                fire_blast(
+                    &entities,
+                    &sprite_resource,
+                    spaceship,
+                    fire_position,
+                    &lazy_update
+                );
+                play_sfx(&sounds.spaceship_laser_sfx,
+                         &storage,
+                         audio_output.as_ref().map(
+                             |o| o.deref()
+                         )
+                );
             }
 
-            if barrel_left {
-                spaceship.barrel_action_left = true;
-                spaceship.barrel_action_timer = spaceship.barrel_duration;
-                spaceship.barrel_reset_timer = spaceship.barrel_cooldown;
-            }
-
-            if barrel_right {
-                spaceship.barrel_action_right = true;
-                spaceship.barrel_action_timer = spaceship.barrel_duration;
-                spaceship.barrel_reset_timer = spaceship.barrel_cooldown;
-            }
-
-            spaceship.constrain_health(); 
+            spaceship.initiate_barrel_roll(barrel_left, barrel_right);
+            spaceship.constrain_health();
         }
     }
 }
