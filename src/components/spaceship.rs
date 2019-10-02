@@ -90,6 +90,11 @@ impl Component for Spaceship {
 
 impl Spaceship {
 
+    pub fn update_location(&mut self, x: f32, y: f32) {
+        self.pos_x = x;
+        self.pos_y = y;
+    }
+
     pub fn constrain_to_arena(&mut self, transform: &mut Transform) {
         let spaceship_x = transform.translation().x;
         let spaceship_y = transform.translation().y;
@@ -114,6 +119,19 @@ impl Spaceship {
         }else if (spaceship_y + (self.height/2.0)) > ARENA_MAX_Y {      //if colliding with bottom of arena
             transform.set_translation_y(ARENA_MAX_Y - (self.height/2.0));
             self.current_velocity_y = -1.0  * self.current_velocity_y.abs();
+        }
+    }
+
+    pub fn initiate_barrel_roll(&mut self, left: bool, right: bool) {
+        if left || right {
+            self.barrel_action_timer = self.barrel_duration;
+            self.barrel_reset_timer = self.barrel_cooldown;
+
+            if left {
+                self.barrel_action_left = true;
+            }else if right {
+                self.barrel_action_right = true;
+            }
         }
     }
     

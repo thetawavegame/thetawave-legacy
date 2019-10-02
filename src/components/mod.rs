@@ -128,8 +128,6 @@ pub trait Fires {
     fn velocity_y(&self) -> f32;
     fn allied(&self) -> bool;
     fn blast_count(&self) -> usize;
-
-
     fn fire_reset_timer(&self) -> f32;
     fn fire_speed(&self) -> f32;
     fn set_fire_reset_timer(&mut self, value: f32);
