@@ -69,6 +69,11 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.max_speed += item.stat_effects["max_speed"];
                     }
 
+                    if item.stat_effects.contains_key("max_health") {
+                        spaceship.set_max_health(spaceship.max_health() + item.stat_effects["max_health"]);
+                        spaceship.set_health(spaceship.health() + item.stat_effects["max_health"]);
+                    }
+
                     if item.stat_effects.contains_key("crit_chance") {
                         spaceship.crit_chance += item.stat_effects["crit_chance"];
                     }
@@ -112,4 +117,3 @@ impl<'s> System<'s> for ItemSystem {
         }
     }
 }
-
