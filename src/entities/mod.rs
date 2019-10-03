@@ -12,7 +12,6 @@ pub mod enemy_spawner;
 pub mod explosion;
 pub mod items;
 pub mod side_panel;
-pub mod background;
 pub mod consumable;
 pub mod defense;
 pub mod status_bar;
@@ -29,7 +28,6 @@ pub use self::{
     explosion::{spawn_explosion},
     items::spawn_item,
     side_panel::initialise_side_panels,
-    background::initialise_background,
     consumable::spawn_consumable,
     defense::initialise_defense,
     status_bar::initialise_status_bars,
