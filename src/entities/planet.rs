@@ -7,7 +7,7 @@ use amethyst::{
     core::math::Vector3,
 };
 use crate::{
-    space_shooter::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
+    constants::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
     components::Planet,
 };
 

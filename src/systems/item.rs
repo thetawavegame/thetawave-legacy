@@ -9,13 +9,11 @@ use amethyst::{
 };
 use std::ops::Deref;
 use crate::{
-    components::{Item, Spaceship, Defense},
+    components::{Item, Spaceship, Defense, Living},
     systems::hitbox_collide,
     audio::{play_sfx, Sounds},
+    constants::ARENA_MIN_Y,
 };
-
-use crate::space_shooter::ARENA_MIN_Y;
-use crate::components::Living;
 
 pub struct ItemSystem;
 

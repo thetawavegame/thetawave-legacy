@@ -7,7 +7,7 @@ use amethyst::{
 };
 use crate::{
     components::Blast,
-    space_shooter::{ARENA_MAX_Y, ARENA_MIN_Y, ARENA_MAX_X, ARENA_MIN_X},
+    constants::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
 };
 
 pub struct BlastSystem;

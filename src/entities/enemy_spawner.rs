@@ -5,7 +5,7 @@ use amethyst::{
 };
 use crate::{
     components::{EnemySpawnerTag, Spawner},
-    space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH},
+    constants::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH},
 };
 
 const SPAWN_INTERVAL: f32 = 1.5;

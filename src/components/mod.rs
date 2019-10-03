@@ -36,6 +36,7 @@ use std::collections::HashMap;
 
 const BLAST_Z: f32 = 0.1;
 
+// rigidbodies are have physics and can collide
 pub trait Rigidbody {
     fn current_velocity_x(&self) -> f32;
     fn current_velocity_y(&self) -> f32;
@@ -54,23 +55,33 @@ pub trait Rigidbody {
     }
 
     fn accelerate_x(&mut self, direction: f32) {
-        self.set_current_velocity_x(self.current_velocity_x() + (direction * self.acceleration_x()));
+        self.set_current_velocity_x(
+            self.current_velocity_x() + (direction * self.acceleration_x())
+        );
     }
 
     fn accelerate_y(&mut self, direction: f32) {
-        self.set_current_velocity_y(self.current_velocity_y() + (direction * self.acceleration_y()));
+        self.set_current_velocity_y(
+            self.current_velocity_y() + (direction * self.acceleration_y())
+        );
     }
 
     fn decelerate_x(&mut self, direction: f32) {
-        self.set_current_velocity_x(self.current_velocity_x() + (direction *  self.deceleration_x()));
+        self.set_current_velocity_x(
+            self.current_velocity_x() + (direction * self.deceleration_x())
+        );
     }
 
     fn decelerate_y(&mut self, direction: f32) {
-        self.set_current_velocity_y(self.current_velocity_y() + (direction *  self.deceleration_y()));
+        self.set_current_velocity_y(
+            self.current_velocity_y() + (direction * self.deceleration_y())
+        );
     }
 
     fn accelerate(&mut self, direction_x: f32, direction_y: f32) {
-        if (direction_x > 0.0 && self.current_velocity_x() < self.max_speed()) || (direction_x < 0.0 && self.current_velocity_x() > (-1.0 * self.max_speed())) {
+        if (direction_x > 0.0 && self.current_velocity_x() < self.max_speed()) ||
+            (direction_x < 0.0 && self.current_velocity_x() > (-1.0 * self.max_speed()))
+        {
             self.accelerate_x(direction_x);
         } else if direction_x == 0.0 && self.current_velocity_x() > 0.0 {
             self.decelerate_x(-1.0);
@@ -78,7 +89,9 @@ pub trait Rigidbody {
             self.decelerate_x(1.0);
         }
 
-        if (direction_y > 0.0 && self.current_velocity_y() < self.max_speed()) || (direction_y < 0.0 && self.current_velocity_y() > (-1.0 * self.max_speed())) {
+        if (direction_y > 0.0 && self.current_velocity_y() < self.max_speed()) ||
+            (direction_y < 0.0 && self.current_velocity_y() > (-1.0 * self.max_speed()))
+        {
             self.accelerate_y(direction_y);
         } else if direction_y == 0.0 && self.current_velocity_y() > 0.0 {
             self.decelerate_y(-1.0);
@@ -118,6 +131,7 @@ pub trait Rigidbody {
     }
 }
 
+// fires can fire projectiles with a cooldown between shots
 pub trait Fires {
     fn blast_sprite_indicies(&self) -> HashMap<String, usize>;
     fn blast_damage(&self) -> f32;
@@ -132,7 +146,13 @@ pub trait Fires {
     fn fire_speed(&self) -> f32;
     fn set_fire_reset_timer(&mut self, value: f32);
 
-    fn fire_cooldown(&mut self, transform: &mut Transform, offset: f32, fire: bool, dt: f32) -> Option<Vector3<f32>> {
+    fn fire_cooldown(
+        &mut self,
+        transform: &mut Transform,
+        offset: f32,
+        fire: bool,
+        dt: f32
+    ) -> Option<Vector3<f32>> {
         if self.fire_reset_timer() > 0.0 {
             self.set_fire_reset_timer(self.fire_reset_timer() - dt);
             return None;
@@ -148,6 +168,7 @@ pub trait Fires {
     }
 }
 
+// livings can "die" and have a max health cap
 pub trait Living {
     fn health(&self) -> f32;
     fn max_health(&self) -> f32;

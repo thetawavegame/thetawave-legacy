@@ -1,73 +1,40 @@
 use amethyst::{
-    assets::{AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystemDesc, RonFormat, Prefab, AssetPrefab},
+    assets::{
+        AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader,
+        PrefabLoaderSystemDesc, RonFormat, Prefab, AssetPrefab
+    },
     gltf::{GltfSceneAsset, GltfSceneFormat, GltfSceneLoaderSystemDesc, GltfPrefab},
     core::transform::{Transform},
     prelude::*,
     renderer::{
-        Camera, SpriteSheet,
-        SpriteSheetFormat, Texture,
-        SpriteRender,
-        camera,
-        shape::Shape,
-        Material,
-        Mesh,
+        Camera, SpriteSheet, SpriteSheetFormat, Texture, SpriteRender, camera, shape::Shape,
+        Material, Mesh,
     },
-    input::{
-        is_key_down,
-        VirtualKeyCode,
-    },
+    input::{is_key_down, VirtualKeyCode},
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     renderer::{
         formats::texture::ImageFormat,
-        rendy::mesh::{
-            Normal,
-            Position,
-            TexCoord,
-            PosNormTangTex,
-        },
+        rendy::mesh::{Normal, Position, TexCoord, PosNormTangTex},
     },
-    ui::{
-        TtfFormat,
-        Anchor,
-        UiText,
-        UiTransform,
-    },
-    utils::{
-        scene::BasicScenePrefab
-    }
+    ui::{TtfFormat, Anchor, UiText, UiTransform},
+    utils::{scene::BasicScenePrefab}
 };
 use crate::{
     audio::initialise_audio,
     systems,
-    entities::{initialise_gamemaster,
-               initialise_spaceship,
-               initialise_enemy_spawner,
-               initialise_side_panels,
-               initialise_background,
-               initialise_defense,
-               initialise_status_bars,
-               initialise_store,
-               initialise_planet
+    entities::{
+        initialise_gamemaster, initialise_spaceship, initialise_enemy_spawner,
+        initialise_side_panels, initialise_background, initialise_defense,
+        initialise_status_bars, initialise_store, initialise_planet
     },
-    resources::{
-        initialise_sprite_resource,
+    resources::{initialise_sprite_resource},
+    constants::{
+        GAME_WIDTH, GAME_HEIGHT, ARENA_WIDTH, ARENA_HEIGHT, ARENA_MIN_X, ARENA_MAX_X,
+        ARENA_MIN_Y, ARENA_MAX_Y,
     },
 };
 use std::fs::File;
 use std::f32::consts::{FRAC_PI_3};
-
-//GAME_HEIGHT and _WIDTH should be  half the resolution?
-pub const GAME_WIDTH: f32 = 360.0;
-pub const GAME_HEIGHT: f32 = 270.0;
-pub const ARENA_MIN_Y: f32 = 0.0;
-pub const ARENA_MAX_Y: f32 = GAME_HEIGHT - ARENA_MIN_Y;
-pub const ARENA_MIN_X: f32 = GAME_WIDTH / 8.0;
-pub const ARENA_MAX_X: f32 = GAME_WIDTH - ARENA_MIN_X;
-pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
-pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
-pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
-
-//pub type PrefabData = BasicScenePrefab<(Vec<Position>, Vec<Normal>, Vec<TexCoord>)>;
 
 #[derive(Debug)]
 pub struct CollisionEvent {

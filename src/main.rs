@@ -25,6 +25,7 @@ pub mod systems;
 pub mod components;
 pub mod resources;
 pub mod entities;
+pub mod constants;
 
 use crate::space_shooter::SpaceShooter;
 use resources::{ItemPool, EnemyPool, ConsumablePool};
