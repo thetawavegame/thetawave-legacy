@@ -12,7 +12,7 @@ use crate::{
     components::{Consumable, Spaceship, Defense},
     systems::hitbox_collide,
     audio::{play_sfx, Sounds},
-    space_shooter::ARENA_MIN_Y,
+    constants::ARENA_MIN_Y,
 };
 
 pub struct ConsumableSystem;

@@ -6,7 +6,7 @@ use amethyst::{
     assets::Handle,
 };
 use crate::{
-    space_shooter::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
+    constants::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
 };
 
 const Z: f32 = 0.0;

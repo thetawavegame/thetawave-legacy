@@ -4,7 +4,7 @@ use amethyst::{
 };
 use crate::{
     components::{Rigidbody, Fires, Living},
-    space_shooter::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
+    constants::{ARENA_MIN_X, ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
 };
 use std::collections::HashMap;
 

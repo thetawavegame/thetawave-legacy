@@ -5,7 +5,7 @@ use amethyst::{
 
 use crate::{
     components::{Rigidbody, Fires, SpawnProbabilities},
-    space_shooter::{ARENA_MIN_X, ARENA_MAX_X},
+    constants::{ARENA_MIN_X, ARENA_MAX_X},
 };
 
 use serde::{Serialize, Deserialize};

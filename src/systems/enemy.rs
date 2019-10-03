@@ -17,7 +17,7 @@ use crate::{
     entities::{spawn_explosion, spawn_consumable, fire_blast},
     resources::SpriteResource,
     audio::{play_sfx, Sounds},
-    space_shooter::{ARENA_MIN_Y},
+    constants::ARENA_MIN_Y,
 };
 
 const ENEMY_BLAST_SPRITE_INDEX: usize = 1;

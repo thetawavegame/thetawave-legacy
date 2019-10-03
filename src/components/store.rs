@@ -10,7 +10,7 @@ use rand::{thread_rng, Rng};
 use crate::{
     components::{Item, Consumable, Spaceship},
     resources::{ItemPool, SpriteResource},
-    space_shooter::{ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
+    constants::{ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
     entities::spawn_item,
 };
 
