@@ -57,4 +57,25 @@
         ],
         enemy_type: Hauler,
     ),
+    "strafer":(
+        health: 75,
+        sprite_index: 3,
+        fires: true,
+        fire_speed: 3,
+        fire_reset_timer: 1,
+        blast_speed: -35,
+        blast_damage: 50,
+        defense_damage: -100,
+        max_speed: 25
+        current_velocity_y: -25,
+        current_velocity_x: 25,
+        collectables_probs: [
+            ("", 0.5),
+            ("health", 0.02),
+            ("defense", 0.025),
+            ("money_1", 0.43),
+            ("money_5", 0.025),
+        ],
+        enemy_type: Strafer,
+    )
 }
