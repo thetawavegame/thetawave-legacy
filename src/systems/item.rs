@@ -92,6 +92,12 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.deceleration_y += item.stat_effects["deceleration"];
                     }
 
+                    if item.stat_effects.contains_key("health_increase"){
+                        spaceship.max_health = spaceship.max_health + (item.stat_effects["health_increase"] * spaceship.max_health);
+                        spaceship.health = spaceship.max_health;
+                    }
+
+
                     play_sfx(&sounds.item_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
 
                     let _result = entities.delete(item_entity);
