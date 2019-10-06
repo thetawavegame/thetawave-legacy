@@ -12,6 +12,7 @@ const SPAWN_INTERVAL: f32 = 1.5;
 //const SPAWN_COUNTER: u32 = 100;
 const ENEMY_PAWN_RATIO: f32 = 50.0;
 const ENEMY_DRONE_RATIO: f32 = 100.0;
+const ENEMY_STRAFER_RATIO: f32 = 75.0;
 const ENEMY_HAULER_RATIO: f32 = 5.0;
 const SPAWNER_Y_OFFSET: f32 = 20.0;
 
@@ -29,6 +30,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
                 ("pawn".to_string(), ENEMY_PAWN_RATIO),
                 ("drone".to_string(), ENEMY_DRONE_RATIO),
                 ("hauler".to_string(), ENEMY_HAULER_RATIO),
+                ("strafer".to_string(), ENEMY_STRAFER_RATIO),
             ],
             SPAWN_INTERVAL
         ))
