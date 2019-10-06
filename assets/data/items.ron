@@ -72,4 +72,12 @@
         sprite_index: 8,
         name: "spice",
     ),
+    "enhanced_plating": (
+        stat_effects: {
+            "health_increase": .2,
+        },
+        price: 11,
+        sprite_index: 9,
+        name: "enhanced_plating"
+    ),
 }
