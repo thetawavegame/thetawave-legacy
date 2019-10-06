@@ -66,7 +66,7 @@
         blast_speed: -35,
         blast_damage: 50,
         defense_damage: -100,
-        max_speed: 25
+        max_speed: 25,
         current_velocity_y: -25,
         current_velocity_x: 25,
         collectables_probs: [
