@@ -15,6 +15,7 @@ use std::collections::HashMap;
 pub enum EnemyType {
     Pawn,
     Drone,
+    Strafer,
     Hauler, //ally
 }
 
@@ -141,6 +142,7 @@ impl Enemy {
         let enemy_x = transform.translation().x;
         if (enemy_x - (self.width/2.0)) < ARENA_MIN_X || (enemy_x + (self.width/2.0)) > ARENA_MAX_X {
             self.current_velocity_x = (-1.0) * self.current_velocity_x;
+            self.acceleration_x = (-1.0) * self.acceleration_x();
         }
     }
 }
