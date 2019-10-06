@@ -80,4 +80,12 @@
         sprite_index: 9,
         name: "enhanced_plating"
     ),
+    "structure_reinforcement": (
+        stat_effects: {
+            "max_health": 100.0,
+        },
+        price: 3,
+        sprite_index: 10,
+        name: "structure_reinforcement",
+    ),
 }
