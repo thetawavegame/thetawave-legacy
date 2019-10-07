@@ -74,7 +74,7 @@
     ),
     "enhanced_plating": (
         stat_effects: {
-            "health_increase": .2,
+            "health_multiply": .2,
         },
         price: 11,
         sprite_index: 9,
@@ -82,7 +82,7 @@
     ),
     "structure_reinforcement": (
         stat_effects: {
-            "max_health": 100.0,
+            "health_add": 100.0,
         },
         price: 3,
         sprite_index: 10,
