@@ -49,6 +49,8 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |Double Barrel|![double_barrel](assets/texture/portraits/double_barrel_portrait.png)|Grants double blasts.|
 |Yithian Plague|![yithian_plague](assets/texture/portraits/yithian_plague_portrait.png)|Grants chance to poison.|
 |Spice|![spice](assets/texture/portraits/spice_portrait.png)|Decreases barrel roll cooldown time.|
+|Enhanced Plating|![enhanced_plating](assets/texture/portraits/enhanced_plating_portrait.png)|Increases maximum health by a factor.|
+|Structure Reinforcement|![structure_reinforcement](assets/texture/portraits/structure_reinforcement_portrait.png)|Increases maximum health.|
 
 # Consumables
 
@@ -65,7 +67,7 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |:---:|:---:|:---:|
 |Drone|![drone_enemy](assets/texture/portraits/drone_portrait.png)|Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.|
 |Pawn|![pawn_enemy](assets/texture/portraits/pawn_portrait.png)|Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
-|Flying Polyp|![pawn_enemy](assets/texture/portraits/polyp_portrait.png)|Coming soon.|
+|Flying Polyp|![pawn_enemy](assets/texture/portraits/polyp_portrait.png)|Strafes left and right while moving towards the bottom of the arena and does defense damage on arrival. Periodically fires a blast.|
 
 # Allies
 
@@ -118,7 +120,7 @@ Rest => Invasion => Rest => Mini-Game => Rest => Boss
 
 In the "Invasion" phase an appropriately themed and appropriately difficult selection of enemies is chosen and total enemy count is determined. Enemies are then spawned at random from the selection and the player must deal with them until the number of enemies spawned reaches the total number of enemies for the level.
 
-The "Mini-Game" phase will feature a challenge apart from shooting eneimes. This could be something like a large amount of asteroids spawning which the player will need to dodge.
+The "Mini-Game" phase will feature a challenge apart from shooting enemies. This could be something like a large amount of asteroids spawning which the player will need to dodge.
 
 The "Boss" phase will feature a super tough enemy that will serve as the toughest challenge in the level. Defeating the boss ends the level.
 
@@ -152,9 +154,9 @@ The "Rest" phase will give the player a chance to rest and collect themselves be
 - [x] defence objective
 ## Items
 ### Passive 
-- [ ] reduce barrel roll cooldown
-- [ ] increase max health
-- [ ] increase max defense
+- [x] reduce barrel roll cooldown
+- [x] increase max health
+- [x] increase max defense
 - [ ] trail behind player that does damage
 - [ ] increase knockback of enemies
 - [ ] increase comsumable frequency
