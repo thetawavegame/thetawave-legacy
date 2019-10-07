@@ -66,7 +66,6 @@ impl<'s> System<'s> for ItemSystem {
                     if item.stat_effects.contains_key("max_speed") {
                         spaceship.max_speed += item.stat_effects["max_speed"];
                     }
-
                     if item.stat_effects.contains_key("crit_chance") {
                         spaceship.crit_chance += item.stat_effects["crit_chance"];
                     }
@@ -79,7 +78,6 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.barrel_cooldown += item.stat_effects["barrel_cooldown"];
                     }
 
-
                     if item.stat_effects.contains_key("acceleration") {
                         spaceship.acceleration_x += item.stat_effects["acceleration"];
                         spaceship.acceleration_y += item.stat_effects["acceleration"];
@@ -88,6 +86,16 @@ impl<'s> System<'s> for ItemSystem {
                     if item.stat_effects.contains_key("deceleration") {
                         spaceship.deceleration_x += item.stat_effects["deceleration"];
                         spaceship.deceleration_y += item.stat_effects["deceleration"];
+                    }
+
+                    if item.stat_effects.contains_key("health_multiply"){
+                        spaceship.set_max_health(spaceship.max_health() + (item.stat_effects["health_multiply"] * spaceship.max_health));
+                        spaceship.set_health(spaceship.max_health)
+                    }
+
+                    if item.stat_effects.contains_key("health_add") {
+                        spaceship.set_max_health(spaceship.max_health() + item.stat_effects["health_add"]);
+                        spaceship.set_health(spaceship.max_health);
                     }
 
                     play_sfx(&sounds.item_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
@@ -104,4 +112,3 @@ impl<'s> System<'s> for ItemSystem {
         }
     }
 }
-
