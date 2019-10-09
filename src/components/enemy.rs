@@ -5,7 +5,7 @@ use amethyst::{
 
 use crate::{
     components::{Rigidbody, Fires, SpawnProbabilities},
-    constants::{ARENA_MIN_X, ARENA_MAX_X},
+    constants::{ARENA_MIN_X, ARENA_MAX_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
 use serde::{Serialize, Deserialize};
@@ -18,8 +18,6 @@ pub enum EnemyType {
     Strafer,
     Hauler, //ally
 }
-
-const ENEMY_BLAST_SPRITE_INDEX: usize = 1;
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Enemy {

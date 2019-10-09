@@ -9,14 +9,13 @@ use amethyst::{
 use crate::{
     components::{Blast, Fires},
     resources::SpriteResource,
+    constants::{
+        BLAST_OFFSET,
+        BLAST_HITBOX_RADIUS,
+        VELOCITY_FACTOR,
+    },
 };
 use rand::{thread_rng, Rng};
-
-const BLAST_OFFSET: f32 = 7.0; // spacing of blasts when multiple fired
-const HITBOX_RADIUS: f32 = 2.0;
-const VELOCITY_FACTOR: f32 = 0.5; // determines how much the spaceships momentum will effect the blast's velocity
-const CRIT_SPRITE_NUM: usize = 2;
-const POISON_SPRITE_NUM: usize = 3;
 
 // spawns blast from source_component with source_component attributes
 pub fn fire_blast(entities: &Entities,
@@ -63,7 +62,7 @@ pub fn fire_blast(entities: &Entities,
         lazy_update.insert(blast_entity,
                            Blast {
                                speed: source_component.blast_speed(),
-                               hitbox_radius: HITBOX_RADIUS,
+                               hitbox_radius: BLAST_HITBOX_RADIUS,
                                damage: damage,
                                poison_damage: poison_damage,
                                x_velocity: source_component.velocity_x(),

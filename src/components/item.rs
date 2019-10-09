@@ -1,4 +1,5 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
+
 use std::{
     collections::{HashMap},
 };

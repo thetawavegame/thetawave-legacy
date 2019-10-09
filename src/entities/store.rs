@@ -5,11 +5,10 @@ use amethyst::{
 use crate::{
     resources::{ItemPool},
     components::Store,
+    constants::RESTOCK_INTERVAL,
 };
 
 pub type StockProbabilities = Vec<(String, f32)>;
-
-const RESTOCK_INTERVAL: f32 = 10.0;
 
 pub fn initialise_store(world: &mut World) {
 

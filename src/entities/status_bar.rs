@@ -4,20 +4,12 @@ use amethyst::{
 };
 use crate::{
     components::{StatusBar, StatusType},
+    constants::{
+        HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_LIMIT, DEFENSE_BAR_X, DEFENSE_BAR_Y,
+        DEFENSE_BAR_LIMIT, ROLL_BAR_X, ROLL_BAR_Y, ROLL_BAR_LIMIT, RESTOCK_BAR_X, RESTOCK_BAR_Y,
+        RESTOCK_BAR_LIMIT,
+    },
 };
-
-const HEALTH_X: f32 = 332.0;
-const HEALTH_Y: f32 = 200.0;
-const HEALTH_LIMIT: f32 = 63.0;
-const DEFENSE_X: f32 = 352.0;
-const DEFENSE_Y: f32 = 200.0;
-const DEFENSE_LIMIT: f32 = 63.0;
-const ROLL_X: f32 = 324.0;
-const ROLL_Y: f32 = 177.0;
-const ROLL_LIMIT: f32 = 28.0;
-const RESTOCK_X: f32 = 324.0;//should appear in arena
-const RESTOCK_Y: f32 = 90.0;
-const RESTOCK_LIMIT: f32 = 28.0;
 
 pub fn initialise_status_bars(world: &mut World) {
 
@@ -26,10 +18,10 @@ pub fn initialise_status_bars(world: &mut World) {
         .create_entity()
         .with(StatusBar{
             status_type: StatusType::Health,
-            x_pos: HEALTH_X,
-            y_pos: HEALTH_Y,
+            x_pos: HEALTH_BAR_X,
+            y_pos: HEALTH_BAR_Y,
             status_unit_stack: vec![],
-            unit_limit: HEALTH_LIMIT,
+            unit_limit: HEALTH_BAR_LIMIT,
         })
         .build();
 
@@ -38,10 +30,10 @@ pub fn initialise_status_bars(world: &mut World) {
         .create_entity()
         .with(StatusBar{
             status_type: StatusType::Defense,
-            x_pos: DEFENSE_X,
-            y_pos: DEFENSE_Y,
+            x_pos: DEFENSE_BAR_X,
+            y_pos: DEFENSE_BAR_Y,
             status_unit_stack: vec![],
-            unit_limit: DEFENSE_LIMIT,
+            unit_limit: DEFENSE_BAR_LIMIT,
         })
         .build();
 
@@ -50,10 +42,10 @@ pub fn initialise_status_bars(world: &mut World) {
         .create_entity()
         .with(StatusBar{
             status_type: StatusType::Roll,
-            x_pos: ROLL_X,
-            y_pos: ROLL_Y,
+            x_pos: ROLL_BAR_X,
+            y_pos: ROLL_BAR_Y,
             status_unit_stack: vec![],
-            unit_limit: ROLL_LIMIT,
+            unit_limit: ROLL_BAR_LIMIT,
         })
         .build();
 
@@ -62,10 +54,10 @@ pub fn initialise_status_bars(world: &mut World) {
         .create_entity()
         .with(StatusBar {
             status_type: StatusType::Restock,
-            x_pos: RESTOCK_X,
-            y_pos: RESTOCK_Y,
+            x_pos: RESTOCK_BAR_X,
+            y_pos: RESTOCK_BAR_Y,
             status_unit_stack: vec![],
-            unit_limit: RESTOCK_LIMIT,
+            unit_limit: RESTOCK_BAR_LIMIT,
         })
         .build();
 
