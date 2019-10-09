@@ -10,11 +10,9 @@ use rand::{thread_rng, Rng};
 use crate::{
     components::{Item, Consumable, Spaceship},
     resources::{ItemPool, SpriteResource},
-    constants::{ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y},
+    constants::{ARENA_MAX_X, ARENA_MIN_Y, ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
     entities::spawn_item,
 };
-
-const ITEM_SPAWN_Y_OFFSET: f32 = 20.0;
 
 // each item has a customizable chance of appearing in the store, to make certain items more rare
 pub type StockProbabilities = Vec<(String, f32)>;

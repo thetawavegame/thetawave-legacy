@@ -5,6 +5,10 @@ use amethyst::{
     },
 };
 
+use crate::{
+    constants::BLAST_Z,
+};
+
 mod blast;
 mod spaceship;
 mod enemy;
@@ -33,8 +37,6 @@ pub use self::{
     planet::Planet,
 };
 use std::collections::HashMap;
-
-const BLAST_Z: f32 = 0.1;
 
 // rigidbodies are have physics and can collide
 pub trait Rigidbody {

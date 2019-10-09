@@ -4,12 +4,10 @@ use amethyst::{
 };
 use crate::{
     components::{GameMaster, Phase, PhaseType},
+    constants::{
+        STARTING_PHASE_IDX, LAST_PHASE_IDX, STARTING_TICK, TICK_LENGTH,
+    },
 };
-
-const STARTING_TICK: usize = 0;
-const STARTING_PHASE_IDX: usize = 0;
-const LAST_PHASE_IDX: usize = 4;
-const TICK_LENGTH: f32 = 1.0;
 
 pub fn initialise_gamemaster(world: &mut World) {
 
