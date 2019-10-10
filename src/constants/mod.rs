@@ -83,7 +83,6 @@ pub const SPACESHIP_MONEY: usize = 20;
 pub const SPACESHIP_COLLISION_DAMAGE: f32 = 50.0;
 pub const SPACESHIP_CRIT_CHANCE: f32 = 0.0;
 
-
 // status bar
 pub const HEALTH_BAR_X: f32 = 332.0;
 pub const HEALTH_BAR_Y: f32 = 200.0;
