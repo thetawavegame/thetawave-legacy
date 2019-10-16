@@ -1,8 +1,7 @@
 use amethyst::{
     core::{math::Vector3, transform::Transform},
-    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect, World},
-    renderer::{SpriteRender, Transparent, SpriteSheet},
-    assets::{Handle},
+    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender, Transparent},
 };
 
 pub mod blast;
@@ -12,7 +11,6 @@ pub mod enemy_spawner;
 pub mod explosion;
 pub mod items;
 pub mod side_panel;
-pub mod background;
 pub mod consumable;
 pub mod defense;
 pub mod status_bar;
@@ -22,14 +20,13 @@ pub mod store;
 pub mod planet;
 
 pub use self::{
-    blast::{fire_blast, fire_double_blast},
+    blast::fire_blast,
     spaceship::initialise_spaceship,
     enemy::{spawn_enemy},
     enemy_spawner::{initialise_enemy_spawner },
     explosion::{spawn_explosion},
     items::spawn_item,
     side_panel::initialise_side_panels,
-    background::initialise_background,
     consumable::spawn_consumable,
     defense::initialise_defense,
     status_bar::initialise_status_bars,

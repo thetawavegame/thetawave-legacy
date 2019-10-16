@@ -44,7 +44,7 @@ pub fn initialise_audio(world: &mut World) {
         sound
     };
 
-    world.add_resource(sound_effects);
+    world.insert(sound_effects);
 }
 
 pub fn play_sfx(sound: &Handle<Source>, storage: &AssetStorage<Source>, output: Option<&Output>) {

@@ -1,73 +1,34 @@
 use amethyst::{
-    assets::{AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystemDesc, RonFormat, Prefab, AssetPrefab},
-    gltf::{GltfSceneAsset, GltfSceneFormat, GltfSceneLoaderSystemDesc, GltfPrefab},
+    assets::{
+        AssetStorage, Loader, Handle,
+    },
     core::transform::{Transform},
     prelude::*,
     renderer::{
-        Camera, SpriteSheet,
-        SpriteSheetFormat, Texture,
-        SpriteRender,
-        camera,
-        shape::Shape,
-        Material,
-        Mesh,
+        Camera, SpriteSheet, SpriteSheetFormat, Texture, SpriteRender, camera,
     },
-    input::{
-        is_key_down,
-        VirtualKeyCode,
-    },
+    input::{is_key_down, VirtualKeyCode},
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     renderer::{
         formats::texture::ImageFormat,
-        rendy::mesh::{
-            Normal,
-            Position,
-            TexCoord,
-            PosNormTangTex,
-        },
     },
-    ui::{
-        TtfFormat,
-        Anchor,
-        UiText,
-        UiTransform,
-    },
-    utils::{
-        scene::BasicScenePrefab
-    }
+    ui::{TtfFormat, Anchor, UiText, UiTransform},
 };
 use crate::{
     audio::initialise_audio,
     systems,
-    entities::{initialise_gamemaster,
-               initialise_spaceship,
-               initialise_enemy_spawner,
-               initialise_side_panels,
-               initialise_background,
-               initialise_defense,
-               initialise_status_bars,
-               initialise_store,
-               initialise_planet
+    entities::{
+        initialise_gamemaster, initialise_spaceship, initialise_enemy_spawner,
+        initialise_side_panels, initialise_defense, initialise_status_bars,
+        initialise_store, initialise_planet
     },
-    resources::{
-        initialise_sprite_resource,
+    resources::{initialise_sprite_resource},
+    constants::{
+        ARENA_WIDTH, ARENA_HEIGHT, ARENA_MIN_X, ARENA_MAX_X,
+        ARENA_MIN_Y, CAMERA_X, CAMERA_Y, CAMERA_Z,
     },
 };
-use std::fs::File;
 use std::f32::consts::{FRAC_PI_3};
-
-//GAME_HEIGHT and _WIDTH should be  half the resolution?
-pub const GAME_WIDTH: f32 = 360.0;
-pub const GAME_HEIGHT: f32 = 270.0;
-pub const ARENA_MIN_Y: f32 = 0.0;
-pub const ARENA_MAX_Y: f32 = GAME_HEIGHT - ARENA_MIN_Y;
-pub const ARENA_MIN_X: f32 = GAME_WIDTH / 8.0;
-pub const ARENA_MAX_X: f32 = GAME_WIDTH - ARENA_MIN_X;
-pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
-pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
-pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
-
-//pub type PrefabData = BasicScenePrefab<(Vec<Position>, Vec<Normal>, Vec<TexCoord>)>;
 
 #[derive(Debug)]
 pub struct CollisionEvent {
@@ -95,7 +56,7 @@ impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
             dispatcher: DispatcherBuilder::new()
-                .with(systems::PlanetsSystem, "planets_system", &[])
+                .with(systems::PlanetsSystem,"planets_system", &[])
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
@@ -106,7 +67,6 @@ impl Default for SpaceShooter {
                 .with(systems::ExplosionSystem, "explosion_system", &[])
                 .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::SpaceshipMovementSystem, "spaceship_movement_system", &[])
-                //.with(systems::ItemSpawnSystem, "item_spawn_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(systems::CollisionDetectionSystem, "collision_detection_system", &[])
                 .with(systems::CollisionHandlerSystem::default(), "collision_handler_system", &["collision_detection_system"])
@@ -142,7 +102,6 @@ impl SimpleState for SpaceShooter {
         initialise_status_bars(world);
         initialise_planet(world, "earth_planet.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0), -1100.0, -1010.0, 1000.0, 100.0, 0.01);
         initialise_planet(world, "sol_star.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0) - 5000.0, (ARENA_HEIGHT/2.0) + 3000.0, -15000.0, 800.0, 0.0, 0.005);
-        //initialise_background(world, background_sprite_sheet_handle);
         initialise_spaceship(world, players_sprite_sheet_handle.clone());
         initialise_sprite_resource(world,
                                    items_sprite_sheet_handle,
@@ -213,11 +172,7 @@ fn load_spritesheet(world: &mut World, spritesheet: &str, spritesheet_ron: &str)
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
-    transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 237.0);
-    //transform.set_translation_xyz(GAME_WIDTH * 0.5, GAME_HEIGHT * 0.5, 400.0);
-    //transform.set_translation_xyz(0.0, 0.0, 500.0);
-    //transform.set_translation_xyz(0.0, 0.0, 300.0);
-    //transform.set_rotation_euler(0.0, 15.0_f32.to_radians(), 0.0);
+    transform.set_translation_xyz(CAMERA_X, CAMERA_Y, CAMERA_Z);
     transform.set_rotation_euler(0.0, 0.0, 0.0);
 
     world
@@ -361,11 +316,10 @@ fn initialise_ui(world:  &mut World) {
             15.0
         )).build();
 
-    world.add_resource(TrackedStats {
+    world.insert(TrackedStats {
         currency: currency_count,
         item_price_1: item_price_1,
         item_price_2: item_price_2,
         item_price_3: item_price_3,
     });
-    //world.add_resource(currency_icon);
 }

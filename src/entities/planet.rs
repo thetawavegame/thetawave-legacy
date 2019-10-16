@@ -3,11 +3,10 @@ use amethyst::{
     prelude::Builder,
     ecs::{World, WorldExt},
     core::transform::Transform,
-    assets::{Handle, AssetStorage, Loader},
+    assets::{AssetStorage, Loader},
     core::math::Vector3,
 };
 use crate::{
-    space_shooter::{ARENA_MIN_X, ARENA_WIDTH, ARENA_HEIGHT},
     components::Planet,
 };
 

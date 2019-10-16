@@ -1,15 +1,14 @@
-//#![windows_subsystem = "windows"]
+#![windows_subsystem = "windows"]
 extern crate amethyst;
 extern crate serde;
 
 use amethyst::{
     prelude::*,
 
-    assets::{AssetStorage, Loader, Handle, PrefabLoader, PrefabLoaderSystem, RonFormat, Prefab},
     renderer::{
         RenderingBundle,
         types::DefaultBackend,
-        plugins::{RenderFlat2D, RenderToWindow, RenderShaded3D, RenderFlat3D},
+        plugins::{RenderFlat2D, RenderToWindow, RenderFlat3D},
     },
     utils::application_root_dir,
     core::{transform::TransformBundle},
@@ -25,6 +24,7 @@ pub mod systems;
 pub mod components;
 pub mod resources;
 pub mod entities;
+pub mod constants;
 
 use crate::space_shooter::SpaceShooter;
 use resources::{ItemPool, EnemyPool, ConsumablePool};

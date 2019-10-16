@@ -9,13 +9,11 @@ use amethyst::{
 };
 use std::ops::Deref;
 use crate::{
-    components::{Item, Spaceship, Defense},
+    components::{Item, Spaceship, Defense, Living},
     systems::hitbox_collide,
     audio::{play_sfx, Sounds},
+    constants::ARENA_MIN_Y,
 };
-
-use crate::space_shooter::ARENA_MIN_Y;
-use crate::components::Living;
 
 pub struct ItemSystem;
 
@@ -53,8 +51,8 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.steel_barrel = item.bool_effects["barrel_immunity"];
                     }
 
-                    if item.bool_effects.contains_key("double_blasts") {
-                        spaceship.double_blasts = item.bool_effects["double_blasts"];
+                    if item.stat_effects.contains_key("blast_count") {
+                        spaceship.blast_count += item.stat_effects["blast_count"] as usize;
                     }
 
                     if item.stat_effects.contains_key("fire_speed") {
