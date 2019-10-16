@@ -17,12 +17,8 @@ use crate::{
     entities::{spawn_explosion, spawn_consumable, fire_blast},
     resources::SpriteResource,
     audio::{play_sfx, Sounds},
-    constants::ARENA_MIN_Y,
+    constants::{ARENA_MIN_Y, EXPLOSION_Z}
 };
-
-const ENEMY_BLAST_SPRITE_INDEX: usize = 1;
-const EXPLOSION_SPRITE_INDEX: usize = 0;
-const EXPLOSION_Z: f32 = 0.0;
 
 pub struct EnemySystem;
 
@@ -44,8 +40,6 @@ impl<'s> System<'s> for EnemySystem {
 
     fn run(&mut self, (entities, mut enemys, mut defenses, mut transforms, time, sprite_resource, lazy_update, storage, sounds, audio_output, consumable_pool): Self::SystemData) {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
-
-            //enemy_collision_event_channel.single_write(EnemyCollisionEvent::A);
 
             //limit the maximum knockback and speed
             enemy_component.limit_knockback();
@@ -79,19 +73,29 @@ impl<'s> System<'s> for EnemySystem {
                 
                 let _result = entities.delete(enemy_entity);
 
-                spawn_explosion(&entities, &sprite_resource, EXPLOSION_SPRITE_INDEX,death_position, &lazy_update);
+                spawn_explosion(
+                    &entities, &sprite_resource, enemy_component.explosion_sprite_idx,
+                    death_position, &lazy_update
+                );
+
                 play_sfx(&sounds.explosion_sfx, &storage, audio_output.as_ref().map(|o| o.deref()));
 
                 let name = choose_random_name(&enemy_component.collectables_probs);
                 if !name.is_empty() {
-                    spawn_consumable(&entities, &sprite_resource, consumable_pool[name].clone(), death_position, &lazy_update);
+                    spawn_consumable(
+                        &entities, &sprite_resource, consumable_pool[name].clone(),
+                        death_position, &lazy_update
+                    );
                 }
             }
 
             //behavior for enemies based on its enemy_type attribute
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
-                    if let Some(fire_position) = enemy_component.fire_cooldown(enemy_transform, -1.0 * enemy_component.height / 2.0, true, time.delta_seconds()) {
+                    if let Some(fire_position) = enemy_component.fire_cooldown(
+                        enemy_transform, -1.0 * enemy_component.height / 2.0, true,
+                        time.delta_seconds()
+                    ) {
                         fire_blast(&entities, &sprite_resource, enemy_component, fire_position, &lazy_update)
                     }
                 }
@@ -101,7 +105,10 @@ impl<'s> System<'s> for EnemySystem {
                 EnemyType::Hauler => {}
 
                 EnemyType::Strafer => {
-                    if let Some(fire_position) = enemy_component.fire_cooldown(enemy_transform, -1.0 * enemy_component.height / 2.0, true, time.delta_seconds()) {
+                    if let Some(fire_position) = enemy_component.fire_cooldown(
+                        enemy_transform, -1.0 * enemy_component.height / 2.0, true,
+                        time.delta_seconds()
+                    ) {
                         fire_blast(&entities, &sprite_resource, enemy_component, fire_position, &lazy_update)
                     }
 

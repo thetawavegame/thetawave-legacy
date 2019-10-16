@@ -67,8 +67,11 @@ pub struct Enemy {
     pub allied: bool,
     pub collectables_probs: SpawnProbabilities,
     pub enemy_type: EnemyType,
+    #[serde(default = "des_explosion_sprite_idx")]
+    pub explosion_sprite_idx: usize,
 }
 
+fn des_explosion_sprite_idx() -> usize { 0 }
 fn des_width() -> f32 { 18.0 }
 fn des_height() -> f32 { 18.0 }
 fn des_hitbox_width() -> f32 { 14.0 }
