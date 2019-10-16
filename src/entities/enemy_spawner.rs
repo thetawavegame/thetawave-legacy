@@ -5,16 +5,11 @@ use amethyst::{
 };
 use crate::{
     components::{EnemySpawnerTag, Spawner},
-    space_shooter::{ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH},
+    constants::{
+        ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH, ENEMY_DRONE_RATIO, ENEMY_PAWN_RATIO,
+        ENEMY_HAULER_RATIO, ENEMY_STRAFER_RATIO, ENEMY_SPAWN_INTERVAL, SPAWNER_Y_OFFSET,
+    },
 };
-
-const SPAWN_INTERVAL: f32 = 1.5;
-//const SPAWN_COUNTER: u32 = 100;
-const ENEMY_PAWN_RATIO: f32 = 50.0;
-const ENEMY_DRONE_RATIO: f32 = 100.0;
-const ENEMY_STRAFER_RATIO: f32 = 75.0;
-const ENEMY_HAULER_RATIO: f32 = 5.0;
-const SPAWNER_Y_OFFSET: f32 = 20.0;
 
 pub fn initialise_enemy_spawner(world: &mut World) {
     let mut local_transform = Transform::default();
@@ -32,7 +27,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
                 ("hauler".to_string(), ENEMY_HAULER_RATIO),
                 ("strafer".to_string(), ENEMY_STRAFER_RATIO),
             ],
-            SPAWN_INTERVAL
+            ENEMY_SPAWN_INTERVAL
         ))
         .with(EnemySpawnerTag)
         .with(local_transform)

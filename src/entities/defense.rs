@@ -4,9 +4,8 @@ use amethyst::{
 };
 use crate::{
     components::Defense,
+    constants::DEFENSE,
 };
-
-const DEFENSE: f32 = 500.0;
 
 pub fn initialise_defense(world: &mut World) {
     world

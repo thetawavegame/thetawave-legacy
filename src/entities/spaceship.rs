@@ -7,28 +7,17 @@ use amethyst::{
 };
 use crate::{
     components::Spaceship,
-    space_shooter::{ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT},
+    constants::{
+        ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT,
+        SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_SPEED,
+        SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y, SPACESHIP_DECELERATION_X,
+        SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_DAMAGE, SPACESHIP_BARREL_COOLDOWN,
+        SPACESHIP_BARREL_SPEED, SPACESHIP_BARREL_DURATION, SPACESHIP_HEALTH, SPACESHIP_MONEY,
+        SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_CRIT_CHANCE,
+        SPACESHIP_BLAST_SPRITE_INDEX, CRIT_SPRITE_INDEX, POISON_SPRITE_INDEX
+    },
 };
-
-const HEIGHT: f32 = 18.0;
-const WIDTH: f32 = 18.0;
-const HITBOX_HEIGHT: f32 = 14.0;
-const HITBOX_WIDTH: f32 = 6.0;
-const ACCELERATION_X: f32 = 2.0;
-const DECELERATION_X: f32 = 1.0;
-const ACCELERATION_Y: f32 = 4.0;
-const DECELERATION_Y: f32 = 1.0;
-const MAX_SPEED: f32 = 70.0;
-const MAX_KNOCKBACK_SPEED: f32 = 100.0;
-const FIRE_SPEED: f32 = 0.3;
-const DAMAGE: f32 = 40.0;
-const BARREL_COOLDOWN: f32 = 1.5;
-const BARREL_SPEED: f32 = 180.0;
-const BARREL_DURATION: f32 = 0.3;
-const HEALTH: f32 = 400.0;
-const MONEY: usize = 20;
-const COLLISION_DAMAGE: f32 = 50.0;
-const CRIT_CHANCE: f32 = 0.0;
+use std::collections::HashMap;
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
 
@@ -40,43 +29,50 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         sprite_number: 0,
     };
 
+    let mut blast_sprite_indicies = HashMap::new();
+    blast_sprite_indicies.insert("normal".to_string(), SPACESHIP_BLAST_SPRITE_INDEX);
+    blast_sprite_indicies.insert("crit".to_string(), CRIT_SPRITE_INDEX);
+    blast_sprite_indicies.insert("poison".to_string(), POISON_SPRITE_INDEX);
+
     world
         .create_entity()
         .with(sprite_render)
         .with(Spaceship {
-            width: WIDTH,
-            height: HEIGHT,
-            hitbox_width: HITBOX_WIDTH,
-            hitbox_height: HITBOX_HEIGHT,
-            max_speed: MAX_SPEED,
+            width: SPACESHIP_WIDTH,
+            height: SPACESHIP_HEIGHT,
+            hitbox_width: SPACESHIP_HITBOX_WIDTH,
+            hitbox_height: SPACESHIP_HITBOX_HEIGHT,
+            max_speed: SPACESHIP_MAX_SPEED,
             current_velocity_x: 0.0,
             current_velocity_y: 0.0,
-            acceleration_x: ACCELERATION_X,
-            deceleration_x: DECELERATION_X,
-            acceleration_y: ACCELERATION_Y,
-            deceleration_y: DECELERATION_Y,
-            fire_speed: FIRE_SPEED,
+            acceleration_x: SPACESHIP_ACCELERATION_X,
+            deceleration_x: SPACESHIP_DECELERATION_X,
+            acceleration_y: SPACESHIP_ACCELERATION_Y,
+            deceleration_y: SPACESHIP_DECELERATION_Y,
+            fire_speed: SPACESHIP_FIRE_SPEED,
             fire_reset_timer: 0.0,
-            damage: DAMAGE,
-            barrel_cooldown: BARREL_COOLDOWN,
+            damage: SPACESHIP_DAMAGE,
+            barrel_cooldown: SPACESHIP_BARREL_COOLDOWN,
             barrel_reset_timer: 0.0,
-            barrel_speed: BARREL_SPEED,
+            barrel_speed: SPACESHIP_BARREL_SPEED,
             barrel_action_right: false,
             barrel_action_left: false,
-            barrel_duration: BARREL_DURATION,
-            barrel_action_timer: BARREL_DURATION,
+            barrel_duration: SPACESHIP_BARREL_DURATION,
+            barrel_action_timer: SPACESHIP_BARREL_DURATION,
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
             blast_speed: 100.0,
-            max_health: HEALTH,
-            health: HEALTH,
-            money: MONEY,
-            knockback_max_speed: MAX_KNOCKBACK_SPEED,
+            max_health: SPACESHIP_HEALTH,
+            health: SPACESHIP_HEALTH,
+            money: SPACESHIP_MONEY,
+            knockback_max_speed: SPACESHIP_MAX_KNOCKBACK_SPEED,
             steel_barrel: false,
-            double_blasts: false,
-            collision_damage: COLLISION_DAMAGE,
-            crit_chance: CRIT_CHANCE,
+            blast_count: 1,
+            collision_damage: SPACESHIP_COLLISION_DAMAGE,
+            crit_chance: SPACESHIP_CRIT_CHANCE,
             poison_chance: 0.0,
+            blast_sprite_indicies: blast_sprite_indicies,
+            allied: true,
         })
         .with(local_transform)
         .with(Transparent)

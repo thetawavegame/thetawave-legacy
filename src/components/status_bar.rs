@@ -3,8 +3,9 @@ use amethyst::{
     core::math::Vector3,
 };
 use std::vec::Vec;
-
-const Z: f32 = 0.9;
+use crate::{
+    constants::STATUS_BAR_Z,
+};
 
 pub enum StatusType {
     Health,
@@ -34,7 +35,7 @@ impl StatusBar {
 
         if status_unit_num > self.status_unit_stack.len() {
             let status_position = Vector3::new(
-                self.x_pos, self.y_pos, Z
+                self.x_pos, self.y_pos, STATUS_BAR_Z
             );
             self.x_pos += 1.0;
             return Some(status_position);
@@ -56,7 +57,7 @@ impl StatusBar {
 
         if status_unit_num > self.status_unit_stack.len() {
             let status_position = Vector3::new(
-                self.x_pos, self.y_pos, Z
+                self.x_pos, self.y_pos, STATUS_BAR_Z
             );
             self.y_pos += 1.0;
             return Some(status_position);
