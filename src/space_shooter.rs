@@ -1,23 +1,18 @@
 use amethyst::{
     assets::{
-        AssetLoaderSystemData, AssetStorage, Loader, Handle, PrefabLoader,
-        PrefabLoaderSystemDesc, RonFormat, Prefab, AssetPrefab
+        AssetStorage, Loader, Handle,
     },
-    gltf::{GltfSceneAsset, GltfSceneFormat, GltfSceneLoaderSystemDesc, GltfPrefab},
     core::transform::{Transform},
     prelude::*,
     renderer::{
-        Camera, SpriteSheet, SpriteSheetFormat, Texture, SpriteRender, camera, shape::Shape,
-        Material, Mesh,
+        Camera, SpriteSheet, SpriteSheetFormat, Texture, SpriteRender, camera,
     },
     input::{is_key_down, VirtualKeyCode},
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     renderer::{
         formats::texture::ImageFormat,
-        rendy::mesh::{Normal, Position, TexCoord, PosNormTangTex},
     },
     ui::{TtfFormat, Anchor, UiText, UiTransform},
-    utils::{scene::BasicScenePrefab}
 };
 use crate::{
     audio::initialise_audio,
@@ -29,11 +24,10 @@ use crate::{
     },
     resources::{initialise_sprite_resource},
     constants::{
-        GAME_WIDTH, GAME_HEIGHT, ARENA_WIDTH, ARENA_HEIGHT, ARENA_MIN_X, ARENA_MAX_X,
-        ARENA_MIN_Y, ARENA_MAX_Y, CAMERA_X, CAMERA_Y, CAMERA_Z,
+        ARENA_WIDTH, ARENA_HEIGHT, ARENA_MIN_X, ARENA_MAX_X,
+        ARENA_MIN_Y, CAMERA_X, CAMERA_Y, CAMERA_Z,
     },
 };
-use std::fs::File;
 use std::f32::consts::{FRAC_PI_3};
 
 #[derive(Debug)]

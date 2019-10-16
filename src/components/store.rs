@@ -36,10 +36,9 @@ impl Store {
     pub fn choose_item_stock(&mut self, item_pool: ItemPool) {
         self.item_inventory = [None, None, None];
         let mut choose_pool = self.items.clone();
-        //let item_pool = world.read_resource::<ItemPool>();
+
         //add three items to item_inventory
         for i in 0..3 {
-            //println!("item pool: {:?}", choose_pool);
             let total_probs = choose_pool.iter().fold(0.0, |sum, item| sum + item.1);
 
             //choose an item
@@ -49,11 +48,8 @@ impl Store {
                 sum += value;
                 if sum > pos {
                     let item_to_add = &item_pool[&name];
-                    ///println!("adding item to stock: {:?}", item_to_add);
                     choose_pool.retain(|element| element != &(name.clone(), value));
-                    //self.item_inventory.push(Some(item_to_add.clone()));
                     self.item_inventory[i] = Some(item_to_add.clone());
-                    //println!("added {} to slot #{}", item_to_add.clone().name, i);
 
                     let item_index = self.items.iter().position(|element| element == &(name.clone(), value)).unwrap();
                     self.items[item_index].1 /= 2.0; //divide probability of appearing again by 2
@@ -70,8 +66,6 @@ impl Store {
         } else {
             self.restock_timer = self.restock_interval;
             self.choose_item_stock(item_pool);
-            //println!("store item stock: {:?}", self.item_inventory);
-            //println!("store item stock: {:?}", self.items);
 
             for item_icon in self.item_icons.iter() {
                 if let Some(item_icon_to_delete) = item_icon {
@@ -93,7 +87,6 @@ impl Store {
 
     pub fn purchase_item(&mut self, item_index: usize, entities: &Entities, spaceship: &mut Spaceship, sprite_resource: &ReadExpect<SpriteResource>, lazy_update: &ReadExpect<LazyUpdate>) -> bool {
         if let Some(item) = &self.item_inventory[item_index] {
-            //println!("spaceship funds: {} item price: {}", spaceship.money, item.price);
             if spaceship.money >= item.price {
                 println!("purchasing {} located in slot #{} for {}", item.name, item_index, item.price);
                 spaceship.money -= item.price;
@@ -110,7 +103,6 @@ impl Store {
                     self.item_icons[item_index] = None;
                 }
                 return true;
-                //println!("item purchased");
             }
         }
         return false;

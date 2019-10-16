@@ -1,8 +1,7 @@
 use amethyst::{
     core::{math::Vector3, transform::Transform},
-    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect, World},
-    renderer::{SpriteRender, Transparent, SpriteSheet},
-    assets::{Handle},
+    ecs::prelude::{Builder, Component, Entities, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender, Transparent},
 };
 
 pub mod blast;

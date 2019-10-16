@@ -1,5 +1,5 @@
 use amethyst::{
-    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
+    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
     core::{
         transform::Transform,
@@ -52,7 +52,7 @@ pub fn fire_blast(entities: &Entities,
     }
 
     // create and insert blast entities
-    for blast_idx in 0..source_component.blast_count() {
+    for _ in 0..source_component.blast_count() {
         let blast_entity = entities.create();
         let mut blast_transform = Transform::default();
         blast_transform.set_translation(Vector3::new(blast_spawn_pos, source_position[1], source_position[2]));
