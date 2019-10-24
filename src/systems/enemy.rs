@@ -112,7 +112,7 @@ impl<'s> System<'s> for EnemySystem {
                         fire_blast(&entities, &sprite_resource, enemy_component, fire_position, &lazy_update)
                     }
 
-                    enemy_component.accelerate(-1.0, 0.0);
+                    enemy_component.accelerate(1.0, 0.0);
                 }
             }
         }

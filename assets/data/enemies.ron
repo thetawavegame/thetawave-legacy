@@ -1,5 +1,6 @@
 {
     "drone": (
+        name: "drone",
         health: 60,
         sprite_index: 0,
         fires: false,
@@ -20,6 +21,7 @@
         enemy_type: Drone,
     ),
     "pawn": (
+        name: "pawn",
         health: 110,
         sprite_index: 1,
         fires: true,
@@ -40,6 +42,7 @@
         enemy_type: Pawn,
     ),
     "hauler": (
+        name: "hauler",
         height: 36,
         hitbox_height: 28,
         health: 220,
@@ -51,6 +54,7 @@
         blast_damage: 30,
         defense_damage: -100,
         max_speed: 25,
+        current_velocity_x: 25,
         current_velocity_y: -20,
         collectables_probs: [
             ("", 1.0) // doesn't drop anything
@@ -58,6 +62,7 @@
         enemy_type: Hauler,
     ),
     "strafer":(
+        name: "strafer",
         health: 75,
         sprite_index: 4,
         width: 24,
