@@ -1,9 +1,11 @@
 {
     "defense": (
+        name: "defense_wrench",
         defense_value: 70,
         sprite_index: 1,
     ),
     "money_1": (
+        name: "moneyx1",
         width: 7,
         height: 7,
         hitbox_width: 6,
@@ -12,10 +14,12 @@
         sprite_index: 3,
     ),
     "money_5": (
+        name: "moneyx5",
         money_value: 5,
         sprite_index: 2,
     ),
     "health": (
+        name: "health_wrench",
         health_value: 30,
         sprite_index: 0,
     ),

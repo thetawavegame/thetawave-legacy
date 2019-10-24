@@ -4,12 +4,13 @@ use amethyst::{
 };
 
 use crate::{
-    components::{Rigidbody, Fires, SpawnProbabilities},
+    components::{Rigidbody, Fires, Spawnable, SpawnProbabilities},
     constants::{ARENA_MIN_X, ARENA_MAX_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
+use rand::{thread_rng, Rng};
 
 #[derive(Clone, Serialize, Deserialize)]
 pub enum EnemyType {
@@ -21,6 +22,7 @@ pub enum EnemyType {
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Enemy {
+    pub name: String,
     #[serde(default = "des_width")]
     pub width: f32,
     #[serde(default = "des_height")]
@@ -38,7 +40,7 @@ pub struct Enemy {
     pub blast_damage: f32,
     pub defense_damage: f32,
     pub max_speed: f32,
-    #[serde(default)]
+    #[serde(default = "des_current_velocity_x")]
     pub current_velocity_x: f32,
     pub current_velocity_y: f32,
     #[serde(default = "des_acceleration_x")]
@@ -76,6 +78,7 @@ fn des_width() -> f32 { 18.0 }
 fn des_height() -> f32 { 18.0 }
 fn des_hitbox_width() -> f32 { 14.0 }
 fn des_hitbox_height() -> f32 { 14.0 }
+fn des_current_velocity_x() -> f32 { 0.0 }
 fn des_acceleration_x() -> f32 { 2.0 }
 fn des_acceleration_y() -> f32 { 4.0 }
 fn des_deceleration_x() -> f32 { 1.0 }
@@ -132,6 +135,20 @@ impl Fires for Enemy {
     fn fire_reset_timer(&self) -> f32 { self.fire_reset_timer }
     fn fire_speed(&self) -> f32 { self.fire_speed }
     fn set_fire_reset_timer(&mut self, value: f32) { self.fire_reset_timer = value; }
+}
+
+impl Spawnable for Enemy {
+    fn name(&self) -> String  { self.name.clone() }
+
+    fn init(&mut self) {
+        let mut rng = rand::thread_rng();
+        let rand_num = rng.gen_range(0,2);
+
+        if rand_num == 1 {
+            self.current_velocity_x = (-1.0) * self.current_velocity_x;
+            self.acceleration_x = (-1.0) * self.acceleration_x();
+        }
+    }
 }
 
 impl Component for Enemy {

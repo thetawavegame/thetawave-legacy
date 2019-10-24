@@ -14,5 +14,5 @@ pub fn spawn_explosion(entities: &Entities, sprite_resource: &ReadExpect<SpriteR
         sprite_sheet: sprite_resource.explosions_sprite_sheet.clone(),
         sprite_number,
     };
-    super::spawn_sprite_entity(&entities, sprite, Explosion{ duration: EXPLOSION_DURATION}, spawn_position, &lazy_update);
+    super::spawn_sprite_entity(&entities, sprite, Explosion{ duration: EXPLOSION_DURATION, name: "explosion".to_string()}, spawn_position, &lazy_update);
 }

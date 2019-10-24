@@ -6,6 +6,10 @@ use std::{
 
 use serde::{Serialize, Deserialize};
 
+use crate::{
+    components::{ Spawnable },
+};
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Item {
     #[serde(default = "des_width")]
@@ -34,6 +38,11 @@ fn des_hitbox_width() -> f32 { 14.0 }
 fn des_hitbox_height() -> f32 { 14.0 }
 fn des_speed() -> f32 { 70.0 }
 fn des_price() -> usize { 10 }
+
+impl Spawnable for Item {
+    fn name(&self) -> String { self.name.clone() }
+    fn init(&mut self) { }
+}
 
 impl Component for Item {
     type Storage = DenseVecStorage<Self>;

@@ -185,3 +185,8 @@ pub trait Living {
         }
     }
 }
+
+pub trait Spawnable {
+    fn name(&self) -> String;
+    fn init(&mut self);
+}
