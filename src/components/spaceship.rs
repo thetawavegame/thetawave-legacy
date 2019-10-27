@@ -58,6 +58,33 @@ impl Rigidbody for Spaceship {
 
     fn set_current_velocity_y(&mut self, value: f32) { self.current_velocity_y = value; }
     fn set_current_velocity_x(&mut self, value: f32) { self.current_velocity_x = value; }
+
+    fn constrain_to_arena(&mut self, transform: &mut Transform) {
+        let spaceship_x = transform.translation().x;
+        let spaceship_y = transform.translation().y;
+
+        if (spaceship_x - (self.width/2.0)) < ARENA_MIN_X {     //if colliding with left border of arena
+            if self.barrel_action_left {
+                self.barrel_action_right = true;
+                self.barrel_action_left= false;
+            }
+            transform.set_translation_x(ARENA_MIN_X + (self.width/2.0));
+            self.current_velocity_x = self.current_velocity_x.abs();
+        }else if (spaceship_x + (self.width/2.0)) > ARENA_MAX_X {       //if colliding with right border of arena
+            if self.barrel_action_right {
+                self.barrel_action_right = false;
+                self.barrel_action_left= true;
+            }
+            transform.set_translation_x(ARENA_MAX_X - (self.width/2.0));
+            self.current_velocity_x = -1.0 *  self.current_velocity_x.abs();
+        }else if (spaceship_y - (self.height/2.0)) < ARENA_MIN_Y {      //if colliding with bottom of arena
+            transform.set_translation_y(ARENA_MIN_Y + (self.height/2.0));
+            self.current_velocity_y = self.current_velocity_y.abs();
+        }else if (spaceship_y + (self.height/2.0)) > ARENA_MAX_Y {      //if colliding with bottom of arena
+            transform.set_translation_y(ARENA_MAX_Y - (self.height/2.0));
+            self.current_velocity_y = -1.0  * self.current_velocity_y.abs();
+        }
+    }
 }
 
 impl Fires for Spaceship {
@@ -93,33 +120,6 @@ impl Spaceship {
     pub fn update_location(&mut self, x: f32, y: f32) {
         self.pos_x = x;
         self.pos_y = y;
-    }
-
-    pub fn constrain_to_arena(&mut self, transform: &mut Transform) {
-        let spaceship_x = transform.translation().x;
-        let spaceship_y = transform.translation().y;
-
-        if (spaceship_x - (self.width/2.0)) < ARENA_MIN_X {     //if colliding with left border of arena
-            if self.barrel_action_left {
-                self.barrel_action_right = true;
-                self.barrel_action_left= false;
-            }
-            transform.set_translation_x(ARENA_MIN_X + (self.width/2.0));
-            self.current_velocity_x = self.current_velocity_x.abs();
-        }else if (spaceship_x + (self.width/2.0)) > ARENA_MAX_X {       //if colliding with right border of arena
-            if self.barrel_action_right {
-                self.barrel_action_right = false;
-                self.barrel_action_left= true;
-            }
-            transform.set_translation_x(ARENA_MAX_X - (self.width/2.0));
-            self.current_velocity_x = -1.0 *  self.current_velocity_x.abs();
-        }else if (spaceship_y - (self.height/2.0)) < ARENA_MIN_Y {      //if colliding with bottom of arena
-            transform.set_translation_y(ARENA_MIN_Y + (self.height/2.0));
-            self.current_velocity_y = self.current_velocity_y.abs();
-        }else if (spaceship_y + (self.height/2.0)) > ARENA_MAX_Y {      //if colliding with bottom of arena
-            transform.set_translation_y(ARENA_MAX_Y - (self.height/2.0));
-            self.current_velocity_y = -1.0  * self.current_velocity_y.abs();
-        }
     }
 
     pub fn initiate_barrel_roll(&mut self, left: bool, right: bool) {

@@ -4,6 +4,7 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
 };
 
+
 pub mod blast;
 pub mod spaceship;
 pub mod enemy;
@@ -35,16 +36,23 @@ pub use self::{
     store::{initialise_store},
     planet::{initialise_planet},
 };
+use crate::{
+    components::{ Spawnable },
+};
 
-fn spawn_sprite_entity<T: Component + Send + Sync>(
+fn spawn_sprite_entity<T: Spawnable + Component + Send + Sync>(
     entities: &Entities,
     sprite_render: SpriteRender,
-    item_comp: T,
+    mut item_comp: T,
     spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
+
+    println!("{} spawned!", item_comp.name());
+    item_comp.init();
+
     lazy_update
         .create_entity(entities)
         .with(sprite_render)
