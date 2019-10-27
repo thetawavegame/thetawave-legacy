@@ -51,6 +51,8 @@ pub trait Rigidbody {
     fn set_current_velocity_y(&mut self, value: f32);
     fn set_current_velocity_x(&mut self, value: f32);
 
+    fn constrain_to_arena(&mut self, transform: &mut Transform);
+
     fn update_position(&self, transform: &mut Transform, dt: f32) {
         transform.set_translation_x(transform.translation().x + self.current_velocity_x()*dt);
         transform.set_translation_y(transform.translation().y + self.current_velocity_y()*dt);
@@ -81,6 +83,8 @@ pub trait Rigidbody {
     }
 
     fn accelerate(&mut self, direction_x: f32, direction_y: f32) {
+        self.limit_speed();
+        self.limit_knockback();
         if (direction_x > 0.0 && self.current_velocity_x() < self.max_speed()) ||
             (direction_x < 0.0 && self.current_velocity_x() > (-1.0 * self.max_speed()))
         {

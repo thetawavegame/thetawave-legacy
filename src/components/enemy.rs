@@ -10,7 +10,7 @@ use crate::{
 
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
-use rand::{thread_rng, Rng};
+use rand::{Rng};
 
 #[derive(Clone, Serialize, Deserialize)]
 pub enum EnemyType {
@@ -115,8 +115,15 @@ impl Rigidbody for Enemy{
     fn set_current_velocity_y(&mut self, value: f32) {
         self.current_velocity_y = value;
     }
-
     fn set_current_velocity_x(&mut self, value: f32) { self.current_velocity_x = value; }
+
+    fn constrain_to_arena(&mut self, transform: &mut Transform) {
+        let enemy_x = transform.translation().x;
+        if (enemy_x - (self.width/2.0)) < ARENA_MIN_X || (enemy_x + (self.width/2.0)) > ARENA_MAX_X {
+            self.current_velocity_x = (-1.0) * self.current_velocity_x;
+            self.acceleration_x = (-1.0) * self.acceleration_x();
+        }
+    }
 }
 
 impl Fires for Enemy {
@@ -153,16 +160,6 @@ impl Spawnable for Enemy {
 
 impl Component for Enemy {
     type Storage = DenseVecStorage<Self>;
-}
-
-impl Enemy {
-    pub fn constrain_to_arena(&mut self, transform: &mut Transform) {
-        let enemy_x = transform.translation().x;
-        if (enemy_x - (self.width/2.0)) < ARENA_MIN_X || (enemy_x + (self.width/2.0)) > ARENA_MAX_X {
-            self.current_velocity_x = (-1.0) * self.current_velocity_x;
-            self.acceleration_x = (-1.0) * self.acceleration_x();
-        }
-    }
 }
 
 #[derive(Default)]

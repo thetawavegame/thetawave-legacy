@@ -32,12 +32,6 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
             //keep spaceship with bounds of arena
             spaceship.constrain_to_arena(transform);
 
-            //if the spaceships speed is greater than knockback max speed, immediately set velocity to knockback_max_speed
-            spaceship.limit_knockback();
-
-            //if the spaceships speed is greater than its max speed, decelerate to equal max_speed
-            spaceship.limit_speed();
-
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {
                 spaceship.set_current_velocity_x(-1.0 * spaceship.barrel_speed);
