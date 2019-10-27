@@ -67,7 +67,8 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 |:---:|:---:|:---:|
 |Drone|![drone_enemy](assets/texture/portraits/drone_portrait.png)|Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.|
 |Pawn|![pawn_enemy](assets/texture/portraits/pawn_portrait.png)|Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
-|Flying Polyp|![pawn_enemy](assets/texture/portraits/polyp_portrait.png)|Strafes left and right while moving towards the bottom of the arena and does defense damage on arrival. Periodically fires a blast.|
+|Strafer|![strafer_enemy](assets/texture/portraits/strafer_portrait.png)|Strafes left and right towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
+|Flying Polyp|![flying_polyp_enemy](assets/texture/portraits/polyp_portrait.png)|Coming soon.|
 
 # Allies
 
