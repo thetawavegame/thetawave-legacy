@@ -41,12 +41,8 @@ impl<'s> System<'s> for EnemySystem {
     fn run(&mut self, (entities, mut enemys, mut defenses, mut transforms, time, sprite_resource, lazy_update, storage, sounds, audio_output, consumable_pool): Self::SystemData) {
         for (enemy_entity, enemy_component, enemy_transform) in (&*entities, &mut enemys, &mut transforms).join() {
 
-            //limit the maximum knockback and speed
-            enemy_component.limit_knockback();
-            enemy_component.limit_speed();
-
             //constrain in arena
-            enemy_component.constrain_to_arena(enemy_transform); 
+            enemy_component.constrain_to_arena(enemy_transform);
 
             //accelerate in -y direction
             enemy_component.accelerate(0.0, -1.0);
