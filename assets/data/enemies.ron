@@ -23,7 +23,7 @@
     "pawn": (
         name: "pawn",
         health: 110,
-        sprite_index: 1,
+        sprite_index: 3,
         fires: true,
         fire_speed: 3,
         fire_reset_timer: 1,
@@ -46,7 +46,7 @@
         height: 36,
         hitbox_height: 28,
         health: 220,
-        sprite_index: 2,
+        sprite_index: 9,
         fires: false,
         fire_speed: 3,
         fire_reset_timer: 1,
@@ -64,7 +64,7 @@
     "strafer":(
         name: "strafer",
         health: 75,
-        sprite_index: 4,
+        sprite_index: 6,
         width: 24,
         height: 12,
         hitbox_width: 22,

@@ -13,6 +13,7 @@ pub struct SpriteResource {
     pub players_sprite_sheet: Handle<SpriteSheet>,
     pub blasts_sprite_sheet: Handle<SpriteSheet>,
     pub explosions_sprite_sheet: Handle<SpriteSheet>,
+    pub enemy_animations_sprite_sheet: Handle<SpriteSheet>,
 }
 
 pub fn initialise_sprite_resource(
@@ -23,7 +24,8 @@ pub fn initialise_sprite_resource(
     enemies_sprite_sheet_handle: Handle<SpriteSheet>,
     players_sprite_sheet_handle: Handle<SpriteSheet>,
     blasts_sprite_sheet_handle: Handle<SpriteSheet>,
-    explosions_sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
+    explosions_sprite_sheet_handle: Handle<SpriteSheet>,
+    enemy_animations_sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
 
     let sprite_resource = SpriteResource {
         items_sprite_sheet: items_sprite_sheet_handle,
@@ -33,6 +35,7 @@ pub fn initialise_sprite_resource(
         players_sprite_sheet: players_sprite_sheet_handle,
         blasts_sprite_sheet: blasts_sprite_sheet_handle,
         explosions_sprite_sheet: explosions_sprite_sheet_handle,
+        enemy_animations_sprite_sheet: enemy_animations_sprite_sheet_handle,
     };
 
     world.insert(sprite_resource.clone());
