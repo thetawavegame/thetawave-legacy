@@ -56,6 +56,7 @@ impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
             dispatcher: DispatcherBuilder::new()
+                .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem,"planets_system", &[])
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
@@ -92,6 +93,7 @@ impl SimpleState for SpaceShooter {
         let players_sprite_sheet_handle = load_spritesheet(world, "player_spritesheet.png", "player_spritesheet.ron");
         let blasts_sprite_sheet_handle = load_spritesheet(world, "blasts_spritesheet.png", "blasts_spritesheet.ron");
         let explosions_sprite_sheet_handle = load_spritesheet(world, "explosions_spritesheet.png", "explosions_spritesheet.ron");
+        let enemy_animations_sprite_sheet_handle = load_spritesheet(world, "enemy_animations.png", "enemy_animations.ron");
 
         self.dispatcher.setup(world);
 
@@ -110,7 +112,8 @@ impl SimpleState for SpaceShooter {
                                    enemies_sprite_sheet_handle,
                                    players_sprite_sheet_handle,
                                    blasts_sprite_sheet_handle,
-                                   explosions_sprite_sheet_handle);
+                                   explosions_sprite_sheet_handle,
+                                   enemy_animations_sprite_sheet_handle);
         initialise_enemy_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
         initialise_store(world);

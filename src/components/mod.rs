@@ -21,6 +21,7 @@ mod spawner;
 mod gamemaster;
 mod store;
 mod planet;
+mod animation;
 
 pub use self::{
     blast::Blast,
@@ -35,6 +36,7 @@ pub use self::{
     gamemaster::{GameMaster, Phase, PhaseType},
     store::Store,
     planet::Planet,
+    animation::Animation,
 };
 use std::collections::HashMap;
 
