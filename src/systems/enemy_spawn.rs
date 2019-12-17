@@ -10,6 +10,7 @@ use crate::{
     entities::{spawn_enemy},
     components::{Spawner, EnemySpawnerTag, GameMaster, PhaseType},
     resources::{SpriteResource, EnemyPool},
+    constants,
 };
 
 pub struct SpawnerSystem;
@@ -23,13 +24,13 @@ impl<'s> System<'s> for SpawnerSystem {
         ReadStorage<'s, EnemySpawnerTag>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
-        ReadStorage<'s, GameMaster>,
+        WriteStorage<'s, GameMaster>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemyPool>,
     );
 
-    fn run(&mut self, (entities, mut transforms, mut spawners, spawner_tag, time, enemy_resource, gamemasters, lazy_update, enemy_pool): Self::SystemData) {
-        for gamemaster in (&gamemasters).join() {
+    fn run(&mut self, (entities, mut transforms, mut spawners, spawner_tag, time, enemy_resource, mut gamemasters, lazy_update, enemy_pool): Self::SystemData) {
+        for gamemaster in (&mut gamemasters).join() {
             if gamemaster.phase_idx < gamemaster.last_phase {
             
                 match gamemaster.phase_map[gamemaster.phase_idx].phase_type {
@@ -42,13 +43,23 @@ impl<'s> System<'s> for SpawnerSystem {
                                     new_x, transform.translation()[1], transform.translation()[2]
                                 );
 
-                                spawn_enemy(&entities, &enemy_resource, enemy_pool[name].clone(), spawn_position, &lazy_update);
+                                spawn_enemy(&entities, enemy_resource.enemy_animations_sprite_sheet.clone(), enemy_pool[name].clone(), spawn_position, &lazy_update);
                             }
                         }
 
                     }
 
-                    PhaseType::Boss => {}
+                    PhaseType::Boss => {
+                        // spawn repeater boss
+                        if !gamemaster.phase_map[gamemaster.phase_idx].boss_spawned {
+                            let spawn_position = Vector3::new(
+                                constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT, constants::ENEMY_Z
+                            );
+
+                            spawn_enemy(&entities, enemy_resource.repeater_body_sprite_sheet.clone(), enemy_pool[&"repeater_body".to_string()].clone(), spawn_position, &lazy_update);
+                            gamemaster.phase_map[gamemaster.phase_idx].boss_spawned = true;
+                        }
+                    }
 
                     PhaseType::Rest => {}
                 }

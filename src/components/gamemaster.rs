@@ -11,6 +11,7 @@ pub enum PhaseType {
 pub struct Phase {
     pub phase_type: PhaseType,
     pub length: usize,
+    pub boss_spawned: bool,
 }
 
 #[derive(Clone)]

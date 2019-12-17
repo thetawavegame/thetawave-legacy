@@ -19,6 +19,7 @@ use crate::{
     audio::{play_sfx, Sounds},
     constants::{ARENA_MIN_Y, EXPLOSION_Z}
 };
+use crate::constants::ARENA_HEIGHT;
 
 pub struct EnemySystem;
 
@@ -44,8 +45,7 @@ impl<'s> System<'s> for EnemySystem {
             //constrain in arena
             enemy_component.constrain_to_arena(enemy_transform);
 
-            //accelerate in -y direction
-            enemy_component.accelerate(0.0, -1.0);
+
 
             //transform the spaceship in x and y by the currrent velocity in x and y
             enemy_component.update_position(enemy_transform, time.delta_seconds());
@@ -88,6 +88,9 @@ impl<'s> System<'s> for EnemySystem {
             //behavior for enemies based on its enemy_type attribute
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
+                    //accelerate in -y direction
+                    enemy_component.accelerate(0.0, -1.0);
+
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform, -1.0 * enemy_component.height / 2.0, true,
                         time.delta_seconds()
@@ -96,11 +99,20 @@ impl<'s> System<'s> for EnemySystem {
                     }
                 }
 
-                EnemyType::Drone => {}
+                EnemyType::Drone => {
+                    //accelerate in -y direction
+                    enemy_component.accelerate(0.0, -1.0);
+                }
 
-                EnemyType::Hauler => {}
+                EnemyType::Hauler => {
+                    //accelerate in -y direction
+                    enemy_component.accelerate(0.0, -1.0);
+                }
 
                 EnemyType::Strafer => {
+                    //accelerate in -y direction
+                    enemy_component.accelerate(0.0, -1.0);
+
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform, -1.0 * enemy_component.height / 2.0, true,
                         time.delta_seconds()
@@ -109,6 +121,15 @@ impl<'s> System<'s> for EnemySystem {
                     }
 
                     enemy_component.accelerate(1.0, 0.0);
+                }
+
+                EnemyType::Repeater_Body => {
+                    //accelerate in -y direction
+                    if enemy_transform.translation().y > ARENA_MIN_Y + (ARENA_HEIGHT * 0.75){
+                        enemy_component.accelerate(0.0, -1.0);
+                    }else {
+                        enemy_component.current_velocity_y = 0.0;
+                    }
                 }
             }
         }
