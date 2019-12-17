@@ -15,27 +15,32 @@ pub fn initialise_gamemaster(world: &mut World) {
 
     let phase_0 = Phase {
         phase_type: PhaseType::Rest,
-        length: 8, 
+        length: 8,
+        boss_spawned: false,
     };
 
     let phase_1 = Phase {
-        phase_type: PhaseType::Invasion,
-        length: 60,
+        phase_type: PhaseType::Boss,
+        length: 25,
+        boss_spawned: false
     };
 
     let phase_2 = Phase {
         phase_type: PhaseType::Rest,
         length: 8,
+        boss_spawned: false,
     };
 
     let phase_3 = Phase {
         phase_type: PhaseType::Invasion,
-        length: 120,
+        length: 60,
+        boss_spawned: false,
     };
 
     let phase_4 = Phase {
         phase_type: PhaseType::Rest,
-        length: 16,
+        length: 200,
+        boss_spawned: false
     };
 
     phase_map.push(phase_0);
