@@ -36,7 +36,7 @@ pub use self::{
     gamemaster::{GameMaster, Phase, PhaseType},
     store::Store,
     planet::Planet,
-    animation::Animation,
+    animation::{Animation, AnimationType},
 };
 use std::collections::HashMap;
 
