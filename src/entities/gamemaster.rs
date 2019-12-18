@@ -2,8 +2,9 @@ use amethyst::{
     prelude::Builder,
     ecs::{World, WorldExt},
 };
+
 use crate::{
-    components::{GameMaster, Phase, PhaseType},
+    components::{GameMaster, Phase, PhaseType, BossType},
     constants::{
         STARTING_PHASE_IDX, LAST_PHASE_IDX, STARTING_TICK, TICK_LENGTH,
     },
@@ -11,36 +12,41 @@ use crate::{
 
 pub fn initialise_gamemaster(world: &mut World) {
 
-    let mut phase_map: Vec<Phase> = vec![];
+    let mut phase_map: Vec<Phase> = Vec::new();
 
     let phase_0 = Phase {
         phase_type: PhaseType::Rest,
+        boss_type: BossType::None,
         length: 8,
         boss_spawned: false,
     };
 
     let phase_1 = Phase {
         phase_type: PhaseType::Boss,
-        length: 25,
-        boss_spawned: false
+        boss_type: BossType::Repeater,
+        length: 0,
+        boss_spawned: false,
     };
 
     let phase_2 = Phase {
         phase_type: PhaseType::Rest,
+        boss_type: BossType::None,
         length: 8,
         boss_spawned: false,
     };
 
     let phase_3 = Phase {
         phase_type: PhaseType::Invasion,
+        boss_type: BossType::None,
         length: 60,
         boss_spawned: false,
     };
 
     let phase_4 = Phase {
         phase_type: PhaseType::Rest,
+        boss_type: BossType::None,
         length: 200,
-        boss_spawned: false
+        boss_spawned: false,
     };
 
     phase_map.push(phase_0);
@@ -48,6 +54,7 @@ pub fn initialise_gamemaster(world: &mut World) {
     phase_map.push(phase_2);
     phase_map.push(phase_3);
     phase_map.push(phase_4);
+
 
     world
         .create_entity()

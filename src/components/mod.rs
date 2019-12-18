@@ -33,7 +33,7 @@ pub use self::{
     defense::Defense,
     status_bar::{StatusBar, StatusType},
     spawner::{Spawner, SpawnProbabilities, choose_random_name},
-    gamemaster::{GameMaster, Phase, PhaseType},
+    gamemaster::{GameMaster, Phase, PhaseType, BossType},
     store::Store,
     planet::Planet,
     animation::{Animation, AnimationType},

@@ -18,7 +18,7 @@ pub enum EnemyType {
     Drone,
     Strafer,
     Hauler, //ally
-    Repeater_Body
+    RepeaterBody
 }
 
 #[derive(Clone, Serialize, Deserialize)]
