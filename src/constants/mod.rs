@@ -36,7 +36,6 @@ pub const SIDE_PANEL_Z: f32 = 0.8;
 pub const DEFENSE: f32 = 500.0;
 pub const VELOCITY_FACTOR: f32 = 0.5; // how much a source's velocity effects its projectiles
 pub const ENEMY_SPAWN_INTERVAL: f32 = 1.5; // time between enemy spawns
-pub const EXPLOSION_DURATION: f32 = 0.3;
 pub const RESTOCK_INTERVAL: f32 = 10.0;
 
 // sprites
