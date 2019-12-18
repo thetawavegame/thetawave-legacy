@@ -27,7 +27,7 @@ impl<'s> System<'s> for AnimationSystem {
             match ani.animation_type {
 
                 AnimationType::PingPong => {
-                    // ping pong animation code
+
                     if ani.elapsed_time > ani.frame_time {
                         ani.elapsed_time = 0.0;
                         if ani.forward {
@@ -49,7 +49,14 @@ impl<'s> System<'s> for AnimationSystem {
                     }
                 }
 
-                AnimationType::Forward => {}
+                AnimationType::Forward => {
+                    if ani.elapsed_time > ani.frame_time {
+                        ani.elapsed_time = 0.0;
+                        ani.current_frame += 1;
+                        sprite_render.sprite_number = ani.current_frame;
+                    }
+                }
+
             }
         }
     }
