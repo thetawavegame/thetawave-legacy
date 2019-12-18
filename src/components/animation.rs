@@ -1,10 +1,13 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
+use serde::{Serialize, Deserialize};
 
+#[derive(Clone, Serialize, Deserialize)]
 pub enum AnimationType {
     PingPong,
     Forward,
 }
 
+#[derive(Clone)]
 pub struct Animation {
     pub start_idx: usize,
     pub frame_count: usize,

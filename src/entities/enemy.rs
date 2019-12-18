@@ -5,7 +5,7 @@ use amethyst::{
     assets::Handle,
 };
 use crate::{
-    components::{Enemy, Animation, AnimationType},
+    components::{Enemy, Animation},
 };
 
 pub fn spawn_enemy(entities: &Entities, sprite_sheet: Handle<SpriteSheet>, item: Enemy, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
@@ -16,12 +16,12 @@ pub fn spawn_enemy(entities: &Entities, sprite_sheet: Handle<SpriteSheet>, item:
 
     let animation = Animation {
         start_idx: item.sprite_index,
-        frame_count: 3, // TODO: Replace with variable
+        frame_count: item.frame_count,
         current_frame: item.sprite_index,
-        frame_time: 0.18, // TODO: Replace with variable
+        frame_time: item.frame_time,
         elapsed_time: 0.0,
         forward: true,
-        animation_type: AnimationType::PingPong,
+        animation_type: item.animation_type.clone(),
     };
 
     super::spawn_animated_entity(&entities, sprite, animation, item, spawn_position, &lazy_update);

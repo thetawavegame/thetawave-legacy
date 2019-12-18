@@ -19,6 +19,10 @@
             ("money_5", 0.025),
         ],
         enemy_type: Drone,
+
+        frame_count: 3,
+        frame_time: 0.18,
+        animation_type: PingPong
     ),
     "pawn": (
         name: "pawn",
@@ -40,6 +44,10 @@
             ("money_5", 0.025),
         ],
         enemy_type: Pawn,
+
+        frame_count: 3,
+        frame_time: 0.18,
+        animation_type: PingPong
     ),
     "hauler": (
         name: "hauler",
@@ -60,6 +68,10 @@
             ("", 1.0) // doesn't drop anything
         ],
         enemy_type: Hauler,
+
+        frame_count: 3,
+        frame_time: 0.18,
+        animation_type: PingPong
     ),
     "strafer":(
         name: "strafer",
@@ -86,6 +98,10 @@
             ("money_5", 0.025),
         ],
         enemy_type: Strafer,
+
+        frame_count: 3,
+        frame_time: 0.18,
+        animation_type: PingPong
     ),
     "repeater_body":(
         name: "repeater_body",
@@ -111,5 +127,9 @@
             ("money_5", 0.5),
         ],
         enemy_type: RepeaterBody,
+
+        frame_count: 3,
+        frame_time: 0.18,
+        animation_type: PingPong
     ),
 }
