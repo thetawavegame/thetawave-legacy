@@ -123,7 +123,7 @@ impl<'s> System<'s> for EnemySystem {
                     enemy_component.accelerate(1.0, 0.0);
                 }
 
-                EnemyType::Repeater_Body => {
+                EnemyType::RepeaterBody => {
                     //accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + (ARENA_HEIGHT * 0.75){
                         enemy_component.accelerate(0.0, -1.0);

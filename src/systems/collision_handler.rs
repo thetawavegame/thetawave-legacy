@@ -8,7 +8,7 @@ use amethyst::{
 use std::ops::Deref;
 use crate::{
     space_shooter::CollisionEvent,
-    components::{Spaceship, Enemy, EnemyType},
+    components::{Spaceship, Enemy},
     audio::{play_sfx, Sounds},
 };
 
@@ -66,8 +66,6 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                                 enemy_dead = true;
                             }
 
-                            enemy.health -= spaceship.collision_damage;
-
                             if spaceship.barrel_action_left {
                                 spaceship.barrel_action_right = true;
                                 spaceship.barrel_action_left = false;
@@ -91,6 +89,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                             spaceship.current_velocity_y = (-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y;
 
                             if enemy.name != "repeater_body" {
+                                enemy.health -= spaceship.collision_damage;
                                 enemy.current_velocity_x = (-(1.0) * enemy.current_velocity_x) + temp_velocity_x;
                                 enemy.current_velocity_y = (-(1.0) * enemy.current_velocity_y) + temp_velocity_y;
                             }

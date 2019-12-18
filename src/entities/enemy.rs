@@ -5,7 +5,6 @@ use amethyst::{
     assets::Handle,
 };
 use crate::{
-    resources::SpriteResource,
     components::{Enemy, Animation, AnimationType},
 };
 

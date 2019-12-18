@@ -8,7 +8,7 @@ use amethyst::{
 };
 use crate::{
     entities::{spawn_enemy},
-    components::{Spawner, EnemySpawnerTag, GameMaster, PhaseType},
+    components::{Spawner, EnemySpawnerTag, GameMaster, PhaseType, BossType},
     resources::{SpriteResource, EnemyPool},
     constants,
 };
@@ -50,14 +50,22 @@ impl<'s> System<'s> for SpawnerSystem {
                     }
 
                     PhaseType::Boss => {
-                        // spawn repeater boss
-                        if !gamemaster.phase_map[gamemaster.phase_idx].boss_spawned {
-                            let spawn_position = Vector3::new(
-                                constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT, constants::ENEMY_Z
-                            );
+                        match gamemaster.phase_map[gamemaster.phase_idx].boss_type {
 
-                            spawn_enemy(&entities, enemy_resource.repeater_body_sprite_sheet.clone(), enemy_pool[&"repeater_body".to_string()].clone(), spawn_position, &lazy_update);
-                            gamemaster.phase_map[gamemaster.phase_idx].boss_spawned = true;
+                            BossType::Repeater => {
+                                // spawn repeater boss
+                                if !gamemaster.phase_map[gamemaster.phase_idx].boss_spawned {
+                                    let spawn_position = Vector3::new(
+                                        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT, constants::ENEMY_Z
+                                    );
+
+                                    spawn_enemy(&entities, enemy_resource.repeater_body_sprite_sheet.clone(), enemy_pool[&"repeater_body".to_string()].clone(), spawn_position, &lazy_update);
+                                    gamemaster.phase_map[gamemaster.phase_idx].boss_spawned = true;
+                                }
+                            }
+
+                            BossType::None => {}
+
                         }
                     }
 

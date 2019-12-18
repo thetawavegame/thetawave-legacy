@@ -8,8 +8,15 @@ pub enum PhaseType {
 }
 
 #[derive(Clone)]
+pub enum BossType {
+    Repeater,
+    None,
+}
+
+#[derive(Clone)]
 pub struct Phase {
     pub phase_type: PhaseType,
+    pub boss_type: BossType,
     pub length: usize,
     pub boss_spawned: bool,
 }

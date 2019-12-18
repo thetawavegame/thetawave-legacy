@@ -110,6 +110,6 @@
             ("money_1", 0.43),
             ("money_5", 0.5),
         ],
-        enemy_type: Repeater_Body,
+        enemy_type: RepeaterBody,
     ),
 }
