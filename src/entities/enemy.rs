@@ -1,5 +1,5 @@
 use amethyst::{
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    ecs::prelude::{Entities, LazyUpdate, ReadExpect, Entity},
     renderer::{SpriteRender, SpriteSheet},
     core::math::Vector3,
     assets::Handle,
@@ -8,7 +8,7 @@ use crate::{
     components::{Enemy, Animation},
 };
 
-pub fn spawn_enemy(entities: &Entities, sprite_sheet: Handle<SpriteSheet>, item: Enemy, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
+pub fn spawn_enemy(entities: &Entities, sprite_sheet: Handle<SpriteSheet>, item: Enemy, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) -> Entity {
     let sprite = SpriteRender {
         sprite_sheet: sprite_sheet,
         sprite_number: item.sprite_index,
@@ -24,6 +24,6 @@ pub fn spawn_enemy(entities: &Entities, sprite_sheet: Handle<SpriteSheet>, item:
         animation_type: item.animation_type.clone(),
     };
 
-    super::spawn_animated_entity(&entities, sprite, animation, item, spawn_position, &lazy_update);
+    super::spawn_animated_entity(&entities, sprite, animation, item, spawn_position, &lazy_update)
 
 }
