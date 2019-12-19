@@ -11,7 +11,8 @@ use crate::{
 };
 
 pub struct Repeater {
-    pub body: Entity
+    pub body: Entity,
+    pub head: Entity,
 }
 
 impl Component for Repeater {
