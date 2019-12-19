@@ -27,6 +27,7 @@ pub fn initialise_enemy_spawner(world: &mut World) {
                 ("hauler".to_string(), ENEMY_HAULER_RATIO),
                 ("strafer".to_string(), ENEMY_STRAFER_RATIO),
                 ("repeater_body".to_string(), 0.0),
+                ("repeater_head".to_string(), 0.0),
             ],
             ENEMY_SPAWN_INTERVAL
         ))

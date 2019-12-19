@@ -14,15 +14,22 @@ use crate::entities::{spawn_animated_entity, spawn_enemy};
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(entities: &Entities, sprite_sheet: Handle<SpriteSheet>, enemy_pool: &ReadExpect<EnemyPool>, lazy_update: &ReadExpect<LazyUpdate>) {
-    let spawn_position = Vector3::new(
+    let body_position = Vector3::new(
 
-        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT, constants::ENEMY_Z
+        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 100.0, constants::ENEMY_Z
+    );
+    let head_position = Vector3::new(
+
+        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 63.0, constants::ENEMY_Z
     );
     let body_entity = enemy_pool[&"repeater_body".to_string()].clone();
-    let body =  spawn_enemy(&entities, sprite_sheet, body_entity, spawn_position, &lazy_update);
+    let head_entity = enemy_pool[&"repeater_head".to_string()].clone();
+    let body =  spawn_enemy(&entities, sprite_sheet.clone(), body_entity, body_position, &lazy_update);
+    let head =  spawn_enemy(&entities, sprite_sheet.clone(), head_entity, head_position, &lazy_update);
 
     let repeater = Repeater {
-        body
+        body,
+        head
     };
 
     lazy_update.create_entity(entities).with(repeater).build();

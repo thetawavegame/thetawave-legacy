@@ -56,7 +56,7 @@ impl<'s> System<'s> for SpawnerSystem {
                                 // spawn repeater boss
                                 if !gamemaster.phase_map[gamemaster.phase_idx].boss_spawned {
                                     //spawn_enemy(&entities, enemy_resource.repeater_body_sprite_sheet.clone(), enemy_pool[&"repeater_body".to_string()].clone(), spawn_position, &lazy_update);
-                                    spawn_repeater(&entities, enemy_resource.repeater_body_sprite_sheet.clone(), &enemy_pool, &lazy_update);
+                                    spawn_repeater(&entities, enemy_resource.repeater_sprite_sheet.clone(), &enemy_pool, &lazy_update);
 
                                     gamemaster.phase_map[gamemaster.phase_idx].boss_spawned = true;
                                 }

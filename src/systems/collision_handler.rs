@@ -45,11 +45,11 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                     if event.type_b == "enemy" && event.type_a == "enemy" {
                         if event.entity_a == enemy_entity ||  event.entity_b == enemy_entity {
 
-                            if event.entity_a == enemy_entity && enemy.name != "repeater_body" {
+                            if event.entity_a == enemy_entity && enemy.name != "repeater_body" && enemy.name != "repeater_head" {
                                 enemy.health -= spaceship.collision_damage;
                                 enemy.current_velocity_x = event.to_velocity_x_a;
                                 enemy.current_velocity_y = event.to_velocity_y_a;
-                            } else if event.entity_b == enemy_entity && enemy.name != "repeater_body" {
+                            } else if event.entity_b == enemy_entity && enemy.name != "repeater_body" && enemy.name != "repeater_head" {
                                 enemy.health -= spaceship.collision_damage;
                                 enemy.current_velocity_x = event.to_velocity_x_b;
                                 enemy.current_velocity_y = event.to_velocity_y_b;
@@ -88,7 +88,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                             let temp_velocity_y = spaceship.current_velocity_y;
                             spaceship.current_velocity_y = (-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y;
 
-                            if enemy.name != "repeater_body" {
+                            if enemy.name != "repeater_body" && enemy.name != "repeater_head" {
                                 enemy.health -= spaceship.collision_damage;
                                 enemy.current_velocity_x = (-(1.0) * enemy.current_velocity_x) + temp_velocity_x;
                                 enemy.current_velocity_y = (-(1.0) * enemy.current_velocity_y) + temp_velocity_y;

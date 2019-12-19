@@ -1,0 +1,42 @@
+(
+    texture_width: 204,
+    texture_height: 89,
+    sprites: [
+        (
+            x: 0,
+            y: 0,
+            width: 68,
+            height: 41,
+        ),
+        (
+            x: 68,
+            y: 0,
+            width: 68,
+            height: 41,
+        ),
+        (
+            x: 136,
+            y: 0,
+            width: 68,
+            height: 41,
+        ),
+        (
+            x: 0,
+            y: 41,
+            width: 66,
+            height: 48,
+        ),
+        (
+            x: 66,
+            y: 41,
+            width: 66,
+            height: 48,
+        ),
+        (
+            x: 132,
+            y: 41,
+            width: 66,
+            height: 48,
+        )
+    ],
+)
