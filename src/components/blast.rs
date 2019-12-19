@@ -1,6 +1,14 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
 #[derive(Clone)]
+pub enum BlastType {
+    Player,
+    Poison,
+    Critical,
+    Enemy,
+}
+
+#[derive(Clone)]
 pub struct Blast {
     pub speed: f32,
     pub hitbox_radius: f32,
@@ -10,6 +18,7 @@ pub struct Blast {
     pub y_velocity: f32,
     pub velocity_factor: f32,
     pub allied: bool,
+    pub blast_type: BlastType,
 }
 
 impl Component for Blast {

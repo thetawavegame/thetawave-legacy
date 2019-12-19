@@ -27,7 +27,7 @@ pub use self::{
     spaceship::initialise_spaceship,
     enemy::{spawn_enemy},
     enemy_spawner::{initialise_enemy_spawner },
-    explosion::{spawn_explosion},
+    explosion::{spawn_explosion, spawn_blast_explosion},
     items::spawn_item,
     side_panel::initialise_side_panels,
     consumable::spawn_consumable,
