@@ -24,7 +24,7 @@ mod planet;
 mod animation;
 
 pub use self::{
-    blast::Blast,
+    blast::{Blast, BlastType},
     spaceship::{Spaceship},
     enemy::{Enemy, EnemyType, EnemySpawnerTag},
     explosion::Explosion,

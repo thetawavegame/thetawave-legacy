@@ -96,6 +96,7 @@ impl SimpleState for SpaceShooter {
         let explosions_sprite_sheet_handle = load_spritesheet(world, "explosions_spritesheet.png", "explosions_spritesheet.ron");
         let enemy_animations_sprite_sheet_handle = load_spritesheet(world, "enemy_animations.png", "enemy_animations.ron");
         let repeater_body_sprite_sheet_handle = load_spritesheet(world, "repeater_body.png", "repeater_body.ron");
+        let blast_explosions_sprite_sheet_handle = load_spritesheet(world, "blast_explosions.png", "blast_explosions.ron");
 
         self.dispatcher.setup(world);
 
@@ -107,16 +108,19 @@ impl SimpleState for SpaceShooter {
         initialise_planet(world, "earth_planet.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0), -1100.0, -1010.0, 1000.0, 100.0, 0.01);
         initialise_planet(world, "sol_star.glb", ARENA_MIN_X + (ARENA_WIDTH/2.0) - 5000.0, (ARENA_HEIGHT/2.0) + 3000.0, -15000.0, 800.0, 0.0, 0.005);
         initialise_spaceship(world, players_sprite_sheet_handle.clone());
-        initialise_sprite_resource(world,
-                                   items_sprite_sheet_handle,
-                                   consumables_sprite_sheet_handle,
-                                   status_bar_unit_sprite_sheet_handle,
-                                   enemies_sprite_sheet_handle,
-                                   players_sprite_sheet_handle,
-                                   blasts_sprite_sheet_handle,
-                                   explosions_sprite_sheet_handle,
-                                   enemy_animations_sprite_sheet_handle,
-                                   repeater_body_sprite_sheet_handle);
+        initialise_sprite_resource(
+            world,
+            items_sprite_sheet_handle,
+            consumables_sprite_sheet_handle,
+            status_bar_unit_sprite_sheet_handle,
+            enemies_sprite_sheet_handle,
+            players_sprite_sheet_handle,
+            blasts_sprite_sheet_handle,
+            explosions_sprite_sheet_handle,
+            enemy_animations_sprite_sheet_handle,
+            repeater_body_sprite_sheet_handle,
+            blast_explosions_sprite_sheet_handle
+        );
         initialise_enemy_spawner(world);
         initialise_side_panels(world, side_panel_sprite_sheet_handle);
         initialise_store(world);

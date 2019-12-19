@@ -26,9 +26,9 @@ pub const CAMERA_Z: f32 = 237.0;
 pub const ENEMY_Z: f32 = 0.0;
 pub const PLAYER_Z: f32 = 0.0;
 pub const CONSUMABLE_Z: f32 = 0.0;
-pub const ITEM_Z: f32 = 0.0;
+pub const ITEM_Z: f32 = 0.6;
 pub const BLAST_Z: f32 = 0.9;
-pub const EXPLOSION_Z: f32 = 0.0;
+pub const EXPLOSION_Z: f32 = 0.5;
 pub const STATUS_BAR_Z: f32 = 0.9;
 pub const SIDE_PANEL_Z: f32 = 0.8;
 

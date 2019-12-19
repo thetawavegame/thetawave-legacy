@@ -7,7 +7,7 @@ use amethyst::{
     },
 };
 use crate::{
-    components::{Blast, Fires},
+    components::{Blast, Fires, BlastType},
     resources::SpriteResource,
     constants::{
         BLAST_OFFSET,
@@ -30,6 +30,11 @@ pub fn fire_blast(entities: &Entities,
         sprite_number: source_component.blast_sprite_indicies()["normal"]
     };
 
+    let mut blast_type: BlastType = BlastType::Player;
+    if !source_component.allied() {
+       blast_type = BlastType::Enemy;
+    }
+
     // roll for crit, then poison
     let mut damage = source_component.blast_damage();
     let mut poison_damage = 0.0;
@@ -38,9 +43,11 @@ pub fn fire_blast(entities: &Entities,
     if crit_roll < source_component.crit_chance() {
         blast_sprite_render.sprite_number = source_component.blast_sprite_indicies()["crit"];
         damage *= 2.0;
+        blast_type = BlastType::Critical;
     }else if poison_roll < source_component.poison_chance() {
         blast_sprite_render.sprite_number = source_component.blast_sprite_indicies()["poison"];
         poison_damage = source_component.blast_damage()/100.0;
+        blast_type = BlastType::Poison;
     }
 
     // calculate spawn position for blasts centered around source_position
@@ -69,6 +76,7 @@ pub fn fire_blast(entities: &Entities,
                                y_velocity: source_component.velocity_y(),
                                velocity_factor: VELOCITY_FACTOR,
                                allied: source_component.allied(),
+                               blast_type: blast_type.clone(),
                            });
         lazy_update.insert(blast_entity, blast_transform);
         lazy_update.insert(blast_entity, Transparent);
