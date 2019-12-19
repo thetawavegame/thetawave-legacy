@@ -62,6 +62,7 @@ impl Default for SpaceShooter {
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
+                .with(systems::BossSystem, "boss_system", &[])
                 .with(systems::ConsumableSystem, "consumable_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::PlayerHitSystem, "player_hit_system", &[])

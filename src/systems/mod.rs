@@ -17,6 +17,7 @@ mod stat_tracker;
 mod store;
 mod planets;
 mod animation;
+mod boss;
 
 pub use self::{
     blast::BlastSystem,
@@ -38,6 +39,7 @@ pub use self::{
     store::StoreSystem,
     planets::PlanetsSystem,
     animation::AnimationSystem,
+    boss::BossSystem,
 };
 
 pub fn hitbox_collide(mut x1: f32, mut y1: f32, mut x2: f32, mut y2: f32, hitbox_width_1: f32, hitbox_height_1: f32, hitbox_width_2: f32, hitbox_height_2: f32) -> bool {

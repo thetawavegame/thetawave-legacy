@@ -22,6 +22,7 @@ mod gamemaster;
 mod store;
 mod planet;
 mod animation;
+mod boss;
 
 pub use self::{
     blast::{Blast, BlastType},
@@ -37,6 +38,7 @@ pub use self::{
     store::Store,
     planet::Planet,
     animation::{Animation, AnimationType},
+    boss::{Repeater},
 };
 use std::collections::HashMap;
 
