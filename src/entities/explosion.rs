@@ -11,7 +11,7 @@ use crate::{
 
 pub fn spawn_explosion(entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, sprite_number: usize, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) {
     let frame_time: f32 = 0.1;
-    let frame_count: usize = 7;
+    let frame_count: usize = 10;
     let duration: f32 = frame_time * (frame_count - 1) as f32;
 
     let sprite = SpriteRender {
