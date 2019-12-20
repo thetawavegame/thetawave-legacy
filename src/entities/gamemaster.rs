@@ -38,7 +38,7 @@ pub fn initialise_gamemaster(world: &mut World) {
     let phase_3 = Phase {
         phase_type: PhaseType::Invasion,
         boss_type: BossType::None,
-        length: 60,
+        length: 360,
         boss_spawned: false,
     };
 
