@@ -82,17 +82,6 @@ fn spawn_animated_entity<T: Spawnable + Component + Send + Sync>(
 
     let enemy_entity: Entity = entities.create();
 
-    /*
-    lazy_update
-        .create_entity(entities)
-        .with(animation)
-        .with(sprite_render)
-        .with(item_component)
-        .with(local_transform)
-        .with(Transparent)
-        .build();
-        */
-
     lazy_update.insert(enemy_entity, animation);
     lazy_update.insert(enemy_entity, sprite_render);
     lazy_update.insert(enemy_entity, item_component);
