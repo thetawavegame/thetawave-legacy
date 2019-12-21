@@ -16,11 +16,11 @@ use amethyst::prelude::Builder;
 pub fn spawn_repeater(entities: &Entities, sprite_sheet: Handle<SpriteSheet>, enemy_pool: &ReadExpect<EnemyPool>, lazy_update: &ReadExpect<LazyUpdate>) {
     let body_position = Vector3::new(
 
-        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 100.0, constants::ENEMY_Z
+        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 100.0, constants::BOSS_Z_1
     );
     let head_position = Vector3::new(
 
-        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 63.0, constants::ENEMY_Z
+        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0), constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 63.0, constants::BOSS_Z_2
     );
     let body_entity = enemy_pool[&"repeater_body".to_string()].clone();
     let head_entity = enemy_pool[&"repeater_head".to_string()].clone();

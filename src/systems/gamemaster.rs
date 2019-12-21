@@ -5,7 +5,7 @@ use amethyst::{
     ecs::prelude::{Join, System, Read, WriteStorage},
 };
 use crate::{
-    components::{GameMaster},
+    components::{GameMaster, PhaseType},
 };
 
 pub struct GameMasterSystem;
@@ -19,7 +19,18 @@ impl<'s> System<'s> for GameMasterSystem {
 
     fn run(&mut self, (mut gamemasters, time): Self::SystemData) {
         for gamemaster in (&mut gamemasters).join() {
-            gamemaster.iterate_tick(time.delta_seconds());
+            match gamemaster.phase_map[gamemaster.phase_idx].phase_type {
+
+                PhaseType::Invasion => {
+                    gamemaster.iterate_tick(time.delta_seconds());
+                }
+
+                PhaseType::Rest => {
+                    gamemaster.iterate_tick(time.delta_seconds());
+                }
+
+                PhaseType::Boss => {}
+            }
         }
     }
 }
