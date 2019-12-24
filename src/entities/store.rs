@@ -1,20 +1,16 @@
+use crate::{components::Store, constants::RESTOCK_INTERVAL, resources::ItemPool};
 use amethyst::{
-    prelude::Builder,
     ecs::{World, WorldExt},
-};
-use crate::{
-    resources::{ItemPool},
-    components::Store,
-    constants::RESTOCK_INTERVAL,
+    prelude::Builder,
 };
 
 pub type StockProbabilities = Vec<(String, f32)>;
 
 pub fn initialise_store(world: &mut World) {
-
-    let stock_list: StockProbabilities  = world.read_resource::<ItemPool>()
+    let stock_list: StockProbabilities = world
+        .read_resource::<ItemPool>()
         .iter()
-        .map(|(key,_)| (key.clone(), 1.0)) // all with same probability
+        .map(|(key, _)| (key.clone(), 1.0)) // all with same probability
         .collect();
 
     let store = Store {
@@ -26,10 +22,5 @@ pub fn initialise_store(world: &mut World) {
         consumable_inventory: vec![],
     };
 
-    world
-        .create_entity()
-        .with(store)
-        .build();
+    world.create_entity().with(store).build();
 }
-
-

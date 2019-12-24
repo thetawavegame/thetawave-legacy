@@ -1,21 +1,18 @@
-use amethyst::{
-    prelude::Builder,
-    ecs::{World, WorldExt},
-};
 use crate::{
     components::{GameMaster, Phase, PhaseType},
-    constants::{
-        STARTING_PHASE_IDX, LAST_PHASE_IDX, STARTING_TICK, TICK_LENGTH,
-    },
+    constants::{LAST_PHASE_IDX, STARTING_PHASE_IDX, STARTING_TICK, TICK_LENGTH},
+};
+use amethyst::{
+    ecs::{World, WorldExt},
+    prelude::Builder,
 };
 
 pub fn initialise_gamemaster(world: &mut World) {
-
     let mut phase_map: Vec<Phase> = vec![];
 
     let phase_0 = Phase {
         phase_type: PhaseType::Rest,
-        length: 8, 
+        length: 8,
     };
 
     let phase_1 = Phase {
@@ -48,7 +45,7 @@ pub fn initialise_gamemaster(world: &mut World) {
         .create_entity()
         .with(GameMaster {
             phase_map: phase_map,
-            phase_idx: STARTING_PHASE_IDX, 
+            phase_idx: STARTING_PHASE_IDX,
             last_phase: LAST_PHASE_IDX,
             current_tick: STARTING_TICK,
             tick_timer: TICK_LENGTH,

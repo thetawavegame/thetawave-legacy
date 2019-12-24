@@ -1,14 +1,10 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
 
-use std::{
-    collections::{HashMap},
-};
+use std::collections::HashMap;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-use crate::{
-    components::{ Spawnable },
-};
+use crate::components::Spawnable;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Item {
@@ -32,16 +28,30 @@ pub struct Item {
     pub name: String,
 }
 
-fn des_width() -> f32 { 14.0 }
-fn des_height() -> f32 { 14.0 }
-fn des_hitbox_width() -> f32 { 14.0 }
-fn des_hitbox_height() -> f32 { 14.0 }
-fn des_speed() -> f32 { 70.0 }
-fn des_price() -> usize { 10 }
+fn des_width() -> f32 {
+    14.0
+}
+fn des_height() -> f32 {
+    14.0
+}
+fn des_hitbox_width() -> f32 {
+    14.0
+}
+fn des_hitbox_height() -> f32 {
+    14.0
+}
+fn des_speed() -> f32 {
+    70.0
+}
+fn des_price() -> usize {
+    10
+}
 
 impl Spawnable for Item {
-    fn name(&self) -> String { self.name.clone() }
-    fn init(&mut self) { }
+    fn name(&self) -> String {
+        self.name.clone()
+    }
+    fn init(&mut self) {}
 }
 
 impl Component for Item {

@@ -1,5 +1,5 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use crate::components::Living;
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
 pub struct Defense {
     pub max_defense: f32,
@@ -7,10 +7,18 @@ pub struct Defense {
 }
 
 impl Living for Defense {
-    fn health(&self) -> f32 { self.defense }
-    fn max_health(&self) -> f32 { self.max_defense }
-    fn set_health(&mut self, value: f32) { self.defense = value; }
-    fn set_max_health(&mut self, value: f32) { self.max_defense = value; }
+    fn health(&self) -> f32 {
+        self.defense
+    }
+    fn max_health(&self) -> f32 {
+        self.max_defense
+    }
+    fn set_health(&mut self, value: f32) {
+        self.defense = value;
+    }
+    fn set_max_health(&mut self, value: f32) {
+        self.max_defense = value;
+    }
 }
 
 impl Component for Defense {

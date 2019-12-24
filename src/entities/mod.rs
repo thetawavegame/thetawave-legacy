@@ -4,41 +4,29 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
 };
 
-
 pub mod blast;
-pub mod spaceship;
+pub mod consumable;
+pub mod defense;
 pub mod enemy;
 pub mod enemy_spawner;
 pub mod explosion;
+pub mod gamemaster;
 pub mod items;
+pub mod planet;
 pub mod side_panel;
-pub mod consumable;
-pub mod defense;
+pub mod spaceship;
 pub mod status_bar;
 pub mod status_unit;
-pub mod gamemaster;
 pub mod store;
-pub mod planet;
 
 pub use self::{
-    blast::fire_blast,
-    spaceship::initialise_spaceship,
-    enemy::{spawn_enemy},
-    enemy_spawner::{initialise_enemy_spawner },
-    explosion::{spawn_explosion},
-    items::spawn_item,
-    side_panel::initialise_side_panels,
-    consumable::spawn_consumable,
-    defense::initialise_defense,
-    status_bar::initialise_status_bars,
-    status_unit::spawn_status_unit,
-    gamemaster::initialise_gamemaster,
-    store::{initialise_store},
-    planet::{initialise_planet},
+    blast::fire_blast, consumable::spawn_consumable, defense::initialise_defense,
+    enemy::spawn_enemy, enemy_spawner::initialise_enemy_spawner, explosion::spawn_explosion,
+    gamemaster::initialise_gamemaster, items::spawn_item, planet::initialise_planet,
+    side_panel::initialise_side_panels, spaceship::initialise_spaceship,
+    status_bar::initialise_status_bars, status_unit::spawn_status_unit, store::initialise_store,
 };
-use crate::{
-    components::{ Spawnable },
-};
+use crate::components::Spawnable;
 
 fn spawn_sprite_entity<T: Spawnable + Component + Send + Sync>(
     entities: &Entities,

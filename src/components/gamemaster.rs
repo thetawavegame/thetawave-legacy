@@ -14,7 +14,7 @@ pub struct Phase {
 }
 
 #[derive(Clone)]
-pub struct GameMaster{
+pub struct GameMaster {
     pub phase_map: Vec<Phase>,
     pub phase_idx: usize,
     pub last_phase: usize,
@@ -23,7 +23,7 @@ pub struct GameMaster{
     pub tick_length: f32,
 }
 
-impl Component for GameMaster{
+impl Component for GameMaster {
     type Storage = DenseVecStorage<Self>;
 }
 
@@ -32,11 +32,16 @@ impl GameMaster {
         if self.tick_timer > 0.0 {
             self.tick_timer -= dt;
         } else {
-            println!("phase index: {}\tcurrent_tick: {}", self.phase_idx, self.current_tick);
+            println!(
+                "phase index: {}\tcurrent_tick: {}",
+                self.phase_idx, self.current_tick
+            );
             self.tick_timer = self.tick_length;
             self.current_tick += 1;
 
-            if self.phase_idx < self.last_phase && self.current_tick >= self.phase_map[self.phase_idx].length {
+            if self.phase_idx < self.last_phase
+                && self.current_tick >= self.phase_map[self.phase_idx].length
+            {
                 self.phase_idx += 1;
                 self.current_tick = 0;
             }
