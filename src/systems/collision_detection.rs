@@ -32,15 +32,50 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                     continue;
                 }
 
-                if hitbox_collide(transform_a.translation().x, transform_a.translation().y, transform_b.translation().x, transform_b.translation().y, enemy_a.hitbox_width, enemy_a.hitbox_height, enemy_b.hitbox_width, enemy_b.hitbox_height) {
-                    enemy_collision_event_channel.single_write(CollisionEvent::new(entity_a, String::from("enemy"), enemy_b.current_velocity_x, enemy_b.current_velocity_y, entity_b, String::from("enemy"), enemy_a.current_velocity_x, enemy_a.current_velocity_y));
+                if hitbox_collide(
+                    transform_a.translation().x,
+                    transform_a.translation().y,
+                    transform_b.translation().x,
+                    transform_b.translation().y,
+                    enemy_a.hitbox_width,
+                    enemy_a.hitbox_height,
+                    enemy_b.hitbox_width,
+                    enemy_b.hitbox_height
+                ) {
+                    enemy_collision_event_channel.single_write(CollisionEvent::new(
+                        entity_a,
+                        String::from("enemy"),
+                        enemy_b.current_velocity_x,
+                        enemy_b.current_velocity_y,
+                        entity_b, String::from("enemy"),
+                        enemy_a.current_velocity_x,
+                        enemy_a.current_velocity_y
+                    ));
                 }
             }
 
             //check for spaceship collisions
             for (entity_b, transform_b, spaceship_b) in (&entities, &transforms, &spaceships).join() {
-                if hitbox_collide(transform_a.translation().x, transform_a.translation().y, transform_b.translation().x, transform_b.translation().y, enemy_a.hitbox_width, enemy_a.hitbox_height, spaceship_b.hitbox_width, spaceship_b.hitbox_height) {
-                    enemy_collision_event_channel.single_write(CollisionEvent::new(entity_a, String::from("enemy"), spaceship_b.current_velocity_x, spaceship_b.current_velocity_y, entity_b, String::from("spaceship"), enemy_a.current_velocity_x, enemy_a.current_velocity_y));
+                if hitbox_collide(
+                    transform_a.translation().x,
+                    transform_a.translation().y,
+                    transform_b.translation().x,
+                    transform_b.translation().y,
+                    enemy_a.hitbox_width,
+                    enemy_a.hitbox_height,
+                    spaceship_b.hitbox_width,
+                    spaceship_b.hitbox_height
+                ) {
+                    enemy_collision_event_channel.single_write(CollisionEvent::new(
+                        entity_a,
+                        String::from("enemy"),
+                        spaceship_b.current_velocity_x,
+                        spaceship_b.current_velocity_y,
+                        entity_b,
+                        String::from("spaceship"),
+                        enemy_a.current_velocity_x,
+                        enemy_a.current_velocity_y
+                    ));
                 }
             }
         }

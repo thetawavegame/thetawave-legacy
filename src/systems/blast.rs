@@ -38,8 +38,12 @@ impl<'s> System<'s> for BlastSystem {
             }
 
             // update position based on blast velocity
-            blast_transform.prepend_translation_x(blast_component.x_velocity * blast_component.velocity_factor * time.delta_seconds());
-            blast_transform.prepend_translation_y((blast_component.y_velocity * blast_component.velocity_factor + blast_component.speed) * time.delta_seconds());
+            blast_transform.prepend_translation_x(
+                blast_component.x_velocity * blast_component.velocity_factor * time.delta_seconds()
+            );
+            blast_transform.prepend_translation_y(
+                (blast_component.y_velocity * blast_component.velocity_factor + blast_component.speed) * time.delta_seconds()
+            );
         }
     }
 }
