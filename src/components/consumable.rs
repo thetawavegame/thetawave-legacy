@@ -1,9 +1,7 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-use crate::{
-    components::{ Spawnable },
-};
+use crate::components::Spawnable;
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Consumable {
@@ -27,15 +25,27 @@ pub struct Consumable {
     pub sprite_index: usize,
 }
 
-fn des_width() -> f32 { 12.0 }
-fn des_height() -> f32 { 12.0 }
-fn des_hitbox_width() -> f32 { 10.0 }
-fn des_hitbox_height() -> f32 { 10.0 }
-fn des_speed() -> f32 { 35.0 }
+fn des_width() -> f32 {
+    12.0
+}
+fn des_height() -> f32 {
+    12.0
+}
+fn des_hitbox_width() -> f32 {
+    10.0
+}
+fn des_hitbox_height() -> f32 {
+    10.0
+}
+fn des_speed() -> f32 {
+    35.0
+}
 
 impl Spawnable for Consumable {
-    fn name(&self) -> String { self.name.clone() }
-    fn init(&mut self) { }
+    fn name(&self) -> String {
+        self.name.clone()
+    }
+    fn init(&mut self) {}
 }
 
 impl Component for Consumable {

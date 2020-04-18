@@ -1,14 +1,6 @@
-use amethyst::{
-    ecs::prelude::{
-        Component,
-        DenseVecStorage,
-        Entity,
-    }
-};
+use amethyst::ecs::prelude::{Component, DenseVecStorage, Entity};
 
-use crate::{
-    components::{Enemy},
-};
+use crate::components::Enemy;
 
 pub struct Repeater {
     pub body: Entity,

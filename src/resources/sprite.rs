@@ -1,8 +1,4 @@
-use amethyst::{
-    assets::Handle,
-    renderer::SpriteSheet,
-    ecs::prelude::{World}
-};
+use amethyst::{assets::Handle, ecs::prelude::World, renderer::SpriteSheet};
 
 #[derive(Clone)]
 pub struct SpriteResource {
@@ -29,9 +25,8 @@ pub fn initialise_sprite_resource(
     explosions_sprite_sheet_handle: Handle<SpriteSheet>,
     enemy_animations_sprite_sheet_handle: Handle<SpriteSheet>,
     repeater_sprite_sheet_handle: Handle<SpriteSheet>,
-    blast_explosions_sprite_sheet_handle: Handle<SpriteSheet>
+    blast_explosions_sprite_sheet_handle: Handle<SpriteSheet>,
 ) -> SpriteResource {
-
     let sprite_resource = SpriteResource {
         items_sprite_sheet: items_sprite_sheet_handle,
         consumables_sprite_sheet: consumables_sprite_sheet_handle,
@@ -42,7 +37,7 @@ pub fn initialise_sprite_resource(
         explosions_sprite_sheet: explosions_sprite_sheet_handle,
         enemy_animations_sprite_sheet: enemy_animations_sprite_sheet_handle,
         repeater_sprite_sheet: repeater_sprite_sheet_handle,
-        blast_explosions_sprite_sheet: blast_explosions_sprite_sheet_handle
+        blast_explosions_sprite_sheet: blast_explosions_sprite_sheet_handle,
     };
 
     world.insert(sprite_resource.clone());

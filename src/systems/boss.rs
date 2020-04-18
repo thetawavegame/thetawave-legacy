@@ -1,17 +1,12 @@
+use crate::components::{GameMaster, Repeater};
 use amethyst::{
-    core::{
-        timing::Time,
-    },
-    ecs::prelude::{Entities, Join, System, WriteStorage, Read, Entity},
-};
-use crate::{
-    components::{Repeater, GameMaster},
+    core::timing::Time,
+    ecs::prelude::{Entities, Entity, Join, Read, System, WriteStorage},
 };
 
 pub struct BossSystem;
 
 impl<'s> System<'s> for BossSystem {
-
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Repeater>,
@@ -21,8 +16,9 @@ impl<'s> System<'s> for BossSystem {
 
     fn run(&mut self, (entities, mut repeaters, mut gamemasters, time): Self::SystemData) {
         for (boss_entity, repeater_component) in (&*entities, &mut repeaters).join() {
-
-            if !entities.is_alive(repeater_component.head) && !entities.is_alive(repeater_component.body){
+            if !entities.is_alive(repeater_component.head)
+                && !entities.is_alive(repeater_component.body)
+            {
                 let _result = entities.delete(boss_entity);
 
                 for gamemaster in (&mut gamemasters).join() {
@@ -31,7 +27,6 @@ impl<'s> System<'s> for BossSystem {
 
                 println!("repeater defeated");
             }
-
         }
     }
 }

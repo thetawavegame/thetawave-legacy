@@ -1,11 +1,8 @@
-
-use crate::components::{Enemy, Item, Consumable};
+use crate::components::{Consumable, Enemy, Item};
 
 mod sprite;
 
-pub use self::{
-    sprite::{SpriteResource, initialise_sprite_resource},
-};
+pub use self::sprite::{initialise_sprite_resource, SpriteResource};
 
 pub type EnemyPool = std::collections::HashMap<String, Enemy>;
 pub type ItemPool = std::collections::HashMap<String, Item>;

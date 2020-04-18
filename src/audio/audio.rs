@@ -1,11 +1,6 @@
 use amethyst::{
-    assets::{AssetStorage, Loader, Handle},
-    audio::{
-        output::Output,
-        Source,
-        SourceHandle,
-        OggFormat,
-    },
+    assets::{AssetStorage, Handle, Loader},
+    audio::{output::Output, OggFormat, Source, SourceHandle},
     ecs::{World, WorldExt},
 };
 
@@ -38,7 +33,7 @@ pub fn initialise_audio(world: &mut World) {
             crash_sfx: load_audio_track(&loader, &world, "audio/crash.ogg"),
             explosion_sfx: load_audio_track(&loader, &world, "audio/explosion.ogg"),
             spaceship_hit_sfx: load_audio_track(&loader, &world, "audio/spaceship_hit.ogg"),
-            cash_register_bell: load_audio_track(&loader, &world, "audio/cash_register_bell.ogg")
+            cash_register_bell: load_audio_track(&loader, &world, "audio/cash_register_bell.ogg"),
         };
 
         sound

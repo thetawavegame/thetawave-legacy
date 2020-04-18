@@ -21,6 +21,7 @@ pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
 pub const CAMERA_X: f32 = GAME_WIDTH * 0.5;
 pub const CAMERA_Y: f32 = GAME_HEIGHT * 0.5;
 pub const CAMERA_Z: f32 = 237.0;
+//pub const CAMERA_Z: f32 = 500.0;
 
 // Z levels of sprites
 pub const ENEMY_Z: f32 = 0.0;
@@ -33,7 +34,6 @@ pub const BLAST_Z: f32 = 0.9;
 pub const EXPLOSION_Z: f32 = 0.5;
 pub const STATUS_BAR_Z: f32 = 0.9;
 pub const SIDE_PANEL_Z: f32 = 0.8;
-
 
 // stats
 pub const DEFENSE: f32 = 500.0;
@@ -95,6 +95,6 @@ pub const DEFENSE_BAR_LIMIT: f32 = 63.0;
 pub const ROLL_BAR_X: f32 = 324.0;
 pub const ROLL_BAR_Y: f32 = 177.0;
 pub const ROLL_BAR_LIMIT: f32 = 28.0;
-pub const RESTOCK_BAR_X: f32 = 324.0;//should appear in arena
+pub const RESTOCK_BAR_X: f32 = 324.0; //should appear in arena
 pub const RESTOCK_BAR_Y: f32 = 90.0;
 pub const RESTOCK_BAR_LIMIT: f32 = 28.0;
