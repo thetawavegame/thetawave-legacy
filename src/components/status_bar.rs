@@ -3,7 +3,7 @@ use amethyst::{
     core::math::Vector3,
     ecs::prelude::{Component, DenseVecStorage, Entities, Entity},
 };
-use std::vec::Vec;
+use std::{cmp::Ordering, vec::Vec};
 
 pub enum StatusType {
     Health,
@@ -34,18 +34,20 @@ impl StatusBar {
         let status_divisor = max_value / self.unit_limit;
         let status_unit_num = (current_value / status_divisor).ceil() as usize;
 
-        if status_unit_num > self.status_unit_stack.len() {
-            let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
-            self.x_pos += 1.0;
-            return Some(status_position);
-        } else if status_unit_num < self.status_unit_stack.len() {
-            if let Some(unit) = self.status_unit_stack.pop() {
-                let _result = entities.delete(unit);
-                self.x_pos -= 1.0;
+        match status_unit_num.cmp(&self.status_unit_stack.len()) {
+            Ordering::Greater => {
+                let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
+                self.x_pos += 1.0;
+                return Some(status_position);
             }
-            return None;
-        } else {
-            return None;
+            Ordering::Less => {
+                if let Some(unit) = self.status_unit_stack.pop() {
+                    let _result = entities.delete(unit);
+                    self.x_pos -= 1.0;
+                }
+                return None;
+            }
+            Ordering::Equal => return None,
         }
     }
 
@@ -58,18 +60,20 @@ impl StatusBar {
         let status_divisor = max_value / self.unit_limit;
         let status_unit_num = (current_value / status_divisor).ceil() as usize;
 
-        if status_unit_num > self.status_unit_stack.len() {
-            let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
-            self.y_pos += 1.0;
-            return Some(status_position);
-        } else if status_unit_num < self.status_unit_stack.len() {
-            if let Some(unit) = self.status_unit_stack.pop() {
-                let _result = entities.delete(unit);
-                self.y_pos -= 1.0;
+        match status_unit_num.cmp(&self.status_unit_stack.len()) {
+            Ordering::Greater => {
+                let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
+                self.y_pos += 1.0;
+                return Some(status_position);
             }
-            return None;
-        } else {
-            return None;
+            Ordering::Less => {
+                if let Some(unit) = self.status_unit_stack.pop() {
+                    let _result = entities.delete(unit);
+                    self.y_pos -= 1.0;
+                }
+                return None;
+            }
+            Ordering::Equal => return None,
         }
     }
 }
