@@ -1,20 +1,13 @@
+use crate::components::{Rigidbody, Spaceship};
 use amethyst::{
-    core::{
-        Transform,
-        timing::Time,
-    },
+    core::{timing::Time, Transform},
     ecs::{Join, Read, System, WriteStorage},
     input::{InputHandler, StringBindings},
-};
-use crate::{
-    components::{Spaceship, Rigidbody},
-    
 };
 
 pub struct SpaceshipMovementSystem;
 
 impl<'s> System<'s> for SpaceshipMovementSystem {
-
     type SystemData = (
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
@@ -23,12 +16,10 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
     );
 
     fn run(&mut self, (mut transforms, mut spaceships, input, time): Self::SystemData) {
-
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;
 
         for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
-
             //keep spaceship with bounds of arena
             spaceship.constrain_to_arena(transform);
 

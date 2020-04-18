@@ -1,16 +1,17 @@
+use crate::resources::SpriteResource;
 use amethyst::{
+    core::{math::Vector3, transform::Transform},
     ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender},
-    core::{
-        transform::Transform,
-        math::Vector3,
-    },
-};
-use crate::{
-    resources::SpriteResource,
+    renderer::SpriteRender,
 };
 
-pub fn spawn_status_unit(entities: &Entities, sprite_resource: &ReadExpect<SpriteResource>, sprite_number: usize, spawn_position: Vector3<f32>, lazy_update: &ReadExpect<LazyUpdate>) -> Entity {
+pub fn spawn_status_unit(
+    entities: &Entities,
+    sprite_resource: &ReadExpect<SpriteResource>,
+    sprite_number: usize,
+    spawn_position: Vector3<f32>,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) -> Entity {
     let status_unit_entity: Entity = entities.create();
 
     let mut local_transform = Transform::default();
@@ -25,5 +26,4 @@ pub fn spawn_status_unit(entities: &Entities, sprite_resource: &ReadExpect<Sprit
     lazy_update.insert(status_unit_entity, local_transform);
 
     status_unit_entity
-
 }

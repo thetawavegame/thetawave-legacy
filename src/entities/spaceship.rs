@@ -1,28 +1,31 @@
-use amethyst::{
-    prelude::Builder,
-    ecs::{World, WorldExt},
-    core::transform::Transform,
-    renderer::{SpriteRender, SpriteSheet, Transparent},
-    assets::Handle,
-};
 use crate::{
     components::Spaceship,
     constants::{
-        ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT,
-        SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_SPEED,
-        SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y, SPACESHIP_DECELERATION_X,
-        SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_DAMAGE, SPACESHIP_BARREL_COOLDOWN,
-        SPACESHIP_BARREL_SPEED, SPACESHIP_BARREL_DURATION, SPACESHIP_HEALTH, SPACESHIP_MONEY,
-        SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_CRIT_CHANCE,
-        SPACESHIP_BLAST_SPRITE_INDEX, CRIT_SPRITE_INDEX, POISON_SPRITE_INDEX
+        ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_SPRITE_INDEX,
+        POISON_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
+        SPACESHIP_BARREL_COOLDOWN, SPACESHIP_BARREL_DURATION, SPACESHIP_BARREL_SPEED,
+        SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_CRIT_CHANCE,
+        SPACESHIP_DAMAGE, SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED,
+        SPACESHIP_HEALTH, SPACESHIP_HEIGHT, SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH,
+        SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED, SPACESHIP_MONEY, SPACESHIP_WIDTH,
     },
+};
+use amethyst::{
+    assets::Handle,
+    core::transform::Transform,
+    ecs::{World, WorldExt},
+    prelude::Builder,
+    renderer::{SpriteRender, SpriteSheet, Transparent},
 };
 use std::collections::HashMap;
 
 pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
-
     let mut local_transform = Transform::default();
-    local_transform.set_translation_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MIN_Y + (ARENA_HEIGHT / 6.0), 0.9);
+    local_transform.set_translation_xyz(
+        ARENA_MIN_X + (ARENA_WIDTH / 2.0),
+        ARENA_MIN_Y + (ARENA_HEIGHT / 6.0),
+        0.9,
+    );
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),

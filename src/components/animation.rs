@@ -1,5 +1,5 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize)]
 pub enum AnimationType {

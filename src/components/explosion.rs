@@ -1,8 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-use crate::{
-    components::{ Spawnable },
-};
+use crate::components::Spawnable;
 
 #[derive(Clone)]
 pub struct Explosion {
@@ -11,8 +9,10 @@ pub struct Explosion {
 }
 
 impl Spawnable for Explosion {
-    fn name(&self) -> String { self.name.clone() }
-    fn init(&mut self) { }
+    fn name(&self) -> String {
+        self.name.clone()
+    }
+    fn init(&mut self) {}
 }
 
 impl Component for Explosion {

@@ -1,4 +1,4 @@
-(
+List((
     texture_width: 20,
     texture_height: 58,
     sprites: [
@@ -9,4 +9,4 @@
             height: 58,
         ),
     ],
-)
+))
