@@ -18,8 +18,8 @@ use amethyst::{
     input::{is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::formats::texture::ImageFormat,
-    renderer::{camera, Camera, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
-    ui::{Anchor, TtfFormat, UiText, UiTransform},
+    renderer::{Camera, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
+    ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform},
 };
 use std::f32::consts::FRAC_PI_3;
 
@@ -266,9 +266,7 @@ fn initialise_camera(world: &mut World) {
 
     world
         .create_entity()
-        .with(Camera::from(camera::Projection::perspective(
-            1.3, FRAC_PI_3, 0.1, 20000.0,
-        )))
+        .with(Camera::perspective(1.3, FRAC_PI_3, 0.1))
         .with(transform)
         .build();
 }
@@ -377,6 +375,8 @@ fn initialise_ui(world: &mut World) {
             "x0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
             20.0,
+            LineMode::Single,
+            Anchor::Middle,
         ))
         .build();
 
@@ -398,6 +398,8 @@ fn initialise_ui(world: &mut World) {
             "$0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
             15.0,
+            LineMode::Single,
+            Anchor::Middle,
         ))
         .build();
 
@@ -419,6 +421,8 @@ fn initialise_ui(world: &mut World) {
             "$0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
             15.0,
+            LineMode::Single,
+            Anchor::Middle,
         ))
         .build();
 
@@ -440,6 +444,8 @@ fn initialise_ui(world: &mut World) {
             "$0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
             15.0,
+            LineMode::Single,
+            Anchor::Middle,
         ))
         .build();
 
