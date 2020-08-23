@@ -1,6 +1,5 @@
 use crate::{
     components::{BossType, EnemySpawnerTag, GameMaster, PhaseType, Spawner},
-    constants,
     entities::{spawn_enemy, spawn_repeater},
     resources::{EnemyPool, SpriteResource},
 };

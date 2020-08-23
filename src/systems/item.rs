@@ -10,7 +10,6 @@ use amethyst::{
     core::{timing::Time, transform::Transform},
     ecs::prelude::{Entities, Join, Read, ReadExpect, System, WriteStorage},
 };
-use std::ops::Deref;
 
 pub struct ItemSystem;
 
@@ -123,11 +122,7 @@ impl<'s> System<'s> for ItemSystem {
                         spaceship.set_health(spaceship.max_health);
                     }
 
-                    play_sfx(
-                        &sounds.item_sfx,
-                        &storage,
-                        audio_output.as_ref().map(|o| o.deref()),
-                    );
+                    play_sfx(&sounds.item_sfx, &storage, audio_output.as_deref());
 
                     let _result = entities.delete(item_entity);
                 } else {

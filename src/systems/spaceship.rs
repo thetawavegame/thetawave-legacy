@@ -11,7 +11,6 @@ use amethyst::{
     ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
-use std::ops::Deref;
 
 pub struct SpaceshipSystem;
 
@@ -84,7 +83,7 @@ impl<'s> System<'s> for SpaceshipSystem {
                 play_sfx(
                     &sounds.spaceship_laser_sfx,
                     &storage,
-                    audio_output.as_ref().map(|o| o.deref()),
+                    audio_output.as_deref(),
                 );
             }
 

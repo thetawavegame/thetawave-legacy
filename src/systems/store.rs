@@ -10,7 +10,6 @@ use amethyst::{
     ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
-use std::ops::Deref;
 
 pub struct StoreSystem;
 
@@ -59,33 +58,30 @@ impl<'s> System<'s> for StoreSystem {
             );
 
             for spaceship in (&mut spaceships).join() {
-                if buy_0_action {
-                    if store.purchase_item(0, &entities, spaceship, &sprite_resource, &lazy_update)
-                    {
-                        play_sfx(
-                            &sounds.cash_register_bell,
-                            &storage,
-                            audio_output.as_ref().map(|o| o.deref()),
-                        );
-                    }
-                } else if buy_1_action {
-                    if store.purchase_item(1, &entities, spaceship, &sprite_resource, &lazy_update)
-                    {
-                        play_sfx(
-                            &sounds.cash_register_bell,
-                            &storage,
-                            audio_output.as_ref().map(|o| o.deref()),
-                        );
-                    }
-                } else if buy_2_action {
-                    if store.purchase_item(2, &entities, spaceship, &sprite_resource, &lazy_update)
-                    {
-                        play_sfx(
-                            &sounds.cash_register_bell,
-                            &storage,
-                            audio_output.as_ref().map(|o| o.deref()),
-                        );
-                    }
+                if (buy_0_action
+                    && store.purchase_item(0, &entities, spaceship, &sprite_resource, &lazy_update))
+                    || (buy_1_action
+                        && store.purchase_item(
+                            1,
+                            &entities,
+                            spaceship,
+                            &sprite_resource,
+                            &lazy_update,
+                        ))
+                    || (buy_2_action
+                        && store.purchase_item(
+                            2,
+                            &entities,
+                            spaceship,
+                            &sprite_resource,
+                            &lazy_update,
+                        ))
+                {
+                    play_sfx(
+                        &sounds.cash_register_bell,
+                        &storage,
+                        audio_output.as_deref(),
+                    );
                 }
             }
         }

@@ -14,7 +14,6 @@ use amethyst::{
         Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
     },
 };
-use std::ops::Deref;
 
 pub struct PlayerHitSystem;
 
@@ -66,11 +65,7 @@ impl<'s> System<'s> for PlayerHitSystem {
                         enemy.hitbox_height,
                     ) {
                         let _result = entities.delete(blast_entity);
-                        play_sfx(
-                            &sounds.spaceship_hit_sfx,
-                            &storage,
-                            audio_output.as_ref().map(|o| o.deref()),
-                        );
+                        play_sfx(&sounds.spaceship_hit_sfx, &storage, audio_output.as_deref());
 
                         let explosion_position = Vector3::new(
                             blast_transform.translation().x,

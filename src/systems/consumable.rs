@@ -10,7 +10,6 @@ use amethyst::{
     core::{timing::Time, transform::Transform},
     ecs::prelude::{Entities, Join, Read, ReadExpect, System, WriteStorage},
 };
-use std::ops::Deref;
 
 pub struct ConsumableSystem;
 
@@ -62,23 +61,11 @@ impl<'s> System<'s> for ConsumableSystem {
                     spaceship.money += consumable.money_value;
 
                     if consumable.money_value == 1 {
-                        play_sfx(
-                            &sounds.small_rock_sfx,
-                            &storage,
-                            audio_output.as_ref().map(|o| o.deref()),
-                        );
+                        play_sfx(&sounds.small_rock_sfx, &storage, audio_output.as_deref());
                     } else if consumable.money_value == 5 {
-                        play_sfx(
-                            &sounds.large_rock_sfx,
-                            &storage,
-                            audio_output.as_ref().map(|o| o.deref()),
-                        );
+                        play_sfx(&sounds.large_rock_sfx, &storage, audio_output.as_deref());
                     } else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
-                        play_sfx(
-                            &sounds.wrench_sfx,
-                            &storage,
-                            audio_output.as_ref().map(|o| o.deref()),
-                        );
+                        play_sfx(&sounds.wrench_sfx, &storage, audio_output.as_deref());
                     }
 
                     for defense in (&mut defenses).join() {
