@@ -5,6 +5,7 @@ use crate::components::Enemy;
 pub struct Repeater {
     pub body: Entity,
     pub head: Entity,
+    pub right_shoulder: Entity,
 }
 
 impl Component for Repeater {

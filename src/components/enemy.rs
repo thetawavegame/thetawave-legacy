@@ -20,6 +20,7 @@ pub enum EnemyType {
     Hauler, //ally
     RepeaterBody,
     RepeaterHead,
+    RepeaterShoulder,
 }
 
 #[derive(Clone, Serialize, Deserialize)]
