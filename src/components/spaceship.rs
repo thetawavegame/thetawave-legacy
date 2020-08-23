@@ -192,9 +192,9 @@ impl Spaceship {
     pub fn barrel_input_cooldown(&mut self, dt: f32) -> bool {
         if self.barrel_reset_timer > 0.0 && !self.barrel_action_left && !self.barrel_action_right {
             self.barrel_reset_timer -= dt;
-            return true;
+            true
         } else {
-            return false;
+            false
         }
     }
 
@@ -217,9 +217,9 @@ impl Spaceship {
                 self.barrel_reset_timer = self.barrel_cooldown;
             }
 
-            return true;
+            true
         } else {
-            return false;
+            false
         }
     }
 }

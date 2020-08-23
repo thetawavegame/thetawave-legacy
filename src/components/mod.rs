@@ -158,7 +158,7 @@ pub trait Fires {
     ) -> Option<Vector3<f32>> {
         if self.fire_reset_timer() > 0.0 {
             self.set_fire_reset_timer(self.fire_reset_timer() - dt);
-            return None;
+            None
         } else if fire {
             self.set_fire_reset_timer(self.fire_speed());
             let fire_position = Vector3::new(
@@ -166,9 +166,9 @@ pub trait Fires {
                 transform.translation()[1] + offset,
                 BLAST_Z,
             );
-            return Some(fire_position);
+            Some(fire_position)
         } else {
-            return None;
+            None
         }
     }
 }

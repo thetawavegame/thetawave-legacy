@@ -14,7 +14,7 @@ pub struct SpriteResource {
     pub blast_explosions_sprite_sheet: Handle<SpriteSheet>,
 }
 
-pub fn initialise_sprite_resource(
+pub fn initialize_sprite_resource(
     world: &mut World,
     items_sprite_sheet_handle: Handle<SpriteSheet>,
     consumables_sprite_sheet_handle: Handle<SpriteSheet>,

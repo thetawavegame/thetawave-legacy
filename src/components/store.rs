@@ -131,7 +131,7 @@ impl Store {
                 return true;
             }
         }
-        return false;
+        false
     }
 
     pub fn spawn_store_icon(

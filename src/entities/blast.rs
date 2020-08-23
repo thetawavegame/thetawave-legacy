@@ -25,10 +25,11 @@ pub fn fire_blast(
         sprite_number: source_component.blast_sprite_indicies()["normal"],
     };
 
-    let mut blast_type: BlastType = BlastType::Player;
-    if !source_component.allied() {
-        blast_type = BlastType::Enemy;
-    }
+    let mut blast_type: BlastType = if !source_component.allied() {
+        BlastType::Enemy
+    } else {
+        BlastType::Player
+    };
 
     // roll for crit, then poison
     let mut damage = source_component.blast_damage();
@@ -70,8 +71,8 @@ pub fn fire_blast(
             Blast {
                 speed: source_component.blast_speed(),
                 hitbox_radius: BLAST_HITBOX_RADIUS,
-                damage: damage,
-                poison_damage: poison_damage,
+                damage,
+                poison_damage,
                 x_velocity: source_component.velocity_x(),
                 y_velocity: source_component.velocity_y(),
                 velocity_factor: VELOCITY_FACTOR,

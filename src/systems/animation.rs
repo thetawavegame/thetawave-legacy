@@ -31,14 +31,13 @@ impl<'s> System<'s> for AnimationSystem {
                             } else {
                                 ani.current_frame += 1;
                             }
+                        } else if ani.current_frame == ani.start_idx {
+                            ani.current_frame += 1;
+                            ani.forward = true;
                         } else {
-                            if ani.current_frame == ani.start_idx {
-                                ani.current_frame += 1;
-                                ani.forward = true;
-                            } else {
-                                ani.current_frame -= 1;
-                            }
+                            ani.current_frame -= 1;
                         }
+
                         sprite_render.sprite_number = ani.current_frame;
                     }
                 }

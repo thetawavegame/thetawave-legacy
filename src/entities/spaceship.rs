@@ -19,7 +19,7 @@ use amethyst::{
 };
 use std::collections::HashMap;
 
-pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
+pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(
         ARENA_MIN_X + (ARENA_WIDTH / 2.0),
@@ -28,7 +28,7 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
     );
 
     let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_sheet: sprite_sheet_handle,
         sprite_number: 0,
     };
 
@@ -74,7 +74,7 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             collision_damage: SPACESHIP_COLLISION_DAMAGE,
             crit_chance: SPACESHIP_CRIT_CHANCE,
             poison_chance: 0.0,
-            blast_sprite_indicies: blast_sprite_indicies,
+            blast_sprite_indicies,
             allied: true,
         })
         .with(local_transform)

@@ -8,7 +8,7 @@ use crate::{
     constants::{LAST_PHASE_IDX, STARTING_PHASE_IDX, STARTING_TICK, TICK_LENGTH},
 };
 
-pub fn initialise_gamemaster(world: &mut World) {
+pub fn initialize_gamemaster(world: &mut World) {
     let mut phase_map: Vec<Phase> = Vec::new();
 
     let phase_0 = Phase {
@@ -55,7 +55,7 @@ pub fn initialise_gamemaster(world: &mut World) {
     world
         .create_entity()
         .with(GameMaster {
-            phase_map: phase_map,
+            phase_map,
             phase_idx: STARTING_PHASE_IDX,
             last_phase: LAST_PHASE_IDX,
             current_tick: STARTING_TICK,

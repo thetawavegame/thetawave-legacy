@@ -38,15 +38,13 @@ fn main() -> amethyst::Result<()> {
     let bindings_path = app_root.join("config").join("bindings_config.ron");
     let assets_path = app_root.join("assets");
 
-    let items = <ItemPool as Config>::load_no_fallback(assets_path.join("data").join("items.ron"))
+    let items = <ItemPool as Config>::load(assets_path.join("data").join("items.ron"))
         .expect("failed to load game data");
-    let enemies =
-        <EnemyPool as Config>::load_no_fallback(assets_path.join("data").join("enemies.ron"))
+    let enemies = <EnemyPool as Config>::load(assets_path.join("data").join("enemies.ron"))
+        .expect("failed to load game data");
+    let consumables =
+        <ConsumablePool as Config>::load(assets_path.join("data").join("consumables.ron"))
             .expect("failed to load game data");
-    let consumables = <ConsumablePool as Config>::load_no_fallback(
-        assets_path.join("data").join("consumables.ron"),
-    )
-    .expect("failed to load game data");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])

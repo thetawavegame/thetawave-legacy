@@ -1,14 +1,14 @@
 use crate::{
-    audio::initialise_audio,
+    audio::initialize_audio,
     constants::{
         ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CAMERA_X, CAMERA_Y,
         CAMERA_Z,
     },
     entities::{
-        initialise_defense, initialise_enemy_spawner, initialise_gamemaster, initialise_planet,
-        initialise_side_panels, initialise_spaceship, initialise_status_bars, initialise_store,
+        initialise_defense, initialise_enemy_spawner, initialise_planet, initialise_status_bars,
+        initialise_store, initialize_gamemaster, initialize_side_panels, initialize_spaceship,
     },
-    resources::initialise_sprite_resource,
+    resources::initialize_sprite_resource,
     systems,
 };
 use amethyst::{
@@ -152,9 +152,9 @@ impl SimpleState for SpaceShooter {
 
         self.dispatcher.setup(world);
 
-        initialise_audio(world);
+        initialize_audio(world);
         initialise_ui(world);
-        initialise_gamemaster(world);
+        initialize_gamemaster(world);
         initialise_defense(world);
         initialise_status_bars(world);
         initialise_planet(
@@ -177,8 +177,8 @@ impl SimpleState for SpaceShooter {
             0.0,
             0.005,
         );
-        initialise_spaceship(world, players_sprite_sheet_handle.clone());
-        initialise_sprite_resource(
+        initialize_spaceship(world, players_sprite_sheet_handle.clone());
+        initialize_sprite_resource(
             world,
             items_sprite_sheet_handle,
             consumables_sprite_sheet_handle,
@@ -192,7 +192,7 @@ impl SimpleState for SpaceShooter {
             blast_explosions_sprite_sheet_handle,
         );
         initialise_enemy_spawner(world);
-        initialise_side_panels(world, side_panel_sprite_sheet_handle);
+        initialize_side_panels(world, side_panel_sprite_sheet_handle);
         initialise_store(world);
         initialise_camera(world);
     }
@@ -302,7 +302,7 @@ fn initialise_ui(world: &mut World) {
     };
 
     let item_slots_sprite_render = SpriteRender {
-        sprite_sheet: item_slots_sprite_sheet_handle.clone(),
+        sprite_sheet: item_slots_sprite_sheet_handle,
         sprite_number: 0,
     };
 
@@ -338,7 +338,7 @@ fn initialise_ui(world: &mut World) {
     };
 
     let currency_sprite_render = SpriteRender {
-        sprite_sheet: currency_sprite_sheet_handle.clone(),
+        sprite_sheet: currency_sprite_sheet_handle,
         sprite_number: 0,
     };
 
@@ -440,7 +440,7 @@ fn initialise_ui(world: &mut World) {
         .create_entity()
         .with(item_price_3_transform)
         .with(UiText::new(
-            font.clone(),
+            font,
             "$0".to_string(),
             [1.0, 1.0, 1.0, 1.0],
             15.0,
@@ -451,8 +451,8 @@ fn initialise_ui(world: &mut World) {
 
     world.insert(TrackedStats {
         currency: currency_count,
-        item_price_1: item_price_1,
-        item_price_2: item_price_2,
-        item_price_3: item_price_3,
+        item_price_1,
+        item_price_2,
+        item_price_3,
     });
 }

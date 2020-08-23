@@ -38,16 +38,16 @@ impl StatusBar {
             Ordering::Greater => {
                 let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
                 self.x_pos += 1.0;
-                return Some(status_position);
+                Some(status_position)
             }
             Ordering::Less => {
                 if let Some(unit) = self.status_unit_stack.pop() {
                     let _result = entities.delete(unit);
                     self.x_pos -= 1.0;
                 }
-                return None;
+                None
             }
-            Ordering::Equal => return None,
+            Ordering::Equal => None,
         }
     }
 
@@ -64,16 +64,16 @@ impl StatusBar {
             Ordering::Greater => {
                 let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
                 self.y_pos += 1.0;
-                return Some(status_position);
+                Some(status_position)
             }
             Ordering::Less => {
                 if let Some(unit) = self.status_unit_stack.pop() {
                     let _result = entities.delete(unit);
                     self.y_pos -= 1.0;
                 }
-                return None;
+                None
             }
-            Ordering::Equal => return None,
+            Ordering::Equal => None,
         }
     }
 }

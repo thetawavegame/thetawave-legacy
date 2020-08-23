@@ -51,11 +51,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
     ) {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             //println!("{:?}", event);
-            play_sfx(
-                &sounds.crash_sfx,
-                &storage,
-                audio_output.as_ref().map(|o| o.deref()),
-            );
+            play_sfx(&sounds.crash_sfx, &storage, audio_output.as_deref());
 
             for spaceship in (&mut spaceships).join() {
                 for (enemy, enemy_entity) in (&mut enemies, &entities).join() {
@@ -80,10 +76,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                     } else if event.type_b == "spaceship" && event.type_a == "enemy" {
                         if event.entity_a == enemy_entity {
                             //println!("spaceship collision");
-                            let mut enemy_dead = false;
-                            if enemy.health <= 0.0 {
-                                enemy_dead = true;
-                            }
+                            let mut enemy_dead = enemy.health <= 0.0;
 
                             if spaceship.barrel_action_left {
                                 spaceship.barrel_action_right = true;

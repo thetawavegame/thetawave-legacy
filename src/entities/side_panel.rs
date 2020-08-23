@@ -10,14 +10,14 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet},
 };
 
-pub fn initialise_side_panels(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
+pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let sprite_render_left = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),
         sprite_number: SIDE_PANEL_LEFT_SPRITE_INDEX,
     };
 
     let sprite_render_right = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_sheet: sprite_sheet_handle,
         sprite_number: SIDE_PANEL_RIGHT_SPRITE_INDEX,
     };
 

@@ -19,7 +19,7 @@ pub fn spawn_status_unit(
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_resource.status_bar_unit_sprite_sheet.clone(),
-        sprite_number: sprite_number,
+        sprite_number,
     };
 
     lazy_update.insert(status_unit_entity, sprite_render);
