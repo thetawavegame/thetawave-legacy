@@ -14,7 +14,7 @@ pub fn spawn_enemy(
     lazy_update: &ReadExpect<LazyUpdate>,
 ) -> Entity {
     let sprite = SpriteRender {
-        sprite_sheet: sprite_sheet,
+        sprite_sheet,
         sprite_number: item.sprite_index,
     };
 

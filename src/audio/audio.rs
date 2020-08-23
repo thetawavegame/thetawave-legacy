@@ -20,11 +20,11 @@ fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle 
     loader.load(file, OggFormat, (), &world.read_resource())
 }
 
-pub fn initialise_audio(world: &mut World) {
+pub fn initialize_audio(world: &mut World) {
     let sound_effects = {
         let loader = world.read_resource::<Loader>();
 
-        let sound = Sounds {
+        Sounds {
             small_rock_sfx: load_audio_track(&loader, &world, "audio/small_rock.ogg"),
             large_rock_sfx: load_audio_track(&loader, &world, "audio/large_rock.ogg"),
             wrench_sfx: load_audio_track(&loader, &world, "audio/wrench.ogg"),
@@ -34,9 +34,7 @@ pub fn initialise_audio(world: &mut World) {
             explosion_sfx: load_audio_track(&loader, &world, "audio/explosion.ogg"),
             spaceship_hit_sfx: load_audio_track(&loader, &world, "audio/spaceship_hit.ogg"),
             cash_register_bell: load_audio_track(&loader, &world, "audio/cash_register_bell.ogg"),
-        };
-
-        sound
+        }
     };
 
     world.insert(sound_effects);

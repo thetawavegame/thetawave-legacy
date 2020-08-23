@@ -129,7 +129,7 @@ fn des_blast_count() -> usize {
 fn des_blast_sprite_indicies() -> HashMap<String, usize> {
     let mut blast_sprite_indicies = HashMap::new();
     blast_sprite_indicies.insert("normal".to_string(), ENEMY_BLAST_SPRITE_INDEX);
-    return blast_sprite_indicies;
+    blast_sprite_indicies
 }
 fn des_allied() -> bool {
     false
@@ -175,8 +175,8 @@ impl Rigidbody for Enemy {
         if (enemy_x - (self.width / 2.0)) < ARENA_MIN_X
             || (enemy_x + (self.width / 2.0)) > ARENA_MAX_X
         {
-            self.current_velocity_x = (-1.0) * self.current_velocity_x;
-            self.acceleration_x = (-1.0) * self.acceleration_x();
+            self.current_velocity_x *= -1.0;
+            self.acceleration_x *= -1.0;
         }
     }
 }
@@ -231,8 +231,8 @@ impl Spawnable for Enemy {
         let rand_num = rng.gen_range(0, 2);
 
         if rand_num == 1 {
-            self.current_velocity_x = (-1.0) * self.current_velocity_x;
-            self.acceleration_x = (-1.0) * self.acceleration_x();
+            self.current_velocity_x *= -1.0;
+            self.acceleration_x *= -1.0;
         }
     }
 }

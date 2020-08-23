@@ -18,10 +18,7 @@ pub fn initialise_planet(
     angle: f32,
     d_angle: f32,
 ) {
-    let planet = Planet {
-        angle: angle,
-        d_angle: d_angle,
-    };
+    let planet = Planet { angle, d_angle };
 
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(x, y, z);
