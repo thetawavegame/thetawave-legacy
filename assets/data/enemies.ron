@@ -161,4 +161,33 @@
         frame_time: 0.18,
         animation_type: PingPong
     ),
+        "repeater_right_shoulder":(
+        name: "repeater_right_shoulder",
+        health: 2000,
+        sprite_index: 6,
+        width: 56,
+        height: 62,
+        hitbox_width: 25,
+        hitbox_height: 30,
+        fires: false,
+        fire_speed: 0,
+        fire_reset_timer: 0,
+        blast_speed: 0,
+        blast_damage: 0,
+        defense_damage: 0,
+        max_speed: 30,
+        current_velocity_y: -30,
+        collectables_probs: [
+            ("", 0.0),
+            ("health", 0.02),
+            ("defense", 0.025),
+            ("money_1", 0.43),
+            ("money_5", 0.5),
+        ],
+        enemy_type: RepeaterShoulder,
+
+        frame_count: 1,
+        frame_time: 0.18,
+        animation_type: NoAnimation,
+    ),
 }

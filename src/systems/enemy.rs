@@ -168,6 +168,15 @@ impl<'s> System<'s> for EnemySystem {
                         enemy_component.current_velocity_y = 0.0;
                     }
                 }
+
+                EnemyType::RepeaterShoulder => {
+                    //accelerate in -y direction
+                    if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
+                        enemy_component.accelerate(0.0, -1.0);
+                    } else {
+                        enemy_component.current_velocity_y = 0.0;
+                    }
+                }
             }
         }
     }

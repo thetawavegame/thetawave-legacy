@@ -21,7 +21,7 @@ pub fn initialize_gamemaster(world: &mut World) {
     let phase_1 = Phase {
         phase_type: PhaseType::Invasion,
         boss_type: BossType::Repeater,
-        length: 30,
+        length: 5,
         boss_spawned: false,
     };
 

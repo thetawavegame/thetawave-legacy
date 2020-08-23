@@ -49,6 +49,8 @@ impl<'s> System<'s> for AnimationSystem {
                         sprite_render.sprite_number = ani.current_frame;
                     }
                 }
+
+                AnimationType::NoAnimation => {}
             }
         }
     }

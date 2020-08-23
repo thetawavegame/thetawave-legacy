@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 pub enum AnimationType {
     PingPong,
     Forward,
+    NoAnimation,
 }
 
 #[derive(Clone)]
