@@ -12,7 +12,7 @@ use amethyst::{
     core::{math::Vector3, timing::Time, transform::Transform},
     ecs::prelude::{Entities, Join, LazyUpdate, Read, ReadExpect, System, WriteStorage},
 };
-use std::{collections::HashMap, ops::Deref};
+use std::collections::HashMap;
 
 pub struct EnemySystem;
 
@@ -83,11 +83,7 @@ impl<'s> System<'s> for EnemySystem {
                     &lazy_update,
                 );
 
-                play_sfx(
-                    &sounds.explosion_sfx,
-                    &storage,
-                    audio_output.as_ref().map(|o| o.deref()),
-                );
+                play_sfx(&sounds.explosion_sfx, &storage, audio_output.as_deref());
 
                 let name = choose_random_name(&enemy_component.collectables_probs);
                 if !name.is_empty() {
