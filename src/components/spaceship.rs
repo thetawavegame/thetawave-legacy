@@ -17,6 +17,7 @@ pub struct Spaceship {
     pub hitbox_y_offset: f32,
     pub current_velocity_x: f32,
     pub current_velocity_y: f32,
+    pub current_rotation_velocity: f32,
     pub max_speed: f32,
     pub acceleration_x: f32,
     pub deceleration_x: f32,
@@ -55,6 +56,9 @@ impl Rigidbody for Spaceship {
     fn current_velocity_y(&self) -> f32 {
         self.current_velocity_y
     }
+    fn current_rotation_velocity(&self) -> f32 {
+        self.current_rotation_velocity
+    }
     fn acceleration_x(&self) -> f32 {
         self.acceleration_x
     }
@@ -79,6 +83,9 @@ impl Rigidbody for Spaceship {
     }
     fn set_current_velocity_x(&mut self, value: f32) {
         self.current_velocity_x = value;
+    }
+    fn set_rotation_velocity(&mut self, value: f32) {
+        self.current_rotation_velocity = value
     }
 
     fn constrain_to_arena(&mut self, transform: &mut Transform) {

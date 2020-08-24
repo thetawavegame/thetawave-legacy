@@ -50,6 +50,8 @@ pub struct Enemy {
     #[serde(default = "des_current_velocity_x")]
     pub current_velocity_x: f32,
     pub current_velocity_y: f32,
+    #[serde(default = "des_current_rotation_velocity")]
+    pub current_rotation_velocity: f32,
     #[serde(default = "des_acceleration_x")]
     pub acceleration_x: f32,
     #[serde(default = "des_acceleration_y")]
@@ -145,6 +147,9 @@ fn des_blast_sprite_indicies() -> HashMap<String, usize> {
 fn des_allied() -> bool {
     false
 }
+fn des_current_rotation_velocity() -> f32 {
+    0.0
+}
 
 impl Rigidbody for Enemy {
     fn current_velocity_x(&self) -> f32 {
@@ -153,6 +158,10 @@ impl Rigidbody for Enemy {
 
     fn current_velocity_y(&self) -> f32 {
         self.current_velocity_y
+    }
+
+    fn current_rotation_velocity(&self) -> f32 {
+        self.current_rotation_velocity
     }
 
     fn acceleration_x(&self) -> f32 {
@@ -179,6 +188,9 @@ impl Rigidbody for Enemy {
     }
     fn set_current_velocity_x(&mut self, value: f32) {
         self.current_velocity_x = value;
+    }
+    fn set_rotation_velocity(&mut self, value: f32) {
+        self.current_rotation_velocity = value
     }
 
     fn constrain_to_arena(&mut self, transform: &mut Transform) {

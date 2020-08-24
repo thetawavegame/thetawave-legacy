@@ -50,6 +50,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             max_speed: SPACESHIP_MAX_SPEED,
             current_velocity_x: 0.0,
             current_velocity_y: 0.0,
+            current_rotation_velocity: 0.0,
             acceleration_x: SPACESHIP_ACCELERATION_X,
             deceleration_x: SPACESHIP_DECELERATION_X,
             acceleration_y: SPACESHIP_ACCELERATION_Y,
