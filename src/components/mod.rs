@@ -39,6 +39,7 @@ use std::collections::HashMap;
 pub trait Rigidbody {
     fn current_velocity_x(&self) -> f32;
     fn current_velocity_y(&self) -> f32;
+    fn current_rotation_velocity(&self) -> f32;
     fn acceleration_x(&self) -> f32;
     fn acceleration_y(&self) -> f32;
     fn deceleration_x(&self) -> f32;
@@ -47,12 +48,14 @@ pub trait Rigidbody {
     fn knockback_max_speed(&self) -> f32;
     fn set_current_velocity_y(&mut self, value: f32);
     fn set_current_velocity_x(&mut self, value: f32);
+    fn set_rotation_velocity(&mut self, value: f32);
 
     fn constrain_to_arena(&mut self, transform: &mut Transform);
 
     fn update_position(&self, transform: &mut Transform, dt: f32) {
         transform.set_translation_x(transform.translation().x + self.current_velocity_x() * dt);
         transform.set_translation_y(transform.translation().y + self.current_velocity_y() * dt);
+        transform.append_rotation_z_axis(self.current_rotation_velocity() * dt);
     }
 
     fn accelerate_x(&mut self, direction: f32) {

@@ -34,9 +34,15 @@ pub fn spawn_repeater(
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 98.0,
         constants::BOSS_Z_1,
     );
+    let left_shoulder_position = Vector3::new(
+        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) - 36.0,
+        constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 98.0,
+        constants::BOSS_Z_1,
+    );
     let body_entity = enemy_pool[&"repeater_body".to_string()].clone();
     let head_entity = enemy_pool[&"repeater_head".to_string()].clone();
     let right_shoulder_entity = enemy_pool[&"repeater_right_shoulder".to_string()].clone();
+    let left_shoulder_entity = enemy_pool[&"repeater_left_shoulder".to_string()].clone();
     let body = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
@@ -53,9 +59,16 @@ pub fn spawn_repeater(
     );
     let right_shoulder = spawn_enemy(
         &entities,
-        sprite_sheet,
+        sprite_sheet.clone(),
         right_shoulder_entity,
         right_shoulder_position,
+        &lazy_update,
+    );
+    let left_shoulder = spawn_enemy(
+        &entities,
+        sprite_sheet,
+        left_shoulder_entity,
+        left_shoulder_position,
         &lazy_update,
     );
 
@@ -63,6 +76,7 @@ pub fn spawn_repeater(
         body,
         head,
         right_shoulder,
+        left_shoulder,
     };
 
     lazy_update.create_entity(entities).with(repeater).build();
