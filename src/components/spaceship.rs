@@ -13,6 +13,8 @@ pub struct Spaceship {
     pub height: f32,
     pub hitbox_width: f32,
     pub hitbox_height: f32,
+    pub hitbox_x_offset: f32,
+    pub hitbox_y_offset: f32,
     pub current_velocity_x: f32,
     pub current_velocity_y: f32,
     pub max_speed: f32,

@@ -56,6 +56,10 @@ impl<'s> System<'s> for ConsumableSystem {
                     consumable.hitbox_height,
                     spaceship.hitbox_width,
                     spaceship.hitbox_height,
+                    consumable.hitbox_x_offset,
+                    consumable.hitbox_y_offset,
+                    spaceship.hitbox_x_offset,
+                    spaceship.hitbox_y_offset,
                 ) {
                     spaceship.health += consumable.health_value;
                     spaceship.money += consumable.money_value;

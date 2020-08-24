@@ -47,6 +47,10 @@ impl<'s> System<'s> for EnemyHitSystem {
                         blast.hitbox_radius,
                         spaceship.hitbox_width,
                         spaceship.hitbox_height,
+                        0.0,
+                        0.0,
+                        spaceship.hitbox_x_offset,
+                        spaceship.hitbox_y_offset,
                     ) && !spaceship.barrel_action_left
                         && !spaceship.barrel_action_right
                     {

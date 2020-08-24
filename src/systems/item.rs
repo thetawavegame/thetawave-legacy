@@ -55,6 +55,10 @@ impl<'s> System<'s> for ItemSystem {
                     item.hitbox_height,
                     spaceship.hitbox_width,
                     spaceship.hitbox_height,
+                    0.0,
+                    0.0,
+                    spaceship.hitbox_x_offset,
+                    spaceship.hitbox_y_offset,
                 ) {
                     if item.stat_effects.contains_key("max_defense") {
                         for defense in (&mut defenses).join() {
