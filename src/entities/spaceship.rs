@@ -45,6 +45,8 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             height: SPACESHIP_HEIGHT,
             hitbox_width: SPACESHIP_HITBOX_WIDTH,
             hitbox_height: SPACESHIP_HITBOX_HEIGHT,
+            hitbox_x_offset: 0.0,
+            hitbox_y_offset: 0.0,
             max_speed: SPACESHIP_MAX_SPEED,
             current_velocity_x: 0.0,
             current_velocity_y: 0.0,

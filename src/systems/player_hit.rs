@@ -63,6 +63,10 @@ impl<'s> System<'s> for PlayerHitSystem {
                         blast.hitbox_radius,
                         enemy.hitbox_width,
                         enemy.hitbox_height,
+                        0.0,
+                        0.0,
+                        enemy.hitbox_x_offset,
+                        enemy.hitbox_y_offset,
                     ) {
                         let _result = entities.delete(blast_entity);
                         play_sfx(&sounds.spaceship_hit_sfx, &storage, audio_output.as_deref());

@@ -14,6 +14,10 @@ pub struct Consumable {
     pub hitbox_width: f32,
     #[serde(default = "des_hitbox_height")]
     pub hitbox_height: f32,
+    #[serde(default = "des_hitbox_x_offset")]
+    pub hitbox_x_offset: f32,
+    #[serde(default = "des_hitbox_y_offset")]
+    pub hitbox_y_offset: f32,
     #[serde(default = "des_speed")]
     pub speed: f32,
     #[serde(default)]
@@ -36,6 +40,12 @@ fn des_hitbox_width() -> f32 {
 }
 fn des_hitbox_height() -> f32 {
     10.0
+}
+fn des_hitbox_x_offset() -> f32 {
+    0.0
+}
+fn des_hitbox_y_offset() -> f32 {
+    0.0
 }
 fn des_speed() -> f32 {
     35.0

@@ -34,6 +34,10 @@ pub struct Enemy {
     pub hitbox_width: f32,
     #[serde(default = "des_hitbox_height")]
     pub hitbox_height: f32,
+    #[serde(default = "des_hitbox_x_offset")]
+    pub hitbox_x_offset: f32,
+    #[serde(default = "des_hitbox_y_offset")]
+    pub hitbox_y_offset: f32,
     pub health: f32,
     pub sprite_index: usize,
     pub fires: bool,
@@ -87,6 +91,12 @@ fn des_width() -> f32 {
 }
 fn des_height() -> f32 {
     18.0
+}
+fn des_hitbox_x_offset() -> f32 {
+    0.0
+}
+fn des_hitbox_y_offset() -> f32 {
+    0.0
 }
 fn des_hitbox_width() -> f32 {
     14.0

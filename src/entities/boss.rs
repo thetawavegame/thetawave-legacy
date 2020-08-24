@@ -30,8 +30,8 @@ pub fn spawn_repeater(
         constants::BOSS_Z_2,
     );
     let right_shoulder_position = Vector3::new(
-        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) + 100.0,
-        constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 100.0,
+        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) + 36.0,
+        constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 98.0,
         constants::BOSS_Z_1,
     );
     let body_entity = enemy_pool[&"repeater_body".to_string()].clone();

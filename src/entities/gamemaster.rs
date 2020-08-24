@@ -46,9 +46,9 @@ pub fn initialize_gamemaster(world: &mut World) {
         boss_spawned: false,
     };
 
-    phase_map.push(phase_0);
-    phase_map.push(phase_1);
-    phase_map.push(phase_2);
+    //phase_map.push(phase_0);
+    //phase_map.push(phase_1);
+    //phase_map.push(phase_2);
     phase_map.push(phase_3);
     phase_map.push(phase_4);
 

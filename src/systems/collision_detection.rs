@@ -41,6 +41,10 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                     enemy_a.hitbox_height,
                     enemy_b.hitbox_width,
                     enemy_b.hitbox_height,
+                    enemy_a.hitbox_x_offset,
+                    enemy_a.hitbox_y_offset,
+                    enemy_b.hitbox_x_offset,
+                    enemy_b.hitbox_y_offset,
                 ) {
                     enemy_collision_event_channel.single_write(CollisionEvent::new(
                         entity_a,
@@ -67,6 +71,10 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                     enemy_a.hitbox_height,
                     spaceship_b.hitbox_width,
                     spaceship_b.hitbox_height,
+                    enemy_a.hitbox_x_offset,
+                    enemy_a.hitbox_y_offset,
+                    spaceship_b.hitbox_x_offset,
+                    spaceship_b.hitbox_y_offset,
                 ) {
                     enemy_collision_event_channel.single_write(CollisionEvent::new(
                         entity_a,
