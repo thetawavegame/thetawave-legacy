@@ -62,23 +62,23 @@ dependencies = [
 
 [[package]]
 name = "amethyst"
-version = "0.15.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_animation 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_audio 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_config 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_controls 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_gltf 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_input 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_rendy 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_ui 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_utils 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_window 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_animation 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_audio 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_config 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_controls 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_gltf 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_input 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_rendy 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_ui 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_utils 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_window 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "crossbeam-channel 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "dirs 2.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -89,7 +89,7 @@ dependencies = [
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "palette 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "rayon 1.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc_version_runtime 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc_version_runtime 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.106 (registry+https://github.com/rust-lang/crates.io-index)",
  "vergen 3.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "winit 0.19.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -97,15 +97,15 @@ dependencies = [
 
 [[package]]
 name = "amethyst_animation"
-version = "0.10.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_rendy 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_ui 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_rendy 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_ui 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "fnv 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "itertools 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -116,12 +116,12 @@ dependencies = [
 
 [[package]]
 name = "amethyst_assets"
-version = "0.11.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "crossbeam-queue 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -140,12 +140,12 @@ dependencies = [
 
 [[package]]
 name = "amethyst_audio"
-version = "0.10.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "cpal 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -156,7 +156,7 @@ dependencies = [
 
 [[package]]
 name = "amethyst_config"
-version = "0.14.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -166,14 +166,14 @@ dependencies = [
 
 [[package]]
 name = "amethyst_controls"
-version = "0.9.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_input 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_input 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.106 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -182,12 +182,12 @@ dependencies = [
 
 [[package]]
 name = "amethyst_core"
-version = "0.10.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "alga 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "alga_derive 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "approx 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -204,7 +204,7 @@ dependencies = [
 
 [[package]]
 name = "amethyst_derive"
-version = "0.8.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "heck 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -217,7 +217,7 @@ dependencies = [
 
 [[package]]
 name = "amethyst_error"
-version = "0.5.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "backtrace 0.3.46 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -225,14 +225,14 @@ dependencies = [
 
 [[package]]
 name = "amethyst_gltf"
-version = "0.10.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_animation 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_rendy 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_animation 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_rendy 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "base64 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "err-derive 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -248,13 +248,13 @@ dependencies = [
 
 [[package]]
 name = "amethyst_input"
-version = "0.11.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_config 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_window 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_config 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_window 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "fnv 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -265,15 +265,15 @@ dependencies = [
 
 [[package]]
 name = "amethyst_rendy"
-version = "0.5.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_config 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_window 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_config 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_window 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "approx 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -294,17 +294,17 @@ dependencies = [
 
 [[package]]
 name = "amethyst_ui"
-version = "0.10.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_audio 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_input 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_rendy 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_window 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_audio 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_input 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_rendy 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_window 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "clipboard 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "derivative 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -327,16 +327,16 @@ dependencies = [
 
 [[package]]
 name = "amethyst_utils"
-version = "0.10.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_controls 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_rendy 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_window 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_controls 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_rendy 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_window 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "derive-new 0.5.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "dunce 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -347,12 +347,12 @@ dependencies = [
 
 [[package]]
 name = "amethyst_window"
-version = "0.5.1"
+version = "0.15.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "amethyst_config 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_config 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.106 (registry+https://github.com/rust-lang/crates.io-index)",
  "winit 0.19.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2753,7 +2753,7 @@ dependencies = [
 
 [[package]]
 name = "rustc_version_runtime"
-version = "0.1.5"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2990,7 +2990,7 @@ dependencies = [
 name = "space_shooter"
 version = "0.1.0"
 dependencies = [
- "amethyst 0.15.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "amethyst 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.106 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -3579,21 +3579,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum alga 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)" = "4f823d037a7ec6ea2197046bafd4ae150e6bc36f9ca347404f46a46823fa84f2"
 "checksum alga_derive 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f448d7130355515534b7d3af3aa8524365de18b11bbd1deceb06a5956c435f0b"
 "checksum alsa-sys 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b0edcbbf9ef68f15ae1b620f722180b82a98b6f0628d30baa6b8d2a5abc87d58"
-"checksum amethyst 0.15.1 (registry+https://github.com/rust-lang/crates.io-index)" = "4abbd3b9de3f0bc26b71e0f3e12727196f375afe9758e150cad40f1b2f123697"
-"checksum amethyst_animation 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b0d76f9e5c3b5e3d658c5f5c5ea05d34a10ebb59966ad8ea29d001b26a2a9500"
-"checksum amethyst_assets 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7ed000436fdbbf05d94677c28e0b77bd53bb580e2c234db3a2921a6fe5d311d8"
-"checksum amethyst_audio 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "151655c815565ef75f716bbca8d97d0ba7cbf3e52bb639b574e0e4490a985b09"
-"checksum amethyst_config 0.14.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3e371aee028dbf9d0b7852103fcd9ce9ec545fd8579ed3fc66cc0a66e80e7573"
-"checksum amethyst_controls 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = "e981b812763293a28d6c7b5aa8931eef3d2d6eca1335efe407d0e4cbd457505c"
-"checksum amethyst_core 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b083e0bff9bc9efb21d77c6024dbb368adf6f26630cf18342d068449ec7af246"
-"checksum amethyst_derive 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)" = "c8c5fed3a12586a411bddfd444212b06067ce450cbd3b5dc05d9787c610760ef"
-"checksum amethyst_error 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1d9924e6f490107304c3ac2f40938d84fa65d9284fc7e621e29e1d943d1a68c1"
-"checksum amethyst_gltf 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "adbcffb38e43c63152eac286f7044fab7b269a8213a68735c65e51d3d7ba64f9"
-"checksum amethyst_input 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)" = "258c38e3ba429a0329148404705b3ed502d455b3dc167560ac66a2f779e5ba1b"
-"checksum amethyst_rendy 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3bfe40a714d32e2fdaa7b30e99705957e93cc9c71b61096a4e3012d564f52b1a"
-"checksum amethyst_ui 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "6794603bf9e1cc7190c41ce3f85989163a008046584861fe4806ed9417d8ebfb"
-"checksum amethyst_utils 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3fe6e52df6e15ec04901e06e9020e853b7071b2967d2400f5f08551298e0b5db"
-"checksum amethyst_window 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "62d5f0f2d198f0ab4e83efae01981bd4c3f9cb36d47df015c50e50624a344acc"
+"checksum amethyst 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "681f00d516b504bd2f1933285b0cf2e5cbf1dc8ea6006aa27baf747709e1df4d"
+"checksum amethyst_animation 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "56b9d4f573831744ad277a1a95db13ce2da07a2342c9999f7716ae32caf98298"
+"checksum amethyst_assets 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1f703a44161d091a5187f5ae222c8fec391118627d6aeea8cc07a2c167d03cb2"
+"checksum amethyst_audio 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1439c4e590d69f8399b9fc27f643778e699f8faf4989128d67db14bb0dcc5dd2"
+"checksum amethyst_config 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "587b1ab5cec425194e727f229ff018d7c33a6af2a129ac6cd6243cedd06aef63"
+"checksum amethyst_controls 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "165f55291f555e5e602fb421eb86b10df7681a91e31d4208feb51a7c3491cb8f"
+"checksum amethyst_core 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "52ef753ed8309c2efe09218de2362e5c83ab131fe2d6614245beb9beecb51434"
+"checksum amethyst_derive 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "e93c5b508a37aa7f8ce0b0035fb6e2b344d482597fccd89ff6d87e350c9ffcae"
+"checksum amethyst_error 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "5bc703640201c6e9f36938a380801d6904af92f2ab472bde4fd920ec8b6faeb8"
+"checksum amethyst_gltf 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "13dc40721941cbe39fc82170a7708569bbdc8a92f81a9b08f03918970b532c3a"
+"checksum amethyst_input 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "d886de7cd1508ba83e55e118f15eecff0dccf698ec61997d520dd26eca2c9559"
+"checksum amethyst_rendy 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "7177b181290f5d0c7afe429061eea4d64deadb963d94b8c83062bf2573e14b90"
+"checksum amethyst_ui 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "27ec756b75d7090229615aa123e9cd9c85783d3badf6efb255a7b3a1b9a9dd94"
+"checksum amethyst_utils 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "3adc2e19f854b990f65e162367a628df0296e62d17cb3da822e409df82924e34"
+"checksum amethyst_window 0.15.3 (registry+https://github.com/rust-lang/crates.io-index)" = "840a2eec68a17ebaa87702e85b3aba1a8391f6f910106db00390dd5a6fbf7b81"
 "checksum andrew 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "9b7f09f89872c2b6b29e319377b1fbe91c6f5947df19a25596e121cf19a7b35e"
 "checksum android_glue 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "000444226fcff248f2bc4c7625be32c63caccfecc2723a2b9f78a7487a49c407"
 "checksum ansi_term 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ee49baf6cb617b853aa8d93bf420db2383fab46d314482ca2803b40d5fde979b"
@@ -3851,7 +3851,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum rustc-demangle 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)" = "4c691c0e608126e00913e33f0ccf3727d5fc84573623b8d65b2df340b5201783"
 "checksum rustc-hash 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7540fc8b0c49f096ee9c961cda096467dce8084bec6bdca2fc83895fd9b28cb8"
 "checksum rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "138e3e0acb6c9fb258b19b67cb8abd63c00679d2851805ea151465464fe9030a"
-"checksum rustc_version_runtime 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "6de8ecd7fad7731f306f69b6e10ec5a3178c61e464dcc06979427aa4cc891145"
+"checksum rustc_version_runtime 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "4076135c155c07b05e4ab54ba0834aca3fc6a5a01610a2339f5ef3223cf8dee5"
 "checksum rusttype 0.7.7 (registry+https://github.com/rust-lang/crates.io-index)" = "654103d61a05074b268a107cf6581ce120f0fc0115f2610ed9dfea363bb81139"
 "checksum rusttype 0.8.3 (registry+https://github.com/rust-lang/crates.io-index)" = "9f61411055101f7b60ecf1041d87fb74205fb20b0c7a723f07ef39174cf6b4c0"
 "checksum rustversion 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b3bba175698996010c4f6dce5e7f173b6eb781fce25d2cfc45e27091ce0b79f6"

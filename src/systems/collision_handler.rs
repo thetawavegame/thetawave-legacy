@@ -105,6 +105,8 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                             && enemy.name != "repeater_head"
                             && enemy.name != "repeater_right_shoulder"
                             && enemy.name != "repeater_left_shoulder"
+                            && enemy.name != "repeater_right_arm"
+                            && enemy.name != "repeater_left_arm"
                         {
                             enemy.health -= spaceship.collision_damage;
                             enemy.current_velocity_x =

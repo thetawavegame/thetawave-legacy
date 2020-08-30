@@ -21,6 +21,7 @@ pub enum EnemyType {
     RepeaterBody,
     RepeaterHead,
     RepeaterShoulder,
+    RepeaterArm,
 }
 
 #[derive(Clone, Serialize, Deserialize)]
