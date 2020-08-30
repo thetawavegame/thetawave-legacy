@@ -1,6 +1,6 @@
 List((
     texture_width: 204,
-    texture_height: 182,
+    texture_height: 504,
     sprites: [
         (
             x: 0,
@@ -42,13 +42,25 @@ List((
             x: 0,
             y: 88,
             width: 83,
-            height: 93,
+            height: 94,
         ),
         (
             x: 83,
             y: 88,
             width: 83,
-            height: 93,
+            height: 94,
+        ),
+        (
+            x: 0,
+            y: 182,
+            width: 75,
+            height: 161,
+        ),
+        (
+            x: 0,
+            y: 343,
+            width: 75,
+            height: 161,
         ),
     ],
 ))

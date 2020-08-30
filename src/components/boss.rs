@@ -7,6 +7,7 @@ pub struct Repeater {
     pub head: Entity,
     pub right_shoulder: Entity,
     pub left_shoulder: Entity,
+    pub right_arm: Entity,
 }
 
 impl Component for Repeater {

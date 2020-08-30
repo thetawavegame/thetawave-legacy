@@ -184,6 +184,14 @@ impl<'s> System<'s> for EnemySystem {
                         enemy_component.set_rotation_velocity(-0.05);
                     }
                 }
+
+                EnemyType::RepeaterArm => {
+                    if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
+                        enemy_component.accelerate(0.0, -1.0);
+                    } else {
+                        enemy_component.current_velocity_y = 0.0;
+                    }
+                }
             }
         }
     }
