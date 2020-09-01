@@ -1,5 +1,5 @@
 use crate::{
-    components::{Animation, AnimationType, BlastType, Explosion},
+    components::{Animation, AnimationType, BlastType, TimeLimitComponent},
     resources::SpriteResource,
 };
 use amethyst::{
@@ -39,10 +39,7 @@ pub fn spawn_explosion(
         &entities,
         sprite,
         animation,
-        Explosion {
-            duration,
-            name: "explosion".to_string(),
-        },
+        TimeLimitComponent { duration },
         spawn_position,
         &lazy_update,
     );
@@ -85,10 +82,7 @@ pub fn spawn_blast_explosion(
         &entities,
         sprite,
         animation,
-        Explosion {
-            duration,
-            name: "explosion".to_string(),
-        },
+        TimeLimitComponent { duration },
         spawn_position,
         &lazy_update,
     );
