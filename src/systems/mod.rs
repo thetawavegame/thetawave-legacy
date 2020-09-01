@@ -11,7 +11,7 @@ mod defense;
 mod enemy;
 mod enemy_hit;
 mod enemy_spawn;
-mod explosion;
+mod timelimit;
 mod gamemaster;
 mod item;
 mod planets;
@@ -26,7 +26,7 @@ pub use self::{
     animation::AnimationSystem, blast::BlastSystem, boss::BossSystem,
     collision_detection::CollisionDetectionSystem, collision_handler::CollisionHandlerSystem,
     consumable::ConsumableSystem, defense::DefenseSystem, enemy::EnemySystem,
-    enemy_hit::EnemyHitSystem, enemy_spawn::SpawnerSystem, explosion::ExplosionSystem,
+    enemy_hit::EnemyHitSystem, enemy_spawn::SpawnerSystem, timelimit::TimeLimitSystem,
     gamemaster::GameMasterSystem, item::ItemSystem, planets::PlanetsSystem,
     player_hit::PlayerHitSystem, spaceship::SpaceshipSystem,
     spaceship_movement::SpaceshipMovementSystem, stat_tracker::StatTrackerSystem,

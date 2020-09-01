@@ -77,7 +77,7 @@ impl Default for SpaceShooter {
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::PlayerHitSystem, "player_hit_system", &[])
                 .with(systems::EnemyHitSystem, "enemy_hit_system", &[])
-                .with(systems::ExplosionSystem, "explosion_system", &[])
+                .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(systems::ItemSystem, "item_system", &[])
                 .with(
                     systems::SpaceshipMovementSystem,
