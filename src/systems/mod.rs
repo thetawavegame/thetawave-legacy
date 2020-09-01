@@ -13,6 +13,7 @@ mod enemy_hit;
 mod enemy_spawn;
 mod explosion;
 mod gamemaster;
+mod hitbox_system;
 mod item;
 mod planets;
 mod player_hit;
@@ -27,8 +28,8 @@ pub use self::{
     collision_detection::CollisionDetectionSystem, collision_handler::CollisionHandlerSystem,
     consumable::ConsumableSystem, defense::DefenseSystem, enemy::EnemySystem,
     enemy_hit::EnemyHitSystem, enemy_spawn::SpawnerSystem, explosion::ExplosionSystem,
-    gamemaster::GameMasterSystem, item::ItemSystem, planets::PlanetsSystem,
-    player_hit::PlayerHitSystem, spaceship::SpaceshipSystem,
+    gamemaster::GameMasterSystem, hitbox_system::HitboxSystem, item::ItemSystem,
+    planets::PlanetsSystem, player_hit::PlayerHitSystem, spaceship::SpaceshipSystem,
     spaceship_movement::SpaceshipMovementSystem, stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem, store::StoreSystem,
 };

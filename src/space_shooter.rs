@@ -59,6 +59,18 @@ impl CollisionEvent {
     }
 }
 
+#[derive(Debug)]
+pub struct HitboxCollisionEvent {
+    pub entity_a: Entity,
+    pub entity_b: Entity,
+}
+
+impl HitboxCollisionEvent {
+    pub fn new(entity_a: Entity, entity_b: Entity) -> HitboxCollisionEvent {
+        HitboxCollisionEvent { entity_a, entity_b }
+    }
+}
+
 pub struct SpaceShooter {
     dispatcher: Dispatcher<'static, 'static>,
 }
@@ -78,7 +90,12 @@ impl Default for SpaceShooter {
                 .with(systems::PlayerHitSystem, "player_hit_system", &[])
                 .with(systems::EnemyHitSystem, "enemy_hit_system", &[])
                 .with(systems::ExplosionSystem, "explosion_system", &[])
-                .with(systems::ItemSystem, "item_system", &[])
+                .with(systems::HitboxSystem, "hitbox_system", &[])
+                .with(
+                    systems::ItemSystem::default(),
+                    "item_system",
+                    &["hitbox_system"],
+                )
                 .with(
                     systems::SpaceshipMovementSystem,
                     "spaceship_movement_system",

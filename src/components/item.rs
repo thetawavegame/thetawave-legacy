@@ -12,10 +12,6 @@ pub struct Item {
     pub width: f32,
     #[serde(default = "des_height")]
     pub height: f32,
-    #[serde(default = "des_hitbox_width")]
-    pub hitbox_width: f32,
-    #[serde(default = "des_hitbox_height")]
-    pub hitbox_height: f32,
     #[serde(default = "des_speed")]
     pub speed: f32,
     #[serde(default = "des_price")]
@@ -32,12 +28,6 @@ fn des_width() -> f32 {
     14.0
 }
 fn des_height() -> f32 {
-    14.0
-}
-fn des_hitbox_width() -> f32 {
-    14.0
-}
-fn des_hitbox_height() -> f32 {
     14.0
 }
 fn des_speed() -> f32 {
