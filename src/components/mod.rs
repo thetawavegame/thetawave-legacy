@@ -8,7 +8,7 @@ mod boss;
 mod consumable;
 mod defense;
 mod enemy;
-mod explosion;
+mod timelimit;
 mod gamemaster;
 mod hitbox;
 mod item;
@@ -25,7 +25,7 @@ pub use self::{
     consumable::Consumable,
     defense::Defense,
     enemy::{Enemy, EnemySpawnerTag, EnemyType},
-    explosion::Explosion,
+    timelimit::TimeLimitComponent,
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
     hitbox::Hitbox2DComponent,
     item::Item,

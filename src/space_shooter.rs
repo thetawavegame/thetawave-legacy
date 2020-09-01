@@ -89,13 +89,13 @@ impl Default for SpaceShooter {
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::PlayerHitSystem, "player_hit_system", &[])
                 .with(systems::EnemyHitSystem, "enemy_hit_system", &[])
-                .with(systems::ExplosionSystem, "explosion_system", &[])
                 .with(systems::HitboxSystem, "hitbox_system", &[])
                 .with(
                     systems::ItemSystem::default(),
                     "item_system",
                     &["hitbox_system"],
                 )
+                .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(
                     systems::SpaceshipMovementSystem,
                     "spaceship_movement_system",
