@@ -1,5 +1,5 @@
 use crate::{
-    components::{Blast, Spaceship},
+    components::{Blast, Hitbox2DComponent, Spaceship},
     constants::EXPLOSION_Z,
     entities::spawn_blast_explosion,
     resources::SpriteResource,
@@ -16,6 +16,7 @@ impl<'s> System<'s> for EnemyHitSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Spaceship>,
+        ReadStorage<'s, Hitbox2DComponent>,
         WriteStorage<'s, Blast>,
         ReadStorage<'s, Transform>,
         ReadExpect<'s, SpriteResource>,
@@ -24,9 +25,11 @@ impl<'s> System<'s> for EnemyHitSystem {
 
     fn run(
         &mut self,
-        (entities, mut spaceships, mut blasts, transforms, sprite_resource, lazy_update): Self::SystemData,
+        (entities, mut spaceships, hitboxes, mut blasts, transforms, sprite_resource, lazy_update): Self::SystemData,
     ) {
-        for (spaceship, spaceship_transform) in (&mut spaceships, &transforms).join() {
+        for (spaceship, spaceship_transform, spaceship_hitbox) in
+            (&mut spaceships, &transforms, &hitboxes).join()
+        {
             for (blast_entity, blast, blast_transform) in
                 (&*entities, &mut blasts, &transforms).join()
             {
@@ -45,12 +48,12 @@ impl<'s> System<'s> for EnemyHitSystem {
                         spaceship_y,
                         blast.hitbox_radius,
                         blast.hitbox_radius,
-                        spaceship.hitbox_width,
-                        spaceship.hitbox_height,
+                        spaceship_hitbox.width,
+                        spaceship_hitbox.height,
                         0.0,
                         0.0,
-                        spaceship.hitbox_x_offset,
-                        spaceship.hitbox_y_offset,
+                        spaceship_hitbox.offset_x,
+                        spaceship_hitbox.offset_y,
                     ) && !spaceship.barrel_action_left
                         && !spaceship.barrel_action_right
                     {

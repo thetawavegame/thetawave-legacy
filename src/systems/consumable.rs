@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Consumable, Defense, Spaceship},
+    components::{Consumable, Defense, Hitbox2DComponent, Spaceship},
     constants::ARENA_MIN_Y,
     systems::hitbox_collide,
 };
@@ -8,7 +8,7 @@ use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
     core::{timing::Time, transform::Transform},
-    ecs::prelude::{Entities, Join, Read, ReadExpect, System, WriteStorage},
+    ecs::prelude::{Entities, Join, Read, ReadExpect, ReadStorage, System, WriteStorage},
 };
 
 pub struct ConsumableSystem;
@@ -18,6 +18,7 @@ impl<'s> System<'s> for ConsumableSystem {
         Entities<'s>,
         WriteStorage<'s, Consumable>,
         WriteStorage<'s, Spaceship>,
+        ReadStorage<'s, Hitbox2DComponent>,
         WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
@@ -32,6 +33,7 @@ impl<'s> System<'s> for ConsumableSystem {
             entities,
             mut consumables,
             mut spaceships,
+            hitboxes,
             mut defenses,
             mut transforms,
             time,
@@ -40,7 +42,7 @@ impl<'s> System<'s> for ConsumableSystem {
             audio_output,
         ): Self::SystemData,
     ) {
-        for spaceship in (&mut spaceships).join() {
+        for (spaceship, spaceship_hitbox) in (&mut spaceships, &hitboxes).join() {
             for (consumable_entity, consumable, consumable_transform) in
                 (&*entities, &mut consumables, &mut transforms).join()
             {
@@ -54,12 +56,12 @@ impl<'s> System<'s> for ConsumableSystem {
                     spaceship.pos_y,
                     consumable.hitbox_width,
                     consumable.hitbox_height,
-                    spaceship.hitbox_width,
-                    spaceship.hitbox_height,
+                    spaceship_hitbox.width,
+                    spaceship_hitbox.height,
                     consumable.hitbox_x_offset,
                     consumable.hitbox_y_offset,
-                    spaceship.hitbox_x_offset,
-                    spaceship.hitbox_y_offset,
+                    spaceship_hitbox.offset_x,
+                    spaceship_hitbox.offset_y,
                 ) {
                     spaceship.health += consumable.health_value;
                     spaceship.money += consumable.money_value;
