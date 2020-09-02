@@ -3,7 +3,7 @@ use crate::{
     resources::{ItemEntityData, SpriteResource},
 };
 use amethyst::{
-    core::{math::Vector3, transform::Transform},
+    core::{math::Vector3, transform::Transform, Named},
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
@@ -23,6 +23,8 @@ pub fn spawn_item(
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
+    let name = Named::new("item");
+
     println!("{} spawned!", item.item_component.name);
 
     lazy_update
@@ -32,5 +34,6 @@ pub fn spawn_item(
         .with(item.hitbox_component)
         .with(local_transform)
         .with(Transparent)
+        .with(name)
         .build();
 }

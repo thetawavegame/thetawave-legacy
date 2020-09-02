@@ -8,9 +8,6 @@ pub struct TimeLimitComponent {
 }
 
 impl Spawnable for TimeLimitComponent {
-  fn name(&self) -> String {
-      "explosion".to_string()
-  }
   fn init(&mut self) {}
 }
 
