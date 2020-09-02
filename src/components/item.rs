@@ -38,9 +38,6 @@ fn des_price() -> usize {
 }
 
 impl Spawnable for Item {
-    fn name(&self) -> String {
-        self.name.clone()
-    }
     fn init(&mut self) {}
 }
 

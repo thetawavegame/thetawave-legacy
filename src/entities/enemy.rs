@@ -1,7 +1,7 @@
 use crate::components::{Animation, Enemy};
 use amethyst::{
     assets::Handle,
-    core::math::Vector3,
+    core::{math::Vector3, Named},
     ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, SpriteSheet},
 };
@@ -28,8 +28,11 @@ pub fn spawn_enemy(
         animation_type: item.animation_type.clone(),
     };
 
+    let name = Named::new("enemy");
+
     super::spawn_animated_entity(
         &entities,
+        name,
         sprite,
         animation,
         item,
