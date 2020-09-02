@@ -3,6 +3,9 @@ use amethyst::{
     ecs::prelude::{Component, DenseVecStorage},
 };
 
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Hitbox2DComponent {
     pub width: f32,
     pub height: f32,
