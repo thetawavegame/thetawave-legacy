@@ -246,10 +246,6 @@ impl Fires for Enemy {
 }
 
 impl Spawnable for Enemy {
-    fn name(&self) -> String {
-        self.name.clone()
-    }
-
     fn init(&mut self) {
         let mut rng = rand::thread_rng();
         let rand_num = rng.gen_range(0, 2);
