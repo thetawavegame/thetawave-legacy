@@ -1,6 +1,6 @@
 use crate::components::Animation;
 use amethyst::{
-    core::{math::Vector3, transform::Transform},
+    core::{math::Vector3, transform::Transform, Named},
     ecs::prelude::{Builder, Component, Entities, Entity, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
@@ -42,6 +42,7 @@ use crate::components::Spawnable;
 
 fn spawn_sprite_entity<T: Spawnable + Component + Send + Sync>(
     entities: &Entities,
+    name: Named,
     sprite_render: SpriteRender,
     mut item_component: T,
     spawn_position: Vector3<f32>,
@@ -50,7 +51,7 @@ fn spawn_sprite_entity<T: Spawnable + Component + Send + Sync>(
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
-    println!("{} spawned!", item_component.name());
+    println!("{} spawned!", name.name);
     item_component.init();
 
     lazy_update
@@ -59,11 +60,13 @@ fn spawn_sprite_entity<T: Spawnable + Component + Send + Sync>(
         .with(item_component)
         .with(local_transform)
         .with(Transparent)
+        .with(name)
         .build();
 }
 
 fn spawn_animated_entity<T: Spawnable + Component + Send + Sync>(
     entities: &Entities,
+    name: Named,
     sprite_render: SpriteRender,
     animation: Animation,
     mut item_component: T,
@@ -73,7 +76,7 @@ fn spawn_animated_entity<T: Spawnable + Component + Send + Sync>(
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
-    println!("{} spawned!", item_component.name());
+    println!("{} spawned!", name.name);
     item_component.init();
 
     let enemy_entity: Entity = entities.create();
@@ -83,6 +86,7 @@ fn spawn_animated_entity<T: Spawnable + Component + Send + Sync>(
     lazy_update.insert(enemy_entity, item_component);
     lazy_update.insert(enemy_entity, local_transform);
     lazy_update.insert(enemy_entity, Transparent);
+    lazy_update.insert(enemy_entity, name);
 
     enemy_entity
 }
