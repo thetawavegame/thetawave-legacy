@@ -28,21 +28,21 @@ impl<'s> System<'s> for StatTrackerSystem {
         for store in (&stores).join() {
             if let Some(text) = ui_text.get_mut(tracked_stats.item_price_1) {
                 if let Some(item) = &store.item_inventory[0] {
-                    text.text = format!("${}", item.price);
+                    text.text = format!("${}", item.item_component.price);
                 } else {
                     text.text = "$0".to_string();
                 }
             }
             if let Some(text) = ui_text.get_mut(tracked_stats.item_price_2) {
                 if let Some(item) = &store.item_inventory[1] {
-                    text.text = format!("${}", item.price);
+                    text.text = format!("${}", item.item_component.price);
                 } else {
                     text.text = "$0".to_string();
                 }
             }
             if let Some(text) = ui_text.get_mut(tracked_stats.item_price_3) {
                 if let Some(item) = &store.item_inventory[2] {
-                    text.text = format!("${}", item.price);
+                    text.text = format!("${}", item.item_component.price);
                 } else {
                     text.text = "$0".to_string();
                 }
