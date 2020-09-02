@@ -4,7 +4,7 @@ use crate::{
 };
 use amethyst::{
     assets::Handle,
-    core::math::Vector3,
+    core::{math::Vector3, Named},
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, SpriteSheet},
 };
@@ -35,8 +35,11 @@ pub fn spawn_explosion(
         animation_type: AnimationType::Forward,
     };
 
+    let name = Named::new("explosion");
+
     super::spawn_animated_entity(
         &entities,
+        name,
         sprite,
         animation,
         TimeLimitComponent { duration },
@@ -77,9 +80,11 @@ pub fn spawn_blast_explosion(
         forward: true,
         animation_type: AnimationType::Forward,
     };
+    let name = Named::new("blast_explosion");
 
     super::spawn_animated_entity(
         &entities,
+        name,
         sprite,
         animation,
         TimeLimitComponent { duration },

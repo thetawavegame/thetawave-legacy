@@ -1,6 +1,6 @@
 use crate::{components::Consumable, resources::SpriteResource};
 use amethyst::{
-    core::math::Vector3,
+    core::{math::Vector3, Named},
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
     renderer::SpriteRender,
 };
@@ -16,5 +16,7 @@ pub fn spawn_consumable(
         sprite_sheet: sprite_resource.consumables_sprite_sheet.clone(),
         sprite_number: item.sprite_index,
     };
-    super::spawn_sprite_entity(&entities, sprite, item, spawn_position, &lazy_update);
+    let name = Named::new("consumable");
+
+    super::spawn_sprite_entity(&entities, name, sprite, item, spawn_position, &lazy_update);
 }

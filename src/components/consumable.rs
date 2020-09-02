@@ -52,9 +52,6 @@ fn des_speed() -> f32 {
 }
 
 impl Spawnable for Consumable {
-    fn name(&self) -> String {
-        self.name.clone()
-    }
     fn init(&mut self) {}
 }
 
