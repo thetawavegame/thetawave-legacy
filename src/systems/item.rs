@@ -3,7 +3,6 @@ use crate::{
     components::{Defense, Item, Living, Spaceship},
     constants::ARENA_MIN_Y,
     space_shooter::HitboxCollisionEvent,
-    systems::hitbox_collide,
 };
 use amethyst::{
     assets::AssetStorage,
@@ -64,6 +63,7 @@ impl<'s> System<'s> for ItemSystem {
             if item_transform.translation()[1] + item.height / 2.0 < ARENA_MIN_Y {
                 let _result = entities.delete(item_entity);
             }
+
             for (spaceship, spaceship_entity) in (&mut spaceships, &entities).join() {
                 for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
                     println!("{:?}", event);

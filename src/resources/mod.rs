@@ -11,6 +11,12 @@ pub struct ItemEntityData {
     pub hitbox_component: Hitbox2DComponent,
 }
 
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ConsumableEntityData {
+    pub consumable_component: Consumable,
+    pub hitbox_component: Hitbox2DComponent,
+}
+
 pub type EnemyPool = std::collections::HashMap<String, Enemy>;
 pub type ItemPool = std::collections::HashMap<String, ItemEntityData>;
-pub type ConsumablePool = std::collections::HashMap<String, Consumable>;
+pub type ConsumablePool = std::collections::HashMap<String, ConsumableEntityData>;
