@@ -4,7 +4,7 @@ use crate::{
     components::{choose_random_name, Consumable, Defense, Enemy, EnemyType, Fires, Rigidbody},
     constants::{ARENA_MIN_Y, EXPLOSION_Z},
     entities::{fire_blast, spawn_consumable, spawn_explosion},
-    resources::SpriteResource,
+    resources::{ConsumableEntityData, SpriteResource},
 };
 use amethyst::{
     assets::AssetStorage,
@@ -28,7 +28,7 @@ impl<'s> System<'s> for EnemySystem {
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
         Option<Read<'s, Output>>,
-        ReadExpect<'s, HashMap<String, Consumable>>, // should create alias ConsumablePool
+        ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
     );
 
     fn run(
