@@ -92,53 +92,5 @@ impl<'s> System<'s> for ConsumableSystem {
                 }
             }
         }
-        /*
-        for (spaceship, spaceship_hitbox) in (&mut spaceships, &hitboxes).join() {
-            for (consumable_entity, consumable, consumable_transform) in
-                (&*entities, &mut consumables, &mut transforms).join()
-            {
-                let consumable_x = consumable_transform.translation().x;
-                let consumable_y = consumable_transform.translation().y;
-
-                if hitbox_collide(
-                    consumable_x,
-                    consumable_y,
-                    spaceship.pos_x,
-                    spaceship.pos_y,
-                    consumable.hitbox_width,
-                    consumable.hitbox_height,
-                    spaceship_hitbox.width,
-                    spaceship_hitbox.height,
-                    consumable.hitbox_x_offset,
-                    consumable.hitbox_y_offset,
-                    spaceship_hitbox.offset_x,
-                    spaceship_hitbox.offset_y,
-                ) {
-                    spaceship.health += consumable.health_value;
-                    spaceship.money += consumable.money_value;
-
-                    if consumable.money_value == 1 {
-                        play_sfx(&sounds.small_rock_sfx, &storage, audio_output.as_deref());
-                    } else if consumable.money_value == 5 {
-                        play_sfx(&sounds.large_rock_sfx, &storage, audio_output.as_deref());
-                    } else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
-                        play_sfx(&sounds.wrench_sfx, &storage, audio_output.as_deref());
-                    }
-
-                    for defense in (&mut defenses).join() {
-                        defense.defense += consumable.defense_value;
-                    }
-
-                    let _result = entities.delete(consumable_entity);
-                } else {
-                    consumable_transform
-                        .prepend_translation_y(-1.0 * consumable.speed * time.delta_seconds());
-
-                    if consumable_transform.translation()[1] < ARENA_MIN_Y {
-                        let _result = entities.delete(consumable_entity);
-                    }
-                }
-            }
-        }*/
     }
 }
