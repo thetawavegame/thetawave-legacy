@@ -92,7 +92,11 @@ impl Default for SpaceShooter {
                     &["hitbox_system"],
                 )
                 .with(systems::SpawnerSystem, "spawner_system", &[])
-                .with(systems::PlayerHitSystem, "player_hit_system", &[])
+                .with(
+                    systems::PlayerHitSystem::default(),
+                    "player_hit_system",
+                    &["hitbox_system"],
+                )
                 .with(
                     systems::EnemyHitSystem::default(),
                     "enemy_hit_system",

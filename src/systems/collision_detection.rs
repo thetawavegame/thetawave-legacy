@@ -26,9 +26,13 @@ impl<'s> System<'s> for CollisionDetectionSystem {
         &mut self,
         (enemies, spaceships, hitboxes, transforms, entities, mut enemy_collision_event_channel): Self::SystemData,
     ) {
-        for (entity_a, transform_a, enemy_a) in (&entities, &transforms, &enemies).join() {
+        for (entity_a, transform_a, enemy_a, hitbox_a) in
+            (&entities, &transforms, &enemies, &hitboxes).join()
+        {
             //check for enemy collisions
-            for (entity_b, transform_b, enemy_b) in (&entities, &transforms, &enemies).join() {
+            for (entity_b, transform_b, enemy_b, hitbox_b) in
+                (&entities, &transforms, &enemies, &hitboxes).join()
+            {
                 if entity_a == entity_b {
                     continue;
                 }
@@ -38,14 +42,14 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                     transform_a.translation().y,
                     transform_b.translation().x,
                     transform_b.translation().y,
-                    enemy_a.hitbox_width,
-                    enemy_a.hitbox_height,
-                    enemy_b.hitbox_width,
-                    enemy_b.hitbox_height,
-                    enemy_a.hitbox_x_offset,
-                    enemy_a.hitbox_y_offset,
-                    enemy_b.hitbox_x_offset,
-                    enemy_b.hitbox_y_offset,
+                    hitbox_a.width,
+                    hitbox_a.height,
+                    hitbox_b.width,
+                    hitbox_b.height,
+                    hitbox_a.offset_x,
+                    hitbox_a.offset_y,
+                    hitbox_b.offset_x,
+                    hitbox_b.offset_y,
                 ) {
                     enemy_collision_event_channel.single_write(CollisionEvent::new(
                         entity_a,
@@ -69,12 +73,12 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                     transform_a.translation().y,
                     transform_b.translation().x,
                     transform_b.translation().y,
-                    enemy_a.hitbox_width,
-                    enemy_a.hitbox_height,
+                    hitbox_a.width,
+                    hitbox_a.height,
                     hitbox_b.width,
                     hitbox_b.height,
-                    enemy_a.hitbox_x_offset,
-                    enemy_a.hitbox_y_offset,
+                    hitbox_a.offset_x,
+                    hitbox_a.offset_y,
                     hitbox_b.offset_x,
                     hitbox_b.offset_y,
                 ) {
