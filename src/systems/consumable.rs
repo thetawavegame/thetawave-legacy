@@ -65,9 +65,11 @@ impl<'s> System<'s> for ConsumableSystem {
             if consumable_transform.translation()[1] < ARENA_MIN_Y {
                 let _result = entities.delete(consumable_entity);
             }
+        }
 
-            for (spaceship, spaceship_entity) in (&mut spaceships, &entities).join() {
-                for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
+        for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
+            for (consumable, consumable_entity) in (&mut consumables, &entities).join() {
+                for (spaceship, spaceship_entity) in (&mut spaceships, &entities).join() {
                     if (event.entity_a == consumable_entity && event.entity_b == spaceship_entity)
                         || (event.entity_a == spaceship_entity
                             && event.entity_b == consumable_entity)
