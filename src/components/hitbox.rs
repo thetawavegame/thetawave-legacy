@@ -26,10 +26,10 @@ impl Hitbox2DComponent {
         transform_b: &Transform,
     ) -> bool {
         if self.offset_rotation == 0.0 && hitbox_b.offset_rotation == 0.0 {
-            let x1 = transform_a.translation().x - (self.width / 2.0) - self.offset_x;
-            let y1 = transform_a.translation().y - (self.height / 2.0) - self.offset_y;
-            let x2 = transform_b.translation().x - (hitbox_b.width / 2.0) - hitbox_b.offset_x;
-            let y2 = transform_b.translation().y - (hitbox_b.height / 2.0) - hitbox_b.offset_y;
+            let x1 = transform_a.translation().x - (self.width / 2.0) + self.offset_x;
+            let y1 = transform_a.translation().y - (self.height / 2.0) + self.offset_y;
+            let x2 = transform_b.translation().x - (hitbox_b.width / 2.0) + hitbox_b.offset_x;
+            let y2 = transform_b.translation().y - (hitbox_b.height / 2.0) + hitbox_b.offset_y;
 
             return x1 < (x2 + hitbox_b.width)
                 && (x1 + self.width) > x2
