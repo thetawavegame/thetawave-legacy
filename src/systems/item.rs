@@ -66,7 +66,7 @@ impl<'s> System<'s> for ItemSystem {
 
             for (spaceship, spaceship_entity) in (&mut spaceships, &entities).join() {
                 for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
-                    println!("{:?}", event);
+                    //println!("{:?}", event);
                     if (event.entity_a == item_entity && event.entity_b == spaceship_entity)
                         || (event.entity_a == spaceship_entity && event.entity_b == item_entity)
                     {

@@ -68,13 +68,14 @@ impl<'s> System<'s> for EnemyHitSystem {
                     //if the blast collides with the player and the player is not currently barrel rolling the blast hits
 
                     for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
-                        println!("{:?}", event);
+                        //println!("{:?}", event);
                         if ((event.entity_a == blast_entity && event.entity_b == spaceship_entity)
                             || (event.entity_a == spaceship_entity
                                 && event.entity_b == blast_entity))
                             && !spaceship.barrel_action_left
                             && !spaceship.barrel_action_right
                         {
+                            //println!("player hit by enemy");
                             let _result = entities.delete(blast_entity);
 
                             let explosion_position = Vector3::new(

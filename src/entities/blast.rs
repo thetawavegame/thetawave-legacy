@@ -91,7 +91,8 @@ pub fn fire_blast(
             .with(hitbox)
             .with(blast_sprite_render.clone())
             .with(blast_transform)
-            .with(Transparent);
+            .with(Transparent)
+            .build();
 
         /*
         lazy_update.insert(blast_entity, blast_sprite_render.clone());
