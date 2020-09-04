@@ -44,43 +44,43 @@ pub fn spawn_repeater(
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 40.0,
         constants::BOSS_Z_2,
     );
-    let body_entity = enemy_pool[&"repeater_body".to_string()].clone();
-    let head_entity = enemy_pool[&"repeater_head".to_string()].clone();
-    let right_shoulder_entity = enemy_pool[&"repeater_right_shoulder".to_string()].clone();
-    let left_shoulder_entity = enemy_pool[&"repeater_left_shoulder".to_string()].clone();
-    let right_arm_entity = enemy_pool[&"repeater_right_arm".to_string()].clone();
+    let body_entity_data = enemy_pool[&"repeater_body".to_string()].clone();
+    let head_entity_data = enemy_pool[&"repeater_head".to_string()].clone();
+    let right_shoulder_entity_data = enemy_pool[&"repeater_right_shoulder".to_string()].clone();
+    let left_shoulder_entity_data = enemy_pool[&"repeater_left_shoulder".to_string()].clone();
+    let right_arm_entity_data = enemy_pool[&"repeater_right_arm".to_string()].clone();
     let body = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
-        body_entity,
+        body_entity_data,
         body_position,
         &lazy_update,
     );
     let head = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
-        head_entity,
+        head_entity_data,
         head_position,
         &lazy_update,
     );
     let right_shoulder = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
-        right_shoulder_entity,
+        right_shoulder_entity_data,
         right_shoulder_position,
         &lazy_update,
     );
     let left_shoulder = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
-        left_shoulder_entity,
+        left_shoulder_entity_data,
         left_shoulder_position,
         &lazy_update,
     );
     let right_arm = spawn_enemy(
         &entities,
         sprite_sheet,
-        right_arm_entity,
+        right_arm_entity_data,
         right_arm_position,
         &lazy_update,
     );

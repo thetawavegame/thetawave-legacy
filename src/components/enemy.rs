@@ -12,7 +12,7 @@ use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum EnemyType {
     Pawn,
     Drone,
@@ -24,7 +24,7 @@ pub enum EnemyType {
     RepeaterArm,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Enemy {
     pub name: String,
     #[serde(default = "des_width")]
