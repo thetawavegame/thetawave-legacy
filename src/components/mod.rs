@@ -11,6 +11,7 @@ mod enemy;
 mod timelimit;
 mod gamemaster;
 mod item;
+mod motion2d;
 mod planet;
 mod spaceship;
 mod spawner;
@@ -27,6 +28,7 @@ pub use self::{
     timelimit::TimeLimitComponent,
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
     item::Item,
+    motion2d::Motion2DComponent,
     planet::Planet,
     spaceship::Spaceship,
     spawner::{choose_random_name, SpawnProbabilities, Spawner},
