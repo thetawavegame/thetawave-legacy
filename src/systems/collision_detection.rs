@@ -1,5 +1,5 @@
 use crate::{
-    components::{Enemy, Spaceship},
+    components::{Enemy, Spaceship, Motion2DComponent},
     space_shooter::CollisionEvent,
     systems::hitbox_collide,
 };
@@ -15,6 +15,7 @@ pub struct CollisionDetectionSystem;
 impl<'s> System<'s> for CollisionDetectionSystem {
     type SystemData = (
         ReadStorage<'s, Enemy>,
+        ReadStorage<'s, Motion2DComponent>,
         ReadStorage<'s, Spaceship>,
         ReadStorage<'s, Transform>,
         Entities<'s>,
@@ -23,7 +24,7 @@ impl<'s> System<'s> for CollisionDetectionSystem {
 
     fn run(
         &mut self,
-        (enemies, spaceships, transforms, entities, mut enemy_collision_event_channel): Self::SystemData,
+        (enemies, motion_2d_components, spaceships, transforms, entities, mut enemy_collision_event_channel): Self::SystemData,
     ) {
         for (entity_a, transform_a, enemy_a) in (&entities, &transforms, &enemies).join() {
             //check for enemy collisions
@@ -60,7 +61,7 @@ impl<'s> System<'s> for CollisionDetectionSystem {
             }
 
             //check for spaceship collisions
-            for (entity_b, transform_b, spaceship_b) in (&entities, &transforms, &spaceships).join()
+            for (entity_b, transform_b, motion_2d, spaceship_b) in (&entities, &transforms, &motion_2d_components, &spaceships).join()
             {
                 if hitbox_collide(
                     transform_a.translation().x,
@@ -79,8 +80,8 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                     enemy_collision_event_channel.single_write(CollisionEvent::new(
                         entity_a,
                         String::from("enemy"),
-                        spaceship_b.current_velocity_x,
-                        spaceship_b.current_velocity_y,
+                        motion_2d.velocity.x,
+                        motion_2d.velocity.y,
                         entity_b,
                         String::from("spaceship"),
                         enemy_a.current_velocity_x,

@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Defense, Item, Living, Spaceship},
+    components::{Defense, Item, Living, Spaceship, Motion2DComponent},
     constants::ARENA_MIN_Y,
     systems::hitbox_collide,
 };
@@ -20,6 +20,7 @@ impl<'s> System<'s> for ItemSystem {
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
+        WriteStorage<'s, Motion2DComponent>,
         Read<'s, Time>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -34,6 +35,7 @@ impl<'s> System<'s> for ItemSystem {
             mut spaceships,
             mut defenses,
             mut transforms,
+            mut motion_2d_components,
             time,
             storage,
             sounds,
@@ -45,7 +47,7 @@ impl<'s> System<'s> for ItemSystem {
             let item_x = item_transform.translation().x;
             let item_y = item_transform.translation().y;
 
-            for spaceship in (&mut spaceships).join() {
+            for (spaceship, motion_2d) in (&mut spaceships, &mut motion_2d_components).join() {
                 if hitbox_collide(
                     item_x,
                     item_y,
@@ -102,13 +104,13 @@ impl<'s> System<'s> for ItemSystem {
                     }
 
                     if item.stat_effects.contains_key("acceleration") {
-                        spaceship.acceleration_x += item.stat_effects["acceleration"];
-                        spaceship.acceleration_y += item.stat_effects["acceleration"];
+                        motion_2d.acceleration.x += item.stat_effects["acceleration"];
+                        motion_2d.acceleration.y += item.stat_effects["acceleration"];
                     }
 
                     if item.stat_effects.contains_key("deceleration") {
-                        spaceship.deceleration_x += item.stat_effects["deceleration"];
-                        spaceship.deceleration_y += item.stat_effects["deceleration"];
+                        motion_2d.deceleration.x += item.stat_effects["deceleration"];
+                        motion_2d.deceleration.y += item.stat_effects["deceleration"];
                     }
 
                     if item.stat_effects.contains_key("health_multiply") {

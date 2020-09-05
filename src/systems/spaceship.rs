@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Fires, Living, Spaceship},
+    components::{Fires, Living, Spaceship, Motion2DComponent},
     entities::fire_blast,
     resources::SpriteResource,
 };
@@ -19,6 +19,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         Entities<'s>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, Motion2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
@@ -34,6 +35,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             entities,
             mut transforms,
             mut spaceships,
+            mut motion_2d_components,
             input,
             time,
             sprite_resource,
@@ -48,7 +50,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right = input.action_is_down("barrel_right").unwrap();
 
-        for (spaceship, transform) in (&mut spaceships, &mut transforms).join() {
+        for (spaceship, transform, motion_2d) in (&mut spaceships, &mut transforms, &mut motion_2d_components).join() {
             // update pos_x and pos_y variables of spaceship
             spaceship.update_location(transform.translation().x, transform.translation().y);
 
@@ -61,7 +63,7 @@ impl<'s> System<'s> for SpaceshipSystem {
 
             //barrel roll action cooldown
             //amount of time until barrel roll is complete
-            if spaceship.barrel_action_cooldown(time.delta_seconds()) {
+            if spaceship.barrel_action_cooldown(time.delta_seconds(), motion_2d) {
                 barrel_left = false;
                 barrel_right = false;
             }
