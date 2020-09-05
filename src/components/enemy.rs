@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{AnimationType, Fires, Rigidbody, SpawnProbabilities, Spawnable},
+    components::{AnimationType, Fires, Rigidbody, SpawnProbabilities, Spawnable, Motion2DComponent},
     constants::{ARENA_MAX_X, ARENA_MIN_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
@@ -194,7 +194,7 @@ impl Rigidbody for Enemy {
         self.current_rotation_velocity = value
     }
 
-    fn constrain_to_arena(&mut self, transform: &mut Transform) {
+    fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
         let enemy_x = transform.translation().x;
         if (enemy_x - (self.width / 2.0)) < ARENA_MIN_X
             || (enemy_x + (self.width / 2.0)) > ARENA_MAX_X

@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Enemy, Spaceship},
+    components::{Enemy, Spaceship, Motion2DComponent},
     space_shooter::CollisionEvent,
 };
 use amethyst::{
@@ -21,6 +21,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         Read<'s, EventChannel<CollisionEvent>>,
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Enemy>,
+        WriteStorage<'s, Motion2DComponent>,
         Entities<'s>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -42,6 +43,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
             enemy_collision_event_channel,
             mut spaceships,
             mut enemies,
+            mut motion_2d_components,
             entities,
             storage,
             sounds,
@@ -52,7 +54,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
             //println!("{:?}", event);
             play_sfx(&sounds.crash_sfx, &storage, audio_output.as_deref());
 
-            for spaceship in (&mut spaceships).join() {
+            for (spaceship, motion_2d) in (&mut spaceships, &mut motion_2d_components).join() {
                 for (enemy, enemy_entity) in (&mut enemies, &entities).join() {
                     if event.type_b == "enemy" && event.type_a == "enemy" {
                         if event.entity_a == enemy_entity || event.entity_b == enemy_entity {
@@ -93,13 +95,13 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                             spaceship.health -= enemy.collision_damage;
                         }
 
-                        let temp_velocity_x = spaceship.current_velocity_x;
-                        spaceship.current_velocity_x =
-                            (-(1.0) * spaceship.current_velocity_x) + enemy.current_velocity_x;
+                        let temp_velocity_x = motion_2d.velocity.x;
+                        motion_2d.velocity.x =
+                            (-(1.0) * temp_velocity_x) + enemy.current_velocity_x;
 
-                        let temp_velocity_y = spaceship.current_velocity_y;
-                        spaceship.current_velocity_y =
-                            (-(1.0) * spaceship.current_velocity_y) + enemy.current_velocity_y;
+                        let temp_velocity_y = motion_2d.velocity.y;
+                        motion_2d.velocity.y =
+                            (-(1.0) * temp_velocity_y) + enemy.current_velocity_y;
 
                         if enemy.name != "repeater_body"
                             && enemy.name != "repeater_head"
