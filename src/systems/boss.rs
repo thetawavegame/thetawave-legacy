@@ -15,6 +15,7 @@ impl<'s> System<'s> for BossSystem {
     );
 
     fn run(&mut self, (entities, mut repeaters, mut gamemasters, time): Self::SystemData) {
+        /*
         for (boss_entity, repeater_component) in (&*entities, &mut repeaters).join() {
             if !entities.is_alive(repeater_component.head)
                 && !entities.is_alive(repeater_component.body)
@@ -28,5 +29,6 @@ impl<'s> System<'s> for BossSystem {
                 println!("repeater defeated");
             }
         }
+        */
     }
 }

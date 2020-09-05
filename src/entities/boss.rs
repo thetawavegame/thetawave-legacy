@@ -49,6 +49,7 @@ pub fn spawn_repeater(
     let right_shoulder_entity_data = enemy_pool[&"repeater_right_shoulder".to_string()].clone();
     let left_shoulder_entity_data = enemy_pool[&"repeater_left_shoulder".to_string()].clone();
     let right_arm_entity_data = enemy_pool[&"repeater_right_arm".to_string()].clone();
+
     let body = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
@@ -56,6 +57,7 @@ pub fn spawn_repeater(
         body_position,
         &lazy_update,
     );
+
     let head = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
@@ -63,6 +65,15 @@ pub fn spawn_repeater(
         head_position,
         &lazy_update,
     );
+    /*
+    let right_arm = spawn_enemy(
+        &entities,
+        sprite_sheet,
+        right_arm_entity_data,
+        right_arm_position,
+        &lazy_update,
+    );
+    */
     let right_shoulder = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
@@ -77,20 +88,12 @@ pub fn spawn_repeater(
         left_shoulder_position,
         &lazy_update,
     );
-    let right_arm = spawn_enemy(
-        &entities,
-        sprite_sheet,
-        right_arm_entity_data,
-        right_arm_position,
-        &lazy_update,
-    );
-
     let repeater = Repeater {
         body,
         head,
         right_shoulder,
         left_shoulder,
-        right_arm,
+        //right_arm,
     };
 
     lazy_update.create_entity(entities).with(repeater).build();

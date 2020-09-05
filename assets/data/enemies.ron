@@ -215,7 +215,7 @@
             sprite_index: 6,
             width: 83,
             height: 93,
-            //current_rotation_velocity: -0.05,
+            current_rotation_velocity: -0.05,
             fires: false,
             fire_speed: 0,
             fire_reset_timer: 0,
@@ -239,10 +239,10 @@
         ),
         hitbox_component: (
             width: 28.0,
-            height: 4.0,
-            offset_x: 10,
-            offset_y: -20.0,
-            offset_rotation: 0.0,
+            height: 6.0,
+            offset_x: 15,
+            offset_y: -10.0,
+            offset_rotation: 0.7,
         ),
     ),
     "repeater_left_shoulder": (
@@ -276,10 +276,10 @@
         ),
         hitbox_component: (
             width: 28.0,
-            height: 4.0,
-            offset_x: -10.0,
-            offset_y: -20.0,
-            offset_rotation: 0.0,
+            height: 6.0,
+            offset_x: -15.0,
+            offset_y: -10.0,
+            offset_rotation: -0.7,
         ),
     ),
     "repeater_right_arm": (
