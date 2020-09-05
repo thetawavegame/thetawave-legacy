@@ -33,6 +33,8 @@ pub use self::{
     spaceship_movement::SpaceshipMovementSystem, stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem, store::StoreSystem, timelimit::TimeLimitSystem,
 };
+
+// phase this out and instead use hitbox component
 pub fn hitbox_collide(
     mut x1: f32,
     mut y1: f32,

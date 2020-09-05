@@ -18,12 +18,10 @@ pub fn spawn_consumable(
     };
     let name = Named::new("consumable");
 
-    //super::spawn_sprite_entity(&entities, name, sprite, item, spawn_position, &lazy_update);
-
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
-    println!("{} spawned!", name.name);
+    //println!("{} spawned!", name.name);
 
     lazy_update
         .create_entity(entities)

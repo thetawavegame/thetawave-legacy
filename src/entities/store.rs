@@ -6,7 +6,7 @@ use amethyst::{
 
 pub type StockProbabilities = Vec<(String, f32)>;
 
-pub fn initialise_store(world: &mut World) {
+pub fn initialize_store(world: &mut World) {
     let stock_list: StockProbabilities = world
         .read_resource::<ItemPool>()
         .iter()

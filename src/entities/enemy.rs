@@ -1,7 +1,4 @@
-use crate::{
-    components::{Animation, Enemy, Hitbox2DComponent},
-    resources::EnemyEntityData,
-};
+use crate::{components::Animation, resources::EnemyEntityData};
 use amethyst::{
     assets::Handle,
     core::{math::Vector3, transform::Transform, Named},

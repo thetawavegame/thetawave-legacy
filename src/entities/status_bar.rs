@@ -11,7 +11,7 @@ use amethyst::{
     prelude::Builder,
 };
 
-pub fn initialise_status_bars(world: &mut World) {
+pub fn initialize_status_bars(world: &mut World) {
     //health bar
     world
         .create_entity()

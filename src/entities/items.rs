@@ -1,7 +1,4 @@
-use crate::{
-    components::{Hitbox2DComponent, Item},
-    resources::{ItemEntityData, SpriteResource},
-};
+use crate::resources::{ItemEntityData, SpriteResource};
 use amethyst::{
     core::{math::Vector3, transform::Transform, Named},
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
@@ -19,7 +16,6 @@ pub fn spawn_item(
         sprite_sheet: item_resource.items_sprite_sheet.clone(),
         sprite_number: item.item_component.sprite_index,
     };
-    //super::spawn_sprite_entity(&entities, sprite, item, spawn_position, &lazy_update);
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
