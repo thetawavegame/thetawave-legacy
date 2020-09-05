@@ -21,7 +21,7 @@ pub fn spawn_enemy(
         sprite_number: enemy.enemy_component.sprite_index,
     };
 
-    // store animation data in seperate Animation component added to EnemyEntityData
+    // store animation data in separate Animation component added to EnemyEntityData
     let animation = Animation {
         start_idx: enemy.enemy_component.sprite_index,
         frame_count: enemy.enemy_component.frame_count,
