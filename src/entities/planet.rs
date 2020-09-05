@@ -8,7 +8,7 @@ use amethyst::{
     prelude::Builder,
 };
 
-pub fn initialise_planet(
+pub fn initialize_planet(
     world: &mut World,
     gltf_path: &str,
     x: f32,

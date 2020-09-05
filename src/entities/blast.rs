@@ -56,7 +56,6 @@ pub fn fire_blast(
 
     // create and insert blast entities
     for _ in 0..source_component.blast_count() {
-        //let blast_entity = entities.create();
         let mut blast_transform = Transform::default();
         blast_transform.set_translation(Vector3::new(
             blast_spawn_pos,
@@ -93,25 +92,5 @@ pub fn fire_blast(
             .with(blast_transform)
             .with(Transparent)
             .build();
-
-        /*
-        lazy_update.insert(blast_entity, blast_sprite_render.clone());
-        lazy_update.insert(
-            blast_entity,
-            Blast {
-                speed: source_component.blast_speed(),
-                hitbox_radius: BLAST_HITBOX_RADIUS,
-                damage,
-                poison_damage,
-                x_velocity: source_component.velocity_x(),
-                y_velocity: source_component.velocity_y(),
-                velocity_factor: VELOCITY_FACTOR,
-                allied: source_component.allied(),
-                blast_type: blast_type.clone(),
-            },
-        );
-        lazy_update.insert(blast_entity, blast_transform);
-        lazy_update.insert(blast_entity, Transparent);
-        */
     }
 }

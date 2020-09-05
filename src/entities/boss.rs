@@ -1,16 +1,12 @@
 use amethyst::{
     assets::Handle,
     core::math::Vector3,
-    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, SpriteSheet},
+    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    renderer::SpriteSheet,
 };
 
-use crate::entities::{spawn_animated_entity, spawn_enemy};
-use crate::{
-    components::{Animation, Enemy, Repeater},
-    constants,
-    resources::EnemyPool,
-};
+use crate::entities::spawn_enemy;
+use crate::{components::Repeater, constants, resources::EnemyPool};
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(

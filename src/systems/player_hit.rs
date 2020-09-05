@@ -5,7 +5,6 @@ use crate::{
     entities::spawn_blast_explosion,
     resources::SpriteResource,
     space_shooter::HitboxCollisionEvent,
-    systems::hitbox_collide,
 };
 use amethyst::{
     assets::AssetStorage,
