@@ -104,6 +104,40 @@ impl Hitbox2DComponent {
     }
 }
 
+fn rotate_x(x: f32, y: f32, angle: f32) -> f32 {
+    (x * angle.cos()) + (y * angle.sin())
+}
+
+fn rotate_y(x: f32, y: f32, angle: f32) -> f32 {
+    (-x * angle.sin()) + (y * angle.cos())
+}
+
+/*
+The code below is from this repository: https://github.com/JoelEager/Rust-Collision-Detector
+
+MIT License
+
+Copyright (c) 2018 Joel Eager
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 #[derive(Clone, Copy, Debug)]
 pub struct Vector(pub f32, pub f32);
 
@@ -176,12 +210,4 @@ fn project(poly: &[Vector], axis: Vector) -> Vector {
 
 fn overlap(projection1: Vector, projection2: Vector) -> bool {
     projection1.0 <= projection2.1 && projection2.0 <= projection1.1
-}
-
-fn rotate_x(x: f32, y: f32, angle: f32) -> f32 {
-    (x * angle.cos()) + (y * angle.sin())
-}
-
-fn rotate_y(x: f32, y: f32, angle: f32) -> f32 {
-    (-x * angle.sin()) + (y * angle.cos())
 }
