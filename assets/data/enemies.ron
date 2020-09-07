@@ -11,7 +11,6 @@
             blast_damage: 0,
             defense_damage: 30,
             max_speed: 40,
-            current_velocity_y: -40,
             collectables_probs: [
                 ("", 0.5),
                 ("health", 0.02),
@@ -32,6 +31,14 @@
             offset_y: 0.0,
             offset_rotation: 0.0,
         ),
+        motion2d_component: (
+            velocity: [0.0, -40.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
     ),
     "pawn": (
         enemy_component: (
@@ -45,7 +52,6 @@
             blast_damage: 30,
             defense_damage: 50,
             max_speed: 30,
-            current_velocity_y: -30,
             collectables_probs: [
                 ("", 0.5),
                 ("health", 0.02),
@@ -66,6 +72,14 @@
             offset_y: 0.0,
             offset_rotation: 0.0,
         ),
+        motion2d_component: (
+            velocity: [0.0, -30.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
     ),
     "hauler": (
         enemy_component: (
@@ -80,8 +94,6 @@
             blast_damage: 30,
             defense_damage: -100,
             max_speed: 25,
-            current_velocity_x: 25,
-            current_velocity_y: -20,
             collectables_probs: [
                 ("", 1.0) // doesn't drop anything
             ],
@@ -98,6 +110,14 @@
             offset_y: 0.0,
             offset_rotation: 0.0,
         ),
+        motion2d_component: (
+            velocity: [25.0, -20.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
     ),
     "strafer": (
         enemy_component: (
@@ -113,8 +133,6 @@
             blast_damage: 20,
             defense_damage: -30,
             max_speed: 25,
-            current_velocity_y: -25,
-            current_velocity_x: 25,
             collectables_probs: [
                 ("", 0.5),
                 ("health", 0.02),
@@ -135,6 +153,14 @@
             offset_y: 0.0,
             offset_rotation: 0.0,
         ),
+        motion2d_component: (
+            velocity: [25.0, -25.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
     ),
     "repeater_body": (
         enemy_component: (
@@ -150,7 +176,6 @@
             blast_damage: 0,
             defense_damage: 0,
             max_speed: 30,
-            current_velocity_y: -30,
             collectables_probs: [
                 ("", 0.0),
                 ("health", 0.02),
@@ -171,6 +196,14 @@
             offset_y: 0.0,
             offset_rotation: 0.0,
         ),
+        motion2d_component: (
+            velocity: [0.0, -30.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
     ),
     "repeater_head": (
         enemy_component: (
@@ -186,7 +219,6 @@
             blast_damage: 0,
             defense_damage: 0,
             max_speed: 30,
-            current_velocity_y: -30,
             collectables_probs: [
                 ("", 0.0),
                 ("health", 0.02),
@@ -207,6 +239,14 @@
             offset_y: 0.0,
             offset_rotation: 0.0,
         ),
+        motion2d_component: (
+            velocity: [0.0, -30.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
     ),
     "repeater_right_shoulder": (
         enemy_component: (
@@ -215,7 +255,6 @@
             sprite_index: 6,
             width: 83,
             height: 93,
-            current_rotation_velocity: -0.05,
             fires: false,
             fire_speed: 0,
             fire_reset_timer: 0,
@@ -223,7 +262,6 @@
             blast_damage: 0,
             defense_damage: 0,
             max_speed: 30,
-            current_velocity_y: -30,
             collectables_probs: [
                 ("", 0.0),
                 ("health", 0.02),
@@ -244,6 +282,14 @@
             offset_y: -10.0,
             offset_rotation: 0.7,
         ),
+        motion2d_component: (
+            velocity: [0.0, -30.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: -0.05,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
     ),
     "repeater_left_shoulder": (
         enemy_component: (
@@ -252,7 +298,6 @@
             sprite_index: 7,
             width: 83,
             height: 93,
-            current_rotation_velocity: 0.05,
             fires: false,
             fire_speed: 0,
             fire_reset_timer: 0,
@@ -260,7 +305,6 @@
             blast_damage: 0,
             defense_damage: 0,
             max_speed: 30,
-            current_velocity_y: -30,
             collectables_probs: [
                 ("", 0.0),
                 ("health", 0.02),
@@ -280,6 +324,14 @@
             offset_x: -15.0,
             offset_y: -10.0,
             offset_rotation: -0.7,
+        ),
+        motion2d_component: (
+            velocity: [0.0, -30.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.05,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
         ),
     ),
     "repeater_right_arm": (
@@ -316,6 +368,14 @@
             offset_x: 0.0,
             offset_y: -60.0,
             offset_rotation: 0.0,
+        ),
+        motion2d_component: (
+            velocity: [0.0, -30.0],
+            acceleration: [2.0, 4.0],
+            deceleration: [1.0, 1.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
         ),
     ),
 }

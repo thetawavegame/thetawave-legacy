@@ -39,6 +39,7 @@ pub fn spawn_enemy(
         .with(sprite_render)
         .with(enemy.enemy_component)
         .with(enemy.hitbox_component)
+        .with(enemy.motion2d_component)
         .with(local_transform)
         .with(Transparent)
         .with(name)
