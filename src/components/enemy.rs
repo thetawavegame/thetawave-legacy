@@ -179,8 +179,8 @@ impl Rigidbody for Enemy {
         if (enemy_x - (self.width / 2.0)) < ARENA_MIN_X
             || (enemy_x + (self.width / 2.0)) > ARENA_MAX_X
         {
-            self.current_velocity_x *= -1.0;
-            self.acceleration_x *= -1.0;
+            motion_2d.velocity.x *= -1.0;
+            motion_2d.acceleration.x *= -1.0;
         }
     }
 }

@@ -27,11 +27,11 @@ impl<'s> System<'s> for CollisionDetectionSystem {
         &mut self,
         (enemies, spaceships, hitboxes, motions, transforms, entities, mut enemy_collision_event_channel): Self::SystemData,
     ) {
-        for (entity_a, transform_a, enemy_a, hitbox_a, motion_a) in
+        for (entity_a, transform_a, _enemy_a, hitbox_a, motion_a) in
             (&entities, &transforms, &enemies, &hitboxes, &motions).join()
         {
             //check for enemy collisions
-            for (entity_b, transform_b, enemy_b, hitbox_b, motion_b) in
+            for (entity_b, transform_b, _enemy_b, hitbox_b, motion_b) in
                 (&entities, &transforms, &enemies, &hitboxes, &motions).join()
             {
                 if entity_a == entity_b {
@@ -66,7 +66,7 @@ impl<'s> System<'s> for CollisionDetectionSystem {
             }
 
             //check for spaceship collisions
-            for (entity_b, transform_b, spaceship_b, hitbox_b, motion_b) in
+            for (entity_b, transform_b, _spaceship_b, hitbox_b, motion_b) in
                 (&entities, &transforms, &spaceships, &hitboxes, &motions).join()
             {
                 if hitbox_collide(
