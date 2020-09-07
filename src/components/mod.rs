@@ -3,12 +3,12 @@ use amethyst::core::{math::Vector3, transform::Transform};
 use crate::constants::BLAST_Z;
 
 mod animation;
+mod autoblaster;
 mod blast;
 mod boss;
 mod consumable;
 mod defense;
 mod enemy;
-mod timelimit;
 mod gamemaster;
 mod hitbox;
 mod item;
@@ -17,15 +17,16 @@ mod spaceship;
 mod spawner;
 mod status_bar;
 mod store;
+mod timelimit;
 
 pub use self::{
     animation::{Animation, AnimationType},
+    autoblaster::AutoBlasterComponent,
     blast::{Blast, BlastType},
     boss::Repeater,
     consumable::Consumable,
     defense::Defense,
     enemy::{Enemy, EnemySpawnerTag, EnemyType},
-    timelimit::TimeLimitComponent,
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
     hitbox::Hitbox2DComponent,
     item::Item,
@@ -34,6 +35,7 @@ pub use self::{
     spawner::{choose_random_name, SpawnProbabilities, Spawner},
     status_bar::{StatusBar, StatusType},
     store::Store,
+    timelimit::TimeLimitComponent,
 };
 use std::collections::HashMap;
 

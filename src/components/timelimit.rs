@@ -4,11 +4,11 @@ use crate::components::Spawnable;
 
 #[derive(Clone)]
 pub struct TimeLimitComponent {
-    pub duration: f32
+    pub duration: f32,
 }
 
 impl Spawnable for TimeLimitComponent {
-  fn init(&mut self) {}
+    fn init(&mut self) {}
 }
 
 impl Component for TimeLimitComponent {
