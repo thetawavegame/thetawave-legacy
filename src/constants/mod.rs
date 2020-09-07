@@ -50,7 +50,7 @@ pub const SIDE_PANEL_RIGHT_SPRITE_INDEX: usize = 1;
 pub const SPACESHIP_BLAST_SPRITE_INDEX: usize = 0;
 
 // dimensions
-pub const BLAST_HITBOX_RADIUS: f32 = 2.0;
+pub const BLAST_HITBOX_DIAMETER: f32 = 2.0;
 pub const SIDE_PANEL_WIDTH: f32 = 45.0;
 
 // offsets
