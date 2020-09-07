@@ -15,7 +15,9 @@ impl<'s> System<'s> for BossSystem {
             if !entities.is_alive(repeater_component.head)
                 && !entities.is_alive(repeater_component.body)
             {
-                let _result = entities.delete(boss_entity);
+                entities
+                    .delete(boss_entity)
+                    .expect("unable to delete entity");
 
                 for gamemaster in (&mut gamemasters).join() {
                     gamemaster.phase_idx += 1;

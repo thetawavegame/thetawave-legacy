@@ -63,7 +63,9 @@ impl<'s> System<'s> for ConsumableSystem {
                 .prepend_translation_y(-1.0 * consumable.speed * time.delta_seconds());
 
             if consumable_transform.translation().y < ARENA_MIN_Y {
-                entities.delete(consumable_entity);
+                entities
+                    .delete(consumable_entity)
+                    .expect("unable to delete entity");
             }
         }
 
@@ -89,7 +91,9 @@ impl<'s> System<'s> for ConsumableSystem {
                             defense.defense += consumable.defense_value;
                         }
 
-                        let _result = entities.delete(consumable_entity);
+                        entities
+                            .delete(consumable_entity)
+                            .expect("unable to delete entity");
                     }
                 }
             }

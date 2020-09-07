@@ -62,7 +62,9 @@ impl<'s> System<'s> for ItemSystem {
             item_transform.prepend_translation_y(-1.0 * item.speed * time.delta_seconds());
 
             if item_transform.translation().y + item.height / 2.0 < ARENA_MIN_Y {
-                entities.delete(item_entity);
+                entities
+                    .delete(item_entity)
+                    .expect("unable to delete entity");
             }
         }
 
@@ -146,7 +148,9 @@ impl<'s> System<'s> for ItemSystem {
 
                         play_sfx(&sounds.item_sfx, &storage, audio_output.as_deref());
 
-                        entities.delete(item_entity);
+                        entities
+                            .delete(item_entity)
+                            .expect("unable to delete entity");
                     }
                 }
             }
