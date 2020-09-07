@@ -4,11 +4,10 @@ use amethyst::{
 };
 
 use crate::{
-    components::{AnimationType, Fires, Rigidbody, SpawnProbabilities, Spawnable, Motion2DComponent},
+    components::{AnimationType, Fires, Rigidbody, SpawnProbabilities, Motion2DComponent},
     constants::{ARENA_MAX_X, ARENA_MIN_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
-use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -40,19 +39,6 @@ pub struct Enemy {
     pub blast_damage: f32,
     pub defense_damage: f32,
     pub max_speed: f32,
-    #[serde(default = "des_current_velocity_x")]
-    pub current_velocity_x: f32,
-    pub current_velocity_y: f32,
-    #[serde(default = "des_current_rotation_velocity")]
-    pub current_rotation_velocity: f32,
-    #[serde(default = "des_acceleration_x")]
-    pub acceleration_x: f32,
-    #[serde(default = "des_acceleration_y")]
-    pub acceleration_y: f32,
-    #[serde(default = "des_deceleration_x")]
-    pub deceleration_x: f32,
-    #[serde(default = "des_deceleration_y")]
-    pub deceleration_y: f32,
     #[serde(default = "des_knockback_max_speed")]
     pub knockback_max_speed: f32,
     #[serde(default = "des_collision_damage")]
@@ -87,21 +73,6 @@ fn des_width() -> f32 {
 fn des_height() -> f32 {
     18.0
 }
-fn des_current_velocity_x() -> f32 {
-    0.0
-}
-fn des_acceleration_x() -> f32 {
-    2.0
-}
-fn des_acceleration_y() -> f32 {
-    4.0
-}
-fn des_deceleration_x() -> f32 {
-    1.0
-}
-fn des_deceleration_y() -> f32 {
-    1.0
-}
 fn des_knockback_max_speed() -> f32 {
     100.0
 }
@@ -128,35 +99,17 @@ fn des_blast_sprite_indicies() -> HashMap<String, usize> {
 fn des_allied() -> bool {
     false
 }
-fn des_current_rotation_velocity() -> f32 {
-    0.0
-}
 
 impl Rigidbody for Enemy {
-    fn current_velocity_x(&self) -> f32 {
-        self.current_velocity_x
-    }
+    // TODO: Remove these
+    fn current_velocity_x(&self) -> f32 { 0.0 }
+    fn current_velocity_y(&self) -> f32 { 0.0 }
+    fn current_rotation_velocity(&self) -> f32 { 0.0 }
+    fn acceleration_x(&self) -> f32 { 0.0 }
+    fn acceleration_y(&self) -> f32 { 0.0 }
+    fn deceleration_x(&self) -> f32 { 0.0 }
+    fn deceleration_y(&self) -> f32 { 0.0 }
 
-    fn current_velocity_y(&self) -> f32 {
-        self.current_velocity_y
-    }
-
-    fn current_rotation_velocity(&self) -> f32 {
-        self.current_rotation_velocity
-    }
-
-    fn acceleration_x(&self) -> f32 {
-        self.acceleration_x
-    }
-    fn acceleration_y(&self) -> f32 {
-        self.acceleration_y
-    }
-    fn deceleration_x(&self) -> f32 {
-        self.deceleration_x
-    }
-    fn deceleration_y(&self) -> f32 {
-        self.deceleration_y
-    }
     fn max_speed(&self) -> f32 {
         self.max_speed
     }
@@ -164,15 +117,10 @@ impl Rigidbody for Enemy {
         self.knockback_max_speed
     }
 
-    fn set_current_velocity_y(&mut self, value: f32) {
-        self.current_velocity_y = value;
-    }
-    fn set_current_velocity_x(&mut self, value: f32) {
-        self.current_velocity_x = value;
-    }
-    fn set_rotation_velocity(&mut self, value: f32) {
-        self.current_rotation_velocity = value
-    }
+    // TODO: Remove these
+    fn set_current_velocity_y(&mut self, value: f32) {}
+    fn set_current_velocity_x(&mut self, value: f32) {}
+    fn set_rotation_velocity(&mut self, value: f32) {}
 
     fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
         let enemy_x = transform.translation().x;
@@ -201,12 +149,11 @@ impl Fires for Enemy {
     fn blast_speed(&self) -> f32 {
         self.blast_speed
     }
-    fn velocity_x(&self) -> f32 {
-        self.current_velocity_x
-    }
-    fn velocity_y(&self) -> f32 {
-        self.current_velocity_y
-    }
+
+    // TODO: Remove these
+    fn velocity_x(&self) -> f32 { 0.0 }
+    fn velocity_y(&self) -> f32 { 0.0 }
+
     fn allied(&self) -> bool {
         self.allied
     }
@@ -222,18 +169,6 @@ impl Fires for Enemy {
     }
     fn set_fire_reset_timer(&mut self, value: f32) {
         self.fire_reset_timer = value;
-    }
-}
-
-impl Spawnable for Enemy {
-    fn init(&mut self) {
-        let mut rng = rand::thread_rng();
-        let rand_num = rng.gen_range(0, 2);
-
-        if rand_num == 1 {
-            self.current_velocity_x *= -1.0;
-            self.acceleration_x *= -1.0;
-        }
     }
 }
 

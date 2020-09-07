@@ -162,7 +162,7 @@ impl<'s> System<'s> for EnemySystem {
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 30.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
                 }
 
@@ -171,7 +171,7 @@ impl<'s> System<'s> for EnemySystem {
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
                 }
 
@@ -180,14 +180,14 @@ impl<'s> System<'s> for EnemySystem {
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
 
                     //rotate back and forth
                     if enemy_transform.euler_angles().2 > 0.1 {
-                        enemy_component.set_rotation_velocity(0.05);
+                        enemy_motion.angular_velocity = 0.05;
                     } else if enemy_transform.euler_angles().2 < -0.1 {
-                        enemy_component.set_rotation_velocity(-0.05);
+                        enemy_motion.angular_velocity = 0.05;
                     }
                 }
 
@@ -195,7 +195,7 @@ impl<'s> System<'s> for EnemySystem {
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
                 }
             }

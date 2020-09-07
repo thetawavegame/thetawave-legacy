@@ -2,8 +2,9 @@ use amethyst::{
   ecs::prelude::{Component, DenseVecStorage},
   core::{math::Vector2}
 };
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Motion2DComponent {
   pub velocity: Vector2<f32>,
   pub acceleration: Vector2<f32>,
