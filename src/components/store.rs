@@ -2,7 +2,7 @@ use crate::{
     components::{Consumable, Item, Spaceship},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ITEM_SPAWN_Y_OFFSET},
     entities::spawn_item,
-    resources::{ItemPool, SpriteResource},
+    resources::{ItemEntityData, ItemPool, SpriteResource},
 };
 use amethyst::{
     core::{math::Vector3, transform::Transform},
@@ -19,7 +19,7 @@ pub struct Store {
     pub items: StockProbabilities,
     pub restock_timer: f32,
     pub restock_interval: f32,
-    pub item_inventory: [Option<Item>; 3],
+    pub item_inventory: [Option<ItemEntityData>; 3],
     pub item_icons: [Option<Entity>; 3],
     pub consumable_inventory: Vec<Consumable>,
 }
@@ -75,7 +75,9 @@ impl Store {
 
             for item_icon in self.item_icons.iter() {
                 if let Some(item_icon_to_delete) = item_icon {
-                    let _res = entities.delete(*item_icon_to_delete);
+                    entities
+                        .delete(*item_icon_to_delete)
+                        .expect("unable to delete entity");
                 }
             }
 
@@ -88,7 +90,7 @@ impl Store {
                         sprite_resource,
                         lazy_update,
                         i as f32,
-                        store_item.sprite_index,
+                        store_item.item_component.sprite_index,
                     );
                 }
             }
@@ -104,12 +106,12 @@ impl Store {
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
         if let Some(item) = &self.item_inventory[item_index] {
-            if spaceship.money >= item.price {
+            if spaceship.money >= item.item_component.price {
                 println!(
                     "purchasing {} located in slot #{} for {}",
-                    item.name, item_index, item.price
+                    item.item_component.name, item_index, item.item_component.price
                 );
-                spaceship.money -= item.price;
+                spaceship.money -= item.item_component.price;
                 spawn_item(
                     entities,
                     sprite_resource,
@@ -118,14 +120,16 @@ impl Store {
                     lazy_update,
                 );
                 for (i, itm) in self.items.iter().enumerate() {
-                    if itm.0 == item.name {
+                    if itm.0 == item.item_component.name {
                         self.items[i].1 = 0.0; //set probability of appearing again to 0
                         break;
                     }
                 }
                 self.item_inventory[item_index] = None; //change item slot data to None
                 if let Some(item_icon_to_destroy) = self.item_icons[item_index] {
-                    let _res = entities.delete(item_icon_to_destroy); //remove store icon
+                    entities
+                        .delete(item_icon_to_destroy)
+                        .expect("unable to delete entity"); //remove store icon
                     self.item_icons[item_index] = None;
                 }
                 return true;

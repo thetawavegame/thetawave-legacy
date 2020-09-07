@@ -1,5 +1,5 @@
 use crate::{
-    components::Spaceship,
+    components::{Hitbox2DComponent, Spaceship},
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_SPRITE_INDEX,
         POISON_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
@@ -37,16 +37,20 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
     blast_sprite_indicies.insert("crit".to_string(), CRIT_SPRITE_INDEX);
     blast_sprite_indicies.insert("poison".to_string(), POISON_SPRITE_INDEX);
 
+    let hitbox = Hitbox2DComponent {
+        width: SPACESHIP_HITBOX_WIDTH,
+        height: SPACESHIP_HITBOX_HEIGHT,
+        offset_x: 0.0,
+        offset_y: 0.0,
+        offset_rotation: 0.0,
+    };
+
     world
         .create_entity()
         .with(sprite_render)
         .with(Spaceship {
             width: SPACESHIP_WIDTH,
             height: SPACESHIP_HEIGHT,
-            hitbox_width: SPACESHIP_HITBOX_WIDTH,
-            hitbox_height: SPACESHIP_HITBOX_HEIGHT,
-            hitbox_x_offset: 0.0,
-            hitbox_y_offset: 0.0,
             max_speed: SPACESHIP_MAX_SPEED,
             current_velocity_x: 0.0,
             current_velocity_y: 0.0,
@@ -80,6 +84,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             blast_sprite_indicies,
             allied: true,
         })
+        .with(hitbox)
         .with(local_transform)
         .with(Transparent)
         .build();

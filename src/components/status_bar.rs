@@ -42,7 +42,7 @@ impl StatusBar {
             }
             Ordering::Less => {
                 if let Some(unit) = self.status_unit_stack.pop() {
-                    let _result = entities.delete(unit);
+                    entities.delete(unit).expect("unable to delete entity");
                     self.x_pos -= 1.0;
                 }
                 None
@@ -68,7 +68,7 @@ impl StatusBar {
             }
             Ordering::Less => {
                 if let Some(unit) = self.status_unit_stack.pop() {
-                    let _result = entities.delete(unit);
+                    entities.delete(unit).expect("unable to delete entity");
                     self.y_pos -= 1.0;
                 }
                 None

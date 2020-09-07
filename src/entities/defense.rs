@@ -4,7 +4,7 @@ use amethyst::{
     prelude::Builder,
 };
 
-pub fn initialise_defense(world: &mut World) {
+pub fn initialize_defense(world: &mut World) {
     world
         .create_entity()
         .with(Defense {

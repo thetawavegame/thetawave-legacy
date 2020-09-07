@@ -7,14 +7,20 @@ use amethyst::{
 pub struct TimeLimitSystem;
 
 impl<'s> System<'s> for TimeLimitSystem {
-    type SystemData = (Entities<'s>, WriteStorage<'s, TimeLimitComponent>, Read<'s, Time>);
+    type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, TimeLimitComponent>,
+        Read<'s, Time>,
+    );
 
     fn run(&mut self, (entities, mut explosions, time): Self::SystemData) {
         for (timed_entity, time_component) in (&*entities, &mut explosions).join() {
             if time_component.duration > 0.0 {
-              time_component.duration -= time.delta_seconds();
+                time_component.duration -= time.delta_seconds();
             } else {
-                let _result = entities.delete(timed_entity);
+                entities
+                    .delete(timed_entity)
+                    .expect("unable to delete entity");
             }
         }
     }

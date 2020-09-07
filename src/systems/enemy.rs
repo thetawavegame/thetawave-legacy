@@ -1,10 +1,10 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{choose_random_name, Consumable, Defense, Enemy, EnemyType, Fires, Rigidbody},
+    components::{choose_random_name, Defense, Enemy, EnemyType, Fires, Rigidbody},
     constants::{ARENA_MIN_Y, EXPLOSION_Z},
     entities::{fire_blast, spawn_consumable, spawn_explosion},
-    resources::SpriteResource,
+    resources::{ConsumableEntityData, SpriteResource},
 };
 use amethyst::{
     assets::AssetStorage,
@@ -28,7 +28,7 @@ impl<'s> System<'s> for EnemySystem {
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
         Option<Read<'s, Output>>,
-        ReadExpect<'s, HashMap<String, Consumable>>, // should create alias ConsumablePool
+        ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
     );
 
     fn run(
@@ -64,7 +64,9 @@ impl<'s> System<'s> for EnemySystem {
                 for defense in (&mut defenses).join() {
                     defense.defense -= enemy_component.defense_damage;
                 }
-                let _result = entities.delete(enemy_entity);
+                entities
+                    .delete(enemy_entity)
+                    .expect("unable to delete entity");
             } else if enemy_component.health < 0.0 {
                 //enemy us deleted, explosion is spawned and item dropped
                 let death_position = Vector3::new(
@@ -73,7 +75,9 @@ impl<'s> System<'s> for EnemySystem {
                     EXPLOSION_Z,
                 );
 
-                let _result = entities.delete(enemy_entity);
+                entities
+                    .delete(enemy_entity)
+                    .expect("unable to delete entity");
 
                 spawn_explosion(
                     &entities,
