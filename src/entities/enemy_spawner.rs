@@ -11,7 +11,7 @@ use amethyst::{
     prelude::Builder,
 };
 
-pub fn initialise_enemy_spawner(world: &mut World) {
+pub fn initialize_enemy_spawner(world: &mut World) {
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(
         ARENA_MIN_X + (ARENA_WIDTH / 2.0),

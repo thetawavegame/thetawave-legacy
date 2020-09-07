@@ -27,7 +27,7 @@ pub use self::{
     consumable::spawn_consumable,
     defense::initialize_defense,
     enemy::spawn_enemy,
-    enemy_spawner::initialise_enemy_spawner,
+    enemy_spawner::initialize_enemy_spawner,
     explosion::{spawn_blast_explosion, spawn_explosion},
     gamemaster::initialize_gamemaster,
     items::spawn_item,

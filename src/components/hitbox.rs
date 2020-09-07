@@ -21,8 +21,8 @@ impl Component for Hitbox2DComponent {
 impl Hitbox2DComponent {
     pub fn is_colliding(
         &self,
-        transform_a: &Transform,
         hitbox_b: &Hitbox2DComponent,
+        transform_a: &Transform,
         transform_b: &Transform,
     ) -> bool {
         if self.offset_rotation == 0.0 && hitbox_b.offset_rotation == 0.0 {

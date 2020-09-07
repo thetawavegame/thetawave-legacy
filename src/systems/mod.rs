@@ -34,7 +34,7 @@ pub use self::{
     status_bar::StatusBarSystem, store::StoreSystem, timelimit::TimeLimitSystem,
 };
 
-// phase this out and instead use hitbox component
+// TODO: phase this out and instead use hitbox component
 pub fn hitbox_collide(
     mut x1: f32,
     mut y1: f32,

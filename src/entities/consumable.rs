@@ -21,8 +21,6 @@ pub fn spawn_consumable(
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
-    //println!("{} spawned!", name.name);
-
     lazy_update
         .create_entity(entities)
         .with(sprite_render)
