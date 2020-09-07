@@ -29,7 +29,9 @@ impl<'s> System<'s> for BlastSystem {
                 || (blast_transform.translation().x + blast_hitbox.width) > ARENA_MAX_X
                 || (blast_transform.translation().x - blast_hitbox.width) < ARENA_MIN_X
             {
-                entities.delete(blast_entity);
+                entities
+                    .delete(blast_entity)
+                    .expect("unable to delete entity");
             }
 
             // update position based on blast velocity

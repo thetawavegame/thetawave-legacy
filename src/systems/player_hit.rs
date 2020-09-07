@@ -70,7 +70,9 @@ impl<'s> System<'s> for PlayerHitSystem {
                         && ((event.entity_a == blast_entity && event.entity_b == enemy_entity)
                             || (event.entity_a == enemy_entity && event.entity_b == blast_entity))
                     {
-                        let _result = entities.delete(blast_entity);
+                        entities
+                            .delete(blast_entity)
+                            .expect("unable to delete entity");
                         play_sfx(&sounds.spaceship_hit_sfx, &storage, audio_output.as_deref());
 
                         let explosion_position = Vector3::new(

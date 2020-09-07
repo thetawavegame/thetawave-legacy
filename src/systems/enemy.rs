@@ -64,7 +64,9 @@ impl<'s> System<'s> for EnemySystem {
                 for defense in (&mut defenses).join() {
                     defense.defense -= enemy_component.defense_damage;
                 }
-                let _result = entities.delete(enemy_entity);
+                entities
+                    .delete(enemy_entity)
+                    .expect("unable to delete entity");
             } else if enemy_component.health < 0.0 {
                 //enemy us deleted, explosion is spawned and item dropped
                 let death_position = Vector3::new(
@@ -73,7 +75,9 @@ impl<'s> System<'s> for EnemySystem {
                     EXPLOSION_Z,
                 );
 
-                let _result = entities.delete(enemy_entity);
+                entities
+                    .delete(enemy_entity)
+                    .expect("unable to delete entity");
 
                 spawn_explosion(
                     &entities,

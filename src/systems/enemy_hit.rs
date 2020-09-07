@@ -64,7 +64,9 @@ impl<'s> System<'s> for EnemyHitSystem {
                         && !spaceship.barrel_action_left
                         && !spaceship.barrel_action_right
                     {
-                        entities.delete(blast_entity);
+                        entities
+                            .delete(blast_entity)
+                            .expect("unable to delete entity");
 
                         let explosion_position = Vector3::new(
                             blast_transform.translation().x,

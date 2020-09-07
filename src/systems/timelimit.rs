@@ -18,7 +18,9 @@ impl<'s> System<'s> for TimeLimitSystem {
             if time_component.duration > 0.0 {
                 time_component.duration -= time.delta_seconds();
             } else {
-                let _result = entities.delete(timed_entity);
+                entities
+                    .delete(timed_entity)
+                    .expect("unable to delete entity");
             }
         }
     }

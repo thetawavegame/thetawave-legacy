@@ -75,7 +75,9 @@ impl Store {
 
             for item_icon in self.item_icons.iter() {
                 if let Some(item_icon_to_delete) = item_icon {
-                    let _res = entities.delete(*item_icon_to_delete);
+                    entities
+                        .delete(*item_icon_to_delete)
+                        .expect("unable to delete entity");
                 }
             }
 
@@ -125,7 +127,9 @@ impl Store {
                 }
                 self.item_inventory[item_index] = None; //change item slot data to None
                 if let Some(item_icon_to_destroy) = self.item_icons[item_index] {
-                    let _res = entities.delete(item_icon_to_destroy); //remove store icon
+                    entities
+                        .delete(item_icon_to_destroy)
+                        .expect("unable to delete entity"); //remove store icon
                     self.item_icons[item_index] = None;
                 }
                 return true;
