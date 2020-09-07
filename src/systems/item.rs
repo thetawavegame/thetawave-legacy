@@ -61,8 +61,8 @@ impl<'s> System<'s> for ItemSystem {
         for (item, item_entity, item_transform) in (&mut items, &entities, &mut transforms).join() {
             item_transform.prepend_translation_y(-1.0 * item.speed * time.delta_seconds());
 
-            if item_transform.translation()[1] + item.height / 2.0 < ARENA_MIN_Y {
-                let _result = entities.delete(item_entity);
+            if item_transform.translation().y + item.height / 2.0 < ARENA_MIN_Y {
+                entities.delete(item_entity);
             }
         }
 
@@ -76,9 +76,11 @@ impl<'s> System<'s> for ItemSystem {
                     {
                         if item.stat_effects.contains_key("max_defense") {
                             for defense in (&mut defenses).join() {
+                                // increases maximum capacity for defense
                                 defense.set_max_health(
                                     defense.max_health() + item.stat_effects["max_defense"],
                                 );
+                                // sets current defense to new maximum value
                                 defense.set_health(
                                     defense.health() + item.stat_effects["max_defense"],
                                 );
@@ -144,7 +146,7 @@ impl<'s> System<'s> for ItemSystem {
 
                         play_sfx(&sounds.item_sfx, &storage, audio_output.as_deref());
 
-                        let _result = entities.delete(item_entity);
+                        entities.delete(item_entity);
                     }
                 }
             }

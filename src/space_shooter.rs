@@ -5,7 +5,7 @@ use crate::{
         CAMERA_Z,
     },
     entities::{
-        initialise_enemy_spawner, initialize_defense, initialize_gamemaster, initialize_planet,
+        initialize_defense, initialize_enemy_spawner, initialize_gamemaster, initialize_planet,
         initialize_side_panels, initialize_spaceship, initialize_status_bars, initialize_store,
     },
     resources::initialize_sprite_resource,
@@ -220,7 +220,7 @@ impl SimpleState for SpaceShooter {
             repeater_sprite_sheet_handle,
             blast_explosions_sprite_sheet_handle,
         );
-        initialise_enemy_spawner(world);
+        initialize_enemy_spawner(world);
         initialize_side_panels(world, side_panel_sprite_sheet_handle);
         initialize_store(world);
         initialise_camera(world);

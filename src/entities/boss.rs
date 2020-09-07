@@ -53,7 +53,6 @@ pub fn spawn_repeater(
         body_position,
         &lazy_update,
     );
-
     let head = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
@@ -61,15 +60,6 @@ pub fn spawn_repeater(
         head_position,
         &lazy_update,
     );
-    /*
-    let right_arm = spawn_enemy(
-        &entities,
-        sprite_sheet,
-        right_arm_entity_data,
-        right_arm_position,
-        &lazy_update,
-    );
-    */
     let right_shoulder = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
@@ -89,7 +79,6 @@ pub fn spawn_repeater(
         head,
         right_shoulder,
         left_shoulder,
-        //right_arm,
     };
 
     lazy_update.create_entity(entities).with(repeater).build();

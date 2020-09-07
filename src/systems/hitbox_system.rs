@@ -23,7 +23,7 @@ impl<'s> System<'s> for HitboxSystem {
                     continue;
                 }
 
-                if hitbox_a.is_colliding(transform_a, hitbox_b, transform_b) {
+                if hitbox_a.is_colliding(hitbox_b, transform_a, transform_b) {
                     collision_channel.single_write(HitboxCollisionEvent::new(entity_a, entity_b));
                     break 'outer; // breaks out of outer loop to prevent duplicate events
                 }
