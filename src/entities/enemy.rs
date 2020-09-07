@@ -1,42 +1,47 @@
-use crate::components::{Animation, Enemy};
+use crate::{components::Animation, resources::EnemyEntityData};
 use amethyst::{
     assets::Handle,
-    core::{math::Vector3, Named},
-    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, SpriteSheet},
+    core::{math::Vector3, transform::Transform, Named},
+    ecs::prelude::{Builder, Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::{SpriteRender, SpriteSheet, Transparent},
 };
 
 pub fn spawn_enemy(
     entities: &Entities,
     sprite_sheet: Handle<SpriteSheet>,
-    item: Enemy,
+    enemy: EnemyEntityData,
     spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) -> Entity {
-    let sprite = SpriteRender {
+    let sprite_render = SpriteRender {
         sprite_sheet,
-        sprite_number: item.sprite_index,
+        sprite_number: enemy.enemy_component.sprite_index,
     };
 
+    // store animation data in separate Animation component added to EnemyEntityData
     let animation = Animation {
-        start_idx: item.sprite_index,
-        frame_count: item.frame_count,
-        current_frame: item.sprite_index,
-        frame_time: item.frame_time,
+        start_idx: enemy.enemy_component.sprite_index,
+        frame_count: enemy.enemy_component.frame_count,
+        current_frame: enemy.enemy_component.sprite_index,
+        frame_time: enemy.enemy_component.frame_time,
         elapsed_time: 0.0,
         forward: true,
-        animation_type: item.animation_type.clone(),
+        animation_type: enemy.enemy_component.animation_type.clone(),
     };
 
     let name = Named::new("enemy");
 
-    super::spawn_animated_entity(
-        &entities,
-        name,
-        sprite,
-        animation,
-        item,
-        spawn_position,
-        &lazy_update,
-    )
+    let mut local_transform = Transform::default();
+    local_transform.set_translation(spawn_position);
+
+    lazy_update
+        .create_entity(entities)
+        .with(sprite_render)
+        .with(enemy.enemy_component)
+        .with(enemy.hitbox_component)
+        .with(local_transform)
+        .with(Transparent)
+        .with(name)
+        .with(animation)
+        .build()
 }

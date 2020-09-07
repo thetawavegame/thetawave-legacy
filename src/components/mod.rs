@@ -10,6 +10,7 @@ mod defense;
 mod enemy;
 mod timelimit;
 mod gamemaster;
+mod hitbox;
 mod item;
 mod planet;
 mod spaceship;
@@ -26,6 +27,7 @@ pub use self::{
     enemy::{Enemy, EnemySpawnerTag, EnemyType},
     timelimit::TimeLimitComponent,
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
+    hitbox::Hitbox2DComponent,
     item::Item,
     planet::Planet,
     spaceship::Spaceship,

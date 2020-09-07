@@ -4,7 +4,7 @@ use crate::{
     constants::EXPLOSION_Z,
     entities::spawn_blast_explosion,
     resources::SpriteResource,
-    systems::hitbox_collide,
+    space_shooter::HitboxCollisionEvent,
 };
 use amethyst::{
     assets::AssetStorage,
@@ -13,12 +13,19 @@ use amethyst::{
     ecs::prelude::{
         Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
     },
+    ecs::World,
+    ecs::*,
+    shrev::{EventChannel, ReaderId},
 };
 
-pub struct PlayerHitSystem;
+#[derive(Default)]
+pub struct PlayerHitSystem {
+    event_reader: Option<ReaderId<HitboxCollisionEvent>>,
+}
 
 impl<'s> System<'s> for PlayerHitSystem {
     type SystemData = (
+        Read<'s, EventChannel<HitboxCollisionEvent>>,
         Entities<'s>,
         WriteStorage<'s, Enemy>,
         WriteStorage<'s, Blast>,
@@ -30,9 +37,19 @@ impl<'s> System<'s> for PlayerHitSystem {
         ReadExpect<'s, LazyUpdate>,
     );
 
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<HitboxCollisionEvent>>()
+                .register_reader(),
+        );
+    }
+
     fn run(
         &mut self,
         (
+            collision_channel,
             entities,
             mut enemies,
             mut blasts,
@@ -44,31 +61,18 @@ impl<'s> System<'s> for PlayerHitSystem {
             lazy_update,
         ): Self::SystemData,
     ) {
-        for (enemy, enemy_transform) in (&mut enemies, &transforms).join() {
-            for (blast_entity, blast, blast_transform) in
-                (&*entities, &mut blasts, &transforms).join()
-            {
-                if blast.allied {
-                    let enemy_x = enemy_transform.translation().x;
-                    let enemy_y = enemy_transform.translation().y;
-                    let blast_x = blast_transform.translation().x;
-                    let blast_y = blast_transform.translation().y;
-
-                    if hitbox_collide(
-                        blast_x,
-                        blast_y,
-                        enemy_x,
-                        enemy_y,
-                        blast.hitbox_radius,
-                        blast.hitbox_radius,
-                        enemy.hitbox_width,
-                        enemy.hitbox_height,
-                        0.0,
-                        0.0,
-                        enemy.hitbox_x_offset,
-                        enemy.hitbox_y_offset,
-                    ) {
-                        let _result = entities.delete(blast_entity);
+        for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
+            for (enemy_entity, enemy) in (&entities, &mut enemies).join() {
+                for (blast_entity, blast, blast_transform) in
+                    (&entities, &mut blasts, &transforms).join()
+                {
+                    if blast.allied
+                        && ((event.entity_a == blast_entity && event.entity_b == enemy_entity)
+                            || (event.entity_a == enemy_entity && event.entity_b == blast_entity))
+                    {
+                        entities
+                            .delete(blast_entity)
+                            .expect("unable to delete entity");
                         play_sfx(&sounds.spaceship_hit_sfx, &storage, audio_output.as_deref());
 
                         let explosion_position = Vector3::new(
