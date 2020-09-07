@@ -1,10 +1,10 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{choose_random_name, Consumable, Defense, Enemy, EnemyType, Fires, Rigidbody, Motion2DComponent},
+    components::{choose_random_name, Defense, Enemy, EnemyType, Fires, Rigidbody, Motion2DComponent},
     constants::{ARENA_MIN_Y, EXPLOSION_Z},
     entities::{fire_blast, spawn_consumable, spawn_explosion},
-    resources::SpriteResource,
+    resources::{ConsumableEntityData, SpriteResource},
 };
 use amethyst::{
     assets::AssetStorage,
@@ -29,7 +29,7 @@ impl<'s> System<'s> for EnemySystem {
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
         Option<Read<'s, Output>>,
-        ReadExpect<'s, HashMap<String, Consumable>>, // should create alias ConsumablePool
+        ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
     );
 
     fn run(
@@ -39,7 +39,7 @@ impl<'s> System<'s> for EnemySystem {
             mut enemys,
             mut defenses,
             mut transforms,
-            mut motion_2d_components,
+            mut motions,
             time,
             sprite_resource,
             lazy_update,
@@ -49,14 +49,14 @@ impl<'s> System<'s> for EnemySystem {
             consumable_pool,
         ): Self::SystemData,
     ) {
-        for (enemy_entity, enemy_component, enemy_transform, enemy_motion_2d) in
-            (&*entities, &mut enemys, &mut transforms, &mut motion_2d_components).join()
+        for (enemy_entity, enemy_component, enemy_transform, enemy_motion) in
+            (&*entities, &mut enemys, &mut transforms, &mut motions).join()
         {
             //constrain in arena
-            enemy_component.constrain_to_arena(enemy_transform, enemy_motion_2d);
+            enemy_component.constrain_to_arena(enemy_transform, enemy_motion);
 
             //transform the spaceship in x and y by the currrent velocity in x and y
-            enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion_2d);
+            enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion);
 
             enemy_component.health -= enemy_component.poison;
 
@@ -66,7 +66,9 @@ impl<'s> System<'s> for EnemySystem {
                 for defense in (&mut defenses).join() {
                     defense.defense -= enemy_component.defense_damage;
                 }
-                let _result = entities.delete(enemy_entity);
+                entities
+                    .delete(enemy_entity)
+                    .expect("unable to delete entity");
             } else if enemy_component.health < 0.0 {
                 //enemy us deleted, explosion is spawned and item dropped
                 let death_position = Vector3::new(
@@ -75,7 +77,9 @@ impl<'s> System<'s> for EnemySystem {
                     EXPLOSION_Z,
                 );
 
-                let _result = entities.delete(enemy_entity);
+                entities
+                    .delete(enemy_entity)
+                    .expect("unable to delete entity");
 
                 spawn_explosion(
                     &entities,
@@ -103,7 +107,7 @@ impl<'s> System<'s> for EnemySystem {
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
 
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform,
@@ -123,17 +127,17 @@ impl<'s> System<'s> for EnemySystem {
 
                 EnemyType::Drone => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Hauler => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Strafer => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
 
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform,
@@ -150,13 +154,13 @@ impl<'s> System<'s> for EnemySystem {
                         )
                     }
 
-                    enemy_component.accelerate(1.0, 0.0, enemy_motion_2d);
+                    enemy_component.accelerate(1.0, 0.0, enemy_motion);
                 }
 
                 EnemyType::RepeaterBody => {
                     //accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 30.0 {
-                        enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_component.current_velocity_y = 0.0;
                     }
@@ -165,7 +169,7 @@ impl<'s> System<'s> for EnemySystem {
                 EnemyType::RepeaterHead => {
                     //accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
-                        enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_component.current_velocity_y = 0.0;
                     }
@@ -174,7 +178,7 @@ impl<'s> System<'s> for EnemySystem {
                 EnemyType::RepeaterShoulder => {
                     //accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
-                        enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_component.current_velocity_y = 0.0;
                     }
@@ -189,7 +193,7 @@ impl<'s> System<'s> for EnemySystem {
 
                 EnemyType::RepeaterArm => {
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
-                        enemy_component.accelerate(0.0, -1.0, enemy_motion_2d);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_component.current_velocity_y = 0.0;
                     }

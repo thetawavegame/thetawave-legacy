@@ -1,13 +1,13 @@
 use amethyst::{
     core::{math::Vector3, transform::Transform},
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
 use rand::{thread_rng, Rng};
 
 use crate::{
-    components::{Blast, BlastType, Fires},
-    constants::{BLAST_HITBOX_RADIUS, BLAST_OFFSET, VELOCITY_FACTOR},
+    components::{Blast, BlastType, Fires, Hitbox2DComponent},
+    constants::{BLAST_HITBOX_DIAMETER, BLAST_OFFSET, VELOCITY_FACTOR},
     resources::SpriteResource,
 };
 
@@ -56,31 +56,41 @@ pub fn fire_blast(
 
     // create and insert blast entities
     for _ in 0..source_component.blast_count() {
-        let blast_entity = entities.create();
         let mut blast_transform = Transform::default();
         blast_transform.set_translation(Vector3::new(
             blast_spawn_pos,
             source_position[1],
             source_position[2],
         ));
+
         blast_spawn_pos += BLAST_OFFSET;
 
-        lazy_update.insert(blast_entity, blast_sprite_render.clone());
-        lazy_update.insert(
-            blast_entity,
-            Blast {
-                speed: source_component.blast_speed(),
-                hitbox_radius: BLAST_HITBOX_RADIUS,
-                damage,
-                poison_damage,
-                x_velocity: source_component.velocity_x(),
-                y_velocity: source_component.velocity_y(),
-                velocity_factor: VELOCITY_FACTOR,
-                allied: source_component.allied(),
-                blast_type: blast_type.clone(),
-            },
-        );
-        lazy_update.insert(blast_entity, blast_transform);
-        lazy_update.insert(blast_entity, Transparent);
+        let blast_component = Blast {
+            speed: source_component.blast_speed(),
+            damage,
+            poison_damage,
+            x_velocity: source_component.velocity_x(),
+            y_velocity: source_component.velocity_y(),
+            velocity_factor: VELOCITY_FACTOR,
+            allied: source_component.allied(),
+            blast_type: blast_type.clone(),
+        };
+
+        let hitbox = Hitbox2DComponent {
+            width: BLAST_HITBOX_DIAMETER,
+            height: BLAST_HITBOX_DIAMETER,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        };
+
+        lazy_update
+            .create_entity(entities)
+            .with(blast_component)
+            .with(hitbox)
+            .with(blast_sprite_render.clone())
+            .with(blast_transform)
+            .with(Transparent)
+            .build();
     }
 }

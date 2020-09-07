@@ -10,6 +10,7 @@ mod defense;
 mod enemy;
 mod timelimit;
 mod gamemaster;
+mod hitbox;
 mod item;
 mod motion2d;
 mod planet;
@@ -27,6 +28,7 @@ pub use self::{
     enemy::{Enemy, EnemySpawnerTag, EnemyType},
     timelimit::TimeLimitComponent,
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
+    hitbox::Hitbox2DComponent,
     item::Item,
     motion2d::Motion2DComponent,
     planet::Planet,

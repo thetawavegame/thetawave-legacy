@@ -11,7 +11,6 @@ pub enum BlastType {
 #[derive(Clone)]
 pub struct Blast {
     pub speed: f32,
-    pub hitbox_radius: f32,
     pub damage: f32,
     pub poison_damage: f32,
     pub x_velocity: f32,

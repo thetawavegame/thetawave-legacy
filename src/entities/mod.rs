@@ -25,18 +25,18 @@ pub use self::{
     blast::fire_blast,
     boss::spawn_repeater,
     consumable::spawn_consumable,
-    defense::initialise_defense,
+    defense::initialize_defense,
     enemy::spawn_enemy,
-    enemy_spawner::initialise_enemy_spawner,
+    enemy_spawner::initialize_enemy_spawner,
     explosion::{spawn_blast_explosion, spawn_explosion},
     gamemaster::initialize_gamemaster,
     items::spawn_item,
-    planet::initialise_planet,
+    planet::initialize_planet,
     side_panel::initialize_side_panels,
     spaceship::initialize_spaceship,
-    status_bar::initialise_status_bars,
+    status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
-    store::initialise_store,
+    store::initialize_store,
 };
 use crate::components::Spawnable;
 
