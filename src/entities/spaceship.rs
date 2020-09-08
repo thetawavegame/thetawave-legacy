@@ -46,12 +46,12 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
     };
 
     let motion_2d = Motion2DComponent {
-      velocity: Vector2::new(0.0, 0.0),
-      acceleration: Vector2::new(SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y),
-      deceleration: Vector2::new(SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y),
-      angular_velocity: 0.0,
-      angular_acceleration: 0.0,
-      angular_deceleration: 0.0,
+        velocity: Vector2::new(0.0, 0.0),
+        acceleration: Vector2::new(SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y),
+        deceleration: Vector2::new(SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y),
+        angular_velocity: 0.0,
+        angular_acceleration: 0.0,
+        angular_deceleration: 0.0,
     };
 
     world

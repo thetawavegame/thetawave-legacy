@@ -25,7 +25,15 @@ impl<'s> System<'s> for CollisionDetectionSystem {
 
     fn run(
         &mut self,
-        (enemies, spaceships, hitboxes, motions, transforms, entities, mut enemy_collision_event_channel): Self::SystemData,
+        (
+            enemies,
+            spaceships,
+            hitboxes,
+            motions,
+            transforms,
+            entities,
+            mut enemy_collision_event_channel,
+        ): Self::SystemData,
     ) {
         for (entity_a, transform_a, _enemy_a, hitbox_a, motion_a) in
             (&entities, &transforms, &enemies, &hitboxes, &motions).join()

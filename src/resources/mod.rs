@@ -1,4 +1,4 @@
-use crate::components::{Animation, Consumable, Enemy, Hitbox2DComponent, Motion2DComponent, Item};
+use crate::components::{Animation, Consumable, Enemy, Hitbox2DComponent, Item, Motion2DComponent};
 use serde::{Deserialize, Serialize};
 
 mod sprite;

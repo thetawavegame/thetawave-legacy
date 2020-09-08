@@ -52,26 +52,27 @@ pub trait Rigidbody {
     }
 
     fn accelerate_x(&mut self, direction: f32, motion_2d: &mut Motion2DComponent) {
-        motion_2d.velocity.x =
-            motion_2d.velocity.x + (direction * motion_2d.acceleration.x);
+        motion_2d.velocity.x = motion_2d.velocity.x + (direction * motion_2d.acceleration.x);
     }
 
     fn accelerate_y(&mut self, direction: f32, motion_2d: &mut Motion2DComponent) {
-        motion_2d.velocity.y =
-            motion_2d.velocity.y + (direction * motion_2d.acceleration.y);
+        motion_2d.velocity.y = motion_2d.velocity.y + (direction * motion_2d.acceleration.y);
     }
 
     fn decelerate_x(&mut self, direction: f32, motion_2d: &mut Motion2DComponent) {
-        motion_2d.velocity.x =
-            motion_2d.velocity.x + (direction * motion_2d.deceleration.x);
+        motion_2d.velocity.x = motion_2d.velocity.x + (direction * motion_2d.deceleration.x);
     }
 
     fn decelerate_y(&mut self, direction: f32, motion_2d: &mut Motion2DComponent) {
-        motion_2d.velocity.y =
-            motion_2d.velocity.y + (direction * motion_2d.deceleration.y);
+        motion_2d.velocity.y = motion_2d.velocity.y + (direction * motion_2d.deceleration.y);
     }
 
-    fn accelerate(&mut self, direction_x: f32, direction_y: f32, motion_2d: &mut Motion2DComponent) {
+    fn accelerate(
+        &mut self,
+        direction_x: f32,
+        direction_y: f32,
+        motion_2d: &mut Motion2DComponent,
+    ) {
         self.limit_speed(motion_2d);
         self.limit_knockback(motion_2d);
         if (direction_x > 0.0 && motion_2d.velocity.x < self.max_speed())

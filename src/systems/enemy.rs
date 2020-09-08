@@ -1,7 +1,9 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{choose_random_name, Defense, Enemy, EnemyType, Fires, Rigidbody, Motion2DComponent},
+    components::{
+        choose_random_name, Defense, Enemy, EnemyType, Fires, Motion2DComponent, Rigidbody,
+    },
     constants::{ARENA_MIN_Y, EXPLOSION_Z},
     entities::{fire_blast, spawn_consumable, spawn_explosion},
     resources::{ConsumableEntityData, SpriteResource},
