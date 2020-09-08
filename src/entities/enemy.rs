@@ -1,4 +1,4 @@
-use crate::{resources::EnemyEntityData};
+use crate::resources::EnemyEntityData;
 use amethyst::{
     assets::Handle,
     core::{math::Vector3, transform::Transform, Named},

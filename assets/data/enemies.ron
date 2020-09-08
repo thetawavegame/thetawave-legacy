@@ -124,7 +124,6 @@
         enemy_component: (
             name: "strafer",
             health: 75,
-            sprite_index: 6,
             width: 24,
             height: 12,
             fires: true,
