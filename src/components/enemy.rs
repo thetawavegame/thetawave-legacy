@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{Fires, Rigidbody, SpawnProbabilities, Motion2DComponent},
+    components::{Fires, Motion2DComponent, Rigidbody, SpawnProbabilities},
     constants::{ARENA_MAX_X, ARENA_MIN_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
@@ -133,8 +133,12 @@ impl Fires for Enemy {
     }
 
     // TODO: Remove these
-    fn velocity_x(&self) -> f32 { 0.0 }
-    fn velocity_y(&self) -> f32 { 0.0 }
+    fn velocity_x(&self) -> f32 {
+        0.0
+    }
+    fn velocity_y(&self) -> f32 {
+        0.0
+    }
 
     fn allied(&self) -> bool {
         self.allied

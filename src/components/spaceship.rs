@@ -1,5 +1,5 @@
 use crate::{
-    components::{Fires, Living, Rigidbody, Motion2DComponent},
+    components::{Fires, Living, Motion2DComponent, Rigidbody},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
@@ -95,8 +95,12 @@ impl Fires for Spaceship {
     }
 
     // TODO: Remove these
-    fn velocity_x(&self) -> f32 { 0.0 }
-    fn velocity_y(&self) -> f32 { 0.0 }
+    fn velocity_x(&self) -> f32 {
+        0.0
+    }
+    fn velocity_y(&self) -> f32 {
+        0.0
+    }
 
     fn allied(&self) -> bool {
         self.allied
@@ -132,7 +136,7 @@ impl Living for Spaceship {
 }
 
 impl Component for Spaceship {
-  type Storage = DenseVecStorage<Self>;
+    type Storage = DenseVecStorage<Self>;
 }
 
 impl Spaceship {
@@ -170,11 +174,11 @@ impl Spaceship {
                 self.barrel_action_timer -= dt;
             } else {
                 if self.barrel_action_left {
-                  motion_2d.velocity.x = -1.0 * self.max_speed;
+                    motion_2d.velocity.x = -1.0 * self.max_speed;
                 }
 
                 if self.barrel_action_right {
-                  motion_2d.velocity.x = self.max_speed;
+                    motion_2d.velocity.x = self.max_speed;
                 }
 
                 self.barrel_action_left = false;

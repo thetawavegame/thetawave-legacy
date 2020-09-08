@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Fires, Living, Spaceship, Motion2DComponent},
+    components::{Fires, Living, Motion2DComponent, Spaceship},
     entities::fire_blast,
     resources::SpriteResource,
 };
@@ -50,7 +50,9 @@ impl<'s> System<'s> for SpaceshipSystem {
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right = input.action_is_down("barrel_right").unwrap();
 
-        for (spaceship, transform, motion_2d) in (&mut spaceships, &mut transforms, &mut motion_2d_components).join() {
+        for (spaceship, transform, motion_2d) in
+            (&mut spaceships, &mut transforms, &mut motion_2d_components).join()
+        {
             // update pos_x and pos_y variables of spaceship
             spaceship.update_location(transform.translation().x, transform.translation().y);
 

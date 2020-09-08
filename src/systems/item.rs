@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Defense, Item, Living, Spaceship, Motion2DComponent},
+    components::{Defense, Item, Living, Motion2DComponent, Spaceship},
     constants::ARENA_MIN_Y,
     space_shooter::HitboxCollisionEvent,
 };
@@ -64,16 +64,18 @@ impl<'s> System<'s> for ItemSystem {
             item_transform.prepend_translation_y(-1.0 * item.speed * time.delta_seconds());
 
             if item_transform.translation().y + item.height / 2.0 < ARENA_MIN_Y {
-              entities
-                  .delete(item_entity)
-                  .expect("unable to delete entity");
+                entities
+                    .delete(item_entity)
+                    .expect("unable to delete entity");
             }
         }
 
         // event loop needs to be outer so that all events are always read
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
             for (item, item_entity) in (&mut items, &entities).join() {
-                for (spaceship, motion, spaceship_entity) in (&mut spaceships, &mut motions, &entities).join() {
+                for (spaceship, motion, spaceship_entity) in
+                    (&mut spaceships, &mut motions, &entities).join()
+                {
                     if (event.entity_a == item_entity && event.entity_b == spaceship_entity)
                         || (event.entity_a == spaceship_entity && event.entity_b == item_entity)
                     {

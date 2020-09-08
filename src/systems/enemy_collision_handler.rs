@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Enemy, Spaceship, Motion2DComponent},
+    components::{Enemy, Motion2DComponent, Spaceship},
     space_shooter::CollisionEvent,
 };
 use amethyst::{
@@ -56,8 +56,9 @@ impl<'s> System<'s> for EnemyCollisionSystem {
             play_sfx(&sounds.crash_sfx, &storage, audio_output.as_deref());
 
             for spaceship_component in (&mut spaceships).join() {
-                for (enemy, enemy_motion, enemy_entity) in (&mut enemies, &mut motions, &entities).join() {
-
+                for (enemy, enemy_motion, enemy_entity) in
+                    (&mut enemies, &mut motions, &entities).join()
+                {
                     if event.type_b == "enemy" && event.type_a == "enemy" {
                         if event.entity_a == enemy_entity || event.entity_b == enemy_entity {
                             if event.entity_a == enemy_entity
@@ -80,20 +81,20 @@ impl<'s> System<'s> for EnemyCollisionSystem {
                         && event.type_a == "enemy"
                         && event.entity_a == enemy_entity
                     {
-                      if enemy.name != "repeater_body"
-                          && enemy.name != "repeater_head"
-                          && enemy.name != "repeater_right_shoulder"
-                          && enemy.name != "repeater_left_shoulder"
-                          && enemy.name != "repeater_right_arm"
-                          && enemy.name != "repeater_left_arm"
-                      {
-                          enemy.health -= spaceship_component.collision_damage;
-                          enemy_motion.velocity.x =
-                              (-(1.0) * event.to_velocity_x_a) + event.to_velocity_x_b;
-                          enemy_motion.velocity.y =
-                              (-(1.0) * event.to_velocity_y_a) + event.to_velocity_y_b;
-                      }
-                   }
+                        if enemy.name != "repeater_body"
+                            && enemy.name != "repeater_head"
+                            && enemy.name != "repeater_right_shoulder"
+                            && enemy.name != "repeater_left_shoulder"
+                            && enemy.name != "repeater_right_arm"
+                            && enemy.name != "repeater_left_arm"
+                        {
+                            enemy.health -= spaceship_component.collision_damage;
+                            enemy_motion.velocity.x =
+                                (-(1.0) * event.to_velocity_x_a) + event.to_velocity_x_b;
+                            enemy_motion.velocity.y =
+                                (-(1.0) * event.to_velocity_y_a) + event.to_velocity_y_b;
+                        }
+                    }
                 }
             }
         }
