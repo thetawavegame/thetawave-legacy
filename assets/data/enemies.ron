@@ -1,9 +1,17 @@
 {
     "drone": (
+        animation_component: (
+            start_idx: 0,
+            frame_count: 3,
+            current_frame: 0,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
         enemy_component: (
             name: "drone",
             health: 60,
-            sprite_index: 0,
             fires: false,
             fire_speed: 3,
             fire_reset_timer: 0,
@@ -19,10 +27,6 @@
                 ("money_5", 0.025),
             ],
             enemy_type: Drone,
-
-            frame_count: 3,
-            frame_time: 0.18,
-            animation_type: PingPong,
         ),
         hitbox_component: (
             width: 14.0,
@@ -41,10 +45,18 @@
         ),
     ),
     "pawn": (
+        animation_component: (
+            start_idx: 3,
+            frame_count: 3,
+            current_frame: 3,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
         enemy_component: (
             name: "pawn",
             health: 110,
-            sprite_index: 3,
             fires: true,
             fire_speed: 3,
             fire_reset_timer: 1,
@@ -60,10 +72,6 @@
                 ("money_5", 0.025),
             ],
             enemy_type: Pawn,
-
-            frame_count: 3,
-            frame_time: 0.18,
-            animation_type: PingPong,
         ),
         hitbox_component: (
             width: 14.0,
@@ -82,11 +90,19 @@
         ),
     ),
     "hauler": (
+        animation_component: (
+            start_idx: 9,
+            frame_count: 3,
+            current_frame: 9,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
         enemy_component: (
             name: "hauler",
             height: 36,
             health: 220,
-            sprite_index: 9,
             fires: false,
             fire_speed: 3,
             fire_reset_timer: 1,
@@ -98,10 +114,6 @@
                 ("", 1.0) // doesn't drop anything
             ],
             enemy_type: Hauler,
-
-            frame_count: 3,
-            frame_time: 0.18,
-            animation_type: PingPong,
         ),
         hitbox_component: (
             width: 14.0,
@@ -120,10 +132,18 @@
         ),
     ),
     "strafer": (
+        animation_component: (
+            start_idx: 6,
+            frame_count: 3,
+            current_frame: 6,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
         enemy_component: (
             name: "strafer",
             health: 75,
-            sprite_index: 6,
             width: 24,
             height: 12,
             fires: true,
@@ -141,10 +161,6 @@
                 ("money_5", 0.025),
             ],
             enemy_type: Strafer,
-
-            frame_count: 3,
-            frame_time: 0.18,
-            animation_type: PingPong,
         ),
         hitbox_component: (
             width: 22.0,
@@ -163,10 +179,18 @@
         ),
     ),
     "repeater_body": (
+        animation_component: (
+            start_idx: 0,
+            frame_count: 3,
+            current_frame: 0,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
         enemy_component: (
             name: "repeater_body",
             health: 10000,
-            sprite_index: 0,
             width: 24,
             height: 12,
             fires: false,
@@ -184,10 +208,6 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterBody,
-
-            frame_count: 3,
-            frame_time: 0.18,
-            animation_type: PingPong,
         ),
         hitbox_component: (
             width: 48.0,
@@ -206,10 +226,18 @@
         ),
     ),
     "repeater_head": (
+        animation_component: (
+            start_idx: 3,
+            frame_count: 3,
+            current_frame: 3,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
         enemy_component: (
             name: "repeater_head",
             health: 2000,
-            sprite_index: 3,
             width: 24,
             height: 12,
             fires: false,
@@ -227,10 +255,6 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterHead,
-
-            frame_count: 3,
-            frame_time: 0.18,
-            animation_type: PingPong,
         ),
         hitbox_component: (
             width: 30.0,
@@ -249,10 +273,18 @@
         ),
     ),
     "repeater_right_shoulder": (
+        animation_component: (
+            start_idx: 6,
+            frame_count: 1,
+            current_frame: 6,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: NoAnimation,
+        ),
         enemy_component: (
             name: "repeater_right_shoulder",
             health: 2000,
-            sprite_index: 6,
             width: 83,
             height: 93,
             fires: false,
@@ -270,10 +302,6 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterShoulder,
-
-            frame_count: 1,
-            frame_time: 0.18,
-            animation_type: NoAnimation,
         ),
         hitbox_component: (
             width: 28.0,
@@ -292,10 +320,18 @@
         ),
     ),
     "repeater_left_shoulder": (
+        animation_component: (
+            start_idx: 7,
+            frame_count: 1,
+            current_frame: 7,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: NoAnimation,
+        ),
         enemy_component: (
             name: "repeater_left_shoulder",
             health: 2000,
-            sprite_index: 7,
             width: 83,
             height: 93,
             fires: false,
@@ -313,10 +349,6 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterShoulder,
-
-            frame_count: 1,
-            frame_time: 0.18,
-            animation_type: NoAnimation,
         ),
         hitbox_component: (
             width: 28.0,
@@ -335,10 +367,18 @@
         ),
     ),
     "repeater_right_arm": (
+        animation_component: (
+            start_idx: 8,
+            frame_count: 1,
+            current_frame: 8,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: NoAnimation,
+        ),
         enemy_component: (
             name: "repeater_right_arm",
             health: 2000,
-            sprite_index: 8,
             width: 75,
             height: 161,
             fires: false,
@@ -357,10 +397,6 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterArm,
-
-            frame_count: 1,
-            frame_time: 0.18,
-            animation_type: NoAnimation,
         ),
         hitbox_component: (
             width: 20.0,
