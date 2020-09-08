@@ -52,6 +52,11 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         angular_velocity: 0.0,
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
+        max_speed: Vector2::new(SPACESHIP_MAX_SPEED, SPACESHIP_MAX_SPEED),
+        knockback_max_speed: Vector2::new(
+            SPACESHIP_MAX_KNOCKBACK_SPEED,
+            SPACESHIP_MAX_KNOCKBACK_SPEED,
+        ),
     };
 
     world
@@ -60,7 +65,6 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         .with(Spaceship {
             width: SPACESHIP_WIDTH,
             height: SPACESHIP_HEIGHT,
-            max_speed: SPACESHIP_MAX_SPEED,
             fire_speed: SPACESHIP_FIRE_SPEED,
             fire_reset_timer: 0.0,
             damage: SPACESHIP_DAMAGE,
@@ -77,7 +81,6 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             max_health: SPACESHIP_HEALTH,
             health: SPACESHIP_HEALTH,
             money: SPACESHIP_MONEY,
-            knockback_max_speed: SPACESHIP_MAX_KNOCKBACK_SPEED,
             steel_barrel: false,
             blast_count: 1,
             collision_damage: SPACESHIP_COLLISION_DAMAGE,

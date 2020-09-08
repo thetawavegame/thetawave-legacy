@@ -11,7 +11,6 @@ use std::collections::HashMap;
 pub struct Spaceship {
     pub width: f32,
     pub height: f32,
-    pub max_speed: f32,
     pub fire_speed: f32,
     pub fire_reset_timer: f32,
     pub damage: f32,
@@ -28,7 +27,6 @@ pub struct Spaceship {
     pub max_health: f32,
     pub health: f32,
     pub money: usize,
-    pub knockback_max_speed: f32,
     pub steel_barrel: bool,
     pub blast_count: usize,
     pub collision_damage: f32,
@@ -39,12 +37,6 @@ pub struct Spaceship {
 }
 
 impl Rigidbody for Spaceship {
-    fn max_speed(&self) -> f32 {
-        self.max_speed
-    }
-    fn knockback_max_speed(&self) -> f32 {
-        self.knockback_max_speed
-    }
     fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
         let spaceship_x = transform.translation().x;
         let spaceship_y = transform.translation().y;
@@ -174,11 +166,11 @@ impl Spaceship {
                 self.barrel_action_timer -= dt;
             } else {
                 if self.barrel_action_left {
-                    motion_2d.velocity.x = -1.0 * self.max_speed;
+                    motion_2d.velocity.x = -1.0 * motion_2d.max_speed.x;
                 }
 
                 if self.barrel_action_right {
-                    motion_2d.velocity.x = self.max_speed;
+                    motion_2d.velocity.x = motion_2d.max_speed.x;
                 }
 
                 self.barrel_action_left = false;

@@ -41,8 +41,6 @@ use std::collections::HashMap;
 
 // rigidbodies are have physics and can collide
 pub trait Rigidbody {
-    fn max_speed(&self) -> f32;
-    fn knockback_max_speed(&self) -> f32;
     fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent);
 
     fn update_position(&self, transform: &mut Transform, dt: f32, motion_2d: &Motion2DComponent) {
@@ -75,8 +73,8 @@ pub trait Rigidbody {
     ) {
         self.limit_speed(motion_2d);
         self.limit_knockback(motion_2d);
-        if (direction_x > 0.0 && motion_2d.velocity.x < self.max_speed())
-            || (direction_x < 0.0 && motion_2d.velocity.x > (-1.0 * self.max_speed()))
+        if (direction_x > 0.0 && motion_2d.velocity.x < motion_2d.max_speed.x)
+            || (direction_x < 0.0 && motion_2d.velocity.x > (-1.0 * motion_2d.max_speed.x))
         {
             self.accelerate_x(direction_x, motion_2d);
         } else if direction_x == 0.0 && motion_2d.velocity.x > 0.0 {
@@ -85,8 +83,8 @@ pub trait Rigidbody {
             self.decelerate_x(1.0, motion_2d);
         }
 
-        if (direction_y > 0.0 && motion_2d.velocity.y < self.max_speed())
-            || (direction_y < 0.0 && motion_2d.velocity.y > (-1.0 * self.max_speed()))
+        if (direction_y > 0.0 && motion_2d.velocity.y < motion_2d.max_speed.y)
+            || (direction_y < 0.0 && motion_2d.velocity.y > (-1.0 * motion_2d.max_speed.y))
         {
             self.accelerate_y(direction_y, motion_2d);
         } else if direction_y == 0.0 && motion_2d.velocity.y > 0.0 {
@@ -97,31 +95,31 @@ pub trait Rigidbody {
     }
 
     fn limit_knockback(&mut self, motion_2d: &mut Motion2DComponent) {
-        if motion_2d.velocity.x > self.knockback_max_speed() {
-            motion_2d.velocity.x = self.knockback_max_speed();
+        if motion_2d.velocity.x > motion_2d.knockback_max_speed.x {
+            motion_2d.velocity.x = motion_2d.knockback_max_speed.x;
         }
-        if motion_2d.velocity.x < -1.0 * self.knockback_max_speed() {
-            motion_2d.velocity.x = -1.0 * self.knockback_max_speed();
+        if motion_2d.velocity.x < -1.0 * motion_2d.knockback_max_speed.x {
+            motion_2d.velocity.x = -1.0 * motion_2d.knockback_max_speed.x;
         }
-        if motion_2d.velocity.y > self.knockback_max_speed() {
-            motion_2d.velocity.y = self.knockback_max_speed();
+        if motion_2d.velocity.y > motion_2d.knockback_max_speed.y {
+            motion_2d.velocity.y = motion_2d.knockback_max_speed.y;
         }
-        if motion_2d.velocity.y < -1.0 * self.knockback_max_speed() {
-            motion_2d.velocity.y = -1.0 * self.knockback_max_speed();
+        if motion_2d.velocity.y < -1.0 * motion_2d.knockback_max_speed.y {
+            motion_2d.velocity.y = -1.0 * motion_2d.knockback_max_speed.y;
         }
     }
 
     fn limit_speed(&mut self, motion_2d: &mut Motion2DComponent) {
-        if motion_2d.velocity.x > self.max_speed() {
+        if motion_2d.velocity.x > motion_2d.max_speed.x {
             self.decelerate_x(-1.0, motion_2d);
         }
-        if motion_2d.velocity.x < -1.0 * self.max_speed() {
+        if motion_2d.velocity.x < -1.0 * motion_2d.max_speed.x {
             self.decelerate_x(1.0, motion_2d);
         }
-        if motion_2d.velocity.y > self.max_speed() {
+        if motion_2d.velocity.y > motion_2d.max_speed.y {
             self.decelerate_y(-1.0, motion_2d);
         }
-        if motion_2d.velocity.y < -1.0 * self.max_speed() {
+        if motion_2d.velocity.y < -1.0 * motion_2d.max_speed.y {
             self.decelerate_y(1.0, motion_2d);
         }
     }

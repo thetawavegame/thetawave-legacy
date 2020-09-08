@@ -110,7 +110,8 @@ impl<'s> System<'s> for ItemSystem {
                         }
 
                         if item.stat_effects.contains_key("max_speed") {
-                            spaceship.max_speed += item.stat_effects["max_speed"];
+                            motion.max_speed.x += item.stat_effects["max_speed"];
+                            motion.max_speed.y += item.stat_effects["max_speed"];
                         }
                         if item.stat_effects.contains_key("crit_chance") {
                             spaceship.crit_chance += item.stat_effects["crit_chance"];
