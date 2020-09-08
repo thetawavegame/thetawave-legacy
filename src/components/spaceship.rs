@@ -39,27 +39,12 @@ pub struct Spaceship {
 }
 
 impl Rigidbody for Spaceship {
-    // TODO: Remove these
-    fn current_velocity_x(&self) -> f32 { 0.0 }
-    fn current_velocity_y(&self) -> f32 { 0.0 }
-    fn current_rotation_velocity(&self) -> f32 { 0.0 }
-    fn acceleration_x(&self) -> f32 { 0.0 }
-    fn acceleration_y(&self) -> f32 { 0.0 }
-    fn deceleration_x(&self) -> f32 { 0.0 }
-    fn deceleration_y(&self) -> f32 { 0.0 }
-
     fn max_speed(&self) -> f32 {
         self.max_speed
     }
     fn knockback_max_speed(&self) -> f32 {
         self.knockback_max_speed
     }
-
-    // TODO: Remove these
-    fn set_current_velocity_y(&mut self, value: f32) {}
-    fn set_current_velocity_x(&mut self, value: f32) {}
-    fn set_rotation_velocity(&mut self, value: f32) {}
-
     fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
         let spaceship_x = transform.translation().x;
         let spaceship_y = transform.translation().y;
