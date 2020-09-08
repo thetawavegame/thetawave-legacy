@@ -8,7 +8,7 @@ pub enum AnimationType {
     NoAnimation,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Animation {
     pub start_idx: usize,
     pub frame_count: usize,

@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{AnimationType, Fires, Rigidbody, SpawnProbabilities, Spawnable},
+    components::{Fires, Rigidbody, SpawnProbabilities, Spawnable},
     constants::{ARENA_MAX_X, ARENA_MIN_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
@@ -32,7 +32,6 @@ pub struct Enemy {
     #[serde(default = "des_height")]
     pub height: f32,
     pub health: f32,
-    pub sprite_index: usize,
     pub fires: bool,
     pub fire_speed: f32,
     pub fire_reset_timer: f32,
@@ -73,9 +72,6 @@ pub struct Enemy {
     pub enemy_type: EnemyType,
     #[serde(default = "des_explosion_sprite_idx")]
     pub explosion_sprite_idx: usize,
-    pub frame_count: usize,
-    pub frame_time: f32,
-    pub animation_type: AnimationType,
 }
 
 fn des_explosion_sprite_idx() -> usize {
