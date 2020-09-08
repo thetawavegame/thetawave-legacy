@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{Fires, Motion2DComponent, Rigidbody, SpawnProbabilities},
+    components::{Fires, Motion2DComponent, Rigidbody, SpawnProbabilities, Spawnable},
     constants::{ARENA_MAX_X, ARENA_MIN_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
@@ -37,9 +37,6 @@ pub struct Enemy {
     pub blast_speed: f32,
     pub blast_damage: f32,
     pub defense_damage: f32,
-    pub max_speed: f32,
-    #[serde(default = "des_knockback_max_speed")]
-    pub knockback_max_speed: f32,
     #[serde(default = "des_collision_damage")]
     pub collision_damage: f32,
     #[serde(default = "des_poison")]
@@ -97,13 +94,6 @@ fn des_allied() -> bool {
 }
 
 impl Rigidbody for Enemy {
-    fn max_speed(&self) -> f32 {
-        self.max_speed
-    }
-    fn knockback_max_speed(&self) -> f32 {
-        self.knockback_max_speed
-    }
-
     fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
         let enemy_x = transform.translation().x;
         if (enemy_x - (self.width / 2.0)) < ARENA_MIN_X
