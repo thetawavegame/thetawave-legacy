@@ -10,7 +10,7 @@ use amethyst::{
         transform::Transform,
     },
     ecs::prelude::{Builder, Component, DenseVecStorage, Entities, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent},
+    renderer::{palette::Srgba, resources::Tint, SpriteRender, Transparent},
 };
 
 use rand::{thread_rng, Rng};
@@ -59,7 +59,7 @@ impl AutoBlasterComponent {
 
             // spawn blast
 
-            let mut blast_sprite_render = SpriteRender {
+            let blast_sprite_render = SpriteRender {
                 sprite_sheet: sprite_resource.blasts_sprite_sheet.clone(),
                 sprite_number: 0, // yellow blast on blasts spritesheet
             };
@@ -123,11 +123,19 @@ impl AutoBlasterComponent {
                     offset_rotation: 0.0,
                 };
 
+                let blast_tint = match blast_type {
+                    BlastType::Player => Tint(Srgba::new(0.0, 0.0, 0.0, 1.0)),
+                    BlastType::Enemy => Tint(Srgba::new(1.0, 0.3, 0.0, 1.0)),
+                    BlastType::Poison => Tint(Srgba::new(0.0, 1.0, 0.0, 1.0)),
+                    BlastType::Critical => Tint(Srgba::new(1.0, 0.0, 1.0, 1.0)),
+                };
+
                 lazy_update
                     .create_entity(entities)
                     .with(blast_component)
                     .with(hitbox)
                     .with(blast_sprite_render.clone())
+                    .with(blast_tint)
                     .with(blast_transform)
                     .with(Transparent)
                     .build();
