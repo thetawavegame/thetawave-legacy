@@ -1,7 +1,9 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{choose_random_name, Defense, Enemy, EnemyType, Fires, Rigidbody},
+    components::{
+        choose_random_name, Defense, Enemy, EnemyType, Fires, Motion2DComponent, Rigidbody,
+    },
     constants::{ARENA_MIN_Y, EXPLOSION_Z},
     entities::{fire_blast, spawn_consumable, spawn_explosion},
     resources::{ConsumableEntityData, SpriteResource},
@@ -22,6 +24,7 @@ impl<'s> System<'s> for EnemySystem {
         WriteStorage<'s, Enemy>,
         WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
+        WriteStorage<'s, Motion2DComponent>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
@@ -38,6 +41,7 @@ impl<'s> System<'s> for EnemySystem {
             mut enemys,
             mut defenses,
             mut transforms,
+            mut motions,
             time,
             sprite_resource,
             lazy_update,
@@ -47,14 +51,14 @@ impl<'s> System<'s> for EnemySystem {
             consumable_pool,
         ): Self::SystemData,
     ) {
-        for (enemy_entity, enemy_component, enemy_transform) in
-            (&*entities, &mut enemys, &mut transforms).join()
+        for (enemy_entity, enemy_component, enemy_transform, enemy_motion) in
+            (&*entities, &mut enemys, &mut transforms, &mut motions).join()
         {
             //constrain in arena
-            enemy_component.constrain_to_arena(enemy_transform);
+            enemy_component.constrain_to_arena(enemy_transform, enemy_motion);
 
             //transform the spaceship in x and y by the currrent velocity in x and y
-            enemy_component.update_position(enemy_transform, time.delta_seconds());
+            enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion);
 
             enemy_component.health -= enemy_component.poison;
 
@@ -105,7 +109,7 @@ impl<'s> System<'s> for EnemySystem {
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
 
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform,
@@ -125,17 +129,17 @@ impl<'s> System<'s> for EnemySystem {
 
                 EnemyType::Drone => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Hauler => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Strafer => {
                     //accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0);
+                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
 
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform,
@@ -152,48 +156,48 @@ impl<'s> System<'s> for EnemySystem {
                         )
                     }
 
-                    enemy_component.accelerate(1.0, 0.0);
+                    enemy_component.accelerate(1.0, 0.0, enemy_motion);
                 }
 
                 EnemyType::RepeaterBody => {
                     //accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 30.0 {
-                        enemy_component.accelerate(0.0, -1.0);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
                 }
 
                 EnemyType::RepeaterHead => {
                     //accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
-                        enemy_component.accelerate(0.0, -1.0);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
                 }
 
                 EnemyType::RepeaterShoulder => {
                     //accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
-                        enemy_component.accelerate(0.0, -1.0);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
 
                     //rotate back and forth
                     if enemy_transform.euler_angles().2 > 0.1 {
-                        enemy_component.set_rotation_velocity(0.05);
+                        enemy_motion.angular_velocity = 0.05;
                     } else if enemy_transform.euler_angles().2 < -0.1 {
-                        enemy_component.set_rotation_velocity(-0.05);
+                        enemy_motion.angular_velocity = 0.05;
                     }
                 }
 
                 EnemyType::RepeaterArm => {
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
-                        enemy_component.accelerate(0.0, -1.0);
+                        enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
-                        enemy_component.current_velocity_y = 0.0;
+                        enemy_motion.velocity.y = 0.0;
                     }
                 }
             }
