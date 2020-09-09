@@ -1,4 +1,6 @@
-use crate::components::{Animation, Consumable, Enemy, Hitbox2DComponent, Item};
+use crate::components::{
+    Animation, AutoBlasterComponent, Consumable, Enemy, Hitbox2DComponent, Item,
+};
 use serde::{Deserialize, Serialize};
 
 mod sprite;
@@ -10,6 +12,7 @@ pub struct EnemyEntityData {
     pub enemy_component: Enemy,
     pub hitbox_component: Hitbox2DComponent,
     pub animation_component: Animation,
+    pub autoblaster_component: Option<AutoBlasterComponent>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
