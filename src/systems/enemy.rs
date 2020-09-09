@@ -106,7 +106,7 @@ impl<'s> System<'s> for EnemySystem {
                 EnemyType::Pawn => {
                     //accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0);
-
+                    /*
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform,
                         -1.0 * enemy_component.height / 2.0,
@@ -121,6 +121,7 @@ impl<'s> System<'s> for EnemySystem {
                             &lazy_update,
                         )
                     }
+                    */
                 }
 
                 EnemyType::Drone => {
@@ -137,6 +138,7 @@ impl<'s> System<'s> for EnemySystem {
                     //accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0);
 
+                    /*
                     if let Some(fire_position) = enemy_component.fire_cooldown(
                         enemy_transform,
                         -1.0 * enemy_component.height / 2.0,
@@ -151,6 +153,7 @@ impl<'s> System<'s> for EnemySystem {
                             &lazy_update,
                         )
                     }
+                    */
 
                     enemy_component.accelerate(1.0, 0.0);
                 }
