@@ -192,7 +192,7 @@ impl<'s> System<'s> for EnemySystem {
                     if enemy_transform.euler_angles().2 > 0.1 {
                         enemy_motion.angular_velocity = 0.05;
                     } else if enemy_transform.euler_angles().2 < -0.1 {
-                        enemy_motion.angular_velocity = 0.05;
+                        enemy_motion.angular_velocity = -0.05;
                     }
                 }
 

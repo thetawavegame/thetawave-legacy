@@ -140,6 +140,7 @@ impl Default for SpaceShooter {
                     "stat_tracker_system",
                     &["store_system", "spaceship_system", "consumable_system"],
                 )
+                .with(systems::AutoBlasterSystem, "autoblaster_system", &[])
                 .build(),
         }
     }
