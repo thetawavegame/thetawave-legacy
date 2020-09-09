@@ -1,4 +1,8 @@
-use crate::{components::{BlastType, Motion2DComponent}, constants::BLAST_Z, resources::SpriteResource};
+use crate::{
+    components::{Blast, BlastType, Hitbox2DComponent, Motion2DComponent},
+    constants::{BLAST_HITBOX_DIAMETER, BLAST_Z, VELOCITY_FACTOR},
+    resources::SpriteResource,
+};
 
 use amethyst::{
     core::{
@@ -101,8 +105,32 @@ impl AutoBlasterComponent {
                 blast_spawn_x += self.spacing;
 
                 let blast_component = Blast {
-                    speed: self.
-                }
+                    speed: self.shot_velocity.y,
+                    damage: blast_damage,
+                    poison_damage: blast_poison_damage,
+                    x_velocity: source_motion2d.velocity.x,
+                    y_velocity: source_motion2d.velocity.y,
+                    velocity_factor: VELOCITY_FACTOR,
+                    allied: self.allied,
+                    blast_type: blast_type.clone(),
+                };
+
+                let hitbox = Hitbox2DComponent {
+                    width: BLAST_HITBOX_DIAMETER * self.size_multiplier,
+                    height: BLAST_HITBOX_DIAMETER * self.size_multiplier,
+                    offset_x: 0.0,
+                    offset_y: 0.0,
+                    offset_rotation: 0.0,
+                };
+
+                lazy_update
+                    .create_entity(entities)
+                    .with(blast_component)
+                    .with(hitbox)
+                    .with(blast_sprite_render.clone())
+                    .with(blast_transform)
+                    .with(Transparent)
+                    .build();
             }
         }
     }
