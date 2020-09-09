@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{Fires, Motion2DComponent, Rigidbody, SpawnProbabilities, Spawnable},
+    components::{Fires, Motion2DComponent, Rigidbody, SpawnProbabilities},
     constants::{ARENA_MAX_X, ARENA_MIN_X, ENEMY_BLAST_SPRITE_INDEX},
 };
 
@@ -65,9 +65,6 @@ fn des_width() -> f32 {
 }
 fn des_height() -> f32 {
     18.0
-}
-fn des_knockback_max_speed() -> f32 {
-    100.0
 }
 fn des_collision_damage() -> f32 {
     30.0
