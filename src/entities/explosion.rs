@@ -4,8 +4,8 @@ use crate::{
 };
 use amethyst::{
     assets::Handle,
-    core::{math::Vector3, Named},
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    core::{math::Vector3, transform::Transform, Named},
+    ecs::prelude::{Builder, Entities, Entity, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, SpriteSheet},
 };
 
@@ -15,7 +15,7 @@ pub fn spawn_explosion(
     sprite_number: usize,
     spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
-) {
+) -> Entity {
     let frame_time: f32 = 0.1;
     let frame_count: usize = 10;
     let duration: f32 = frame_time * (frame_count - 1) as f32;
@@ -35,17 +35,21 @@ pub fn spawn_explosion(
         animation_type: AnimationType::Forward,
     };
 
-    let name = Named::new("explosion");
+    let named = Named::new("explosion");
 
-    super::spawn_animated_entity(
-        &entities,
-        name,
-        sprite,
-        animation,
-        TimeLimitComponent { duration },
-        spawn_position,
-        &lazy_update,
-    );
+    let timed = TimeLimitComponent { duration };
+
+    let mut local_transform = Transform::default();
+    local_transform.set_translation(spawn_position);
+
+    lazy_update
+        .create_entity(entities)
+        .with(sprite)
+        .with(animation)
+        .with(local_transform)
+        .with(named)
+        .with(timed)
+        .build()
 }
 
 pub fn spawn_blast_explosion(
@@ -54,7 +58,7 @@ pub fn spawn_blast_explosion(
     blast_type: BlastType,
     spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
-) {
+) -> Entity {
     let frame_time: f32 = 0.08;
     let frame_count: usize = 7;
     let duration: f32 = frame_time * (frame_count - 1) as f32;
@@ -80,15 +84,20 @@ pub fn spawn_blast_explosion(
         forward: true,
         animation_type: AnimationType::Forward,
     };
-    let name = Named::new("blast_explosion");
 
-    super::spawn_animated_entity(
-        &entities,
-        name,
-        sprite,
-        animation,
-        TimeLimitComponent { duration },
-        spawn_position,
-        &lazy_update,
-    );
+    let named = Named::new("blast_explosion");
+
+    let timed = TimeLimitComponent { duration };
+
+    let mut local_transform = Transform::default();
+    local_transform.set_translation(spawn_position);
+
+    lazy_update
+        .create_entity(entities)
+        .with(sprite)
+        .with(animation)
+        .with(local_transform)
+        .with(named)
+        .with(timed)
+        .build()
 }
