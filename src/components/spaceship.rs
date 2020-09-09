@@ -1,5 +1,5 @@
 use crate::{
-    components::{Fires, Living, Rigidbody},
+    components::{Fires, Living, Motion2DComponent, Rigidbody},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
@@ -11,14 +11,6 @@ use std::collections::HashMap;
 pub struct Spaceship {
     pub width: f32,
     pub height: f32,
-    pub current_velocity_x: f32,
-    pub current_velocity_y: f32,
-    pub current_rotation_velocity: f32,
-    pub max_speed: f32,
-    pub acceleration_x: f32,
-    pub deceleration_x: f32,
-    pub acceleration_y: f32,
-    pub deceleration_y: f32,
     pub fire_speed: f32,
     pub fire_reset_timer: f32,
     pub damage: f32,
@@ -35,7 +27,6 @@ pub struct Spaceship {
     pub max_health: f32,
     pub health: f32,
     pub money: usize,
-    pub knockback_max_speed: f32,
     pub steel_barrel: bool,
     pub blast_count: usize,
     pub collision_damage: f32,
@@ -46,45 +37,7 @@ pub struct Spaceship {
 }
 
 impl Rigidbody for Spaceship {
-    fn current_velocity_x(&self) -> f32 {
-        self.current_velocity_x
-    }
-    fn current_velocity_y(&self) -> f32 {
-        self.current_velocity_y
-    }
-    fn current_rotation_velocity(&self) -> f32 {
-        self.current_rotation_velocity
-    }
-    fn acceleration_x(&self) -> f32 {
-        self.acceleration_x
-    }
-    fn acceleration_y(&self) -> f32 {
-        self.acceleration_y
-    }
-    fn deceleration_x(&self) -> f32 {
-        self.deceleration_x
-    }
-    fn deceleration_y(&self) -> f32 {
-        self.deceleration_y
-    }
-    fn max_speed(&self) -> f32 {
-        self.max_speed
-    }
-    fn knockback_max_speed(&self) -> f32 {
-        self.knockback_max_speed
-    }
-
-    fn set_current_velocity_y(&mut self, value: f32) {
-        self.current_velocity_y = value;
-    }
-    fn set_current_velocity_x(&mut self, value: f32) {
-        self.current_velocity_x = value;
-    }
-    fn set_rotation_velocity(&mut self, value: f32) {
-        self.current_rotation_velocity = value
-    }
-
-    fn constrain_to_arena(&mut self, transform: &mut Transform) {
+    fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
         let spaceship_x = transform.translation().x;
         let spaceship_y = transform.translation().y;
 
@@ -95,7 +48,7 @@ impl Rigidbody for Spaceship {
                 self.barrel_action_left = false;
             }
             transform.set_translation_x(ARENA_MIN_X + (self.width / 2.0));
-            self.current_velocity_x = self.current_velocity_x.abs();
+            motion_2d.velocity.x = motion_2d.velocity.x.abs();
         } else if (spaceship_x + (self.width / 2.0)) > ARENA_MAX_X {
             //if colliding with right border of arena
             if self.barrel_action_right {
@@ -103,15 +56,15 @@ impl Rigidbody for Spaceship {
                 self.barrel_action_left = true;
             }
             transform.set_translation_x(ARENA_MAX_X - (self.width / 2.0));
-            self.current_velocity_x = -1.0 * self.current_velocity_x.abs();
+            motion_2d.velocity.x = -1.0 * motion_2d.velocity.x.abs();
         } else if (spaceship_y - (self.height / 2.0)) < ARENA_MIN_Y {
             //if colliding with bottom of arena
             transform.set_translation_y(ARENA_MIN_Y + (self.height / 2.0));
-            self.current_velocity_y = self.current_velocity_y.abs();
+            motion_2d.velocity.y = motion_2d.velocity.y.abs();
         } else if (spaceship_y + (self.height / 2.0)) > ARENA_MAX_Y {
             //if colliding with bottom of arena
             transform.set_translation_y(ARENA_MAX_Y - (self.height / 2.0));
-            self.current_velocity_y = -1.0 * self.current_velocity_y.abs();
+            motion_2d.velocity.y = -1.0 * motion_2d.velocity.y.abs();
         }
     }
 }
@@ -132,12 +85,15 @@ impl Fires for Spaceship {
     fn blast_speed(&self) -> f32 {
         self.blast_speed
     }
+
+    // TODO: Remove these
     fn velocity_x(&self) -> f32 {
-        self.current_velocity_x
+        0.0
     }
     fn velocity_y(&self) -> f32 {
-        self.current_velocity_y
+        0.0
     }
+
     fn allied(&self) -> bool {
         self.allied
     }
@@ -203,18 +159,18 @@ impl Spaceship {
         }
     }
 
-    pub fn barrel_action_cooldown(&mut self, dt: f32) -> bool {
+    pub fn barrel_action_cooldown(&mut self, dt: f32, motion_2d: &mut Motion2DComponent) -> bool {
         if self.barrel_action_left || self.barrel_action_right {
             //update the cooldown
             if self.barrel_action_timer > 0.0 {
                 self.barrel_action_timer -= dt;
             } else {
                 if self.barrel_action_left {
-                    self.current_velocity_x = -1.0 * self.max_speed;
+                    motion_2d.velocity.x = -1.0 * motion_2d.max_speed.x;
                 }
 
                 if self.barrel_action_right {
-                    self.current_velocity_x = self.max_speed;
+                    motion_2d.velocity.x = motion_2d.max_speed.x;
                 }
 
                 self.barrel_action_left = false;

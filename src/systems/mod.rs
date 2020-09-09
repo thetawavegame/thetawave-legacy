@@ -1,14 +1,11 @@
-use crate::components::Enemy;
-use amethyst::core::transform::Transform;
-
 mod animation;
 mod blast;
 mod boss;
 mod collision_detection;
-mod collision_handler;
 mod consumable;
 mod defense;
 mod enemy;
+mod enemy_collision_handler;
 mod enemy_hit;
 mod enemy_spawn;
 mod gamemaster;
@@ -17,6 +14,7 @@ mod item;
 mod planets;
 mod player_hit;
 mod spaceship;
+mod spaceship_collision_handler;
 mod spaceship_movement;
 mod stat_tracker;
 mod status_bar;
@@ -25,11 +23,12 @@ mod timelimit;
 
 pub use self::{
     animation::AnimationSystem, blast::BlastSystem, boss::BossSystem,
-    collision_detection::CollisionDetectionSystem, collision_handler::CollisionHandlerSystem,
-    consumable::ConsumableSystem, defense::DefenseSystem, enemy::EnemySystem,
+    collision_detection::CollisionDetectionSystem, consumable::ConsumableSystem,
+    defense::DefenseSystem, enemy::EnemySystem, enemy_collision_handler::EnemyCollisionSystem,
     enemy_hit::EnemyHitSystem, enemy_spawn::SpawnerSystem, gamemaster::GameMasterSystem,
     hitbox_system::HitboxSystem, item::ItemSystem, planets::PlanetsSystem,
     player_hit::PlayerHitSystem, spaceship::SpaceshipSystem,
+    spaceship_collision_handler::SpaceshipCollisionSystem,
     spaceship_movement::SpaceshipMovementSystem, stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem, store::StoreSystem, timelimit::TimeLimitSystem,
 };
