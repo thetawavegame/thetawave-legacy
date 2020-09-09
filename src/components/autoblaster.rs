@@ -1,4 +1,4 @@
-use crate::{components::BlastType, constants::BLAST_Z, resources::SpriteResource};
+use crate::{components::{BlastType, Motion2DComponent}, constants::BLAST_Z, resources::SpriteResource};
 
 use amethyst::{
     core::{
@@ -36,6 +36,7 @@ impl Component for AutoBlasterComponent {
 impl AutoBlasterComponent {
     pub fn fire_when_ready(
         &mut self,
+        source_motion2d: &Motion2DComponent,
         source_transform: &Transform,
         delta_time: f32,
         entities: &Entities,
@@ -98,6 +99,10 @@ impl AutoBlasterComponent {
                 ));
 
                 blast_spawn_x += self.spacing;
+
+                let blast_component = Blast {
+                    speed: self.
+                }
             }
         }
     }

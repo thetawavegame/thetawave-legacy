@@ -120,9 +120,17 @@ impl Default for SpaceShooter {
                     &[],
                 )
                 .with(
-                    systems::CollisionHandlerSystem::default(),
-                    "collision_handler_system",
+                    systems::SpaceshipCollisionSystem::default(),
+                    "spaceship_collision_handler_system",
                     &["collision_detection_system"],
+                )
+                .with(
+                    systems::EnemyCollisionSystem::default(),
+                    "collision_handler_system",
+                    &[
+                        "collision_detection_system",
+                        "spaceship_collision_handler_system",
+                    ],
                 )
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])

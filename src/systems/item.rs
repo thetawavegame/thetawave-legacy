@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Defense, Item, Living, Spaceship},
+    components::{Defense, Item, Living, Motion2DComponent, Spaceship},
     constants::ARENA_MIN_Y,
     space_shooter::HitboxCollisionEvent,
 };
@@ -27,6 +27,7 @@ impl<'s> System<'s> for ItemSystem {
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
+        WriteStorage<'s, Motion2DComponent>,
         Read<'s, Time>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -51,6 +52,7 @@ impl<'s> System<'s> for ItemSystem {
             mut spaceships,
             mut defenses,
             mut transforms,
+            mut motions,
             time,
             storage,
             sounds,
@@ -71,8 +73,9 @@ impl<'s> System<'s> for ItemSystem {
         // event loop needs to be outer so that all events are always read
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
             for (item, item_entity) in (&mut items, &entities).join() {
-                for (spaceship, spaceship_entity) in (&mut spaceships, &entities).join() {
-                    //println!("{:?}", event);
+                for (spaceship, motion, spaceship_entity) in
+                    (&mut spaceships, &mut motions, &entities).join()
+                {
                     if (event.entity_a == item_entity && event.entity_b == spaceship_entity)
                         || (event.entity_a == spaceship_entity && event.entity_b == item_entity)
                     {
@@ -107,7 +110,8 @@ impl<'s> System<'s> for ItemSystem {
                         }
 
                         if item.stat_effects.contains_key("max_speed") {
-                            spaceship.max_speed += item.stat_effects["max_speed"];
+                            motion.max_speed.x += item.stat_effects["max_speed"];
+                            motion.max_speed.y += item.stat_effects["max_speed"];
                         }
                         if item.stat_effects.contains_key("crit_chance") {
                             spaceship.crit_chance += item.stat_effects["crit_chance"];
@@ -122,13 +126,13 @@ impl<'s> System<'s> for ItemSystem {
                         }
 
                         if item.stat_effects.contains_key("acceleration") {
-                            spaceship.acceleration_x += item.stat_effects["acceleration"];
-                            spaceship.acceleration_y += item.stat_effects["acceleration"];
+                            motion.acceleration.x += item.stat_effects["acceleration"];
+                            motion.acceleration.y += item.stat_effects["acceleration"];
                         }
 
                         if item.stat_effects.contains_key("deceleration") {
-                            spaceship.deceleration_x += item.stat_effects["deceleration"];
-                            spaceship.deceleration_y += item.stat_effects["deceleration"];
+                            motion.deceleration.x += item.stat_effects["deceleration"];
+                            motion.deceleration.y += item.stat_effects["deceleration"];
                         }
 
                         if item.stat_effects.contains_key("health_multiply") {
