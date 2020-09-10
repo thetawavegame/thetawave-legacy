@@ -1,7 +1,7 @@
 use amethyst::{
     core::{math::Vector3, transform::Transform},
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent},
+    renderer::{resources::Tint, SpriteRender, Transparent},
 };
 use rand::{thread_rng, Rng};
 
@@ -11,6 +11,37 @@ use crate::{
     resources::SpriteResource,
 };
 
+// spaces and creates blast entities
+pub fn spawn_blasts(
+    blast_count: usize,
+    blast_spacing: f32,
+    blast_sprite_render: SpriteRender,
+    blast_component: Blast,
+    blast_tint: Tint,
+    blast_hitbox: Hitbox2DComponent,
+    mut blast_position: Vector3<f32>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    for _ in 0..blast_count {
+        let mut blast_transform = Transform::default();
+        blast_transform.set_translation(blast_position);
+
+        blast_position.x += blast_spacing;
+
+        lazy_update
+            .create_entity(entities)
+            .with(blast_component.clone())
+            .with(blast_hitbox.clone())
+            .with(blast_sprite_render.clone())
+            .with(blast_tint)
+            .with(blast_transform)
+            .with(Transparent)
+            .build();
+    }
+}
+
+// TODO: phase out fire_blast (player/spaceship entity still uses)
 // spawns blast from source_component with source_component attributes
 pub fn fire_blast(
     entities: &Entities,
