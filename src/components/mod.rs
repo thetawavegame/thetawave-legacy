@@ -129,7 +129,6 @@ pub trait Rigidbody {
 
 // fires can fire projectiles with a cooldown between shots
 pub trait Fires {
-    fn blast_sprite_indicies(&self) -> HashMap<String, usize>;
     fn blast_damage(&self) -> f32;
     fn crit_chance(&self) -> f32;
     fn poison_chance(&self) -> f32;
