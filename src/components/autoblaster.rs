@@ -1,6 +1,9 @@
 use crate::{
     components::{Blast, BlastType, Hitbox2DComponent, Motion2DComponent},
-    constants::{BLAST_HITBOX_DIAMETER, BLAST_Z, VELOCITY_FACTOR},
+    constants::{
+        BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
+        PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX, VELOCITY_FACTOR,
+    },
     entities::spawn_blasts,
     resources::SpriteResource,
 };
@@ -11,7 +14,7 @@ use amethyst::{
         transform::Transform,
     },
     ecs::prelude::{Component, DenseVecStorage, Entities, LazyUpdate, ReadExpect},
-    renderer::{palette::Srgba, resources::Tint, SpriteRender},
+    renderer::SpriteRender,
 };
 
 use rand::{thread_rng, Rng};
@@ -82,7 +85,12 @@ impl AutoBlasterComponent {
 
             let blast_sprite_render = SpriteRender {
                 sprite_sheet: sprite_resource.blasts_sprite_sheet.clone(),
-                sprite_number: 0, // yellow blast on blasts spritesheet
+                sprite_number: match blast_type {
+                    BlastType::Player => PLAYER_BLAST_SPRITE_INDEX,
+                    BlastType::Enemy => ENEMY_BLAST_SPRITE_INDEX,
+                    BlastType::Critical => CRIT_BLAST_SPRITE_INDEX,
+                    BlastType::Poison => POISON_BLAST_SPRITE_INDEX,
+                },
             };
 
             let blast_hitbox = Hitbox2DComponent {
@@ -101,14 +109,7 @@ impl AutoBlasterComponent {
                 y_velocity: source_motion2d.velocity.y,
                 velocity_factor: VELOCITY_FACTOR,
                 allied: self.allied,
-                blast_type: blast_type.clone(),
-            };
-
-            let blast_tint = match blast_type {
-                BlastType::Player => Tint(Srgba::new(0.0, 0.0, 0.0, 1.0)),
-                BlastType::Enemy => Tint(Srgba::new(1.0, 0.3, 0.0, 1.0)),
-                BlastType::Poison => Tint(Srgba::new(0.0, 1.0, 0.0, 1.0)),
-                BlastType::Critical => Tint(Srgba::new(1.0, 0.0, 1.0, 1.0)),
+                blast_type,
             };
 
             let blast_spawn_x = fire_position.x
@@ -125,7 +126,6 @@ impl AutoBlasterComponent {
                 self.spacing,
                 blast_sprite_render,
                 blast_component,
-                blast_tint,
                 blast_hitbox,
                 blast_position,
                 entities,

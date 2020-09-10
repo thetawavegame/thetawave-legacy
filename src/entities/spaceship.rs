@@ -1,8 +1,8 @@
 use crate::{
     components::{Hitbox2DComponent, Motion2DComponent, Spaceship},
     constants::{
-        ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_SPRITE_INDEX,
-        POISON_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
+        ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
+        POISON_BLAST_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
         SPACESHIP_BARREL_COOLDOWN, SPACESHIP_BARREL_DURATION, SPACESHIP_BARREL_SPEED,
         SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_CRIT_CHANCE,
         SPACESHIP_DAMAGE, SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED,
@@ -34,8 +34,8 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
 
     let mut blast_sprite_indicies = HashMap::new();
     blast_sprite_indicies.insert("normal".to_string(), SPACESHIP_BLAST_SPRITE_INDEX);
-    blast_sprite_indicies.insert("crit".to_string(), CRIT_SPRITE_INDEX);
-    blast_sprite_indicies.insert("poison".to_string(), POISON_SPRITE_INDEX);
+    blast_sprite_indicies.insert("crit".to_string(), CRIT_BLAST_SPRITE_INDEX);
+    blast_sprite_indicies.insert("poison".to_string(), POISON_BLAST_SPRITE_INDEX);
 
     let hitbox = Hitbox2DComponent {
         width: SPACESHIP_HITBOX_WIDTH,
