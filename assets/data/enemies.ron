@@ -12,11 +12,6 @@
         enemy_component: (
             name: "drone",
             health: 60,
-            fires: false,
-            fire_speed: 3,
-            fire_reset_timer: 0,
-            blast_speed: 0,
-            blast_damage: 0,
             defense_damage: 30,
             collectables_probs: [
                 ("", 0.5),
@@ -72,11 +67,6 @@
         enemy_component: (
             name: "pawn",
             health: 110,
-            fires: true,
-            fire_speed: 3,
-            fire_reset_timer: 1,
-            blast_speed: -60,
-            blast_damage: 30,
             defense_damage: 50,
             collectables_probs: [
                 ("", 0.5),
@@ -119,11 +109,6 @@
             name: "hauler",
             height: 36,
             health: 220,
-            fires: false,
-            fire_speed: 3,
-            fire_reset_timer: 1,
-            blast_speed: -60,
-            blast_damage: 30,
             defense_damage: -100,
             collectables_probs: [
                 ("", 1.0) // doesn't drop anything
@@ -177,11 +162,6 @@
             health: 75,
             width: 24,
             height: 12,
-            fires: true,
-            fire_speed: 3,
-            fire_reset_timer: 1,
-            blast_speed: -35,
-            blast_damage: 20,
             defense_damage: -30,
             max_speed: 25,
             collectables_probs: [
@@ -226,11 +206,6 @@
             health: 10000,
             width: 24,
             height: 12,
-            fires: false,
-            fire_speed: 0,
-            fire_reset_timer: 0,
-            blast_speed: 0,
-            blast_damage: 0,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -274,11 +249,6 @@
             health: 2000,
             width: 24,
             height: 12,
-            fires: false,
-            fire_speed: 0,
-            fire_reset_timer: 0,
-            blast_speed: 0,
-            blast_damage: 0,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -322,11 +292,6 @@
             health: 2000,
             width: 83,
             height: 93,
-            fires: false,
-            fire_speed: 0,
-            fire_reset_timer: 0,
-            blast_speed: 0,
-            blast_damage: 0,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -370,11 +335,6 @@
             health: 2000,
             width: 83,
             height: 93,
-            fires: false,
-            fire_speed: 0,
-            fire_reset_timer: 0,
-            blast_speed: 0,
-            blast_damage: 0,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -418,11 +378,6 @@
             health: 2000,
             width: 75,
             height: 161,
-            fires: false,
-            fire_speed: 0,
-            fire_reset_timer: 0,
-            blast_speed: 0,
-            blast_damage: 0,
             defense_damage: 0,
             current_velocity_y: -30,
             collectables_probs: [
