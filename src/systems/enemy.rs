@@ -1,11 +1,9 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{
-        choose_random_name, Defense, Enemy, EnemyType, Fires, Motion2DComponent, Rigidbody,
-    },
+    components::{choose_random_name, Defense, Enemy, EnemyType, Motion2DComponent, Rigidbody},
     constants::{ARENA_MIN_Y, EXPLOSION_Z},
-    entities::{fire_blast, spawn_consumable, spawn_explosion},
+    entities::{spawn_consumable, spawn_explosion},
     resources::{ConsumableEntityData, SpriteResource},
 };
 use amethyst::{
@@ -110,22 +108,6 @@ impl<'s> System<'s> for EnemySystem {
                 EnemyType::Pawn => {
                     //accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0, enemy_motion);
-                    /*
-                    if let Some(fire_position) = enemy_component.fire_cooldown(
-                        enemy_transform,
-                        -1.0 * enemy_component.height / 2.0,
-                        true,
-                        time.delta_seconds(),
-                    ) {
-                        fire_blast(
-                            &entities,
-                            &sprite_resource,
-                            enemy_component,
-                            fire_position,
-                            &lazy_update,
-                        )
-                    }
-                    */
                 }
 
                 EnemyType::Drone => {
@@ -141,24 +123,6 @@ impl<'s> System<'s> for EnemySystem {
                 EnemyType::Strafer => {
                     //accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0, enemy_motion);
-
-                    /*
-                    if let Some(fire_position) = enemy_component.fire_cooldown(
-                        enemy_transform,
-                        -1.0 * enemy_component.height / 2.0,
-                        true,
-                        time.delta_seconds(),
-                    ) {
-                        fire_blast(
-                            &entities,
-                            &sprite_resource,
-                            enemy_component,
-                            fire_position,
-                            &lazy_update,
-                        )
-                    }
-                    */
-
                     enemy_component.accelerate(1.0, 0.0, enemy_motion);
                 }
 

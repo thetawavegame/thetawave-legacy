@@ -30,7 +30,6 @@ impl<'s> System<'s> for AutoBlasterSystem {
         for (transform, autoblaster, motion2d) in
             (&transforms, &mut autoblasters, &motion2ds).join()
         {
-            //println!("firing");
             autoblaster.fire_when_ready(
                 motion2d,
                 transform,
