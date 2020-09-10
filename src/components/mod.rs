@@ -39,7 +39,6 @@ pub use self::{
     store::Store,
     timelimit::TimeLimitComponent,
 };
-use std::collections::HashMap;
 
 // rigidbodies are have physics and can collide
 pub trait Rigidbody {

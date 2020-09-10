@@ -105,7 +105,7 @@ impl AutoBlasterComponent {
                 speed: self.shot_velocity.y,
                 damage: blast_damage,
                 poison_damage: blast_poison_damage,
-                x_velocity: source_motion2d.velocity.x,
+                x_velocity: source_motion2d.velocity.x, // TODO: remove speed and only use velocity
                 y_velocity: source_motion2d.velocity.y,
                 velocity_factor: VELOCITY_FACTOR,
                 allied: self.allied,
@@ -119,7 +119,17 @@ impl AutoBlasterComponent {
                     self.spacing * (self.count / 2) as f32
                 };
 
-            let blast_position = Vector3::new(blast_spawn_x, fire_position.y, fire_position.z);
+            let mut blast_transform = Transform::default();
+            blast_transform.set_translation(Vector3::new(
+                blast_spawn_x,
+                fire_position.y,
+                fire_position.z,
+            ));
+            blast_transform.set_scale(Vector3::new(
+                self.size_multiplier,
+                self.size_multiplier,
+                1.0,
+            ));
 
             spawn_blasts(
                 self.count,
@@ -127,7 +137,7 @@ impl AutoBlasterComponent {
                 blast_sprite_render,
                 blast_component,
                 blast_hitbox,
-                blast_position,
+                blast_transform,
                 entities,
                 lazy_update,
             );
