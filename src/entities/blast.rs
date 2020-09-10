@@ -21,24 +21,21 @@ pub fn spawn_blasts(
     blast_sprite_render: SpriteRender,
     blast_component: Blast,
     blast_hitbox: Hitbox2DComponent,
-    mut blast_position: Vector3<f32>,
+    mut blast_transform: Transform,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     for _ in 0..blast_count {
-        let mut blast_transform = Transform::default();
-        blast_transform.set_translation(blast_position);
-
-        blast_position.x += blast_spacing;
-
         lazy_update
             .create_entity(entities)
             .with(blast_component.clone())
             .with(blast_hitbox.clone())
             .with(blast_sprite_render.clone())
-            .with(blast_transform)
+            .with(blast_transform.clone())
             .with(Transparent)
             .build();
+
+        blast_transform.prepend_translation_x(blast_spacing);
     }
 }
 
