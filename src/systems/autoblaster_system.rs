@@ -3,7 +3,7 @@ use crate::{
     constants::{
         BLAST_HITBOX_DIAMETER, BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y, BLAST_Z,
         CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX,
-        POISON_BLAST_SPRITE_INDEX, VELOCITY_FACTOR,
+        POISON_BLAST_SPRITE_INDEX,
     },
     entities::spawn_blasts,
     resources::SpriteResource,
@@ -116,8 +116,10 @@ fn fire_when_ready(
 
         let blast_motion2d = Motion2DComponent {
             velocity: Vector2::new(
-                source_motion2d.velocity.x,
-                source_motion2d.velocity.y + autoblaster.shot_velocity.y,
+                (source_motion2d.velocity.x * autoblaster.velocity_multiplier)
+                    + autoblaster.shot_velocity.x,
+                (source_motion2d.velocity.y * autoblaster.velocity_multiplier)
+                    + autoblaster.shot_velocity.y,
             ),
             acceleration: Vector2::new(0.0, 0.0),
             deceleration: Vector2::new(0.0, 0.0),
@@ -131,7 +133,6 @@ fn fire_when_ready(
         let blast_component = Blast {
             damage: blast_damage,
             poison_damage: blast_poison_damage,
-            velocity_factor: VELOCITY_FACTOR,
             blast_type,
         };
 
