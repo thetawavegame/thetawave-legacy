@@ -1,5 +1,5 @@
 use crate::{
-    components::{Blast, Spaceship},
+    components::{Blast, BlastType, Spaceship},
     constants::EXPLOSION_Z,
     entities::spawn_blast_explosion,
     resources::SpriteResource,
@@ -57,32 +57,38 @@ impl<'s> System<'s> for EnemyHitSystem {
                 {
                     //first check if the blast is allied with the player
                     //if the blast collides with the player and the player is not currently barrel rolling the blast hits
-                    if !blast.allied
-                        && ((event.entity_a == blast_entity && event.entity_b == spaceship_entity)
-                            || (event.entity_a == spaceship_entity
-                                && event.entity_b == blast_entity))
-                        && !spaceship.barrel_action_left
-                        && !spaceship.barrel_action_right
-                    {
-                        entities
-                            .delete(blast_entity)
-                            .expect("unable to delete entity");
+                    match blast.blast_type {
+                        // using match here for ease of adding enemy blast effects (such as poison) in the future
+                        BlastType::Enemy => {
+                            if ((event.entity_a == blast_entity
+                                && event.entity_b == spaceship_entity)
+                                || (event.entity_a == spaceship_entity
+                                    && event.entity_b == blast_entity))
+                                && !spaceship.barrel_action_left
+                                && !spaceship.barrel_action_right
+                            {
+                                entities
+                                    .delete(blast_entity)
+                                    .expect("unable to delete entity");
 
-                        let explosion_position = Vector3::new(
-                            blast_transform.translation().x,
-                            blast_transform.translation().y,
-                            EXPLOSION_Z,
-                        );
+                                let explosion_position = Vector3::new(
+                                    blast_transform.translation().x,
+                                    blast_transform.translation().y,
+                                    EXPLOSION_Z,
+                                );
 
-                        spawn_blast_explosion(
-                            &entities,
-                            sprite_resource.blast_explosions_sprite_sheet.clone(),
-                            blast.blast_type.clone(),
-                            explosion_position,
-                            &lazy_update,
-                        );
+                                spawn_blast_explosion(
+                                    &entities,
+                                    sprite_resource.blast_explosions_sprite_sheet.clone(),
+                                    blast.blast_type.clone(),
+                                    explosion_position,
+                                    &lazy_update,
+                                );
 
-                        spaceship.health -= blast.damage;
+                                spaceship.health -= blast.damage;
+                            }
+                        }
+                        _ => {}
                     }
                 }
             }

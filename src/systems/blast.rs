@@ -1,5 +1,5 @@
 use crate::{
-    components::{Blast, Hitbox2DComponent},
+    components::{Blast, Hitbox2DComponent, Motion2DComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
@@ -14,13 +14,17 @@ impl<'s> System<'s> for BlastSystem {
         Entities<'s>,
         ReadStorage<'s, Blast>,
         ReadStorage<'s, Hitbox2DComponent>,
+        ReadStorage<'s, Motion2DComponent>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (entities, blasts, hitboxes, mut transforms, time): Self::SystemData) {
-        for (blast_entity, blast_component, blast_transform, blast_hitbox) in
-            (&*entities, &blasts, &mut transforms, &hitboxes).join()
+    fn run(
+        &mut self,
+        (entities, blasts, hitboxes, motion2ds, mut transforms, time): Self::SystemData,
+    ) {
+        for (blast_entity, blast_component, blast_transform, blast_hitbox, blast_motion2d) in
+            (&*entities, &blasts, &mut transforms, &hitboxes, &motion2ds).join()
         {
             // delete blast if outside of the arena
             // TODO add hitbox to side panel
@@ -36,11 +40,10 @@ impl<'s> System<'s> for BlastSystem {
 
             // update position based on blast velocity
             blast_transform.prepend_translation_x(
-                blast_component.x_velocity * blast_component.velocity_factor * time.delta_seconds(),
+                blast_motion2d.velocity.x * blast_component.velocity_factor * time.delta_seconds(),
             );
             blast_transform.prepend_translation_y(
-                (blast_component.y_velocity * blast_component.velocity_factor
-                    + blast_component.speed)
+                (blast_motion2d.velocity.y * blast_component.velocity_factor)
                     * time.delta_seconds(),
             );
         }

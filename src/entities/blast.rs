@@ -1,15 +1,19 @@
 use amethyst::{
-    core::{math::Vector3, transform::Transform},
+    core::{
+        math::{Vector2, Vector3},
+        transform::Transform,
+    },
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
 use rand::{thread_rng, Rng};
 
 use crate::{
-    components::{Blast, BlastType, Fires, Hitbox2DComponent},
+    components::{Blast, BlastType, Fires, Hitbox2DComponent, Motion2DComponent},
     constants::{
-        BLAST_HITBOX_DIAMETER, BLAST_OFFSET, CRIT_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX,
-        POISON_BLAST_SPRITE_INDEX, VELOCITY_FACTOR,
+        BLAST_HITBOX_DIAMETER, BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y, BLAST_OFFSET,
+        CRIT_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
+        VELOCITY_FACTOR,
     },
     resources::SpriteResource,
 };
@@ -21,6 +25,7 @@ pub fn spawn_blasts(
     blast_sprite_render: SpriteRender,
     blast_component: Blast,
     blast_hitbox: Hitbox2DComponent,
+    blast_motion2d: Motion2DComponent,
     mut blast_transform: Transform,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
@@ -30,6 +35,7 @@ pub fn spawn_blasts(
             .create_entity(entities)
             .with(blast_component.clone())
             .with(blast_hitbox.clone())
+            .with(blast_motion2d.clone())
             .with(blast_sprite_render.clone())
             .with(blast_transform.clone())
             .with(Transparent)
@@ -57,7 +63,7 @@ pub fn fire_blast(
     let mut blast_type: BlastType = if !source_component.allied() {
         BlastType::Enemy
     } else {
-        BlastType::Player
+        BlastType::Ally
     };
 
     // roll for crit, then poison
@@ -68,11 +74,11 @@ pub fn fire_blast(
     if crit_roll < source_component.crit_chance() {
         blast_sprite_render.sprite_number = CRIT_BLAST_SPRITE_INDEX;
         damage *= 2.0;
-        blast_type = BlastType::Critical;
+        blast_type = BlastType::AllyCritical;
     } else if poison_roll < source_component.poison_chance() {
         blast_sprite_render.sprite_number = POISON_BLAST_SPRITE_INDEX;
         poison_damage = source_component.blast_damage() / 100.0;
-        blast_type = BlastType::Poison;
+        blast_type = BlastType::AllyPoison;
     }
 
     // calculate spawn position for blasts centered around source_position
@@ -95,14 +101,28 @@ pub fn fire_blast(
         blast_spawn_pos += BLAST_OFFSET;
 
         let blast_component = Blast {
-            speed: source_component.blast_speed(),
+            //speed: source_component.blast_speed(),
             damage,
             poison_damage,
-            x_velocity: source_component.velocity_x(),
-            y_velocity: source_component.velocity_y(),
+            //x_velocity: source_component.velocity_x(),
+            //y_velocity: source_component.velocity_y(),
             velocity_factor: VELOCITY_FACTOR,
-            allied: source_component.allied(),
+            //allied: source_component.allied(),
             blast_type: blast_type.clone(),
+        };
+
+        let blast_motion2d = Motion2DComponent {
+            velocity: Vector2::new(
+                source_component.velocity_x(),
+                source_component.velocity_y() + source_component.blast_speed(),
+            ),
+            acceleration: Vector2::new(0.0, 0.0),
+            deceleration: Vector2::new(0.0, 0.0),
+            max_speed: Vector2::new(BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y),
+            knockback_max_speed: Vector2::new(BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y),
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
         };
 
         let hitbox = Hitbox2DComponent {
@@ -118,6 +138,7 @@ pub fn fire_blast(
             .with(blast_component)
             .with(hitbox)
             .with(blast_sprite_render.clone())
+            .with(blast_motion2d)
             .with(blast_transform)
             .with(Transparent)
             .build();
