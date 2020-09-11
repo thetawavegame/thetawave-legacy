@@ -10,7 +10,8 @@ pub struct AutoBlasterComponent {
     pub count: usize,
     pub allied: bool,
     pub shot_velocity: Vector2<f32>,
-    pub offset: Vector2<f32>, // spawn position of blasts offset from center of entity
+    pub velocity_multiplier: f32, // what percentage of the velocity from the source motion2d component will be added to the spawned blasts
+    pub offset: Vector2<f32>,     // spawn position of blasts offset from center of entity
     pub damage: f32,
     pub poison_damage: f32, // applies damage to blast when rolled
     pub poison_chance: f32,

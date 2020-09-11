@@ -13,7 +13,6 @@ use crate::{
     constants::{
         BLAST_HITBOX_DIAMETER, BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y, BLAST_OFFSET,
         CRIT_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
-        VELOCITY_FACTOR,
     },
     resources::SpriteResource,
 };
@@ -101,13 +100,8 @@ pub fn fire_blast(
         blast_spawn_pos += BLAST_OFFSET;
 
         let blast_component = Blast {
-            //speed: source_component.blast_speed(),
             damage,
             poison_damage,
-            //x_velocity: source_component.velocity_x(),
-            //y_velocity: source_component.velocity_y(),
-            velocity_factor: VELOCITY_FACTOR,
-            //allied: source_component.allied(),
             blast_type: blast_type.clone(),
         };
 

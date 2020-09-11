@@ -77,7 +77,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             barrel_action_timer: SPACESHIP_BARREL_DURATION,
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
-            blast_speed: 160.0,
+            blast_speed: 100.0,
             max_health: SPACESHIP_HEALTH,
             health: SPACESHIP_HEALTH,
             money: SPACESHIP_MONEY,

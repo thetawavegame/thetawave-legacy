@@ -13,7 +13,6 @@ pub enum BlastType {
 pub struct Blast {
     pub damage: f32,
     pub poison_damage: f32,
-    pub velocity_factor: f32,
     pub blast_type: BlastType,
 }
 
