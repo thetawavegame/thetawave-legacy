@@ -7,10 +7,39 @@ use rand::{thread_rng, Rng};
 
 use crate::{
     components::{Blast, BlastType, Fires, Hitbox2DComponent},
-    constants::{BLAST_HITBOX_DIAMETER, BLAST_OFFSET, VELOCITY_FACTOR},
+    constants::{
+        BLAST_HITBOX_DIAMETER, BLAST_OFFSET, CRIT_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX,
+        POISON_BLAST_SPRITE_INDEX, VELOCITY_FACTOR,
+    },
     resources::SpriteResource,
 };
 
+// spaces and creates blast entities
+pub fn spawn_blasts(
+    blast_count: usize,
+    blast_spacing: f32,
+    blast_sprite_render: SpriteRender,
+    blast_component: Blast,
+    blast_hitbox: Hitbox2DComponent,
+    mut blast_transform: Transform,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    for _ in 0..blast_count {
+        lazy_update
+            .create_entity(entities)
+            .with(blast_component.clone())
+            .with(blast_hitbox.clone())
+            .with(blast_sprite_render.clone())
+            .with(blast_transform.clone())
+            .with(Transparent)
+            .build();
+
+        blast_transform.prepend_translation_x(blast_spacing);
+    }
+}
+
+// TODO: phase out fire_blast (player/spaceship entity still uses)
 // spawns blast from source_component with source_component attributes
 pub fn fire_blast(
     entities: &Entities,
@@ -22,7 +51,7 @@ pub fn fire_blast(
     // get render component
     let mut blast_sprite_render = SpriteRender {
         sprite_sheet: sprite_resource.blasts_sprite_sheet.clone(),
-        sprite_number: source_component.blast_sprite_indicies()["normal"],
+        sprite_number: PLAYER_BLAST_SPRITE_INDEX,
     };
 
     let mut blast_type: BlastType = if !source_component.allied() {
@@ -37,11 +66,11 @@ pub fn fire_blast(
     let crit_roll = thread_rng().gen::<f32>();
     let poison_roll = thread_rng().gen::<f32>();
     if crit_roll < source_component.crit_chance() {
-        blast_sprite_render.sprite_number = source_component.blast_sprite_indicies()["crit"];
+        blast_sprite_render.sprite_number = CRIT_BLAST_SPRITE_INDEX;
         damage *= 2.0;
         blast_type = BlastType::Critical;
     } else if poison_roll < source_component.poison_chance() {
-        blast_sprite_render.sprite_number = source_component.blast_sprite_indicies()["poison"];
+        blast_sprite_render.sprite_number = POISON_BLAST_SPRITE_INDEX;
         poison_damage = source_component.blast_damage() / 100.0;
         blast_type = BlastType::Poison;
     }

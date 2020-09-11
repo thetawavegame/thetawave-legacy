@@ -3,6 +3,7 @@ use amethyst::core::{math::Vector3, transform::Transform};
 use crate::constants::BLAST_Z;
 
 mod animation;
+mod autoblaster;
 mod blast;
 mod boss;
 mod consumable;
@@ -21,6 +22,7 @@ mod timelimit;
 
 pub use self::{
     animation::{Animation, AnimationType},
+    autoblaster::AutoBlasterComponent,
     blast::{Blast, BlastType},
     boss::Repeater,
     consumable::Consumable,
@@ -37,7 +39,6 @@ pub use self::{
     store::Store,
     timelimit::TimeLimitComponent,
 };
-use std::collections::HashMap;
 
 // rigidbodies are have physics and can collide
 pub trait Rigidbody {
@@ -127,7 +128,6 @@ pub trait Rigidbody {
 
 // fires can fire projectiles with a cooldown between shots
 pub trait Fires {
-    fn blast_sprite_indicies(&self) -> HashMap<String, usize>;
     fn blast_damage(&self) -> f32;
     fn crit_chance(&self) -> f32;
     fn poison_chance(&self) -> f32;

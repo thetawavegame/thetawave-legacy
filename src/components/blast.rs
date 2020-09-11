@@ -1,6 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum BlastType {
     Player,
     Poison,
