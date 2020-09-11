@@ -23,7 +23,7 @@ pub fn spawn_enemy(
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
-    lazy_update
+    let enemy_entity = lazy_update
         .create_entity(entities)
         .with(sprite_render)
         .with(enemy.animation_component)
@@ -33,5 +33,11 @@ pub fn spawn_enemy(
         .with(local_transform)
         .with(Transparent)
         .with(name)
-        .build()
+        .build();
+
+    if let Some(autoblaster_component) = enemy.autoblaster_component {
+        lazy_update.insert(enemy_entity, autoblaster_component);
+    }
+
+    enemy_entity
 }

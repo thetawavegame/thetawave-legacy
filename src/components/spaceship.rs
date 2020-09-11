@@ -70,9 +70,6 @@ impl Rigidbody for Spaceship {
 }
 
 impl Fires for Spaceship {
-    fn blast_sprite_indicies(&self) -> HashMap<String, usize> {
-        self.blast_sprite_indicies.clone()
-    }
     fn blast_damage(&self) -> f32 {
         self.damage
     }

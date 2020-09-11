@@ -42,9 +42,10 @@ pub const ENEMY_SPAWN_INTERVAL: f32 = 1.5; // time between enemy spawns
 pub const RESTOCK_INTERVAL: f32 = 10.0;
 
 // sprites
+pub const PLAYER_BLAST_SPRITE_INDEX: usize = 0;
 pub const ENEMY_BLAST_SPRITE_INDEX: usize = 1;
-pub const CRIT_SPRITE_INDEX: usize = 2;
-pub const POISON_SPRITE_INDEX: usize = 3;
+pub const CRIT_BLAST_SPRITE_INDEX: usize = 2;
+pub const POISON_BLAST_SPRITE_INDEX: usize = 3;
 pub const SIDE_PANEL_LEFT_SPRITE_INDEX: usize = 0;
 pub const SIDE_PANEL_RIGHT_SPRITE_INDEX: usize = 1;
 pub const SPACESHIP_BLAST_SPRITE_INDEX: usize = 0;

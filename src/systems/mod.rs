@@ -1,4 +1,5 @@
 mod animation;
+mod autoblaster_system;
 mod blast;
 mod boss;
 mod collision_detection;
@@ -22,8 +23,8 @@ mod store;
 mod timelimit;
 
 pub use self::{
-    animation::AnimationSystem, blast::BlastSystem, boss::BossSystem,
-    collision_detection::CollisionDetectionSystem, consumable::ConsumableSystem,
+    animation::AnimationSystem, autoblaster_system::AutoBlasterSystem, blast::BlastSystem,
+    boss::BossSystem, collision_detection::CollisionDetectionSystem, consumable::ConsumableSystem,
     defense::DefenseSystem, enemy::EnemySystem, enemy_collision_handler::EnemyCollisionSystem,
     enemy_hit::EnemyHitSystem, enemy_spawn::SpawnerSystem, gamemaster::GameMasterSystem,
     hitbox_system::HitboxSystem, item::ItemSystem, planets::PlanetsSystem,
