@@ -23,30 +23,21 @@ pub fn spawn_enemy(
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
 
+    let enemy_entity = lazy_update
+        .create_entity(entities)
+        .with(sprite_render)
+        .with(enemy.animation_component)
+        .with(enemy.enemy_component)
+        .with(enemy.hitbox_component)
+        .with(enemy.motion2d_component)
+        .with(local_transform)
+        .with(Transparent)
+        .with(name)
+        .build();
+
     if let Some(autoblaster_component) = enemy.autoblaster_component {
-        lazy_update
-            .create_entity(entities)
-            .with(sprite_render)
-            .with(enemy.animation_component)
-            .with(enemy.enemy_component)
-            .with(enemy.hitbox_component)
-            .with(enemy.motion2d_component)
-            .with(autoblaster_component)
-            .with(local_transform)
-            .with(Transparent)
-            .with(name)
-            .build()
-    } else {
-        lazy_update
-            .create_entity(entities)
-            .with(sprite_render)
-            .with(enemy.animation_component)
-            .with(enemy.enemy_component)
-            .with(enemy.hitbox_component)
-            .with(enemy.motion2d_component)
-            .with(local_transform)
-            .with(Transparent)
-            .with(name)
-            .build()
+        lazy_update.insert(enemy_entity, autoblaster_component);
     }
+
+    enemy_entity
 }
