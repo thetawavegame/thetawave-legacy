@@ -66,8 +66,6 @@ pub const ENEMY_STRAFER_RATIO: f32 = 75.0;
 pub const ENEMY_HAULER_RATIO: f32 = 5.0;
 
 // player starting stats
-pub const SPACESHIP_HEIGHT: f32 = 18.0;
-pub const SPACESHIP_WIDTH: f32 = 18.0;
 pub const SPACESHIP_HITBOX_HEIGHT: f32 = 14.0;
 pub const SPACESHIP_HITBOX_WIDTH: f32 = 6.0;
 pub const SPACESHIP_ACCELERATION_X: f32 = 2.0;
