@@ -179,7 +179,3 @@ pub trait Living {
         }
     }
 }
-
-pub trait Spawnable {
-    fn init(&mut self);
-}
