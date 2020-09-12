@@ -96,6 +96,6 @@ pub const DEFENSE_BAR_LIMIT: f32 = 63.0;
 pub const ROLL_BAR_X: f32 = 324.0;
 pub const ROLL_BAR_Y: f32 = 177.0;
 pub const ROLL_BAR_LIMIT: f32 = 28.0;
-pub const RESTOCK_BAR_X: f32 = 324.0; //should appear in arena
+pub const RESTOCK_BAR_X: f32 = 324.0;
 pub const RESTOCK_BAR_Y: f32 = 90.0;
 pub const RESTOCK_BAR_LIMIT: f32 = 28.0;
