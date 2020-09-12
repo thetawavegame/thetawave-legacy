@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Defense, Item, Living, Motion2DComponent, Spaceship},
+    components::{Defense, Hitbox2DComponent, Item, Living, Motion2DComponent, Spaceship},
     constants::ARENA_MIN_Y,
     space_shooter::HitboxCollisionEvent,
 };
@@ -28,6 +28,7 @@ impl<'s> System<'s> for ItemSystem {
         WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, Time>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -53,6 +54,7 @@ impl<'s> System<'s> for ItemSystem {
             mut defenses,
             mut transforms,
             mut motions,
+            hitboxes,
             time,
             storage,
             sounds,
@@ -60,10 +62,12 @@ impl<'s> System<'s> for ItemSystem {
         ): Self::SystemData,
     ) {
         // item movement
-        for (item, item_entity, item_transform) in (&mut items, &entities, &mut transforms).join() {
+        for (item, item_entity, item_transform, item_hitbox) in
+            (&mut items, &entities, &mut transforms, &hitboxes).join()
+        {
             item_transform.prepend_translation_y(-1.0 * item.speed * time.delta_seconds());
 
-            if item_transform.translation().y + item.height / 2.0 < ARENA_MIN_Y {
+            if item_transform.translation().y + item_hitbox.height / 2.0 < ARENA_MIN_Y {
                 entities
                     .delete(item_entity)
                     .expect("unable to delete entity");

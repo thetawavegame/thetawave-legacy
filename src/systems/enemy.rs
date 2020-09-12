@@ -1,7 +1,10 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{choose_random_name, Defense, Enemy, EnemyType, Motion2DComponent, Rigidbody},
+    components::{
+        choose_random_name, Defense, Enemy, EnemyType, Hitbox2DComponent, Motion2DComponent,
+        Rigidbody,
+    },
     constants::{ARENA_MIN_Y, EXPLOSION_Z},
     entities::{spawn_consumable, spawn_explosion},
     resources::{ConsumableEntityData, SpriteResource},
@@ -10,7 +13,9 @@ use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
     core::{math::Vector3, timing::Time, transform::Transform},
-    ecs::prelude::{Entities, Join, LazyUpdate, Read, ReadExpect, System, WriteStorage},
+    ecs::prelude::{
+        Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
+    },
 };
 use std::collections::HashMap;
 
@@ -23,6 +28,7 @@ impl<'s> System<'s> for EnemySystem {
         WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
@@ -40,6 +46,7 @@ impl<'s> System<'s> for EnemySystem {
             mut defenses,
             mut transforms,
             mut motions,
+            hitboxes,
             time,
             sprite_resource,
             lazy_update,
@@ -49,11 +56,17 @@ impl<'s> System<'s> for EnemySystem {
             consumable_pool,
         ): Self::SystemData,
     ) {
-        for (enemy_entity, enemy_component, enemy_transform, enemy_motion) in
-            (&*entities, &mut enemys, &mut transforms, &mut motions).join()
+        for (enemy_entity, enemy_component, enemy_transform, enemy_motion, enemy_hitbox) in (
+            &*entities,
+            &mut enemys,
+            &mut transforms,
+            &mut motions,
+            &hitboxes,
+        )
+            .join()
         {
             //constrain in arena
-            enemy_component.constrain_to_arena(enemy_transform, enemy_motion);
+            enemy_component.constrain_to_arena(enemy_transform, enemy_motion, enemy_hitbox);
 
             //transform the spaceship in x and y by the currrent velocity in x and y
             enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion);
@@ -61,7 +74,7 @@ impl<'s> System<'s> for EnemySystem {
             enemy_component.health -= enemy_component.poison;
 
             //conditions for despawning
-            if enemy_transform.translation()[1] + enemy_component.height / 2.0 < ARENA_MIN_Y {
+            if enemy_transform.translation()[1] + enemy_hitbox.height / 2.0 < ARENA_MIN_Y {
                 //defense is damage is enemy gets past
                 for defense in (&mut defenses).join() {
                     defense.defense -= enemy_component.defense_damage;

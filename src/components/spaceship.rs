@@ -1,5 +1,5 @@
 use crate::{
-    components::{Fires, Living, Motion2DComponent, Rigidbody},
+    components::{Fires, Hitbox2DComponent, Living, Motion2DComponent, Rigidbody},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
@@ -9,8 +9,6 @@ use amethyst::{
 use std::collections::HashMap;
 
 pub struct Spaceship {
-    pub width: f32,
-    pub height: f32,
     pub fire_speed: f32,
     pub fire_reset_timer: f32,
     pub damage: f32,
@@ -37,33 +35,38 @@ pub struct Spaceship {
 }
 
 impl Rigidbody for Spaceship {
-    fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
+    fn constrain_to_arena(
+        &mut self,
+        transform: &mut Transform,
+        motion_2d: &mut Motion2DComponent,
+        hitbox_2d: &Hitbox2DComponent,
+    ) {
         let spaceship_x = transform.translation().x;
         let spaceship_y = transform.translation().y;
 
-        if (spaceship_x - (self.width / 2.0)) < ARENA_MIN_X {
+        if (spaceship_x - (hitbox_2d.width / 2.0)) < ARENA_MIN_X {
             //if colliding with left border of arena
             if self.barrel_action_left {
                 self.barrel_action_right = true;
                 self.barrel_action_left = false;
             }
-            transform.set_translation_x(ARENA_MIN_X + (self.width / 2.0));
+            transform.set_translation_x(ARENA_MIN_X + (hitbox_2d.width / 2.0));
             motion_2d.velocity.x = motion_2d.velocity.x.abs();
-        } else if (spaceship_x + (self.width / 2.0)) > ARENA_MAX_X {
+        } else if (spaceship_x + (hitbox_2d.width / 2.0)) > ARENA_MAX_X {
             //if colliding with right border of arena
             if self.barrel_action_right {
                 self.barrel_action_right = false;
                 self.barrel_action_left = true;
             }
-            transform.set_translation_x(ARENA_MAX_X - (self.width / 2.0));
+            transform.set_translation_x(ARENA_MAX_X - (hitbox_2d.width / 2.0));
             motion_2d.velocity.x = -1.0 * motion_2d.velocity.x.abs();
-        } else if (spaceship_y - (self.height / 2.0)) < ARENA_MIN_Y {
+        } else if (spaceship_y - (hitbox_2d.height / 2.0)) < ARENA_MIN_Y {
             //if colliding with bottom of arena
-            transform.set_translation_y(ARENA_MIN_Y + (self.height / 2.0));
+            transform.set_translation_y(ARENA_MIN_Y + (hitbox_2d.height / 2.0));
             motion_2d.velocity.y = motion_2d.velocity.y.abs();
-        } else if (spaceship_y + (self.height / 2.0)) > ARENA_MAX_Y {
+        } else if (spaceship_y + (hitbox_2d.height / 2.0)) > ARENA_MAX_Y {
             //if colliding with bottom of arena
-            transform.set_translation_y(ARENA_MAX_Y - (self.height / 2.0));
+            transform.set_translation_y(ARENA_MAX_Y - (hitbox_2d.height / 2.0));
             motion_2d.velocity.y = -1.0 * motion_2d.velocity.y.abs();
         }
     }
