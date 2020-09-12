@@ -42,7 +42,12 @@ pub use self::{
 
 // rigidbodies are have physics and can collide
 pub trait Rigidbody {
-    fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent);
+    fn constrain_to_arena(
+        &mut self,
+        transform: &mut Transform,
+        motion_2d: &mut Motion2DComponent,
+        hitbox_2d: &Hitbox2DComponent,
+    );
 
     fn update_position(&self, transform: &mut Transform, dt: f32, motion_2d: &Motion2DComponent) {
         transform.set_translation_x(transform.translation().x + motion_2d.velocity.x * dt);
