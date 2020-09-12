@@ -1,7 +1,7 @@
-use crate::components::{Motion2DComponent, Rigidbody, Spaceship};
+use crate::components::{Hitbox2DComponent, Motion2DComponent, Rigidbody, Spaceship};
 use amethyst::{
     core::{timing::Time, Transform},
-    ecs::{Join, Read, System, WriteStorage},
+    ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
 
@@ -12,22 +12,28 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
     );
 
     fn run(
         &mut self,
-        (mut transforms, mut spaceships, mut motion_2d_components, input, time): Self::SystemData,
+        (mut transforms, mut spaceships, mut motion_2d_components, hitboxes, input, time): Self::SystemData,
     ) {
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;
 
-        for (spaceship, transform, motion_2d) in
-            (&mut spaceships, &mut transforms, &mut motion_2d_components).join()
+        for (spaceship, transform, motion_2d, hitbox) in (
+            &mut spaceships,
+            &mut transforms,
+            &mut motion_2d_components,
+            &hitboxes,
+        )
+            .join()
         {
             //keep spaceship with bounds of arena
-            spaceship.constrain_to_arena(transform, motion_2d);
+            spaceship.constrain_to_arena(transform, motion_2d, hitbox);
 
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {

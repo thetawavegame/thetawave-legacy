@@ -6,10 +6,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Item {
-    #[serde(default = "des_width")]
-    pub width: f32,
-    #[serde(default = "des_height")]
-    pub height: f32,
     #[serde(default = "des_speed")]
     pub speed: f32,
     #[serde(default = "des_price")]
@@ -22,12 +18,6 @@ pub struct Item {
     pub name: String,
 }
 
-fn des_width() -> f32 {
-    14.0
-}
-fn des_height() -> f32 {
-    14.0
-}
 fn des_speed() -> f32 {
     70.0
 }

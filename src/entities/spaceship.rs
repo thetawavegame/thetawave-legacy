@@ -63,8 +63,6 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         .create_entity()
         .with(sprite_render)
         .with(Spaceship {
-            width: SPACESHIP_WIDTH,
-            height: SPACESHIP_HEIGHT,
             fire_speed: SPACESHIP_FIRE_SPEED,
             fire_reset_timer: 0.0,
             damage: SPACESHIP_DAMAGE,

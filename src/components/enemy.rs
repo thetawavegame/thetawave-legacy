@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{Motion2DComponent, Rigidbody, SpawnProbabilities},
+    components::{Hitbox2DComponent, Motion2DComponent, Rigidbody, SpawnProbabilities},
     constants::{ARENA_MAX_X, ARENA_MIN_X},
 };
 
@@ -25,10 +25,6 @@ pub enum EnemyType {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Enemy {
     pub name: String,
-    #[serde(default = "des_width")]
-    pub width: f32,
-    #[serde(default = "des_height")]
-    pub height: f32,
     pub health: f32,
     pub defense_damage: f32,
     #[serde(default = "des_collision_damage")]
@@ -46,12 +42,6 @@ pub struct Enemy {
 fn des_explosion_sprite_idx() -> usize {
     0
 }
-fn des_width() -> f32 {
-    18.0
-}
-fn des_height() -> f32 {
-    18.0
-}
 fn des_collision_damage() -> f32 {
     30.0
 }
@@ -63,10 +53,15 @@ fn des_allied() -> bool {
 }
 
 impl Rigidbody for Enemy {
-    fn constrain_to_arena(&mut self, transform: &mut Transform, motion_2d: &mut Motion2DComponent) {
+    fn constrain_to_arena(
+        &mut self,
+        transform: &mut Transform,
+        motion_2d: &mut Motion2DComponent,
+        hitbox_2d: &Hitbox2DComponent,
+    ) {
         let enemy_x = transform.translation().x;
-        if (enemy_x - (self.width / 2.0)) < ARENA_MIN_X
-            || (enemy_x + (self.width / 2.0)) > ARENA_MAX_X
+        if (enemy_x - (hitbox_2d.width / 2.0)) < ARENA_MIN_X
+            || (enemy_x + (hitbox_2d.width / 2.0)) > ARENA_MAX_X
         {
             motion_2d.velocity.x *= -1.0;
             motion_2d.acceleration.x *= -1.0;
