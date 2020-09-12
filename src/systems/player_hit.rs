@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Blast, BlastType, Enemy},
+    components::{BlastComponent, BlastType, Enemy},
     constants::EXPLOSION_Z,
     entities::spawn_blast_explosion,
     resources::SpriteResource,
@@ -28,7 +28,7 @@ impl<'s> System<'s> for PlayerHitSystem {
         Read<'s, EventChannel<HitboxCollisionEvent>>,
         Entities<'s>,
         WriteStorage<'s, Enemy>,
-        WriteStorage<'s, Blast>,
+        WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -68,9 +68,9 @@ impl<'s> System<'s> for PlayerHitSystem {
                 {
                     match blast.blast_type {
                         BlastType::Ally | BlastType::AllyCritical | BlastType::AllyPoison => {
-                            if ((event.entity_a == blast_entity && event.entity_b == enemy_entity)
+                            if (event.entity_a == blast_entity && event.entity_b == enemy_entity)
                                 || (event.entity_a == enemy_entity
-                                    && event.entity_b == blast_entity))
+                                    && event.entity_b == blast_entity)
                             {
                                 entities
                                     .delete(blast_entity)
