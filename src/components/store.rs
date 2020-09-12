@@ -1,5 +1,5 @@
 use crate::{
-    components::{Consumable, Item, Spaceship},
+    components::{Consumable, Spaceship},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ITEM_SPAWN_Y_OFFSET},
     entities::spawn_item,
     resources::{ItemEntityData, ItemPool, SpriteResource},

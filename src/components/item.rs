@@ -4,8 +4,6 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::components::Spawnable;
-
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Item {
     #[serde(default = "des_width")]
@@ -35,10 +33,6 @@ fn des_speed() -> f32 {
 }
 fn des_price() -> usize {
     10
-}
-
-impl Spawnable for Item {
-    fn init(&mut self) {}
 }
 
 impl Component for Item {
