@@ -10,13 +10,20 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  build_on_linux:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+      
+    - name: Install linux deps 
+      run: |
+        sudo apt update
+        sudo apt install gcc pkg-config openssl libasound2-dev cmake build-essential python3 libfreetype6-dev libexpat1-dev libxcb-composite0-dev libssl-dev libx11-dev pulseaudio
+        
     - name: Build
       run: cargo build --verbose
+      
     - name: Run tests
       run: cargo test --verbose
