@@ -1,8 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 
-use crate::components::Spawnable;
-
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Consumable {
     pub name: String,
@@ -29,10 +27,6 @@ fn des_height() -> f32 {
 }
 fn des_speed() -> f32 {
     35.0
-}
-
-impl Spawnable for Consumable {
-    fn init(&mut self) {}
 }
 
 impl Component for Consumable {
