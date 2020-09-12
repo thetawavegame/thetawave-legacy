@@ -64,10 +64,10 @@ pub fn spawn_blast_explosion(
     let duration: f32 = frame_time * (frame_count - 1) as f32;
 
     let starting_frame: usize = match blast_type {
-        BlastType::Player => 0,
+        BlastType::Ally => 0,
         BlastType::Enemy => 7,
-        BlastType::Critical => 14,
-        BlastType::Poison => 21,
+        BlastType::AllyCritical => 14,
+        BlastType::AllyPoison => 21,
     };
 
     let sprite = SpriteRender {

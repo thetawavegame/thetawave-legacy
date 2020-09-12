@@ -1,15 +1,21 @@
 use crate::{
-    components::{AutoBlasterComponent, Blast, BlastType, Hitbox2DComponent, Motion2DComponent},
+    components::{
+        AutoBlasterComponent, BlastComponent, BlastType, Hitbox2DComponent, Motion2DComponent,
+    },
     constants::{
         BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
-        PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX, VELOCITY_FACTOR,
+        PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
     entities::spawn_blasts,
     resources::SpriteResource,
 };
 
 use amethyst::{
-    core::{math::Vector3, timing::Time, transform::Transform},
+    core::{
+        math::{Vector2, Vector3},
+        timing::Time,
+        transform::Transform,
+    },
     ecs::prelude::{
         Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
     },
@@ -73,19 +79,19 @@ fn fire_when_ready(
         let mut blast_type = if !autoblaster.allied {
             BlastType::Enemy // TODO: remove BlastType or "allied" bool. They store redundant info.
         } else {
-            BlastType::Player
+            BlastType::Ally
         };
 
         let blast_damage = autoblaster.damage
             * if thread_rng().gen::<f32>() < autoblaster.crit_chance {
-                blast_type = BlastType::Critical;
+                blast_type = BlastType::AllyCritical;
                 2.0
             } else {
                 1.0
             };
 
         let blast_poison_damage = if thread_rng().gen::<f32>() < autoblaster.poison_chance {
-            blast_type = BlastType::Poison;
+            blast_type = BlastType::AllyPoison;
             autoblaster.poison_damage
         } else {
             0.0
@@ -94,10 +100,10 @@ fn fire_when_ready(
         let blast_sprite_render = SpriteRender {
             sprite_sheet: sprite_resource.blasts_sprite_sheet.clone(),
             sprite_number: match blast_type {
-                BlastType::Player => PLAYER_BLAST_SPRITE_INDEX,
+                BlastType::Ally => PLAYER_BLAST_SPRITE_INDEX,
                 BlastType::Enemy => ENEMY_BLAST_SPRITE_INDEX,
-                BlastType::Critical => CRIT_BLAST_SPRITE_INDEX,
-                BlastType::Poison => POISON_BLAST_SPRITE_INDEX,
+                BlastType::AllyCritical => CRIT_BLAST_SPRITE_INDEX,
+                BlastType::AllyPoison => POISON_BLAST_SPRITE_INDEX,
             },
         };
 
@@ -109,14 +115,25 @@ fn fire_when_ready(
             offset_rotation: 0.0,
         };
 
-        let blast_component = Blast {
-            speed: autoblaster.shot_velocity.y,
+        let blast_motion2d = Motion2DComponent {
+            velocity: Vector2::new(
+                (source_motion2d.velocity.x * autoblaster.velocity_multiplier)
+                    + autoblaster.shot_velocity.x,
+                (source_motion2d.velocity.y * autoblaster.velocity_multiplier)
+                    + autoblaster.shot_velocity.y,
+            ),
+            acceleration: Vector2::new(0.0, 0.0),
+            deceleration: Vector2::new(0.0, 0.0),
+            max_speed: Vector2::new(1000.0, 1000.0),
+            knockback_max_speed: Vector2::new(1000.0, 1000.0),
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        };
+
+        let blast_component = BlastComponent {
             damage: blast_damage,
             poison_damage: blast_poison_damage,
-            x_velocity: source_motion2d.velocity.x, // TODO: remove speed and only use velocity
-            y_velocity: source_motion2d.velocity.y,
-            velocity_factor: VELOCITY_FACTOR,
-            allied: autoblaster.allied,
             blast_type,
         };
 
@@ -145,6 +162,7 @@ fn fire_when_ready(
             blast_sprite_render,
             blast_component,
             blast_hitbox,
+            blast_motion2d,
             blast_transform,
             entities,
             lazy_update,
