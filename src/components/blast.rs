@@ -1,6 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-// used for setting sprite, status rolls, and which entities it can hit
+// used for setting sprite, status rolls, and the entity type spawning the blast
 #[derive(Clone, Debug)]
 pub enum BlastType {
     Ally,
@@ -10,12 +10,12 @@ pub enum BlastType {
 }
 
 #[derive(Clone)]
-pub struct Blast {
+pub struct BlastComponent {
     pub damage: f32,
     pub poison_damage: f32,
     pub blast_type: BlastType,
 }
 
-impl Component for Blast {
+impl Component for BlastComponent {
     type Storage = DenseVecStorage<Self>;
 }

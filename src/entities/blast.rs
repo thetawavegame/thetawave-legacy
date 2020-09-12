@@ -9,10 +9,10 @@ use amethyst::{
 use rand::{thread_rng, Rng};
 
 use crate::{
-    components::{Blast, BlastType, Fires, Hitbox2DComponent, Motion2DComponent},
+    components::{BlastComponent, BlastType, Fires, Hitbox2DComponent, Motion2DComponent},
     constants::{
-        BLAST_HITBOX_DIAMETER, BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y, BLAST_OFFSET,
-        CRIT_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
+        BLAST_HITBOX_DIAMETER, BLAST_OFFSET, CRIT_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX,
+        POISON_BLAST_SPRITE_INDEX,
     },
     resources::SpriteResource,
 };
@@ -22,7 +22,7 @@ pub fn spawn_blasts(
     blast_count: usize,
     blast_spacing: f32,
     blast_sprite_render: SpriteRender,
-    blast_component: Blast,
+    blast_component: BlastComponent,
     blast_hitbox: Hitbox2DComponent,
     blast_motion2d: Motion2DComponent,
     mut blast_transform: Transform,
@@ -99,7 +99,7 @@ pub fn fire_blast(
 
         blast_spawn_pos += BLAST_OFFSET;
 
-        let blast_component = Blast {
+        let blast_component = BlastComponent {
             damage,
             poison_damage,
             blast_type: blast_type.clone(),
@@ -112,8 +112,8 @@ pub fn fire_blast(
             ),
             acceleration: Vector2::new(0.0, 0.0),
             deceleration: Vector2::new(0.0, 0.0),
-            max_speed: Vector2::new(BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y),
-            knockback_max_speed: Vector2::new(BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y),
+            max_speed: Vector2::new(1000.0, 1000.0),
+            knockback_max_speed: Vector2::new(1000.0, 1000.0),
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,

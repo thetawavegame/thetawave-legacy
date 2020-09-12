@@ -1,5 +1,5 @@
 use crate::{
-    components::{Blast, Hitbox2DComponent, Motion2DComponent},
+    components::{BlastComponent, Hitbox2DComponent, Motion2DComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
@@ -12,7 +12,7 @@ pub struct BlastSystem;
 impl<'s> System<'s> for BlastSystem {
     type SystemData = (
         Entities<'s>,
-        ReadStorage<'s, Blast>,
+        ReadStorage<'s, BlastComponent>,
         ReadStorage<'s, Hitbox2DComponent>,
         ReadStorage<'s, Motion2DComponent>,
         WriteStorage<'s, Transform>,
@@ -23,7 +23,7 @@ impl<'s> System<'s> for BlastSystem {
         &mut self,
         (entities, blasts, hitboxes, motion2ds, mut transforms, time): Self::SystemData,
     ) {
-        for (blast_entity, blast_component, blast_transform, blast_hitbox, blast_motion2d) in
+        for (blast_entity, _blast_component, blast_transform, blast_hitbox, blast_motion2d) in
             (&*entities, &blasts, &mut transforms, &hitboxes, &motion2ds).join()
         {
             // delete blast if outside of the arena

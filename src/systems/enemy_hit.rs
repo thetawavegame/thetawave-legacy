@@ -1,5 +1,5 @@
 use crate::{
-    components::{Blast, BlastType, Spaceship},
+    components::{BlastComponent, BlastType, Spaceship},
     constants::EXPLOSION_Z,
     entities::spawn_blast_explosion,
     resources::SpriteResource,
@@ -23,7 +23,7 @@ impl<'s> System<'s> for EnemyHitSystem {
         Read<'s, EventChannel<HitboxCollisionEvent>>,
         Entities<'s>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, Blast>,
+        WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,

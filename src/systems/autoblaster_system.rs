@@ -1,9 +1,10 @@
 use crate::{
-    components::{AutoBlasterComponent, Blast, BlastType, Hitbox2DComponent, Motion2DComponent},
+    components::{
+        AutoBlasterComponent, BlastComponent, BlastType, Hitbox2DComponent, Motion2DComponent,
+    },
     constants::{
-        BLAST_HITBOX_DIAMETER, BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y, BLAST_Z,
-        CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX,
-        POISON_BLAST_SPRITE_INDEX,
+        BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
+        PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
     entities::spawn_blasts,
     resources::SpriteResource,
@@ -123,14 +124,14 @@ fn fire_when_ready(
             ),
             acceleration: Vector2::new(0.0, 0.0),
             deceleration: Vector2::new(0.0, 0.0),
-            max_speed: Vector2::new(BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y),
-            knockback_max_speed: Vector2::new(BLAST_MAX_SPEED_X, BLAST_MAX_SPEED_Y),
+            max_speed: Vector2::new(1000.0, 1000.0),
+            knockback_max_speed: Vector2::new(1000.0, 1000.0),
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         };
 
-        let blast_component = Blast {
+        let blast_component = BlastComponent {
             damage: blast_damage,
             poison_damage: blast_poison_damage,
             blast_type,

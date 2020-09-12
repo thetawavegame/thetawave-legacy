@@ -23,7 +23,7 @@ mod timelimit;
 pub use self::{
     animation::{Animation, AnimationType},
     autoblaster::AutoBlasterComponent,
-    blast::{Blast, BlastType},
+    blast::{BlastComponent, BlastType},
     boss::Repeater,
     consumable::Consumable,
     defense::Defense,
