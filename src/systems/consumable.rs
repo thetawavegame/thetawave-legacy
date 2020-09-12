@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Consumable, Defense, Spaceship},
+    components::{Consumable, Defense, Hitbox2DComponent, Spaceship},
     constants::ARENA_MIN_Y,
     space_shooter::HitboxCollisionEvent,
 };
@@ -8,7 +8,7 @@ use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
     core::{timing::Time, transform::Transform},
-    ecs::prelude::{Entities, Join, Read, ReadExpect, System, WriteStorage},
+    ecs::prelude::{Entities, Join, Read, ReadExpect, ReadStorage, System, WriteStorage},
     ecs::*,
     shrev::{EventChannel, ReaderId},
 };
@@ -26,6 +26,7 @@ impl<'s> System<'s> for ConsumableSystem {
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Defense>,
         WriteStorage<'s, Transform>,
+        ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, Time>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -50,19 +51,20 @@ impl<'s> System<'s> for ConsumableSystem {
             mut spaceships,
             mut defenses,
             mut transforms,
+            hitboxes,
             time,
             storage,
             sounds,
             audio_output,
         ): Self::SystemData,
     ) {
-        for (consumable, consumable_entity, consumable_transform) in
-            (&mut consumables, &entities, &mut transforms).join()
+        for (consumable, consumable_entity, consumable_transform, consumable_hitbox) in
+            (&mut consumables, &entities, &mut transforms, &hitboxes).join()
         {
             consumable_transform
                 .prepend_translation_y(-1.0 * consumable.speed * time.delta_seconds());
 
-            if consumable_transform.translation().y < ARENA_MIN_Y {
+            if consumable_transform.translation().y + consumable_hitbox.height / 2.0 < ARENA_MIN_Y {
                 entities
                     .delete(consumable_entity)
                     .expect("unable to delete entity");

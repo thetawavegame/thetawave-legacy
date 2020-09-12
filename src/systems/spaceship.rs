@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Fires, Living, Motion2DComponent, Spaceship},
+    components::{Fires, Hitbox2DComponent, Living, Motion2DComponent, Spaceship},
     entities::fire_blast,
     resources::SpriteResource,
 };
@@ -8,7 +8,7 @@ use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
     core::{timing::Time, Transform},
-    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, WriteStorage},
+    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
 
@@ -20,6 +20,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
@@ -36,6 +37,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             mut transforms,
             mut spaceships,
             mut motion_2d_components,
+            hitboxes,
             input,
             time,
             sprite_resource,
@@ -50,8 +52,13 @@ impl<'s> System<'s> for SpaceshipSystem {
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right = input.action_is_down("barrel_right").unwrap();
 
-        for (spaceship, transform, motion_2d) in
-            (&mut spaceships, &mut transforms, &mut motion_2d_components).join()
+        for (spaceship, transform, motion_2d, hitbox) in (
+            &mut spaceships,
+            &mut transforms,
+            &mut motion_2d_components,
+            &hitboxes,
+        )
+            .join()
         {
             // update pos_x and pos_y variables of spaceship
             spaceship.update_location(transform.translation().x, transform.translation().y);
@@ -73,7 +80,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             // fires blast and plays effect if able
             if let Some(fire_position) = spaceship.fire_cooldown(
                 transform,
-                spaceship.height / 2.0,
+                hitbox.height / 2.0,
                 !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action,
                 time.delta_seconds(),
             ) {
