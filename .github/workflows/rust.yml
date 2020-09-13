@@ -1,18 +1,26 @@
-name: Rust
+name: CI
 
 on:
   push:
-    branches: [ cdsupina-dev ]
+    branches: 
+      - master
+      - cdsupina-dev
   pull_request:
-    branches: [ cdsupina-dev ]
+    branches: 
+      - master
+      - cdsupina-dev
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build_on_linux:
+  build:
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v2
@@ -21,6 +29,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install gcc pkg-config openssl libasound2-dev cmake build-essential python3 libfreetype6-dev libexpat1-dev libxcb-composite0-dev libssl-dev libx11-dev pulseaudio
+      if: contains(matrix.os, 'ubuntu')
         
     - name: Build
       run: cargo build --verbose
