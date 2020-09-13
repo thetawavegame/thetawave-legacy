@@ -65,16 +65,16 @@ Leave everything as is if running on Windows or Linux and enter `cargo run` in t
 
 |Name|Image|Description|
 |:---:|:---:|:---:|
-|Drone|![drone_enemy](assets/texture/portraits/drone_portrait.png)|Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.|
-|Pawn|![pawn_enemy](assets/texture/portraits/pawn_portrait.png)|Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
-|Strafer|![strafer_enemy](assets/texture/portraits/strafer_portrait.png)|Strafes left and right towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
+|Drone|![drone_enemy](assets/gifs/drone.gif)|Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.|
+|Pawn|![pawn_enemy](assets/gifs/pawn.gif)|Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
+|Strafer|![strafer_enemy](assets/gifs/strafer.gif)|Strafes left and right towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
 |Flying Polyp|![flying_polyp_enemy](assets/texture/portraits/polyp_portrait.png)|Coming soon.|
 
 # Allies
 
 |Name|Image|Description|
 |:---:|:---:|:---:|
-|Hauler|![hauler_ally](assets/texture/portraits/hauler_portrait.png)|Moves towards the bottom of the arena at a very reduced speed and grants defense on arrival.|
+|Hauler|![hauler_ally](assets/gifs/hauler.gif)|Moves towards the bottom of the arena at a very reduced speed and grants defense on arrival.|
 
 # Bosses
 

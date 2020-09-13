@@ -1,16 +1,13 @@
+use crate::{components::Defense, constants::DEFENSE};
 use amethyst::{
-    prelude::Builder,
     ecs::{World, WorldExt},
-};
-use crate::{
-    components::Defense,
-    constants::DEFENSE,
+    prelude::Builder,
 };
 
-pub fn initialise_defense(world: &mut World) {
+pub fn initialize_defense(world: &mut World) {
     world
         .create_entity()
-        .with(Defense{
+        .with(Defense {
             defense: DEFENSE,
             max_defense: DEFENSE,
         })
