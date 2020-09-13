@@ -12,3 +12,6 @@ features = ["vulkan", "audio", "gltf"]
 [dependencies]
 rand = "0.6.5"
 serde = "1"
+
+[features]
+fail-on-warnings = []
