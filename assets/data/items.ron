@@ -1,91 +1,190 @@
 {
     "plasma_blasts": (
-        stat_effects: {
+        item_component: (
+            stat_effects: {
             "fire_speed": -0.05,
             "damage": 5,
-        },
-        price: 15,
-        sprite_index: 1,
-        name: "plasma_blasts",
+            },
+            price: 15,
+            sprite_index: 1,
+            name: "plasma_blasts",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "warp_thruster": (
-        stat_effects: {
+        item_component: (
+            stat_effects: {
             "deceleration": 1,
             "acceleration": 1,
-        },
-        sprite_index: 3,
-        name: "warp_thruster",
+            },
+            sprite_index: 3,
+            name: "warp_thruster",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "hazardous_reactor": (
-        stat_effects: {
-            "max_speed": 20,
-        },
-        price: 7,
-        sprite_index: 2,
-        name: "hazardous_reactor",
+        item_component: (
+            stat_effects: {
+                "max_speed": 20,
+            },
+            price: 7,
+            sprite_index: 2,
+            name: "hazardous_reactor",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "steel_barrel": (
-        bool_effects: {
-            "barrel_immunity": true,
-        },
-        price: 9,
-        sprite_index: 0,
-        name: "steel_barrel",
+        item_component: (
+            bool_effects: {
+                "barrel_immunity": true,
+            },
+            price: 9,
+            sprite_index: 0,
+            name: "steel_barrel",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "quadrupedal_tentaclover": (
-        stat_effects: {
-            "crit_chance": 0.05,
-        },
-        price: 12,
-        sprite_index: 4,
-        name: "quadrupedal_tentaclover",
+        item_component: (
+            stat_effects: {
+                "crit_chance": 0.05,
+            },
+            price: 12,
+            sprite_index: 4,
+            name: "quadrupedal_tentaclover",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "defense_satellite": (
-        stat_effects: {
-            "max_defense": 100,
-        },
-        price: 11,
-        sprite_index: 5,
-        name: "defense_satellite",
+        item_component: (
+            stat_effects: {
+                "max_defense": 100,
+            },
+            price: 11,
+            sprite_index: 5,
+            name: "defense_satellite",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "double_barrel": (
-        stat_effects: {
-            "blast_count": 1,
-        },
-        price: 18,
-        sprite_index: 6,
-        name: "double_barrel",
+        item_component: (
+            stat_effects: {
+                "blast_count": 1,
+            },
+            price: 18,
+            sprite_index: 6,
+            name: "double_barrel",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "yithian_plague": (
-        stat_effects: {
-            "poison_chance": 0.10,
-        },
-        price: 14,
-        sprite_index: 7,
-        name: "yithian_plague",
+        item_component: (
+            stat_effects: {
+                "poison_chance": 0.10,
+            },
+            price: 14,
+            sprite_index: 7,
+            name: "yithian_plague",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "spice": (
-        stat_effects: {
-            "barrel_cooldown": -0.5,
-        },
-        price: 8,
-        sprite_index: 8,
-        name: "spice",
+        item_component: (
+            stat_effects: {
+                "barrel_cooldown": -0.5,
+            },
+            price: 8,
+            sprite_index: 8,
+            name: "spice",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "enhanced_plating": (
-        stat_effects: {
-            "health_multiply": .2,
-        },
-        price: 11,
-        sprite_index: 9,
-        name: "enhanced_plating"
+        item_component: (
+            stat_effects: {
+                "health_multiply": .2,
+            },
+            price: 11,
+            sprite_index: 9,
+            name: "enhanced_plating",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
     "structure_reinforcement": (
-        stat_effects: {
-            "health_add": 100.0,
-        },
-        price: 3,
-        sprite_index: 10,
-        name: "structure_reinforcement",
+        item_component: (
+            stat_effects: {
+                "health_add": 100.0,
+            },
+            price: 3,
+            sprite_index: 10,
+            name: "structure_reinforcement",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
     ),
 }

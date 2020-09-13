@@ -1,6 +1,6 @@
+use crate::constants::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET};
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use rand::{thread_rng, Rng};
-use crate::constants::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET};
 
 pub type SpawnProbabilities = Vec<(String, f32)>;
 
