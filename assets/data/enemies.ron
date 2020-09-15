@@ -52,7 +52,7 @@
         ),
         blaster_component: Some((
             count: 1,
-            allied: false,
+            blast_type: Enemy,
             shot_velocity: [0.0, -80.0],
             velocity_multiplier: 0.5,
             offset: [0.0, -9.0],
@@ -147,7 +147,7 @@
         ),
         blaster_component: Some((
             count: 1,
-            allied: false,
+            blast_type: Enemy,
             shot_velocity: [0.0, -70.0],
             velocity_multiplier: 0.5,
             offset: [0.0, -6.0],

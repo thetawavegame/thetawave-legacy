@@ -23,7 +23,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BlasterComponent {
     pub count: usize,
-    pub allied: bool,
+    //pub allied: bool,
+    pub blast_type: BlastType,
     pub shot_velocity: Vector2<f32>,
     pub velocity_multiplier: f32, // what percentage of the velocity from the source motion2d component will be added to the spawned blasts
     pub offset: Vector2<f32>,     // spawn position of blasts offset from center of entity
@@ -54,35 +55,37 @@ impl BlasterComponent {
             BLAST_Z,
         );
 
-        let mut blast_type = if !self.allied {
-            BlastType::Enemy // TODO: remove BlastType or "allied" bool. They store redundant info.
-        } else {
-            BlastType::Ally
-        };
-
-        let blast_damage = self.damage
-            * if thread_rng().gen::<f32>() < self.crit_chance {
-                blast_type = BlastType::AllyCritical;
-                2.0
-            } else {
-                1.0
-            };
-
-        let blast_poison_damage = if thread_rng().gen::<f32>() < self.poison_chance {
-            blast_type = BlastType::AllyPoison;
-            self.poison_damage
-        } else {
-            0.0
+        let mut blast_damage = self.damage;
+        let mut blast_poison_damage = 0.0;
+        let (blast_type, blast_sprite_number) = match self.blast_type {
+            // status rolls for ally
+            BlastType::Ally => {
+                if thread_rng().gen::<f32>() < self.crit_chance {
+                    blast_damage *= 2.0;
+                    (BlastType::AllyCritical, CRIT_BLAST_SPRITE_INDEX)
+                } else if thread_rng().gen::<f32>() < self.poison_chance {
+                    blast_poison_damage = self.poison_damage;
+                    (BlastType::AllyPoison, POISON_BLAST_SPRITE_INDEX)
+                } else {
+                    (BlastType::Ally, PLAYER_BLAST_SPRITE_INDEX)
+                }
+            }
+            // status rolls for enemy
+            BlastType::Enemy => (BlastType::Enemy, ENEMY_BLAST_SPRITE_INDEX),
+            // blasters with set status rolls will always spawn blasts with that status
+            BlastType::AllyCritical => {
+                blast_damage *= 2.0;
+                (BlastType::AllyCritical, CRIT_BLAST_SPRITE_INDEX)
+            }
+            BlastType::AllyPoison => {
+                blast_poison_damage = self.poison_damage;
+                (BlastType::AllyPoison, POISON_BLAST_SPRITE_INDEX)
+            }
         };
 
         let blast_sprite_render = SpriteRender {
             sprite_sheet: sprite_resource.blasts_sprite_sheet.clone(),
-            sprite_number: match blast_type {
-                BlastType::Ally => PLAYER_BLAST_SPRITE_INDEX,
-                BlastType::Enemy => ENEMY_BLAST_SPRITE_INDEX,
-                BlastType::AllyCritical => CRIT_BLAST_SPRITE_INDEX,
-                BlastType::AllyPoison => POISON_BLAST_SPRITE_INDEX,
-            },
+            sprite_number: blast_sprite_number,
         };
 
         let blast_hitbox = Hitbox2DComponent {

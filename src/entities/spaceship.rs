@@ -1,6 +1,7 @@
 use crate::{
     components::{
-        BlasterComponent, Hitbox2DComponent, ManualFireComponent, Motion2DComponent, Spaceship,
+        BlastType, BlasterComponent, Hitbox2DComponent, ManualFireComponent, Motion2DComponent,
+        Spaceship,
     },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
@@ -63,7 +64,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
 
     let blaster = BlasterComponent {
         count: 1,
-        allied: true,
+        blast_type: BlastType::Ally,
         shot_velocity: Vector2::new(0.0, 100.0),
         velocity_multiplier: 0.5,
         offset: Vector2::new(0.0, 9.0),
