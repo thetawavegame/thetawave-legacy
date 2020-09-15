@@ -64,8 +64,8 @@
             spacing: 7.0,
         )),
         autofire_component: Some((
-            fire_period: 3.0,
-            fire_timer: 1.0,
+            period: 3.0,
+            timer: 1.0,
         )),
         enemy_component: (
             name: "pawn",
@@ -159,8 +159,8 @@
             spacing: 7.0,
         )),
         autofire_component: Some((
-            fire_period: 3.0,
-            fire_timer: 1.0,
+            period: 3.0,
+            timer: 1.0,
         )),
         enemy_component: (
             name: "strafer",

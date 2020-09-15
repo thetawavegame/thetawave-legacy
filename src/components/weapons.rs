@@ -148,10 +148,21 @@ impl BlasterComponent {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoFireComponent {
-    pub fire_period: f32, // time between firing blasts
-    pub fire_timer: f32,  // tracks time between firing blasts
+    pub period: f32, // time between firing blasts
+    pub timer: f32,  // tracks time between firing blasts
 }
 
 impl Component for AutoFireComponent {
+    type Storage = DenseVecStorage<Self>;
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ManualFireComponent {
+    pub period: f32, // time between firing blasts
+    pub timer: f32,  // tracks time between firing blasts
+    pub ready: bool,
+}
+
+impl Component for ManualFireComponent {
     type Storage = DenseVecStorage<Self>;
 }
