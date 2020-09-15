@@ -1,6 +1,4 @@
-use amethyst::core::{math::Vector3, transform::Transform};
-
-use crate::constants::BLAST_Z;
+use amethyst::core::transform::Transform;
 
 mod animation;
 mod blast;
