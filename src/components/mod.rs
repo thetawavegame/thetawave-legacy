@@ -3,7 +3,6 @@ use amethyst::core::{math::Vector3, transform::Transform};
 use crate::constants::BLAST_Z;
 
 mod animation;
-mod autoblaster;
 mod blast;
 mod boss;
 mod consumable;
@@ -19,10 +18,10 @@ mod spawner;
 mod status_bar;
 mod store;
 mod timelimit;
+mod weapons;
 
 pub use self::{
     animation::{Animation, AnimationType},
-    autoblaster::AutoBlasterComponent,
     blast::{BlastComponent, BlastType},
     boss::Repeater,
     consumable::Consumable,
@@ -38,6 +37,7 @@ pub use self::{
     status_bar::{StatusBar, StatusType},
     store::Store,
     timelimit::TimeLimitComponent,
+    weapons::{AutoFireComponent, BlasterComponent},
 };
 
 // rigidbodies are have physics and can collide
