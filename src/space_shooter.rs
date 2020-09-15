@@ -141,6 +141,7 @@ impl Default for SpaceShooter {
                     &["store_system", "spaceship_system", "consumable_system"],
                 )
                 .with(systems::AutoBlasterSystem, "autoblaster_system", &[])
+                .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
                 .build(),
         }
     }

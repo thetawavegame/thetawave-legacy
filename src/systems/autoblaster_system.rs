@@ -1,29 +1,14 @@
 use crate::{
-    components::{
-        AutoFireComponent, BlastComponent, BlastType, BlasterComponent, Hitbox2DComponent,
-        Motion2DComponent,
-    },
-    constants::{
-        BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
-        PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
-    },
-    entities::spawn_blasts,
+    components::{AutoFireComponent, BlasterComponent, Motion2DComponent},
     resources::SpriteResource,
 };
 
 use amethyst::{
-    core::{
-        math::{Vector2, Vector3},
-        timing::Time,
-        transform::Transform,
-    },
+    core::{timing::Time, transform::Transform},
     ecs::prelude::{
         Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
     },
-    renderer::SpriteRender,
 };
-
-use rand::{thread_rng, Rng};
 
 pub struct AutoBlasterSystem;
 
@@ -47,18 +32,18 @@ impl<'s> System<'s> for AutoBlasterSystem {
             lazy_update,
             transforms,
             blasters,
-            mut autofires,
+            mut auto_fires,
             motion2ds,
             sprite_resource,
         ): Self::SystemData,
     ) {
-        for (transform, autofire, blaster, motion2d) in
-            (&transforms, &mut autofires, &blasters, &motion2ds).join()
+        for (transform, auto_fire, blaster, motion2d) in
+            (&transforms, &mut auto_fires, &blasters, &motion2ds).join()
         {
-            if autofire.fire_timer > 0.0 {
-                autofire.fire_timer -= time.delta_seconds();
+            if auto_fire.timer > 0.0 {
+                auto_fire.timer -= time.delta_seconds();
             } else {
-                autofire.fire_timer = autofire.fire_period;
+                auto_fire.timer = auto_fire.period;
                 blaster.fire(
                     motion2d,
                     transform,

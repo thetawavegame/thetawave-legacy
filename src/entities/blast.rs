@@ -1,21 +1,10 @@
 use amethyst::{
-    core::{
-        math::{Vector2, Vector3},
-        transform::Transform,
-    },
+    core::transform::Transform,
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
-use rand::{thread_rng, Rng};
 
-use crate::{
-    components::{BlastComponent, BlastType, Fires, Hitbox2DComponent, Motion2DComponent},
-    constants::{
-        BLAST_HITBOX_DIAMETER, BLAST_OFFSET, CRIT_BLAST_SPRITE_INDEX, PLAYER_BLAST_SPRITE_INDEX,
-        POISON_BLAST_SPRITE_INDEX,
-    },
-    resources::SpriteResource,
-};
+use crate::components::{BlastComponent, Hitbox2DComponent, Motion2DComponent};
 
 // spaces and creates blast entities
 pub fn spawn_blasts(
@@ -43,7 +32,7 @@ pub fn spawn_blasts(
         blast_transform.prepend_translation_x(blast_spacing);
     }
 }
-
+/*
 // TODO: phase out fire_blast (player/spaceship entity still uses)
 // spawns blast from source_component with source_component attributes
 pub fn fire_blast(
@@ -138,3 +127,4 @@ pub fn fire_blast(
             .build();
     }
 }
+*/
