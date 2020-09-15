@@ -1,8 +1,11 @@
 use crate::components::TimeLimitComponent;
 use amethyst::{
     core::timing::Time,
-    ecs::prelude::{Entities, Join, Read, System, WriteStorage},
+    ecs::prelude::{Builder, Entities, Entity, Join, Read, System, WorldExt, WriteStorage},
+    ecs::world::EntitiesRes,
+    Error,
 };
+use amethyst_test::prelude::*;
 
 pub struct TimeLimitSystem;
 
@@ -24,4 +27,15 @@ impl<'s> System<'s> for TimeLimitSystem {
             }
         }
     }
+}
+
+#[test]
+fn test_timelimit_system() -> Result<(), Error> {
+    AmethystApplication::blank()
+        .with_system(TimeLimitSystem, "timelimit_system", &[])
+        .with_effect(|world| {})
+        .with_assertion(|world| {
+            assert!(true);
+        })
+        .run()
 }
