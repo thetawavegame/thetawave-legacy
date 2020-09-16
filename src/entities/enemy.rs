@@ -35,8 +35,11 @@ pub fn spawn_enemy(
         .with(name)
         .build();
 
-    if let Some(autoblaster_component) = enemy.autoblaster_component {
-        lazy_update.insert(enemy_entity, autoblaster_component);
+    if let Some(blaster_component) = enemy.blaster_component {
+        lazy_update.insert(enemy_entity, blaster_component);
+    }
+    if let Some(autofire_component) = enemy.autofire_component {
+        lazy_update.insert(enemy_entity, autofire_component);
     }
 
     enemy_entity

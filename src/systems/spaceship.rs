@@ -1,7 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Fires, Hitbox2DComponent, Living, Motion2DComponent, Spaceship},
-    entities::fire_blast,
+    components::{BlasterComponent, Living, ManualFireComponent, Motion2DComponent, Spaceship},
     resources::SpriteResource,
 };
 use amethyst::{
@@ -20,7 +19,8 @@ impl<'s> System<'s> for SpaceshipSystem {
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Motion2DComponent>,
-        ReadStorage<'s, Hitbox2DComponent>,
+        ReadStorage<'s, BlasterComponent>,
+        WriteStorage<'s, ManualFireComponent>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
@@ -36,8 +36,9 @@ impl<'s> System<'s> for SpaceshipSystem {
             entities,
             mut transforms,
             mut spaceships,
-            mut motion_2d_components,
-            hitboxes,
+            mut motion2d_components,
+            blasters,
+            mut manualfire,
             input,
             time,
             sprite_resource,
@@ -52,11 +53,12 @@ impl<'s> System<'s> for SpaceshipSystem {
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right = input.action_is_down("barrel_right").unwrap();
 
-        for (spaceship, transform, motion_2d, hitbox) in (
+        for (spaceship, transform, motion2d, blaster, manualfire) in (
             &mut spaceships,
             &mut transforms,
-            &mut motion_2d_components,
-            &hitboxes,
+            &mut motion2d_components,
+            &blasters,
+            &mut manualfire,
         )
             .join()
         {
@@ -72,25 +74,24 @@ impl<'s> System<'s> for SpaceshipSystem {
 
             //barrel roll action cooldown
             //amount of time until barrel roll is complete
-            if spaceship.barrel_action_cooldown(time.delta_seconds(), motion_2d) {
+            if spaceship.barrel_action_cooldown(time.delta_seconds(), motion2d) {
                 barrel_left = false;
                 barrel_right = false;
             }
 
-            // fires blast and plays effect if able
-            if let Some(fire_position) = spaceship.fire_cooldown(
-                transform,
-                hitbox.height / 2.0,
-                !spaceship.barrel_action_left && !spaceship.barrel_action_right && shoot_action,
-                time.delta_seconds(),
-            ) {
-                fire_blast(
+            if !spaceship.barrel_action_left
+                && !spaceship.barrel_action_right
+                && shoot_action
+                && manualfire.ready
+            {
+                blaster.fire(
+                    motion2d,
+                    transform,
                     &entities,
                     &sprite_resource,
-                    spaceship,
-                    fire_position,
                     &lazy_update,
                 );
+                manualfire.ready = false;
                 play_sfx(
                     &sounds.spaceship_laser_sfx,
                     &storage,

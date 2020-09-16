@@ -15,7 +15,7 @@ pub mod status_unit;
 pub mod store;
 
 pub use self::{
-    blast::{fire_blast, spawn_blasts},
+    blast::spawn_blasts,
     boss::spawn_repeater,
     consumable::spawn_consumable,
     defense::initialize_defense,

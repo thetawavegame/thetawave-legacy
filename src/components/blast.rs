@@ -1,7 +1,9 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
+use serde::{Deserialize, Serialize};
+
 // used for setting sprite, status rolls, and the entity type spawning the blast
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum BlastType {
     Ally,
     Enemy,

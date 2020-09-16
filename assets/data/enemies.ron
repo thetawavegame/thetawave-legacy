@@ -50,9 +50,9 @@
             forward: true,
             animation_type: PingPong,
         ),
-        autoblaster_component: Some((
+        blaster_component: Some((
             count: 1,
-            allied: false,
+            blast_type: Enemy,
             shot_velocity: [0.0, -80.0],
             velocity_multiplier: 0.5,
             offset: [0.0, -9.0],
@@ -62,8 +62,10 @@
             crit_chance: 0.0,
             size_multiplier: 1.0,
             spacing: 7.0,
-            fire_period: 3.0,
-            fire_timer: 1.0,
+        )),
+        autofire_component: Some((
+            period: 3.0,
+            timer: 1.0,
         )),
         enemy_component: (
             name: "pawn",
@@ -143,9 +145,9 @@
             forward: true,
             animation_type: PingPong,
         ),
-        autoblaster_component: Some((
+        blaster_component: Some((
             count: 1,
-            allied: false,
+            blast_type: Enemy,
             shot_velocity: [0.0, -70.0],
             velocity_multiplier: 0.5,
             offset: [0.0, -6.0],
@@ -155,8 +157,10 @@
             crit_chance: 0.0,
             size_multiplier: 1.0,
             spacing: 7.0,
-            fire_period: 3.0,
-            fire_timer: 1.0,
+        )),
+        autofire_component: Some((
+            period: 3.0,
+            timer: 1.0,
         )),
         enemy_component: (
             name: "strafer",
