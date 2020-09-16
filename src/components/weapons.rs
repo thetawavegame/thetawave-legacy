@@ -23,7 +23,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BlasterComponent {
     pub count: usize,
-    //pub allied: bool,
     pub blast_type: BlastType,
     pub shot_velocity: Vector2<f32>,
     pub velocity_multiplier: f32, // what percentage of the velocity from the source motion2d component will be added to the spawned blasts
