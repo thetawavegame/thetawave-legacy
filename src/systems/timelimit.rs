@@ -1,11 +1,8 @@
 use crate::components::TimeLimitComponent;
 use amethyst::{
     core::timing::Time,
-    ecs::prelude::{Builder, Entities, Entity, Join, Read, System, WorldExt, WriteStorage},
-    ecs::world::EntitiesRes,
-    Error,
+    ecs::prelude::{Entities, Join, Read, System, WriteStorage},
 };
-use amethyst_test::prelude::*;
 
 pub struct TimeLimitSystem;
 
@@ -29,18 +26,34 @@ impl<'s> System<'s> for TimeLimitSystem {
     }
 }
 
-#[test]
-fn test_timelimit_system() -> Result<(), Error> {
-    AmethystApplication::blank()
-        .with_effect(|world| {
-            let entity = world.create_entity().with(TimeLimitComponent { duration: -1.0 }).build();
-            world.insert(EffectReturn(entity));
-        })
-        .with_system(TimeLimitSystem, "timelimit_system", &[])
-        .with_assertion(|world| {
-            let entity = world.read_resource::<EffectReturn<Entity>>().0.clone();
-            world.maintain();
-            assert!(!world.is_alive(entity));
-        })
-        .run()
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    use amethyst::{
+        ecs::prelude::{Builder, Entity, WorldExt},
+        Error,
+    };
+    use amethyst_test::prelude::*;
+
+    use crate::components::TimeLimitComponent;
+
+    #[test]
+    fn test_timelimit_system() -> Result<(), Error> {
+        AmethystApplication::blank()
+            .with_system(TimeLimitSystem, "timelimit_system", &[])
+            .with_effect(|world| {
+                let entity = world
+                    .create_entity()
+                    .with(TimeLimitComponent { duration: -1.0 })
+                    .build();
+                world.insert(EffectReturn(entity));
+            })
+            .with_assertion(|world| {
+                let entity = world.read_resource::<EffectReturn<Entity>>().0.clone();
+                world.maintain();
+                assert!(!world.is_alive(entity));
+            })
+            .run()
+    }
 }

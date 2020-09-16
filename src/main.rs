@@ -1,4 +1,4 @@
-#![cfg_attr(feature="fail-on-warnings", deny(warnings))]
+#![cfg_attr(feature = "fail-on-warnings", deny(warnings))]
 
 extern crate amethyst;
 extern crate serde;
