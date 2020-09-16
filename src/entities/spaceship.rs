@@ -1,13 +1,16 @@
 use crate::{
-    components::{Hitbox2DComponent, Motion2DComponent, Spaceship},
+    components::{
+        BlastType, BlasterComponent, Hitbox2DComponent, ManualFireComponent, Motion2DComponent,
+        Spaceship,
+    },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
         POISON_BLAST_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
         SPACESHIP_BARREL_COOLDOWN, SPACESHIP_BARREL_DURATION, SPACESHIP_BARREL_SPEED,
-        SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_CRIT_CHANCE,
-        SPACESHIP_DAMAGE, SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED,
-        SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH,
-        SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED, SPACESHIP_MONEY,
+        SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_DAMAGE,
+        SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH,
+        SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED,
+        SPACESHIP_MAX_SPEED, SPACESHIP_MONEY,
     },
 };
 use amethyst::{
@@ -59,13 +62,30 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         ),
     };
 
+    let blaster = BlasterComponent {
+        count: 1,
+        blast_type: BlastType::Ally,
+        shot_velocity: Vector2::new(0.0, 100.0),
+        velocity_multiplier: 0.5,
+        offset: Vector2::new(0.0, 9.0),
+        damage: SPACESHIP_DAMAGE,
+        poison_damage: 0.0,
+        poison_chance: 0.0,
+        crit_chance: 0.0,
+        size_multiplier: 1.0,
+        spacing: 7.0,
+    };
+
+    let manual_fire = ManualFireComponent {
+        period: SPACESHIP_FIRE_SPEED,
+        timer: 0.0,
+        ready: false,
+    };
+
     world
         .create_entity()
         .with(sprite_render)
         .with(Spaceship {
-            fire_speed: SPACESHIP_FIRE_SPEED,
-            fire_reset_timer: 0.0,
-            damage: SPACESHIP_DAMAGE,
             barrel_cooldown: SPACESHIP_BARREL_COOLDOWN,
             barrel_reset_timer: 0.0,
             barrel_speed: SPACESHIP_BARREL_SPEED,
@@ -75,18 +95,15 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             barrel_action_timer: SPACESHIP_BARREL_DURATION,
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
-            blast_speed: 100.0,
             max_health: SPACESHIP_HEALTH,
             health: SPACESHIP_HEALTH,
             money: SPACESHIP_MONEY,
             steel_barrel: false,
-            blast_count: 1,
             collision_damage: SPACESHIP_COLLISION_DAMAGE,
-            crit_chance: SPACESHIP_CRIT_CHANCE,
-            poison_chance: 0.0,
             blast_sprite_indicies,
-            allied: true,
         })
+        .with(blaster)
+        .with(manual_fire)
         .with(hitbox)
         .with(motion_2d)
         .with(local_transform)

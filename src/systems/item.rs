@@ -1,6 +1,9 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{Defense, Hitbox2DComponent, Item, Living, Motion2DComponent, Spaceship},
+    components::{
+        BlasterComponent, Defense, Hitbox2DComponent, Item, Living, ManualFireComponent,
+        Motion2DComponent, Spaceship,
+    },
     constants::ARENA_MIN_Y,
     space_shooter::HitboxCollisionEvent,
 };
@@ -29,6 +32,8 @@ impl<'s> System<'s> for ItemSystem {
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, Hitbox2DComponent>,
+        WriteStorage<'s, BlasterComponent>,
+        WriteStorage<'s, ManualFireComponent>,
         Read<'s, Time>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
@@ -55,6 +60,8 @@ impl<'s> System<'s> for ItemSystem {
             mut transforms,
             mut motions,
             hitboxes,
+            mut blasters,
+            mut manual_fires,
             time,
             storage,
             sounds,
@@ -77,8 +84,14 @@ impl<'s> System<'s> for ItemSystem {
         // event loop needs to be outer so that all events are always read
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
             for (item, item_entity) in (&mut items, &entities).join() {
-                for (spaceship, motion, spaceship_entity) in
-                    (&mut spaceships, &mut motions, &entities).join()
+                for (spaceship, motion, blaster, manual_fire, spaceship_entity) in (
+                    &mut spaceships,
+                    &mut motions,
+                    &mut blasters,
+                    &mut manual_fires,
+                    &entities,
+                )
+                    .join()
                 {
                     if (event.entity_a == item_entity && event.entity_b == spaceship_entity)
                         || (event.entity_a == spaceship_entity && event.entity_b == item_entity)
@@ -102,15 +115,15 @@ impl<'s> System<'s> for ItemSystem {
                         }
 
                         if item.stat_effects.contains_key("blast_count") {
-                            spaceship.blast_count += item.stat_effects["blast_count"] as usize;
+                            blaster.count += item.stat_effects["blast_count"] as usize;
                         }
 
                         if item.stat_effects.contains_key("fire_speed") {
-                            spaceship.fire_speed += item.stat_effects["fire_speed"];
+                            manual_fire.period += item.stat_effects["fire_speed"];
                         }
 
                         if item.stat_effects.contains_key("damage") {
-                            spaceship.damage += item.stat_effects["damage"];
+                            blaster.damage += item.stat_effects["damage"];
                         }
 
                         if item.stat_effects.contains_key("max_speed") {
@@ -118,11 +131,11 @@ impl<'s> System<'s> for ItemSystem {
                             motion.max_speed.y += item.stat_effects["max_speed"];
                         }
                         if item.stat_effects.contains_key("crit_chance") {
-                            spaceship.crit_chance += item.stat_effects["crit_chance"];
+                            blaster.crit_chance += item.stat_effects["crit_chance"];
                         }
 
                         if item.stat_effects.contains_key("poison_chance") {
-                            spaceship.poison_chance += item.stat_effects["poison_chance"];
+                            blaster.poison_chance += item.stat_effects["poison_chance"];
                         }
 
                         if item.stat_effects.contains_key("barrel_cooldown") {
