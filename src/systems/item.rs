@@ -167,6 +167,10 @@ impl<'s> System<'s> for ItemSystem {
                             spaceship.set_health(spaceship.max_health);
                         }
 
+                        if item.stat_effects.contains_key("blast_size_multiplier") {
+                            blaster.size_multiplier += item.stat_effects["blast_size_multiplier"];
+                        }
+
                         play_sfx(&sounds.item_sfx, &storage, audio_output.as_deref());
 
                         entities

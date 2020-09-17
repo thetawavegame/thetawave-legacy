@@ -22,6 +22,7 @@ pub struct EnemyEntityData {
 pub struct ItemEntityData {
     pub item_component: Item,
     pub hitbox_component: Hitbox2DComponent,
+    pub animation_component: Option<Animation>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

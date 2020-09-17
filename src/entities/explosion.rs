@@ -1,5 +1,6 @@
 use crate::{
     components::{Animation, AnimationType, BlastType, TimeLimitComponent},
+    constants::EXPLOSION_Z,
     resources::SpriteResource,
 };
 use amethyst::{
@@ -56,7 +57,7 @@ pub fn spawn_blast_explosion(
     entities: &Entities,
     sprite_sheet: Handle<SpriteSheet>,
     blast_type: BlastType,
-    spawn_position: Vector3<f32>,
+    blast_transform: Transform,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) -> Entity {
     let frame_time: f32 = 0.08;
@@ -90,7 +91,18 @@ pub fn spawn_blast_explosion(
     let timed = TimeLimitComponent { duration };
 
     let mut local_transform = Transform::default();
-    local_transform.set_translation(spawn_position);
+    let explosion_position = Vector3::new(
+        blast_transform.translation().x,
+        blast_transform.translation().y,
+        EXPLOSION_Z,
+    );
+    let explosion_size = Vector3::new(
+        blast_transform.scale().x,
+        blast_transform.scale().y,
+        EXPLOSION_Z,
+    );
+    local_transform.set_translation(explosion_position);
+    local_transform.set_scale(explosion_size);
 
     lazy_update
         .create_entity(entities)
