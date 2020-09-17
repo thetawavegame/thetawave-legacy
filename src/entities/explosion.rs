@@ -92,14 +92,14 @@ pub fn spawn_blast_explosion(
 
     let mut local_transform = Transform::default();
     let explosion_position = Vector3::new(
-      blast_transform.translation().x,
-      blast_transform.translation().y,
-      EXPLOSION_Z,
+        blast_transform.translation().x,
+        blast_transform.translation().y,
+        EXPLOSION_Z,
     );
     let explosion_size = Vector3::new(
-      blast_transform.scale().x,
-      blast_transform.scale().y,
-      EXPLOSION_Z,
+        blast_transform.scale().x,
+        blast_transform.scale().y,
+        EXPLOSION_Z,
     );
     local_transform.set_translation(explosion_position);
     local_transform.set_scale(explosion_size);

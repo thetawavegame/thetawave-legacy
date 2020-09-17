@@ -1,7 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{BlastComponent, BlastType, Enemy, Spaceship},
-    constants::EXPLOSION_Z,
+    components::{BlastComponent, BlastType, Enemy},
     entities::spawn_blast_explosion,
     resources::SpriteResource,
     space_shooter::HitboxCollisionEvent,
@@ -9,7 +8,7 @@ use crate::{
 use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
-    core::{math::Vector3, transform::Transform},
+    core::{transform::Transform},
     ecs::prelude::{
         Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
     },

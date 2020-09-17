@@ -1,12 +1,11 @@
 use crate::{
     components::{BlastComponent, BlastType, Spaceship},
-    constants::EXPLOSION_Z,
     entities::spawn_blast_explosion,
     resources::SpriteResource,
     space_shooter::HitboxCollisionEvent,
 };
 use amethyst::{
-    core::{math::Vector3, transform::Transform},
+    core::{transform::Transform},
     ecs::prelude::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage},
     ecs::*,
     ecs::{Read, World},
