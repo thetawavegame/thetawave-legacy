@@ -1,6 +1,6 @@
 use crate::{
     audio::{play_sfx, Sounds},
-    components::{BlastComponent, BlastType, Enemy},
+    components::{BlastComponent, BlastType, Enemy, Spaceship},
     constants::EXPLOSION_Z,
     entities::spawn_blast_explosion,
     resources::SpriteResource,
@@ -81,17 +81,11 @@ impl<'s> System<'s> for PlayerHitSystem {
                                     audio_output.as_deref(),
                                 );
 
-                                let explosion_position = Vector3::new(
-                                    blast_transform.translation().x,
-                                    blast_transform.translation().y,
-                                    EXPLOSION_Z,
-                                );
-
                                 spawn_blast_explosion(
                                     &entities,
                                     sprite_resource.blast_explosions_sprite_sheet.clone(),
                                     blast.blast_type.clone(),
-                                    explosion_position,
+                                    blast_transform.clone(),
                                     &lazy_update,
                                 );
 

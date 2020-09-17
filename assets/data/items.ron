@@ -187,4 +187,30 @@
             offset_rotation: 0.0,
         ),
     ),
+    "blaster_size_enhancer": (
+        item_component: (
+            stat_effects: {
+                "blast_size_multiplier": 5.0,
+            },
+            price: 12,
+            sprite_index: 11,
+            name: "blaster_size_enhancer",
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
+        animation_component: Some((
+            start_idx: 11,
+            frame_count: 5,
+            current_frame: 11,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        )),
+    )
 }
