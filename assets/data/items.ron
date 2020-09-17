@@ -190,7 +190,7 @@
     "blaster_size_enhancer": (
         item_component: (
             stat_effects: {
-                "blast_size_multiplier": 5.0,
+                "blast_size_multiplier": 4.0,
             },
             price: 12,
             sprite_index: 11,
