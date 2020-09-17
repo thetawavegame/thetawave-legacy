@@ -23,7 +23,7 @@ pub fn spawn_item(
 
     println!("{} spawned!", item.item_component.name);
 
-    lazy_update
+    let item_entity = lazy_update
         .create_entity(entities)
         .with(sprite_render)
         .with(item.item_component)
@@ -32,4 +32,8 @@ pub fn spawn_item(
         .with(Transparent)
         .with(name)
         .build();
+
+    if let Some(animation_component) = item.animation_component {
+        lazy_update.insert(item_entity, animation_component);
+    }
 }

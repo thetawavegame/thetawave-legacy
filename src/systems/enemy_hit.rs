@@ -71,17 +71,11 @@ impl<'s> System<'s> for EnemyHitSystem {
                                     .delete(blast_entity)
                                     .expect("unable to delete entity");
 
-                                let explosion_position = Vector3::new(
-                                    blast_transform.translation().x,
-                                    blast_transform.translation().y,
-                                    EXPLOSION_Z,
-                                );
-
                                 spawn_blast_explosion(
                                     &entities,
                                     sprite_resource.blast_explosions_sprite_sheet.clone(),
                                     blast.blast_type.clone(),
-                                    explosion_position,
+                                    blast_transform.clone(),
                                     &lazy_update,
                                 );
 
