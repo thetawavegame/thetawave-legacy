@@ -1,7 +1,7 @@
 # Getting started
 
 Hello, thanks for your interest in contributing to Space Shooter! If you haven't
-already please take some time read the community [Code of Conduct](CODE_OF_CONDUCT.md).
+already, please take some time to read the community [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## The Basics
 
@@ -22,7 +22,7 @@ If you're familiar with the basics of the [Amethyst](https://amethyst.rs/) engin
 This isn't an exhaustive list of everything there is to know. But it should be
 enough to start contributing.
 
-## Contributing
+## Contributing code
 
 In general, the process for contributing goes like
 this:
