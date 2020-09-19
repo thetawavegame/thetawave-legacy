@@ -1,7 +1,6 @@
 use crate::{
     components::{Enemy, Hitbox2DComponent, Motion2DComponent, Spaceship},
     space_shooter::CollisionEvent,
-    systems::hitbox_collide,
 };
 use amethyst::{
     core::transform::Transform,
@@ -32,74 +31,54 @@ impl<'s> System<'s> for CollisionDetectionSystem {
             motions,
             transforms,
             entities,
-            mut enemy_collision_event_channel,
+            mut collision_event_channel,
         ): Self::SystemData,
     ) {
-        for (entity_a, transform_a, _enemy_a, hitbox_a, motion_a) in
+        for (enemy, enemy_transform, _enemy, enemy_hitbox, enemy_motion) in
             (&entities, &transforms, &enemies, &hitboxes, &motions).join()
         {
             //check for enemy collisions
-            for (entity_b, transform_b, _enemy_b, hitbox_b, motion_b) in
+            for (enemy_b, enemy_b_transform, _enemy_b, enemy_b_hitbox, enemy_b_motion) in
                 (&entities, &transforms, &enemies, &hitboxes, &motions).join()
             {
-                if entity_a == entity_b {
+                if enemy == enemy_b {
                     continue;
                 }
 
-                if hitbox_collide(
-                    transform_a.translation().x,
-                    transform_a.translation().y,
-                    transform_b.translation().x,
-                    transform_b.translation().y,
-                    hitbox_a.width,
-                    hitbox_a.height,
-                    hitbox_b.width,
-                    hitbox_b.height,
-                    hitbox_a.offset_x,
-                    hitbox_a.offset_y,
-                    hitbox_b.offset_x,
-                    hitbox_b.offset_y,
-                ) {
-                    enemy_collision_event_channel.single_write(CollisionEvent::new(
-                        entity_a,
+                if enemy_hitbox.is_colliding(enemy_b_hitbox, enemy_transform, enemy_b_transform) {
+                    collision_event_channel.single_write(CollisionEvent::new(
+                        enemy,
                         String::from("enemy"),
-                        motion_b.velocity.x,
-                        motion_b.velocity.y,
-                        entity_b,
+                        enemy_motion.velocity.x,
+                        enemy_motion.velocity.y,
+                        enemy_b,
                         String::from("enemy"),
-                        motion_a.velocity.x,
-                        motion_a.velocity.y,
+                        enemy_b_motion.velocity.x,
+                        enemy_b_motion.velocity.y,
                     ));
                 }
             }
 
             //check for spaceship collisions
-            for (entity_b, transform_b, _spaceship_b, hitbox_b, motion_b) in
-                (&entities, &transforms, &spaceships, &hitboxes, &motions).join()
+            for (
+                spaceship_entity,
+                spaceship_transform,
+                _spaceship,
+                spaceship_hitbox,
+                spaceship_motion,
+            ) in (&entities, &transforms, &spaceships, &hitboxes, &motions).join()
             {
-                if hitbox_collide(
-                    transform_a.translation().x,
-                    transform_a.translation().y,
-                    transform_b.translation().x,
-                    transform_b.translation().y,
-                    hitbox_a.width,
-                    hitbox_a.height,
-                    hitbox_b.width,
-                    hitbox_b.height,
-                    hitbox_a.offset_x,
-                    hitbox_a.offset_y,
-                    hitbox_b.offset_x,
-                    hitbox_b.offset_y,
-                ) {
-                    enemy_collision_event_channel.single_write(CollisionEvent::new(
-                        entity_a,
+                if spaceship_hitbox.is_colliding(enemy_hitbox, spaceship_transform, enemy_transform)
+                {
+                    collision_event_channel.single_write(CollisionEvent::new(
+                        enemy,
                         String::from("enemy"),
-                        motion_a.velocity.x,
-                        motion_a.velocity.y,
-                        entity_b,
+                        enemy_motion.velocity.x,
+                        enemy_motion.velocity.y,
+                        spaceship_entity,
                         String::from("spaceship"),
-                        motion_b.velocity.x,
-                        motion_b.velocity.y,
+                        spaceship_motion.velocity.x,
+                        spaceship_motion.velocity.y,
                     ));
                 }
             }

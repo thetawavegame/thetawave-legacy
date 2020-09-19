@@ -5,7 +5,7 @@ use crate::{
     space_shooter::HitboxCollisionEvent,
 };
 use amethyst::{
-    core::{transform::Transform},
+    core::transform::Transform,
     ecs::prelude::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage},
     ecs::*,
     ecs::{Read, World},

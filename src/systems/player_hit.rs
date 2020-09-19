@@ -8,7 +8,7 @@ use crate::{
 use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
-    core::{transform::Transform},
+    core::transform::Transform,
     ecs::prelude::{
         Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
     },
