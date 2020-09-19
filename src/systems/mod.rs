@@ -34,29 +34,3 @@ pub use self::{
     spaceship_movement::SpaceshipMovementSystem, stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem, store::StoreSystem, timelimit::TimeLimitSystem,
 };
-
-// TODO: phase this out and instead use hitbox component
-pub fn hitbox_collide(
-    mut x1: f32,
-    mut y1: f32,
-    mut x2: f32,
-    mut y2: f32,
-    hitbox_width_1: f32,
-    hitbox_height_1: f32,
-    hitbox_width_2: f32,
-    hitbox_height_2: f32,
-    hitbox_x_offset_1: f32,
-    hitbox_y_offset_1: f32,
-    hitbox_x_offset_2: f32,
-    hitbox_y_offset_2: f32,
-) -> bool {
-    x1 -= (hitbox_width_1 / 2.0) - hitbox_x_offset_1;
-    y1 -= (hitbox_height_1 / 2.0) - hitbox_y_offset_1;
-    x2 -= (hitbox_width_2 / 2.0) - hitbox_x_offset_2;
-    y2 -= (hitbox_height_2 / 2.0) - hitbox_y_offset_2;
-
-    x1 < (x2 + hitbox_width_2)
-        && (x1 + hitbox_width_1) > x2
-        && y1 < (y2 + hitbox_height_2)
-        && (y1 + hitbox_height_1) > y2
-}
