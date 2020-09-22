@@ -2,7 +2,7 @@ use crate::{
     audio::{play_sfx, Sounds},
     components::{Consumable, Defense, Hitbox2DComponent, Spaceship},
     constants::ARENA_MIN_Y,
-    space_shooter::HitboxCollisionEvent,
+    events::HitboxCollisionEvent,
 };
 use amethyst::{
     assets::AssetStorage,

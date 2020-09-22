@@ -2,8 +2,8 @@ use crate::{
     audio::{play_sfx, Sounds},
     components::{BlastComponent, BlastType, Enemy},
     entities::spawn_blast_explosion,
+    events::HitboxCollisionEvent,
     resources::SpriteResource,
-    space_shooter::HitboxCollisionEvent,
 };
 use amethyst::{
     assets::AssetStorage,
