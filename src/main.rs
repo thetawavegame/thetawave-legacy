@@ -18,10 +18,11 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-mod audio;
+pub mod audio;
 pub mod components;
 pub mod constants;
 pub mod entities;
+pub mod events;
 pub mod resources;
 mod space_shooter;
 pub mod systems;
