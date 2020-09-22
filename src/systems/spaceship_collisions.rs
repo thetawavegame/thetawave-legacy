@@ -63,10 +63,6 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
                 if let Some(velocity) = event.collision_velocity {
                     // Push the ship in the opposite direction.
-                    println!("velocity x: {}", velocity.x);
-                    println!("velocity y: {}", velocity.y);
-                    println!("space velocity x: {}", spaceship_motion.velocity.x);
-                    println!("space velocity y: {}", spaceship_motion.velocity.y);
                     spaceship_motion.velocity.x = velocity.x - spaceship_motion.velocity.x;
                     spaceship_motion.velocity.y = velocity.y - spaceship_motion.velocity.y;
                 }
