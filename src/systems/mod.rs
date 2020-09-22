@@ -12,7 +12,6 @@ mod gamemaster;
 mod item;
 mod manualblaster_system;
 mod planets;
-mod player_hit;
 mod spaceship;
 mod spaceship_collisions;
 mod spaceship_movement;
@@ -31,13 +30,14 @@ pub use self::{
     consumable::ConsumableSystem,
     defense::DefenseSystem,
     enemy::EnemySystem,
-    enemy_collisions::{EnemyEnemyCollisionSystem, EnemyPlayerCollisionSystem},
+    enemy_collisions::{
+        EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem, EnemyPlayerCollisionSystem,
+    },
     enemy_spawn::SpawnerSystem,
     gamemaster::GameMasterSystem,
     item::ItemSystem,
     manualblaster_system::ManualBlasterSystem,
     planets::PlanetsSystem,
-    // player_hit::PlayerHitSystem,
     spaceship::SpaceshipSystem,
     spaceship_collisions::{
         SpaceshipBlastCollisionSystem, SpaceshipConsumableCollisionSystem,
