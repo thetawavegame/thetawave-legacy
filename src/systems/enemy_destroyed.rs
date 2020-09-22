@@ -9,7 +9,7 @@ use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
     core::transform::Transform,
-    ecs::prelude::{Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System},
+    ecs::prelude::{Entities, LazyUpdate, ReadExpect, ReadStorage, System},
     ecs::*,
     ecs::{Read, World},
     shrev::{EventChannel, ReaderId},
@@ -60,36 +60,33 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         ): Self::SystemData,
     ) {
         for event in enemy_destroyed_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            for (enemy_entity, enemy_component, enemy_transform) in
-                (&entities, &enemies, &transforms).join()
-            {
-                if event.enemy == enemy_entity {
-                    play_sfx(&sounds.explosion_sfx, &storage, audio_output.as_deref());
+            let enemy_transform = transforms.get(event.enemy).unwrap();
+            let enemy_component = enemies.get(event.enemy).unwrap();
 
-                    spawn_explosion(
-                        &entities,
-                        &sprite_resource,
-                        enemy_component.explosion_sprite_idx,
-                        enemy_transform.translation(),
-                        &lazy_update,
-                    );
+            play_sfx(&sounds.explosion_sfx, &storage, audio_output.as_deref());
 
-                    let name = choose_random_name(&enemy_component.collectables_probs);
-                    if !name.is_empty() {
-                        spawn_consumable(
-                            &entities,
-                            &sprite_resource,
-                            consumable_pool[name].clone(),
-                            enemy_transform.translation(),
-                            &lazy_update,
-                        );
-                    }
+            spawn_explosion(
+                &entities,
+                &sprite_resource,
+                enemy_component.explosion_sprite_idx,
+                enemy_transform.translation(),
+                &lazy_update,
+            );
 
-                    entities
-                        .delete(enemy_entity)
-                        .expect("unable to delete entity");
-                }
+            let name = choose_random_name(&enemy_component.collectables_probs);
+            if !name.is_empty() {
+                spawn_consumable(
+                    &entities,
+                    &sprite_resource,
+                    consumable_pool[name].clone(),
+                    enemy_transform.translation(),
+                    &lazy_update,
+                );
             }
+
+            entities
+                .delete(event.enemy)
+                .expect("unable to delete entity");
         }
     }
 }
