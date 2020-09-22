@@ -13,7 +13,7 @@ use crate::{
 };
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
-    core::transform::Transform,
+    core::{math::Vector2, transform::Transform},
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     input::{is_key_down, VirtualKeyCode},
     prelude::*,
@@ -26,48 +26,54 @@ use std::f32::consts::FRAC_PI_3;
 #[derive(Debug)]
 pub struct CollisionEvent {
     pub entity_a: Entity,
-    pub type_a: String,
-    pub to_velocity_x_a: f32, //velocity of the entity acting on a
-    pub to_velocity_y_a: f32,
     pub entity_b: Entity,
-    pub type_b: String,
-    pub to_velocity_x_b: f32, //velocity of the entity acting on b
-    pub to_velocity_y_b: f32,
 }
 
 impl CollisionEvent {
+    pub fn new(entity_a: Entity, entity_b: Entity) -> CollisionEvent {
+        CollisionEvent { entity_a, entity_b }
+    }
+}
+
+#[derive(Debug)]
+pub struct PlayerCollisionEvent {
+    pub player_entity: Entity,
+    pub colliding_entity: Entity,
+    pub collision_velocity: Option<Vector2<f32>>,
+}
+
+impl PlayerCollisionEvent {
     pub fn new(
         entity_a: Entity,
-        type_a: String,
-        to_velocity_x_a: f32,
-        to_velocity_y_a: f32,
         entity_b: Entity,
-        type_b: String,
-        to_velocity_x_b: f32,
-        to_velocity_y_b: f32,
-    ) -> CollisionEvent {
-        CollisionEvent {
-            entity_a,
-            type_a,
-            to_velocity_x_a,
-            to_velocity_y_a,
-            entity_b,
-            type_b,
-            to_velocity_x_b,
-            to_velocity_y_b,
+        velocity: Option<Vector2<f32>>,
+    ) -> PlayerCollisionEvent {
+        PlayerCollisionEvent {
+            player_entity: entity_a,
+            colliding_entity: entity_b,
+            collision_velocity: velocity,
         }
     }
 }
 
 #[derive(Debug)]
-pub struct HitboxCollisionEvent {
-    pub entity_a: Entity,
-    pub entity_b: Entity,
+pub struct EnemyCollisionEvent {
+    pub enemy_entity: Entity,
+    pub colliding_entity: Entity,
+    pub collision_velocity: Option<Vector2<f32>>,
 }
 
-impl HitboxCollisionEvent {
-    pub fn new(entity_a: Entity, entity_b: Entity) -> HitboxCollisionEvent {
-        HitboxCollisionEvent { entity_a, entity_b }
+impl EnemyCollisionEvent {
+    pub fn new(
+        entity_a: Entity,
+        entity_b: Entity,
+        velocity: Option<Vector2<f32>>,
+    ) -> EnemyCollisionEvent {
+        EnemyCollisionEvent {
+            enemy_entity: entity_a,
+            colliding_entity: entity_b,
+            collision_velocity: velocity,
+        }
     }
 }
 
@@ -85,28 +91,9 @@ impl Default for SpaceShooter {
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
-                .with(systems::HitboxSystem, "hitbox_system", &[])
-                .with(
-                    systems::ConsumableSystem::default(),
-                    "consumable_system",
-                    &["hitbox_system"],
-                )
+                .with(systems::ConsumableSystem, "consumable_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
-                .with(
-                    systems::PlayerHitSystem::default(),
-                    "player_hit_system",
-                    &["hitbox_system"],
-                )
-                .with(
-                    systems::EnemyHitSystem::default(),
-                    "enemy_hit_system",
-                    &["hitbox_system"],
-                )
-                .with(
-                    systems::ItemSystem::default(),
-                    "item_system",
-                    &["hitbox_system"],
-                )
+                .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(
                     systems::SpaceshipMovementSystem,
@@ -120,17 +107,42 @@ impl Default for SpaceShooter {
                     &[],
                 )
                 .with(
-                    systems::SpaceshipCollisionSystem::default(),
-                    "spaceship_collision_handler_system",
+                    systems::CollisionHandlerSystem::default(),
+                    "collision_handler_system",
                     &["collision_detection_system"],
                 )
                 .with(
-                    systems::EnemyCollisionSystem::default(),
-                    "collision_handler_system",
+                    systems::SpaceshipEnemyCollisionSystem::default(),
+                    "spaceship_enemy_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::SpaceshipBlastCollisionSystem::default(),
+                    "spaceship_blast_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::SpaceshipItemCollisionSystem::default(),
+                    "spaceship_item_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::SpaceshipConsumableCollisionSystem::default(),
+                    "spaceship_consumable_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::EnemyPlayerCollisionSystem::default(),
+                    "enemy_player_collision",
                     &[
-                        "collision_detection_system",
-                        "spaceship_collision_handler_system",
+                        "collision_handler_system",
+                        "spaceship_enemy_collision_system",
                     ],
+                )
+                .with(
+                    systems::EnemyEnemyCollisionSystem::default(),
+                    "enemy_enemy_collision",
+                    &["collision_handler_system"],
                 )
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
@@ -138,7 +150,7 @@ impl Default for SpaceShooter {
                 .with(
                     systems::StatTrackerSystem,
                     "stat_tracker_system",
-                    &["store_system", "spaceship_system", "consumable_system"],
+                    &["store_system", "spaceship_system"],
                 )
                 .with(systems::AutoBlasterSystem, "autoblaster_system", &[])
                 .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
