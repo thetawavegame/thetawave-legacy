@@ -13,7 +13,7 @@ use crate::{
 };
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
-    core::{math::Vector2, transform::Transform},
+    core::transform::Transform,
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     input::{is_key_down, VirtualKeyCode},
     prelude::*,
@@ -22,60 +22,6 @@ use amethyst::{
     ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform},
 };
 use std::f32::consts::FRAC_PI_3;
-
-#[derive(Debug)]
-pub struct CollisionEvent {
-    pub entity_a: Entity,
-    pub entity_b: Entity,
-}
-
-impl CollisionEvent {
-    pub fn new(entity_a: Entity, entity_b: Entity) -> CollisionEvent {
-        CollisionEvent { entity_a, entity_b }
-    }
-}
-
-#[derive(Debug)]
-pub struct PlayerCollisionEvent {
-    pub player_entity: Entity,
-    pub colliding_entity: Entity,
-    pub collision_velocity: Option<Vector2<f32>>,
-}
-
-impl PlayerCollisionEvent {
-    pub fn new(
-        entity_a: Entity,
-        entity_b: Entity,
-        velocity: Option<Vector2<f32>>,
-    ) -> PlayerCollisionEvent {
-        PlayerCollisionEvent {
-            player_entity: entity_a,
-            colliding_entity: entity_b,
-            collision_velocity: velocity,
-        }
-    }
-}
-
-#[derive(Debug)]
-pub struct EnemyCollisionEvent {
-    pub enemy_entity: Entity,
-    pub colliding_entity: Entity,
-    pub collision_velocity: Option<Vector2<f32>>,
-}
-
-impl EnemyCollisionEvent {
-    pub fn new(
-        entity_a: Entity,
-        entity_b: Entity,
-        velocity: Option<Vector2<f32>>,
-    ) -> EnemyCollisionEvent {
-        EnemyCollisionEvent {
-            enemy_entity: entity_a,
-            colliding_entity: entity_b,
-            collision_velocity: velocity,
-        }
-    }
-}
 
 pub struct SpaceShooter {
     dispatcher: Dispatcher<'static, 'static>,
@@ -159,6 +105,11 @@ impl Default for SpaceShooter {
                 )
                 .with(systems::AutoBlasterSystem, "autoblaster_system", &[])
                 .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
+                .with(
+                    systems::EnemyDestroyedSystem::default(),
+                    "enemy_destroyed_system",
+                    &["enemy_system"],
+                )
                 .build(),
         }
     }

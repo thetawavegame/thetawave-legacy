@@ -5,8 +5,8 @@ use crate::{
         ManualFireComponent, Motion2DComponent, Spaceship,
     },
     entities::spawn_blast_explosion,
+    events::PlayerCollisionEvent,
     resources::SpriteResource,
-    space_shooter::PlayerCollisionEvent,
 };
 use amethyst::{
     assets::AssetStorage,

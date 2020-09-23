@@ -7,6 +7,7 @@ mod consumable;
 mod defense;
 mod enemy;
 mod enemy_collisions;
+mod enemy_destroyed;
 mod enemy_spawn;
 mod gamemaster;
 mod item;
@@ -25,14 +26,14 @@ pub use self::{
     autoblaster_system::AutoBlasterSystem,
     blast::BlastSystem,
     boss::BossSystem,
-    collision_detection::CollisionDetectionSystem,
-    collision_detection::CollisionHandlerSystem,
+    collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     consumable::ConsumableSystem,
     defense::DefenseSystem,
     enemy::EnemySystem,
     enemy_collisions::{
         EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem, EnemyPlayerCollisionSystem,
     },
+    enemy_destroyed::EnemyDestroyedSystem,
     enemy_spawn::SpawnerSystem,
     gamemaster::GameMasterSystem,
     item::ItemSystem,

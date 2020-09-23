@@ -9,7 +9,7 @@ pub fn spawn_consumable(
     entities: &Entities,
     sprite_resource: &ReadExpect<SpriteResource>,
     consumable: ConsumableEntityData,
-    spawn_position: Vector3<f32>,
+    spawn_position: &Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let sprite_render = SpriteRender {
@@ -19,7 +19,7 @@ pub fn spawn_consumable(
     let name = Named::new("consumable");
 
     let mut local_transform = Transform::default();
-    local_transform.set_translation(spawn_position);
+    local_transform.set_translation(*spawn_position);
 
     lazy_update
         .create_entity(entities)

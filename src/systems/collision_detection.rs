@@ -1,13 +1,12 @@
 use crate::{
     components::{Enemy, Hitbox2DComponent, Motion2DComponent, Spaceship},
-    space_shooter::{CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent},
+    events::{CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent},
 };
 use amethyst::{
     core::{math::Vector2, transform::Transform},
     ecs::*,
     shrev::{EventChannel, ReaderId},
 };
-use std::collections::HashMap;
 
 #[derive(Default)]
 pub struct CollisionDetectionSystem;
