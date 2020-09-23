@@ -1,7 +1,7 @@
 use crate::{
     audio::{play_sfx, Sounds},
     components::{Enemy, Motion2DComponent, Spaceship},
-    space_shooter::CollisionEvent,
+    events::CollisionEvent,
 };
 use amethyst::{
     assets::AssetStorage,

@@ -14,7 +14,7 @@ pub fn spawn_explosion(
     entities: &Entities,
     sprite_resource: &ReadExpect<SpriteResource>,
     sprite_number: usize,
-    spawn_position: Vector3<f32>,
+    spawn_position: &Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) -> Entity {
     let frame_time: f32 = 0.1;
@@ -41,7 +41,7 @@ pub fn spawn_explosion(
     let timed = TimeLimitComponent { duration };
 
     let mut local_transform = Transform::default();
-    local_transform.set_translation(spawn_position);
+    local_transform.set_translation(*spawn_position);
 
     lazy_update
         .create_entity(entities)

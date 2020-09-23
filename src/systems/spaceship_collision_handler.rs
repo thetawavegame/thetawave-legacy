@@ -1,6 +1,6 @@
 use crate::{
     components::{Enemy, Motion2DComponent, Spaceship},
-    space_shooter::CollisionEvent,
+    events::CollisionEvent,
 };
 use amethyst::{
     ecs::*,

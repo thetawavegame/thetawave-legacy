@@ -1,8 +1,8 @@
 use crate::{
     components::{BlastComponent, BlastType, Spaceship},
     entities::spawn_blast_explosion,
+    events::HitboxCollisionEvent,
     resources::SpriteResource,
-    space_shooter::HitboxCollisionEvent,
 };
 use amethyst::{
     core::transform::Transform,
