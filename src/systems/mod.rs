@@ -7,6 +7,7 @@ mod consumable;
 mod defense;
 mod enemy;
 mod enemy_collision_handler;
+mod enemy_destroyed;
 mod enemy_hit;
 mod enemy_spawn;
 mod gamemaster;
@@ -27,10 +28,10 @@ pub use self::{
     animation::AnimationSystem, autoblaster_system::AutoBlasterSystem, blast::BlastSystem,
     boss::BossSystem, collision_detection::CollisionDetectionSystem, consumable::ConsumableSystem,
     defense::DefenseSystem, enemy::EnemySystem, enemy_collision_handler::EnemyCollisionSystem,
-    enemy_hit::EnemyHitSystem, enemy_spawn::SpawnerSystem, gamemaster::GameMasterSystem,
-    hitbox_system::HitboxSystem, item::ItemSystem, manualblaster_system::ManualBlasterSystem,
-    planets::PlanetsSystem, player_hit::PlayerHitSystem, spaceship::SpaceshipSystem,
-    spaceship_collision_handler::SpaceshipCollisionSystem,
+    enemy_destroyed::EnemyDestroyedSystem, enemy_hit::EnemyHitSystem, enemy_spawn::SpawnerSystem,
+    gamemaster::GameMasterSystem, hitbox_system::HitboxSystem, item::ItemSystem,
+    manualblaster_system::ManualBlasterSystem, planets::PlanetsSystem, player_hit::PlayerHitSystem,
+    spaceship::SpaceshipSystem, spaceship_collision_handler::SpaceshipCollisionSystem,
     spaceship_movement::SpaceshipMovementSystem, stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem, store::StoreSystem, timelimit::TimeLimitSystem,
 };

@@ -1,4 +1,4 @@
-use crate::{components::Hitbox2DComponent, space_shooter::HitboxCollisionEvent};
+use crate::{components::Hitbox2DComponent, events::HitboxCollisionEvent};
 use amethyst::{
     core::transform::Transform,
     ecs::prelude::{Entities, Join, ReadStorage, System, Write},

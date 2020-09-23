@@ -5,7 +5,7 @@ use crate::{
         Motion2DComponent, Spaceship,
     },
     constants::ARENA_MIN_Y,
-    space_shooter::HitboxCollisionEvent,
+    events::HitboxCollisionEvent,
 };
 use amethyst::{
     assets::AssetStorage,
