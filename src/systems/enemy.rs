@@ -1,23 +1,14 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
-    audio::{play_sfx, Sounds},
-    components::{
-        choose_random_name, Defense, Enemy, EnemyType, Hitbox2DComponent, Motion2DComponent,
-        Rigidbody,
-    },
-    constants::{ARENA_MIN_Y, EXPLOSION_Z},
-    entities::{spawn_consumable, spawn_explosion},
-    resources::{ConsumableEntityData, SpriteResource},
+    components::{Defense, Enemy, EnemyType, Hitbox2DComponent, Motion2DComponent, Rigidbody},
+    constants::ARENA_MIN_Y,
+    events::EnemyDestroyedEvent,
 };
 use amethyst::{
-    assets::AssetStorage,
-    audio::{output::Output, Source},
-    core::{math::Vector3, timing::Time, transform::Transform},
-    ecs::prelude::{
-        Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage,
-    },
+    core::{timing::Time, transform::Transform},
+    ecs::prelude::{Entities, Join, Read, ReadStorage, System, Write, WriteStorage},
+    shrev::EventChannel,
 };
-use std::collections::HashMap;
 
 pub struct EnemySystem;
 
@@ -30,12 +21,7 @@ impl<'s> System<'s> for EnemySystem {
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, Time>,
-        ReadExpect<'s, SpriteResource>,
-        ReadExpect<'s, LazyUpdate>,
-        Read<'s, AssetStorage<Source>>,
-        ReadExpect<'s, Sounds>,
-        Option<Read<'s, Output>>,
-        ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
+        Write<'s, EventChannel<EnemyDestroyedEvent>>,
     );
 
     fn run(
@@ -48,12 +34,7 @@ impl<'s> System<'s> for EnemySystem {
             mut motions,
             hitboxes,
             time,
-            sprite_resource,
-            lazy_update,
-            storage,
-            sounds,
-            audio_output,
-            consumable_pool,
+            mut enemy_destroyed_event_channel,
         ): Self::SystemData,
     ) {
         for (enemy_entity, enemy_component, enemy_transform, enemy_motion, enemy_hitbox) in (
@@ -83,37 +64,7 @@ impl<'s> System<'s> for EnemySystem {
                     .delete(enemy_entity)
                     .expect("unable to delete entity");
             } else if enemy_component.health < 0.0 {
-                //enemy us deleted, explosion is spawned and item dropped
-                let death_position = Vector3::new(
-                    enemy_transform.translation()[0],
-                    enemy_transform.translation()[1],
-                    EXPLOSION_Z,
-                );
-
-                entities
-                    .delete(enemy_entity)
-                    .expect("unable to delete entity");
-
-                spawn_explosion(
-                    &entities,
-                    &sprite_resource,
-                    enemy_component.explosion_sprite_idx,
-                    death_position,
-                    &lazy_update,
-                );
-
-                play_sfx(&sounds.explosion_sfx, &storage, audio_output.as_deref());
-
-                let name = choose_random_name(&enemy_component.collectables_probs);
-                if !name.is_empty() {
-                    spawn_consumable(
-                        &entities,
-                        &sprite_resource,
-                        consumable_pool[name].clone(),
-                        death_position,
-                        &lazy_update,
-                    );
-                }
+                enemy_destroyed_event_channel.single_write(EnemyDestroyedEvent::new(enemy_entity));
             }
 
             //behavior for enemies based on its enemy_type attribute

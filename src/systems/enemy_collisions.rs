@@ -3,8 +3,8 @@ use crate::{
     components::{BlastComponent, BlastType, Enemy, Motion2DComponent, Spaceship},
     constants::SPACESHIP_COLLISION_DAMAGE,
     entities::spawn_blast_explosion,
+    events::EnemyCollisionEvent,
     resources::SpriteResource,
-    space_shooter::EnemyCollisionEvent,
 };
 use amethyst::{
     assets::AssetStorage,
