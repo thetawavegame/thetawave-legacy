@@ -1,50 +1,14 @@
-use amethyst::ecs::prelude::Entity;
+use amethyst::{core::math::Vector2, ecs::prelude::Entity};
 
 #[derive(Debug)]
 pub struct CollisionEvent {
     pub entity_a: Entity,
-    pub type_a: String,
-    pub to_velocity_x_a: f32, //velocity of the entity acting on a
-    pub to_velocity_y_a: f32,
     pub entity_b: Entity,
-    pub type_b: String,
-    pub to_velocity_x_b: f32, //velocity of the entity acting on b
-    pub to_velocity_y_b: f32,
 }
 
 impl CollisionEvent {
-    pub fn new(
-        entity_a: Entity,
-        type_a: String,
-        to_velocity_x_a: f32,
-        to_velocity_y_a: f32,
-        entity_b: Entity,
-        type_b: String,
-        to_velocity_x_b: f32,
-        to_velocity_y_b: f32,
-    ) -> CollisionEvent {
-        CollisionEvent {
-            entity_a,
-            type_a,
-            to_velocity_x_a,
-            to_velocity_y_a,
-            entity_b,
-            type_b,
-            to_velocity_x_b,
-            to_velocity_y_b,
-        }
-    }
-}
-
-#[derive(Debug)]
-pub struct HitboxCollisionEvent {
-    pub entity_a: Entity,
-    pub entity_b: Entity,
-}
-
-impl HitboxCollisionEvent {
-    pub fn new(entity_a: Entity, entity_b: Entity) -> HitboxCollisionEvent {
-        HitboxCollisionEvent { entity_a, entity_b }
+    pub fn new(entity_a: Entity, entity_b: Entity) -> CollisionEvent {
+        CollisionEvent { entity_a, entity_b }
     }
 }
 
@@ -56,5 +20,47 @@ pub struct EnemyDestroyedEvent {
 impl EnemyDestroyedEvent {
     pub fn new(enemy: Entity) -> EnemyDestroyedEvent {
         EnemyDestroyedEvent { enemy }
+    }
+}
+
+#[derive(Debug)]
+pub struct PlayerCollisionEvent {
+    pub player_entity: Entity,
+    pub colliding_entity: Entity,
+    pub collision_velocity: Option<Vector2<f32>>,
+}
+
+impl PlayerCollisionEvent {
+    pub fn new(
+        entity_a: Entity,
+        entity_b: Entity,
+        velocity: Option<Vector2<f32>>,
+    ) -> PlayerCollisionEvent {
+        PlayerCollisionEvent {
+            player_entity: entity_a,
+            colliding_entity: entity_b,
+            collision_velocity: velocity,
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct EnemyCollisionEvent {
+    pub enemy_entity: Entity,
+    pub colliding_entity: Entity,
+    pub collision_velocity: Option<Vector2<f32>>,
+}
+
+impl EnemyCollisionEvent {
+    pub fn new(
+        entity_a: Entity,
+        entity_b: Entity,
+        velocity: Option<Vector2<f32>>,
+    ) -> EnemyCollisionEvent {
+        EnemyCollisionEvent {
+            enemy_entity: entity_a,
+            colliding_entity: entity_b,
+            collision_velocity: velocity,
+        }
     }
 }

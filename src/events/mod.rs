@@ -1,3 +1,5 @@
 mod events;
 
-pub use self::events::{CollisionEvent, EnemyDestroyedEvent, HitboxCollisionEvent};
+pub use self::events::{
+    CollisionEvent, EnemyCollisionEvent, EnemyDestroyedEvent, PlayerCollisionEvent,
+};

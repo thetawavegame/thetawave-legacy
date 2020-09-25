@@ -1,86 +1,94 @@
 use crate::{
     components::{Enemy, Hitbox2DComponent, Motion2DComponent, Spaceship},
-    events::CollisionEvent,
+    events::{CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent},
 };
 use amethyst::{
-    core::transform::Transform,
-    ecs::prelude::{Entities, Join, ReadStorage, System, Write},
-    shrev::EventChannel,
+    core::{math::Vector2, transform::Transform},
+    ecs::*,
+    shrev::{EventChannel, ReaderId},
 };
 
 #[derive(Default)]
 pub struct CollisionDetectionSystem;
 
+/// Detects collisions between entities
 impl<'s> System<'s> for CollisionDetectionSystem {
     type SystemData = (
-        ReadStorage<'s, Enemy>,
-        ReadStorage<'s, Spaceship>,
-        ReadStorage<'s, Hitbox2DComponent>,
-        ReadStorage<'s, Motion2DComponent>,
-        ReadStorage<'s, Transform>,
         Entities<'s>,
+        ReadStorage<'s, Hitbox2DComponent>,
+        ReadStorage<'s, Transform>,
         Write<'s, EventChannel<CollisionEvent>>,
     );
+    fn run(&mut self, (entities, hitbox2ds, transforms, mut collision_channel): Self::SystemData) {
+        for (entity_a, transform_a, hitbox_a) in (&entities, &transforms, &hitbox2ds).join() {
+            for (entity_b, transform_b, hitbox_b) in (&entities, &transforms, &hitbox2ds).join() {
+                if entity_a == entity_b {
+                    continue;
+                }
+
+                if hitbox_a.is_colliding(hitbox_b, transform_a, transform_b) {
+                    collision_channel.single_write(CollisionEvent::new(entity_a, entity_b));
+                }
+            }
+        }
+    }
+}
+
+#[derive(Default)]
+pub struct CollisionHandlerSystem {
+    event_reader: Option<ReaderId<CollisionEvent>>,
+}
+
+/// Handles collision events between entities
+impl<'s> System<'s> for CollisionHandlerSystem {
+    type SystemData = (
+        ReadStorage<'s, Spaceship>,
+        ReadStorage<'s, Enemy>,
+        ReadStorage<'s, Motion2DComponent>,
+        Read<'s, EventChannel<CollisionEvent>>,
+        Write<'s, EventChannel<PlayerCollisionEvent>>,
+        Write<'s, EventChannel<EnemyCollisionEvent>>,
+    );
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<CollisionEvent>>()
+                .register_reader(),
+        );
+    }
 
     fn run(
         &mut self,
         (
-            enemies,
             spaceships,
-            hitboxes,
+            enemies,
             motions,
-            transforms,
-            entities,
-            mut collision_event_channel,
+            collision_channel,
+            mut player_collision_channel,
+            mut enemy_collision_channel,
         ): Self::SystemData,
     ) {
-        for (enemy, enemy_transform, _enemy, enemy_hitbox, enemy_motion) in
-            (&entities, &transforms, &enemies, &hitboxes, &motions).join()
-        {
-            //check for enemy collisions
-            for (enemy_b, enemy_b_transform, _enemy_b, enemy_b_hitbox, enemy_b_motion) in
-                (&entities, &transforms, &enemies, &hitboxes, &motions).join()
-            {
-                if enemy == enemy_b {
-                    continue;
-                }
+        for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
+            let mut collision_velocity: Option<Vector2<f32>> = None;
 
-                if enemy_hitbox.is_colliding(enemy_b_hitbox, enemy_transform, enemy_b_transform) {
-                    collision_event_channel.single_write(CollisionEvent::new(
-                        enemy,
-                        String::from("enemy"),
-                        enemy_motion.velocity.x,
-                        enemy_motion.velocity.y,
-                        enemy_b,
-                        String::from("enemy"),
-                        enemy_b_motion.velocity.x,
-                        enemy_b_motion.velocity.y,
-                    ));
-                }
+            if let Some(motion_component) = motions.get(event.entity_b) {
+                collision_velocity = Some(motion_component.velocity);
             }
 
-            //check for spaceship collisions
-            for (
-                spaceship_entity,
-                spaceship_transform,
-                _spaceship,
-                spaceship_hitbox,
-                spaceship_motion,
-            ) in (&entities, &transforms, &spaceships, &hitboxes, &motions).join()
-            {
-                if spaceship_hitbox.is_colliding(enemy_hitbox, spaceship_transform, enemy_transform)
-                {
-                    collision_event_channel.single_write(CollisionEvent::new(
-                        enemy,
-                        String::from("enemy"),
-                        enemy_motion.velocity.x,
-                        enemy_motion.velocity.y,
-                        spaceship_entity,
-                        String::from("spaceship"),
-                        spaceship_motion.velocity.x,
-                        spaceship_motion.velocity.y,
-                    ));
-                }
+            if let Some(_spaceship) = spaceships.get(event.entity_a) {
+                player_collision_channel.single_write(PlayerCollisionEvent::new(
+                    event.entity_a,
+                    event.entity_b,
+                    collision_velocity,
+                ));
+            } else if let Some(_enemy) = enemies.get(event.entity_a) {
+                enemy_collision_channel.single_write(EnemyCollisionEvent::new(
+                    event.entity_a,
+                    event.entity_b,
+                    collision_velocity,
+                ));
             }
         }
     }
