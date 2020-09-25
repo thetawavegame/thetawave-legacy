@@ -37,28 +37,9 @@ impl Default for SpaceShooter {
                 .with(systems::SpaceshipSystem, "spaceship_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
-                .with(systems::HitboxSystem, "hitbox_system", &[])
-                .with(
-                    systems::ConsumableSystem::default(),
-                    "consumable_system",
-                    &["hitbox_system"],
-                )
+                .with(systems::ConsumableSystem, "consumable_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
-                .with(
-                    systems::PlayerHitSystem::default(),
-                    "player_hit_system",
-                    &["hitbox_system"],
-                )
-                .with(
-                    systems::EnemyHitSystem::default(),
-                    "enemy_hit_system",
-                    &["hitbox_system"],
-                )
-                .with(
-                    systems::ItemSystem::default(),
-                    "item_system",
-                    &["hitbox_system"],
-                )
+                .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(
                     systems::SpaceshipMovementSystem,
@@ -72,17 +53,44 @@ impl Default for SpaceShooter {
                     &[],
                 )
                 .with(
-                    systems::SpaceshipCollisionSystem::default(),
-                    "spaceship_collision_handler_system",
+                    systems::CollisionHandlerSystem::default(),
+                    "collision_handler_system",
                     &["collision_detection_system"],
                 )
                 .with(
-                    systems::EnemyCollisionSystem::default(),
-                    "collision_handler_system",
-                    &[
-                        "collision_detection_system",
-                        "spaceship_collision_handler_system",
-                    ],
+                    systems::SpaceshipEnemyCollisionSystem::default(),
+                    "spaceship_enemy_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::SpaceshipBlastCollisionSystem::default(),
+                    "spaceship_blast_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::SpaceshipItemCollisionSystem::default(),
+                    "spaceship_item_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::SpaceshipConsumableCollisionSystem::default(),
+                    "spaceship_consumable_collision_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::EnemyPlayerCollisionSystem::default(),
+                    "enemy_player_collision",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::EnemyEnemyCollisionSystem::default(),
+                    "enemy_enemy_collision",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::EnemyBlastCollisionSystem::default(),
+                    "enemy_blast_collision",
+                    &["collision_handler_system"],
                 )
                 .with(systems::DefenseSystem, "defense_system", &[])
                 .with(systems::BlastSystem, "blast_system", &[])
@@ -90,7 +98,7 @@ impl Default for SpaceShooter {
                 .with(
                     systems::StatTrackerSystem,
                     "stat_tracker_system",
-                    &["store_system", "spaceship_system", "consumable_system"],
+                    &["store_system", "spaceship_system"],
                 )
                 .with(systems::AutoBlasterSystem, "autoblaster_system", &[])
                 .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
