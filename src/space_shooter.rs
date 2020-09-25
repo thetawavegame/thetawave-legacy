@@ -80,10 +80,7 @@ impl Default for SpaceShooter {
                 .with(
                     systems::EnemyPlayerCollisionSystem::default(),
                     "enemy_player_collision",
-                    &[
-                        "collision_handler_system",
-                        "spaceship_enemy_collision_system",
-                    ],
+                    &["collision_handler_system"],
                 )
                 .with(
                     systems::EnemyEnemyCollisionSystem::default(),
