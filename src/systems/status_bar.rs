@@ -20,7 +20,7 @@ impl<'s> System<'s> for StatusBarSystem {
         WriteStorage<'s, StatusBar>,
         ReadStorage<'s, Spaceship>,
         ReadStorage<'s, DefenseTag>,
-        WriteStorage<'s, HealthComponent>,
+        ReadStorage<'s, HealthComponent>,
         ReadStorage<'s, Store>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
@@ -33,7 +33,7 @@ impl<'s> System<'s> for StatusBarSystem {
             mut status_bars,
             spaceships,
             defense_tags,
-            mut healths,
+            healths,
             stores,
             sprite_resource,
             lazy_update,
@@ -42,12 +42,10 @@ impl<'s> System<'s> for StatusBarSystem {
         for status_bar in (&mut status_bars).join() {
             match status_bar.status_type {
                 StatusType::Health => {
-                    for spaceship in (&spaceships).join() {
-                        if let Some(status_position) = status_bar.update_units_y(
-                            spaceship.max_health,
-                            spaceship.health,
-                            &entities,
-                        ) {
+                    for (spaceship, health) in (&spaceships, &healths).join() {
+                        if let Some(status_position) =
+                            status_bar.update_units_y(health.max_health, health.health, &entities)
+                        {
                             status_bar.status_unit_stack.push(spawn_status_unit(
                                 &entities,
                                 &sprite_resource,
@@ -60,7 +58,7 @@ impl<'s> System<'s> for StatusBarSystem {
                 }
 
                 StatusType::Defense => {
-                    for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
+                    for (_defense_tag, defense_health) in (&defense_tags, &healths).join() {
                         if let Some(status_position) = status_bar.update_units_y(
                             defense_health.max_health,
                             defense_health.health,

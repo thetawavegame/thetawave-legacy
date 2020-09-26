@@ -156,7 +156,7 @@
     "enhanced_plating": (
         item_component: (
             stat_effects: {
-                "health_multiply": .2,
+                "health_multiply": 1.2,
             },
             price: 11,
             sprite_index: 9,
