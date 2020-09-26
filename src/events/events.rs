@@ -64,3 +64,8 @@ impl EnemyCollisionEvent {
         }
     }
 }
+
+#[derive(Debug)]
+pub struct PlayAudioEvent {
+    pub value: &'static str,
+}

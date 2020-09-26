@@ -13,6 +13,7 @@ mod gamemaster;
 mod item;
 mod manualblaster_system;
 mod planets;
+mod play_audio;
 mod spaceship;
 mod spaceship_collisions;
 mod spaceship_movement;
@@ -39,6 +40,7 @@ pub use self::{
     item::ItemSystem,
     manualblaster_system::ManualBlasterSystem,
     planets::PlanetsSystem,
+    play_audio::PlayAudioSystem,
     spaceship::SpaceshipSystem,
     spaceship_collisions::{
         SpaceshipBlastCollisionSystem, SpaceshipConsumableCollisionSystem,
