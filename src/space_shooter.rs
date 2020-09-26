@@ -92,7 +92,11 @@ impl Default for SpaceShooter {
                     "enemy_blast_collision",
                     &["collision_handler_system"],
                 )
-                .with(systems::DefenseSystem, "defense_system", &[])
+                .with(
+                    systems::DefenseSystem::default(),
+                    "defense_system",
+                    &["spaceship_item_collision_system"],
+                )
                 .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::StoreSystem, "store_system", &[])
                 .with(

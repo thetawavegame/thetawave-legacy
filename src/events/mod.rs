@@ -1,5 +1,6 @@
 mod events;
 
 pub use self::events::{
-    CollisionEvent, EnemyCollisionEvent, EnemyDestroyedEvent, PlayerCollisionEvent,
+    CollisionEvent, DefenseItemGetEvent, EnemyCollisionEvent, EnemyDestroyedEvent,
+    PlayerCollisionEvent,
 };
