@@ -1,14 +1,14 @@
 use crate::{
-    audio::{play_sfx, Sounds},
     components::{BlasterComponent, Living, ManualFireComponent, Motion2DComponent, Spaceship},
+    constants::SPACESHIP_LASER_SFX,
+    events::PlayAudioEvent,
     resources::SpriteResource,
 };
 use amethyst::{
-    assets::AssetStorage,
-    audio::{output::Output, Source},
     core::{timing::Time, Transform},
-    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage},
+    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
+    shrev::EventChannel,
 };
 
 pub struct SpaceshipSystem;
@@ -25,9 +25,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
-        Read<'s, AssetStorage<Source>>,
-        ReadExpect<'s, Sounds>,
-        Option<Read<'s, Output>>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
     );
 
     fn run(
@@ -43,9 +41,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             time,
             sprite_resource,
             lazy_update,
-            storage,
-            sounds,
-            audio_output,
+            mut play_audio_channel,
         ): Self::SystemData,
     ) {
         // collect input bools
@@ -92,11 +88,9 @@ impl<'s> System<'s> for SpaceshipSystem {
                     &lazy_update,
                 );
                 manualfire.ready = false;
-                play_sfx(
-                    &sounds.spaceship_laser_sfx,
-                    &storage,
-                    audio_output.as_deref(),
-                );
+                play_audio_channel.single_write(PlayAudioEvent {
+                    value: SPACESHIP_LASER_SFX,
+                });
             }
 
             spaceship.initiate_barrel_roll(barrel_left, barrel_right);
