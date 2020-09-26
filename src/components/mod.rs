@@ -4,9 +4,9 @@ mod animation;
 mod blast;
 mod boss;
 mod consumable;
-mod defense;
 mod enemy;
 mod gamemaster;
+mod health;
 mod hitbox;
 mod item;
 mod motion2d;
@@ -23,9 +23,9 @@ pub use self::{
     blast::{BlastComponent, BlastType},
     boss::Repeater,
     consumable::Consumable,
-    defense::Defense,
     enemy::{Enemy, EnemySpawnerTag, EnemyType},
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
+    health::{DefenseTag, HealthComponent},
     hitbox::Hitbox2DComponent,
     item::Item,
     motion2d::Motion2DComponent,

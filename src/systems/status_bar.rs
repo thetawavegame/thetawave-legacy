@@ -1,5 +1,5 @@
 use crate::{
-    components::{Defense, Spaceship, StatusBar, StatusType, Store},
+    components::{DefenseTag, HealthComponent, Spaceship, StatusBar, StatusType, Store},
     entities::spawn_status_unit,
     resources::SpriteResource,
 };
@@ -19,7 +19,8 @@ impl<'s> System<'s> for StatusBarSystem {
         Entities<'s>,
         WriteStorage<'s, StatusBar>,
         ReadStorage<'s, Spaceship>,
-        WriteStorage<'s, Defense>,
+        ReadStorage<'s, DefenseTag>,
+        WriteStorage<'s, HealthComponent>,
         ReadStorage<'s, Store>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
@@ -27,7 +28,16 @@ impl<'s> System<'s> for StatusBarSystem {
 
     fn run(
         &mut self,
-        (entities, mut status_bars, spaceships, mut defenses, stores, sprite_resource, lazy_update): Self::SystemData,
+        (
+            entities,
+            mut status_bars,
+            spaceships,
+            defense_tags,
+            mut healths,
+            stores,
+            sprite_resource,
+            lazy_update,
+        ): Self::SystemData,
     ) {
         for status_bar in (&mut status_bars).join() {
             match status_bar.status_type {
@@ -50,10 +60,10 @@ impl<'s> System<'s> for StatusBarSystem {
                 }
 
                 StatusType::Defense => {
-                    for defense in (&mut defenses).join() {
+                    for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
                         if let Some(status_position) = status_bar.update_units_y(
-                            defense.max_defense,
-                            defense.defense,
+                            defense_health.max_health,
+                            defense_health.health,
                             &entities,
                         ) {
                             status_bar.status_unit_stack.push(spawn_status_unit(

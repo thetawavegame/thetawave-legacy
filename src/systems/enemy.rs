@@ -1,6 +1,9 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
-    components::{Defense, Enemy, EnemyType, Hitbox2DComponent, Motion2DComponent, Rigidbody},
+    components::{
+        DefenseTag, Enemy, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent,
+        Rigidbody,
+    },
     constants::ARENA_MIN_Y,
     events::EnemyDestroyedEvent,
 };
@@ -16,7 +19,8 @@ impl<'s> System<'s> for EnemySystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Enemy>,
-        WriteStorage<'s, Defense>,
+        ReadStorage<'s, DefenseTag>,
+        WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, Hitbox2DComponent>,
@@ -29,7 +33,8 @@ impl<'s> System<'s> for EnemySystem {
         (
             entities,
             mut enemys,
-            mut defenses,
+            defense_tags,
+            mut healths,
             mut transforms,
             mut motions,
             hitboxes,
@@ -57,8 +62,8 @@ impl<'s> System<'s> for EnemySystem {
             //conditions for despawning
             if enemy_transform.translation()[1] + enemy_hitbox.height / 2.0 < ARENA_MIN_Y {
                 //defense is damage is enemy gets past
-                for defense in (&mut defenses).join() {
-                    defense.defense -= enemy_component.defense_damage;
+                for (defense_tag, health) in (&defense_tags, &mut healths).join() {
+                    health.health -= enemy_component.defense_damage;
                 }
                 entities
                     .delete(enemy_entity)

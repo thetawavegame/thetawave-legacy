@@ -1,14 +1,17 @@
-use crate::components::{Defense, Living};
-use amethyst::ecs::prelude::{Join, System, WriteStorage};
+use crate::components::{DefenseTag, HealthComponent};
+use amethyst::ecs::prelude::{Join, ReadStorage, System, WriteStorage};
 
 pub struct DefenseSystem;
 
 impl<'s> System<'s> for DefenseSystem {
-    type SystemData = WriteStorage<'s, Defense>;
+    type SystemData = (
+        ReadStorage<'s, DefenseTag>,
+        WriteStorage<'s, HealthComponent>,
+    );
 
-    fn run(&mut self, mut defenses: Self::SystemData) {
-        for defense in (&mut defenses).join() {
-            defense.constrain_health();
+    fn run(&mut self, (defense_tags, mut healths): Self::SystemData) {
+        for (defense_tag, health) in (&defense_tags, &mut healths).join() {
+            health.constrain();
         }
     }
 }
