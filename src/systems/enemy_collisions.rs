@@ -199,3 +199,32 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    use crate::entities::{initialize_spaceship, spawn_enemy};
+
+    use amethyst::{
+        ecs::prelude::{Builder, Entity, WorldExt},
+        Error,
+    };
+    use amethyst_test::prelude::*;
+
+    #[test]
+    fn test_enemy_player_collision() -> Result<(), Error> {
+        AmethystApplication::blank()
+            .with_system(
+                EnemyPlayerCollisionSystem::default(),
+                "enemy_player_collision_system",
+                &[],
+            )
+            .with_effect(|world| {
+                // let spaceship_entity =
+                // let event = EnemyCollisionEvent::new(entity_a: Entity, entity_b: Entity, velocity: Option<Vector2<f32>>)
+            })
+            .with_assertion(|world| {})
+            .run()
+    }
+}
