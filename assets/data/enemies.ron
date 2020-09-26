@@ -165,7 +165,7 @@
         enemy_component: (
             name: "strafer",
             health: 75,
-            defense_damage: -30,
+            defense_damage: 25,
             max_speed: 25,
             collectables_probs: [
                 ("", 0.5),

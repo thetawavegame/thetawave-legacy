@@ -1,8 +1,8 @@
 use crate::{
     audio::{play_sfx, Sounds},
     components::{
-        BlastComponent, BlastType, BlasterComponent, Consumable, Defense, Enemy, Item, Living,
-        ManualFireComponent, Motion2DComponent, Spaceship,
+        BlastComponent, BlastType, BlasterComponent, Consumable, DefenseTag, Enemy,
+        HealthComponent, Item, Living, ManualFireComponent, Motion2DComponent, Spaceship,
     },
     entities::spawn_blast_explosion,
     events::PlayerCollisionEvent,
@@ -153,7 +153,8 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         Entities<'s>,
         ReadStorage<'s, Item>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, Defense>,
+        ReadStorage<'s, DefenseTag>,
+        WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
@@ -178,7 +179,8 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
             entities,
             items,
             mut spaceships,
-            mut defenses,
+            defense_tags,
+            mut healths,
             mut motions,
             mut blasters,
             mut manual_fires,
@@ -196,13 +198,11 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                 let motion = motions.get_mut(event.player_entity).unwrap();
 
                 if item.stat_effects.contains_key("max_defense") {
-                    for defense in (&mut defenses).join() {
+                    for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
                         // increases maximum capacity for defense
-                        defense.set_max_health(
-                            defense.max_health() + item.stat_effects["max_defense"],
-                        );
+                        defense_health.max_health += item.stat_effects["max_defense"];
                         // sets current defense to new maximum value
-                        defense.set_health(defense.health() + item.stat_effects["max_defense"]);
+                        defense_health.health += item.stat_effects["max_defense"];
                     }
                 }
 
@@ -288,7 +288,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Entities<'s>,
         ReadStorage<'s, Consumable>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, Defense>,
+        ReadStorage<'s, DefenseTag>,
+        WriteStorage<'s, HealthComponent>,
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
         Option<Read<'s, Output>>,
@@ -310,7 +311,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             entities,
             consumables,
             mut spaceships,
-            mut defenses,
+            defense_tags,
+            mut healths,
             storage,
             sounds,
             audio_output,
@@ -331,8 +333,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                     play_sfx(&sounds.wrench_sfx, &storage, audio_output.as_deref());
                 }
 
-                for defense in (&mut defenses).join() {
-                    defense.defense += consumable.defense_value;
+                for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
+                    defense_health.health += consumable.defense_value;
                 }
 
                 entities
