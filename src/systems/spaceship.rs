@@ -1,8 +1,7 @@
 use crate::{
     audio::{play_sfx, Sounds},
     components::{
-        BlasterComponent, HealthComponent, Living, ManualFireComponent, Motion2DComponent,
-        Spaceship,
+        BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent, Spaceship,
     },
     resources::SpriteResource,
 };

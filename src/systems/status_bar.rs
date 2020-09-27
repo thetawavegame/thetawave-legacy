@@ -42,7 +42,7 @@ impl<'s> System<'s> for StatusBarSystem {
         for status_bar in (&mut status_bars).join() {
             match status_bar.status_type {
                 StatusType::Health => {
-                    for (spaceship, health) in (&spaceships, &healths).join() {
+                    for (_spaceship, health) in (&spaceships, &healths).join() {
                         if let Some(status_position) =
                             status_bar.update_units_y(health.max_health, health.health, &entities)
                         {
