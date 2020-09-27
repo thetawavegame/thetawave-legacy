@@ -2,7 +2,7 @@ use crate::{
     audio::{play_sfx, Sounds},
     components::{
         BlastComponent, BlastType, BlasterComponent, Consumable, DefenseTag, Enemy,
-        HealthComponent, Item, Living, ManualFireComponent, Motion2DComponent, Spaceship,
+        HealthComponent, Item, ManualFireComponent, Motion2DComponent, Spaceship,
     },
     entities::spawn_blast_explosion,
     events::{DefenseItemGetEvent, PlayerCollisionEvent},
@@ -58,9 +58,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                     spaceship.barrel_action_right = false;
                 }
 
-                let enemy_dead = enemy.health <= 0.0;
-
-                if (!spaceship.steel_barrel && !enemy_dead)
+                if !spaceship.steel_barrel
                     || (!spaceship.barrel_action_left && !spaceship.barrel_action_right)
                 {
                     spaceship_health.health -= enemy.collision_damage;
@@ -85,7 +83,6 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
-        WriteStorage<'s, Spaceship>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
@@ -107,7 +104,6 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         (
             collision_event_channel,
             entities,
-            mut spaceships,
             mut healths,
             mut blasts,
             transforms,
@@ -118,12 +114,11 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with a blast component?
             if let Some(blast) = blasts.get_mut(event.colliding_entity) {
-                let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 let blast_transform = transforms.get(event.colliding_entity).unwrap();
 
                 //first check if the blast is allied with the player
-                //if the blast collides with the player and the player is not currently barrel rolling the blast hits
+                //TODO blast should not hit if player is currently barrel rolling
                 match blast.blast_type {
                     // using match here for ease of adding enemy blast effects (such as poison) in the future
                     BlastType::Enemy => {
@@ -158,7 +153,6 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         Entities<'s>,
         ReadStorage<'s, Item>,
         WriteStorage<'s, Spaceship>,
-        ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, BlasterComponent>,
@@ -185,7 +179,6 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
             entities,
             items,
             mut spaceships,
-            defense_tags,
             mut healths,
             mut motions,
             mut blasters,
@@ -208,14 +201,6 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                 if item.stat_effects.contains_key("max_defense") {
                     defense_item_get_event_channel
                         .single_write(DefenseItemGetEvent::new(item.stat_effects.clone()));
-                    /*
-                    for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
-                        // increases maximum capacity for defense
-                        defense_health.max_health += item.stat_effects["max_defense"];
-                        // sets current defense to new maximum value
-                        defense_health.health += item.stat_effects["max_defense"];
-                    }
-                    */
                 }
 
                 // add stats to spaceship

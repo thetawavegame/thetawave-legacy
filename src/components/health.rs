@@ -1,5 +1,7 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
+use serde::{Deserialize, Serialize};
 
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct HealthComponent {
     pub max_health: f32,
     pub health: f32,

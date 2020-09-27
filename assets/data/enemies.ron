@@ -11,7 +11,6 @@
         ),
         enemy_component: (
             name: "drone",
-            health: 60,
             defense_damage: 30,
             collectables_probs: [
                 ("", 0.5),
@@ -21,6 +20,10 @@
                 ("money_5", 0.025),
             ],
             enemy_type: Drone,
+        ),
+        health_component: (
+            max_health: 60,
+            health: 60,
         ),
         hitbox_component: (
             width: 14.0,
@@ -69,7 +72,6 @@
         )),
         enemy_component: (
             name: "pawn",
-            health: 110,
             defense_damage: 50,
             collectables_probs: [
                 ("", 0.5),
@@ -79,6 +81,10 @@
                 ("money_5", 0.025),
             ],
             enemy_type: Pawn,
+        ),
+        health_component: (
+            max_health: 110,
+            health: 110,
         ),
         hitbox_component: (
             width: 14.0,
@@ -110,12 +116,15 @@
         ),
         enemy_component: (
             name: "hauler",
-            health: 220,
             defense_damage: -100,
             collectables_probs: [
                 ("", 1.0) // doesn't drop anything
             ],
             enemy_type: Hauler,
+        ),
+        health_component: (
+            max_health: 220,
+            health: 220,
         ),
         hitbox_component: (
             width: 14.0,
@@ -164,7 +173,6 @@
         )),
         enemy_component: (
             name: "strafer",
-            health: 75,
             defense_damage: 25,
             max_speed: 25,
             collectables_probs: [
@@ -175,6 +183,10 @@
                 ("money_5", 0.025),
             ],
             enemy_type: Strafer,
+        ),
+        health_component: (
+            max_health: 75,
+            health: 75,
         ),
         hitbox_component: (
             width: 22.0,
@@ -206,7 +218,6 @@
         ),
         enemy_component: (
             name: "repeater_body",
-            health: 10000,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -216,6 +227,10 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterBody,
+        ),
+        health_component: (
+            max_health: 10000,
+            health: 10000,
         ),
         hitbox_component: (
             width: 48.0,
@@ -247,7 +262,6 @@
         ),
         enemy_component: (
             name: "repeater_head",
-            health: 2000,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -257,6 +271,10 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterHead,
+        ),
+        health_component: (
+            max_health: 2000,
+            health: 2000,
         ),
         hitbox_component: (
             width: 30.0,
@@ -288,7 +306,6 @@
         ),
         enemy_component: (
             name: "repeater_right_shoulder",
-            health: 2000,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -298,6 +315,10 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterShoulder,
+        ),
+        health_component: (
+            max_health: 2000,
+            health: 2000,
         ),
         hitbox_component: (
             width: 28.0,
@@ -329,7 +350,6 @@
         ),
         enemy_component: (
             name: "repeater_left_shoulder",
-            health: 2000,
             defense_damage: 0,
             collectables_probs: [
                 ("", 0.0),
@@ -339,6 +359,10 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterShoulder,
+        ),
+        health_component: (
+            max_health: 2000,
+            health: 2000,
         ),
         hitbox_component: (
             width: 28.0,
@@ -370,7 +394,6 @@
         ),
         enemy_component: (
             name: "repeater_right_arm",
-            health: 2000,
             defense_damage: 0,
             current_velocity_y: -30,
             collectables_probs: [
@@ -381,6 +404,10 @@
                 ("money_5", 0.5),
             ],
             enemy_type: RepeaterArm,
+        ),
+        health_component: (
+            max_health: 2000,
+            health: 2000,
         ),
         hitbox_component: (
             width: 20.0,

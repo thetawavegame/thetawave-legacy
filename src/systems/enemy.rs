@@ -1,11 +1,10 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     components::{
-        DefenseTag, Enemy, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent,
-        Rigidbody,
+        Enemy, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent, Rigidbody,
     },
     constants::ARENA_MIN_Y,
-    events::EnemyDestroyedEvent,
+    events::{EnemyDestroyedEvent, EnemyReachedBottomEvent},
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},
@@ -19,32 +18,40 @@ impl<'s> System<'s> for EnemySystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Enemy>,
-        ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, Time>,
         Write<'s, EventChannel<EnemyDestroyedEvent>>,
+        Write<'s, EventChannel<EnemyReachedBottomEvent>>,
     );
 
     fn run(
         &mut self,
         (
             entities,
-            mut enemys,
-            defense_tags,
+            mut enemies,
             mut healths,
             mut transforms,
             mut motions,
             hitboxes,
             time,
             mut enemy_destroyed_event_channel,
+            mut enemy_reached_bottom_event_channel,
         ): Self::SystemData,
     ) {
-        for (enemy_entity, enemy_component, enemy_transform, enemy_motion, enemy_hitbox) in (
+        for (
+            enemy_entity,
+            enemy_component,
+            enemy_health,
+            enemy_transform,
+            enemy_motion,
+            enemy_hitbox,
+        ) in (
             &*entities,
-            &mut enemys,
+            &mut enemies,
+            &mut healths,
             &mut transforms,
             &mut motions,
             &hitboxes,
@@ -57,18 +64,18 @@ impl<'s> System<'s> for EnemySystem {
             //transform the spaceship in x and y by the currrent velocity in x and y
             enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion);
 
-            enemy_component.health -= enemy_component.poison;
+            enemy_health.health -= enemy_component.poison;
+            enemy_health.constrain();
 
             //conditions for despawning
             if enemy_transform.translation()[1] + enemy_hitbox.height / 2.0 < ARENA_MIN_Y {
-                //defense is damage is enemy gets past
-                for (defense_tag, health) in (&defense_tags, &mut healths).join() {
-                    health.health -= enemy_component.defense_damage;
-                }
+                //defense is damaged if enemy gets past
+                enemy_reached_bottom_event_channel
+                    .single_write(EnemyReachedBottomEvent::new(enemy_component.defense_damage));
                 entities
                     .delete(enemy_entity)
                     .expect("unable to delete entity");
-            } else if enemy_component.health < 0.0 {
+            } else if enemy_health.health <= 0.0 {
                 enemy_destroyed_event_channel.single_write(EnemyDestroyedEvent::new(enemy_entity));
             }
 

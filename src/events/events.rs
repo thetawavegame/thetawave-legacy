@@ -76,3 +76,14 @@ impl DefenseItemGetEvent {
         DefenseItemGetEvent { stat_effects }
     }
 }
+
+#[derive(Debug)]
+pub struct EnemyReachedBottomEvent {
+    pub damage: f32,
+}
+
+impl EnemyReachedBottomEvent {
+    pub fn new(damage: f32) -> EnemyReachedBottomEvent {
+        EnemyReachedBottomEvent { damage }
+    }
+}
