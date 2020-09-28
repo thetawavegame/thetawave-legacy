@@ -1,5 +1,5 @@
 use crate::{
-    components::{Hitbox2DComponent, Living, Motion2DComponent, Rigidbody},
+    components::{Hitbox2DComponent, Motion2DComponent, Rigidbody},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
@@ -18,8 +18,6 @@ pub struct Spaceship {
     pub barrel_action_timer: f32,
     pub pos_x: f32,
     pub pos_y: f32,
-    pub max_health: f32,
-    pub health: f32,
     pub money: usize,
     pub steel_barrel: bool,
     pub collision_damage: f32,
@@ -61,21 +59,6 @@ impl Rigidbody for Spaceship {
             transform.set_translation_y(ARENA_MAX_Y - (hitbox_2d.height / 2.0));
             motion_2d.velocity.y = -1.0 * motion_2d.velocity.y.abs();
         }
-    }
-}
-
-impl Living for Spaceship {
-    fn health(&self) -> f32 {
-        self.health
-    }
-    fn max_health(&self) -> f32 {
-        self.max_health
-    }
-    fn set_health(&mut self, value: f32) {
-        self.health = value;
-    }
-    fn set_max_health(&mut self, value: f32) {
-        self.max_health = value;
     }
 }
 
