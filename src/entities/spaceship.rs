@@ -83,8 +83,8 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
     };
 
     let health = HealthComponent {
-        health: SPACESHIP_HEALTH,
-        max_health: SPACESHIP_HEALTH,
+        value: SPACESHIP_HEALTH,
+        max_value: SPACESHIP_HEALTH,
     };
 
     world

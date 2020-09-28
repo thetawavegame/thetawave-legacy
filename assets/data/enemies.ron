@@ -22,8 +22,8 @@
             enemy_type: Drone,
         ),
         health_component: (
-            max_health: 60,
-            health: 60,
+            max_value: 60,
+            value: 60,
         ),
         hitbox_component: (
             width: 14.0,
@@ -83,8 +83,8 @@
             enemy_type: Pawn,
         ),
         health_component: (
-            max_health: 110,
-            health: 110,
+            max_value: 110,
+            value: 110,
         ),
         hitbox_component: (
             width: 14.0,
@@ -123,8 +123,8 @@
             enemy_type: Hauler,
         ),
         health_component: (
-            max_health: 220,
-            health: 220,
+            max_value: 220,
+            value: 220,
         ),
         hitbox_component: (
             width: 14.0,
@@ -185,8 +185,8 @@
             enemy_type: Strafer,
         ),
         health_component: (
-            max_health: 75,
-            health: 75,
+            max_value: 75,
+            value: 75,
         ),
         hitbox_component: (
             width: 22.0,
@@ -229,8 +229,8 @@
             enemy_type: RepeaterBody,
         ),
         health_component: (
-            max_health: 10000,
-            health: 10000,
+            max_value: 10000,
+            value: 10000,
         ),
         hitbox_component: (
             width: 48.0,
@@ -273,8 +273,8 @@
             enemy_type: RepeaterHead,
         ),
         health_component: (
-            max_health: 2000,
-            health: 2000,
+            max_value: 2000,
+            value: 2000,
         ),
         hitbox_component: (
             width: 30.0,
@@ -317,8 +317,8 @@
             enemy_type: RepeaterShoulder,
         ),
         health_component: (
-            max_health: 2000,
-            health: 2000,
+            max_value: 2000,
+            value: 2000,
         ),
         hitbox_component: (
             width: 28.0,
@@ -361,8 +361,8 @@
             enemy_type: RepeaterShoulder,
         ),
         health_component: (
-            max_health: 2000,
-            health: 2000,
+            max_value: 2000,
+            value: 2000,
         ),
         hitbox_component: (
             width: 28.0,
@@ -406,8 +406,8 @@
             enemy_type: RepeaterArm,
         ),
         health_component: (
-            max_health: 2000,
-            health: 2000,
+            max_value: 2000,
+            value: 2000,
         ),
         hitbox_component: (
             width: 20.0,

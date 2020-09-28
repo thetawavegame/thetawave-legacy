@@ -58,52 +58,52 @@ impl<'s> System<'s> for EnemySystem {
         )
             .join()
         {
-            //constrain in arena
+            // constrain in arena
             enemy_component.constrain_to_arena(enemy_transform, enemy_motion, enemy_hitbox);
 
-            //transform the spaceship in x and y by the currrent velocity in x and y
+            // transform the spaceship in x and y by the currrent velocity in x and y
             enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion);
 
-            enemy_health.health -= enemy_component.poison;
+            enemy_health.value -= enemy_component.poison;
             enemy_health.constrain();
 
-            //conditions for despawning
+            // conditions for despawning
             if enemy_transform.translation()[1] + enemy_hitbox.height / 2.0 < ARENA_MIN_Y {
-                //defense is damaged if enemy gets past
+                // defense is damaged if enemy gets past
                 enemy_reached_bottom_event_channel
                     .single_write(EnemyReachedBottomEvent::new(enemy_component.defense_damage));
                 entities
                     .delete(enemy_entity)
                     .expect("unable to delete entity");
-            } else if enemy_health.health <= 0.0 {
+            } else if enemy_health.value <= 0.0 {
                 enemy_destroyed_event_channel.single_write(EnemyDestroyedEvent::new(enemy_entity));
             }
 
-            //behavior for enemies based on its enemy_type attribute
+            // behavior for enemies based on its enemy_type attribute
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
-                    //accelerate in -y direction
+                    // accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Drone => {
-                    //accelerate in -y direction
+                    // accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Hauler => {
-                    //accelerate in -y direction
+                    // accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Strafer => {
-                    //accelerate in -y direction
+                    // accelerate in -y direction
                     enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     enemy_component.accelerate(1.0, 0.0, enemy_motion);
                 }
 
                 EnemyType::RepeaterBody => {
-                    //accelerate in -y direction
+                    // accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 30.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
@@ -112,7 +112,7 @@ impl<'s> System<'s> for EnemySystem {
                 }
 
                 EnemyType::RepeaterHead => {
-                    //accelerate in -y direction
+                    // accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
@@ -121,14 +121,14 @@ impl<'s> System<'s> for EnemySystem {
                 }
 
                 EnemyType::RepeaterShoulder => {
-                    //accelerate in -y direction
+                    // accelerate in -y direction
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_motion.velocity.y = 0.0;
                     }
 
-                    //rotate back and forth
+                    // rotate back and forth
                     if enemy_transform.euler_angles().2 > 0.1 {
                         enemy_motion.angular_velocity = 0.05;
                     } else if enemy_transform.euler_angles().2 < -0.1 {

@@ -5,7 +5,7 @@ use crate::{
         HealthComponent, Item, ManualFireComponent, Motion2DComponent, Spaceship,
     },
     entities::spawn_blast_explosion,
-    events::{DefenseItemGetEvent, PlayerCollisionEvent},
+    events::{ItemEffectGetEvent, PlayerCollisionEvent},
     resources::SpriteResource,
 };
 use amethyst::{
@@ -61,7 +61,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                 if !spaceship.steel_barrel
                     || (!spaceship.barrel_action_left && !spaceship.barrel_action_right)
                 {
-                    spaceship_health.health -= enemy.collision_damage;
+                    spaceship_health.value -= enemy.collision_damage;
                 }
 
                 if let Some(velocity) = event.collision_velocity {
@@ -117,8 +117,8 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 let blast_transform = transforms.get(event.colliding_entity).unwrap();
 
-                //first check if the blast is allied with the player
-                //TODO blast should not hit if player is currently barrel rolling
+                // first check if the blast is allied with the player
+                // TODO blast should not hit if player is currently barrel rolling
                 match blast.blast_type {
                     // using match here for ease of adding enemy blast effects (such as poison) in the future
                     BlastType::Enemy => {
@@ -133,7 +133,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                             blast_transform.clone(),
                             &lazy_update,
                         );
-                        spaceship_health.health -= blast.damage;
+                        spaceship_health.value -= blast.damage;
                     }
                     _ => {}
                 }
@@ -160,7 +160,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         Read<'s, AssetStorage<Source>>,
         ReadExpect<'s, Sounds>,
         Option<Read<'s, Output>>,
-        Write<'s, EventChannel<DefenseItemGetEvent>>,
+        Write<'s, EventChannel<ItemEffectGetEvent>>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -200,7 +200,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
 
                 if item.stat_effects.contains_key("max_defense") {
                     defense_item_get_event_channel
-                        .single_write(DefenseItemGetEvent::new(item.stat_effects.clone()));
+                        .single_write(ItemEffectGetEvent::new(item.stat_effects.clone()));
                 }
 
                 // add stats to spaceship
@@ -247,13 +247,13 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                 }
 
                 if item.stat_effects.contains_key("health_multiply") {
-                    spaceship_health.max_health *= item.stat_effects["health_multiply"];
-                    spaceship_health.health = spaceship_health.max_health;
+                    spaceship_health.max_value *= item.stat_effects["health_multiply"];
+                    spaceship_health.value = spaceship_health.max_value;
                 }
 
                 if item.stat_effects.contains_key("health_add") {
-                    spaceship_health.max_health += item.stat_effects["health_add"];
-                    spaceship_health.health = spaceship_health.max_health;
+                    spaceship_health.max_value += item.stat_effects["health_add"];
+                    spaceship_health.value = spaceship_health.max_value;
                 }
 
                 if item.stat_effects.contains_key("blast_size_multiplier") {
@@ -316,7 +316,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             if let Some(consumable) = consumables.get(event.colliding_entity) {
                 let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
-                spaceship_health.health += consumable.health_value;
+                spaceship_health.value += consumable.health_value;
                 spaceship.money += consumable.money_value;
 
                 if consumable.money_value == 1 {
@@ -328,7 +328,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                 }
 
                 for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
-                    defense_health.health += consumable.defense_value;
+                    defense_health.value += consumable.defense_value;
                 }
 
                 entities

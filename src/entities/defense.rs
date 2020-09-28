@@ -12,8 +12,8 @@ pub fn initialize_defense(world: &mut World) {
         .create_entity()
         .with(DefenseTag::default())
         .with(HealthComponent {
-            health: DEFENSE,
-            max_health: DEFENSE,
+            value: DEFENSE,
+            max_value: DEFENSE,
         })
         .build();
 }
