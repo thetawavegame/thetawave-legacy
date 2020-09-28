@@ -1,6 +1,6 @@
 use crate::{
     components::{DefenseTag, HealthComponent},
-    events::{DefenseItemGetEvent, EnemyReachedBottomEvent},
+    events::{EnemyReachedBottomEvent, ItemEffectGetEvent},
 };
 use amethyst::{
     ecs::prelude::{Join, ReadStorage, System, WriteStorage},
@@ -10,13 +10,13 @@ use amethyst::{
 
 #[derive(Default)]
 pub struct DefenseSystem {
-    defense_item_get_event_reader: Option<ReaderId<DefenseItemGetEvent>>,
+    item_effect_get_event_reader: Option<ReaderId<ItemEffectGetEvent>>,
     enemy_reached_bottom_event_reader: Option<ReaderId<EnemyReachedBottomEvent>>,
 }
 
 impl<'s> System<'s> for DefenseSystem {
     type SystemData = (
-        Read<'s, EventChannel<DefenseItemGetEvent>>,
+        Read<'s, EventChannel<ItemEffectGetEvent>>,
         Read<'s, EventChannel<EnemyReachedBottomEvent>>,
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
@@ -24,9 +24,9 @@ impl<'s> System<'s> for DefenseSystem {
 
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
-        self.defense_item_get_event_reader = Some(
+        self.item_effect_get_event_reader = Some(
             world
-                .fetch_mut::<EventChannel<DefenseItemGetEvent>>()
+                .fetch_mut::<EventChannel<ItemEffectGetEvent>>()
                 .register_reader(),
         );
         self.enemy_reached_bottom_event_reader = Some(
@@ -49,13 +49,13 @@ impl<'s> System<'s> for DefenseSystem {
             health.constrain();
         }
 
-        for event in defense_item_get_event_channel
-            .read(self.defense_item_get_event_reader.as_mut().unwrap())
+        for event in
+            defense_item_get_event_channel.read(self.item_effect_get_event_reader.as_mut().unwrap())
         {
             for (_defense_tag, health) in (&defense_tags, &mut healths).join() {
                 if event.stat_effects.contains_key("max_defense") {
-                    health.max_health += event.stat_effects["max_defense"];
-                    health.health += event.stat_effects["max_defense"];
+                    health.max_value += event.stat_effects["max_defense"];
+                    health.value += event.stat_effects["max_defense"];
                 }
             }
         }
@@ -64,7 +64,7 @@ impl<'s> System<'s> for DefenseSystem {
             .read(self.enemy_reached_bottom_event_reader.as_mut().unwrap())
         {
             for (_defense_tag, health) in (&defense_tags, &mut healths).join() {
-                health.health -= event.damage;
+                health.value -= event.damage;
             }
         }
     }

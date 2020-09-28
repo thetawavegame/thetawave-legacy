@@ -15,6 +15,7 @@ mod spaceship;
 mod spawner;
 mod status_bar;
 mod store;
+mod tags;
 mod timelimit;
 mod weapons;
 
@@ -25,7 +26,7 @@ pub use self::{
     consumable::Consumable,
     enemy::{Enemy, EnemySpawnerTag, EnemyType},
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
-    health::{DefenseTag, HealthComponent},
+    health::HealthComponent,
     hitbox::Hitbox2DComponent,
     item::Item,
     motion2d::Motion2DComponent,
@@ -34,6 +35,7 @@ pub use self::{
     spawner::{choose_random_name, SpawnProbabilities, Spawner},
     status_bar::{StatusBar, StatusType},
     store::Store,
+    tags::DefenseTag,
     timelimit::TimeLimitComponent,
     weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };

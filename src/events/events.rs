@@ -67,13 +67,13 @@ impl EnemyCollisionEvent {
 }
 
 #[derive(Debug)]
-pub struct DefenseItemGetEvent {
+pub struct ItemEffectGetEvent {
     pub stat_effects: HashMap<String, f32>,
 }
 
-impl DefenseItemGetEvent {
-    pub fn new(stat_effects: HashMap<String, f32>) -> DefenseItemGetEvent {
-        DefenseItemGetEvent { stat_effects }
+impl ItemEffectGetEvent {
+    pub fn new(stat_effects: HashMap<String, f32>) -> ItemEffectGetEvent {
+        ItemEffectGetEvent { stat_effects }
     }
 }
 

@@ -71,7 +71,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                     && enemy.name != "repeater_left_arm"
                 {
                     if let Some(velocity) = event.collision_velocity {
-                        enemy_health.health -= spaceship.collision_damage;
+                        enemy_health.value -= spaceship.collision_damage;
                         enemy_motion.velocity.x = -enemy_motion.velocity.x + velocity.x;
                         enemy_motion.velocity.y = -enemy_motion.velocity.y + velocity.y;
                     }
@@ -118,7 +118,7 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
                         && enemy.name != "repeater_head"
                     {
                         if let Some(velocity) = event.collision_velocity {
-                            enemy_health.health -= SPACESHIP_COLLISION_DAMAGE;
+                            enemy_health.value -= SPACESHIP_COLLISION_DAMAGE;
                             enemy_motion.velocity.x = velocity.x;
                             enemy_motion.velocity.y = velocity.y;
                         }
@@ -196,7 +196,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                             &lazy_update,
                         );
 
-                        enemy_health.health -= blast.damage;
+                        enemy_health.value -= blast.damage;
                         enemy.poison = blast.poison_damage;
                     }
 
