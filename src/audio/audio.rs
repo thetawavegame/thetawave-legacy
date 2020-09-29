@@ -33,7 +33,11 @@ pub fn initialize_audio(world: &mut World) {
             crash_sfx: load_audio_track(&loader, &world, "audio/crash.ogg"),
             explosion_sfx: load_audio_track(&loader, &world, "audio/explosion.ogg"),
             spaceship_hit_sfx: load_audio_track(&loader, &world, "audio/spaceship_hit.ogg"),
-            cash_register_bell_sfx: load_audio_track(&loader, &world, "audio/cash_register_bell.ogg"),
+            cash_register_bell_sfx: load_audio_track(
+                &loader,
+                &world,
+                "audio/cash_register_bell.ogg",
+            ),
         }
     };
 

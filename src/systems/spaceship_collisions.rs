@@ -182,7 +182,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
             mut manual_fires,
             mut item_get_event_channel,
             mut play_audio_channel,
-            sounds
+            sounds,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -256,7 +256,9 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                     blaster.size_multiplier += item.stat_effects["blast_size_multiplier"];
                 }
 
-                play_audio_channel.single_write(PlayAudioEvent { source: sounds.item_sfx.clone() });
+                play_audio_channel.single_write(PlayAudioEvent {
+                    source: sounds.item_sfx.clone(),
+                });
 
                 entities
                     .delete(event.colliding_entity)
@@ -322,7 +324,9 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                         source: sounds.large_rock_sfx.clone(),
                     });
                 } else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
-                    play_audio_channel.single_write(PlayAudioEvent { source: sounds.wrench_sfx.clone() });
+                    play_audio_channel.single_write(PlayAudioEvent {
+                        source: sounds.wrench_sfx.clone(),
+                    });
                 }
 
                 for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
