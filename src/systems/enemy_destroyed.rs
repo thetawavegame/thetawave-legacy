@@ -1,13 +1,11 @@
 use crate::{
-    audio::{play_sfx, Sounds},
+    audio::Sounds,
     components::{choose_random_name, Enemy},
     entities::{spawn_consumable, spawn_explosion},
-    events::EnemyDestroyedEvent,
+    events::{EnemyDestroyedEvent, PlayAudioEvent},
     resources::{ConsumableEntityData, SpriteResource},
 };
 use amethyst::{
-    assets::AssetStorage,
-    audio::{output::Output, Source},
     core::transform::Transform,
     ecs::prelude::{Entities, LazyUpdate, ReadExpect, ReadStorage, System},
     ecs::*,
@@ -30,9 +28,8 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
-        Read<'s, AssetStorage<Source>>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
-        Option<Read<'s, Output>>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -54,16 +51,17 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             consumable_pool,
             sprite_resource,
             lazy_update,
-            storage,
+            mut play_audio_channel,
             sounds,
-            audio_output,
         ): Self::SystemData,
     ) {
         for event in enemy_destroyed_event_channel.read(self.event_reader.as_mut().unwrap()) {
             let enemy_transform = transforms.get(event.enemy).unwrap();
             let enemy_component = enemies.get(event.enemy).unwrap();
 
-            play_sfx(&sounds.explosion_sfx, &storage, audio_output.as_deref());
+            play_audio_channel.single_write(PlayAudioEvent {
+                source: sounds.explosion_sfx.clone(),
+            });
 
             spawn_explosion(
                 &entities,

@@ -111,6 +111,11 @@ impl Default for SpaceShooter {
                     "enemy_destroyed_system",
                     &["enemy_system"],
                 )
+                .with(
+                    systems::PlayAudioSystem::default(),
+                    "play_audio_system",
+                    &[],
+                )
                 .build(),
         }
     }
