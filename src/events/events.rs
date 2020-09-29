@@ -1,8 +1,4 @@
-use amethyst::{
-  audio::{SourceHandle},
-  core::math::Vector2,
-  ecs::prelude::Entity
-};
+use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
 use std::collections::HashMap;
 
 #[derive(Debug)]

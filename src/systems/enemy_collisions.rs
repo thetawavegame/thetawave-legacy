@@ -53,7 +53,9 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the enemy colliding with an entity with a spaceship component?
             if let Some(spaceship) = spaceships.get(event.colliding_entity) {
-                play_audio_channel.single_write(PlayAudioEvent { source: sounds.crash_sfx.clone() });
+                play_audio_channel.single_write(PlayAudioEvent {
+                    source: sounds.crash_sfx.clone(),
+                });
 
                 let enemy = enemies.get_mut(event.enemy_entity).unwrap();
                 let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();

@@ -1,7 +1,4 @@
-use crate::{
-    audio::{play_sfx},
-    events::PlayAudioEvent,
-};
+use crate::{audio::play_sfx, events::PlayAudioEvent};
 use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
