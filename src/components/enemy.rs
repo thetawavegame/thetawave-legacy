@@ -25,7 +25,6 @@ pub enum EnemyType {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Enemy {
     pub name: String,
-    pub health: f32,
     pub defense_damage: f32,
     #[serde(default = "des_collision_damage")]
     pub collision_damage: f32,

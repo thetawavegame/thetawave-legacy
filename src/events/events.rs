@@ -1,4 +1,5 @@
 use amethyst::{core::math::Vector2, ecs::prelude::Entity};
+use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct CollisionEvent {
@@ -62,6 +63,28 @@ impl EnemyCollisionEvent {
             colliding_entity: entity_b,
             collision_velocity: velocity,
         }
+    }
+}
+
+#[derive(Debug)]
+pub struct ItemEffectGetEvent {
+    pub stat_effects: HashMap<String, f32>,
+}
+
+impl ItemEffectGetEvent {
+    pub fn new(stat_effects: HashMap<String, f32>) -> ItemEffectGetEvent {
+        ItemEffectGetEvent { stat_effects }
+    }
+}
+
+#[derive(Debug)]
+pub struct EnemyReachedBottomEvent {
+    pub damage: f32,
+}
+
+impl EnemyReachedBottomEvent {
+    pub fn new(damage: f32) -> EnemyReachedBottomEvent {
+        EnemyReachedBottomEvent { damage }
     }
 }
 
