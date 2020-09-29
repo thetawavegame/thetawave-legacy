@@ -1,11 +1,11 @@
 use crate::{
     components::{
-        BlastComponent, BlastType, BlasterComponent, Consumable, Defense, Enemy, Item, Living,
-        ManualFireComponent, Motion2DComponent, Spaceship,
+        BlastComponent, BlastType, BlasterComponent, Consumable, DefenseTag, Enemy,
+        HealthComponent, Item, ManualFireComponent, Motion2DComponent, Spaceship,
     },
     constants::{ITEM_SFX, LARGE_ROCK_SFX, SMALL_ROCK_SFX, WRENCH_SFX},
     entities::spawn_blast_explosion,
-    events::{PlayAudioEvent, PlayerCollisionEvent},
+    events::{ItemEffectGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::SpriteResource,
 };
 use amethyst::{
@@ -25,6 +25,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
         ReadStorage<'s, Enemy>,
         WriteStorage<'s, Spaceship>,
         WriteStorage<'s, Motion2DComponent>,
+        WriteStorage<'s, HealthComponent>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -38,13 +39,14 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
     fn run(
         &mut self,
-        (collision_event_channel, enemies, mut spaceships, mut motions): Self::SystemData,
+        (collision_event_channel, enemies, mut spaceships, mut motions, mut healths): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with an enemy component?
             if let Some(enemy) = enemies.get(event.colliding_entity) {
                 let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_motion = motions.get_mut(event.player_entity).unwrap();
+                let spaceship_health = healths.get_mut(event.player_entity).unwrap();
 
                 if spaceship.barrel_action_left {
                     spaceship.barrel_action_right = true;
@@ -54,12 +56,10 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                     spaceship.barrel_action_right = false;
                 }
 
-                let enemy_dead = enemy.health <= 0.0;
-
-                if (!spaceship.steel_barrel && !enemy_dead)
+                if !spaceship.steel_barrel
                     || (!spaceship.barrel_action_left && !spaceship.barrel_action_right)
                 {
-                    spaceship.health -= enemy.collision_damage;
+                    spaceship_health.value -= enemy.collision_damage;
                 }
 
                 if let Some(velocity) = event.collision_velocity {
@@ -81,7 +81,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
-        WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
         ReadExpect<'s, SpriteResource>,
@@ -102,7 +102,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         (
             collision_event_channel,
             entities,
-            mut spaceships,
+            mut healths,
             mut blasts,
             transforms,
             sprite_resource,
@@ -112,11 +112,11 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with a blast component?
             if let Some(blast) = blasts.get_mut(event.colliding_entity) {
-                let spaceship = spaceships.get_mut(event.player_entity).unwrap();
+                let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 let blast_transform = transforms.get(event.colliding_entity).unwrap();
 
-                //first check if the blast is allied with the player
-                //if the blast collides with the player and the player is not currently barrel rolling the blast hits
+                // first check if the blast is allied with the player
+                // TODO blast should not hit if player is currently barrel rolling
                 match blast.blast_type {
                     // using match here for ease of adding enemy blast effects (such as poison) in the future
                     BlastType::Enemy => {
@@ -131,7 +131,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                             blast_transform.clone(),
                             &lazy_update,
                         );
-                        spaceship.health -= blast.damage;
+                        spaceship_health.value -= blast.damage;
                     }
                     _ => {}
                 }
@@ -151,11 +151,12 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         Entities<'s>,
         ReadStorage<'s, Item>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, Defense>,
+        WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
+        Write<'s, EventChannel<ItemEffectGetEvent>>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -174,30 +175,26 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
             entities,
             items,
             mut spaceships,
-            mut defenses,
+            mut healths,
             mut motions,
             mut blasters,
             mut manual_fires,
             mut play_audio_channel,
+            mut defense_item_get_event_channel,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with an item component?
             if let Some(item) = items.get(event.colliding_entity) {
                 let spaceship = spaceships.get_mut(event.player_entity).unwrap();
+                let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 let blaster = blasters.get_mut(event.player_entity).unwrap();
                 let manual_fire = manual_fires.get_mut(event.player_entity).unwrap();
                 let motion = motions.get_mut(event.player_entity).unwrap();
 
                 if item.stat_effects.contains_key("max_defense") {
-                    for defense in (&mut defenses).join() {
-                        // increases maximum capacity for defense
-                        defense.set_max_health(
-                            defense.max_health() + item.stat_effects["max_defense"],
-                        );
-                        // sets current defense to new maximum value
-                        defense.set_health(defense.health() + item.stat_effects["max_defense"]);
-                    }
+                    defense_item_get_event_channel
+                        .single_write(ItemEffectGetEvent::new(item.stat_effects.clone()));
                 }
 
                 // add stats to spaceship
@@ -244,17 +241,13 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                 }
 
                 if item.stat_effects.contains_key("health_multiply") {
-                    spaceship.set_max_health(
-                        spaceship.max_health()
-                            + (item.stat_effects["health_multiply"] * spaceship.max_health),
-                    );
-                    spaceship.set_health(spaceship.max_health)
+                    spaceship_health.max_value *= item.stat_effects["health_multiply"];
+                    spaceship_health.value = spaceship_health.max_value;
                 }
 
                 if item.stat_effects.contains_key("health_add") {
-                    spaceship
-                        .set_max_health(spaceship.max_health() + item.stat_effects["health_add"]);
-                    spaceship.set_health(spaceship.max_health);
+                    spaceship_health.max_value += item.stat_effects["health_add"];
+                    spaceship_health.value = spaceship_health.max_value;
                 }
 
                 if item.stat_effects.contains_key("blast_size_multiplier") {
@@ -282,7 +275,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Entities<'s>,
         ReadStorage<'s, Consumable>,
         WriteStorage<'s, Spaceship>,
-        WriteStorage<'s, Defense>,
+        ReadStorage<'s, DefenseTag>,
+        WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
     );
 
@@ -302,7 +296,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             entities,
             consumables,
             mut spaceships,
-            mut defenses,
+            defense_tags,
+            mut healths,
             mut play_audio_channel,
         ): Self::SystemData,
     ) {
@@ -310,7 +305,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             // Is the player colliding with an entity with an item component?
             if let Some(consumable) = consumables.get(event.colliding_entity) {
                 let spaceship = spaceships.get_mut(event.player_entity).unwrap();
-                spaceship.health += consumable.health_value;
+                let spaceship_health = healths.get_mut(event.player_entity).unwrap();
+                spaceship_health.value += consumable.health_value;
                 spaceship.money += consumable.money_value;
 
                 if consumable.money_value == 1 {
@@ -325,8 +321,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                     play_audio_channel.single_write(PlayAudioEvent { value: WRENCH_SFX });
                 }
 
-                for defense in (&mut defenses).join() {
-                    defense.defense += consumable.defense_value;
+                for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
+                    defense_health.value += consumable.defense_value;
                 }
 
                 entities

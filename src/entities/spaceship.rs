@@ -1,7 +1,7 @@
 use crate::{
     components::{
-        BlastType, BlasterComponent, Hitbox2DComponent, ManualFireComponent, Motion2DComponent,
-        Spaceship,
+        BlastType, BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
+        Motion2DComponent, Spaceship,
     },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
@@ -82,6 +82,11 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         ready: false,
     };
 
+    let health = HealthComponent {
+        value: SPACESHIP_HEALTH,
+        max_value: SPACESHIP_HEALTH,
+    };
+
     world
         .create_entity()
         .with(sprite_render)
@@ -95,8 +100,6 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             barrel_action_timer: SPACESHIP_BARREL_DURATION,
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
-            max_health: SPACESHIP_HEALTH,
-            health: SPACESHIP_HEALTH,
             money: SPACESHIP_MONEY,
             steel_barrel: false,
             collision_damage: SPACESHIP_COLLISION_DAMAGE,
@@ -106,6 +109,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         .with(manual_fire)
         .with(hitbox)
         .with(motion_2d)
+        .with(health)
         .with(local_transform)
         .with(Transparent)
         .build();

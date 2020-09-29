@@ -1,5 +1,7 @@
 use crate::{
-    components::{BlasterComponent, Living, ManualFireComponent, Motion2DComponent, Spaceship},
+    components::{
+        BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent, Spaceship,
+    },
     constants::SPACESHIP_LASER_SFX,
     events::PlayAudioEvent,
     resources::SpriteResource,
@@ -18,6 +20,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         Entities<'s>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
@@ -34,6 +37,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             entities,
             mut transforms,
             mut spaceships,
+            mut healths,
             mut motion2d_components,
             blasters,
             mut manualfire,
@@ -49,8 +53,9 @@ impl<'s> System<'s> for SpaceshipSystem {
         let mut barrel_left = input.action_is_down("barrel_left").unwrap();
         let mut barrel_right = input.action_is_down("barrel_right").unwrap();
 
-        for (spaceship, transform, motion2d, blaster, manualfire) in (
+        for (spaceship, health, transform, motion2d, blaster, manualfire) in (
             &mut spaceships,
+            &mut healths,
             &mut transforms,
             &mut motion2d_components,
             &blasters,
@@ -94,7 +99,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             }
 
             spaceship.initiate_barrel_roll(barrel_left, barrel_right);
-            spaceship.constrain_health();
+            health.constrain();
         }
     }
 }
