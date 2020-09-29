@@ -1,6 +1,6 @@
 use crate::{
+    audio::Sounds,
     components::{Spaceship, Store},
-    constants::CASH_REGISTER_BELL,
     events::PlayAudioEvent,
     resources::{ItemPool, SpriteResource},
 };
@@ -24,6 +24,7 @@ impl<'s> System<'s> for StoreSystem {
         Read<'s, InputHandler<StringBindings>>,
         WriteStorage<'s, Spaceship>,
         Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn run(
@@ -38,6 +39,7 @@ impl<'s> System<'s> for StoreSystem {
             input,
             mut spaceships,
             mut play_audio_channel,
+            sounds,
         ): Self::SystemData,
     ) {
         let buy_0_action = input.action_is_down("buy_0").unwrap();
@@ -74,7 +76,7 @@ impl<'s> System<'s> for StoreSystem {
                         ))
                 {
                     play_audio_channel.single_write(PlayAudioEvent {
-                        value: CASH_REGISTER_BELL,
+                        source: sounds.cash_register_bell_sfx.clone(),
                     });
                 }
             }

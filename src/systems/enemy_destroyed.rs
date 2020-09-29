@@ -1,6 +1,6 @@
 use crate::{
+    audio::Sounds,
     components::{choose_random_name, Enemy},
-    constants::EXPLOSION_SFX,
     entities::{spawn_consumable, spawn_explosion},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
     resources::{ConsumableEntityData, SpriteResource},
@@ -29,6 +29,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -51,6 +52,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
+            sounds,
         ): Self::SystemData,
     ) {
         for event in enemy_destroyed_event_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -58,7 +60,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             let enemy_component = enemies.get(event.enemy).unwrap();
 
             play_audio_channel.single_write(PlayAudioEvent {
-                value: EXPLOSION_SFX,
+                source: sounds.explosion_sfx.clone(),
             });
 
             spawn_explosion(
