@@ -1,8 +1,8 @@
 use crate::{
+    audio::Sounds,
     components::{
         BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent, Spaceship,
     },
-    constants::SPACESHIP_LASER_SFX,
     events::PlayAudioEvent,
     resources::SpriteResource,
 };
@@ -29,6 +29,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn run(
@@ -46,6 +47,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
+            sounds,
         ): Self::SystemData,
     ) {
         // collect input bools
@@ -94,7 +96,7 @@ impl<'s> System<'s> for SpaceshipSystem {
                 );
                 manualfire.ready = false;
                 play_audio_channel.single_write(PlayAudioEvent {
-                    value: SPACESHIP_LASER_SFX,
+                    source: sounds.spaceship_laser_sfx.clone(),
                 });
             }
 

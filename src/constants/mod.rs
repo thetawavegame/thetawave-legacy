@@ -97,14 +97,3 @@ pub const ROLL_BAR_LIMIT: f32 = 28.0;
 pub const RESTOCK_BAR_X: f32 = 324.0;
 pub const RESTOCK_BAR_Y: f32 = 90.0;
 pub const RESTOCK_BAR_LIMIT: f32 = 28.0;
-
-// sound effects
-pub const SMALL_ROCK_SFX: &str = "small_rock_sfx";
-pub const LARGE_ROCK_SFX: &str = "large_rock_sfx";
-pub const WRENCH_SFX: &str = "wrench_sfx";
-pub const ITEM_SFX: &str = "item_sfx";
-pub const SPACESHIP_LASER_SFX: &str = "spaceship_laser_sfx";
-pub const CRASH_SFX: &str = "crash_sfx";
-pub const EXPLOSION_SFX: &str = "explosion_sfx";
-pub const SPACESHIP_HIT_SFX: &str = "spaceship_hit_sfx";
-pub const CASH_REGISTER_BELL: &str = "cash_register_bell_sfx";

@@ -1,9 +1,9 @@
 use crate::{
+    audio::Sounds,
     components::{
         BlastComponent, BlastType, BlasterComponent, Consumable, DefenseTag, Enemy,
         HealthComponent, Item, ManualFireComponent, Motion2DComponent, Spaceship,
     },
-    constants::{ITEM_SFX, LARGE_ROCK_SFX, SMALL_ROCK_SFX, WRENCH_SFX},
     entities::spawn_blast_explosion,
     events::{ItemEffectGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::SpriteResource,
@@ -155,8 +155,9 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
-        Write<'s, EventChannel<PlayAudioEvent>>,
         Write<'s, EventChannel<ItemEffectGetEvent>>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -179,8 +180,9 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
             mut motions,
             mut blasters,
             mut manual_fires,
+            mut item_get_event_channel,
             mut play_audio_channel,
-            mut defense_item_get_event_channel,
+            sounds
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -193,7 +195,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                 let motion = motions.get_mut(event.player_entity).unwrap();
 
                 if item.stat_effects.contains_key("max_defense") {
-                    defense_item_get_event_channel
+                    item_get_event_channel
                         .single_write(ItemEffectGetEvent::new(item.stat_effects.clone()));
                 }
 
@@ -254,7 +256,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                     blaster.size_multiplier += item.stat_effects["blast_size_multiplier"];
                 }
 
-                play_audio_channel.single_write(PlayAudioEvent { value: ITEM_SFX });
+                play_audio_channel.single_write(PlayAudioEvent { source: sounds.item_sfx.clone() });
 
                 entities
                     .delete(event.colliding_entity)
@@ -278,6 +280,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -299,6 +302,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             defense_tags,
             mut healths,
             mut play_audio_channel,
+            sounds,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -311,14 +315,14 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
 
                 if consumable.money_value == 1 {
                     play_audio_channel.single_write(PlayAudioEvent {
-                        value: SMALL_ROCK_SFX,
+                        source: sounds.small_rock_sfx.clone(),
                     });
                 } else if consumable.money_value == 5 {
                     play_audio_channel.single_write(PlayAudioEvent {
-                        value: LARGE_ROCK_SFX,
+                        source: sounds.large_rock_sfx.clone(),
                     });
                 } else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
-                    play_audio_channel.single_write(PlayAudioEvent { value: WRENCH_SFX });
+                    play_audio_channel.single_write(PlayAudioEvent { source: sounds.wrench_sfx.clone() });
                 }
 
                 for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {

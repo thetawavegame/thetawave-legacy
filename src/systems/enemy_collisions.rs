@@ -1,6 +1,7 @@
 use crate::{
+    audio::Sounds,
     components::{BlastComponent, BlastType, Enemy, HealthComponent, Motion2DComponent, Spaceship},
-    constants::{CRASH_SFX, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_HIT_SFX},
+    constants::SPACESHIP_COLLISION_DAMAGE,
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
     resources::SpriteResource,
@@ -23,8 +24,9 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
         ReadStorage<'s, Spaceship>,
         WriteStorage<'s, Enemy>,
         WriteStorage<'s, Motion2DComponent>,
-        Write<'s, EventChannel<PlayAudioEvent>>,
         WriteStorage<'s, HealthComponent>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -45,12 +47,13 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
             mut motions,
             mut healths,
             mut play_audio_channel,
+            sounds,
         ): Self::SystemData,
     ) {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the enemy colliding with an entity with a spaceship component?
             if let Some(spaceship) = spaceships.get(event.colliding_entity) {
-                play_audio_channel.single_write(PlayAudioEvent { value: CRASH_SFX });
+                play_audio_channel.single_write(PlayAudioEvent { source: sounds.crash_sfx.clone() });
 
                 let enemy = enemies.get_mut(event.enemy_entity).unwrap();
                 let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
@@ -138,6 +141,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -161,6 +165,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
+            sounds,
         ): Self::SystemData,
     ) {
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -176,7 +181,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                             .expect("unable to delete entity");
 
                         play_audio_channel.single_write(PlayAudioEvent {
-                            value: SPACESHIP_HIT_SFX,
+                            source: sounds.spaceship_hit_sfx.clone(),
                         });
 
                         spawn_blast_explosion(
