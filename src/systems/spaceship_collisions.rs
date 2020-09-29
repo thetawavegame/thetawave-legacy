@@ -1,16 +1,14 @@
 use crate::{
-    audio::{play_sfx, Sounds},
+    audio::Sounds,
     components::{
         BlastComponent, BlastType, BlasterComponent, Consumable, DefenseTag, Enemy,
         HealthComponent, Item, ManualFireComponent, Motion2DComponent, Spaceship,
     },
     entities::spawn_blast_explosion,
-    events::{ItemEffectGetEvent, PlayerCollisionEvent},
+    events::{ItemEffectGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::SpriteResource,
 };
 use amethyst::{
-    assets::AssetStorage,
-    audio::{output::Output, Source},
     core::transform::Transform,
     ecs::*,
     shrev::{EventChannel, ReaderId},
@@ -157,10 +155,9 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
-        Read<'s, AssetStorage<Source>>,
-        ReadExpect<'s, Sounds>,
-        Option<Read<'s, Output>>,
         Write<'s, EventChannel<ItemEffectGetEvent>>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -183,10 +180,9 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
             mut motions,
             mut blasters,
             mut manual_fires,
-            storage,
+            mut item_get_event_channel,
+            mut play_audio_channel,
             sounds,
-            audio_output,
-            mut defense_item_get_event_channel,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -199,7 +195,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                 let motion = motions.get_mut(event.player_entity).unwrap();
 
                 if item.stat_effects.contains_key("max_defense") {
-                    defense_item_get_event_channel
+                    item_get_event_channel
                         .single_write(ItemEffectGetEvent::new(item.stat_effects.clone()));
                 }
 
@@ -260,7 +256,9 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                     blaster.size_multiplier += item.stat_effects["blast_size_multiplier"];
                 }
 
-                play_sfx(&sounds.item_sfx, &storage, audio_output.as_deref());
+                play_audio_channel.single_write(PlayAudioEvent {
+                    source: sounds.item_sfx.clone(),
+                });
 
                 entities
                     .delete(event.colliding_entity)
@@ -283,9 +281,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         WriteStorage<'s, Spaceship>,
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
-        Read<'s, AssetStorage<Source>>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
-        Option<Read<'s, Output>>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -306,9 +303,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             mut spaceships,
             defense_tags,
             mut healths,
-            storage,
+            mut play_audio_channel,
             sounds,
-            audio_output,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -320,11 +316,17 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                 spaceship.money += consumable.money_value;
 
                 if consumable.money_value == 1 {
-                    play_sfx(&sounds.small_rock_sfx, &storage, audio_output.as_deref());
+                    play_audio_channel.single_write(PlayAudioEvent {
+                        source: sounds.small_rock_sfx.clone(),
+                    });
                 } else if consumable.money_value == 5 {
-                    play_sfx(&sounds.large_rock_sfx, &storage, audio_output.as_deref());
+                    play_audio_channel.single_write(PlayAudioEvent {
+                        source: sounds.large_rock_sfx.clone(),
+                    });
                 } else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
-                    play_sfx(&sounds.wrench_sfx, &storage, audio_output.as_deref());
+                    play_audio_channel.single_write(PlayAudioEvent {
+                        source: sounds.wrench_sfx.clone(),
+                    });
                 }
 
                 for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {

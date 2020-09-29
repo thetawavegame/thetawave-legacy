@@ -1,14 +1,14 @@
 use crate::{
-    audio::{play_sfx, Sounds},
+    audio::Sounds,
     components::{Spaceship, Store},
+    events::PlayAudioEvent,
     resources::{ItemPool, SpriteResource},
 };
 use amethyst::{
-    assets::AssetStorage,
-    audio::{output::Output, Source},
     core::timing::Time,
-    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, WriteStorage},
+    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
+    shrev::EventChannel,
 };
 
 pub struct StoreSystem;
@@ -23,9 +23,8 @@ impl<'s> System<'s> for StoreSystem {
         Read<'s, Time>,
         Read<'s, InputHandler<StringBindings>>,
         WriteStorage<'s, Spaceship>,
-        Read<'s, AssetStorage<Source>>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
-        Option<Read<'s, Output>>,
     );
 
     fn run(
@@ -39,9 +38,8 @@ impl<'s> System<'s> for StoreSystem {
             time,
             input,
             mut spaceships,
-            storage,
+            mut play_audio_channel,
             sounds,
-            audio_output,
         ): Self::SystemData,
     ) {
         let buy_0_action = input.action_is_down("buy_0").unwrap();
@@ -77,11 +75,9 @@ impl<'s> System<'s> for StoreSystem {
                             &lazy_update,
                         ))
                 {
-                    play_sfx(
-                        &sounds.cash_register_bell,
-                        &storage,
-                        audio_output.as_deref(),
-                    );
+                    play_audio_channel.single_write(PlayAudioEvent {
+                        source: sounds.cash_register_bell_sfx.clone(),
+                    });
                 }
             }
         }

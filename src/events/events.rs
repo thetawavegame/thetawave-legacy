@@ -1,4 +1,4 @@
-use amethyst::{core::math::Vector2, ecs::prelude::Entity};
+use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
 use std::collections::HashMap;
 
 #[derive(Debug)]
@@ -86,4 +86,9 @@ impl EnemyReachedBottomEvent {
     pub fn new(damage: f32) -> EnemyReachedBottomEvent {
         EnemyReachedBottomEvent { damage }
     }
+}
+
+#[derive(Debug)]
+pub struct PlayAudioEvent {
+    pub source: SourceHandle,
 }
