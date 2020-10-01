@@ -5,10 +5,14 @@ authors = []
 edition = "2018"
 
 [dependencies.amethyst]
-version = "0.13"
+version = "0.15.3"
 default-features = false
 features = ["vulkan", "audio", "gltf"]
 
 [dependencies]
+amethyst_test = "0.15.3"
 rand = "0.6.5"
 serde = "1"
+
+[features]
+fail-on-warnings = []

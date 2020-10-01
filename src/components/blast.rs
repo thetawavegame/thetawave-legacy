@@ -1,17 +1,23 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-#[derive(Clone)]
-pub struct Blast {
-    pub speed: f32,
-    pub hitbox_radius: f32,
-    pub damage: f32,
-    pub poison_damage: f32,
-    pub x_velocity: f32,
-    pub y_velocity: f32,
-    pub velocity_factor: f32,
-    pub allied: bool,
+use serde::{Deserialize, Serialize};
+
+// used for setting sprite, status rolls, and the entity type spawning the blast
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum BlastType {
+    Ally,
+    Enemy,
+    AllyPoison,
+    AllyCritical,
 }
 
-impl Component for Blast {
+#[derive(Clone)]
+pub struct BlastComponent {
+    pub damage: f32,
+    pub poison_damage: f32,
+    pub blast_type: BlastType,
+}
+
+impl Component for BlastComponent {
     type Storage = DenseVecStorage<Self>;
 }

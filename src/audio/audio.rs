@@ -1,11 +1,6 @@
 use amethyst::{
-    assets::{AssetStorage, Loader, Handle},
-    audio::{
-        output::Output,
-        Source,
-        SourceHandle,
-        OggFormat,
-    },
+    assets::{AssetStorage, Handle, Loader},
+    audio::{output::Output, OggFormat, Source, SourceHandle},
     ecs::{World, WorldExt},
 };
 
@@ -18,18 +13,18 @@ pub struct Sounds {
     pub crash_sfx: SourceHandle,
     pub explosion_sfx: SourceHandle,
     pub spaceship_hit_sfx: SourceHandle,
-    pub cash_register_bell: SourceHandle,
+    pub cash_register_bell_sfx: SourceHandle,
 }
 
 fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle {
     loader.load(file, OggFormat, (), &world.read_resource())
 }
 
-pub fn initialise_audio(world: &mut World) {
+pub fn initialize_audio(world: &mut World) {
     let sound_effects = {
         let loader = world.read_resource::<Loader>();
 
-        let sound = Sounds {
+        Sounds {
             small_rock_sfx: load_audio_track(&loader, &world, "audio/small_rock.ogg"),
             large_rock_sfx: load_audio_track(&loader, &world, "audio/large_rock.ogg"),
             wrench_sfx: load_audio_track(&loader, &world, "audio/wrench.ogg"),
@@ -38,10 +33,12 @@ pub fn initialise_audio(world: &mut World) {
             crash_sfx: load_audio_track(&loader, &world, "audio/crash.ogg"),
             explosion_sfx: load_audio_track(&loader, &world, "audio/explosion.ogg"),
             spaceship_hit_sfx: load_audio_track(&loader, &world, "audio/spaceship_hit.ogg"),
-            cash_register_bell: load_audio_track(&loader, &world, "audio/cash_register_bell.ogg")
-        };
-
-        sound
+            cash_register_bell_sfx: load_audio_track(
+                &loader,
+                &world,
+                "audio/cash_register_bell.ogg",
+            ),
+        }
     };
 
     world.insert(sound_effects);

@@ -1,12 +1,37 @@
-
-use crate::components::{Enemy, Item, Consumable};
+use crate::components::{
+    Animation, AutoFireComponent, BlasterComponent, Consumable, Enemy, HealthComponent,
+    Hitbox2DComponent, Item, Motion2DComponent,
+};
+use serde::{Deserialize, Serialize};
 
 mod sprite;
 
-pub use self::{
-    sprite::{SpriteResource, initialise_sprite_resource},
-};
+pub use self::sprite::{initialize_sprite_resource, SpriteResource};
 
-pub type EnemyPool = std::collections::HashMap<String, Enemy>;
-pub type ItemPool = std::collections::HashMap<String, Item>;
-pub type ConsumablePool = std::collections::HashMap<String, Consumable>;
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct EnemyEntityData {
+    pub animation_component: Animation,
+    pub enemy_component: Enemy,
+    pub hitbox_component: Hitbox2DComponent,
+    pub blaster_component: Option<BlasterComponent>,
+    pub autofire_component: Option<AutoFireComponent>,
+    pub motion2d_component: Motion2DComponent,
+    pub health_component: HealthComponent,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ItemEntityData {
+    pub item_component: Item,
+    pub hitbox_component: Hitbox2DComponent,
+    pub animation_component: Option<Animation>,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ConsumableEntityData {
+    pub consumable_component: Consumable,
+    pub hitbox_component: Hitbox2DComponent,
+}
+
+pub type EnemyPool = std::collections::HashMap<String, EnemyEntityData>;
+pub type ItemPool = std::collections::HashMap<String, ItemEntityData>;
+pub type ConsumablePool = std::collections::HashMap<String, ConsumableEntityData>;

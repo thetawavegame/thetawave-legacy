@@ -1,57 +1,96 @@
-use amethyst::{
-    prelude::Builder,
-    ecs::{World, WorldExt},
-    core::transform::Transform,
-    renderer::{SpriteRender, SpriteSheet, Transparent},
-    assets::Handle,
-};
 use crate::{
-    components::Spaceship,
-    constants::{
-        ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, ARENA_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT,
-        SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_SPEED,
-        SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y, SPACESHIP_DECELERATION_X,
-        SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_DAMAGE, SPACESHIP_BARREL_COOLDOWN,
-        SPACESHIP_BARREL_SPEED, SPACESHIP_BARREL_DURATION, SPACESHIP_HEALTH, SPACESHIP_MONEY,
-        SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_CRIT_CHANCE,
-        SPACESHIP_BLAST_SPRITE_INDEX, CRIT_SPRITE_INDEX, POISON_SPRITE_INDEX
+    components::{
+        BlastType, BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
+        Motion2DComponent, Spaceship,
     },
+    constants::{
+        ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
+        POISON_BLAST_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
+        SPACESHIP_BARREL_COOLDOWN, SPACESHIP_BARREL_DURATION, SPACESHIP_BARREL_SPEED,
+        SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_DAMAGE,
+        SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH,
+        SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED,
+        SPACESHIP_MAX_SPEED, SPACESHIP_MONEY,
+    },
+};
+use amethyst::{
+    assets::Handle,
+    core::{math::Vector2, transform::Transform},
+    ecs::{World, WorldExt},
+    prelude::Builder,
+    renderer::{SpriteRender, SpriteSheet, Transparent},
 };
 use std::collections::HashMap;
 
-pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
-
+pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let mut local_transform = Transform::default();
-    local_transform.set_translation_xyz(ARENA_MIN_X + (ARENA_WIDTH / 2.0), ARENA_MIN_Y + (ARENA_HEIGHT / 6.0), 0.9);
+    local_transform.set_translation_xyz(
+        ARENA_MIN_X + (ARENA_WIDTH / 2.0),
+        ARENA_MIN_Y + (ARENA_HEIGHT / 6.0),
+        0.9,
+    );
 
     let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_sheet: sprite_sheet_handle,
         sprite_number: 0,
     };
 
     let mut blast_sprite_indicies = HashMap::new();
     blast_sprite_indicies.insert("normal".to_string(), SPACESHIP_BLAST_SPRITE_INDEX);
-    blast_sprite_indicies.insert("crit".to_string(), CRIT_SPRITE_INDEX);
-    blast_sprite_indicies.insert("poison".to_string(), POISON_SPRITE_INDEX);
+    blast_sprite_indicies.insert("crit".to_string(), CRIT_BLAST_SPRITE_INDEX);
+    blast_sprite_indicies.insert("poison".to_string(), POISON_BLAST_SPRITE_INDEX);
+
+    let hitbox = Hitbox2DComponent {
+        width: SPACESHIP_HITBOX_WIDTH,
+        height: SPACESHIP_HITBOX_HEIGHT,
+        offset_x: 0.0,
+        offset_y: 0.0,
+        offset_rotation: 0.0,
+    };
+
+    let motion_2d = Motion2DComponent {
+        velocity: Vector2::new(0.0, 0.0),
+        acceleration: Vector2::new(SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y),
+        deceleration: Vector2::new(SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y),
+        angular_velocity: 0.0,
+        angular_acceleration: 0.0,
+        angular_deceleration: 0.0,
+        max_speed: Vector2::new(SPACESHIP_MAX_SPEED, SPACESHIP_MAX_SPEED),
+        knockback_max_speed: Vector2::new(
+            SPACESHIP_MAX_KNOCKBACK_SPEED,
+            SPACESHIP_MAX_KNOCKBACK_SPEED,
+        ),
+    };
+
+    let blaster = BlasterComponent {
+        count: 1,
+        blast_type: BlastType::Ally,
+        shot_velocity: Vector2::new(0.0, 100.0),
+        velocity_multiplier: 0.5,
+        offset: Vector2::new(0.0, 9.0),
+        damage: SPACESHIP_DAMAGE,
+        poison_damage: 0.0,
+        poison_chance: 0.0,
+        crit_chance: 0.0,
+        size_multiplier: 1.0,
+        spacing: 7.0,
+    };
+
+    let manual_fire = ManualFireComponent {
+        period: SPACESHIP_FIRE_SPEED,
+        timer: 0.0,
+        ready: false,
+    };
+
+    let health = HealthComponent {
+        value: SPACESHIP_HEALTH,
+        max_value: SPACESHIP_HEALTH,
+    };
 
     world
         .create_entity()
         .with(sprite_render)
         .with(Spaceship {
-            width: SPACESHIP_WIDTH,
-            height: SPACESHIP_HEIGHT,
-            hitbox_width: SPACESHIP_HITBOX_WIDTH,
-            hitbox_height: SPACESHIP_HITBOX_HEIGHT,
-            max_speed: SPACESHIP_MAX_SPEED,
-            current_velocity_x: 0.0,
-            current_velocity_y: 0.0,
-            acceleration_x: SPACESHIP_ACCELERATION_X,
-            deceleration_x: SPACESHIP_DECELERATION_X,
-            acceleration_y: SPACESHIP_ACCELERATION_Y,
-            deceleration_y: SPACESHIP_DECELERATION_Y,
-            fire_speed: SPACESHIP_FIRE_SPEED,
-            fire_reset_timer: 0.0,
-            damage: SPACESHIP_DAMAGE,
             barrel_cooldown: SPACESHIP_BARREL_COOLDOWN,
             barrel_reset_timer: 0.0,
             barrel_speed: SPACESHIP_BARREL_SPEED,
@@ -61,19 +100,16 @@ pub fn initialise_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             barrel_action_timer: SPACESHIP_BARREL_DURATION,
             pos_x: local_transform.translation().x,
             pos_y: local_transform.translation().y,
-            blast_speed: 100.0,
-            max_health: SPACESHIP_HEALTH,
-            health: SPACESHIP_HEALTH,
             money: SPACESHIP_MONEY,
-            knockback_max_speed: SPACESHIP_MAX_KNOCKBACK_SPEED,
             steel_barrel: false,
-            blast_count: 1,
             collision_damage: SPACESHIP_COLLISION_DAMAGE,
-            crit_chance: SPACESHIP_CRIT_CHANCE,
-            poison_chance: 0.0,
-            blast_sprite_indicies: blast_sprite_indicies,
-            allied: true,
+            blast_sprite_indicies,
         })
+        .with(blaster)
+        .with(manual_fire)
+        .with(hitbox)
+        .with(motion_2d)
+        .with(health)
         .with(local_transform)
         .with(Transparent)
         .build();
