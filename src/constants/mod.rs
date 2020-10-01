@@ -21,14 +21,17 @@ pub const ARENA_SPAWN_OFFSET: f32 = 20.0;
 pub const CAMERA_X: f32 = GAME_WIDTH * 0.5;
 pub const CAMERA_Y: f32 = GAME_HEIGHT * 0.5;
 pub const CAMERA_Z: f32 = 237.0;
+//pub const CAMERA_Z: f32 = 500.0;
 
 // Z levels of sprites
 pub const ENEMY_Z: f32 = 0.0;
+pub const BOSS_Z_1: f32 = 0.1;
+pub const BOSS_Z_2: f32 = 0.2;
 pub const PLAYER_Z: f32 = 0.0;
 pub const CONSUMABLE_Z: f32 = 0.0;
-pub const ITEM_Z: f32 = 0.0;
+pub const ITEM_Z: f32 = 0.6;
 pub const BLAST_Z: f32 = 0.9;
-pub const EXPLOSION_Z: f32 = 0.0;
+pub const EXPLOSION_Z: f32 = 0.5;
 pub const STATUS_BAR_Z: f32 = 0.9;
 pub const SIDE_PANEL_Z: f32 = 0.8;
 
@@ -36,19 +39,19 @@ pub const SIDE_PANEL_Z: f32 = 0.8;
 pub const DEFENSE: f32 = 500.0;
 pub const VELOCITY_FACTOR: f32 = 0.5; // how much a source's velocity effects its projectiles
 pub const ENEMY_SPAWN_INTERVAL: f32 = 1.5; // time between enemy spawns
-pub const EXPLOSION_DURATION: f32 = 0.3;
 pub const RESTOCK_INTERVAL: f32 = 10.0;
 
 // sprites
+pub const PLAYER_BLAST_SPRITE_INDEX: usize = 0;
 pub const ENEMY_BLAST_SPRITE_INDEX: usize = 1;
-pub const CRIT_SPRITE_INDEX: usize = 2;
-pub const POISON_SPRITE_INDEX: usize = 3;
+pub const CRIT_BLAST_SPRITE_INDEX: usize = 2;
+pub const POISON_BLAST_SPRITE_INDEX: usize = 3;
 pub const SIDE_PANEL_LEFT_SPRITE_INDEX: usize = 0;
 pub const SIDE_PANEL_RIGHT_SPRITE_INDEX: usize = 1;
 pub const SPACESHIP_BLAST_SPRITE_INDEX: usize = 0;
 
 // dimensions
-pub const BLAST_HITBOX_RADIUS: f32 = 2.0;
+pub const BLAST_HITBOX_DIAMETER: f32 = 2.0;
 pub const SIDE_PANEL_WIDTH: f32 = 45.0;
 
 // offsets
@@ -63,8 +66,6 @@ pub const ENEMY_STRAFER_RATIO: f32 = 75.0;
 pub const ENEMY_HAULER_RATIO: f32 = 5.0;
 
 // player starting stats
-pub const SPACESHIP_HEIGHT: f32 = 18.0;
-pub const SPACESHIP_WIDTH: f32 = 18.0;
 pub const SPACESHIP_HITBOX_HEIGHT: f32 = 14.0;
 pub const SPACESHIP_HITBOX_WIDTH: f32 = 6.0;
 pub const SPACESHIP_ACCELERATION_X: f32 = 2.0;
@@ -93,6 +94,6 @@ pub const DEFENSE_BAR_LIMIT: f32 = 63.0;
 pub const ROLL_BAR_X: f32 = 324.0;
 pub const ROLL_BAR_Y: f32 = 177.0;
 pub const ROLL_BAR_LIMIT: f32 = 28.0;
-pub const RESTOCK_BAR_X: f32 = 324.0;//should appear in arena
+pub const RESTOCK_BAR_X: f32 = 324.0;
 pub const RESTOCK_BAR_Y: f32 = 90.0;
 pub const RESTOCK_BAR_LIMIT: f32 = 28.0;

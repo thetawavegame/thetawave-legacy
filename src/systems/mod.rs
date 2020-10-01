@@ -1,48 +1,54 @@
-mod spaceship;
+mod animation;
+mod autoblaster_system;
 mod blast;
-mod enemy;
-mod enemy_spawn;
-mod player_hit;
-mod explosion;
-mod item;
-mod spaceship_movement;
-mod enemy_hit;
-mod consumable;
-mod status_bar;
-mod defense;
+mod boss;
 mod collision_detection;
-mod collision_handler;
+mod consumable;
+mod defense;
+mod enemy;
+mod enemy_collisions;
+mod enemy_destroyed;
+mod enemy_spawn;
 mod gamemaster;
-mod stat_tracker;
-mod store;
+mod item;
+mod manualblaster_system;
 mod planets;
+mod play_audio;
+mod spaceship;
+mod spaceship_collisions;
+mod spaceship_movement;
+mod stat_tracker;
+mod status_bar;
+mod store;
+mod timelimit;
 
 pub use self::{
+    animation::AnimationSystem,
+    autoblaster_system::AutoBlasterSystem,
     blast::BlastSystem,
-    spaceship::SpaceshipSystem,
-    enemy::EnemySystem,
-    enemy_spawn::SpawnerSystem,
-    player_hit::PlayerHitSystem,
-    explosion::ExplosionSystem,
-    item::ItemSystem,
-    spaceship_movement::SpaceshipMovementSystem,
-    enemy_hit::EnemyHitSystem,
+    boss::BossSystem,
+    collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     consumable::ConsumableSystem,
-    status_bar::StatusBarSystem,
     defense::DefenseSystem,
-    collision_detection::CollisionDetectionSystem,
-    collision_handler::CollisionHandlerSystem,
+    enemy::EnemySystem,
+    enemy_collisions::{
+        EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem, EnemyPlayerCollisionSystem,
+    },
+    enemy_destroyed::EnemyDestroyedSystem,
+    enemy_spawn::SpawnerSystem,
     gamemaster::GameMasterSystem,
-    stat_tracker::StatTrackerSystem,
-    store::StoreSystem,
+    item::ItemSystem,
+    manualblaster_system::ManualBlasterSystem,
     planets::PlanetsSystem,
+    play_audio::PlayAudioSystem,
+    spaceship::SpaceshipSystem,
+    spaceship_collisions::{
+        SpaceshipBlastCollisionSystem, SpaceshipConsumableCollisionSystem,
+        SpaceshipEnemyCollisionSystem, SpaceshipItemCollisionSystem,
+    },
+    spaceship_movement::SpaceshipMovementSystem,
+    stat_tracker::StatTrackerSystem,
+    status_bar::StatusBarSystem,
+    store::StoreSystem,
+    timelimit::TimeLimitSystem,
 };
-
-pub fn hitbox_collide(mut x1: f32, mut y1: f32, mut x2: f32, mut y2: f32, hitbox_width_1: f32, hitbox_height_1: f32, hitbox_width_2: f32, hitbox_height_2: f32) -> bool {
-    x1 -= hitbox_width_1 / 2.0;
-    y1 -= hitbox_height_1 / 2.0;
-    x2 -= hitbox_width_2 / 2.0;
-    y2 -= hitbox_height_2 / 2.0 ;
-
-    x1 < (x2 + hitbox_width_2) && (x1 + hitbox_width_1) > x2 && y1 < (y2 + hitbox_height_2) && (y1 + hitbox_height_1) > y2
-}
