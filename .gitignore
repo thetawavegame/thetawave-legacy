@@ -3,4 +3,3 @@
 target/
 Cargo.lock
 book/book
-target

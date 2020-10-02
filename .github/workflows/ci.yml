@@ -37,6 +37,12 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
 
+  markdown:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
     - name: markdown lint
       uses: avto-dev/markdown-lint@v1
       with:
