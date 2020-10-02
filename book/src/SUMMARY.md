@@ -9,4 +9,4 @@
 - [Guides](./TODO.md)
   - [Contributing art](./TODO.md)
   - [Adding new items](./TODO.md)
-  * [Writing tests](./TODO.md)
+  - [Writing tests](./TODO.md)
