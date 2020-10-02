@@ -67,13 +67,23 @@ impl EnemyCollisionEvent {
 }
 
 #[derive(Debug)]
-pub struct ItemEffectGetEvent {
+pub struct ItemGetEvent {
+    pub player_entity: Entity,
     pub stat_effects: HashMap<String, f32>,
+    pub bool_effects: HashMap<String, bool>,
 }
 
-impl ItemEffectGetEvent {
-    pub fn new(stat_effects: HashMap<String, f32>) -> ItemEffectGetEvent {
-        ItemEffectGetEvent { stat_effects }
+impl ItemGetEvent {
+    pub fn new(
+        player_entity: Entity,
+        stat_effects: HashMap<String, f32>,
+        bool_effects: HashMap<String, bool>,
+    ) -> ItemGetEvent {
+        ItemGetEvent {
+            player_entity,
+            stat_effects,
+            bool_effects,
+        }
     }
 }
 
