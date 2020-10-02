@@ -1,6 +1,6 @@
 # Contributing
 
-If you haven't already, please take some time to read the community [Code of Conduct](CODE_OF_CONDUCT.md).
+If you haven't already, please take some time to read the community [Code of Conduct](https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md).
 
 ## The Basics
 
