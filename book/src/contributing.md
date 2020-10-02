@@ -54,12 +54,12 @@ This part of the process involves getting a local copy of the project and settin
 
 Once you're able to successfully build the game, you can start writing some code!
 
-### Write the patch, PR, request review!
+### Write the patch, PR, and request a review
 
-Before writing your patch, branch off `cdsupina-dev`:
+Before writing your patch, branch off `develop`:
 
 ```
-git checkout -b <branch-name> origin/cdsupina-dev
+git checkout -b <branch-name> develop
 ```
 
 When finished writing your patch, [save](https://www.atlassian.com/git/tutorials/saving-changes) and [commit](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) your work:

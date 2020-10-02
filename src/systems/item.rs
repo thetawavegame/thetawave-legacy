@@ -1,5 +1,5 @@
 use crate::{
-    components::{Hitbox2DComponent, Item},
+    components::{Hitbox2DComponent, Item, Motion2DComponent},
     constants::ARENA_MIN_Y,
 };
 use amethyst::{
@@ -18,15 +18,26 @@ impl<'s> System<'s> for ItemSystem {
         WriteStorage<'s, Item>,
         WriteStorage<'s, Transform>,
         ReadStorage<'s, Hitbox2DComponent>,
+        ReadStorage<'s, Motion2DComponent>,
         Read<'s, Time>,
     );
 
-    fn run(&mut self, (entities, mut items, mut transforms, hitboxes, time): Self::SystemData) {
+    fn run(
+        &mut self,
+        (entities, mut items, mut transforms, hitboxes, motion2ds, time): Self::SystemData,
+    ) {
         // item movement
-        for (item, item_entity, item_transform, item_hitbox) in
-            (&mut items, &entities, &mut transforms, &hitboxes).join()
+        for (_item, item_entity, item_transform, item_hitbox, item_motion2d) in (
+            &mut items,
+            &entities,
+            &mut transforms,
+            &hitboxes,
+            &motion2ds,
+        )
+            .join()
         {
-            item_transform.prepend_translation_y(-1.0 * item.speed * time.delta_seconds());
+            item_transform
+                .prepend_translation_y(-1.0 * item_motion2d.velocity.y * time.delta_seconds());
 
             if item_transform.translation().y + item_hitbox.height / 2.0 < ARENA_MIN_Y {
                 entities

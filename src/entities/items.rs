@@ -28,6 +28,7 @@ pub fn spawn_item(
         .with(sprite_render)
         .with(item.item_component)
         .with(item.hitbox_component)
+        .with(item.motion2d_component)
         .with(local_transform)
         .with(Transparent)
         .with(name)

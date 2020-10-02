@@ -1,6 +1,6 @@
 use crate::{
     components::{DefenseTag, HealthComponent},
-    events::{EnemyReachedBottomEvent, ItemEffectGetEvent},
+    events::{EnemyReachedBottomEvent, ItemGetEvent},
 };
 use amethyst::{
     ecs::prelude::{Join, ReadStorage, System, WriteStorage},
@@ -10,13 +10,13 @@ use amethyst::{
 
 #[derive(Default)]
 pub struct DefenseSystem {
-    item_effect_get_event_reader: Option<ReaderId<ItemEffectGetEvent>>,
+    item_get_event_reader: Option<ReaderId<ItemGetEvent>>,
     enemy_reached_bottom_event_reader: Option<ReaderId<EnemyReachedBottomEvent>>,
 }
 
 impl<'s> System<'s> for DefenseSystem {
     type SystemData = (
-        Read<'s, EventChannel<ItemEffectGetEvent>>,
+        Read<'s, EventChannel<ItemGetEvent>>,
         Read<'s, EventChannel<EnemyReachedBottomEvent>>,
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
@@ -24,9 +24,9 @@ impl<'s> System<'s> for DefenseSystem {
 
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
-        self.item_effect_get_event_reader = Some(
+        self.item_get_event_reader = Some(
             world
-                .fetch_mut::<EventChannel<ItemEffectGetEvent>>()
+                .fetch_mut::<EventChannel<ItemGetEvent>>()
                 .register_reader(),
         );
         self.enemy_reached_bottom_event_reader = Some(
@@ -39,7 +39,7 @@ impl<'s> System<'s> for DefenseSystem {
     fn run(
         &mut self,
         (
-            defense_item_get_event_channel,
+            item_get_event_channel,
             enemy_reached_bottom_event_channel,
             defense_tags,
             mut healths,
@@ -49,9 +49,7 @@ impl<'s> System<'s> for DefenseSystem {
             health.constrain();
         }
 
-        for event in
-            defense_item_get_event_channel.read(self.item_effect_get_event_reader.as_mut().unwrap())
-        {
+        for event in item_get_event_channel.read(self.item_get_event_reader.as_mut().unwrap()) {
             for (_defense_tag, health) in (&defense_tags, &mut healths).join() {
                 if event.stat_effects.contains_key("max_defense") {
                     health.max_value += event.stat_effects["max_defense"];
