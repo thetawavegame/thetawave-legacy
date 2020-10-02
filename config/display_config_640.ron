@@ -1,6 +1,0 @@
-(
-  title: "space_shooter",
-  dimensions: Some((640, 480)),
-  max_dimensions: Some((640, 480)),
-  min_dimensions: Some((640, 480)),
-)

@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>space_shooter_rs Documentation</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">2.</strong> Contibuting code</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.</strong> Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.1.</strong> Components</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.2.</strong> Systems</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.3.</strong> Event Channel</a></li></ol></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.</strong> Guides</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.1.</strong> Contributing art</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.2.</strong> Adding new items</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.3.</strong> Writing tests</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">space_shooter_rs Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<p>Hey there! Welcome to the book for the space_shooter_rs game. It aims to serve
+as the primary source of documentation for those interested in contributing to
+a game using the <a href="https://amethyst.rs/">Amethyst game engine</a>.</p>
+<p>This book is being actively updated. So there may be sections that are still
+under construction.</p>
+<h1><a class="header" href="#contributing" id="contributing">Contributing</a></h1>
+<p>If you haven't already, please take some time to read the community <a href="https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>.</p>
+<h2><a class="header" href="#the-basics" id="the-basics">The Basics</a></h2>
+<p>If you're familiar with the basics of the <a href="https://amethyst.rs/">Amethyst</a> engine
+or programming with Rust, then you can contribute! And even if you aren't, these
+are some of the things you can learn to get up to speed:</p>
+<h3><a class="header" href="#ecs-and-amethyst-concepts" id="ecs-and-amethyst-concepts">ECS and Amethyst concepts</a></h3>
+<ul>
+<li><a href="https://book.amethyst.rs/stable/concepts/entity_and_component.html">Entity and Component</a></li>
+<li><a href="https://book.amethyst.rs/stable/concepts/system.html">System</a></li>
+<li><a href="https://book.amethyst.rs/stable/concepts/event-channel.html">Event Channels</a></li>
+</ul>
+<h3><a class="header" href="#rust-concepts" id="rust-concepts">Rust concepts</a></h3>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">Patterns and Matching</a></li>
+<li><a href="https://doc.rust-lang.org/stable/rust-by-example/std/option.html">Option</a></li>
+<li><a href="https://doc.rust-lang.org/stable/rust-by-example/trait.html">Traits</a></li>
+</ul>
+<p>This isn't an exhaustive list of everything there is to know. But it should be
+enough to start contributing.</p>
+<h2><a class="header" href="#contributing-code" id="contributing-code">Contributing code</a></h2>
+<p>In general, the process for contributing goes like
+this:</p>
+<ul>
+<li>Pick an issue to work on</li>
+<li>Setup your development environment</li>
+<li>Write the patch, create a PR, and request a review</li>
+</ul>
+<h3><a class="header" href="#pick-an-issue-to-work-on" id="pick-an-issue-to-work-on">Pick an issue to work on</a></h3>
+<p>Take a look at the <a href="https://github.com/amethyst/space_shooter_rs/issues">issues list</a>
+and choose an issue you'd like to work on. Issues labeled as <a href="https://github.com/amethyst/space_shooter_rs/issues?q=is%3Aissue+label%3A%22good+first+issue%22+is%3Aopen">good first issue</a>
+are a great way to get started with the codebase.</p>
+<p>Make sure to claim the issue by
+commenting you'd like to work on it and mentioning either <strong>@cdsupina</strong> or
+<strong>@tigleym</strong>. Ask questions if something is unclear about the issue you are
+working on.</p>
+<h4><a class="header" href="#creating-your-own-issue" id="creating-your-own-issue">Creating your own issue</a></h4>
+<p>If the existing issues aren't what you're looking for then feel free to create
+a new issue! This can be fixing a bug, improving documentation, or a
+proposal to implement a new feature. Whatever the purpose is, please make sure
+to create an issue for it describing what you intend to do and why.</p>
+<p>If you need help identifying what the focus of your issue should be,
+feel free to mention either <strong>@cdsupina</strong> and <strong>@tigleym</strong>. We can help identify
+the sort of work that might be involved for your issue.</p>
+<p>This step is important because we want to make sure the work behind each pull
+request has context and intent.</p>
+<h3><a class="header" href="#setting-up-your-dev-environment" id="setting-up-your-dev-environment">Setting up your dev environment</a></h3>
+<p>This part of the process involves getting a local copy of the project and setting
+up your development machine to be able to build and run it.</p>
+<ol>
+<li>
+<p>Since this is a game built with the Amethyst game engine, it's important that
+<a href="https://book.amethyst.rs/stable/getting-started.html">Rust is setup</a> and have
+the proper <a href="https://github.com/amethyst/amethyst/blob/master/README.md#dependencies">dependencies installed</a>
+on your dev machine.</p>
+</li>
+<li>
+<p><a href="https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository">Fork</a> the space_shooter_rs project.</p>
+</li>
+<li>
+<p><a href="https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#step-2-create-a-local-clone-of-your-fork">Create a local clone of the fork</a></p>
+</li>
+<li>
+<p><a href="https://github.com/amethyst/space_shooter_rs#to-run">Run the game</a></p>
+</li>
+</ol>
+<p>Once you're able to successfully build the game, you can start writing some code!</p>
+<h3><a class="header" href="#write-the-patch-pr-and-request-a-review" id="write-the-patch-pr-and-request-a-review">Write the patch, PR, and request a review</a></h3>
+<p>Before writing your patch, branch off <code>develop</code>:</p>
+<pre><code class="language-none">git checkout -b &lt;branch-name&gt; develop
+</code></pre>
+<p>When finished writing your patch, <a href="https://www.atlassian.com/git/tutorials/saving-changes">save</a> and
+<a href="https://www.atlassian.com/git/tutorials/saving-changes/git-commit">commit</a> your work:</p>
+<pre><code class="language-none">git add
+git commit -m &quot;meaningful commit message&quot;
+</code></pre>
+<p>Make sure to run <code>cargo fmt</code> to ensure your work is formatted correctly and that
+no warnings are present when you run <code>cargo build</code>. The CI checks will fail if
+build warnings are present in your PR.</p>
+<p>Now that your patch is ready for review, you can <a href="https://www.atlassian.com/git/tutorials/syncing/git-push">push</a> your changes:</p>
+<pre><code class="language-none">git push
+</code></pre>
+<p>and <a href="https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/creating-an-issue-or-pull-request#creating-a-pull-request">create that PR</a> for review!</p>
+<p><strong><em>Please make sure to link the issue you selected earlier in the PR's description.</em></strong></p>
+<h1><a class="header" href="#under-construction" id="under-construction">Under construction</a></h1>
+<h1><a class="header" href="#under-construction-1" id="under-construction-1">Under construction</a></h1>
+<h1><a class="header" href="#under-construction-2" id="under-construction-2">Under construction</a></h1>
+<h1><a class="header" href="#under-construction-3" id="under-construction-3">Under construction</a></h1>
+<h1><a class="header" href="#under-construction-4" id="under-construction-4">Under construction</a></h1>
+<h1><a class="header" href="#under-construction-5" id="under-construction-5">Under construction</a></h1>
+<h1><a class="header" href="#under-construction-6" id="under-construction-6">Under construction</a></h1>
+<h1><a class="header" href="#under-construction-7" id="under-construction-7">Under construction</a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
