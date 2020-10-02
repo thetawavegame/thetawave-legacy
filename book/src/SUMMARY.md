@@ -6,7 +6,6 @@
   * [Components](./TODO.md)
   * [Systems](./TODO.md)
   * [Event Channel](./TODO.md)
-  * [UI](./TODO.md)
 * [Guides](./TODO.md)
   * [Contributing art](./TODO.md)
   * [Adding new items](./TODO.md)

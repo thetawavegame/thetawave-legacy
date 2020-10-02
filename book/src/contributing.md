@@ -27,18 +27,32 @@ enough to start contributing.
 In general, the process for contributing goes like
 this:
 
-- Choose an issue
+- Pick an issue to work on
 - Setup your development environment
 - Write the patch, create a PR, and request a review
 
-### Choose an issue
+### Pick an issue to work on
 
 Take a look at the [issues list](https://github.com/amethyst/space_shooter_rs/issues)
 and choose an issue you'd like to work on. Issues labeled as [good first issue](https://github.com/amethyst/space_shooter_rs/issues?q=is%3Aissue+label%3A%22good+first+issue%22+is%3Aopen)
 are a great way to get started with the codebase.
 
 Make sure to claim the issue by
-commenting you'd like to work on it and mentioning either @cdsupina or @tigleym. Ask questions if something is unclear about the issue you are working on.
+commenting you'd like to work on it and mentioning either **@cdsupina** or **@tigleym**. Ask questions if something is unclear about the issue you are working on.
+
+#### Creating your own issue
+
+If the existing issues aren't what you're looking for then feel free to create
+a new issue! This can be fixing a bug, improving documentation, or a
+proposal to implement a new feature. Whatever the purpose is, please make sure
+to create an issue for it describing what you intend to do and why.
+
+If you need help identifying what the focus of your issue should be,
+feel free to mention either **@cdsupina** and **@tigleym**. We can help identify the
+sort of work that might be involved for your issue.
+
+This step is important because we want to make sure the work behind each pull
+request has context and intent.
 
 ### Setting up your dev environment
 
@@ -78,3 +92,5 @@ git push
 ```
 
  and [create that PR](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/creating-an-issue-or-pull-request#creating-a-pull-request) for review!
+
+**_Please make sure to link the issue you selected earlier in the PR's description._**
