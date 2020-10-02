@@ -8,11 +8,11 @@ If you're familiar with the basics of the [Amethyst](https://amethyst.rs/) engin
 or programming with Rust, then you can contribute! And even if you aren't, these
 are some of the things you can learn to get up to speed:
 
-### Amethyst ECS concepts
+### ECS and Amethyst concepts
 
-- [Entity](https://book.amethyst.rs/stable/concepts/entity_and_component.html)
-- [Component](https://book.amethyst.rs/stable/concepts/entity_and_component.html)
+- [Entity and Component](https://book.amethyst.rs/stable/concepts/entity_and_component.html)
 - [System](https://book.amethyst.rs/stable/concepts/system.html)
+- [Event Channels](https://book.amethyst.rs/stable/concepts/event-channel.html)
 
 ### Rust concepts
 
