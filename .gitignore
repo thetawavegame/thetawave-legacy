@@ -1,2 +1,6 @@
+.idea/
+.vscode/
+target/
+Cargo.lock
 book/book
 target
