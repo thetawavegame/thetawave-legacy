@@ -2,3 +2,4 @@
 .vscode/
 target/
 Cargo.lock
+book/book

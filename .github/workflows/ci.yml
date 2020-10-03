@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - master
-      - cdsupina-dev
+      - develop
   pull_request:
     branches:
       - master
-      - cdsupina-dev
+      - develop
 
 env:
   CARGO_TERM_COLOR: always
@@ -36,3 +36,15 @@ jobs:
 
     - name: Run tests
       run: cargo test --verbose
+
+  markdown:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: markdown lint
+      uses: avto-dev/markdown-lint@v1
+      with:
+        args: '.'
+        config: '.markdownlint.json'
