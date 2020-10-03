@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - develop
-  pull_request:
-    branches:
-      - develop # TODO: this is a test. remove this after.
 
 jobs:
   book:
