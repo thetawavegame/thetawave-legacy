@@ -1,6 +1,9 @@
 [book]
-authors = ["Micah Tigley"]
+authors = ["Micah Tigley", "Carlo Supina"]
 language = "en"
 multilingual = false
 src = "src"
 title = "space_shooter_rs Documentation"
+
+[output.html]
+default-theme = "rust"

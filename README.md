@@ -45,31 +45,6 @@ the root of the project.
 |2|Buy shop item 2.|
 |3|Buy shop item 3.|
 
-## Items
-
-|Name|Image|Description|
-|:---:|:---:|:---:|
-|Steel Barrel|![steel_barrel](assets/texture/portraits/steel_barrel_portrait.png)|Gives player collision damage immunity while barrel rolling.|
-|Plasma Blasts|![plasma_blast](assets/texture/portraits/plasma_blast_portrait.png)|Increases fire rate and damage.|
-|Hazardous Reactor|![hazardous_reactor](assets/texture/portraits/hazardous_reactor_portrait.png)|Increases maximum speed.|
-|Warp Thruster|![warp_thruster](assets/texture/portraits/warp_thruster_portrait.png)|Increases acceleration and deceleration.|
-|Quadrupedal Tentaclover|![quadrupedal_tentaclover](assets/texture/portraits/quadrupedal_tentaclover_portrait.png)|Grants chance to critical hit.|
-|Defense Satellite|![defense_satellite](assets/texture/portraits/defense_satellite_portrait.png)|Increases maximum defense.|
-|Double Barrel|![double_barrel](assets/texture/portraits/double_barrel_portrait.png)|Grants double blasts.|
-|Yithian Plague|![yithian_plague](assets/texture/portraits/yithian_plague_portrait.png)|Grants chance to poison.|
-|Spice|![spice](assets/texture/portraits/spice_portrait.png)|Decreases barrel roll cooldown time.|
-|Enhanced Plating|![enhanced_plating](assets/texture/portraits/enhanced_plating_portrait.png)|Increases maximum health by a factor.|
-|Structure Reinforcement|![structure_reinforcement](assets/texture/portraits/structure_reinforcement_portrait.png)|Increases maximum health.|
-
-## Consumables
-
-|Name|Image|Description|
-|:---:|:---:|:---:|
-|Health Wrench|![health_wrench](assets/texture/portraits/health_wrench_portrait.png)|Grants health to the player.|
-|Defense Wrench|![defense_wrench](assets/texture/portraits/defense_wrench_portrait.png)|Grants defense.|
-|1x Currency|![money_1_wrench](assets/texture/portraits/money_1_portrait.png)|Grants 1 currency.|
-|5x Currency|![money_5_wrench](assets/texture/portraits/money_5_portrait.png)|Grants 5 currency.|
-
 ## Enemies
 
 |Name|Image|Description|
@@ -206,6 +181,7 @@ past you unharmed)
 
 ## Credits
 
-- Font: *Space Madness* by Robert Frye -
+- Font: [Space Madness](https://mozz.itch.io/space-madness) by Robert Frye -
 [License](http://creativecommons.org/licenses/by/4.0/): Creative Commons:
 Attribution 4.0 International
+- Input Icons: [Kadith's Icons](https://kadith.itch.io/kadiths-free-icons) by Kadith
