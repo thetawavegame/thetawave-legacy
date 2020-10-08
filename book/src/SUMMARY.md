@@ -8,5 +8,6 @@
   - [Event Channel](./TODO.md)
 - [Guides](./TODO.md)
   - [Contributing art](./TODO.md)
-  - [Adding new items](./TODO.md)
+  - [Adding Items](./add_item.md)
+    - [Design your Item](./design_item.md)
   - [Writing tests](./TODO.md)
