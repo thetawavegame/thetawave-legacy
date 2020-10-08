@@ -3,6 +3,7 @@
 - [Introduction](./intro.md)
 - [Gameplay](./gameplay.md)
   - [Controls](./controls.md)
+  - [Characters](./characters.md)
   - [Items](./items.md)
   - [Consumables](./consumables.md)
   - [Enemies](./enemies.md)

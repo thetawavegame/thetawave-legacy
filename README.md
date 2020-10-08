@@ -45,27 +45,6 @@ the root of the project.
 |2|Buy shop item 2.|
 |3|Buy shop item 3.|
 
-## Enemies
-
-|Name|Image|Description|
-|:---:|:---:|:---:|
-|Drone|![drone_enemy](assets/gifs/drone.gif)|Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.|
-|Pawn|![pawn_enemy](assets/gifs/pawn.gif)|Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
-|Strafer|![strafer_enemy](assets/gifs/strafer.gif)|Strafes left and right towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.|
-|Flying Polyp|![flying_polyp_enemy](assets/texture/portraits/polyp_portrait.png)|Coming soon.|
-
-## Allies
-
-|Name|Image|Description|
-|:---:|:---:|:---:|
-|Hauler|![hauler_ally](assets/gifs/hauler.gif)|Moves towards the bottom of the arena at a very reduced speed and grants defense on arrival.|
-
-## Bosses
-
-|Name|Image|Description|
-|:---:|:---:|:---:|
-|Repeater|![repeater_boss](assets/texture/portraits/repeater_portrait.png)|Coming soon.|
-
 ## MVP Specification
 
 **Inspirations**: Raiden, Binding of Isaac
