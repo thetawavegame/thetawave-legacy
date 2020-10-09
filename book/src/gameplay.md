@@ -1,6 +1,6 @@
 # Gameplay
 
-In space_shooter_rs, you play as as a spaceship defending an objective. The goal
+In space_shooter_rs, you play as a spaceship defending an objective. The goal
 of the game is to survive levels by destroying enemies, collecting consumables,
 buying items, and defeating the final boss.
 
