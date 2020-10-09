@@ -7,4 +7,4 @@ buying items, and defeating the final boss.
 In this section you can find detailed information about the enemies,
 consumables, items, enemies, allies, and bosses in the game.
 
-![gameplay](assets/gameplay.gif)
+![gameplay of space_shooter_rs](assets/gameplay.gif)
