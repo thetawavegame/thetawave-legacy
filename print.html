@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js rust">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -38,7 +38,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -64,7 +64,7 @@
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
             html.classList.remove('no-js')
-            html.classList.remove('light')
+            html.classList.remove('rust')
             html.classList.add(theme);
             html.classList.add('js');
         </script>
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">2.</strong> Contibuting code</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.</strong> Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.1.</strong> Components</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.2.</strong> Systems</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">3.3.</strong> Event Channel</a></li></ol></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.</strong> Guides</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.1.</strong> Contributing art</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.2.</strong> Adding new items</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.3.</strong> Writing tests</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="gameplay.html"><strong aria-hidden="true">2.</strong> Gameplay</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="controls.html"><strong aria-hidden="true">2.1.</strong> Controls</a></li><li class="chapter-item expanded "><a href="characters.html"><strong aria-hidden="true">2.2.</strong> Characters</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">2.3.</strong> Items</a></li><li class="chapter-item expanded "><a href="consumables.html"><strong aria-hidden="true">2.4.</strong> Consumables</a></li><li class="chapter-item expanded "><a href="enemies.html"><strong aria-hidden="true">2.5.</strong> Enemies</a></li><li class="chapter-item expanded "><a href="allies.html"><strong aria-hidden="true">2.6.</strong> Allies</a></li><li class="chapter-item expanded "><a href="bosses.html"><strong aria-hidden="true">2.7.</strong> Bosses</a></li></ol></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">3.</strong> Contibuting code</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.1.</strong> Components</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.2.</strong> Systems</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.3.</strong> Event Channel</a></li></ol></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.</strong> Guides</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.1.</strong> Contributing art</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.2.</strong> Adding new items</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.3.</strong> Writing tests</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -102,8 +102,8 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -155,6 +155,78 @@ as the primary source of documentation for those interested in contributing to
 a game using the <a href="https://amethyst.rs/">Amethyst game engine</a>.</p>
 <p>This book is being actively updated. So there may be sections that are still
 under construction.</p>
+<h1><a class="header" href="#gameplay" id="gameplay">Gameplay</a></h1>
+<p>In space_shooter_rs, you play as a spaceship defending an objective. The goal
+of the game is to survive levels by destroying enemies, collecting consumables,
+buying items, and defeating the final boss.</p>
+<p>In this section you can find detailed information about the enemies,
+consumables, items, enemies, allies, and bosses in the game.</p>
+<p><img src="assets/gameplay.gif" alt="gameplay of space_shooter_rs" /></p>
+<h1><a class="header" href="#controls" id="controls">Controls</a></h1>
+<p>In space_shooter_rs you control a spaceship character. You can move around,
+shoot, use abilities, and buy items from the store.</p>
+<table><thead><tr><th align="center">Key</th><th align="center"></th><th align="center">Action</th></tr></thead><tbody>
+<tr><td align="center">W</td><td align="center"><img src="assets/w_key.gif" alt="w_key" /></td><td align="center">Accelerate up.</td></tr>
+<tr><td align="center">S</td><td align="center"><img src="assets/s_key.gif" alt="s_key" /></td><td align="center">Accelerate down.</td></tr>
+<tr><td align="center">A</td><td align="center"><img src="assets/a_key.gif" alt="a_key" /></td><td align="center">Accelerate left.</td></tr>
+<tr><td align="center">D</td><td align="center"><img src="assets/d_key.gif" alt="d_key" /></td><td align="center">Accelerate right.</td></tr>
+<tr><td align="center">Space</td><td align="center"><img src="assets/space_key.gif" alt="space_key" /></td><td align="center">Fire blast.</td></tr>
+<tr><td align="center">Left</td><td align="center"><img src="assets/left_key.gif" alt="left_key" /></td><td align="center">Barrel roll left.</td></tr>
+<tr><td align="center">Right</td><td align="center"><img src="assets/right_key.gif" alt="right_key" /></td><td align="center">Barrel roll right.</td></tr>
+<tr><td align="center">1</td><td align="center"><img src="assets/one_key.gif" alt="one_key" /></td><td align="center">Buy shop item 1.</td></tr>
+<tr><td align="center">2</td><td align="center"><img src="assets/two_key.gif" alt="two_key" /></td><td align="center">Buy shop item 2.</td></tr>
+<tr><td align="center">3</td><td align="center"><img src="assets/three_key.gif" alt="three_key" /></td><td align="center">Buy shop item 3.</td></tr>
+<tr><td align="center">Escape</td><td align="center"><img src="assets/esc_key.gif" alt="esc_key" /></td><td align="center">Pause the game.</td></tr>
+</tbody></table>
+<h1><a class="header" href="#characters" id="characters">Characters</a></h1>
+<p>In the future, the player will be able to choose to play as one of many
+characters. Each character has a unique special ability.</p>
+<table><thead><tr><th align="center">Name</th><th align="center">Image</th><th align="center">Special Ability</th></tr></thead><tbody>
+<tr><td align="center">Juggernaut</td><td align="center"><img src="assets/spaceship_portrait.png" alt="juggernaut" /></td><td align="center">Barrel roll to the left or right.</td></tr>
+</tbody></table>
+<h1><a class="header" href="#items" id="items">Items</a></h1>
+<p>Items can be purchased from the shop (bottom right). They grant the player
+permanent augmentations.</p>
+<table><thead><tr><th align="center">Name</th><th align="center"></th><th align="center">Description</th></tr></thead><tbody>
+<tr><td align="center">Steel Barrel</td><td align="center"><img src="assets/steel_barrel_portrait.png" alt="steel_barrel" /></td><td align="center">Gives player collision damage immunity while barrel rolling.</td></tr>
+<tr><td align="center">Plasma Blasts</td><td align="center"><img src="assets/plasma_blast_portrait.png" alt="plasma_blast" /></td><td align="center">Increases fire rate and damage.</td></tr>
+<tr><td align="center">Hazardous Reactor</td><td align="center"><img src="assets/hazardous_reactor_portrait.png" alt="hazardous_reactor" /></td><td align="center">Increases maximum speed.</td></tr>
+<tr><td align="center">Warp Thruster</td><td align="center"><img src="assets/warp_thruster_portrait.png" alt="warp_thruster" /></td><td align="center">Increases acceleration and deceleration.</td></tr>
+<tr><td align="center">Quadrupedal Tentaclover</td><td align="center"><img src="assets/quadrupedal_tentaclover_portrait.png" alt="quadrupedal_tentaclover" /></td><td align="center">Grants chance to critical hit.</td></tr>
+<tr><td align="center">Defense Satellite</td><td align="center"><img src="assets/defense_satellite_portrait.png" alt="defense_satellite" /></td><td align="center">Increases maximum defense.</td></tr>
+<tr><td align="center">Double Barrel</td><td align="center"><img src="assets/double_barrel_portrait.png" alt="double_barrel" /></td><td align="center">Grants double blasts.</td></tr>
+<tr><td align="center">Yithian Plague</td><td align="center"><img src="assets/yithian_plague_portrait.png" alt="yithian_plague" /></td><td align="center">Grants chance to poison.</td></tr>
+<tr><td align="center">Spice</td><td align="center"><img src="assets/spice_portrait.png" alt="spice" /></td><td align="center">Decreases barrel roll cooldown time.</td></tr>
+<tr><td align="center">Enhanced Plating</td><td align="center"><img src="assets/enhanced_plating_portrait.png" alt="enhanced_plating" /></td><td align="center">Increases maximum health by a factor.</td></tr>
+<tr><td align="center">Structure Reinforcement</td><td align="center"><img src="assets/structure_reinforcement_portrait.png" alt="structure_reinforcement" /></td><td align="center">Increases maximum health.</td></tr>
+<tr><td align="center">Blast Size Enhancer</td><td align="center"><img src="assets/blast_size_enhancer_portrait.png" alt="blast_size_enhancer" /></td><td align="center">Increases size of shot blasts.</td></tr>
+</tbody></table>
+<h1><a class="header" href="#consumables" id="consumables">Consumables</a></h1>
+<p>Consumables have a chance to be dropped from enemies upon being destroyed.</p>
+<table><thead><tr><th align="center">Name</th><th align="center">Image</th><th align="center">Description</th></tr></thead><tbody>
+<tr><td align="center">Health Wrench</td><td align="center"><img src="assets/health_wrench_portrait.png" alt="health_wrench" /></td><td align="center">Grants health to the player.</td></tr>
+<tr><td align="center">Defense Wrench</td><td align="center"><img src="assets/defense_wrench_portrait.png" alt="defense_wrench" /></td><td align="center">Grants defense.</td></tr>
+<tr><td align="center">1x Currency</td><td align="center"><img src="assets/money_1_portrait.png" alt="money_1_wrench" /></td><td align="center">Grants 1 currency.</td></tr>
+<tr><td align="center">5x Currency</td><td align="center"><img src="assets/money_5_portrait.png" alt="money_5_wrench" /></td><td align="center">Grants 5 currency.</td></tr>
+</tbody></table>
+<h1><a class="header" href="#enemies" id="enemies">Enemies</a></h1>
+<p>Enemies can damage the player and the defense. Upon being destroyed they have a
+chance to drop consumables.</p>
+<table><thead><tr><th align="center">Name</th><th align="center">Image</th><th align="center">Description</th></tr></thead><tbody>
+<tr><td align="center">Drone</td><td align="center"><img src="assets/drone.gif" alt="drone_enemy" /></td><td align="center">Most basic enemy in the game. Moves towards the bottom of the arena and does defense damage on arrival.</td></tr>
+<tr><td align="center">Pawn</td><td align="center"><img src="assets/pawn.gif" alt="pawn_enemy" /></td><td align="center">Moves towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.</td></tr>
+<tr><td align="center">Strafer</td><td align="center"><img src="assets/strafer.gif" alt="strafer_enemy" /></td><td align="center">Strafes left and right towards the bottom of the arena at a reduced speed and does defense damage on arrival. Periodically fires a blast.</td></tr>
+</tbody></table>
+<h1><a class="header" href="#allies" id="allies">Allies</a></h1>
+<p>Allies provide a temporary objective. Make sure they survive and you will be rewarded.</p>
+<table><thead><tr><th align="center">Name</th><th align="center">Image</th><th align="center">Description</th></tr></thead><tbody>
+<tr><td align="center">Hauler</td><td align="center"><img src="assets/hauler.gif" alt="hauler_ally" /></td><td align="center">Moves towards the bottom of the arena at a very reduced speed and grants defense on arrival.</td></tr>
+</tbody></table>
+<h1><a class="header" href="#bosses" id="bosses">Bosses</a></h1>
+<p>Bosses arrive at the end of a stage. Destory them to move on to the next stage.</p>
+<table><thead><tr><th align="center">Name</th><th align="center">Image</th><th align="center">Description</th></tr></thead><tbody>
+<tr><td align="center">Repeater</td><td align="center"><img src="assets/repeater_portrait.png" alt="repeater_boss" /></td><td align="center">WIP.</td></tr>
+</tbody></table>
 <h1><a class="header" href="#contributing" id="contributing">Contributing</a></h1>
 <p>If you haven't already, please take some time to read the community <a href="https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>.</p>
 <h2><a class="header" href="#the-basics" id="the-basics">The Basics</a></h2>

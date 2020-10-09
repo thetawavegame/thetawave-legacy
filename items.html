@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Items - space_shooter_rs Documentation</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="gameplay.html"><strong aria-hidden="true">2.</strong> Gameplay</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="controls.html"><strong aria-hidden="true">2.1.</strong> Controls</a></li><li class="chapter-item expanded "><a href="characters.html"><strong aria-hidden="true">2.2.</strong> Characters</a></li><li class="chapter-item expanded "><a href="items.html" class="active"><strong aria-hidden="true">2.3.</strong> Items</a></li><li class="chapter-item expanded "><a href="consumables.html"><strong aria-hidden="true">2.4.</strong> Consumables</a></li><li class="chapter-item expanded "><a href="enemies.html"><strong aria-hidden="true">2.5.</strong> Enemies</a></li><li class="chapter-item expanded "><a href="allies.html"><strong aria-hidden="true">2.6.</strong> Allies</a></li><li class="chapter-item expanded "><a href="bosses.html"><strong aria-hidden="true">2.7.</strong> Bosses</a></li></ol></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">3.</strong> Contibuting code</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.1.</strong> Components</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.2.</strong> Systems</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">4.3.</strong> Event Channel</a></li></ol></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.</strong> Guides</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.1.</strong> Contributing art</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.2.</strong> Adding new items</a></li><li class="chapter-item expanded "><a href="TODO.html"><strong aria-hidden="true">5.3.</strong> Writing tests</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">space_shooter_rs Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#items" id="items">Items</a></h1>
+<p>Items can be purchased from the shop (bottom right). They grant the player
+permanent augmentations.</p>
+<table><thead><tr><th align="center">Name</th><th align="center"></th><th align="center">Description</th></tr></thead><tbody>
+<tr><td align="center">Steel Barrel</td><td align="center"><img src="assets/steel_barrel_portrait.png" alt="steel_barrel" /></td><td align="center">Gives player collision damage immunity while barrel rolling.</td></tr>
+<tr><td align="center">Plasma Blasts</td><td align="center"><img src="assets/plasma_blast_portrait.png" alt="plasma_blast" /></td><td align="center">Increases fire rate and damage.</td></tr>
+<tr><td align="center">Hazardous Reactor</td><td align="center"><img src="assets/hazardous_reactor_portrait.png" alt="hazardous_reactor" /></td><td align="center">Increases maximum speed.</td></tr>
+<tr><td align="center">Warp Thruster</td><td align="center"><img src="assets/warp_thruster_portrait.png" alt="warp_thruster" /></td><td align="center">Increases acceleration and deceleration.</td></tr>
+<tr><td align="center">Quadrupedal Tentaclover</td><td align="center"><img src="assets/quadrupedal_tentaclover_portrait.png" alt="quadrupedal_tentaclover" /></td><td align="center">Grants chance to critical hit.</td></tr>
+<tr><td align="center">Defense Satellite</td><td align="center"><img src="assets/defense_satellite_portrait.png" alt="defense_satellite" /></td><td align="center">Increases maximum defense.</td></tr>
+<tr><td align="center">Double Barrel</td><td align="center"><img src="assets/double_barrel_portrait.png" alt="double_barrel" /></td><td align="center">Grants double blasts.</td></tr>
+<tr><td align="center">Yithian Plague</td><td align="center"><img src="assets/yithian_plague_portrait.png" alt="yithian_plague" /></td><td align="center">Grants chance to poison.</td></tr>
+<tr><td align="center">Spice</td><td align="center"><img src="assets/spice_portrait.png" alt="spice" /></td><td align="center">Decreases barrel roll cooldown time.</td></tr>
+<tr><td align="center">Enhanced Plating</td><td align="center"><img src="assets/enhanced_plating_portrait.png" alt="enhanced_plating" /></td><td align="center">Increases maximum health by a factor.</td></tr>
+<tr><td align="center">Structure Reinforcement</td><td align="center"><img src="assets/structure_reinforcement_portrait.png" alt="structure_reinforcement" /></td><td align="center">Increases maximum health.</td></tr>
+<tr><td align="center">Blast Size Enhancer</td><td align="center"><img src="assets/blast_size_enhancer_portrait.png" alt="blast_size_enhancer" /></td><td align="center">Increases size of shot blasts.</td></tr>
+</tbody></table>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="characters.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="consumables.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="characters.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="consumables.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
