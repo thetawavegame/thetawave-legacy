@@ -15,7 +15,7 @@ in the process. You can shoot the enemies with your spaceships blasters or ram
 into them with your barrel roll dealing damage to yourself in the process. How
 long can you last?
 
-![Alt text](assets/gifs/gameplay.gif)
+![gameplay of space_shooter_rs](book/src/assets/gameplay.gif)
 
 ## To Run
 
@@ -29,7 +29,7 @@ the root of the project.
 
 ## Controls
 
-![spaceship](assets/texture/portraits/spaceship_portrait.png)
+![spaceship](book/src/assets/spaceship_portrait.png)
 
 |Key|Action|
 |:---:|:---:|
