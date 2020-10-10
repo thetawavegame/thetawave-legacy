@@ -18,4 +18,6 @@
   - [Contributing art](./TODO.md)
   - [Adding Items](./add_item.md)
     - [Design your Item](./design_item.md)
+    - [Append Sprite to Spritesheet](./append_item_sprite.md)
+    - [Append Data to items.ron](./append_item_data.md)
   - [Writing tests](./TODO.md)

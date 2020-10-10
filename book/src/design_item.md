@@ -1,8 +1,8 @@
 # Design your Item
 
 Before you start modifying the source files to add your item to the game you
-should first come up clear idea for your item. You should consider the following
-attributes for the item:
+should first come up clear idea for your item.
+You should consider the following attributes for the item:
 
 - What benefits will it provide? (e.g. increase damage, fire rate, health, etc)
 - At what cost to stats will it provide the benefit? (e.g. large increase in
@@ -12,7 +12,8 @@ attributes for the item:
 
 Once you have an idea for each of the points listed above, you should be ready
 to start implementing your item. However, if you have ideas for the presentation
-of the item in the game you can come up with those now too. This includes:
+of the item in the game (keeping our [Code of Conduct](https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md)
+in mind) you can come up with those now too. This includes:
 
 - What will the item be called? Try keeping your item's name consistent with
   space_shooter_rs's sci-fi/cosmic-horror theme.
@@ -20,13 +21,16 @@ of the item in the game you can come up with those now too. This includes:
   representation of the name you gave it. Refer to the section for
   [items]() in contributing art.
 
+When you have the information for your item, submit an issue if there isn't
+one already. Make sure to give it the "item" tag.
+
 ## Example Item
 
 I want to create an item that will:
 
 - Provide a substantial increase in fire rate.
 - The increase in fire rate will come at the cost of some damage per blast.
-- This item will cost $8 from the store.
+- Cost $8 from the store.
 
 This item will be called "Frequency Augmentor" because it sounds sci-fi-y and
 somewhat relates to what the items does. The item will look like this:
