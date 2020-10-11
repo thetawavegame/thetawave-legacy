@@ -28,7 +28,7 @@ pub use self::{
     gamemaster::{BossType, GameMaster, Phase, PhaseType},
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
-    item::Item,
+    item::ItemComponent,
     motion2d::Motion2DComponent,
     planet::Planet,
     spaceship::Spaceship,

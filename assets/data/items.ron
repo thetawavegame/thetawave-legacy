@@ -1,13 +1,12 @@
 {
-    "plasma_blasts": (
+    "steel_barrel": (
         item_component: (
-            stat_effects: {
-            "fire_speed": -0.05,
-            "damage": 5,
+            bool_effects: {
+                "barrel_immunity": true,
             },
-            price: 15,
-            sprite_index: 2,
-            name: "plasma_blasts",
+            price: 9,
+            sprite_index: 1,
+            name: "steel_barrel",
         ),
         motion2d_component: (
             velocity: [0.0, 70.0],
@@ -15,7 +14,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -27,14 +26,15 @@
             offset_rotation: 0.0,
         ),
     ),
-    "warp_thruster": (
+    "plasma_blasts": (
         item_component: (
             stat_effects: {
-            "deceleration": 1,
-            "acceleration": 1,
+            "blast_fire_speed": -0.05,
+            "blast_damage": 5,
             },
-            sprite_index: 4,
-            name: "warp_thruster",
+            price: 15,
+            sprite_index: 2,
+            name: "plasma_blasts",
         ),
         motion2d_component: (
             velocity: [0.0, 70.0],
@@ -42,7 +42,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -69,7 +69,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -81,14 +81,14 @@
             offset_rotation: 0.0,
         ),
     ),
-    "steel_barrel": (
+    "warp_thruster": (
         item_component: (
-            bool_effects: {
-                "barrel_immunity": true,
+            stat_effects: {
+            "deceleration": 1,
+            "acceleration": 1,
             },
-            price: 9,
-            sprite_index: 1,
-            name: "steel_barrel",
+            sprite_index: 4,
+            name: "warp_thruster",
         ),
         motion2d_component: (
             velocity: [0.0, 70.0],
@@ -96,7 +96,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -123,7 +123,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -150,7 +150,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -177,7 +177,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -204,7 +204,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -231,7 +231,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -258,7 +258,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -285,7 +285,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -300,7 +300,7 @@
     "blaster_size_enhancer": (
         item_component: (
             stat_effects: {
-                "blast_size_multiplier": 4.0,
+                "blast_size": 4.0,
             },
             price: 12,
             sprite_index: 12,
@@ -312,7 +312,7 @@
             deceleration: [0.0, 0.0],
             max_speed: [0.0, 70.0],
             knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.05,
+            angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
         ),
@@ -332,5 +332,33 @@
             forward: true,
             animation_type: PingPong,
         )),
-    )
+    ),
+    "frequency_augmentor": (
+        item_component: (
+            stat_effects: {
+                "blast_fire_speed": -0.12,
+                "blast_damage": -4,
+            },
+            price: 8,
+            sprite_index: 17,
+            name: "frequency_augmentor",
+        ),
+        motion2d_component: (
+            velocity: [0.0, 70.0],
+            acceleration: [0.0, 0.0],
+            deceleration: [0.0, 0.0],
+            max_speed: [0.0, 70.0],
+            knockback_max_speed: [0.0, 70.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+        ),
+        hitbox_component: (
+            width: 14.0,
+            height: 14.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
+    ),
 }
