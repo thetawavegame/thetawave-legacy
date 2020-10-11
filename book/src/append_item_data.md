@@ -1,40 +1,19 @@
 # Append Data to items.ron
 
-An item entity requires three components:
+An item entity requires seven components:
 
+- SpriteRender
 - ItemComponent
 - Hitbox2DComponent
 - Motion2DComponent
+- Transform
+- Transparent
+- Name
+- AnimationComponent (Optional)
 
-These components are listed for each item and are stored in assets/data/items.ron. Motion2DComponent and Hitbox2DComponent should remain the same across all items. Respectively, here is what they should look like in items.ron:
+All of the components besides the ItemComponent and optional AnimationComponent are consistent throughtout all of the items, so they do not need to be specified by you when adding an item.
 
-```rust
-...
-
-motion2d_component: (
-    velocity: [0.0, 70.0],
-    acceleration: [0.0, 0.0],
-    deceleration: [0.0, 0.0],
-    max_speed: [0.0, 70.0],
-    knockback_max_speed: [0.0, 70.0],
-    angular_velocity: 0.0,
-    angular_acceleration: 0.0,
-    angular_deceleration: 0.0,
-),
-hitbox_component: (
-    width: 14.0,
-    height: 14.0,
-    offset_x: 0.0,
-    offset_y: 0.0,
-    offset_rotation: 0.0,
-),
-
-...
-```
-
-The Motion2DComponent makes the item entity to travel down at a speed of 70. The Hitbox2DComponent makes the item entity have a 14 by 14 pixel hitbox.
-
-The final component, called ItemComponent defines all of the attributes listed in the design section:
+The ItemComponent and optional AnimationComponent do need to be specified in assets/data/items.ron. In the "Frequency Augmentor" example we won't be adding an animation at this point, so we don't need to worry about adding AnimationComponent data to the file. For right now we just need to add the ItemComponent data. This data is all of the information listed in the design section:
 
 - Name
 - Sprite
@@ -56,23 +35,10 @@ Here is what the full entry for the new "Frequency Augmentor" item should like w
             sprite_index: 17,
             name: "frequency_augmentor",
         ),
-        motion2d_component: (
-            velocity: [0.0, 70.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            max_speed: [0.0, 70.0],
-            knockback_max_speed: [0.0, 70.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-        ),
-        hitbox_component: (
-            width: 14.0,
-            height: 14.0,
-            offset_x: 0.0,
-            offset_y: 0.0,
-            offset_rotation: 0.0,
-        ),
     ),
 }
 ```
+
+The price is set to 8, because we want the item to cost $8 from the item shop. The name is in snakecase which would be "frequency_augmentor" (this is also the key value in the hashmap). The sprite_index is set to 17 because the art for the item is the 17th sprite to be added to the spritesheet and ron file.
+
+The most involved data to add is the "stat_effects" property. This is a hashmap that maps names of attributes to float values. You can find a list of all of the attributes in the Appendix.
