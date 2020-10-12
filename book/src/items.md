@@ -16,4 +16,5 @@ permanent augmentations.
 |Spice|![spice](assets/spice_portrait.png)|Decreases barrel roll cooldown time.|
 |Enhanced Plating|![enhanced_plating](assets/enhanced_plating_portrait.png)|Increases maximum health by a factor.|
 |Structure Reinforcement|![structure_reinforcement](assets/structure_reinforcement_portrait.png)|Increases maximum health.|
-|Blast Size Enhancer|![blast_size_enhancer](assets/blast_size_enhancer_portrait.png)|Increases size of shot blasts.|
+|Blast Size Enhancer|![blast_size_enhancer](assets/blast_size_enhancer_portrait.png)|Increases size of blasts.|
+|Frequency Augmentor|![frequency_augmentor](assets/frequency_augmentor_portrait.png)|Sharply increases fire rate of blasts at the cost of some damage.|

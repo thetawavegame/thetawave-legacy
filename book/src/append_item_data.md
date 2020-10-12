@@ -11,9 +11,9 @@ An item entity requires seven components:
 - Name
 - AnimationComponent (Optional)
 
-All of the components besides the ItemComponent and optional AnimationComponent are consistent throughtout all of the items, so they do not need to be specified by you when adding an item.
+All of the components besides the ItemComponent and optional AnimationComponent are consistent throughtout all of the items, so they do not need to be specified when adding an item.
 
-The ItemComponent and optional AnimationComponent do need to be specified in assets/data/items.ron. In the "Frequency Augmentor" example we won't be adding an animation at this point, so we don't need to worry about adding AnimationComponent data to the file. For right now we just need to add the ItemComponent data. This data is all of the information listed in the design section:
+The ItemComponent and optional AnimationComponent need to be specified in assets/data/items.ron. For the "Frequency Augmentor" example we won't be adding an animation at this point, so we don't need to worry about adding AnimationComponent data to the file. For right now we just need to add the ItemComponent data. This data is all of the information listed in the design section:
 
 - Name
 - Sprite
@@ -39,6 +39,16 @@ Here is what the full entry for the new "Frequency Augmentor" item should like w
 }
 ```
 
-The price is set to 8, because we want the item to cost $8 from the item shop. The name is in snakecase which would be "frequency_augmentor" (this is also the key value in the hashmap). The sprite_index is set to 17 because the art for the item is the 17th sprite to be added to the spritesheet and ron file.
+The price is set to 8, because we want the item to cost $8 from the item shop. The name is "Frequency Augmentor" in snakecase which would be "frequency_augmentor" (this is also the key in the hashmap). The sprite_index is set to 17 because the art for the item is at index 17 in the spritesheet data file (assets/texture/item_spritesheet.ron).
 
-The most involved data to add is the "stat_effects" property. This is a hashmap that maps names of attributes to float values. You can find a list of all of the attributes in the Appendix.
+The most involved data to add is the "stat_effects" property. This is a hashmap that maps names of attributes to float values. You can find a list of all these attributes in [Appendix A](./stat_effects.md). Map the name of the effect you want the item to make to a float value. For the "Frequency Augmentor" item, I add  `-0.10` to `blast_fire_speed`, to decrease the delay between blasts. I also decrease the damage per blast by 4 points of damage by setting `blast_damage` to `-4`.
+
+If you run the game after following the sections up to this point in [Adding Items](./add_item.md), your item should work! Here is the "Frequency Augmentor" item in action:
+
+![frequency_augmentor_gif](./assets/frequency_augmentor.gif)
+
+This the minimum amount of work that needs to be done to in order to add an item to the game. However you should continue reading this section if...
+
+- you want your item to have an animation.
+- you want to add an item that affects stats not listed in [Appendix A](./item_effects.md).
+- you want to add an item with a bool effect.
