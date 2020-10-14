@@ -26,7 +26,8 @@ ItemComponent data. This data is all of the information listed in the design sec
 - Price
 - Effects
 
-Here is what the full entry for the new "Frequency Augmentor" item should like when appended to the end assets/data/items.ron:
+Here is what the full entry for the new "Frequency Augmentor" item should like
+when appended to the end assets/data/items.ron:
 
 ```rust
 ...
