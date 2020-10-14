@@ -1,7 +1,7 @@
 # Append Sprite to Spritesheet
 
-Now that your item is designed and you have submitted feedback on your item issue,
-you can begin putting it in the game!
+Once your item is designed and you have have received feedback on your
+submitted item issue, you can begin putting it in the game!
 
 Refer to the [Contributing Guidelines](/book/src/contributing.md) section for
 details on how to fork, run, and edit the game on your machine.
@@ -49,7 +49,7 @@ List((
 ```
 
 The width and height for all sprites on the item spritesheet should be 14,
-and the x and y coordinates should be multiples of 14.
+and the x and y coordinates should both be multiples of 14.
 
 At this point you should be able to build and run the game with no errors.
-If this case, you can move on to the next section.
+If this is the case, you can move on to the next section.

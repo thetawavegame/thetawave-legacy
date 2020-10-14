@@ -1,7 +1,7 @@
 # Design your Item
 
-Before you start modifying the source files to add your item to the game you
-should first come up clear idea for your item.
+Before you start modifying the source files to add your item to the game, you
+should first come up with a clear idea for your item.
 You should consider the following attributes for the item:
 
 - What benefits will it provide? (e.g. increase damage, fire rate, health, etc)
@@ -17,12 +17,11 @@ in mind) you can come up with those now too. This includes:
 
 - What will the item be called? Try keeping your item's name consistent with
   space_shooter_rs's sci-fi/cosmic-horror theme.
-- What will the item look like? The item should like like a visual
-  representation of the name you gave it. Refer to the section for
-  [items]() in contributing art.
+- What will the item look like? The item's sprite should be a visual
+  representation of the name you gave it.
 
-When you have the information for your item, submit an issue if there isn't
-one already. Make sure to give it the "item" tag.
+When you have the required information for your item, submit an issue if there isn't
+one already. Make sure to give the issue the "item" tag.
 
 ## Example Item
 
@@ -35,7 +34,7 @@ I want to create an item that will:
 This item will be called "Frequency Augmentor" because it sounds sci-fi-y and
 somewhat relates to what the items does. The item will look like this:
 
-![frequency_aumgentor](assets/frequency_augmentor_example.png)
+![frequency_augmentor](assets/frequency_augmentor_example.png)
 
-Note that this image is scaled up 500%. The actual sprite on the items spritesheet
-is only 14x14 pixels.
+*Note that this image is scaled up 500%. The actual sprite on the items spritesheet
+is only 14x14 pixels.*
