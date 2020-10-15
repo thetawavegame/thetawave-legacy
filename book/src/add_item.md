@@ -7,6 +7,6 @@ change overarching rules of the game.
 
 ![collecting_items](./assets/collecting_items.gif)
 
-In this section we will go over the steps of adding a simple stat effecting item
+In this section we will go over the steps of adding a simple stat affecting item
 to the game. We will also follow along with these steps to add the "Frequency Augmentor"
 item to the game.

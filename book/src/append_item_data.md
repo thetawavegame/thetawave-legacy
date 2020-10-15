@@ -11,15 +11,15 @@ An item entity requires seven components:
 - Name
 - AnimationComponent (Optional)
 
-All of the components besides the ItemComponent and optional AnimationComponent
-are consistent throughtout all of the items, so they do not need to be specified
+All of the components besides the `ItemComponent` and optional `AnimationComponent`
+are consistent through out all of the items, so they do not need to be specified
 by you when adding a new item.
 
-The ItemComponent and optional AnimationComponent need to be specified in
-assets/data/items.ron. For the "Frequency Augmentor" example we won't be adding
+The `ItemComponent` and optional `AnimationComponent` need to be specified in
+`assets/data/items.ron`. For the "Frequency Augmentor" example we won't be adding
 an animation at this point, so we don't need to worry about adding
-AnimationComponent data to the file. For right now we just need to add the
-ItemComponent data. This data is all of the information listed in the design section:
+`AnimationComponent` data to the file. For right now we just need to add the
+`ItemComponent` data. This data is all of the information listed in the design section:
 
 - Name
 - Sprite
@@ -27,7 +27,7 @@ ItemComponent data. This data is all of the information listed in the design sec
 - Effects
 
 Here is what the full entry for the new "Frequency Augmentor" item should like
-when appended to the end assets/data/items.ron:
+when appended to the end `assets/data/items.ron`:
 
 ```rust
 ...
@@ -67,7 +67,7 @@ your item should work! Here is the "Frequency Augmentor" item in action:
 
 ![frequency_augmentor_gif](./assets/frequency_augmentor.gif)
 
-This the minimum amount of work that needs to be done to in order to add an item
+This is the minimum amount of work that needs to be done to in order to add an item
 to the game. However you should continue reading this section if...
 
 - you want your item to have an animation.

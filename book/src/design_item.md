@@ -5,9 +5,9 @@ should first come up with a clear idea for your item.
 You should consider the following attributes for the item:
 
 - What benefits will it provide? (e.g. increase damage, fire rate, health, etc)
-- At what cost to stats will it provide the benefit? (e.g. large increase in
+- Are there any trade-offs to these benefits? (e.g. large increase in
   fire rate, but lowers damage per blast)
-- What price should it be listed at in the store? (Items should be priced
+- What price should it be listed as in the store? (Items should be priced
   according to their net benefit.)
 
 Once you have an idea for each of the points listed above, you should be ready
@@ -31,8 +31,8 @@ I want to create an item that will:
 - The increase in fire rate will come at the cost of some damage per blast.
 - Cost $8 from the store.
 
-This item will be called "Frequency Augmentor" because it sounds sci-fi-y and
-somewhat relates to what the items does. The item will look like this:
+This item will be called "Frequency Augmentor" because it sounds "sci-fi-y" and
+somewhat relates to what the item does. The item will look like this:
 
 ![frequency_augmentor](assets/frequency_augmentor_example.png)
 
