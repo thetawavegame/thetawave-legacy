@@ -1,6 +1,6 @@
 use crate::components::{
     Animation, AutoFireComponent, BlasterComponent, Consumable, Enemy, HealthComponent,
-    Hitbox2DComponent, Item, Motion2DComponent,
+    Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
 use serde::{Deserialize, Serialize};
 
@@ -21,9 +21,7 @@ pub struct EnemyEntityData {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ItemEntityData {
-    pub item_component: Item,
-    pub hitbox_component: Hitbox2DComponent,
-    pub motion2d_component: Motion2DComponent,
+    pub item_component: ItemComponent,
     pub animation_component: Option<Animation>,
 }
 

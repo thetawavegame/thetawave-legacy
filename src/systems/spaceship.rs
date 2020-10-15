@@ -134,12 +134,12 @@ impl<'s> System<'s> for SpaceshipSystem {
                 blaster.count += event.stat_effects["blast_count"] as usize;
             }
 
-            if event.stat_effects.contains_key("fire_speed") {
-                manual_fire.period += event.stat_effects["fire_speed"];
+            if event.stat_effects.contains_key("blast_fire_speed") {
+                manual_fire.period += event.stat_effects["blast_fire_speed"];
             }
 
-            if event.stat_effects.contains_key("damage") {
-                blaster.damage += event.stat_effects["damage"];
+            if event.stat_effects.contains_key("blast_damage") {
+                blaster.damage += event.stat_effects["blast_damage"];
             }
 
             if event.stat_effects.contains_key("max_speed") {
@@ -178,8 +178,8 @@ impl<'s> System<'s> for SpaceshipSystem {
                 spaceship_health.value = spaceship_health.max_value;
             }
 
-            if event.stat_effects.contains_key("blast_size_multiplier") {
-                blaster.size_multiplier += event.stat_effects["blast_size_multiplier"];
+            if event.stat_effects.contains_key("blast_size") {
+                blaster.size_multiplier += event.stat_effects["blast_size"];
             }
         }
     }

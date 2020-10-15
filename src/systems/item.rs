@@ -1,5 +1,5 @@
 use crate::{
-    components::{Hitbox2DComponent, Item, Motion2DComponent},
+    components::{Hitbox2DComponent, ItemComponent, Motion2DComponent},
     constants::ARENA_MIN_Y,
 };
 use amethyst::{
@@ -15,7 +15,7 @@ pub struct ItemSystem;
 impl<'s> System<'s> for ItemSystem {
     type SystemData = (
         Entities<'s>,
-        WriteStorage<'s, Item>,
+        WriteStorage<'s, ItemComponent>,
         WriteStorage<'s, Transform>,
         ReadStorage<'s, Hitbox2DComponent>,
         ReadStorage<'s, Motion2DComponent>,

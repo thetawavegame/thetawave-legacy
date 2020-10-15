@@ -1,6 +1,13 @@
-use crate::resources::{ItemEntityData, SpriteResource};
+use crate::{
+    components::{Hitbox2DComponent, Motion2DComponent},
+    resources::{ItemEntityData, SpriteResource},
+};
 use amethyst::{
-    core::{math::Vector3, transform::Transform, Named},
+    core::{
+        math::{Vector2, Vector3},
+        transform::Transform,
+        Named,
+    },
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
@@ -21,14 +28,33 @@ pub fn spawn_item(
 
     let name = Named::new("item");
 
+    let hitbox_component = Hitbox2DComponent {
+        width: 14.0,
+        height: 14.0,
+        offset_x: 0.0,
+        offset_y: 0.0,
+        offset_rotation: 0.0,
+    };
+
+    let motion_component = Motion2DComponent {
+        velocity: Vector2::new(0.0, 70.0),
+        acceleration: Vector2::new(0.0, 0.0),
+        deceleration: Vector2::new(0.0, 0.0),
+        max_speed: Vector2::new(0.0, 70.0),
+        knockback_max_speed: Vector2::new(0.0, 70.0),
+        angular_velocity: 0.0,
+        angular_acceleration: 0.0,
+        angular_deceleration: 0.0,
+    };
+
     println!("{} spawned!", item.item_component.name);
 
     let item_entity = lazy_update
         .create_entity(entities)
         .with(sprite_render)
         .with(item.item_component)
-        .with(item.hitbox_component)
-        .with(item.motion2d_component)
+        .with(hitbox_component)
+        .with(motion_component)
         .with(local_transform)
         .with(Transparent)
         .with(name)

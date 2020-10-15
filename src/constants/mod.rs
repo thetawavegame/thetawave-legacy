@@ -80,7 +80,7 @@ pub const SPACESHIP_BARREL_COOLDOWN: f32 = 1.5;
 pub const SPACESHIP_BARREL_SPEED: f32 = 180.0;
 pub const SPACESHIP_BARREL_DURATION: f32 = 0.3;
 pub const SPACESHIP_HEALTH: f32 = 400.0;
-pub const SPACESHIP_MONEY: usize = 20;
+pub const SPACESHIP_MONEY: usize = 50;
 pub const SPACESHIP_COLLISION_DAMAGE: f32 = 50.0;
 pub const SPACESHIP_CRIT_CHANCE: f32 = 0.0;
 
