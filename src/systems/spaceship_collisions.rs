@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlastComponent, BlastType, Consumable, DefenseTag, Enemy, HealthComponent, Item,
+        BlastComponent, BlastType, Consumable, DefenseTag, Enemy, HealthComponent, ItemComponent,
         Motion2DComponent, Spaceship,
     },
     entities::spawn_blast_explosion,
@@ -149,7 +149,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
-        ReadStorage<'s, Item>,
+        ReadStorage<'s, ItemComponent>,
         Write<'s, EventChannel<ItemGetEvent>>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
