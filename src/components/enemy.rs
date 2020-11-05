@@ -23,7 +23,7 @@ pub enum EnemyType {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct Enemy {
+pub struct EnemyComponent {
     pub name: String,
     pub defense_damage: f32,
     #[serde(default = "des_collision_damage")]
@@ -51,7 +51,7 @@ fn des_allied() -> bool {
     false
 }
 
-impl Rigidbody for Enemy {
+impl Rigidbody for EnemyComponent {
     fn constrain_to_arena(
         &mut self,
         transform: &mut Transform,
@@ -68,7 +68,7 @@ impl Rigidbody for Enemy {
     }
 }
 
-impl Component for Enemy {
+impl Component for EnemyComponent {
     type Storage = DenseVecStorage<Self>;
 }
 

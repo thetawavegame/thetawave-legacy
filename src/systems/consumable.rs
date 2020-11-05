@@ -1,5 +1,5 @@
 use crate::{
-    components::{Consumable, Hitbox2DComponent},
+    components::{ConsumableComponent, Hitbox2DComponent},
     constants::ARENA_MIN_Y,
 };
 use amethyst::{
@@ -13,7 +13,7 @@ pub struct ConsumableSystem;
 impl<'s> System<'s> for ConsumableSystem {
     type SystemData = (
         Entities<'s>,
-        WriteStorage<'s, Consumable>,
+        WriteStorage<'s, ConsumableComponent>,
         WriteStorage<'s, Transform>,
         ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, Time>,

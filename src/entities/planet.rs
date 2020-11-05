@@ -1,4 +1,4 @@
-use crate::components::Planet;
+use crate::components::PlanetComponent;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::math::Vector3,
@@ -18,7 +18,7 @@ pub fn initialize_planet(
     angle: f32,
     d_angle: f32,
 ) {
-    let planet = Planet { angle, d_angle };
+    let planet = PlanetComponent { angle, d_angle };
 
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(x, y, z);

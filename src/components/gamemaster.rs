@@ -22,7 +22,7 @@ pub struct Phase {
 }
 
 #[derive(Clone)]
-pub struct GameMaster {
+pub struct GameMasterComponent {
     pub phase_map: Vec<Phase>,
     pub phase_idx: usize,
     pub last_phase: usize,
@@ -31,11 +31,11 @@ pub struct GameMaster {
     pub tick_length: f32,
 }
 
-impl Component for GameMaster {
+impl Component for GameMasterComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl GameMaster {
+impl GameMasterComponent {
     pub fn iterate_tick(&mut self, dt: f32) {
         if self.tick_timer > 0.0 {
             self.tick_timer -= dt;

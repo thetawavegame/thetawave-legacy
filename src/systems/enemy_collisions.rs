@@ -1,6 +1,9 @@
 use crate::{
     audio::Sounds,
-    components::{BlastComponent, BlastType, Enemy, HealthComponent, Motion2DComponent, Spaceship},
+    components::{
+        BlastComponent, BlastType, EnemyComponent, HealthComponent, Motion2DComponent,
+        SpaceshipComponent,
+    },
     constants::SPACESHIP_COLLISION_DAMAGE,
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
@@ -21,8 +24,8 @@ pub struct EnemyPlayerCollisionSystem {
 impl<'s> System<'s> for EnemyPlayerCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
-        ReadStorage<'s, Spaceship>,
-        WriteStorage<'s, Enemy>,
+        ReadStorage<'s, SpaceshipComponent>,
+        WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -88,7 +91,7 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
         Entities<'s>,
-        WriteStorage<'s, Enemy>,
+        WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
     );
@@ -136,7 +139,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
         Entities<'s>,
-        WriteStorage<'s, Enemy>,
+        WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,

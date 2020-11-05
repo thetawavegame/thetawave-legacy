@@ -4,18 +4,18 @@ use rand::{thread_rng, Rng};
 
 pub type SpawnProbabilities = Vec<(String, f32)>;
 
-pub struct Spawner {
+pub struct SpawnerComponent {
     probabilities: SpawnProbabilities,
     interval: f32,
     timer: f32,
     prob_space: f32,
 }
 
-impl Component for Spawner {
+impl Component for SpawnerComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl Spawner {
+impl SpawnerComponent {
     /// create spawner instance
     /// ## Parameters
     /// * `probabilities` vector of names with probabilities, sum of probabilities doesn't need to be equal to 1.0,

@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::{
-    components::{BossType, GameMaster, Phase, PhaseType},
+    components::{BossType, GameMasterComponent, Phase, PhaseType},
     constants::{LAST_PHASE_IDX, STARTING_PHASE_IDX, STARTING_TICK, TICK_LENGTH},
 };
 
@@ -54,7 +54,7 @@ pub fn initialize_gamemaster(world: &mut World) {
 
     world
         .create_entity()
-        .with(GameMaster {
+        .with(GameMasterComponent {
             phase_map,
             phase_idx: STARTING_PHASE_IDX,
             last_phase: LAST_PHASE_IDX,

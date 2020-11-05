@@ -2,7 +2,7 @@ use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct Consumable {
+pub struct ConsumableComponent {
     pub name: String,
     #[serde(default = "des_speed")]
     pub speed: f32,
@@ -19,6 +19,6 @@ fn des_speed() -> f32 {
     35.0
 }
 
-impl Component for Consumable {
+impl Component for ConsumableComponent {
     type Storage = DenseVecStorage<Self>;
 }

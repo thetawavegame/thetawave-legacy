@@ -1,7 +1,8 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent, Spaceship,
+        BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent,
+        SpaceshipComponent,
     },
     events::{ItemGetEvent, PlayAudioEvent},
     resources::SpriteResource,
@@ -23,7 +24,7 @@ impl<'s> System<'s> for SpaceshipSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, SpaceshipComponent>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, BlasterComponent>,

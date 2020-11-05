@@ -1,5 +1,5 @@
 use crate::{
-    components::{Animation, AnimationType, BlastType, TimeLimitComponent},
+    components::{AnimationComponent, AnimationType, BlastType, TimeLimitComponent},
     constants::EXPLOSION_Z,
     resources::SpriteResource,
 };
@@ -26,7 +26,7 @@ pub fn spawn_explosion(
         sprite_number,
     };
 
-    let animation = Animation {
+    let animation = AnimationComponent {
         start_idx: 0,
         frame_count,
         current_frame: 0,
@@ -76,7 +76,7 @@ pub fn spawn_blast_explosion(
         sprite_number: starting_frame,
     };
 
-    let animation = Animation {
+    let animation = AnimationComponent {
         start_idx: starting_frame,
         frame_count,
         current_frame: starting_frame,

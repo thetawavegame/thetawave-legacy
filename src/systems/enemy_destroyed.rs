@@ -1,6 +1,6 @@
 use crate::{
     audio::Sounds,
-    components::{choose_random_name, Enemy},
+    components::{choose_random_name, EnemyComponent},
     entities::{spawn_consumable, spawn_explosion},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
     resources::{ConsumableEntityData, SpriteResource},
@@ -24,7 +24,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         Read<'s, EventChannel<EnemyDestroyedEvent>>,
         Entities<'s>,
         ReadStorage<'s, Transform>,
-        ReadStorage<'s, Enemy>,
+        ReadStorage<'s, EnemyComponent>,
         ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,

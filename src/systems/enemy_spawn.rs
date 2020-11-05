@@ -1,5 +1,5 @@
 use crate::{
-    components::{BossType, EnemySpawnerTag, GameMaster, PhaseType, Spawner},
+    components::{BossType, EnemySpawnerTag, GameMasterComponent, PhaseType, SpawnerComponent},
     entities::{spawn_enemy, spawn_repeater},
     resources::{EnemyPool, SpriteResource},
 };
@@ -14,11 +14,11 @@ impl<'s> System<'s> for SpawnerSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, Spawner>,
+        WriteStorage<'s, SpawnerComponent>,
         ReadStorage<'s, EnemySpawnerTag>,
         Read<'s, Time>,
         ReadExpect<'s, SpriteResource>,
-        WriteStorage<'s, GameMaster>,
+        WriteStorage<'s, GameMasterComponent>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemyPool>,
     );

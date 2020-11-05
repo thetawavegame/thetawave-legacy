@@ -6,7 +6,7 @@ use amethyst::{
 };
 
 use crate::entities::spawn_enemy;
-use crate::{components::Repeater, constants, resources::EnemyPool};
+use crate::{components::RepeaterComponent, constants, resources::EnemyPool};
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(
@@ -74,7 +74,7 @@ pub fn spawn_repeater(
         left_shoulder_position,
         &lazy_update,
     );
-    let repeater = Repeater {
+    let repeater = RepeaterComponent {
         body,
         head,
         right_shoulder,

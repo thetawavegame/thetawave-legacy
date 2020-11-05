@@ -1,5 +1,5 @@
 use crate::{
-    components::{Spaceship, Store},
+    components::{SpaceshipComponent, StoreComponent},
     space_shooter::TrackedStats,
 };
 use amethyst::{
@@ -11,8 +11,8 @@ pub struct StatTrackerSystem;
 
 impl<'s> System<'s> for StatTrackerSystem {
     type SystemData = (
-        ReadStorage<'s, Spaceship>,
-        ReadStorage<'s, Store>,
+        ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, StoreComponent>,
         WriteStorage<'s, UiText>,
         ReadExpect<'s, TrackedStats>,
     );

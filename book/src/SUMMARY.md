@@ -11,7 +11,7 @@
   - [Bosses](./bosses.md)
 - [Contibuting code](./contributing.md)
 - [Architecture](./architecture.md)
-  - [Entities and their components](./entities-components.md)
+  - [Entities and Their Components](./entities-components.md)
   - [Systems](./TODO.md)
 - [Guides](./TODO.md)
   - [Contributing art](./TODO.md)

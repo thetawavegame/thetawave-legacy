@@ -1,4 +1,4 @@
-use crate::components::{GameMaster, PhaseType};
+use crate::components::{GameMasterComponent, PhaseType};
 use amethyst::{
     core::timing::Time,
     ecs::prelude::{Join, Read, System, WriteStorage},
@@ -7,7 +7,7 @@ use amethyst::{
 pub struct GameMasterSystem;
 
 impl<'s> System<'s> for GameMasterSystem {
-    type SystemData = (WriteStorage<'s, GameMaster>, Read<'s, Time>);
+    type SystemData = (WriteStorage<'s, GameMasterComponent>, Read<'s, Time>);
 
     fn run(&mut self, (mut gamemasters, time): Self::SystemData) {
         for gamemaster in (&mut gamemasters).join() {

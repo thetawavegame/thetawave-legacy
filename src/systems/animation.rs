@@ -4,14 +4,14 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::components::{Animation, AnimationType};
+use crate::components::{AnimationComponent, AnimationType};
 
 pub struct AnimationSystem;
 
 impl<'s> System<'s> for AnimationSystem {
     type SystemData = (
         WriteStorage<'s, SpriteRender>,
-        WriteStorage<'s, Animation>,
+        WriteStorage<'s, AnimationComponent>,
         Read<'s, Time>,
     );
 
