@@ -8,7 +8,7 @@ use amethyst::{
 };
 use std::collections::HashMap;
 
-pub struct Spaceship {
+pub struct SpaceshipComponent {
     pub barrel_cooldown: f32,
     pub barrel_reset_timer: f32,
     pub barrel_speed: f32,
@@ -24,7 +24,7 @@ pub struct Spaceship {
     pub blast_sprite_indicies: HashMap<String, usize>,
 }
 
-impl Rigidbody for Spaceship {
+impl Rigidbody for SpaceshipComponent {
     fn constrain_to_arena(
         &mut self,
         transform: &mut Transform,
@@ -62,11 +62,11 @@ impl Rigidbody for Spaceship {
     }
 }
 
-impl Component for Spaceship {
+impl Component for SpaceshipComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl Spaceship {
+impl SpaceshipComponent {
     pub fn update_location(&mut self, x: f32, y: f32) {
         self.pos_x = x;
         self.pos_y = y;

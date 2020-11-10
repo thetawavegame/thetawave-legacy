@@ -1,5 +1,5 @@
 use crate::{
-    components::{EnemySpawnerTag, Spawner},
+    components::{EnemySpawnerTag, SpawnerComponent},
     constants::{
         ARENA_MAX_Y, ARENA_MIN_X, ARENA_WIDTH, ENEMY_DRONE_RATIO, ENEMY_HAULER_RATIO,
         ENEMY_PAWN_RATIO, ENEMY_SPAWN_INTERVAL, ENEMY_STRAFER_RATIO, SPAWNER_Y_OFFSET,
@@ -20,7 +20,7 @@ pub fn initialize_enemy_spawner(world: &mut World) {
     );
     world
         .create_entity()
-        .with(Spawner::new(
+        .with(SpawnerComponent::new(
             vec![
                 ("pawn".to_string(), ENEMY_PAWN_RATIO),
                 ("drone".to_string(), ENEMY_DRONE_RATIO),

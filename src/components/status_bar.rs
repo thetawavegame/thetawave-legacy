@@ -12,7 +12,7 @@ pub enum StatusType {
     Restock,
 }
 
-pub struct StatusBar {
+pub struct StatusBarComponent {
     pub status_type: StatusType,
     pub x_pos: f32,
     pub y_pos: f32,
@@ -20,11 +20,11 @@ pub struct StatusBar {
     pub unit_limit: f32,
 }
 
-impl Component for StatusBar {
+impl Component for StatusBarComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl StatusBar {
+impl StatusBarComponent {
     pub fn update_units_x(
         &mut self,
         max_value: f32,

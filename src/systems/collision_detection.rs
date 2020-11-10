@@ -1,5 +1,5 @@
 use crate::{
-    components::{Enemy, Hitbox2DComponent, Motion2DComponent, Spaceship},
+    components::{EnemyComponent, Hitbox2DComponent, Motion2DComponent, SpaceshipComponent},
     events::{CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent},
 };
 use amethyst::{
@@ -42,8 +42,8 @@ pub struct CollisionHandlerSystem {
 /// Handles collision events between entities
 impl<'s> System<'s> for CollisionHandlerSystem {
     type SystemData = (
-        ReadStorage<'s, Spaceship>,
-        ReadStorage<'s, Enemy>,
+        ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, EnemyComponent>,
         ReadStorage<'s, Motion2DComponent>,
         Read<'s, EventChannel<CollisionEvent>>,
         Write<'s, EventChannel<PlayerCollisionEvent>>,

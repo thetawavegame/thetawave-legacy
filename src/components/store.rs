@@ -1,5 +1,5 @@
 use crate::{
-    components::{Consumable, Spaceship},
+    components::{ConsumableComponent, SpaceshipComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ITEM_SPAWN_Y_OFFSET},
     entities::spawn_item,
     resources::{ItemEntityData, ItemPool, SpriteResource},
@@ -15,20 +15,20 @@ use rand::{thread_rng, Rng};
 pub type StockProbabilities = Vec<(String, f32)>;
 
 #[derive(Clone)]
-pub struct Store {
+pub struct StoreComponent {
     pub items: StockProbabilities,
     pub restock_timer: f32,
     pub restock_interval: f32,
     pub item_inventory: [Option<ItemEntityData>; 3],
     pub item_icons: [Option<Entity>; 3],
-    pub consumable_inventory: Vec<Consumable>,
+    pub consumable_inventory: Vec<ConsumableComponent>,
 }
 
-impl Component for Store {
+impl Component for StoreComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl Store {
+impl StoreComponent {
     pub fn choose_item_stock(&mut self, item_pool: ItemPool) {
         self.item_inventory = [None, None, None];
         let mut choose_pool = self.items.clone();
@@ -101,7 +101,7 @@ impl Store {
         &mut self,
         item_index: usize,
         entities: &Entities,
-        spaceship: &mut Spaceship,
+        spaceship: &mut SpaceshipComponent,
         sprite_resource: &ReadExpect<SpriteResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {

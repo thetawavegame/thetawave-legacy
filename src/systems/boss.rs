@@ -1,4 +1,4 @@
-use crate::components::{GameMaster, Repeater};
+use crate::components::{GameMasterComponent, RepeaterComponent};
 use amethyst::ecs::prelude::{Entities, Join, System, WriteStorage};
 
 pub struct BossSystem;
@@ -6,8 +6,8 @@ pub struct BossSystem;
 impl<'s> System<'s> for BossSystem {
     type SystemData = (
         Entities<'s>,
-        WriteStorage<'s, Repeater>,
-        WriteStorage<'s, GameMaster>,
+        WriteStorage<'s, RepeaterComponent>,
+        WriteStorage<'s, GameMasterComponent>,
     );
 
     fn run(&mut self, (entities, mut repeaters, mut gamemasters): Self::SystemData) {

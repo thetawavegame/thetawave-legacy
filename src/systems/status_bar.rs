@@ -1,5 +1,8 @@
 use crate::{
-    components::{DefenseTag, HealthComponent, Spaceship, StatusBar, StatusType, Store},
+    components::{
+        DefenseTag, HealthComponent, SpaceshipComponent, StatusBarComponent, StatusType,
+        StoreComponent,
+    },
     entities::spawn_status_unit,
     resources::SpriteResource,
 };
@@ -17,11 +20,11 @@ pub struct StatusBarSystem;
 impl<'s> System<'s> for StatusBarSystem {
     type SystemData = (
         Entities<'s>,
-        WriteStorage<'s, StatusBar>,
-        ReadStorage<'s, Spaceship>,
+        WriteStorage<'s, StatusBarComponent>,
+        ReadStorage<'s, SpaceshipComponent>,
         ReadStorage<'s, DefenseTag>,
         ReadStorage<'s, HealthComponent>,
-        ReadStorage<'s, Store>,
+        ReadStorage<'s, StoreComponent>,
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
     );

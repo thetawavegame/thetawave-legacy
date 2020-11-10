@@ -9,7 +9,7 @@ pub enum AnimationType {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct Animation {
+pub struct AnimationComponent {
     pub start_idx: usize,
     pub frame_count: usize,
     pub current_frame: usize,
@@ -19,6 +19,6 @@ pub struct Animation {
     pub animation_type: AnimationType,
 }
 
-impl Component for Animation {
+impl Component for AnimationComponent {
     type Storage = DenseVecStorage<Self>;
 }

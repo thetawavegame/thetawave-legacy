@@ -1,4 +1,4 @@
-use crate::components::{Hitbox2DComponent, Motion2DComponent, Rigidbody, Spaceship};
+use crate::components::{Hitbox2DComponent, Motion2DComponent, Rigidbody, SpaceshipComponent};
 use amethyst::{
     core::{timing::Time, Transform},
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
@@ -10,7 +10,7 @@ pub struct SpaceshipMovementSystem;
 impl<'s> System<'s> for SpaceshipMovementSystem {
     type SystemData = (
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, SpaceshipComponent>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, InputHandler<StringBindings>>,

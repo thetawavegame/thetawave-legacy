@@ -1,7 +1,7 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     components::{
-        Enemy, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent, Rigidbody,
+        EnemyComponent, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent, Rigidbody,
     },
     constants::ARENA_MIN_Y,
     events::{EnemyDestroyedEvent, EnemyReachedBottomEvent},
@@ -17,7 +17,7 @@ pub struct EnemySystem;
 impl<'s> System<'s> for EnemySystem {
     type SystemData = (
         Entities<'s>,
-        WriteStorage<'s, Enemy>,
+        WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, Motion2DComponent>,

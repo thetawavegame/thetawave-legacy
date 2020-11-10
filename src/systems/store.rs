@@ -1,6 +1,6 @@
 use crate::{
     audio::Sounds,
-    components::{Spaceship, Store},
+    components::{SpaceshipComponent, StoreComponent},
     events::PlayAudioEvent,
     resources::{ItemPool, SpriteResource},
 };
@@ -19,10 +19,10 @@ impl<'s> System<'s> for StoreSystem {
         ReadExpect<'s, SpriteResource>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, ItemPool>,
-        WriteStorage<'s, Store>,
+        WriteStorage<'s, StoreComponent>,
         Read<'s, Time>,
         Read<'s, InputHandler<StringBindings>>,
-        WriteStorage<'s, Spaceship>,
+        WriteStorage<'s, SpaceshipComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );

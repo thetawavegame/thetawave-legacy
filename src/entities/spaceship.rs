@@ -1,7 +1,7 @@
 use crate::{
     components::{
         BlastType, BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
-        Motion2DComponent, Spaceship,
+        Motion2DComponent, SpaceshipComponent,
     },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
@@ -90,7 +90,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
     world
         .create_entity()
         .with(sprite_render)
-        .with(Spaceship {
+        .with(SpaceshipComponent {
             barrel_cooldown: SPACESHIP_BARREL_COOLDOWN,
             barrel_reset_timer: 0.0,
             barrel_speed: SPACESHIP_BARREL_SPEED,

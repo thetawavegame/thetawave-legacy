@@ -1,6 +1,6 @@
 use crate::components::{
-    Animation, AutoFireComponent, BlasterComponent, Consumable, Enemy, HealthComponent,
-    Hitbox2DComponent, ItemComponent, Motion2DComponent,
+    AnimationComponent, AutoFireComponent, BlasterComponent, ConsumableComponent, EnemyComponent,
+    HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
 use serde::{Deserialize, Serialize};
 
@@ -10,8 +10,8 @@ pub use self::sprite::{initialize_sprite_resource, SpriteResource};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
-    pub animation_component: Animation,
-    pub enemy_component: Enemy,
+    pub animation_component: AnimationComponent,
+    pub enemy_component: EnemyComponent,
     pub hitbox_component: Hitbox2DComponent,
     pub blaster_component: Option<BlasterComponent>,
     pub autofire_component: Option<AutoFireComponent>,
@@ -22,12 +22,12 @@ pub struct EnemyEntityData {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ItemEntityData {
     pub item_component: ItemComponent,
-    pub animation_component: Option<Animation>,
+    pub animation_component: Option<AnimationComponent>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumableEntityData {
-    pub consumable_component: Consumable,
+    pub consumable_component: ConsumableComponent,
     pub hitbox_component: Hitbox2DComponent,
 }
 

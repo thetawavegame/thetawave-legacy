@@ -1,4 +1,4 @@
-use crate::{components::Store, constants::RESTOCK_INTERVAL, resources::ItemPool};
+use crate::{components::StoreComponent, constants::RESTOCK_INTERVAL, resources::ItemPool};
 use amethyst::{
     ecs::{World, WorldExt},
     prelude::Builder,
@@ -13,7 +13,7 @@ pub fn initialize_store(world: &mut World) {
         .map(|(key, _)| (key.clone(), 1.0)) // all with same probability
         .collect();
 
-    let store = Store {
+    let store = StoreComponent {
         items: stock_list,
         restock_timer: RESTOCK_INTERVAL,
         restock_interval: RESTOCK_INTERVAL,
