@@ -55,7 +55,7 @@ impl<'s> System<'s> for SpawnerSystem {
 
                                 spawn_enemy(
                                     &entities,
-                                    enemy_resource.enemy_animations_sprite_sheet.clone(),
+                                    enemy_resource.enemies_sprite_sheet.clone(),
                                     enemy_pool[name].clone(),
                                     spawn_position,
                                     &lazy_update,

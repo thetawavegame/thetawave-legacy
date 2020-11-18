@@ -157,8 +157,10 @@ impl SimpleState for SpaceShooter {
             "explosions_spritesheet.png",
             "explosions_spritesheet.ron",
         );
-        let enemy_animations_sprite_sheet_handle =
-            load_spritesheet(world, "enemy_animations.png", "enemy_animations.ron");
+        /*
+        let enemies_sprite_sheet_handle =
+            load_spritesheet(world, "enemies_spritesheet.png", "enemies_spritesheet.ron");
+        */
         let repeater_sprite_sheet_handle = load_spritesheet(
             world,
             "repeater_spritesheet.png",
@@ -204,7 +206,7 @@ impl SimpleState for SpaceShooter {
             players_sprite_sheet_handle,
             blasts_sprite_sheet_handle,
             explosions_sprite_sheet_handle,
-            enemy_animations_sprite_sheet_handle,
+            //enemies_sprite_sheet_handle,
             repeater_sprite_sheet_handle,
             blast_explosions_sprite_sheet_handle,
         );

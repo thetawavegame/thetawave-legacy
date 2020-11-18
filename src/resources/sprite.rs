@@ -9,7 +9,7 @@ pub struct SpriteResource {
     pub players_sprite_sheet: Handle<SpriteSheet>,
     pub blasts_sprite_sheet: Handle<SpriteSheet>,
     pub explosions_sprite_sheet: Handle<SpriteSheet>,
-    pub enemy_animations_sprite_sheet: Handle<SpriteSheet>,
+    //pub enemy_animations_sprite_sheet: Handle<SpriteSheet>,
     pub repeater_sprite_sheet: Handle<SpriteSheet>,
     pub blast_explosions_sprite_sheet: Handle<SpriteSheet>,
 }
@@ -23,7 +23,7 @@ pub fn initialize_sprite_resource(
     players_sprite_sheet_handle: Handle<SpriteSheet>,
     blasts_sprite_sheet_handle: Handle<SpriteSheet>,
     explosions_sprite_sheet_handle: Handle<SpriteSheet>,
-    enemy_animations_sprite_sheet_handle: Handle<SpriteSheet>,
+    //enemy_animations_sprite_sheet_handle: Handle<SpriteSheet>,
     repeater_sprite_sheet_handle: Handle<SpriteSheet>,
     blast_explosions_sprite_sheet_handle: Handle<SpriteSheet>,
 ) -> SpriteResource {
@@ -35,7 +35,7 @@ pub fn initialize_sprite_resource(
         players_sprite_sheet: players_sprite_sheet_handle,
         blasts_sprite_sheet: blasts_sprite_sheet_handle,
         explosions_sprite_sheet: explosions_sprite_sheet_handle,
-        enemy_animations_sprite_sheet: enemy_animations_sprite_sheet_handle,
+        //enemy_animations_sprite_sheet: enemy_animations_sprite_sheet_handle,
         repeater_sprite_sheet: repeater_sprite_sheet_handle,
         blast_explosions_sprite_sheet: blast_explosions_sprite_sheet_handle,
     };
