@@ -218,18 +218,28 @@ impl SimpleState for SpaceShooter {
         initialise_camera(world);
     }
 
-    fn on_pause(&mut self, _data: StateData<'_, GameData<'_, '_>>) {
-      self.is_paused = true;
+    fn on_pause(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        self.is_paused = true;
+
+        let paused_text_entity = get_paused_text(data.world);
+        self.pause_display = Some(paused_text_entity);
     }
 
     fn on_resume(&mut self, _data: StateData<'_, GameData<'_, '_>>) {
-      self.is_paused = false;
+        self.is_paused = false;
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         self.dispatcher.dispatch(data.world);
 
-        // Handle paused states here.
+        // Handle paused state here.
+        if let Some(pause_text_entity) = self.pause_display {
+            data.world
+                .delete_entity(pause_text_entity)
+                .expect("Failed to remove Paused text.");
+
+            self.pause_display = None;
+        }
 
         Trans::None
     }
@@ -489,37 +499,37 @@ fn initialise_ui(world: &mut World) {
     });
 }
 
-fn initialize_paused_text(world: &mut World) -> Entity {
-  let font_handle = world.read_resource::<Loader>().load(
-    "font/SpaceMadness.ttf",
-    TtfFormat,
-    (),
-    &world.read_resource(),
-  );
-  let ui_transform = UiTransform::new(
-    String::from("paused_text"),   // id
-    Anchor::Middle,                // anchor
-    Anchor::Middle,                // pivot
-    0f32,                          // x
-    0f32,                          // y
-    0f32,                          // z
-    100f32,                        // width
-    30f32,                         // height
-  );
-  let ui_text = UiText::new(
-    font_handle,                   // font
-    String::from("Paused"),        // text
-    [1.0, 1.0, 1.0, 0.5],          // color
-    25f32,                         // font_size
-    LineMode::Single,              // line mode
-    Anchor::Middle,                // alignment
-  );
+fn get_paused_text(world: &mut World) -> Entity {
+    let font_handle = world.read_resource::<Loader>().load(
+        "font/SpaceMadness.ttf",
+        TtfFormat,
+        (),
+        &world.read_resource(),
+    );
+    let ui_transform = UiTransform::new(
+        String::from("paused_text"),
+        Anchor::Middle,
+        Anchor::Middle,
+        0.0,
+        0.0,
+        0.0,
+        100.0,
+        30.0,
+    );
+    let ui_text = UiText::new(
+        font_handle,
+        String::from("paused"),
+        [1.0, 1.0, 1.0, 1.0],
+        25.0,
+        LineMode::Single,
+        Anchor::Middle,
+    );
 
-  /* Building the entity */
-  let entity = world.create_entity()
-      .with(ui_transform)
-      .with(ui_text)
-      .build();
+    let entity = world
+        .create_entity()
+        .with(ui_transform)
+        .with(ui_text)
+        .build();
 
-  entity
+    entity
 }
