@@ -24,12 +24,16 @@ use amethyst::{
 use std::f32::consts::FRAC_PI_3;
 
 pub struct SpaceShooter {
+    is_paused: bool,
+    pause_display: Option<Entity>,
     dispatcher: Dispatcher<'static, 'static>,
 }
 
 impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
+            is_paused: false,
+            pause_display: None,
             dispatcher: DispatcherBuilder::new()
                 .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
@@ -214,8 +218,19 @@ impl SimpleState for SpaceShooter {
         initialise_camera(world);
     }
 
+    fn on_pause(&mut self, _data: StateData<'_, GameData<'_, '_>>) {
+      self.is_paused = true;
+    }
+
+    fn on_resume(&mut self, _data: StateData<'_, GameData<'_, '_>>) {
+      self.is_paused = false;
+    }
+
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         self.dispatcher.dispatch(data.world);
+
+        // Handle paused states here.
+
         Trans::None
     }
 
@@ -472,4 +487,39 @@ fn initialise_ui(world: &mut World) {
         item_price_2,
         item_price_3,
     });
+}
+
+fn initialize_paused_text(world: &mut World) -> Entity {
+  let font_handle = world.read_resource::<Loader>().load(
+    "font/SpaceMadness.ttf",
+    TtfFormat,
+    (),
+    &world.read_resource(),
+  );
+  let ui_transform = UiTransform::new(
+    String::from("paused_text"),   // id
+    Anchor::Middle,                // anchor
+    Anchor::Middle,                // pivot
+    0f32,                          // x
+    0f32,                          // y
+    0f32,                          // z
+    100f32,                        // width
+    30f32,                         // height
+  );
+  let ui_text = UiText::new(
+    font_handle,                   // font
+    String::from("Paused"),        // text
+    [1.0, 1.0, 1.0, 0.5],          // color
+    25f32,                         // font_size
+    LineMode::Single,              // line mode
+    Anchor::Middle,                // alignment
+  );
+
+  /* Building the entity */
+  let entity = world.create_entity()
+      .with(ui_transform)
+      .with(ui_text)
+      .build();
+
+  entity
 }
