@@ -1,0 +1,50 @@
+{
+    "drone": (
+        animation_component: (
+            start_idx: 0,
+            frame_count: 3,
+            current_frame: 0,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
+        y_offset: 11.0,
+    ),
+    "pawn": (
+        animation_component: (
+            start_idx: 3,
+            frame_count: 3,
+            current_frame: 3,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
+        y_offset: 11.0,
+    ),
+    "strafer": (
+        animation_component: (
+            start_idx: 6,
+            frame_count: 3,
+            current_frame: 6,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
+        y_offset: 7.0,
+    ),
+    "hauler": (
+        animation_component: (
+            start_idx: 9,
+            frame_count: 3,
+            current_frame: 9,
+            frame_time: 0.18,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: PingPong,
+        ),
+        y_offset: 18.0,
+    ),
+}
