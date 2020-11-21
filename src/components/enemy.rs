@@ -16,6 +16,8 @@ pub enum EnemyType {
     Drone,
     Strafer,
     Hauler, //ally
+    MissileLauncher,
+    Missile,
     RepeaterBody,
     RepeaterHead,
     RepeaterShoulder,

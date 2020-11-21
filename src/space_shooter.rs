@@ -108,7 +108,7 @@ impl Default for SpaceShooter {
                     "stat_tracker_system",
                     &["store_system", "spaceship_system"],
                 )
-                .with(systems::AutoBlasterSystem, "autoblaster_system", &[])
+                .with(systems::AutoFireSystem, "autoblaster_system", &[])
                 .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
                 .with(
                     systems::EnemyDestroyedSystem::default(),

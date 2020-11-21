@@ -37,7 +37,7 @@ pub use self::{
     store::StoreComponent,
     tags::DefenseTag,
     timelimit::TimeLimitComponent,
-    weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
+    weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent, WeaponType},
 };
 
 // rigidbodies are have physics and can collide

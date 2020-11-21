@@ -77,19 +77,19 @@ List((
         (
             x: 0,
             y: 84,
-            width: 20,
+            width: 21,
             height: 26,
         ),
         (
-            x: 20,
+            x: 21,
             y: 84,
-            width: 20,
+            width: 21,
             height: 26,
         ),
         (
-            x: 40,
+            x: 42,
             y: 84,
-            width: 20,
+            width: 21,
             height: 26,
         ),
         (

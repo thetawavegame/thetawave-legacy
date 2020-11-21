@@ -1,5 +1,5 @@
 use crate::{
-    components::{AutoFireComponent, BlasterComponent, Motion2DComponent},
+    components::{AutoFireComponent, BlasterComponent, Motion2DComponent, WeaponType},
     resources::SpriteResource,
 };
 
@@ -10,9 +10,9 @@ use amethyst::{
     },
 };
 
-pub struct AutoBlasterSystem;
+pub struct AutoFireSystem;
 
-impl<'s> System<'s> for AutoBlasterSystem {
+impl<'s> System<'s> for AutoFireSystem {
     type SystemData = (
         Entities<'s>,
         Read<'s, Time>,
@@ -44,13 +44,19 @@ impl<'s> System<'s> for AutoBlasterSystem {
                 auto_fire.timer -= time.delta_seconds();
             } else {
                 auto_fire.timer = auto_fire.period;
-                blaster.fire(
-                    motion2d,
-                    transform,
-                    &entities,
-                    &sprite_resource,
-                    &lazy_update,
-                );
+                match auto_fire.weapon_type {
+                    WeaponType::Blast => {
+                        blaster.fire(
+                            motion2d,
+                            transform,
+                            &entities,
+                            &sprite_resource,
+                            &lazy_update,
+                        );
+                    }
+
+                    WeaponType::Missile => {}
+                }
             }
         }
     }
