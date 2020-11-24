@@ -1,5 +1,5 @@
 use crate::{
-    components::{AutoFireComponent, BlasterComponent, Motion2DComponent, WeaponType},
+    components::{AutoFireComponent, BlasterComponent, Motion2DComponent},
     resources::SpriteResource,
 };
 
@@ -44,19 +44,13 @@ impl<'s> System<'s> for AutoFireSystem {
                 auto_fire.timer -= time.delta_seconds();
             } else {
                 auto_fire.timer = auto_fire.period;
-                match auto_fire.weapon_type {
-                    WeaponType::Blast => {
-                        blaster.fire(
-                            motion2d,
-                            transform,
-                            &entities,
-                            &sprite_resource,
-                            &lazy_update,
-                        );
-                    }
-
-                    WeaponType::Missile => {}
-                }
+                blaster.fire(
+                    motion2d,
+                    transform,
+                    &entities,
+                    &sprite_resource,
+                    &lazy_update,
+                );
             }
         }
     }

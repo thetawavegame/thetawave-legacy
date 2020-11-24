@@ -58,7 +58,7 @@ pub fn spawn_enemy(
         let mut thruster_local_transform = Transform::default();
         thruster_local_transform.set_translation_y(thruster_data.y_offset);
 
-        let thruster_entity = lazy_update
+        lazy_update
             .create_entity(entities)
             .with(thruster_parent)
             .with(thruster_local_transform)
