@@ -18,12 +18,14 @@
                 ("defense", 0.025),
                 ("money_1", 0.43),
                 ("money_5", 0.025),
+                ("armor", 0.5),
             ],
             enemy_type: Drone,
         ),
         health_component: (
             max_value: 60,
             value: 60,
+            armor: 0,
         ),
         hitbox_component: (
             width: 14.0,
@@ -79,12 +81,14 @@
                 ("defense", 0.025),
                 ("money_1", 0.43),
                 ("money_5", 0.025),
+                ("armor", 0.5),
             ],
             enemy_type: Pawn,
         ),
         health_component: (
             max_value: 110,
             value: 110,
+            armor: 0,
         ),
         hitbox_component: (
             width: 14.0,
@@ -125,6 +129,7 @@
         health_component: (
             max_value: 220,
             value: 220,
+            armor: 0,
         ),
         hitbox_component: (
             width: 14.0,
@@ -181,12 +186,14 @@
                 ("defense", 0.025),
                 ("money_1", 0.43),
                 ("money_5", 0.025),
+                ("armor", 0.5),
             ],
             enemy_type: Strafer,
         ),
         health_component: (
             max_value: 75,
             value: 75,
+            armor: 0,
         ),
         hitbox_component: (
             width: 22.0,
@@ -231,6 +238,7 @@
         health_component: (
             max_value: 10000,
             value: 10000,
+            armor: 0,
         ),
         hitbox_component: (
             width: 48.0,
@@ -275,6 +283,7 @@
         health_component: (
             max_value: 2000,
             value: 2000,
+            armor: 0,
         ),
         hitbox_component: (
             width: 30.0,
@@ -319,6 +328,7 @@
         health_component: (
             max_value: 2000,
             value: 2000,
+            armor: 0,
         ),
         hitbox_component: (
             width: 28.0,
@@ -363,6 +373,7 @@
         health_component: (
             max_value: 2000,
             value: 2000,
+            armor: 0,
         ),
         hitbox_component: (
             width: 28.0,
@@ -408,6 +419,7 @@
         health_component: (
             max_value: 2000,
             value: 2000,
+            armor: 0,
         ),
         hitbox_component: (
             width: 20.0,

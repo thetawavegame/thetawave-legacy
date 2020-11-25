@@ -59,7 +59,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                 if !spaceship.steel_barrel
                     || (!spaceship.barrel_action_left && !spaceship.barrel_action_right)
                 {
-                    spaceship_health.value -= enemy.collision_damage;
+                    spaceship_health.take_damage(enemy.collision_damage);
                 }
 
                 if let Some(velocity) = event.collision_velocity {
@@ -131,7 +131,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                             blast_transform.clone(),
                             &lazy_update,
                         );
-                        spaceship_health.value -= blast.damage;
+                        spaceship_health.take_damage(blast.damage);
                     }
                     _ => {}
                 }
@@ -241,6 +241,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                 let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 spaceship_health.value += consumable.health_value;
+                spaceship_health.armor += consumable.armor_value;
                 spaceship.money += consumable.money_value;
 
                 if consumable.money_value == 1 {
@@ -254,6 +255,10 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                 } else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
                     play_audio_channel.single_write(PlayAudioEvent {
                         source: sounds.wrench_sfx.clone(),
+                    });
+                } else if consumable.armor_value > 0 {
+                    play_audio_channel.single_write(PlayAudioEvent {
+                        source: sounds.shields_up_sfx.clone(),
                     });
                 }
 

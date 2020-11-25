@@ -315,6 +315,7 @@ fn initialise_camera(world: &mut World) {
 
 pub struct TrackedStats {
     pub currency: Entity,
+    pub shields: Entity,
     pub item_price_1: Entity,
     pub item_price_2: Entity,
     pub item_price_3: Entity,
@@ -379,6 +380,28 @@ fn initialise_ui(world: &mut World) {
         )
     };
 
+    let consumables_texture_handle = {
+        let loader = world.read_resource::<Loader>();
+        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
+        loader.load(
+            "texture/consumables_spritesheet.png",
+            ImageFormat::default(),
+            (),
+            &texture_storage,
+        )
+    };
+
+    let consumables_sprite_sheet_handle = {
+        let loader = world.read_resource::<Loader>();
+        let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
+        loader.load(
+            "texture/consumables_spritesheet.ron",
+            SpriteSheetFormat(consumables_texture_handle),
+            (),
+            &sprite_sheet_store,
+        )
+    };
+
     let currency_sprite_render = SpriteRender {
         sprite_sheet: currency_sprite_sheet_handle,
         sprite_number: 0,
@@ -390,6 +413,20 @@ fn initialise_ui(world: &mut World) {
     world
         .create_entity()
         .with(currency_sprite_render)
+        .with(local_transform)
+        .build();
+
+    let shield_sprite_render = SpriteRender {
+        sprite_sheet: consumables_sprite_sheet_handle,
+        sprite_number: 4,
+    };
+
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(ARENA_MAX_X + 10.0, ARENA_MIN_Y + 158.0, 0.9);
+
+    world
+        .create_entity()
+        .with(shield_sprite_render)
         .with(local_transform)
         .build();
 
@@ -412,6 +449,30 @@ fn initialise_ui(world: &mut World) {
     let currency_count = world
         .create_entity()
         .with(currency_count_transform)
+        .with(UiText::new(
+            font.clone(),
+            "x0".to_string(),
+            [1.0, 1.0, 1.0, 1.0],
+            20.0,
+            LineMode::Single,
+            Anchor::Middle,
+        ))
+        .build();
+
+    let shields_count_transform = UiTransform::new(
+        "shields_count".to_string(),
+        Anchor::BottomRight,
+        Anchor::BottomRight,
+        -6.0,
+        260.0,
+        0.9,
+        50.0,
+        45.0,
+    );
+
+    let shields_count = world
+        .create_entity()
+        .with(shields_count_transform)
         .with(UiText::new(
             font.clone(),
             "x0".to_string(),
@@ -493,6 +554,7 @@ fn initialise_ui(world: &mut World) {
 
     world.insert(TrackedStats {
         currency: currency_count,
+        shields: shields_count,
         item_price_1,
         item_price_2,
         item_price_3,

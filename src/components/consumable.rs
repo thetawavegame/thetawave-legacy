@@ -12,6 +12,7 @@ pub struct ConsumableComponent {
     pub defense_value: f32,
     #[serde(default)]
     pub money_value: usize,
+    pub armor_value: usize,
     pub sprite_index: usize,
 }
 

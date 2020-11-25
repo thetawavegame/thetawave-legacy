@@ -3,6 +3,7 @@
         consumable_component: (
             name: "defense_wrench",
             defense_value: 70,
+            armor_value: 0,
             sprite_index: 1,
         ),
         hitbox_component: (
@@ -18,6 +19,7 @@
             name: "moneyx1",
             width: 7,
             height: 7,
+            armor_value: 0,
             money_value: 1,
             sprite_index: 3,
         ),
@@ -33,6 +35,7 @@
         consumable_component: (
             name: "moneyx5",
             money_value: 5,
+            armor_value: 0,
             sprite_index: 2,
         ),
         hitbox_component: (
@@ -47,7 +50,23 @@
         consumable_component: (
             name: "health_wrench",
             health_value: 30,
+            armor_value: 0,
             sprite_index: 0,
+        ),
+        hitbox_component: (
+            width: 10.0,
+            height: 10.0,
+            offset_x: 0.0,
+            offset_y: 0.0,
+            offset_rotation: 0.0,
+        ),
+    ),
+    "armor": (
+        consumable_component: (
+            name: "armor",
+            health_value: 0,
+            armor_value: 1,
+            sprite_index: 4,
         ),
         hitbox_component: (
             width: 10.0,
