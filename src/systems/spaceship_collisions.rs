@@ -244,19 +244,20 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                 spaceship_health.armor += consumable.armor_value;
                 spaceship.money += consumable.money_value;
 
-                if consumable.money_value == 1 {
+                if consumable.name == "money_1" {
                     play_audio_channel.single_write(PlayAudioEvent {
                         source: sounds.small_rock_sfx.clone(),
                     });
-                } else if consumable.money_value == 5 {
+                } else if consumable.name == "money_5" {
                     play_audio_channel.single_write(PlayAudioEvent {
                         source: sounds.large_rock_sfx.clone(),
                     });
-                } else if consumable.health_value > 0.0 || consumable.defense_value > 0.0 {
+                } else if consumable.name == "health_wrench" || consumable.name == "defense_wrench"
+                {
                     play_audio_channel.single_write(PlayAudioEvent {
                         source: sounds.wrench_sfx.clone(),
                     });
-                } else if consumable.armor_value > 0 {
+                } else if consumable.name == "armor" {
                     play_audio_channel.single_write(PlayAudioEvent {
                         source: sounds.shields_up_sfx.clone(),
                     });
