@@ -464,10 +464,10 @@ fn initialise_ui(world: &mut World) {
 
     let shields_count_transform = UiTransform::new(
         "shields_count".to_string(),
-        Anchor::BottomRight,
-        Anchor::BottomRight,
+        Anchor::MiddleRight,
+        Anchor::MiddleRight,
         -6.0,
-        260.0,
+        48.0,
         0.9,
         50.0,
         45.0,

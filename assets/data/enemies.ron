@@ -231,16 +231,18 @@
             max_speed: 10,
             collectables_probs: [
                 ("", 0.5),
-                ("health", 0.02),
-                ("defense", 0.025),
-                ("money_1", 0.43),
-                ("money_5", 0.025),
+                ("health_wrench", 0.03),
+                ("defense_wrench", 0.02),
+                ("money_1", 0.40),
+                ("money_5", 0.02),
+                ("armor", 0.03),
             ],
             enemy_type: MissileLauncher,
         ),
         health_component: (
             max_value: 300,
             value: 300,
+            armor: 0,
         ),
         hitbox_component: (
             width: 15.0,
@@ -277,16 +279,13 @@
             max_speed: 45,
             collectables_probs: [
                 ("", 1.0),
-                ("health", 0.0),
-                ("defense", 0.0),
-                ("money_1", 0.0),
-                ("money_5", 0.0),
             ],
             enemy_type: Missile,
         ),
         health_component: (
             max_value: 50,
             value: 50,
+            armor: 0,
         ),
         hitbox_component: (
             width: 15.0,
