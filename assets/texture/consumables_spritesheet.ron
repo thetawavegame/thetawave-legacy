@@ -26,5 +26,11 @@ List((
             width: 7,
             height: 7,
         ),
+        (
+            x: 43,
+            y: 0,
+            width: 12,
+            height: 12,
+        ),
     ],
 ))
