@@ -1,7 +1,7 @@
 use crate::{
     components::{BossType, EnemySpawnerTag, GameMasterComponent, PhaseType, SpawnerComponent},
     entities::{spawn_enemy, spawn_repeater},
-    resources::{EnemyPool, SpriteResource},
+    resources::{EnemyPool, SpriteResource, ThrusterPool},
 };
 use amethyst::{
     core::{math::Vector3, timing::Time, Transform},
@@ -21,6 +21,7 @@ impl<'s> System<'s> for SpawnerSystem {
         WriteStorage<'s, GameMasterComponent>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemyPool>,
+        ReadExpect<'s, ThrusterPool>,
     );
 
     fn run(
@@ -35,6 +36,7 @@ impl<'s> System<'s> for SpawnerSystem {
             mut gamemasters,
             lazy_update,
             enemy_pool,
+            thruster_pool,
         ): Self::SystemData,
     ) {
         for gamemaster in (&mut gamemasters).join() {
@@ -55,8 +57,10 @@ impl<'s> System<'s> for SpawnerSystem {
 
                                 spawn_enemy(
                                     &entities,
-                                    enemy_resource.enemy_animations_sprite_sheet.clone(),
+                                    enemy_resource.enemies_sprite_sheet.clone(),
+                                    Some(enemy_resource.thrusters_sprite_sheet.clone()),
                                     enemy_pool[name].clone(),
+                                    Some(thruster_pool[name].clone()),
                                     spawn_position,
                                     &lazy_update,
                                 );

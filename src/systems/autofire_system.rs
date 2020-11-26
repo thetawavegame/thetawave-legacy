@@ -10,9 +10,9 @@ use amethyst::{
     },
 };
 
-pub struct AutoBlasterSystem;
+pub struct AutoFireSystem;
 
-impl<'s> System<'s> for AutoBlasterSystem {
+impl<'s> System<'s> for AutoFireSystem {
     type SystemData = (
         Entities<'s>,
         Read<'s, Time>,

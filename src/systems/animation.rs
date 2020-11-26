@@ -45,7 +45,11 @@ impl<'s> System<'s> for AnimationSystem {
                 AnimationType::Forward => {
                     if ani.elapsed_time > ani.frame_time {
                         ani.elapsed_time = 0.0;
-                        ani.current_frame += 1;
+                        if ani.start_idx + ani.frame_count - 1 == ani.current_frame {
+                            ani.current_frame = ani.start_idx;
+                        } else {
+                            ani.current_frame += 1;
+                        }
                         sprite_render.sprite_number = ani.current_frame;
                     }
                 }

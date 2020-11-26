@@ -49,28 +49,36 @@ pub fn spawn_repeater(
     let body = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
+        None,
         body_entity_data,
+        None,
         body_position,
         &lazy_update,
     );
     let head = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
+        None,
         head_entity_data,
+        None,
         head_position,
         &lazy_update,
     );
     let right_shoulder = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
+        None,
         right_shoulder_entity_data,
+        None,
         right_shoulder_position,
         &lazy_update,
     );
     let left_shoulder = spawn_enemy(
         &entities,
         sprite_sheet.clone(),
+        None,
         left_shoulder_entity_data,
+        None,
         left_shoulder_position,
         &lazy_update,
     );

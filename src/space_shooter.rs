@@ -112,7 +112,7 @@ impl Default for SpaceShooter {
                     "stat_tracker_system",
                     &["store_system", "spaceship_system"],
                 )
-                .with(systems::AutoBlasterSystem, "autoblaster_system", &[])
+                .with(systems::AutoFireSystem, "autoblaster_system", &[])
                 .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
                 .with(
                     systems::EnemyDestroyedSystem::default(),
@@ -161,8 +161,6 @@ impl SimpleState for SpaceShooter {
             "explosions_spritesheet.png",
             "explosions_spritesheet.ron",
         );
-        let enemy_animations_sprite_sheet_handle =
-            load_spritesheet(world, "enemy_animations.png", "enemy_animations.ron");
         let repeater_sprite_sheet_handle = load_spritesheet(
             world,
             "repeater_spritesheet.png",
@@ -170,6 +168,11 @@ impl SimpleState for SpaceShooter {
         );
         let blast_explosions_sprite_sheet_handle =
             load_spritesheet(world, "blast_explosions.png", "blast_explosions.ron");
+        let thrusters_sprite_sheet_handle = load_spritesheet(
+            world,
+            "thrusters_spritesheet.png",
+            "thrusters_spritesheet.ron",
+        );
 
         self.dispatcher.setup(world);
 
@@ -208,9 +211,9 @@ impl SimpleState for SpaceShooter {
             players_sprite_sheet_handle,
             blasts_sprite_sheet_handle,
             explosions_sprite_sheet_handle,
-            enemy_animations_sprite_sheet_handle,
             repeater_sprite_sheet_handle,
             blast_explosions_sprite_sheet_handle,
+            thrusters_sprite_sheet_handle,
         );
         initialize_enemy_spawner(world);
         initialize_side_panels(world, side_panel_sprite_sheet_handle);
@@ -461,10 +464,10 @@ fn initialise_ui(world: &mut World) {
 
     let shields_count_transform = UiTransform::new(
         "shields_count".to_string(),
-        Anchor::BottomRight,
-        Anchor::BottomRight,
+        Anchor::MiddleRight,
+        Anchor::MiddleRight,
         -6.0,
-        260.0,
+        48.0,
         0.9,
         50.0,
         45.0,

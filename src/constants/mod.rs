@@ -64,6 +64,8 @@ pub const ENEMY_PAWN_RATIO: f32 = 50.0;
 pub const ENEMY_DRONE_RATIO: f32 = 100.0;
 pub const ENEMY_STRAFER_RATIO: f32 = 75.0;
 pub const ENEMY_HAULER_RATIO: f32 = 5.0;
+pub const ENEMY_MISSILE_LAUNCHER_RATIO: f32 = 40.0;
+pub const ENEMY_MISSILE_RATIO: f32 = 80.0;
 
 // player starting stats
 pub const SPACESHIP_HITBOX_HEIGHT: f32 = 14.0;

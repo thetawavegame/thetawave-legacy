@@ -28,7 +28,7 @@ mod space_shooter;
 pub mod systems;
 
 use crate::space_shooter::SpaceShooter;
-use resources::{ConsumablePool, EnemyPool, ItemPool};
+use resources::{ConsumablePool, EnemyPool, ItemPool, ThrusterPool};
 
 use amethyst::config::Config;
 
@@ -36,13 +36,15 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
-    let display_config_path = app_root.join("config").join("display_config_640.ron");
+    let display_config_path = app_root.join("config").join("display_config_960.ron");
     let bindings_path = app_root.join("config").join("bindings_config.ron");
     let assets_path = app_root.join("assets");
 
     let items = <ItemPool as Config>::load(assets_path.join("data").join("items.ron"))
         .expect("failed to load game data");
     let enemies = <EnemyPool as Config>::load(assets_path.join("data").join("enemies.ron"))
+        .expect("failed to load game data");
+    let thrusters = <ThrusterPool as Config>::load(assets_path.join("data").join("thrusters.ron"))
         .expect("failed to load game data");
     let consumables =
         <ConsumablePool as Config>::load(assets_path.join("data").join("consumables.ron"))
@@ -69,6 +71,7 @@ fn main() -> amethyst::Result<()> {
     let mut game = Application::build(assets_path, SpaceShooter::default())?
         .with_resource(items)
         .with_resource(enemies)
+        .with_resource(thrusters)
         .with_resource(consumables)
         .build(game_data)?;
 

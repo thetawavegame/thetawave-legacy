@@ -20,6 +20,12 @@ pub struct EnemyEntityData {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ThrusterEntityData {
+    pub animation_component: AnimationComponent,
+    pub y_offset: f32,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ItemEntityData {
     pub item_component: ItemComponent,
     pub animation_component: Option<AnimationComponent>,
@@ -32,5 +38,6 @@ pub struct ConsumableEntityData {
 }
 
 pub type EnemyPool = std::collections::HashMap<String, EnemyEntityData>;
+pub type ThrusterPool = std::collections::HashMap<String, ThrusterEntityData>;
 pub type ItemPool = std::collections::HashMap<String, ItemEntityData>;
 pub type ConsumablePool = std::collections::HashMap<String, ConsumableEntityData>;
