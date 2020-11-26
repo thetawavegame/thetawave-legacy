@@ -14,6 +14,7 @@ pub fn initialize_defense(world: &mut World) {
         .with(HealthComponent {
             value: DEFENSE,
             max_value: DEFENSE,
+            armor: 0,
         })
         .build();
 }

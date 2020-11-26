@@ -13,6 +13,7 @@ pub struct Sounds {
     pub crash_sfx: SourceHandle,
     pub explosion_sfx: SourceHandle,
     pub spaceship_hit_sfx: SourceHandle,
+    pub shields_up_sfx: SourceHandle,
     pub cash_register_bell_sfx: SourceHandle,
 }
 
@@ -33,6 +34,7 @@ pub fn initialize_audio(world: &mut World) {
             crash_sfx: load_audio_track(&loader, &world, "audio/crash.ogg"),
             explosion_sfx: load_audio_track(&loader, &world, "audio/explosion.ogg"),
             spaceship_hit_sfx: load_audio_track(&loader, &world, "audio/spaceship_hit.ogg"),
+            shields_up_sfx: load_audio_track(&loader, &world, "audio/shields_up.ogg"),
             cash_register_bell_sfx: load_audio_track(
                 &loader,
                 &world,
