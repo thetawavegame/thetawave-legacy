@@ -24,12 +24,16 @@ use amethyst::{
 use std::f32::consts::FRAC_PI_3;
 
 pub struct SpaceShooter {
+    is_paused: bool,
+    pause_display: Option<Entity>,
     dispatcher: Dispatcher<'static, 'static>,
 }
 
 impl Default for SpaceShooter {
     fn default() -> Self {
         SpaceShooter {
+            is_paused: false,
+            pause_display: None,
             dispatcher: DispatcherBuilder::new()
                 .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
@@ -217,8 +221,29 @@ impl SimpleState for SpaceShooter {
         initialise_camera(world);
     }
 
+    fn on_pause(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        self.is_paused = true;
+
+        let paused_text_entity = get_paused_text(data.world);
+        self.pause_display = Some(paused_text_entity);
+    }
+
+    fn on_resume(&mut self, _data: StateData<'_, GameData<'_, '_>>) {
+        self.is_paused = false;
+    }
+
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         self.dispatcher.dispatch(data.world);
+
+        // Handle paused state here.
+        if let Some(pause_text_entity) = self.pause_display {
+            data.world
+                .delete_entity(pause_text_entity)
+                .expect("Failed to remove Paused text.");
+
+            self.pause_display = None;
+        }
+
         Trans::None
     }
 
@@ -475,4 +500,39 @@ fn initialise_ui(world: &mut World) {
         item_price_2,
         item_price_3,
     });
+}
+
+fn get_paused_text(world: &mut World) -> Entity {
+    let font_handle = world.read_resource::<Loader>().load(
+        "font/SpaceMadness.ttf",
+        TtfFormat,
+        (),
+        &world.read_resource(),
+    );
+    let ui_transform = UiTransform::new(
+        String::from("paused_text"),
+        Anchor::Middle,
+        Anchor::Middle,
+        0.0,
+        0.0,
+        0.0,
+        100.0,
+        30.0,
+    );
+    let ui_text = UiText::new(
+        font_handle,
+        String::from("paused"),
+        [1.0, 1.0, 1.0, 1.0],
+        25.0,
+        LineMode::Single,
+        Anchor::Middle,
+    );
+
+    let entity = world
+        .create_entity()
+        .with(ui_transform)
+        .with(ui_text)
+        .build();
+
+    entity
 }
