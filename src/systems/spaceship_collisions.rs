@@ -185,7 +185,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
                 ));
 
                 play_audio_channel.single_write(PlayAudioEvent {
-                    source: sounds.item_sfx.clone(),
+                    source: sounds.sound_effects["shotgun_cock"].clone(),
                 });
 
                 entities
@@ -240,32 +240,17 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             if let Some(consumable) = consumables.get(event.colliding_entity) {
                 let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
+
                 spaceship_health.value += consumable.health_value;
                 spaceship_health.armor += consumable.armor_value;
                 spaceship.money += consumable.money_value;
-
-                if consumable.name == "money_1" {
-                    play_audio_channel.single_write(PlayAudioEvent {
-                        source: sounds.small_rock_sfx.clone(),
-                    });
-                } else if consumable.name == "money_5" {
-                    play_audio_channel.single_write(PlayAudioEvent {
-                        source: sounds.large_rock_sfx.clone(),
-                    });
-                } else if consumable.name == "health_wrench" || consumable.name == "defense_wrench"
-                {
-                    play_audio_channel.single_write(PlayAudioEvent {
-                        source: sounds.wrench_sfx.clone(),
-                    });
-                } else if consumable.name == "armor" {
-                    play_audio_channel.single_write(PlayAudioEvent {
-                        source: sounds.shields_up_sfx.clone(),
-                    });
-                }
-
                 for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
                     defense_health.value += consumable.defense_value;
                 }
+
+                play_audio_channel.single_write(PlayAudioEvent {
+                    source: sounds.sound_effects[&consumable.sound_effect].clone(),
+                });
 
                 entities
                     .delete(event.colliding_entity)

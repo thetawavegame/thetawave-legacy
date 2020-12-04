@@ -1,7 +1,7 @@
 {
     "defense_wrench": (
         consumable_component: (
-            name: "defense_wrench",
+            sound_effect: "metal_clang",
             defense_value: 70,
             sprite_index: 1,
         ),
@@ -15,7 +15,7 @@
     ),
     "money_1": (
         consumable_component: (
-            name: "money_1",
+            sound_effect: "small_rock",
             money_value: 1,
             sprite_index: 3,
         ),
@@ -29,7 +29,7 @@
     ),
     "money_5": (
         consumable_component: (
-            name: "money_5",
+            sound_effect: "large_rock",
             money_value: 5,
             sprite_index: 2,
         ),
@@ -43,7 +43,7 @@
     ),
     "health_wrench": (
         consumable_component: (
-            name: "health_wrench",
+            sound_effect: "metal_clang",
             health_value: 30,
             sprite_index: 0,
         ),
@@ -57,7 +57,7 @@
     ),
     "armor": (
         consumable_component: (
-            name: "armor",
+            sound_effect: "armor_up",
             armor_value: 1,
             sprite_index: 4,
         ),

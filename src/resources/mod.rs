@@ -3,6 +3,7 @@ use crate::components::{
     HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 mod sprite;
 
@@ -37,7 +38,8 @@ pub struct ConsumableEntityData {
     pub hitbox_component: Hitbox2DComponent,
 }
 
-pub type EnemyPool = std::collections::HashMap<String, EnemyEntityData>;
-pub type ThrusterPool = std::collections::HashMap<String, ThrusterEntityData>;
-pub type ItemPool = std::collections::HashMap<String, ItemEntityData>;
-pub type ConsumablePool = std::collections::HashMap<String, ConsumableEntityData>;
+pub type SoundsData = HashMap<String, String>;
+pub type EnemyPool = HashMap<String, EnemyEntityData>;
+pub type ThrusterPool = HashMap<String, ThrusterEntityData>;
+pub type ItemPool = HashMap<String, ItemEntityData>;
+pub type ConsumablePool = HashMap<String, ConsumableEntityData>;

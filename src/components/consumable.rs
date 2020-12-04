@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumableComponent {
-    pub name: String,
+    pub sound_effect: String,
     #[serde(default = "des_speed")]
     pub speed: f32,
     #[serde(default)]
