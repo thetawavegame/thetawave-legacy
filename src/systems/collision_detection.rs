@@ -51,14 +51,14 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                 // draw debug lines for hitboxes
                 debug_lines.draw_rotated_box(
                     [
-                        transform_a.translation().x + hitbox_a.offset_x - hitbox_a.width / 2.0,
-                        transform_a.translation().y + hitbox_a.offset_y - hitbox_a.height / 2.0,
+                        transform_a.translation().x + hitbox_a.offset.x - (hitbox_a.width / 2.0),
+                        transform_a.translation().y + hitbox_a.offset.y - (hitbox_a.height / 2.0),
                         transform_a.translation().z,
                     ]
                     .into(),
                     [
-                        transform_a.translation().x + hitbox_a.offset_x + hitbox_a.width / 2.0,
-                        transform_a.translation().y + hitbox_a.offset_y + hitbox_a.height / 2.0,
+                        transform_a.translation().x + hitbox_a.offset.x + (hitbox_a.width / 2.0),
+                        transform_a.translation().y + hitbox_a.offset.y + (hitbox_a.height / 2.0),
                         transform_a.translation().z,
                     ]
                     .into(),
