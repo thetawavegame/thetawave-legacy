@@ -1,10 +1,15 @@
 use crate::{
     components::{EnemyComponent, Hitbox2DComponent, Motion2DComponent, SpaceshipComponent},
     events::{CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent},
+    resources::DebugLinesConfig,
 };
 use amethyst::{
-    core::{math::Vector2, transform::Transform},
+    core::{
+        math::{UnitQuaternion, Vector2},
+        transform::Transform,
+    },
     ecs::*,
+    renderer::debug_drawing::DebugLines,
     shrev::{EventChannel, ReaderId},
 };
 
@@ -18,8 +23,20 @@ impl<'s> System<'s> for CollisionDetectionSystem {
         ReadStorage<'s, Hitbox2DComponent>,
         ReadStorage<'s, Transform>,
         Write<'s, EventChannel<CollisionEvent>>,
+        Write<'s, DebugLines>,
+        Read<'s, DebugLinesConfig>,
     );
-    fn run(&mut self, (entities, hitbox2ds, transforms, mut collision_channel): Self::SystemData) {
+    fn run(
+        &mut self,
+        (
+            entities,
+            hitbox2ds,
+            transforms,
+            mut collision_channel,
+            mut debug_lines,
+            debug_lines_config,
+        ): Self::SystemData,
+    ) {
         for (entity_a, transform_a, hitbox_a) in (&entities, &transforms, &hitbox2ds).join() {
             for (entity_b, transform_b, hitbox_b) in (&entities, &transforms, &hitbox2ds).join() {
                 if entity_a == entity_b {
@@ -29,6 +46,25 @@ impl<'s> System<'s> for CollisionDetectionSystem {
                 if hitbox_a.is_colliding(hitbox_b, transform_a, transform_b) {
                     collision_channel.single_write(CollisionEvent::new(entity_a, entity_b));
                 }
+            }
+            if cfg!(debug_assertions) {
+                // draw debug lines for hitboxes
+                debug_lines.draw_rotated_box(
+                    [
+                        transform_a.translation().x + hitbox_a.offset_x - hitbox_a.width / 2.0,
+                        transform_a.translation().y + hitbox_a.offset_y - hitbox_a.height / 2.0,
+                        transform_a.translation().z,
+                    ]
+                    .into(),
+                    [
+                        transform_a.translation().x + hitbox_a.offset_x + hitbox_a.width / 2.0,
+                        transform_a.translation().y + hitbox_a.offset_y + hitbox_a.height / 2.0,
+                        transform_a.translation().z,
+                    ]
+                    .into(),
+                    UnitQuaternion::from_euler_angles(0.0, 0.0, -hitbox_a.offset_rotation),
+                    debug_lines_config.hitbox_color,
+                );
             }
         }
     }

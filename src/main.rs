@@ -10,7 +10,7 @@ use amethyst::{
     input::{InputBundle, StringBindings},
     prelude::*,
     renderer::{
-        plugins::{RenderFlat2D, RenderFlat3D, RenderToWindow},
+        plugins::{RenderDebugLines, RenderFlat2D, RenderFlat3D, RenderToWindow},
         types::DefaultBackend,
         RenderingBundle,
     },
@@ -28,7 +28,7 @@ mod space_shooter;
 pub mod systems;
 
 use crate::space_shooter::SpaceShooter;
-use resources::{ConsumablePool, EnemyPool, ItemPool, ThrusterPool};
+use resources::{ConsumablePool, DebugLinesConfig, EnemyPool, ItemPool, ThrusterPool};
 
 use amethyst::config::Config;
 
@@ -36,8 +36,13 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
+    let config_path = app_root.join("config");
     let display_config_path = app_root.join("config").join("display_config_960.ron");
     let bindings_path = app_root.join("config").join("bindings_config.ron");
+
+    let debug_lines = <DebugLinesConfig as Config>::load(config_path.join("debug_lines.ron"))
+        .expect("failed to load configuration file: debug_lines.ron");
+
     let assets_path = app_root.join("assets");
 
     let items = <ItemPool as Config>::load(assets_path.join("data").join("items.ron"))
@@ -65,7 +70,8 @@ fn main() -> amethyst::Result<()> {
                 .with_plugin(RenderFlat3D::default())
                 .with_plugin(RenderFlat2D::default())
                 //.with_plugin(RenderShaded3D::default())
-                .with_plugin(RenderUi::default()),
+                .with_plugin(RenderUi::default())
+                .with_plugin(RenderDebugLines::default()),
         )?;
 
     let mut game = Application::build(assets_path, SpaceShooter::default())?
@@ -73,6 +79,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(enemies)
         .with_resource(thrusters)
         .with_resource(consumables)
+        .with_resource(debug_lines)
         .build(game_data)?;
 
     game.run();
