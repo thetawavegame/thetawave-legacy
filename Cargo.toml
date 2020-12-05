@@ -16,3 +16,6 @@ serde = "1"
 
 [features]
 fail-on-warnings = []
+
+[patch.crates-io]
+coreaudio-sys = { git = "https://github.com/RustAudio/coreaudio-sys.git" }
