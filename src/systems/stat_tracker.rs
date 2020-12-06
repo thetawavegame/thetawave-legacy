@@ -1,6 +1,6 @@
 use crate::{
     components::{HealthComponent, SpaceshipComponent, StoreComponent},
-    space_shooter::TrackedStats,
+    states::TrackedStats,
 };
 use amethyst::{
     ecs::prelude::{Join, ReadExpect, ReadStorage, System, WriteStorage},

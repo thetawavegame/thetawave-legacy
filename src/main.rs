@@ -24,11 +24,11 @@ pub mod constants;
 pub mod entities;
 pub mod events;
 pub mod resources;
-mod space_shooter;
+pub mod states;
 pub mod systems;
 
-use crate::space_shooter::SpaceShooter;
 use resources::{ConsumablePool, EnemyPool, ItemPool, ThrusterPool};
+use states::MainGameState;
 
 use amethyst::config::Config;
 
@@ -64,11 +64,10 @@ fn main() -> amethyst::Result<()> {
                 )
                 .with_plugin(RenderFlat3D::default())
                 .with_plugin(RenderFlat2D::default())
-                //.with_plugin(RenderShaded3D::default())
                 .with_plugin(RenderUi::default()),
         )?;
 
-    let mut game = Application::build(assets_path, SpaceShooter::default())?
+    let mut game = Application::build(assets_path, MainGameState::default())?
         .with_resource(items)
         .with_resource(enemies)
         .with_resource(thrusters)

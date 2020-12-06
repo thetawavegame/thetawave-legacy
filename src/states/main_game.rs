@@ -9,6 +9,7 @@ use crate::{
         initialize_side_panels, initialize_spaceship, initialize_status_bars, initialize_store,
     },
     resources::initialize_sprite_resource,
+    states::PausedState,
     systems,
 };
 use amethyst::{
@@ -23,15 +24,15 @@ use amethyst::{
 };
 use std::f32::consts::FRAC_PI_3;
 
-pub struct SpaceShooter {
+pub struct MainGameState {
     is_paused: bool,
     pause_display: Option<Entity>,
     dispatcher: Dispatcher<'static, 'static>,
 }
 
-impl Default for SpaceShooter {
+impl Default for MainGameState {
     fn default() -> Self {
-        SpaceShooter {
+        MainGameState {
             is_paused: false,
             pause_display: None,
             dispatcher: DispatcherBuilder::new()
@@ -129,10 +130,9 @@ impl Default for SpaceShooter {
     }
 }
 
-impl SimpleState for SpaceShooter {
+impl SimpleState for MainGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
-        //let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
         let side_panel_sprite_sheet_handle = load_spritesheet(
             world,
             "side_panel_spritesheet.png",
@@ -255,23 +255,6 @@ impl SimpleState for SpaceShooter {
         if let StateEvent::Window(event) = &event {
             if is_key_down(&event, VirtualKeyCode::Escape) {
                 return Trans::Push(Box::new(PausedState));
-            }
-        }
-        Trans::None
-    }
-}
-
-pub struct PausedState;
-
-impl SimpleState for PausedState {
-    fn handle_event(
-        &mut self,
-        _data: StateData<'_, GameData<'_, '_>>,
-        event: StateEvent,
-    ) -> SimpleTrans {
-        if let StateEvent::Window(event) = &event {
-            if is_key_down(&event, VirtualKeyCode::Escape) {
-                return Trans::Pop;
             }
         }
         Trans::None
