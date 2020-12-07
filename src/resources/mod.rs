@@ -2,6 +2,7 @@ use crate::components::{
     AnimationComponent, AutoFireComponent, BlasterComponent, ConsumableComponent, EnemyComponent,
     HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
+use amethyst::renderer::palette::Srgba;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -36,6 +37,12 @@ pub struct ItemEntityData {
 pub struct ConsumableEntityData {
     pub consumable_component: ConsumableComponent,
     pub hitbox_component: Hitbox2DComponent,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
+pub struct DebugLinesConfig {
+    pub line_width: f32,
+    pub hitbox_color: Srgba,
 }
 
 pub type SoundsData = HashMap<String, String>;
