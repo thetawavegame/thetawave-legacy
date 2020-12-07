@@ -4,6 +4,7 @@ use crate::components::{
 };
 use amethyst::renderer::palette::Srgba;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 mod sprite;
 
@@ -44,7 +45,8 @@ pub struct DebugLinesConfig {
     pub hitbox_color: Srgba,
 }
 
-pub type EnemyPool = std::collections::HashMap<String, EnemyEntityData>;
-pub type ThrusterPool = std::collections::HashMap<String, ThrusterEntityData>;
-pub type ItemPool = std::collections::HashMap<String, ItemEntityData>;
-pub type ConsumablePool = std::collections::HashMap<String, ConsumableEntityData>;
+pub type SoundsData = HashMap<String, String>;
+pub type EnemyPool = HashMap<String, EnemyEntityData>;
+pub type ThrusterPool = HashMap<String, ThrusterEntityData>;
+pub type ItemPool = HashMap<String, ItemEntityData>;
+pub type ConsumablePool = HashMap<String, ConsumableEntityData>;

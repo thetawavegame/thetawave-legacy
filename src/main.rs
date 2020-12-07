@@ -28,7 +28,7 @@ mod space_shooter;
 pub mod systems;
 
 use crate::space_shooter::SpaceShooter;
-use resources::{ConsumablePool, DebugLinesConfig, EnemyPool, ItemPool, ThrusterPool};
+use resources::{ConsumablePool, DebugLinesConfig, EnemyPool, ItemPool, SoundsData, ThrusterPool};
 
 use amethyst::config::Config;
 
@@ -54,6 +54,8 @@ fn main() -> amethyst::Result<()> {
     let consumables =
         <ConsumablePool as Config>::load(assets_path.join("data").join("consumables.ron"))
             .expect("failed to load game data");
+    let sounds = <SoundsData as Config>::load(assets_path.join("data").join("sounds.ron"))
+        .expect("failed to load game data");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])
@@ -79,6 +81,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(enemies)
         .with_resource(thrusters)
         .with_resource(consumables)
+        .with_resource(sounds)
         .with_resource(debug_lines)
         .build(game_data)?;
 

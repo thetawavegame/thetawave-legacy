@@ -1,6 +1,6 @@
 use crate::resources::{ConsumableEntityData, SpriteResource};
 use amethyst::{
-    core::{math::Vector3, transform::Transform, Named},
+    core::{math::Vector3, transform::Transform},
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
@@ -16,7 +16,6 @@ pub fn spawn_consumable(
         sprite_sheet: sprite_resource.consumables_sprite_sheet.clone(),
         sprite_number: consumable.consumable_component.sprite_index,
     };
-    let name = Named::new("consumable");
 
     let mut local_transform = Transform::default();
     local_transform.set_translation(*spawn_position);
@@ -28,6 +27,5 @@ pub fn spawn_consumable(
         .with(consumable.consumable_component)
         .with(local_transform)
         .with(Transparent)
-        .with(name)
         .build();
 }
