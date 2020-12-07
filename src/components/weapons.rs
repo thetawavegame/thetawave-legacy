@@ -5,7 +5,7 @@ use crate::{
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
     entities::spawn_blasts,
-    resources::SpriteResource,
+    resources::SpriteSheets,
 };
 
 use amethyst::{
@@ -45,7 +45,7 @@ impl BlasterComponent {
         source_motion2d: &Motion2DComponent,
         source_transform: &Transform,
         entities: &Entities,
-        sprite_resource: &ReadExpect<SpriteResource>,
+        sprite_resource: &ReadExpect<SpriteSheets>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) {
         let fire_position = Vector3::new(
@@ -83,7 +83,7 @@ impl BlasterComponent {
         };
 
         let blast_sprite_render = SpriteRender {
-            sprite_sheet: sprite_resource.blasts_sprite_sheet.clone(),
+            sprite_sheet: sprite_resource.spritesheets["blasts"].clone(),
             sprite_number: blast_sprite_number,
         };
 

@@ -2,7 +2,7 @@ use crate::{
     components::{ConsumableComponent, SpaceshipComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ITEM_SPAWN_Y_OFFSET},
     entities::spawn_item,
-    resources::{ItemEntityData, ItemPool, SpriteResource},
+    resources::{ItemEntityData, ItemPool, SpriteSheets},
 };
 use amethyst::{
     core::{math::Vector3, transform::Transform},
@@ -64,7 +64,7 @@ impl StoreComponent {
         dt: f32,
         item_pool: ItemPool,
         entities: &Entities,
-        sprite_resource: &ReadExpect<SpriteResource>,
+        sprite_resource: &ReadExpect<SpriteSheets>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) {
         if self.restock_timer > 0.0 {
@@ -102,7 +102,7 @@ impl StoreComponent {
         item_index: usize,
         entities: &Entities,
         spaceship: &mut SpaceshipComponent,
-        sprite_resource: &ReadExpect<SpriteResource>,
+        sprite_resource: &ReadExpect<SpriteSheets>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
         if let Some(item) = &self.item_inventory[item_index] {
@@ -141,7 +141,7 @@ impl StoreComponent {
     pub fn spawn_store_icon(
         &mut self,
         entities: &Entities,
-        sprite_resource: &ReadExpect<SpriteResource>,
+        sprite_resource: &ReadExpect<SpriteSheets>,
         lazy_update: &ReadExpect<LazyUpdate>,
         index: f32,
         sprite_index: usize,
@@ -156,7 +156,7 @@ impl StoreComponent {
         ));
 
         let sprite_render = SpriteRender {
-            sprite_sheet: sprite_resource.items_sprite_sheet.clone(),
+            sprite_sheet: sprite_resource.spritesheets["items"].clone(),
             sprite_number: sprite_index,
         };
 

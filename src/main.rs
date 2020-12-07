@@ -27,7 +27,7 @@ pub mod resources;
 pub mod states;
 pub mod systems;
 
-use resources::{ConsumablePool, EnemyPool, ItemPool, ThrusterPool};
+use resources::{ConsumablePool, EnemyPool, ItemPool, SpriteSheetsConfig, ThrusterPool};
 use states::MainGameState;
 
 use amethyst::config::Config;
@@ -36,10 +36,15 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
-    let display_config_path = app_root.join("config").join("display_config_960.ron");
-    let bindings_path = app_root.join("config").join("bindings_config.ron");
     let assets_path = app_root.join("assets");
+    let config_path = app_root.join("config");
 
+    let display_config_path = config_path.join("display_config_960.ron");
+    let bindings_path = config_path.join("bindings_config.ron");
+
+    let spritesheets =
+        <SpriteSheetsConfig as Config>::load(config_path.join("spritesheets_config.ron"))
+            .expect("failed to load config/spritesheets.ron");
     let items = <ItemPool as Config>::load(assets_path.join("data").join("items.ron"))
         .expect("failed to load game data");
     let enemies = <EnemyPool as Config>::load(assets_path.join("data").join("enemies.ron"))
@@ -72,6 +77,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(enemies)
         .with_resource(thrusters)
         .with_resource(consumables)
+        .with_resource(spritesheets)
         .build(game_data)?;
 
     game.run();

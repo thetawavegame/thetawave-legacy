@@ -2,11 +2,9 @@ use crate::components::{
     AnimationComponent, AutoFireComponent, BlasterComponent, ConsumableComponent, EnemyComponent,
     HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
+use amethyst::{assets::Handle, renderer::SpriteSheet};
 use serde::{Deserialize, Serialize};
-
-mod sprite;
-
-pub use self::sprite::{initialize_sprite_resource, SpriteResource};
+use std::collections::HashMap;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
@@ -37,7 +35,19 @@ pub struct ConsumableEntityData {
     pub hitbox_component: Hitbox2DComponent,
 }
 
-pub type EnemyPool = std::collections::HashMap<String, EnemyEntityData>;
-pub type ThrusterPool = std::collections::HashMap<String, ThrusterEntityData>;
-pub type ItemPool = std::collections::HashMap<String, ItemEntityData>;
-pub type ConsumablePool = std::collections::HashMap<String, ConsumableEntityData>;
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct SpriteSheetData {
+    pub image: String,
+    pub data: String,
+}
+
+#[derive(Clone)]
+pub struct SpriteSheets {
+    pub spritesheets: HashMap<String, Handle<SpriteSheet>>,
+}
+
+pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;
+pub type EnemyPool = HashMap<String, EnemyEntityData>;
+pub type ThrusterPool = HashMap<String, ThrusterEntityData>;
+pub type ItemPool = HashMap<String, ItemEntityData>;
+pub type ConsumablePool = HashMap<String, ConsumableEntityData>;

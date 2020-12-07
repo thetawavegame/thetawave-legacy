@@ -1,7 +1,7 @@
 use crate::{
     components::{BossType, EnemySpawnerTag, GameMasterComponent, PhaseType, SpawnerComponent},
     entities::{spawn_enemy, spawn_repeater},
-    resources::{EnemyPool, SpriteResource, ThrusterPool},
+    resources::{EnemyPool, SpriteSheets, ThrusterPool},
 };
 use amethyst::{
     core::{math::Vector3, timing::Time, Transform},
@@ -17,7 +17,7 @@ impl<'s> System<'s> for SpawnerSystem {
         WriteStorage<'s, SpawnerComponent>,
         ReadStorage<'s, EnemySpawnerTag>,
         Read<'s, Time>,
-        ReadExpect<'s, SpriteResource>,
+        ReadExpect<'s, SpriteSheets>,
         WriteStorage<'s, GameMasterComponent>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemyPool>,
@@ -57,8 +57,8 @@ impl<'s> System<'s> for SpawnerSystem {
 
                                 spawn_enemy(
                                     &entities,
-                                    enemy_resource.enemies_sprite_sheet.clone(),
-                                    Some(enemy_resource.thrusters_sprite_sheet.clone()),
+                                    enemy_resource.spritesheets["enemies"].clone(),
+                                    Some(enemy_resource.spritesheets["thrusters"].clone()),
                                     enemy_pool[name].clone(),
                                     Some(thruster_pool[name].clone()),
                                     spawn_position,
@@ -75,7 +75,7 @@ impl<'s> System<'s> for SpawnerSystem {
                                 if !gamemaster.phase_map[gamemaster.phase_idx].boss_spawned {
                                     spawn_repeater(
                                         &entities,
-                                        enemy_resource.repeater_sprite_sheet.clone(),
+                                        enemy_resource.spritesheets["repeater"].clone(),
                                         &enemy_pool,
                                         &lazy_update,
                                     );

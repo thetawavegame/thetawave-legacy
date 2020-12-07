@@ -1,6 +1,6 @@
 use crate::{
     components::{Hitbox2DComponent, Motion2DComponent},
-    resources::{ItemEntityData, SpriteResource},
+    resources::{ItemEntityData, SpriteSheets},
 };
 use amethyst::{
     core::{
@@ -14,13 +14,13 @@ use amethyst::{
 
 pub fn spawn_item(
     entities: &Entities,
-    item_resource: &ReadExpect<SpriteResource>,
+    item_resource: &ReadExpect<SpriteSheets>,
     item: ItemEntityData,
     spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let sprite_render = SpriteRender {
-        sprite_sheet: item_resource.items_sprite_sheet.clone(),
+        sprite_sheet: item_resource.spritesheets["items"].clone(),
         sprite_number: item.item_component.sprite_index,
     };
     let mut local_transform = Transform::default();
