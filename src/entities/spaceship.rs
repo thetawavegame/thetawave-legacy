@@ -43,8 +43,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
     let hitbox = Hitbox2DComponent {
         width: SPACESHIP_HITBOX_WIDTH,
         height: SPACESHIP_HITBOX_HEIGHT,
-        offset_x: 0.0,
-        offset_y: 0.0,
+        offset: Vector2::new(0.0, 0.0),
         offset_rotation: 0.0,
     };
 

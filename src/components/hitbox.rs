@@ -1,5 +1,5 @@
 use amethyst::{
-    core::transform::Transform,
+    core::{math::Vector2, transform::Transform},
     ecs::prelude::{Component, DenseVecStorage},
 };
 
@@ -9,9 +9,17 @@ use serde::{Deserialize, Serialize};
 pub struct Hitbox2DComponent {
     pub width: f32,
     pub height: f32,
-    pub offset_x: f32,
-    pub offset_y: f32,
+    #[serde(default = "des_offset")]
+    pub offset: Vector2<f32>,
+    #[serde(default = "des_offset_rotation")]
     pub offset_rotation: f32, // offset in radians
+}
+fn des_offset() -> Vector2<f32> {
+    Vector2::new(0.0, 0.0)
+}
+
+fn des_offset_rotation() -> f32 {
+    0.0
 }
 
 impl Component for Hitbox2DComponent {
@@ -26,10 +34,10 @@ impl Hitbox2DComponent {
         transform_b: &Transform,
     ) -> bool {
         if self.offset_rotation == 0.0 && hitbox_b.offset_rotation == 0.0 {
-            let x1 = transform_a.translation().x - (self.width / 2.0) + self.offset_x;
-            let y1 = transform_a.translation().y - (self.height / 2.0) + self.offset_y;
-            let x2 = transform_b.translation().x - (hitbox_b.width / 2.0) + hitbox_b.offset_x;
-            let y2 = transform_b.translation().y - (hitbox_b.height / 2.0) + hitbox_b.offset_y;
+            let x1 = transform_a.translation().x - (self.width / 2.0) + self.offset.x;
+            let y1 = transform_a.translation().y - (self.height / 2.0) + self.offset.y;
+            let x2 = transform_b.translation().x - (hitbox_b.width / 2.0) + hitbox_b.offset.x;
+            let y2 = transform_b.translation().y - (hitbox_b.height / 2.0) + hitbox_b.offset.y;
 
             return x1 < (x2 + hitbox_b.width)
                 && (x1 + self.width) > x2
@@ -57,8 +65,8 @@ impl Hitbox2DComponent {
         let b_ll_y_temp = -hitbox_b.height / 2.0;
 
         // Step 2: find rotated coordinates of four corners
-        let a_x_offset = transform_a.translation().x + self.offset_x;
-        let a_y_offset = transform_a.translation().y + self.offset_y;
+        let a_x_offset = transform_a.translation().x + self.offset.x;
+        let a_y_offset = transform_a.translation().y + self.offset.y;
         let rotated_hitbox_1 = [
             Vector(
                 rotate_x(a_ur_x_temp, a_ur_y_temp, self.offset_rotation) + a_x_offset,
@@ -78,8 +86,8 @@ impl Hitbox2DComponent {
             ),
         ];
 
-        let b_x_offset = transform_b.translation().x + hitbox_b.offset_x;
-        let b_y_offset = transform_b.translation().y + hitbox_b.offset_y;
+        let b_x_offset = transform_b.translation().x + hitbox_b.offset.x;
+        let b_y_offset = transform_b.translation().y + hitbox_b.offset.y;
         let rotated_hitbox_2 = [
             Vector(
                 rotate_x(b_ur_x_temp, b_ur_y_temp, hitbox_b.offset_rotation) + b_x_offset,
