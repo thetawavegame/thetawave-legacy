@@ -1,20 +1,14 @@
+use crate::resources::SoundsConfig;
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
     audio::{output::Output, OggFormat, Source, SourceHandle},
     ecs::{World, WorldExt},
 };
 
+use std::collections::HashMap;
+
 pub struct Sounds {
-    pub small_rock_sfx: SourceHandle,
-    pub large_rock_sfx: SourceHandle,
-    pub wrench_sfx: SourceHandle,
-    pub item_sfx: SourceHandle,
-    pub spaceship_laser_sfx: SourceHandle,
-    pub crash_sfx: SourceHandle,
-    pub explosion_sfx: SourceHandle,
-    pub spaceship_hit_sfx: SourceHandle,
-    pub shields_up_sfx: SourceHandle,
-    pub cash_register_bell_sfx: SourceHandle,
+    pub sound_effects: HashMap<String, SourceHandle>,
 }
 
 fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle {
@@ -24,23 +18,18 @@ fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle 
 pub fn initialize_audio(world: &mut World) {
     let sound_effects = {
         let loader = world.read_resource::<Loader>();
+        let sound_data = world.read_resource::<SoundsConfig>();
 
-        Sounds {
-            small_rock_sfx: load_audio_track(&loader, &world, "audio/small_rock.ogg"),
-            large_rock_sfx: load_audio_track(&loader, &world, "audio/large_rock.ogg"),
-            wrench_sfx: load_audio_track(&loader, &world, "audio/wrench.ogg"),
-            item_sfx: load_audio_track(&loader, &world, "audio/item.ogg"),
-            spaceship_laser_sfx: load_audio_track(&loader, &world, "audio/spaceship_laser.ogg"),
-            crash_sfx: load_audio_track(&loader, &world, "audio/crash.ogg"),
-            explosion_sfx: load_audio_track(&loader, &world, "audio/explosion.ogg"),
-            spaceship_hit_sfx: load_audio_track(&loader, &world, "audio/spaceship_hit.ogg"),
-            shields_up_sfx: load_audio_track(&loader, &world, "audio/shields_up.ogg"),
-            cash_register_bell_sfx: load_audio_track(
-                &loader,
-                &world,
-                "audio/cash_register_bell.ogg",
-            ),
+        let mut sound_effects = HashMap::new();
+
+        for (sound_name, sound_file) in sound_data.iter() {
+            sound_effects.insert(
+                sound_name.to_owned(),
+                load_audio_track(&loader, &world, &*("audio/".to_string() + sound_file)),
+            );
         }
+
+        Sounds { sound_effects }
     };
 
     world.insert(sound_effects);

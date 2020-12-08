@@ -112,7 +112,7 @@ impl<'s> System<'s> for SpaceshipSystem {
                 );
                 manual_fire.ready = false;
                 play_audio_channel.single_write(PlayAudioEvent {
-                    source: sounds.spaceship_laser_sfx.clone(),
+                    source: sounds.sound_effects["laser_blast"].clone(),
                 });
             }
 

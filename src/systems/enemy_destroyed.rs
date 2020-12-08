@@ -60,7 +60,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             let enemy_component = enemies.get(event.enemy).unwrap();
 
             play_audio_channel.single_write(PlayAudioEvent {
-                source: sounds.explosion_sfx.clone(),
+                source: sounds.sound_effects["explosion"].clone(),
             });
 
             spawn_explosion(

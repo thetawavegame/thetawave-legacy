@@ -60,3 +60,4 @@ pub type EnemiesResource = HashMap<String, EnemyEntityData>;
 pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
 pub type ItemsResource = HashMap<String, ItemEntityData>;
 pub type ConsumablesResource = HashMap<String, ConsumableEntityData>;
+pub type SoundsConfig = HashMap<String, String>;

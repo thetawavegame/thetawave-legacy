@@ -28,8 +28,8 @@ pub mod states;
 pub mod systems;
 
 use resources::{
-    ConsumablesResource, DebugLinesConfig, EnemiesResource, ItemsResource, SpriteSheetsConfig,
-    ThrustersResource,
+    ConsumablesResource, DebugLinesConfig, EnemiesResource, ItemsResource, SoundsConfig,
+    SpriteSheetsConfig, ThrustersResource,
 };
 use states::MainGameState;
 
@@ -39,27 +39,28 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
-    let assets_path = app_root.join("assets");
     let config_path = app_root.join("config");
+    let data_path = app_root.join("assets").join("data");
 
     let display_config_path = config_path.join("display_config_960.ron");
     let bindings_path = config_path.join("bindings_config.ron");
 
-    let debug_lines = <DebugLinesConfig as Config>::load(config_path.join("debug_lines.ron"))
-        .expect("failed to load configuration file: debug_lines.ron");
+    let debug_lines =
+        <DebugLinesConfig as Config>::load(config_path.join("debug_lines_config.ron"))
+            .expect("failed to load configuration file: debug_lines_config.ron");
     let spritesheets =
         <SpriteSheetsConfig as Config>::load(config_path.join("spritesheets_config.ron"))
-            .expect("failed to load config/spritesheets.ron");
-    let items = <ItemsResource as Config>::load(assets_path.join("data").join("items.ron"))
-        .expect("failed to load game data");
-    let enemies = <EnemiesResource as Config>::load(assets_path.join("data").join("enemies.ron"))
-        .expect("failed to load game data");
-    let thrusters =
-        <ThrustersResource as Config>::load(assets_path.join("data").join("thrusters.ron"))
-            .expect("failed to load game data");
-    let consumables =
-        <ConsumablesResource as Config>::load(assets_path.join("data").join("consumables.ron"))
-            .expect("failed to load game data");
+            .expect("failed to load configuration file: spritesheets_config.ron");
+    let sounds = <SoundsConfig as Config>::load(config_path.join("sounds_config.ron"))
+        .expect("failed to load configuration file: sounds_config.ron");
+    let items = <ItemsResource as Config>::load(data_path.join("items.ron"))
+        .expect("failed to load data file: items.ron");
+    let enemies = <EnemiesResource as Config>::load(data_path.join("enemies.ron"))
+        .expect("failed to load data file: enemies.ron");
+    let thrusters = <ThrustersResource as Config>::load(data_path.join("thrusters.ron"))
+        .expect("failed to load data file: thrusters.ron");
+    let consumables = <ConsumablesResource as Config>::load(data_path.join("consumables.ron"))
+        .expect("failed to load data file: consumables.ron");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])
@@ -79,12 +80,13 @@ fn main() -> amethyst::Result<()> {
                 .with_plugin(RenderDebugLines::default()),
         )?;
 
-    let mut game = Application::build(assets_path, MainGameState::default())?
+    let mut game = Application::build(app_root.join("assets"), MainGameState::default())?
         .with_resource(items)
         .with_resource(enemies)
         .with_resource(thrusters)
         .with_resource(consumables)
         .with_resource(spritesheets)
+        .with_resource(sounds)
         .with_resource(debug_lines)
         .build(game_data)?;
 

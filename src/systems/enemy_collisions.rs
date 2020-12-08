@@ -57,7 +57,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
             // Is the enemy colliding with an entity with a spaceship component?
             if let Some(spaceship) = spaceships.get(event.colliding_entity) {
                 play_audio_channel.single_write(PlayAudioEvent {
-                    source: sounds.crash_sfx.clone(),
+                    source: sounds.sound_effects["metal_crash"].clone(),
                 });
 
                 let enemy = enemies.get_mut(event.enemy_entity).unwrap();
@@ -186,7 +186,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                             .expect("unable to delete entity");
 
                         play_audio_channel.single_write(PlayAudioEvent {
-                            source: sounds.spaceship_hit_sfx.clone(),
+                            source: sounds.sound_effects["metal_ping"].clone(),
                         });
 
                         spawn_blast_explosion(

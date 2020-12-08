@@ -76,7 +76,7 @@ impl<'s> System<'s> for StoreSystem {
                         ))
                 {
                     play_audio_channel.single_write(PlayAudioEvent {
-                        source: sounds.cash_register_bell_sfx.clone(),
+                        source: sounds.sound_effects["cash_register_bell"].clone(),
                     });
                 }
             }
