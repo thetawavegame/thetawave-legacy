@@ -10,7 +10,7 @@ use amethyst::{
     input::{InputBundle, StringBindings},
     prelude::*,
     renderer::{
-        plugins::{RenderFlat2D, RenderFlat3D, RenderToWindow},
+        plugins::{RenderDebugLines, RenderFlat2D, RenderFlat3D, RenderToWindow},
         types::DefaultBackend,
         RenderingBundle,
     },
@@ -27,7 +27,9 @@ pub mod resources;
 pub mod states;
 pub mod systems;
 
-use resources::{ConsumablePool, EnemyPool, ItemPool, SpriteSheetsConfig, ThrusterPool};
+use resources::{
+    ConsumablePool, DebugLinesConfig, EnemyPool, ItemPool, SpriteSheetsConfig, ThrusterPool,
+};
 use states::MainGameState;
 
 use amethyst::config::Config;
@@ -42,6 +44,8 @@ fn main() -> amethyst::Result<()> {
     let display_config_path = config_path.join("display_config_960.ron");
     let bindings_path = config_path.join("bindings_config.ron");
 
+    let debug_lines = <DebugLinesConfig as Config>::load(config_path.join("debug_lines.ron"))
+        .expect("failed to load configuration file: debug_lines.ron");
     let spritesheets =
         <SpriteSheetsConfig as Config>::load(config_path.join("spritesheets_config.ron"))
             .expect("failed to load config/spritesheets.ron");
@@ -69,7 +73,8 @@ fn main() -> amethyst::Result<()> {
                 )
                 .with_plugin(RenderFlat3D::default())
                 .with_plugin(RenderFlat2D::default())
-                .with_plugin(RenderUi::default()),
+                .with_plugin(RenderUi::default())
+                .with_plugin(RenderDebugLines::default()),
         )?;
 
     let mut game = Application::build(assets_path, MainGameState::default())?
@@ -78,6 +83,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(thrusters)
         .with_resource(consumables)
         .with_resource(spritesheets)
+        .with_resource(debug_lines)
         .build(game_data)?;
 
     game.run();

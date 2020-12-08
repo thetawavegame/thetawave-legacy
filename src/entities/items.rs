@@ -31,8 +31,7 @@ pub fn spawn_item(
     let hitbox_component = Hitbox2DComponent {
         width: 14.0,
         height: 14.0,
-        offset_x: 0.0,
-        offset_y: 0.0,
+        offset: Vector2::new(0.0, 0.0),
         offset_rotation: 0.0,
     };
 

@@ -8,7 +8,7 @@ use crate::{
         initialize_defense, initialize_enemy_spawner, initialize_gamemaster, initialize_planet,
         initialize_side_panels, initialize_spaceship, initialize_status_bars, initialize_store,
     },
-    resources::{SpriteSheets, SpriteSheetsConfig},
+    resources::{DebugLinesConfig, SpriteSheets, SpriteSheetsConfig},
     states::PausedState,
     systems,
 };
@@ -18,6 +18,7 @@ use amethyst::{
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     input::{is_key_down, VirtualKeyCode},
     prelude::*,
+    renderer::debug_drawing::{DebugLines, DebugLinesParams},
     renderer::formats::texture::ImageFormat,
     renderer::{Camera, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform},
@@ -167,6 +168,16 @@ impl SimpleState for MainGameState {
         initialize_side_panels(world, spritesheets.spritesheets["side_panels"].clone());
         initialize_store(world);
         initialise_camera(world);
+
+        world.insert(DebugLines::new());
+        let debug_lines_params = {
+            let debug_lines_config = world.read_resource::<DebugLinesConfig>();
+
+            DebugLinesParams {
+                line_width: debug_lines_config.line_width,
+            }
+        };
+        world.insert(debug_lines_params);
     }
 
     fn on_pause(&mut self, data: StateData<'_, GameData<'_, '_>>) {

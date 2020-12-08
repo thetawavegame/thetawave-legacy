@@ -2,7 +2,10 @@ use crate::components::{
     AnimationComponent, AutoFireComponent, BlasterComponent, ConsumableComponent, EnemyComponent,
     HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
-use amethyst::{assets::Handle, renderer::SpriteSheet};
+use amethyst::{
+    assets::Handle,
+    renderer::{palette::Srgba, SpriteSheet},
+};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -44,6 +47,12 @@ pub struct SpriteSheetData {
 #[derive(Clone)]
 pub struct SpriteSheets {
     pub spritesheets: HashMap<String, Handle<SpriteSheet>>,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
+pub struct DebugLinesConfig {
+    pub line_width: f32,
+    pub hitbox_color: Srgba,
 }
 
 pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;
