@@ -7,7 +7,7 @@ use crate::{
     constants::SPACESHIP_COLLISION_DAMAGE,
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
-    resources::SpriteSheets,
+    resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::transform::Transform,
@@ -143,7 +143,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
-        ReadExpect<'s, SpriteSheets>,
+        ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,

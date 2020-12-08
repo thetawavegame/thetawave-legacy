@@ -6,13 +6,13 @@ use amethyst::{
 };
 
 use crate::entities::spawn_enemy;
-use crate::{components::RepeaterComponent, constants, resources::EnemyPool};
+use crate::{components::RepeaterComponent, constants, resources::EnemiesResource};
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(
     entities: &Entities,
     sprite_sheet: Handle<SpriteSheet>,
-    enemy_pool: &ReadExpect<EnemyPool>,
+    enemy_pool: &ReadExpect<EnemiesResource>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let body_position = Vector3::new(

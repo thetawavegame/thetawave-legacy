@@ -1,7 +1,7 @@
 use crate::{
     components::{AnimationComponent, AnimationType, BlastType, TimeLimitComponent},
     constants::EXPLOSION_Z,
-    resources::SpriteSheets,
+    resources::SpriteSheetsResource,
 };
 use amethyst::{
     assets::Handle,
@@ -12,7 +12,7 @@ use amethyst::{
 
 pub fn spawn_explosion(
     entities: &Entities,
-    sprite_resource: &ReadExpect<SpriteSheets>,
+    sprite_resource: &ReadExpect<SpriteSheetsResource>,
     sprite_number: usize,
     spawn_position: &Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,

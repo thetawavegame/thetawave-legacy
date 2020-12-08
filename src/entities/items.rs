@@ -1,6 +1,6 @@
 use crate::{
     components::{Hitbox2DComponent, Motion2DComponent},
-    resources::{ItemEntityData, SpriteSheets},
+    resources::{ItemEntityData, SpriteSheetsResource},
 };
 use amethyst::{
     core::{
@@ -14,7 +14,7 @@ use amethyst::{
 
 pub fn spawn_item(
     entities: &Entities,
-    item_resource: &ReadExpect<SpriteSheets>,
+    item_resource: &ReadExpect<SpriteSheetsResource>,
     item: ItemEntityData,
     spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,

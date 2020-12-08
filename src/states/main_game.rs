@@ -8,7 +8,7 @@ use crate::{
         initialize_defense, initialize_enemy_spawner, initialize_gamemaster, initialize_planet,
         initialize_side_panels, initialize_spaceship, initialize_status_bars, initialize_store,
     },
-    resources::{DebugLinesConfig, SpriteSheets, SpriteSheetsConfig},
+    resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
     states::PausedState,
     systems,
 };
@@ -220,7 +220,7 @@ impl SimpleState for MainGameState {
     }
 }
 
-fn init_spritesheets(world: &mut World) -> SpriteSheets {
+fn init_spritesheets(world: &mut World) -> SpriteSheetsResource {
     let mut spritesheets = HashMap::new();
     {
         let spritesheets_config = world.read_resource::<SpriteSheetsConfig>();
@@ -248,7 +248,7 @@ fn init_spritesheets(world: &mut World) -> SpriteSheets {
             spritesheets.insert(spritesheet_name.clone(), spritesheet_handle);
         }
     }
-    let spritesheets = SpriteSheets { spritesheets };
+    let spritesheets = SpriteSheetsResource { spritesheets };
     world.insert(spritesheets.clone());
     spritesheets
 }

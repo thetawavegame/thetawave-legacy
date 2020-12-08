@@ -28,7 +28,8 @@ pub mod states;
 pub mod systems;
 
 use resources::{
-    ConsumablePool, DebugLinesConfig, EnemyPool, ItemPool, SpriteSheetsConfig, ThrusterPool,
+    ConsumablesResource, DebugLinesConfig, EnemiesResource, ItemsResource, SpriteSheetsConfig,
+    ThrustersResource,
 };
 use states::MainGameState;
 
@@ -49,14 +50,15 @@ fn main() -> amethyst::Result<()> {
     let spritesheets =
         <SpriteSheetsConfig as Config>::load(config_path.join("spritesheets_config.ron"))
             .expect("failed to load config/spritesheets.ron");
-    let items = <ItemPool as Config>::load(assets_path.join("data").join("items.ron"))
+    let items = <ItemsResource as Config>::load(assets_path.join("data").join("items.ron"))
         .expect("failed to load game data");
-    let enemies = <EnemyPool as Config>::load(assets_path.join("data").join("enemies.ron"))
+    let enemies = <EnemiesResource as Config>::load(assets_path.join("data").join("enemies.ron"))
         .expect("failed to load game data");
-    let thrusters = <ThrusterPool as Config>::load(assets_path.join("data").join("thrusters.ron"))
-        .expect("failed to load game data");
+    let thrusters =
+        <ThrustersResource as Config>::load(assets_path.join("data").join("thrusters.ron"))
+            .expect("failed to load game data");
     let consumables =
-        <ConsumablePool as Config>::load(assets_path.join("data").join("consumables.ron"))
+        <ConsumablesResource as Config>::load(assets_path.join("data").join("consumables.ron"))
             .expect("failed to load game data");
 
     let game_data = GameDataBuilder::default()

@@ -2,7 +2,7 @@ use crate::{
     components::{ConsumableComponent, SpaceshipComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ITEM_SPAWN_Y_OFFSET},
     entities::spawn_item,
-    resources::{ItemEntityData, ItemPool, SpriteSheets},
+    resources::{ItemEntityData, ItemsResource, SpriteSheetsResource},
 };
 use amethyst::{
     core::{math::Vector3, transform::Transform},
@@ -29,7 +29,7 @@ impl Component for StoreComponent {
 }
 
 impl StoreComponent {
-    pub fn choose_item_stock(&mut self, item_pool: ItemPool) {
+    pub fn choose_item_stock(&mut self, item_pool: ItemsResource) {
         self.item_inventory = [None, None, None];
         let mut choose_pool = self.items.clone();
 
@@ -62,9 +62,9 @@ impl StoreComponent {
     pub fn restock(
         &mut self,
         dt: f32,
-        item_pool: ItemPool,
+        item_pool: ItemsResource,
         entities: &Entities,
-        sprite_resource: &ReadExpect<SpriteSheets>,
+        sprite_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) {
         if self.restock_timer > 0.0 {
@@ -102,7 +102,7 @@ impl StoreComponent {
         item_index: usize,
         entities: &Entities,
         spaceship: &mut SpaceshipComponent,
-        sprite_resource: &ReadExpect<SpriteSheets>,
+        sprite_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
         if let Some(item) = &self.item_inventory[item_index] {
@@ -141,7 +141,7 @@ impl StoreComponent {
     pub fn spawn_store_icon(
         &mut self,
         entities: &Entities,
-        sprite_resource: &ReadExpect<SpriteSheets>,
+        sprite_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
         index: f32,
         sprite_index: usize,

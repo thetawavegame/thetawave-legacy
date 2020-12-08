@@ -45,7 +45,7 @@ pub struct SpriteSheetData {
 }
 
 #[derive(Clone)]
-pub struct SpriteSheets {
+pub struct SpriteSheetsResource {
     pub spritesheets: HashMap<String, Handle<SpriteSheet>>,
 }
 
@@ -56,7 +56,7 @@ pub struct DebugLinesConfig {
 }
 
 pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;
-pub type EnemyPool = HashMap<String, EnemyEntityData>;
-pub type ThrusterPool = HashMap<String, ThrusterEntityData>;
-pub type ItemPool = HashMap<String, ItemEntityData>;
-pub type ConsumablePool = HashMap<String, ConsumableEntityData>;
+pub type EnemiesResource = HashMap<String, EnemyEntityData>;
+pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
+pub type ItemsResource = HashMap<String, ItemEntityData>;
+pub type ConsumablesResource = HashMap<String, ConsumableEntityData>;

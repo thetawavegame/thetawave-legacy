@@ -2,7 +2,7 @@ use crate::{
     audio::Sounds,
     components::{SpaceshipComponent, StoreComponent},
     events::PlayAudioEvent,
-    resources::{ItemPool, SpriteSheets},
+    resources::{ItemsResource, SpriteSheetsResource},
 };
 use amethyst::{
     core::timing::Time,
@@ -16,9 +16,9 @@ pub struct StoreSystem;
 impl<'s> System<'s> for StoreSystem {
     type SystemData = (
         Entities<'s>,
-        ReadExpect<'s, SpriteSheets>,
+        ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
-        ReadExpect<'s, ItemPool>,
+        ReadExpect<'s, ItemsResource>,
         WriteStorage<'s, StoreComponent>,
         Read<'s, Time>,
         Read<'s, InputHandler<StringBindings>>,

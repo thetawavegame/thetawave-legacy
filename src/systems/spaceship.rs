@@ -5,7 +5,7 @@ use crate::{
         SpaceshipComponent,
     },
     events::{ItemGetEvent, PlayAudioEvent},
-    resources::SpriteSheets,
+    resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::{timing::Time, Transform},
@@ -31,7 +31,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         WriteStorage<'s, ManualFireComponent>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
-        ReadExpect<'s, SpriteSheets>,
+        ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, EventChannel<ItemGetEvent>>,
         Write<'s, EventChannel<PlayAudioEvent>>,

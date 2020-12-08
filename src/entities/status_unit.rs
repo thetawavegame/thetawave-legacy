@@ -1,4 +1,4 @@
-use crate::resources::SpriteSheets;
+use crate::resources::SpriteSheetsResource;
 use amethyst::{
     core::{math::Vector3, transform::Transform},
     ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
@@ -7,7 +7,7 @@ use amethyst::{
 
 pub fn spawn_status_unit(
     entities: &Entities,
-    sprite_resource: &ReadExpect<SpriteSheets>,
+    sprite_resource: &ReadExpect<SpriteSheetsResource>,
     sprite_number: usize,
     spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
