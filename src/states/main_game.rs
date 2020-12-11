@@ -256,7 +256,6 @@ fn init_spritesheets(world: &mut World) -> SpriteSheetsResource {
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
     transform.set_translation_xyz(CAMERA_X, CAMERA_Y, CAMERA_Z);
-    transform.set_rotation_euler(0.0, 0.0, 0.0);
 
     world
         .create_entity()

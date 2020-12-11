@@ -44,20 +44,21 @@ pub struct SpriteSheetData {
     pub data: String,
 }
 
+pub type EnemiesResource = HashMap<String, EnemyEntityData>;
+pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
+pub type ItemsResource = HashMap<String, ItemEntityData>;
+pub type ConsumablesResource = HashMap<String, ConsumableEntityData>;
+
 #[derive(Clone)]
 pub struct SpriteSheetsResource {
     pub spritesheets: HashMap<String, Handle<SpriteSheet>>,
 }
+
+pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;
+pub type SoundsConfig = HashMap<String, String>;
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct DebugLinesConfig {
     pub line_width: f32,
     pub hitbox_color: Srgba,
 }
-
-pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;
-pub type EnemiesResource = HashMap<String, EnemyEntityData>;
-pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
-pub type ItemsResource = HashMap<String, ItemEntityData>;
-pub type ConsumablesResource = HashMap<String, ConsumableEntityData>;
-pub type SoundsConfig = HashMap<String, String>;
