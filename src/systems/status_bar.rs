@@ -4,7 +4,7 @@ use crate::{
         StoreComponent,
     },
     entities::spawn_status_unit,
-    resources::SpriteResource,
+    resources::SpriteSheetsResource,
 };
 use amethyst::ecs::prelude::{
     Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage,
@@ -25,7 +25,7 @@ impl<'s> System<'s> for StatusBarSystem {
         ReadStorage<'s, DefenseTag>,
         ReadStorage<'s, HealthComponent>,
         ReadStorage<'s, StoreComponent>,
-        ReadExpect<'s, SpriteResource>,
+        ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
     );
 

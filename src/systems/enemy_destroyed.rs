@@ -3,7 +3,7 @@ use crate::{
     components::{choose_random_name, EnemyComponent},
     entities::{spawn_consumable, spawn_explosion},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
-    resources::{ConsumableEntityData, SpriteResource},
+    resources::{ConsumableEntityData, SpriteSheetsResource},
 };
 use amethyst::{
     core::transform::Transform,
@@ -26,7 +26,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, EnemyComponent>,
         ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
-        ReadExpect<'s, SpriteResource>,
+        ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,

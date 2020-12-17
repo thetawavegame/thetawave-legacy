@@ -2,13 +2,12 @@ use crate::components::{
     AnimationComponent, AutoFireComponent, BlasterComponent, ConsumableComponent, EnemyComponent,
     HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
-use amethyst::renderer::palette::Srgba;
+use amethyst::{
+    assets::Handle,
+    renderer::{palette::Srgba, SpriteSheet},
+};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-
-mod sprite;
-
-pub use self::sprite::{initialize_sprite_resource, SpriteResource};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
@@ -39,14 +38,27 @@ pub struct ConsumableEntityData {
     pub hitbox_component: Hitbox2DComponent,
 }
 
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct SpriteSheetData {
+    pub image: String,
+    pub data: String,
+}
+
+pub type EnemiesResource = HashMap<String, EnemyEntityData>;
+pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
+pub type ItemsResource = HashMap<String, ItemEntityData>;
+pub type ConsumablesResource = HashMap<String, ConsumableEntityData>;
+
+#[derive(Clone)]
+pub struct SpriteSheetsResource {
+    pub spritesheets: HashMap<String, Handle<SpriteSheet>>,
+}
+
+pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;
+pub type SoundsConfig = HashMap<String, String>;
+
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct DebugLinesConfig {
     pub line_width: f32,
     pub hitbox_color: Srgba,
 }
-
-pub type SoundsData = HashMap<String, String>;
-pub type EnemyPool = HashMap<String, EnemyEntityData>;
-pub type ThrusterPool = HashMap<String, ThrusterEntityData>;
-pub type ItemPool = HashMap<String, ItemEntityData>;
-pub type ConsumablePool = HashMap<String, ConsumableEntityData>;

@@ -1,4 +1,4 @@
-use crate::resources::{ConsumableEntityData, SpriteResource};
+use crate::resources::{ConsumableEntityData, SpriteSheetsResource};
 use amethyst::{
     core::{math::Vector3, transform::Transform},
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
@@ -7,13 +7,13 @@ use amethyst::{
 
 pub fn spawn_consumable(
     entities: &Entities,
-    sprite_resource: &ReadExpect<SpriteResource>,
+    sprite_resource: &ReadExpect<SpriteSheetsResource>,
     consumable: ConsumableEntityData,
     spawn_position: &Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let sprite_render = SpriteRender {
-        sprite_sheet: sprite_resource.consumables_sprite_sheet.clone(),
+        sprite_sheet: sprite_resource.spritesheets["consumables"].clone(),
         sprite_number: consumable.consumable_component.sprite_index,
     };
 

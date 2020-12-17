@@ -1,6 +1,6 @@
 use crate::{
     components::{AutoFireComponent, BlasterComponent, Motion2DComponent},
-    resources::SpriteResource,
+    resources::SpriteSheetsResource,
 };
 
 use amethyst::{
@@ -21,7 +21,7 @@ impl<'s> System<'s> for AutoFireSystem {
         ReadStorage<'s, BlasterComponent>,
         WriteStorage<'s, AutoFireComponent>,
         ReadStorage<'s, Motion2DComponent>,
-        ReadExpect<'s, SpriteResource>,
+        ReadExpect<'s, SpriteSheetsResource>,
     );
 
     fn run(

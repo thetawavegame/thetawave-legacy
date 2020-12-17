@@ -8,11 +8,12 @@ use crate::{
         initialize_defense, initialize_enemy_spawner, initialize_gamemaster, initialize_planet,
         initialize_side_panels, initialize_spaceship, initialize_status_bars, initialize_store,
     },
-    resources::{initialize_sprite_resource, DebugLinesConfig},
+    resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
+    states::PausedState,
     systems,
 };
 use amethyst::{
-    assets::{AssetStorage, Handle, Loader},
+    assets::{AssetStorage, Loader},
     core::transform::Transform,
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     input::{is_key_down, VirtualKeyCode},
@@ -22,17 +23,17 @@ use amethyst::{
     renderer::{Camera, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
     ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform},
 };
-use std::f32::consts::FRAC_PI_3;
+use std::{collections::HashMap, f32::consts::FRAC_PI_3};
 
-pub struct SpaceShooter {
+pub struct MainGameState {
     is_paused: bool,
     pause_display: Option<Entity>,
     dispatcher: Dispatcher<'static, 'static>,
 }
 
-impl Default for SpaceShooter {
+impl Default for MainGameState {
     fn default() -> Self {
-        SpaceShooter {
+        MainGameState {
             is_paused: false,
             pause_display: None,
             dispatcher: DispatcherBuilder::new()
@@ -130,50 +131,10 @@ impl Default for SpaceShooter {
     }
 }
 
-impl SimpleState for SpaceShooter {
+impl SimpleState for MainGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
-        //let background_sprite_sheet_handle = load_spritesheet(world, "earth_planet_background.png", "earth_planet_background.ron");
-        let side_panel_sprite_sheet_handle = load_spritesheet(
-            world,
-            "side_panel_spritesheet.png",
-            "side_panel_spritesheet.ron",
-        );
-        let items_sprite_sheet_handle =
-            load_spritesheet(world, "items_spritesheet.png", "items_spritesheet.ron");
-        let consumables_sprite_sheet_handle = load_spritesheet(
-            world,
-            "consumables_spritesheet.png",
-            "consumables_spritesheet.ron",
-        );
-        let status_bar_unit_sprite_sheet_handle = load_spritesheet(
-            world,
-            "status_bar_unit_spritesheet.png",
-            "status_bar_unit_spritesheet.ron",
-        );
-        let enemies_sprite_sheet_handle =
-            load_spritesheet(world, "enemies_spritesheet.png", "enemies_spritesheet.ron");
-        let players_sprite_sheet_handle =
-            load_spritesheet(world, "player_spritesheet.png", "player_spritesheet.ron");
-        let blasts_sprite_sheet_handle =
-            load_spritesheet(world, "blasts_spritesheet.png", "blasts_spritesheet.ron");
-        let explosions_sprite_sheet_handle = load_spritesheet(
-            world,
-            "explosions_spritesheet.png",
-            "explosions_spritesheet.ron",
-        );
-        let repeater_sprite_sheet_handle = load_spritesheet(
-            world,
-            "repeater_spritesheet.png",
-            "repeater_spritesheet.ron",
-        );
-        let blast_explosions_sprite_sheet_handle =
-            load_spritesheet(world, "blast_explosions.png", "blast_explosions.ron");
-        let thrusters_sprite_sheet_handle = load_spritesheet(
-            world,
-            "thrusters_spritesheet.png",
-            "thrusters_spritesheet.ron",
-        );
+        let spritesheets = init_spritesheets(world);
 
         self.dispatcher.setup(world);
 
@@ -202,22 +163,9 @@ impl SimpleState for SpaceShooter {
             0.0,
             0.005,
         );
-        initialize_spaceship(world, players_sprite_sheet_handle.clone());
-        initialize_sprite_resource(
-            world,
-            items_sprite_sheet_handle,
-            consumables_sprite_sheet_handle,
-            status_bar_unit_sprite_sheet_handle,
-            enemies_sprite_sheet_handle,
-            players_sprite_sheet_handle,
-            blasts_sprite_sheet_handle,
-            explosions_sprite_sheet_handle,
-            repeater_sprite_sheet_handle,
-            blast_explosions_sprite_sheet_handle,
-            thrusters_sprite_sheet_handle,
-        );
+        initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
         initialize_enemy_spawner(world);
-        initialize_side_panels(world, side_panel_sprite_sheet_handle);
+        initialize_side_panels(world, spritesheets.spritesheets["side_panels"].clone());
         initialize_store(world);
         initialise_camera(world);
 
@@ -272,53 +220,42 @@ impl SimpleState for SpaceShooter {
     }
 }
 
-pub struct PausedState;
+fn init_spritesheets(world: &mut World) -> SpriteSheetsResource {
+    let mut spritesheets = HashMap::new();
+    {
+        let spritesheets_config = world.read_resource::<SpriteSheetsConfig>();
+        for (spritesheet_name, spritesheet_data) in spritesheets_config.iter() {
+            let texture_handle = {
+                let loader = world.read_resource::<Loader>();
+                let texture_storage = world.read_resource::<AssetStorage<Texture>>();
+                loader.load(
+                    format!("texture/{}", spritesheet_data.image),
+                    ImageFormat::default(),
+                    (),
+                    &texture_storage,
+                )
+            };
 
-impl SimpleState for PausedState {
-    fn handle_event(
-        &mut self,
-        _data: StateData<'_, GameData<'_, '_>>,
-        event: StateEvent,
-    ) -> SimpleTrans {
-        if let StateEvent::Window(event) = &event {
-            if is_key_down(&event, VirtualKeyCode::Escape) {
-                return Trans::Pop;
-            }
+            let loader = world.read_resource::<Loader>();
+            let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
+            let spritesheet_handle = loader.load(
+                format!("texture/{}", spritesheet_data.data),
+                SpriteSheetFormat(texture_handle),
+                (),
+                &sprite_sheet_store,
+            );
+
+            spritesheets.insert(spritesheet_name.clone(), spritesheet_handle);
         }
-        Trans::None
     }
-}
-
-fn load_spritesheet(
-    world: &mut World,
-    spritesheet: &str,
-    spritesheet_ron: &str,
-) -> Handle<SpriteSheet> {
-    let texture_handle = {
-        let loader = world.read_resource::<Loader>();
-        let texture_storage = world.read_resource::<AssetStorage<Texture>>();
-        loader.load(
-            format!("texture/{}", spritesheet),
-            ImageFormat::default(),
-            (),
-            &texture_storage,
-        )
-    };
-
-    let loader = world.read_resource::<Loader>();
-    let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
-    loader.load(
-        format!("texture/{}", spritesheet_ron),
-        SpriteSheetFormat(texture_handle),
-        (),
-        &sprite_sheet_store,
-    )
+    let spritesheets = SpriteSheetsResource { spritesheets };
+    world.insert(spritesheets.clone());
+    spritesheets
 }
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
     transform.set_translation_xyz(CAMERA_X, CAMERA_Y, CAMERA_Z);
-    transform.set_rotation_euler(0.0, 0.0, 0.0);
 
     world
         .create_entity()

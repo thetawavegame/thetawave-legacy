@@ -1,4 +1,4 @@
-use crate::resources::SoundsData;
+use crate::resources::SoundsConfig;
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
     audio::{output::Output, OggFormat, Source, SourceHandle},
@@ -18,7 +18,7 @@ fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle 
 pub fn initialize_audio(world: &mut World) {
     let sound_effects = {
         let loader = world.read_resource::<Loader>();
-        let sound_data = world.read_resource::<SoundsData>();
+        let sound_data = world.read_resource::<SoundsConfig>();
 
         let mut sound_effects = HashMap::new();
 
