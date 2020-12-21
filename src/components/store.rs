@@ -102,6 +102,7 @@ impl StoreComponent {
         item_index: usize,
         entities: &Entities,
         spaceship: &mut SpaceshipComponent,
+        transform: &Transform,
         sprite_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
@@ -116,7 +117,11 @@ impl StoreComponent {
                     entities,
                     sprite_resource,
                     item.clone(),
-                    Vector3::new(spaceship.pos_x, ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET, 0.0),
+                    Vector3::new(
+                        transform.translation().x,
+                        ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
+                        0.0,
+                    ),
                     lazy_update,
                 );
                 for (i, itm) in self.items.iter().enumerate() {

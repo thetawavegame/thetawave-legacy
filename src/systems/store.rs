@@ -5,8 +5,8 @@ use crate::{
     resources::{ItemsResource, SpriteSheetsResource},
 };
 use amethyst::{
-    core::timing::Time,
-    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, Write, WriteStorage},
+    core::{timing::Time, Transform},
+    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
     shrev::EventChannel,
 };
@@ -23,6 +23,7 @@ impl<'s> System<'s> for StoreSystem {
         Read<'s, Time>,
         Read<'s, InputHandler<StringBindings>>,
         WriteStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, Transform>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
@@ -38,6 +39,7 @@ impl<'s> System<'s> for StoreSystem {
             time,
             input,
             mut spaceships,
+            transforms,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
@@ -55,14 +57,22 @@ impl<'s> System<'s> for StoreSystem {
                 &lazy_update,
             );
 
-            for spaceship in (&mut spaceships).join() {
+            for (spaceship, transform) in (&mut spaceships, &transforms).join() {
                 if (buy_0_action
-                    && store.purchase_item(0, &entities, spaceship, &sprite_resource, &lazy_update))
+                    && store.purchase_item(
+                        0,
+                        &entities,
+                        spaceship,
+                        transform,
+                        &sprite_resource,
+                        &lazy_update,
+                    ))
                     || (buy_1_action
                         && store.purchase_item(
                             1,
                             &entities,
                             spaceship,
+                            transform,
                             &sprite_resource,
                             &lazy_update,
                         ))
@@ -71,6 +81,7 @@ impl<'s> System<'s> for StoreSystem {
                             2,
                             &entities,
                             spaceship,
+                            transform,
                             &sprite_resource,
                             &lazy_update,
                         ))
