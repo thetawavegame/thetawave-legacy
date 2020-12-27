@@ -1,10 +1,9 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlastComponent, BlastType, EnemyComponent, HealthComponent, Motion2DComponent,
-        SpaceshipComponent,
+        BlastComponent, BlastType, CharacterComponent, EnemyComponent, HealthComponent,
+        Motion2DComponent,
     },
-    constants::SPACESHIP_COLLISION_DAMAGE,
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
     resources::SpriteSheetsResource,
@@ -24,7 +23,7 @@ pub struct EnemyPlayerCollisionSystem {
 impl<'s> System<'s> for EnemyPlayerCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
-        ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, CharacterComponent>,
         WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
@@ -45,7 +44,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
         &mut self,
         (
             enemy_collision_event_channel,
-            spaceships,
+            characters,
             mut enemies,
             mut motions,
             mut healths,
@@ -55,7 +54,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
     ) {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the enemy colliding with an entity with a spaceship component?
-            if let Some(spaceship) = spaceships.get(event.colliding_entity) {
+            if let Some(character) = characters.get(event.colliding_entity) {
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["metal_crash"].clone(),
                 });
@@ -72,7 +71,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                     && enemy.name != "repeater_left_arm"
                 {
                     if let Some(velocity) = event.collision_velocity {
-                        enemy_health.value -= spaceship.collision_damage;
+                        enemy_health.value -= character.collision_damage;
                         enemy_motion.velocity.x = -enemy_motion.velocity.x + velocity.x;
                         enemy_motion.velocity.y = -enemy_motion.velocity.y + velocity.y;
                     }
@@ -91,7 +90,7 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
         Entities<'s>,
-        WriteStorage<'s, EnemyComponent>,
+        ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
     );
@@ -107,19 +106,19 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
 
     fn run(
         &mut self,
-        (enemy_collision_event_channel, entities, mut enemies, mut motions, mut healths): Self::SystemData,
+        (enemy_collision_event_channel, entities, enemies, mut motions, mut healths): Self::SystemData,
     ) {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            if let Some(_colliding_enemy) = enemies.get(event.colliding_entity) {
+            if let Some(colliding_enemy) = enemies.get(event.colliding_entity) {
                 for (enemy, enemy_motion, enemy_health, enemy_entity) in
-                    (&mut enemies, &mut motions, &mut healths, &entities).join()
+                    (&enemies, &mut motions, &mut healths, &entities).join()
                 {
                     if enemy_entity == event.enemy_entity
                         && enemy.name != "repeater_body"
                         && enemy.name != "repeater_head"
                     {
                         if let Some(velocity) = event.collision_velocity {
-                            enemy_health.value -= SPACESHIP_COLLISION_DAMAGE;
+                            enemy_health.value -= colliding_enemy.collision_damage;
                             enemy_motion.velocity.x = velocity.x;
                             enemy_motion.velocity.y = velocity.y;
                         }

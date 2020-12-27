@@ -31,7 +31,7 @@ pub use self::{
     item::ItemComponent,
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
-    spaceship::SpaceshipComponent,
+    spaceship::{CharacterComponent, SpaceshipComponent},
     spawner::{choose_random_name, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
     store::StoreComponent,

@@ -1,8 +1,8 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlastComponent, BlastType, ConsumableComponent, DefenseTag, EnemyComponent,
-        HealthComponent, ItemComponent, Motion2DComponent, SpaceshipComponent,
+        BlastComponent, BlastType, CharacterComponent, ConsumableComponent, DefenseTag,
+        EnemyComponent, HealthComponent, ItemComponent, Motion2DComponent, SpaceshipComponent,
     },
     entities::spawn_blast_explosion,
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
@@ -207,6 +207,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Entities<'s>,
         ReadStorage<'s, ConsumableComponent>,
         WriteStorage<'s, SpaceshipComponent>,
+        WriteStorage<'s, CharacterComponent>,
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -229,6 +230,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             entities,
             consumables,
             mut spaceships,
+            mut characters,
             defense_tags,
             mut healths,
             mut play_audio_channel,
@@ -240,10 +242,11 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             if let Some(consumable) = consumables.get(event.colliding_entity) {
                 let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
+                let character = characters.get_mut(event.player_entity).unwrap();
 
                 spaceship_health.value += consumable.health_value;
                 spaceship_health.armor += consumable.armor_value;
-                spaceship.money += consumable.money_value;
+                character.money += consumable.money_value;
                 for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
                     defense_health.value += consumable.defense_value;
                 }

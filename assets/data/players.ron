@@ -1,0 +1,8 @@
+{
+    "juggernaut": (
+        character_component: (
+            money: 50,
+            collision_damage: 50.0, 
+        )
+    )
+}

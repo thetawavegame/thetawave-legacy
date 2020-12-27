@@ -28,8 +28,8 @@ pub mod states;
 pub mod systems;
 
 use resources::{
-    ConsumablesResource, DebugLinesConfig, EnemiesResource, ItemsResource, SoundsConfig,
-    SpriteSheetsConfig, ThrustersResource,
+    ConsumablesResource, DebugLinesConfig, EnemiesResource, ItemsResource, PlayersResource,
+    SoundsConfig, SpriteSheetsConfig, ThrustersResource,
 };
 use states::MainGameState;
 
@@ -61,6 +61,8 @@ fn main() -> amethyst::Result<()> {
         .expect("failed to load data file: thrusters.ron");
     let consumables = <ConsumablesResource as Config>::load(data_path.join("consumables.ron"))
         .expect("failed to load data file: consumables.ron");
+    let players = <PlayersResource as Config>::load(data_path.join("players.ron"))
+        .expect("failed to load data file: players.ron");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])

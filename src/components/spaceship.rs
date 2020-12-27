@@ -6,7 +6,18 @@ use amethyst::{
     core::Transform,
     ecs::prelude::{Component, DenseVecStorage},
 };
-use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct CharacterComponent {
+    pub money: usize,
+    pub collision_damage: f32,
+}
+
+impl Component for CharacterComponent {
+    type Storage = DenseVecStorage<Self>;
+}
 
 pub struct SpaceshipComponent {
     pub barrel_cooldown: f32,
@@ -16,10 +27,7 @@ pub struct SpaceshipComponent {
     pub barrel_action_right: bool,
     pub barrel_duration: f32,
     pub barrel_action_timer: f32,
-    pub money: usize,
     pub steel_barrel: bool,
-    pub collision_damage: f32,
-    pub blast_sprite_indicies: HashMap<String, usize>,
 }
 
 impl Rigidbody for SpaceshipComponent {

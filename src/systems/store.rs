@@ -1,6 +1,6 @@
 use crate::{
     audio::Sounds,
-    components::{SpaceshipComponent, StoreComponent},
+    components::{CharacterComponent, StoreComponent},
     events::PlayAudioEvent,
     resources::{ItemsResource, SpriteSheetsResource},
 };
@@ -22,7 +22,7 @@ impl<'s> System<'s> for StoreSystem {
         WriteStorage<'s, StoreComponent>,
         Read<'s, Time>,
         Read<'s, InputHandler<StringBindings>>,
-        WriteStorage<'s, SpaceshipComponent>,
+        WriteStorage<'s, CharacterComponent>,
         ReadStorage<'s, Transform>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
@@ -38,7 +38,7 @@ impl<'s> System<'s> for StoreSystem {
             mut stores,
             time,
             input,
-            mut spaceships,
+            mut characters,
             transforms,
             mut play_audio_channel,
             sounds,
@@ -57,12 +57,12 @@ impl<'s> System<'s> for StoreSystem {
                 &lazy_update,
             );
 
-            for (spaceship, transform) in (&mut spaceships, &transforms).join() {
+            for (character, transform) in (&mut characters, &transforms).join() {
                 if (buy_0_action
                     && store.purchase_item(
                         0,
                         &entities,
-                        spaceship,
+                        character,
                         transform,
                         &sprite_resource,
                         &lazy_update,
@@ -71,7 +71,7 @@ impl<'s> System<'s> for StoreSystem {
                         && store.purchase_item(
                             1,
                             &entities,
-                            spaceship,
+                            character,
                             transform,
                             &sprite_resource,
                             &lazy_update,
@@ -80,7 +80,7 @@ impl<'s> System<'s> for StoreSystem {
                         && store.purchase_item(
                             2,
                             &entities,
-                            spaceship,
+                            character,
                             transform,
                             &sprite_resource,
                             &lazy_update,
