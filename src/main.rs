@@ -87,6 +87,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(enemies)
         .with_resource(thrusters)
         .with_resource(consumables)
+        .with_resource(players)
         .with_resource(spritesheets)
         .with_resource(sounds)
         .with_resource(debug_lines)

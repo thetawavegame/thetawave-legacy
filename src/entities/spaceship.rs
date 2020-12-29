@@ -23,7 +23,10 @@ use amethyst::{
 use std::collections::HashMap;
 
 pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
-    let players = world.read_resource::<PlayersResource>();
+    let player = {
+        let players_resource = world.read_resource::<PlayersResource>();
+        players_resource["juggernaut"].character_component.clone()
+    };
 
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(
@@ -109,6 +112,6 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         .with(health)
         .with(local_transform)
         .with(Transparent)
-        .with(players["juggernaut"].character_component)
+        .with(player)
         .build();
 }

@@ -206,7 +206,6 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
         ReadStorage<'s, ConsumableComponent>,
-        WriteStorage<'s, SpaceshipComponent>,
         WriteStorage<'s, CharacterComponent>,
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
@@ -229,7 +228,6 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             collision_event_channel,
             entities,
             consumables,
-            mut spaceships,
             mut characters,
             defense_tags,
             mut healths,
@@ -240,7 +238,6 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with an item component?
             if let Some(consumable) = consumables.get(event.colliding_entity) {
-                let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 let character = characters.get_mut(event.player_entity).unwrap();
 
