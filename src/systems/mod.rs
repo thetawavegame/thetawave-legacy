@@ -12,6 +12,7 @@ mod enemy_spawn;
 mod gamemaster;
 mod item;
 mod manualblaster_system;
+mod motion2d;
 mod planets;
 mod play_audio;
 mod spaceship;
@@ -39,6 +40,7 @@ pub use self::{
     gamemaster::GameMasterSystem,
     item::ItemSystem,
     manualblaster_system::ManualBlasterSystem,
+    motion2d::ConstrainToArenaSystem,
     planets::PlanetsSystem,
     play_audio::PlayAudioSystem,
     spaceship::SpaceshipSystem,

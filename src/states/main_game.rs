@@ -47,6 +47,11 @@ impl Default for MainGameState {
                 .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(
+                    systems::ConstrainToArenaSystem,
+                    "constrain_to_arena_system",
+                    &[],
+                )
+                .with(
                     systems::SpaceshipMovementSystem,
                     "spaceship_movement_system",
                     &[],
