@@ -1,5 +1,5 @@
 use crate::{
-    components::{HealthComponent, SpaceshipComponent, StoreComponent},
+    components::{CharacterComponent, HealthComponent, SpaceshipComponent, StoreComponent},
     states::TrackedStats,
 };
 use amethyst::{
@@ -12,16 +12,20 @@ pub struct StatTrackerSystem;
 impl<'s> System<'s> for StatTrackerSystem {
     type SystemData = (
         ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, CharacterComponent>,
         ReadStorage<'s, HealthComponent>,
         ReadStorage<'s, StoreComponent>,
         WriteStorage<'s, UiText>,
         ReadExpect<'s, TrackedStats>,
     );
 
-    fn run(&mut self, (spaceships, healths, stores, mut ui_text, tracked_stats): Self::SystemData) {
-        for spaceship in (&spaceships).join() {
+    fn run(
+        &mut self,
+        (spaceships, characters, healths, stores, mut ui_text, tracked_stats): Self::SystemData,
+    ) {
+        for character in (&characters).join() {
             if let Some(text) = ui_text.get_mut(tracked_stats.currency) {
-                text.text = format!("x{}", spaceship.money.to_string());
+                text.text = format!("x{}", character.money.to_string());
             }
         }
 
