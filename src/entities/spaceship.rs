@@ -7,11 +7,11 @@ use crate::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
         POISON_BLAST_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
         SPACESHIP_BARREL_COOLDOWN, SPACESHIP_BARREL_DURATION, SPACESHIP_BARREL_SPEED,
-        SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_COLLISION_DAMAGE, SPACESHIP_DAMAGE,
-        SPACESHIP_DECELERATION_X, SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH,
-        SPACESHIP_HITBOX_HEIGHT, SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED,
-        SPACESHIP_MAX_SPEED, SPACESHIP_MONEY,
+        SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_DAMAGE, SPACESHIP_DECELERATION_X,
+        SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT,
+        SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
     },
+    resources::PlayersResource,
 };
 use amethyst::{
     assets::Handle,
@@ -23,6 +23,11 @@ use amethyst::{
 use std::collections::HashMap;
 
 pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
+    let player = {
+        let players_resource = world.read_resource::<PlayersResource>();
+        players_resource["juggernaut"].character_component.clone()
+    };
+
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(
         ARENA_MIN_X + (ARENA_WIDTH / 2.0),
@@ -98,12 +103,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             barrel_action_left: false,
             barrel_duration: SPACESHIP_BARREL_DURATION,
             barrel_action_timer: SPACESHIP_BARREL_DURATION,
-            pos_x: local_transform.translation().x,
-            pos_y: local_transform.translation().y,
-            money: SPACESHIP_MONEY,
             steel_barrel: false,
-            collision_damage: SPACESHIP_COLLISION_DAMAGE,
-            blast_sprite_indicies,
         })
         .with(blaster)
         .with(manual_fire)
@@ -112,5 +112,6 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         .with(health)
         .with(local_transform)
         .with(Transparent)
+        .with(player)
         .build();
 }

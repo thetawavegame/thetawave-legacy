@@ -3,6 +3,7 @@ use amethyst::core::transform::Transform;
 mod animation;
 mod blast;
 mod boss;
+mod character;
 mod consumable;
 mod enemy;
 mod gamemaster;
@@ -23,6 +24,7 @@ pub use self::{
     animation::{AnimationComponent, AnimationType},
     blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,
+    character::CharacterComponent,
     consumable::ConsumableComponent,
     enemy::{EnemyComponent, EnemySpawnerTag, EnemyType},
     gamemaster::{BossType, GameMasterComponent, Phase, PhaseType},

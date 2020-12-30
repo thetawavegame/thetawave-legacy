@@ -6,7 +6,6 @@ use amethyst::{
     core::Transform,
     ecs::prelude::{Component, DenseVecStorage},
 };
-use std::collections::HashMap;
 
 pub struct SpaceshipComponent {
     pub barrel_cooldown: f32,
@@ -16,12 +15,7 @@ pub struct SpaceshipComponent {
     pub barrel_action_right: bool,
     pub barrel_duration: f32,
     pub barrel_action_timer: f32,
-    pub pos_x: f32,
-    pub pos_y: f32,
-    pub money: usize,
     pub steel_barrel: bool,
-    pub collision_damage: f32,
-    pub blast_sprite_indicies: HashMap<String, usize>,
 }
 
 impl Rigidbody for SpaceshipComponent {
@@ -67,11 +61,6 @@ impl Component for SpaceshipComponent {
 }
 
 impl SpaceshipComponent {
-    pub fn update_location(&mut self, x: f32, y: f32) {
-        self.pos_x = x;
-        self.pos_y = y;
-    }
-
     pub fn initiate_barrel_roll(&mut self, left: bool, right: bool) {
         if left || right {
             self.barrel_action_timer = self.barrel_duration;

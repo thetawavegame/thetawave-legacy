@@ -81,9 +81,6 @@ impl<'s> System<'s> for SpaceshipSystem {
         )
             .join()
         {
-            // update pos_x and pos_y variables of spaceship
-            spaceship.update_location(transform.translation().x, transform.translation().y);
-
             // barrel roll input cooldown
             // amount of time until new barrel roll can be initiated
             if spaceship.barrel_input_cooldown(time.delta_seconds()) {
