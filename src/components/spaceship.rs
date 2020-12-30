@@ -1,11 +1,5 @@
-use crate::{
-    components::{Hitbox2DComponent, Motion2DComponent, Rigidbody},
-    constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
-};
-use amethyst::{
-    core::Transform,
-    ecs::prelude::{Component, DenseVecStorage},
-};
+use crate::components::Motion2DComponent;
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use std::collections::HashMap;
 
 pub struct SpaceshipComponent {
@@ -22,44 +16,6 @@ pub struct SpaceshipComponent {
     pub steel_barrel: bool,
     pub collision_damage: f32,
     pub blast_sprite_indicies: HashMap<String, usize>,
-}
-
-impl Rigidbody for SpaceshipComponent {
-    fn constrain_to_arena(
-        &mut self,
-        transform: &mut Transform,
-        motion_2d: &mut Motion2DComponent,
-        hitbox_2d: &Hitbox2DComponent,
-    ) {
-        let spaceship_x = transform.translation().x;
-        let spaceship_y = transform.translation().y;
-
-        if (spaceship_x - (hitbox_2d.width / 2.0)) < ARENA_MIN_X {
-            //if colliding with left border of arena
-            if self.barrel_action_left {
-                self.barrel_action_right = true;
-                self.barrel_action_left = false;
-            }
-            transform.set_translation_x(ARENA_MIN_X + (hitbox_2d.width / 2.0));
-            motion_2d.velocity.x = motion_2d.velocity.x.abs();
-        } else if (spaceship_x + (hitbox_2d.width / 2.0)) > ARENA_MAX_X {
-            //if colliding with right border of arena
-            if self.barrel_action_right {
-                self.barrel_action_right = false;
-                self.barrel_action_left = true;
-            }
-            transform.set_translation_x(ARENA_MAX_X - (hitbox_2d.width / 2.0));
-            motion_2d.velocity.x = -1.0 * motion_2d.velocity.x.abs();
-        } else if (spaceship_y - (hitbox_2d.height / 2.0)) < ARENA_MIN_Y {
-            //if colliding with bottom of arena
-            transform.set_translation_y(ARENA_MIN_Y + (hitbox_2d.height / 2.0));
-            motion_2d.velocity.y = motion_2d.velocity.y.abs();
-        } else if (spaceship_y + (hitbox_2d.height / 2.0)) > ARENA_MAX_Y {
-            //if colliding with bottom of arena
-            transform.set_translation_y(ARENA_MAX_Y - (hitbox_2d.height / 2.0));
-            motion_2d.velocity.y = -1.0 * motion_2d.velocity.y.abs();
-        }
-    }
 }
 
 impl Component for SpaceshipComponent {
