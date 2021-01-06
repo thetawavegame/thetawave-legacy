@@ -13,7 +13,7 @@ use crate::{
     systems,
 };
 use amethyst::{
-    assets::{AssetStorage, Loader},
+    assets::{AssetStorage, Loader, ProgressCounter},
     core::transform::Transform,
     ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
     input::{is_key_down, VirtualKeyCode},
@@ -29,6 +29,10 @@ pub struct MainGameState {
     is_paused: bool,
     pause_display: Option<Entity>,
     dispatcher: Dispatcher<'static, 'static>,
+    progress_counter: ProgressCounter,
+    loading_display: Option<Entity>,
+    spritesheets: Option<SpriteSheetsResource>,
+    is_loaded: bool,
 }
 
 impl Default for MainGameState {
@@ -36,6 +40,10 @@ impl Default for MainGameState {
         MainGameState {
             is_paused: false,
             pause_display: None,
+            progress_counter: ProgressCounter::new(),
+            loading_display: None,
+            spritesheets: None,
+            is_loaded: false,
             dispatcher: DispatcherBuilder::new()
                 .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
@@ -134,16 +142,14 @@ impl Default for MainGameState {
 impl SimpleState for MainGameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
-        let spritesheets = init_spritesheets(world);
-
         self.dispatcher.setup(world);
+        let spritesheets = init_spritesheets(&mut self.progress_counter, world);
+        self.spritesheets = Some(spritesheets);
 
-        initialize_audio(world);
-        initialise_ui(world);
-        initialize_gamemaster(world);
-        initialize_defense(world);
-        initialize_status_bars(world);
+        initialize_audio(&mut self.progress_counter, world);
+        initialise_ui(&mut self.progress_counter, world);
         initialize_planet(
+            &mut self.progress_counter,
             world,
             "earth_planet.glb",
             ARENA_MIN_X + (ARENA_WIDTH / 2.0),
@@ -154,6 +160,7 @@ impl SimpleState for MainGameState {
             0.01,
         );
         initialize_planet(
+            &mut self.progress_counter,
             world,
             "sol_star.glb",
             ARENA_MIN_X + (ARENA_WIDTH / 2.0) - 5000.0,
@@ -163,11 +170,8 @@ impl SimpleState for MainGameState {
             0.0,
             0.005,
         );
-        initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
-        initialize_enemy_spawner(world);
-        initialize_side_panels(world, spritesheets.spritesheets["side_panels"].clone());
-        initialize_store(world);
-        initialise_camera(world);
+
+        self.loading_display = Some(initialise_loading_text(self.progress_counter.num_assets(), world));
 
         world.insert(DebugLines::new());
         let debug_lines_params = {
@@ -203,6 +207,34 @@ impl SimpleState for MainGameState {
             self.pause_display = None;
         }
 
+        // Handle loading state here
+        if self.progress_counter.is_complete() && !self.is_loaded {
+            self.is_loaded = true;
+
+            if let Some(loading_display_entity) = self.loading_display {
+                data.world
+                    .delete_entity(loading_display_entity)
+                    .expect("Failed to remove loading text.");
+            }
+
+            initialize_spaceship(data.world, self.spritesheets.as_ref().unwrap().spritesheets["characters"].clone());
+            initialize_enemy_spawner(data.world);
+
+            initialize_gamemaster(data.world);
+            initialize_defense(data.world);
+            initialize_status_bars(data.world);
+            initialize_side_panels(data.world, self.spritesheets.as_ref().unwrap().spritesheets["side_panels"].clone());
+            initialize_store(data.world);
+            initialise_camera(data.world);
+
+        } else if !self.is_loaded {
+            let mut ui_text = data.world.write_storage::<UiText>();
+
+            if let Some(loading_display) = self.loading_display.and_then(|entity| ui_text.get_mut(entity)) {
+                loading_display.text = format!("Loading {}/{} assets", self.progress_counter.num_finished(), self.progress_counter.num_assets());
+            }
+        }
+
         Trans::None
     }
 
@@ -220,7 +252,7 @@ impl SimpleState for MainGameState {
     }
 }
 
-fn init_spritesheets(world: &mut World) -> SpriteSheetsResource {
+fn init_spritesheets(progress_counter: &mut ProgressCounter, world: &mut World) -> SpriteSheetsResource {
     let mut spritesheets = HashMap::new();
     {
         let spritesheets_config = world.read_resource::<SpriteSheetsConfig>();
@@ -231,7 +263,7 @@ fn init_spritesheets(world: &mut World) -> SpriteSheetsResource {
                 loader.load(
                     format!("texture/{}", spritesheet_data.image),
                     ImageFormat::default(),
-                    (),
+                    &mut *progress_counter,
                     &texture_storage,
                 )
             };
@@ -241,7 +273,7 @@ fn init_spritesheets(world: &mut World) -> SpriteSheetsResource {
             let spritesheet_handle = loader.load(
                 format!("texture/{}", spritesheet_data.data),
                 SpriteSheetFormat(texture_handle),
-                (),
+                &mut *progress_counter,
                 &sprite_sheet_store,
             );
 
@@ -272,14 +304,14 @@ pub struct TrackedStats {
     pub item_price_3: Entity,
 }
 
-fn initialise_ui(world: &mut World) {
+fn initialise_ui(progress_counter: &mut ProgressCounter, world: &mut World) {
     let item_slots_texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
             "texture/item_slots.png",
             ImageFormat::default(),
-            (),
+            &mut *progress_counter,
             &texture_storage,
         )
     };
@@ -290,7 +322,7 @@ fn initialise_ui(world: &mut World) {
         loader.load(
             "texture/item_slots.ron",
             SpriteSheetFormat(item_slots_texture_handle),
-            (),
+            &mut *progress_counter,
             &sprite_sheet_store,
         )
     };
@@ -534,6 +566,42 @@ fn get_paused_text(world: &mut World) -> Entity {
         String::from("paused"),
         [1.0, 1.0, 1.0, 1.0],
         25.0,
+        LineMode::Single,
+        Anchor::Middle,
+    );
+
+    let entity = world
+        .create_entity()
+        .with(ui_transform)
+        .with(ui_text)
+        .build();
+
+    entity
+}
+
+fn initialise_loading_text(num_assets: usize, world: &mut World) -> Entity {
+    let font_handle = world.read_resource::<Loader>().load(
+        "font/SpaceMadness.ttf",
+        TtfFormat,
+        (),
+        &world.read_resource(),
+    );
+    let ui_transform = UiTransform::new(
+        String::from("progress_text"),
+        Anchor::Middle,
+        Anchor::Middle,
+        0.0,
+        0.0,
+        0.0,
+        900.0,
+        500.0,
+    );
+    let text = "0/".to_string() + &num_assets.to_string();
+    let ui_text = UiText::new(
+        font_handle,
+        String::from(text),
+        [1.0, 1.0, 1.0, 1.0],
+        64.0,
         LineMode::Single,
         Anchor::Middle,
     );

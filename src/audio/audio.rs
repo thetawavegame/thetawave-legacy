@@ -1,6 +1,6 @@
 use crate::resources::SoundsConfig;
 use amethyst::{
-    assets::{AssetStorage, Handle, Loader},
+    assets::{AssetStorage, Handle, Loader, ProgressCounter},
     audio::{output::Output, OggFormat, Source, SourceHandle},
     ecs::{World, WorldExt},
 };
@@ -11,11 +11,21 @@ pub struct Sounds {
     pub sound_effects: HashMap<String, SourceHandle>,
 }
 
-fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle {
-    loader.load(file, OggFormat, (), &world.read_resource())
+fn load_audio_track(
+    progress_counter: &mut ProgressCounter,
+    loader: &Loader,
+    world: &World,
+    file: &str,
+) -> SourceHandle {
+    loader.load(
+        file,
+        OggFormat,
+        &mut *progress_counter,
+        &world.read_resource(),
+    )
 }
 
-pub fn initialize_audio(world: &mut World) {
+pub fn initialize_audio(progress_counter: &mut ProgressCounter, world: &mut World) {
     let sound_effects = {
         let loader = world.read_resource::<Loader>();
         let sound_data = world.read_resource::<SoundsConfig>();
@@ -25,7 +35,12 @@ pub fn initialize_audio(world: &mut World) {
         for (sound_name, sound_file) in sound_data.iter() {
             sound_effects.insert(
                 sound_name.to_owned(),
-                load_audio_track(&loader, &world, &*("audio/".to_string() + sound_file)),
+                load_audio_track(
+                    progress_counter,
+                    &loader,
+                    &world,
+                    &*("audio/".to_string() + sound_file),
+                ),
             );
         }
 

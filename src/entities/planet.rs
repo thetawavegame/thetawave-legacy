@@ -1,6 +1,6 @@
 use crate::components::PlanetComponent;
 use amethyst::{
-    assets::{AssetStorage, Loader},
+    assets::{AssetStorage, Loader, ProgressCounter},
     core::math::Vector3,
     core::transform::Transform,
     ecs::{World, WorldExt},
@@ -9,6 +9,7 @@ use amethyst::{
 };
 
 pub fn initialize_planet(
+    progress_counter: &mut ProgressCounter,
     world: &mut World,
     gltf_path: &str,
     x: f32,
@@ -31,7 +32,7 @@ pub fn initialize_planet(
         loader.load(
             format!("mesh/{}", gltf_path),
             GltfSceneFormat::default(),
-            (),
+            &mut *progress_counter,
             &gltf_storage,
         )
     };
