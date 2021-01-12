@@ -40,7 +40,7 @@ pub use self::{
     gamemaster::GameMasterSystem,
     item::ItemSystem,
     manualblaster_system::ManualBlasterSystem,
-    motion2d::ConstrainToArenaSystem,
+    motion2d::{ConstrainToArenaSystem, Motion2DSystem},
     planets::PlanetsSystem,
     play_audio::PlayAudioSystem,
     spaceship::SpaceshipSystem,

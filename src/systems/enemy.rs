@@ -1,7 +1,7 @@
 use crate::constants::ARENA_HEIGHT;
 use crate::{
     components::{
-        EnemyComponent, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent, Rigidbody,
+        EnemyComponent, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent,
     },
     constants::ARENA_MIN_Y,
     events::{EnemyDestroyedEvent, EnemyReachedBottomEvent},
@@ -59,10 +59,10 @@ impl<'s> System<'s> for EnemySystem {
             .join()
         {
             // constrain in arena
-            enemy_component.constrain_to_arena(enemy_transform, enemy_motion, enemy_hitbox);
+            //enemy_component.constrain_to_arena(enemy_transform, enemy_motion, enemy_hitbox); // handled in constrain to arena system
 
             // transform the spaceship in x and y by the currrent velocity in x and y
-            enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion);
+            // enemy_component.update_position(enemy_transform, time.delta_seconds(), enemy_motion); // handle in motion2d system
 
             enemy_health.value -= enemy_component.poison;
             enemy_health.constrain();

@@ -1,11 +1,85 @@
 use crate::{
-    components::{Hitbox2DComponent, Motion2DComponent},
+    components::{EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
-    core::transform::Transform,
-    ecs::prelude::{Join, ReadStorage, System, WriteStorage},
+    core::{timing::Time, transform::Transform},
+    ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
 };
+
+pub struct Motion2DSystem;
+
+impl<'s> System<'s> for Motion2DSystem {
+    type SystemData = (
+        WriteStorage<'s, Motion2DComponent>,
+        WriteStorage<'s, Transform>,
+        Read<'s, Time>,
+    );
+
+    fn run(&mut self, (mut motion_2ds, mut transforms, time): Self::SystemData) {
+        for (motion_2d, transform) in (&mut motion_2ds, &mut transforms).join() {
+            let dt = time.delta_seconds();
+
+            // update translation
+            transform.set_translation_xyz(
+                transform.translation().x + motion_2d.velocity.x * dt,
+                transform.translation().y + motion_2d.velocity.y * dt,
+                transform.translation().z,
+            );
+
+            // update angular position
+            transform.append_rotation_z_axis(motion_2d.angular_velocity * dt);
+        }
+    }
+}
+
+pub struct EnemyMotion2DSystem;
+
+impl<'s> System<'s> for EnemyMotion2DSystem {
+    type SystemData = (
+        ReadStorage<'s, EnemyComponent>,
+        WriteStorage<'s, Motion2DComponent>,
+        WriteStorage<'s, Transform>,
+        Read<'s, Time>,
+    );
+
+    fn run(&mut self, (enemies, mut motion_2ds, mut transforms, time): Self::SystemData) {
+        for (enemy, motion_2d, transform) in (&enemies, &mut motion_2ds, &mut transforms).join() {
+            match enemy.enemy_type {
+                EnemyType::Pawn => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::Drone => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::Hauler => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::Strafer => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::MissileLauncher => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::Missile => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::RepeaterBody => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::RepeaterHead => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::RepeaterShoulder => {
+                    // TODO: Add motion logic
+                }
+                EnemyType::RepeaterArm => {
+                    // TODO: Add motion logic
+                }
+            }
+        }
+    }
+}
 
 pub struct ConstrainToArenaSystem;
 
