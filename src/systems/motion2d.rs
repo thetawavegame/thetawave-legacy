@@ -47,13 +47,16 @@ impl<'s> System<'s> for EnemyMotion2DSystem {
         for (enemy, motion_2d, transform) in (&enemies, &mut motion_2ds, &mut transforms).join() {
             match enemy.enemy_type {
                 EnemyType::Pawn => {
-                    // TODO: Add motion logic
+                    // accelerate in negative y direction
+                    motion_2d.velocity.y -= motion_2d.acceleration.y;
                 }
                 EnemyType::Drone => {
-                    // TODO: Add motion logic
+                    // accelerate in negative y direction
+                    motion_2d.velocity.y -= motion_2d.acceleration.y;
                 }
                 EnemyType::Hauler => {
-                    // TODO: Add motion logic
+                    // accelerate in negative y direction
+                    motion_2d.velocity.y -= motion_2d.acceleration.y;
                 }
                 EnemyType::Strafer => {
                     // TODO: Add motion logic

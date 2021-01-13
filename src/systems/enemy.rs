@@ -83,53 +83,58 @@ impl<'s> System<'s> for EnemySystem {
             match enemy_component.enemy_type {
                 EnemyType::Pawn => {
                     // accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
+                    //enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Drone => {
                     // accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
+                    // enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Hauler => {
                     // accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
+                    //enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Strafer => {
                     // accelerate in -y direction
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
-                    enemy_component.accelerate(1.0, 0.0, enemy_motion);
+                    //enemy_component.accelerate(0.0, -1.0, enemy_motion);
+                    //enemy_component.accelerate(1.0, 0.0, enemy_motion);
                 }
 
                 EnemyType::MissileLauncher => {
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
+                    //enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::Missile => {
-                    enemy_component.accelerate(0.0, -1.0, enemy_motion);
+                    //enemy_component.accelerate(0.0, -1.0, enemy_motion);
                 }
 
                 EnemyType::RepeaterBody => {
                     // accelerate in -y direction
+                    /*
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 30.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_motion.velocity.y = 0.0;
                     }
+                    */
                 }
 
                 EnemyType::RepeaterHead => {
                     // accelerate in -y direction
+                    /*
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_motion.velocity.y = 0.0;
                     }
+                    */
                 }
 
                 EnemyType::RepeaterShoulder => {
                     // accelerate in -y direction
+                    /*
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
@@ -142,14 +147,17 @@ impl<'s> System<'s> for EnemySystem {
                     } else if enemy_transform.euler_angles().2 < -0.1 {
                         enemy_motion.angular_velocity = -0.05;
                     }
+                    */
                 }
 
                 EnemyType::RepeaterArm => {
+                    /*
                     if enemy_transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                         enemy_component.accelerate(0.0, -1.0, enemy_motion);
                     } else {
                         enemy_motion.velocity.y = 0.0;
                     }
+                    */
                 }
             }
         }

@@ -1,4 +1,4 @@
-use crate::components::{Hitbox2DComponent, Motion2DComponent, Rigidbody, SpaceshipComponent};
+use crate::components::{Hitbox2DComponent, Motion2DComponent, SpaceshipComponent};
 use amethyst::{
     core::{timing::Time, Transform},
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
@@ -33,7 +33,7 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
             .join()
         {
             //keep spaceship with bounds of arena
-            spaceship.constrain_to_arena(transform, motion_2d, hitbox);
+            //spaceship.constrain_to_arena(transform, motion_2d, hitbox);
 
             //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
             if spaceship.barrel_action_left {
@@ -41,10 +41,10 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
             } else if spaceship.barrel_action_right {
                 motion_2d.velocity.x = spaceship.barrel_speed;
             } else {
-                spaceship.accelerate(x_move, y_move, motion_2d);
+                //spaceship.accelerate(x_move, y_move, motion_2d);
             }
 
-            spaceship.update_position(transform, time.delta_seconds(), motion_2d);
+            //spaceship.update_position(transform, time.delta_seconds(), motion_2d);
         }
     }
 }
