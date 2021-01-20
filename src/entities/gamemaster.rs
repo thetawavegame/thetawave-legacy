@@ -20,7 +20,7 @@ pub fn initialize_gamemaster(world: &mut World) {
 
     let phase_1 = Phase {
         phase_type: PhaseType::Invasion,
-        boss_type: BossType::Repeater,
+        boss_type: BossType::None,
         length: 60,
         boss_spawned: false,
     };
@@ -28,7 +28,7 @@ pub fn initialize_gamemaster(world: &mut World) {
     let phase_2 = Phase {
         phase_type: PhaseType::Rest,
         boss_type: BossType::None,
-        length: 4,
+        length: 0,
         boss_spawned: false,
     };
 
