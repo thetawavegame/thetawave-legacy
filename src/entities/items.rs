@@ -36,7 +36,7 @@ pub fn spawn_item(
     };
 
     let motion_component = Motion2DComponent {
-        velocity: Vector2::new(0.0, 70.0),
+        velocity: Vector2::new(0.0, -70.0),
         acceleration: Vector2::new(0.0, 0.0),
         deceleration: Vector2::new(0.0, 0.0),
         max_speed: Vector2::new(0.0, 70.0),
