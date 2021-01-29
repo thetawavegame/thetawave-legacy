@@ -1,6 +1,6 @@
 use crate::{
     components::{EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent},
-    constants::{ARENA_HEIGHT, ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
+    constants::{ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y},
     events::EnemyReachedBottomEvent,
 };
 use amethyst::{
