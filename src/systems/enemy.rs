@@ -1,14 +1,9 @@
-use crate::constants::ARENA_HEIGHT;
 use crate::{
-    components::{
-        EnemyComponent, EnemyType, HealthComponent, Hitbox2DComponent, Motion2DComponent,
-    },
-    constants::ARENA_MIN_Y,
-    events::{EnemyDestroyedEvent, EnemyReachedBottomEvent},
+    components::{EnemyComponent, HealthComponent},
+    events::EnemyDestroyedEvent,
 };
 use amethyst::{
-    core::{timing::Time, transform::Transform},
-    ecs::prelude::{Entities, Join, Read, ReadStorage, System, Write, WriteStorage},
+    ecs::prelude::{Entities, Join, System, Write, WriteStorage},
     shrev::EventChannel,
 };
 
