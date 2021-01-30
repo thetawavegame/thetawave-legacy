@@ -59,11 +59,8 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         angular_velocity: 0.0,
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
-        max_speed: Vector2::new(SPACESHIP_MAX_SPEED, SPACESHIP_MAX_SPEED),
-        knockback_max_speed: Vector2::new(
-            SPACESHIP_MAX_KNOCKBACK_SPEED,
-            SPACESHIP_MAX_KNOCKBACK_SPEED,
-        ),
+        speed: Vector2::new(SPACESHIP_MAX_SPEED, SPACESHIP_MAX_SPEED),
+        max_speed: Vector2::new(SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_KNOCKBACK_SPEED),
     };
 
     let blaster = BlasterComponent {
