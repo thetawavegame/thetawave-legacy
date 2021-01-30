@@ -73,17 +73,12 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                     if let Some(velocity) = event.collision_velocity {
                         enemy_health.value -= character.collision_damage;
                         enemy_motion.velocity.y += velocity.y;
+                        enemy_motion.velocity.x += velocity.x;
 
-                        match enemy.enemy_type {
-                            EnemyType::Strafer => {
-                                if enemy_motion.velocity.x * velocity.x > 0.0 {
-                                    enemy_motion.velocity.x += velocity.x;
-                                } else {
-                                    enemy_motion.velocity.x *= -1.0;
-                                };
-                            }
-                            _ => {
-                                enemy_motion.velocity.x += velocity.x;
+                        // if velocities are opposite the strafer switches direction
+                        if let EnemyType::Strafer = enemy.enemy_type {
+                            if enemy_motion.velocity.x * velocity.x < 0.0 {
+                                enemy_motion.velocity.x *= -1.0;
                             }
                         }
                     }
@@ -132,17 +127,12 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
                         if let Some(velocity) = event.collision_velocity {
                             enemy_health.value -= colliding_enemy.collision_damage;
                             enemy_motion.velocity.y += velocity.y;
+                            enemy_motion.velocity.x += velocity.x;
 
-                            match enemy.enemy_type {
-                                EnemyType::Strafer => {
-                                    if enemy_motion.velocity.x * velocity.x > 0.0 {
-                                        enemy_motion.velocity.x += velocity.x;
-                                    } else {
-                                        enemy_motion.velocity.x *= -1.0;
-                                    }
-                                }
-                                _ => {
-                                    enemy_motion.velocity.x += velocity.x;
+                            // if velocities are opposite the strafer switches direction
+                            if let EnemyType::Strafer = enemy.enemy_type {
+                                if enemy_motion.velocity.x * velocity.x < 0.0 {
+                                    enemy_motion.velocity.x *= -1.0;
                                 }
                             }
                         }
