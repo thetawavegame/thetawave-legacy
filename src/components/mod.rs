@@ -35,7 +35,7 @@ pub use self::{
     spawner::{choose_random_name, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
     store::StoreComponent,
-    tags::DefenseTag,
+    tags::{DefenseTag, DespawnAtBottomTag},
     timelimit::TimeLimitComponent,
     weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };

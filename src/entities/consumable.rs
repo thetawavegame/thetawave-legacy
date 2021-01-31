@@ -1,4 +1,7 @@
-use crate::resources::{ConsumableEntityData, SpriteSheetsResource};
+use crate::{
+    components::DespawnAtBottomTag,
+    resources::{ConsumableEntityData, SpriteSheetsResource},
+};
 use amethyst::{
     core::{math::Vector3, transform::Transform},
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
@@ -27,5 +30,6 @@ pub fn spawn_consumable(
         .with(consumable.consumable_component)
         .with(local_transform)
         .with(Transparent)
+        .with(DespawnAtBottomTag::default())
         .build();
 }

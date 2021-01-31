@@ -42,12 +42,15 @@ impl Default for MainGameState {
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
-                .with(systems::ConsumableSystem, "consumable_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
-                .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::EnemyMotion2DSystem, "enemy_motion_2d_system", &[])
+                .with(
+                    systems::DespawnAtBottomSystem,
+                    "despawn_at_bottom_system",
+                    &[],
+                )
                 .with(
                     systems::SpaceshipMovementSystem,
                     "spaceship_movement_system",

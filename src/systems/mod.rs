@@ -3,14 +3,13 @@ mod autofire_system;
 mod blast;
 mod boss;
 mod collision_detection;
-mod consumable;
 mod defense;
+mod despawn;
 mod enemy;
 mod enemy_collisions;
 mod enemy_destroyed;
 mod enemy_spawn;
 mod gamemaster;
-mod item;
 mod manualblaster_system;
 mod motion2d;
 mod planets;
@@ -29,8 +28,8 @@ pub use self::{
     blast::BlastSystem,
     boss::BossSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
-    consumable::ConsumableSystem,
     defense::DefenseSystem,
+    despawn::DespawnAtBottomSystem,
     enemy::EnemySystem,
     enemy_collisions::{
         EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem, EnemyPlayerCollisionSystem,
@@ -38,7 +37,6 @@ pub use self::{
     enemy_destroyed::EnemyDestroyedSystem,
     enemy_spawn::SpawnerSystem,
     gamemaster::GameMasterSystem,
-    item::ItemSystem,
     manualblaster_system::ManualBlasterSystem,
     motion2d::{EnemyMotion2DSystem, Motion2DSystem},
     planets::PlanetsSystem,

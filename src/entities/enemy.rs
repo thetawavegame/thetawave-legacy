@@ -1,4 +1,7 @@
-use crate::resources::{EnemyEntityData, ThrusterEntityData};
+use crate::{
+    components::DespawnAtBottomTag,
+    resources::{EnemyEntityData, ThrusterEntityData},
+};
 use amethyst::{
     assets::Handle,
     core::{math::Vector3, transform::Transform, Named, Parent},
@@ -36,6 +39,7 @@ pub fn spawn_enemy(
         .with(local_transform)
         .with(Transparent)
         .with(name)
+        .with(DespawnAtBottomTag::default())
         .build();
 
     if let Some(blaster_component) = enemy.blaster_component {

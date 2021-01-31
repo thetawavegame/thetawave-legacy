@@ -1,13 +1,9 @@
 use crate::{
-    components::{
-        Hitbox2DComponent,
-        Motion2DComponent,
-        SpaceshipComponent,
-    },
+    components::{Hitbox2DComponent, Motion2DComponent, SpaceshipComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
-    core::{Transform},
+    core::Transform,
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
@@ -52,11 +48,7 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
 }
 
 // Handles acceleration and deceleration of spaceship based on given x,y direction inputs.
-fn handle_spaceship_movement(
-    motion: &mut Motion2DComponent,
-    x_move: f32,
-    y_move: f32
-) {
+fn handle_spaceship_movement(motion: &mut Motion2DComponent, x_move: f32, y_move: f32) {
     // Handle deceleration in the x direction while moving.
     if x_move == 0.0 && motion.velocity.x != 0.0 {
         if motion.velocity.x > 0.0 {

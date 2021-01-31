@@ -1,12 +1,10 @@
 use crate::{
     components::{EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent},
     constants::{ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y},
-    events::EnemyReachedBottomEvent,
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},
-    ecs::prelude::{Entities, Entity, Join, Read, ReadStorage, System, Write, WriteStorage},
-    shrev::EventChannel,
+    ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
 };
 
 // basic physics for all Motion2D entities
@@ -50,6 +48,8 @@ impl<'s> System<'s> for Motion2DSystem {
                     motion_2d.velocity.y = -motion_2d.max_speed.y;
                 }
             }
+
+            // constrain motion2d entities to area
         }
     }
 }
@@ -59,45 +59,18 @@ pub struct EnemyMotion2DSystem;
 
 impl<'s> System<'s> for EnemyMotion2DSystem {
     type SystemData = (
-        Entities<'s>,
         ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, Transform>,
         ReadStorage<'s, Hitbox2DComponent>,
-        Write<'s, EventChannel<EnemyReachedBottomEvent>>,
     );
 
-    fn run(
-        &mut self,
-        (
-            entities,
-            enemies,
-            mut motion_2ds,
-            mut transforms,
-            hitbox_2ds,
-            mut enemy_reached_bottom_event_channel,
-        ): Self::SystemData,
-    ) {
-        for (enemy, motion_2d, hitbox_2d, transform, entity) in (
-            &enemies,
-            &mut motion_2ds,
-            &hitbox_2ds,
-            &mut transforms,
-            &entities,
-        )
-            .join()
+    fn run(&mut self, (enemies, mut motion_2ds, mut transforms, hitbox_2ds): Self::SystemData) {
+        for (enemy, motion_2d, hitbox_2d, transform) in
+            (&enemies, &mut motion_2ds, &hitbox_2ds, &mut transforms).join()
         {
             move_enemy(&enemy, transform, motion_2d);
-
-            constrain_enemies_to_arena(
-                &enemy,
-                transform,
-                motion_2d,
-                hitbox_2d,
-                &entity,
-                &mut enemy_reached_bottom_event_channel,
-                &entities,
-            );
+            constrain_enemies_to_arena(&enemy, transform, motion_2d, hitbox_2d);
         }
     }
 }
@@ -176,15 +149,12 @@ fn move_enemy(
     }
 }
 
-// how enemies behave upon coming into contact with the edge of the arena
+// how enemies behave upon coming into contact with the edges of the arena
 fn constrain_enemies_to_arena(
     enemy: &EnemyComponent,
     transform: &mut Transform,
     motion_2d: &mut Motion2DComponent,
     hitbox_2d: &Hitbox2DComponent,
-    entity: &Entity,
-    enemy_reached_bottom_event_channel: &mut Write<EventChannel<EnemyReachedBottomEvent>>,
-    entities: &Entities,
 ) {
     // right and left sides
     if transform.translation().x + (hitbox_2d.width / 2.0) > ARENA_MAX_X
@@ -199,14 +169,5 @@ fn constrain_enemies_to_arena(
                 motion_2d.velocity.x *= -1.0;
             }
         }
-    }
-
-    // all enemies despawn upon reaching bottom side
-    if transform.translation().y - hitbox_2d.height / 2.0 < ARENA_MIN_Y {
-        enemy_reached_bottom_event_channel
-            .single_write(EnemyReachedBottomEvent::new(enemy.defense_damage));
-        entities
-            .delete(*entity)
-            .expect("enemy unable to despawn upon reaching bottom of arena");
     }
 }
