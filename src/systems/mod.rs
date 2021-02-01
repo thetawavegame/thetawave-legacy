@@ -1,6 +1,5 @@
 mod animation;
 mod autofire_system;
-mod blast;
 mod boss;
 mod collision_detection;
 mod defense;
@@ -25,11 +24,10 @@ mod timelimit;
 pub use self::{
     animation::AnimationSystem,
     autofire_system::AutoFireSystem,
-    blast::BlastSystem,
     boss::BossSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
-    despawn::DespawnAtBottomSystem,
+    despawn::DespawnAtBorderSystem,
     enemy::EnemySystem,
     enemy_collisions::{
         EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem, EnemyPlayerCollisionSystem,

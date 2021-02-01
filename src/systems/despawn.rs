@@ -1,6 +1,6 @@
 use crate::{
-    components::{DespawnAtBottomTag, EnemyComponent, Hitbox2DComponent},
-    constants::ARENA_MIN_Y,
+    components::{DespawnAtBorderComponent, EnemyComponent},
+    constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
     events::EnemyReachedBottomEvent,
 };
 use amethyst::{
@@ -10,38 +10,50 @@ use amethyst::{
     shrev::EventChannel,
 };
 
-pub struct DespawnAtBottomSystem;
+pub struct DespawnAtBorderSystem;
 
-impl<'s> System<'s> for DespawnAtBottomSystem {
+impl<'s> System<'s> for DespawnAtBorderSystem {
     type SystemData = (
         Entities<'s>,
-        ReadStorage<'s, DespawnAtBottomTag>,
+        ReadStorage<'s, DespawnAtBorderComponent>,
         ReadStorage<'s, Transform>,
-        ReadStorage<'s, Hitbox2DComponent>,
         ReadStorage<'s, EnemyComponent>,
         Write<'s, EventChannel<EnemyReachedBottomEvent>>,
     );
 
     fn run(
         &mut self,
-        (
-            entities,
-            despawn_bottoms,
-            transforms,
-            hitboxes,
-            enemies,
-            mut enemy_reached_bottom_event_channel,
-        ): Self::SystemData,
+        (entities, despawn_borders, transforms, enemies, mut enemy_reached_bottom_event_channel): Self::SystemData,
     ) {
-        for (entity, _despawn_bottom, transform, hitbox) in
-            (&*entities, &despawn_bottoms, &transforms, &hitboxes).join()
+        for (entity, despawn_border, transform) in
+            (&*entities, &despawn_borders, &transforms).join()
         {
-            if transform.translation().y - hitbox.height / 2.0 < ARENA_MIN_Y {
-                if let Some(enemy) = enemies.get(entity) {
-                    enemy_reached_bottom_event_channel
-                        .single_write(EnemyReachedBottomEvent::new(enemy.defense_damage));
+            if let Some(top_border_offset) = despawn_border.top_offset {
+                if transform.translation().y > ARENA_MAX_Y + top_border_offset {
+                    entities.delete(entity).expect("unable to delete entity");
                 }
-                entities.delete(entity).expect("unable to delete entity");
+            }
+
+            if let Some(bottom_border_offset) = despawn_border.bottom_offset {
+                if transform.translation().y < ARENA_MIN_Y + bottom_border_offset {
+                    if let Some(enemy) = enemies.get(entity) {
+                        enemy_reached_bottom_event_channel
+                            .single_write(EnemyReachedBottomEvent::new(enemy.defense_damage));
+                    }
+                    entities.delete(entity).expect("unable to delete entity");
+                }
+            }
+
+            if let Some(left_border_offset) = despawn_border.left_offset {
+                if transform.translation().x < ARENA_MIN_X + left_border_offset {
+                    entities.delete(entity).expect("unable to delete entity");
+                }
+            }
+
+            if let Some(right_border_offset) = despawn_border.right_offset {
+                if transform.translation().x > ARENA_MAX_X + right_border_offset {
+                    entities.delete(entity).expect("unable to delete entity");
+                }
             }
         }
     }

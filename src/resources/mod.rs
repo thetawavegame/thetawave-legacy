@@ -1,7 +1,7 @@
 use crate::components::{
     AnimationComponent, AutoFireComponent, BlasterComponent, CharacterComponent,
-    ConsumableComponent, EnemyComponent, HealthComponent, Hitbox2DComponent, ItemComponent,
-    Motion2DComponent,
+    ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, HealthComponent,
+    Hitbox2DComponent, ItemComponent, Motion2DComponent,
 };
 use amethyst::{
     assets::Handle,
@@ -19,6 +19,7 @@ pub struct EnemyEntityData {
     pub autofire_component: Option<AutoFireComponent>,
     pub motion2d_component: Motion2DComponent,
     pub health_component: HealthComponent,
+    pub despawn_component: DespawnAtBorderComponent,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

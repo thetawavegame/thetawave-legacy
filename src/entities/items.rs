@@ -1,5 +1,5 @@
 use crate::{
-    components::{DespawnAtBottomTag, Hitbox2DComponent, Motion2DComponent},
+    components::{DespawnAtBorderComponent, Hitbox2DComponent, Motion2DComponent},
     resources::{ItemEntityData, SpriteSheetsResource},
 };
 use amethyst::{
@@ -57,7 +57,12 @@ pub fn spawn_item(
         .with(local_transform)
         .with(Transparent)
         .with(name)
-        .with(DespawnAtBottomTag::default())
+        .with(DespawnAtBorderComponent {
+            top_offset: None,
+            bottom_offset: Some(20.0),
+            left_offset: None,
+            right_offset: None,
+        })
         .build();
 
     if let Some(animation_component) = item.animation_component {

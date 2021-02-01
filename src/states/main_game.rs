@@ -47,8 +47,8 @@ impl Default for MainGameState {
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::EnemyMotion2DSystem, "enemy_motion_2d_system", &[])
                 .with(
-                    systems::DespawnAtBottomSystem,
-                    "despawn_at_bottom_system",
+                    systems::DespawnAtBorderSystem,
+                    "despawn_at_border_system",
                     &[],
                 )
                 .with(
@@ -112,7 +112,6 @@ impl Default for MainGameState {
                     "spaceship_system",
                     &["spaceship_item_collision_system"],
                 )
-                .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::StoreSystem, "store_system", &[])
                 .with(
                     systems::StatTrackerSystem,

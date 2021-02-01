@@ -1,5 +1,5 @@
 use crate::{
-    components::DespawnAtBottomTag,
+    components::DespawnAtBorderComponent,
     resources::{ConsumableEntityData, SpriteSheetsResource},
 };
 use amethyst::{
@@ -30,6 +30,11 @@ pub fn spawn_consumable(
         .with(consumable.consumable_component)
         .with(local_transform)
         .with(Transparent)
-        .with(DespawnAtBottomTag::default())
+        .with(DespawnAtBorderComponent {
+            top_offset: None,
+            bottom_offset: Some(20.0),
+            left_offset: None,
+            right_offset: None,
+        })
         .build();
 }

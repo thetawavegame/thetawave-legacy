@@ -1,5 +1,5 @@
 use crate::{
-    components::DespawnAtBottomTag,
+    components::DespawnAtBorderComponent,
     resources::{EnemyEntityData, ThrusterEntityData},
 };
 use amethyst::{
@@ -36,10 +36,10 @@ pub fn spawn_enemy(
         .with(enemy.hitbox_component)
         .with(enemy.motion2d_component)
         .with(enemy.health_component)
+        .with(enemy.despawn_component)
         .with(local_transform)
         .with(Transparent)
         .with(name)
-        .with(DespawnAtBottomTag::default())
         .build();
 
     if let Some(blaster_component) = enemy.blaster_component {
