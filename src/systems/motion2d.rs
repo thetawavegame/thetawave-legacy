@@ -206,13 +206,14 @@ fn move_enemy(
                 //turn towards target
                 motion_2d.turn_towards_target(
                     Vector2::new(transform.translation().x, transform.translation().y),
-                    transform.euler_angles().2,
+                    transform.euler_angles().2.to_degrees() + 180.0,
                     target_position,
                 );
                 hitbox_2d.set_offset_rotation(transform.euler_angles().2);
 
                 // TODO: replace move down with move forward (along axis of entity)
-                motion_2d.move_down();
+                motion_2d.move_forward(transform.euler_angles().2);
+            //motion_2d.move_down();
 
             // move towards target
             } else {

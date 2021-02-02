@@ -68,13 +68,42 @@ impl Motion2DComponent {
         current_angle: f32,
         target_position: Vector2<f32>,
     ) {
-        let target_angle =
-            (current_position.y - target_position.y).atan2(current_position.x - target_position.x);
+        let target_angle = (current_position.y - target_position.y)
+            .atan2(current_position.x - target_position.x)
+            .to_degrees()
+            + 180.0;
 
-        if target_angle - current_angle < std::f32::consts::FRAC_PI_2 {
-            self.angular_velocity += self.angular_acceleration;
+        println!(
+            "target angle: {} \tcurrent angle: {}",
+            target_angle, current_angle
+        );
+
+        if target_position.x > current_position.x && target_position.y > current_position.y {
+            if target_angle - current_angle < -270.0 {
+                self.angular_velocity += self.angular_acceleration;
+            } else {
+                self.angular_velocity -= self.angular_acceleration;
+            }
         } else {
-            self.angular_velocity -= self.angular_acceleration;
+            if target_angle - current_angle < 90.0 {
+                self.angular_velocity += self.angular_acceleration;
+            } else {
+                self.angular_velocity -= self.angular_acceleration;
+            }
+        }
+    }
+
+    pub fn move_forward(&mut self, angle: f32) {
+        if self.velocity.x < self.speed.x * (angle - std::f32::consts::FRAC_PI_2).cos() {
+            self.velocity.x += self.acceleration.x;
+        } else {
+            self.velocity.x -= self.acceleration.x;
+        }
+
+        if self.velocity.y < self.speed.y * (angle - std::f32::consts::FRAC_PI_2).sin() {
+            self.velocity.y += self.acceleration.y;
+        } else {
+            self.velocity.y -= self.acceleration.y;
         }
     }
 }
