@@ -211,11 +211,7 @@ fn move_enemy(
                 );
                 hitbox_2d.set_offset_rotation(transform.euler_angles().2);
 
-                // TODO: replace move down with move forward (along axis of entity)
                 motion_2d.move_forward(transform.euler_angles().2);
-            //motion_2d.move_down();
-
-            // move towards target
             } else {
                 motion_2d.move_down();
                 motion_2d.brake_horizontal();

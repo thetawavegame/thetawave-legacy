@@ -73,26 +73,18 @@ impl Motion2DComponent {
             .to_degrees()
             + 180.0;
 
-        println!(
-            "target angle: {} \tcurrent angle: {}",
-            target_angle, current_angle
-        );
+        let adjusted_angle = current_angle + 90.0;
 
-        if target_position.x > current_position.x && target_position.y > current_position.y {
-            if target_angle - current_angle < -270.0 {
-                self.angular_velocity += self.angular_acceleration;
-            } else {
-                self.angular_velocity -= self.angular_acceleration;
-            }
+        let smallest_angle = signed_modulo(target_angle - adjusted_angle + 180.0, 360.0) - 180.0;
+
+        if smallest_angle >= 0.0 {
+            self.angular_velocity -= self.angular_acceleration;
         } else {
-            if target_angle - current_angle < 90.0 {
-                self.angular_velocity += self.angular_acceleration;
-            } else {
-                self.angular_velocity -= self.angular_acceleration;
-            }
+            self.angular_velocity += self.angular_acceleration;
         }
     }
 
+    // move in direction that the entity is facing
     pub fn move_forward(&mut self, angle: f32) {
         if self.velocity.x < self.speed.x * (angle - std::f32::consts::FRAC_PI_2).cos() {
             self.velocity.x += self.acceleration.x;
@@ -106,4 +98,8 @@ impl Motion2DComponent {
             self.velocity.y -= self.acceleration.y;
         }
     }
+}
+
+fn signed_modulo(a: f32, n: f32) -> f32 {
+    a - (a / n).floor() * n
 }
