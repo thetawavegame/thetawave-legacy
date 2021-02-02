@@ -44,6 +44,7 @@ pub fn spawn_item(
         angular_velocity: 0.0,
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
+        angular_speed: 0.0,
     };
 
     println!("{} spawned!", item.item_component.name);

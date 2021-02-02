@@ -24,6 +24,7 @@ pub fn spawn_enemy(
 
     let mut local_transform = Transform::default();
     local_transform.set_translation(spawn_position);
+    //local_transform.set_rotation_euler(0.0, 0.0, 5.49);
 
     let enemy_entity = lazy_update
         .create_entity(entities)

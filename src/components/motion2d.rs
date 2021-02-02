@@ -16,6 +16,7 @@ pub struct Motion2DComponent {
     pub angular_velocity: f32,
     pub angular_acceleration: f32,
     pub angular_deceleration: f32,
+    pub angular_speed: f32,
 }
 
 impl Component for Motion2DComponent {
@@ -57,6 +58,23 @@ impl Motion2DComponent {
             self.velocity.x -= self.deceleration.x;
         } else if self.velocity.x < 0.0 {
             self.velocity.x += self.deceleration.x;
+        }
+    }
+
+    // turn to face the target
+    pub fn turn_towards_target(
+        &mut self,
+        current_position: Vector2<f32>,
+        current_angle: f32,
+        target_position: Vector2<f32>,
+    ) {
+        let target_angle =
+            (current_position.y - target_position.y).atan2(current_position.x - target_position.x);
+
+        if target_angle - current_angle < std::f32::consts::FRAC_PI_2 {
+            self.angular_velocity += self.angular_acceleration;
+        } else {
+            self.angular_velocity -= self.angular_acceleration;
         }
     }
 }

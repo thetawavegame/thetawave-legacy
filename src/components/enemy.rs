@@ -1,4 +1,7 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
+use amethyst::{
+    core::math::Vector2,
+    ecs::prelude::{Component, DenseVecStorage, NullStorage},
+};
 
 use crate::components::SpawnProbabilities;
 
@@ -32,6 +35,7 @@ pub struct EnemyComponent {
     pub enemy_type: EnemyType,
     #[serde(default = "des_explosion_sprite_idx")]
     pub explosion_sprite_idx: usize,
+    pub target_position: Option<Vector2<f32>>,
 }
 
 fn des_explosion_sprite_idx() -> usize {

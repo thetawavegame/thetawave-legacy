@@ -23,14 +23,14 @@ pub fn initialize_enemy_spawner(world: &mut World) {
         .create_entity()
         .with(SpawnerComponent::new(
             vec![
-                ("pawn".to_string(), ENEMY_PAWN_RATIO),
-                ("drone".to_string(), ENEMY_DRONE_RATIO),
-                ("hauler".to_string(), ENEMY_HAULER_RATIO),
-                ("strafer".to_string(), ENEMY_STRAFER_RATIO),
-                ("missile_launcher".to_string(), ENEMY_MISSILE_LAUNCHER_RATIO),
+                //("pawn".to_string(), ENEMY_PAWN_RATIO),
+                //("drone".to_string(), ENEMY_DRONE_RATIO),
+                //("hauler".to_string(), ENEMY_HAULER_RATIO),
+                //("strafer".to_string(), ENEMY_STRAFER_RATIO),
+                //("missile_launcher".to_string(), ENEMY_MISSILE_LAUNCHER_RATIO),
                 ("missile".to_string(), ENEMY_MISSILE_RATIO),
-                ("repeater_body".to_string(), 0.0),
-                ("repeater_head".to_string(), 0.0),
+                //("repeater_body".to_string(), 0.0),
+                //("repeater_head".to_string(), 0.0),
             ],
             ENEMY_SPAWN_INTERVAL,
         ))

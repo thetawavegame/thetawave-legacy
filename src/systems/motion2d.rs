@@ -1,10 +1,12 @@
 use crate::{
-    components::{EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent},
+    components::{
+        EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent, SpaceshipComponent,
+    },
     constants::{ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y},
     events::EnemyReachedBottomEvent,
 };
 use amethyst::{
-    core::{timing::Time, transform::Transform},
+    core::{math::Vector2, timing::Time, transform::Transform},
     ecs::prelude::{Entities, Entity, Join, Read, ReadStorage, System, Write, WriteStorage},
     shrev::EventChannel,
 };
@@ -32,6 +34,15 @@ impl<'s> System<'s> for Motion2DSystem {
 
             // update angle based on angular velocity and time
             transform.append_rotation_z_axis(motion_2d.angular_velocity * dt);
+
+            // limit angular speed to max angular speed
+            if motion_2d.angular_velocity.abs() > motion_2d.angular_speed {
+                if motion_2d.angular_velocity > 0.0 {
+                    motion_2d.angular_velocity = motion_2d.angular_speed;
+                } else {
+                    motion_2d.angular_velocity = -motion_2d.angular_speed;
+                }
+            }
 
             // limit speed in the x direction to the max speed
             if motion_2d.velocity.x.abs() > motion_2d.max_speed.x {
@@ -63,7 +74,7 @@ impl<'s> System<'s> for EnemyMotion2DSystem {
         ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, Transform>,
-        ReadStorage<'s, Hitbox2DComponent>,
+        WriteStorage<'s, Hitbox2DComponent>,
         Write<'s, EventChannel<EnemyReachedBottomEvent>>,
     );
 
@@ -74,20 +85,20 @@ impl<'s> System<'s> for EnemyMotion2DSystem {
             enemies,
             mut motion_2ds,
             mut transforms,
-            hitbox_2ds,
+            mut hitbox_2ds,
             mut enemy_reached_bottom_event_channel,
         ): Self::SystemData,
     ) {
         for (enemy, motion_2d, hitbox_2d, transform, entity) in (
             &enemies,
             &mut motion_2ds,
-            &hitbox_2ds,
+            &mut hitbox_2ds,
             &mut transforms,
             &entities,
         )
             .join()
         {
-            move_enemy(&enemy, transform, motion_2d);
+            move_enemy(&enemy, transform, motion_2d, hitbox_2d);
 
             constrain_enemies_to_arena(
                 &enemy,
@@ -102,10 +113,58 @@ impl<'s> System<'s> for EnemyMotion2DSystem {
     }
 }
 
+// acquire target for targeting enemies
+pub struct EnemyTargetSystem;
+
+impl<'s> System<'s> for EnemyTargetSystem {
+    type SystemData = (
+        WriteStorage<'s, EnemyComponent>,
+        ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, Transform>,
+    );
+
+    fn run(&mut self, (mut enemies, spaceships, transforms): Self::SystemData) {
+        for (enemy, transform) in (&mut enemies, &transforms).join() {
+            if let EnemyType::Missile = enemy.enemy_type {
+                let mut closest_player_position: Option<Vector2<f32>> = None;
+
+                for (_spaceship, player_transform) in (&spaceships, &transforms).join() {
+                    if let Some(closest_position) = closest_player_position {
+                        if get_distance(
+                            player_transform.translation().x,
+                            transform.translation().x,
+                            player_transform.translation().y,
+                            transform.translation().y,
+                        ) < get_distance(
+                            closest_position.x,
+                            transform.translation().x,
+                            closest_position.y,
+                            transform.translation().y,
+                        ) {
+                            closest_player_position = Some(Vector2::new(
+                                player_transform.translation().x,
+                                player_transform.translation().y,
+                            ));
+                        }
+                    } else {
+                        closest_player_position = Some(Vector2::new(
+                            player_transform.translation().x,
+                            player_transform.translation().y,
+                        ));
+                    }
+                }
+
+                enemy.target_position = closest_player_position;
+            }
+        }
+    }
+}
+
 fn move_enemy(
     enemy: &EnemyComponent,
     transform: &mut Transform,
     motion_2d: &mut Motion2DComponent,
+    hitbox_2d: &mut Hitbox2DComponent,
 ) {
     match enemy.enemy_type {
         EnemyType::Pawn => {
@@ -143,8 +202,23 @@ fn move_enemy(
             motion_2d.brake_horizontal();
         }
         EnemyType::Missile => {
-            motion_2d.move_down();
-            motion_2d.brake_horizontal();
+            if let Some(target_position) = enemy.target_position {
+                //turn towards target
+                motion_2d.turn_towards_target(
+                    Vector2::new(transform.translation().x, transform.translation().y),
+                    transform.euler_angles().2,
+                    target_position,
+                );
+                hitbox_2d.set_offset_rotation(transform.euler_angles().2);
+
+                // TODO: replace move down with move forward (along axis of entity)
+                motion_2d.move_down();
+
+            // move towards target
+            } else {
+                motion_2d.move_down();
+                motion_2d.brake_horizontal();
+            }
         }
         EnemyType::RepeaterBody => {
             // move down to position and then accelerate backwards
@@ -213,4 +287,8 @@ fn constrain_enemies_to_arena(
             .delete(*entity)
             .expect("enemy unable to despawn upon reaching bottom of arena");
     }
+}
+
+fn get_distance(x1: f32, x2: f32, y1: f32, y2: f32) -> f32 {
+    ((x1 - x2).powi(2) + (y1 - y2).powi(2)).sqrt()
 }

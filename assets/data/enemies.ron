@@ -40,6 +40,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
     "pawn": (
@@ -101,6 +102,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
     "hauler": (
@@ -139,6 +141,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
     "strafer": (
@@ -201,6 +204,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
     "missile_launcher": (
@@ -245,6 +249,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
     "missile": (
@@ -280,11 +285,12 @@
             velocity: [0.0, 0.0],
             acceleration: [5.0, 5.0],
             deceleration: [2.0, 2.0],
-            speed: [45, 45],
+            speed: [10, 10],
             max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
-            angular_acceleration: 0.0,
+            angular_acceleration: 0.05,
             angular_deceleration: 0.0,
+            angular_speed: 0.5,
         ),
     ),
     "repeater_body": (
@@ -328,6 +334,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
     "repeater_head": (
@@ -371,6 +378,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
     "repeater_right_shoulder": (
@@ -416,6 +424,7 @@
             angular_velocity: -0.05,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.05,
         ),
     ),
     "repeater_left_shoulder": (
@@ -461,6 +470,7 @@
             angular_velocity: 0.05,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.05,
         ),
     ),
     "repeater_right_arm": (
@@ -506,6 +516,7 @@
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         ),
     ),
 }
