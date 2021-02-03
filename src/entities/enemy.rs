@@ -1,4 +1,7 @@
-use crate::resources::{EnemyEntityData, ThrusterEntityData};
+use crate::{
+    components::DespawnAtBorderComponent,
+    resources::{EnemyEntityData, ThrusterEntityData},
+};
 use amethyst::{
     assets::Handle,
     core::{math::Vector3, transform::Transform, Named, Parent},
@@ -33,6 +36,7 @@ pub fn spawn_enemy(
         .with(enemy.hitbox_component)
         .with(enemy.motion2d_component)
         .with(enemy.health_component)
+        .with(enemy.despawn_component)
         .with(local_transform)
         .with(Transparent)
         .with(name)
