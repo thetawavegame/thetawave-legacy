@@ -35,7 +35,7 @@ impl<'s> System<'s> for Motion2DSystem {
 
             // limit speed in the x direction to the max speed
             if motion_2d.velocity.x.abs() > motion_2d.max_speed.x {
-                if motion_2d.velocity.x >= 0.0 {
+                if motion_2d.velocity.x > 0.0 {
                     motion_2d.velocity.x = motion_2d.max_speed.x;
                 } else {
                     motion_2d.velocity.x = -motion_2d.max_speed.x;
@@ -44,7 +44,7 @@ impl<'s> System<'s> for Motion2DSystem {
 
             // limit speed in the y direction to the max speed
             if motion_2d.velocity.y.abs() > motion_2d.max_speed.y {
-                if motion_2d.velocity.y >= 0.0 {
+                if motion_2d.velocity.y > 0.0 {
                     motion_2d.velocity.y = motion_2d.max_speed.y;
                 } else {
                     motion_2d.velocity.y = -motion_2d.max_speed.y;
@@ -109,53 +109,65 @@ fn move_enemy(
 ) {
     match enemy.enemy_type {
         EnemyType::Pawn => {
-            // accelerate in negative y direction
-            motion_2d.velocity.y += motion_2d.acceleration.y;
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
         }
         EnemyType::Drone => {
-            // accelerate in negative y direction
-            motion_2d.velocity.y += motion_2d.acceleration.y;
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
         }
         EnemyType::Hauler => {
-            // accelerate in negative y direction
-            motion_2d.velocity.y += motion_2d.acceleration.y;
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
         }
         EnemyType::Strafer => {
-            // accelerate in negative y direction
-            motion_2d.velocity.y += motion_2d.acceleration.y;
-            // accelerate in x direction
-            motion_2d.velocity.x += motion_2d.acceleration.x;
+            motion_2d.move_down();
+
+            // accelerate to speed stat in the x direction
+            if motion_2d.velocity.x.abs() < motion_2d.speed.x {
+                if motion_2d.velocity.x >= 0.0 {
+                    motion_2d.velocity.x += motion_2d.acceleration.x;
+                } else {
+                    motion_2d.velocity.x -= motion_2d.acceleration.x;
+                }
+            } else if motion_2d.velocity.x.abs() >= motion_2d.speed.x {
+                if motion_2d.velocity.x > 0.0 {
+                    motion_2d.velocity.x -= motion_2d.deceleration.x;
+                } else {
+                    motion_2d.velocity.x += motion_2d.deceleration.x;
+                }
+            }
         }
         EnemyType::MissileLauncher => {
-            // accelerate in negative y direction
-            motion_2d.velocity.y += motion_2d.acceleration.y;
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
         }
         EnemyType::Missile => {
-            // accelerate in negative y direction
-            motion_2d.velocity.y += motion_2d.acceleration.y;
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
         }
         EnemyType::RepeaterBody => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 30.0 {
-                motion_2d.velocity.y += motion_2d.acceleration.y;
+                motion_2d.move_down();
             } else {
-                motion_2d.velocity.y -= motion_2d.acceleration.y;
+                motion_2d.move_up();
             }
         }
         EnemyType::RepeaterHead => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
-                motion_2d.velocity.y += motion_2d.acceleration.y;
+                motion_2d.move_down();
             } else {
-                motion_2d.velocity.y -= motion_2d.acceleration.y;
+                motion_2d.move_up();
             }
         }
         EnemyType::RepeaterShoulder => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
-                motion_2d.velocity.y += motion_2d.acceleration.y;
+                motion_2d.move_down();
             } else {
-                motion_2d.velocity.y -= motion_2d.acceleration.y;
+                motion_2d.move_up();
             }
 
             // rotate back and forth
@@ -168,9 +180,9 @@ fn move_enemy(
         EnemyType::RepeaterArm => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
-                motion_2d.velocity.y += motion_2d.acceleration.y;
+                motion_2d.move_down();
             } else {
-                motion_2d.velocity.y -= motion_2d.acceleration.y;
+                motion_2d.move_up();
             }
         }
     }
@@ -190,15 +202,7 @@ fn constrain_enemies_to_arena(
     if transform.translation().x + (hitbox_2d.width / 2.0) > ARENA_MAX_X
         || transform.translation().x - (hitbox_2d.width / 2.0) < ARENA_MIN_X
     {
-        match enemy.enemy_type {
-            EnemyType::Strafer => {
-                motion_2d.acceleration.x *= -1.0;
-                motion_2d.velocity.x *= -1.0;
-            }
-            _ => {
-                motion_2d.velocity.x *= -1.0;
-            }
-        }
+        motion_2d.velocity.x *= -1.0;
     }
 
     // all enemies despawn upon reaching bottom side
