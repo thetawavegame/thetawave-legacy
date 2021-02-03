@@ -42,9 +42,7 @@ impl Default for MainGameState {
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
                 .with(systems::EnemySystem, "enemy_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
-                .with(systems::ConsumableSystem, "consumable_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
-                .with(systems::ItemSystem, "item_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::EnemyTargetSystem, "enemy_target_system", &[])
@@ -52,6 +50,11 @@ impl Default for MainGameState {
                     systems::EnemyMotion2DSystem,
                     "enemy_motion_2d_system",
                     &["enemy_target_system"],
+                )
+                .with(
+                    systems::DespawnAtBorderSystem,
+                    "despawn_at_border_system",
+                    &[],
                 )
                 .with(
                     systems::SpaceshipMovementSystem,
@@ -114,7 +117,6 @@ impl Default for MainGameState {
                     "spaceship_system",
                     &["spaceship_item_collision_system"],
                 )
-                .with(systems::BlastSystem, "blast_system", &[])
                 .with(systems::StoreSystem, "store_system", &[])
                 .with(
                     systems::StatTrackerSystem,

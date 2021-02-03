@@ -42,6 +42,9 @@
             angular_deceleration: 0.0,
             angular_speed: 0.0,
         ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
+        ),
     ),
     "pawn": (
         animation_component: (
@@ -104,6 +107,9 @@
             angular_deceleration: 0.0,
             angular_speed: 0.0,
         ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
+        ),
     ),
     "hauler": (
         animation_component: (
@@ -142,6 +148,9 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+        ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
         ),
     ),
     "strafer": (
@@ -206,6 +215,9 @@
             angular_deceleration: 0.0,
             angular_speed: 0.0,
         ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
+        ),
     ),
     "missile_launcher": (
         animation_component: (
@@ -251,6 +263,9 @@
             angular_deceleration: 0.0,
             angular_speed: 0.0,
         ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
+        ),
     ),
     "missile": (
         animation_component: (
@@ -291,6 +306,9 @@
             angular_acceleration: 0.2,
             angular_deceleration: 0.0,
             angular_speed: 1.2,
+        ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
         ),
     ),
     "repeater_body": (
@@ -336,6 +354,9 @@
             angular_deceleration: 0.0,
             angular_speed: 0.0,
         ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
+        ),
     ),
     "repeater_head": (
         animation_component: (
@@ -379,6 +400,9 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+        ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
         ),
     ),
     "repeater_right_shoulder": (
@@ -426,6 +450,9 @@
             angular_deceleration: 0.0,
             angular_speed: 0.05,
         ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
+        ),
     ),
     "repeater_left_shoulder": (
         animation_component: (
@@ -472,6 +499,9 @@
             angular_deceleration: 0.0,
             angular_speed: 0.05,
         ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
+        ),
     ),
     "repeater_right_arm": (
         animation_component: (
@@ -517,6 +547,9 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+        ),
+        despawn_component: (
+            bottom_offset: Some(20.0),
         ),
     ),
 }

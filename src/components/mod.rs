@@ -3,6 +3,7 @@ mod blast;
 mod boss;
 mod character;
 mod consumable;
+mod despawn;
 mod enemy;
 mod gamemaster;
 mod health;
@@ -24,6 +25,7 @@ pub use self::{
     boss::RepeaterComponent,
     character::CharacterComponent,
     consumable::ConsumableComponent,
+    despawn::DespawnAtBorderComponent,
     enemy::{EnemyComponent, EnemySpawnerTag, EnemyType},
     gamemaster::{BossType, GameMasterComponent, Phase, PhaseType},
     health::HealthComponent,
