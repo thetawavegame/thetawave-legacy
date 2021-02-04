@@ -45,7 +45,12 @@ impl Default for MainGameState {
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
-                .with(systems::EnemyMotion2DSystem, "enemy_motion_2d_system", &[])
+                .with(systems::EnemyTargetSystem, "enemy_target_system", &[])
+                .with(
+                    systems::EnemyMotion2DSystem,
+                    "enemy_motion_2d_system",
+                    &["enemy_target_system"],
+                )
                 .with(
                     systems::DespawnAtBorderSystem,
                     "despawn_at_border_system",
