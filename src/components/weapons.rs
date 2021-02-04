@@ -106,6 +106,7 @@ impl BlasterComponent {
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
         };
 
         let blast_component = BlastComponent {

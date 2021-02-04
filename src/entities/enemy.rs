@@ -1,7 +1,4 @@
-use crate::{
-    components::DespawnAtBorderComponent,
-    resources::{EnemyEntityData, ThrusterEntityData},
-};
+use crate::resources::{EnemyEntityData, ThrusterEntityData};
 use amethyst::{
     assets::Handle,
     core::{math::Vector3, transform::Transform, Named, Parent},

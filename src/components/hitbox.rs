@@ -27,6 +27,10 @@ impl Component for Hitbox2DComponent {
 }
 
 impl Hitbox2DComponent {
+    pub fn set_offset_rotation(&mut self, current_angle: f32) {
+        self.offset_rotation = -current_angle;
+    }
+
     pub fn is_colliding(
         &self,
         hitbox_b: &Hitbox2DComponent,
