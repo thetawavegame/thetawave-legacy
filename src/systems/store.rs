@@ -64,6 +64,7 @@ impl<'s> System<'s> for StoreSystem {
                         &entities,
                         character,
                         transform,
+                        &item_pool,
                         &sprite_resource,
                         &lazy_update,
                     ))
@@ -73,6 +74,7 @@ impl<'s> System<'s> for StoreSystem {
                             &entities,
                             character,
                             transform,
+                            &item_pool,
                             &sprite_resource,
                             &lazy_update,
                         ))
@@ -82,6 +84,7 @@ impl<'s> System<'s> for StoreSystem {
                             &entities,
                             character,
                             transform,
+                            &item_pool,
                             &sprite_resource,
                             &lazy_update,
                         ))

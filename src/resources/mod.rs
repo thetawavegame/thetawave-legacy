@@ -51,10 +51,21 @@ pub struct SpriteSheetData {
     pub data: String,
 }
 
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ConsumablesResource {
+    pub motion2d_component: Motion2DComponent,
+    pub consumable_entities: HashMap<String, ConsumableEntityData>,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ItemsResource {
+    pub motion2d_component: Motion2DComponent,
+    pub hitbox2d_component: Hitbox2DComponent,
+    pub item_entities: HashMap<String, ItemEntityData>,
+}
+
 pub type EnemiesResource = HashMap<String, EnemyEntityData>;
 pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
-pub type ItemsResource = HashMap<String, ItemEntityData>;
-pub type ConsumablesResource = HashMap<String, ConsumableEntityData>;
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 #[derive(Clone)]

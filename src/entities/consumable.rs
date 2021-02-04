@@ -1,6 +1,6 @@
 use crate::{
     components::DespawnAtBorderComponent,
-    resources::{ConsumableEntityData, SpriteSheetsResource},
+    resources::{ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
     core::{math::Vector3, transform::Transform},
@@ -11,13 +11,16 @@ use amethyst::{
 pub fn spawn_consumable(
     entities: &Entities,
     sprite_resource: &ReadExpect<SpriteSheetsResource>,
-    consumable: ConsumableEntityData,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    name: String,
     spawn_position: &Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_resource.spritesheets["consumables"].clone(),
-        sprite_number: consumable.consumable_component.sprite_index,
+        sprite_number: consumables_resource.consumable_entities[&name]
+            .consumable_component
+            .sprite_index,
     };
 
     let mut local_transform = Transform::default();
@@ -26,8 +29,17 @@ pub fn spawn_consumable(
     lazy_update
         .create_entity(entities)
         .with(sprite_render)
-        .with(consumable.hitbox_component)
-        .with(consumable.consumable_component)
+        .with(
+            consumables_resource.consumable_entities[&name]
+                .hitbox_component
+                .clone(),
+        )
+        .with(
+            consumables_resource.consumable_entities[&name]
+                .consumable_component
+                .clone(),
+        )
+        .with(consumables_resource.motion2d_component.clone())
         .with(local_transform)
         .with(Transparent)
         .with(DespawnAtBorderComponent {

@@ -3,7 +3,7 @@ use crate::{
     components::{choose_random_name, EnemyComponent},
     entities::{spawn_consumable, spawn_explosion},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
-    resources::{ConsumableEntityData, SpriteSheetsResource},
+    resources::{ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
     core::transform::Transform,
@@ -12,7 +12,6 @@ use amethyst::{
     ecs::{Read, World},
     shrev::{EventChannel, ReaderId},
 };
-use std::collections::HashMap;
 
 #[derive(Default)]
 pub struct EnemyDestroyedSystem {
@@ -25,7 +24,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         Entities<'s>,
         ReadStorage<'s, Transform>,
         ReadStorage<'s, EnemyComponent>,
-        ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
+        ReadExpect<'s, ConsumablesResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -48,7 +47,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             entities,
             transforms,
             enemies,
-            consumable_pool,
+            consumables_resource,
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
@@ -76,7 +75,8 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 spawn_consumable(
                     &entities,
                     &sprite_resource,
-                    consumable_pool[name].clone(),
+                    &consumables_resource,
+                    name.to_string(),
                     enemy_transform.translation(),
                     &lazy_update,
                 );

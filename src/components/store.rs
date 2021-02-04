@@ -43,7 +43,7 @@ impl StoreComponent {
             for (name, value) in choose_pool.clone() {
                 sum += value;
                 if sum > pos {
-                    let item_to_add = &item_pool[&name];
+                    let item_to_add = &item_pool.item_entities[&name];
                     choose_pool.retain(|element| element != &(name.clone(), value));
                     self.item_inventory[i] = Some(item_to_add.clone());
 
@@ -103,6 +103,7 @@ impl StoreComponent {
         entities: &Entities,
         character: &mut CharacterComponent,
         transform: &Transform,
+        items_resource: &ReadExpect<ItemsResource>,
         sprite_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
@@ -117,6 +118,7 @@ impl StoreComponent {
                     entities,
                     sprite_resource,
                     item.clone(),
+                    items_resource,
                     Vector3::new(
                         transform.translation().x,
                         ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
