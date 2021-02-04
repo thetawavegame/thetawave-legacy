@@ -1,6 +1,8 @@
 use crate::{
-    components::DespawnAtBorderComponent,
-    resources::{ConsumablesResource, SpriteSheetsResource},
+    components::{
+        choose_random_name, ConsumableComponent, DespawnAtBorderComponent, EnemyComponent,
+    },
+    resources::{ConsumableEntityData, ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
     core::{math::Vector3, transform::Transform},
@@ -11,16 +13,14 @@ use amethyst::{
 pub fn spawn_consumable(
     entities: &Entities,
     sprite_resource: &ReadExpect<SpriteSheetsResource>,
+    consumable_data: &ConsumableEntityData,
     consumables_resource: &ReadExpect<ConsumablesResource>,
-    name: String,
     spawn_position: &Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_resource.spritesheets["consumables"].clone(),
-        sprite_number: consumables_resource.consumable_entities[&name]
-            .consumable_component
-            .sprite_index,
+        sprite_number: consumable_data.consumable_component.sprite_index,
     };
 
     let mut local_transform = Transform::default();
@@ -29,16 +29,8 @@ pub fn spawn_consumable(
     lazy_update
         .create_entity(entities)
         .with(sprite_render)
-        .with(
-            consumables_resource.consumable_entities[&name]
-                .hitbox_component
-                .clone(),
-        )
-        .with(
-            consumables_resource.consumable_entities[&name]
-                .consumable_component
-                .clone(),
-        )
+        .with(consumable_data.hitbox_component.clone())
+        .with(consumable_data.consumable_component.clone())
         .with(consumables_resource.motion2d_component.clone())
         .with(local_transform)
         .with(Transparent)
@@ -49,4 +41,26 @@ pub fn spawn_consumable(
             right_offset: None,
         })
         .build();
+}
+
+pub fn spawn_random_consumable(
+    entities: &Entities,
+    enemy: &EnemyComponent,
+    sprite_resource: &ReadExpect<SpriteSheetsResource>,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    spawn_position: &Vector3<f32>,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    let name = choose_random_name(&enemy.collectables_probs);
+
+    if !name.is_empty() {
+        spawn_consumable(
+            entities,
+            sprite_resource,
+            &consumables_resource.consumable_entities[name],
+            consumables_resource,
+            spawn_position,
+            lazy_update,
+        )
+    }
 }

@@ -17,7 +17,7 @@ pub mod store;
 pub use self::{
     blast::spawn_blasts,
     boss::spawn_repeater,
-    consumable::spawn_consumable,
+    consumable::{spawn_consumable, spawn_random_consumable},
     defense::initialize_defense,
     enemy::spawn_enemy,
     enemy_spawner::initialize_enemy_spawner,

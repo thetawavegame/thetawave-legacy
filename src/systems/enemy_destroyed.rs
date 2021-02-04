@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
-    components::{choose_random_name, EnemyComponent},
-    entities::{spawn_consumable, spawn_explosion},
+    components::EnemyComponent,
+    entities::{spawn_explosion, spawn_random_consumable},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
     resources::{ConsumablesResource, SpriteSheetsResource},
 };
@@ -70,17 +70,14 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 &lazy_update,
             );
 
-            let name = choose_random_name(&enemy_component.collectables_probs);
-            if !name.is_empty() {
-                spawn_consumable(
-                    &entities,
-                    &sprite_resource,
-                    &consumables_resource,
-                    name.to_string(),
-                    enemy_transform.translation(),
-                    &lazy_update,
-                );
-            }
+            spawn_random_consumable(
+                &entities,
+                &enemy_component,
+                &sprite_resource,
+                &consumables_resource,
+                enemy_transform.translation(),
+                &lazy_update,
+            );
 
             entities
                 .delete(event.enemy)
