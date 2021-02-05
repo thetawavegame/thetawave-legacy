@@ -54,6 +54,7 @@ pub struct SpriteSheetData {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumablesResource {
     pub motion2d_component: Motion2DComponent,
+    pub despawn_border_component: DespawnAtBorderComponent,
     pub consumable_entities: HashMap<String, ConsumableEntityData>,
 }
 
@@ -61,6 +62,7 @@ pub struct ConsumablesResource {
 pub struct ItemsResource {
     pub motion2d_component: Motion2DComponent,
     pub hitbox2d_component: Hitbox2DComponent,
+    pub despawn_border_component: DespawnAtBorderComponent,
     pub item_entities: HashMap<String, ItemEntityData>,
 }
 

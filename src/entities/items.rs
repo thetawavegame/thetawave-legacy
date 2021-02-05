@@ -1,7 +1,4 @@
-use crate::{
-    components::DespawnAtBorderComponent,
-    resources::{ItemEntityData, ItemsResource, SpriteSheetsResource},
-};
+use crate::resources::{ItemEntityData, ItemsResource, SpriteSheetsResource};
 use amethyst::{
     core::{math::Vector3, transform::Transform, Named},
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
@@ -36,12 +33,7 @@ pub fn spawn_item(
         .with(local_transform)
         .with(Transparent)
         .with(name)
-        .with(DespawnAtBorderComponent {
-            top_offset: None,
-            bottom_offset: Some(20.0),
-            left_offset: None,
-            right_offset: None,
-        })
+        .with(items_resource.despawn_border_component.clone())
         .build();
 
     if let Some(animation_component) = item.animation_component {

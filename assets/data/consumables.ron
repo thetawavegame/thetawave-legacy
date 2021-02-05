@@ -10,6 +10,9 @@
         angular_deceleration: 0.0,
         angular_speed: 0.0,
     ),
+    despawn_border_component: (
+        bottom_offset: Some(20.0),
+    ),
     consumable_entities: {
         "defense_wrench": (
             consumable_component: (

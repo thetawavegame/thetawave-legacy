@@ -14,6 +14,9 @@
         width: 14.0,
         height: 14.0,
     ),
+    despawn_border_component: (
+        bottom_offset: Some(20.0),
+    ),
     item_entities: {
         "steel_barrel": (
             item_component: (

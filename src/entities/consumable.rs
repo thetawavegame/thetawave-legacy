@@ -1,7 +1,5 @@
 use crate::{
-    components::{
-        choose_random_name, ConsumableComponent, DespawnAtBorderComponent, EnemyComponent,
-    },
+    components::{choose_random_name, EnemyComponent},
     resources::{ConsumableEntityData, ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
@@ -34,12 +32,7 @@ pub fn spawn_consumable(
         .with(consumables_resource.motion2d_component.clone())
         .with(local_transform)
         .with(Transparent)
-        .with(DespawnAtBorderComponent {
-            top_offset: None,
-            bottom_offset: Some(20.0),
-            left_offset: None,
-            right_offset: None,
-        })
+        .with(consumables_resource.despawn_border_component.clone())
         .build();
 }
 
