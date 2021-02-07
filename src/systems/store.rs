@@ -57,6 +57,7 @@ impl<'s> System<'s> for StoreSystem {
                 &lazy_update,
             );
 
+            // TODO: streamline purchase_item function with constant component in item data file
             for (character, transform) in (&mut characters, &transforms).join() {
                 if (buy_0_action
                     && store.purchase_item(
@@ -64,6 +65,7 @@ impl<'s> System<'s> for StoreSystem {
                         &entities,
                         character,
                         transform,
+                        &item_pool,
                         &sprite_resource,
                         &lazy_update,
                     ))
@@ -73,6 +75,7 @@ impl<'s> System<'s> for StoreSystem {
                             &entities,
                             character,
                             transform,
+                            &item_pool,
                             &sprite_resource,
                             &lazy_update,
                         ))
@@ -82,6 +85,7 @@ impl<'s> System<'s> for StoreSystem {
                             &entities,
                             character,
                             transform,
+                            &item_pool,
                             &sprite_resource,
                             &lazy_update,
                         ))

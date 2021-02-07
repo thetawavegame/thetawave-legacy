@@ -1,9 +1,9 @@
 use crate::{
     audio::Sounds,
-    components::{choose_random_name, EnemyComponent},
-    entities::{spawn_consumable, spawn_explosion},
+    components::EnemyComponent,
+    entities::{spawn_explosion, spawn_random_consumable},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
-    resources::{ConsumableEntityData, SpriteSheetsResource},
+    resources::{ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
     core::transform::Transform,
@@ -12,7 +12,6 @@ use amethyst::{
     ecs::{Read, World},
     shrev::{EventChannel, ReaderId},
 };
-use std::collections::HashMap;
 
 #[derive(Default)]
 pub struct EnemyDestroyedSystem {
@@ -25,7 +24,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         Entities<'s>,
         ReadStorage<'s, Transform>,
         ReadStorage<'s, EnemyComponent>,
-        ReadExpect<'s, HashMap<String, ConsumableEntityData>>,
+        ReadExpect<'s, ConsumablesResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -48,7 +47,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             entities,
             transforms,
             enemies,
-            consumable_pool,
+            consumables_resource,
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
@@ -71,16 +70,14 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 &lazy_update,
             );
 
-            let name = choose_random_name(&enemy_component.collectables_probs);
-            if !name.is_empty() {
-                spawn_consumable(
-                    &entities,
-                    &sprite_resource,
-                    consumable_pool[name].clone(),
-                    enemy_transform.translation(),
-                    &lazy_update,
-                );
-            }
+            spawn_random_consumable(
+                &entities,
+                &enemy_component,
+                &sprite_resource,
+                &consumables_resource,
+                enemy_transform.translation(),
+                &lazy_update,
+            );
 
             entities
                 .delete(event.enemy)

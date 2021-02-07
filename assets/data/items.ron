@@ -1,143 +1,163 @@
-{
-    "steel_barrel": (
-        item_component: (
-            bool_effects: {
-                "barrel_immunity": true,
-            },
-            price: 9,
-            sprite_index: 1,
-            name: "steel_barrel",
-        ),
+(   
+    motion2d_component: (
+        velocity: [0.0, -70.0],
+        acceleration: [0.0, 0.0],
+        deceleration: [0.0, 0.0],
+        speed: [0.0, 70.0],
+        max_speed: [0.0, 70.0],
+        angular_velocity: 0.0,
+        angular_acceleration: 0.0,
+        angular_deceleration: 0.0,
+        angular_speed: 0.0,
     ),
-    "plasma_blasts": (
-        item_component: (
-            stat_effects: {
-            "blast_fire_speed": -0.05,
-            "blast_damage": 5,
-            },
-            price: 15,
-            sprite_index: 2,
-            name: "plasma_blasts",
-        ),
+    hitbox2d_component: (
+        width: 14.0,
+        height: 14.0,
     ),
-    "hazardous_reactor": (
-        item_component: (
-            stat_effects: {
-                "max_speed": 20,
-            },
-            price: 7,
-            sprite_index: 3,
-            name: "hazardous_reactor",
-        ),
+    despawn_border_component: (
+        bottom_offset: Some(20.0),
     ),
-    "warp_thruster": (
-        item_component: (
-            stat_effects: {
-            "deceleration": 1,
-            "acceleration": 1,
-            },
-            sprite_index: 4,
-            name: "warp_thruster",
+    item_entities: {
+        "steel_barrel": (
+            item_component: (
+                bool_effects: {
+                    "barrel_immunity": true,
+                },
+                price: 9,
+                sprite_index: 1,
+                name: "steel_barrel",
+            ),
         ),
-    ),
-    "quadrupedal_tentaclover": (
-        item_component: (
-            stat_effects: {
-                "crit_chance": 0.05,
-            },
-            price: 12,
-            sprite_index: 5,
-            name: "quadrupedal_tentaclover",
+        "plasma_blasts": (
+            item_component: (
+                stat_effects: {
+                "blast_fire_speed": -0.05,
+                "blast_damage": 5,
+                },
+                price: 15,
+                sprite_index: 2,
+                name: "plasma_blasts",
+            ),
         ),
-    ),
-    "defense_satellite": (
-        item_component: (
-            stat_effects: {
-                "max_defense": 100,
-            },
-            price: 11,
-            sprite_index: 6,
-            name: "defense_satellite",
+        "hazardous_reactor": (
+            item_component: (
+                stat_effects: {
+                    "max_speed": 20,
+                },
+                price: 7,
+                sprite_index: 3,
+                name: "hazardous_reactor",
+            ),
         ),
-    ),
-    "double_barrel": (
-        item_component: (
-            stat_effects: {
-                "blast_count": 1,
-            },
-            price: 18,
-            sprite_index: 7,
-            name: "double_barrel",
+        "warp_thruster": (
+            item_component: (
+                stat_effects: {
+                "deceleration": 1,
+                "acceleration": 1,
+                },
+                sprite_index: 4,
+                name: "warp_thruster",
+            ),
         ),
-    ),
-    "yithian_plague": (
-        item_component: (
-            stat_effects: {
-                "poison_chance": 0.10,
-            },
-            price: 14,
-            sprite_index: 8,
-            name: "yithian_plague",
+        "quadrupedal_tentaclover": (
+            item_component: (
+                stat_effects: {
+                    "crit_chance": 0.05,
+                },
+                price: 12,
+                sprite_index: 5,
+                name: "quadrupedal_tentaclover",
+            ),
         ),
-    ),
-    "spice": (
-        item_component: (
-            stat_effects: {
-                "barrel_cooldown": -0.5,
-            },
-            price: 8,
-            sprite_index: 9,
-            name: "spice",
+        "defense_satellite": (
+            item_component: (
+                stat_effects: {
+                    "max_defense": 100,
+                },
+                price: 11,
+                sprite_index: 6,
+                name: "defense_satellite",
+            ),
         ),
-    ),
-    "enhanced_plating": (
-        item_component: (
-            stat_effects: {
-                "health_multiply": 1.2,
-            },
-            price: 11,
-            sprite_index: 10,
-            name: "enhanced_plating",
+        "double_barrel": (
+            item_component: (
+                stat_effects: {
+                    "blast_count": 1,
+                },
+                price: 18,
+                sprite_index: 7,
+                name: "double_barrel",
+            ),
         ),
-    ),
-    "structure_reinforcement": (
-        item_component: (
-            stat_effects: {
-                "health_add": 100.0,
-            },
-            price: 3,
-            sprite_index: 11,
-            name: "structure_reinforcement",
+        "yithian_plague": (
+            item_component: (
+                stat_effects: {
+                    "poison_chance": 0.10,
+                },
+                price: 14,
+                sprite_index: 8,
+                name: "yithian_plague",
+            ),
         ),
-    ),
-    "blaster_size_enhancer": (
-        item_component: (
-            stat_effects: {
-                "blast_size": 4.0,
-            },
-            price: 12,
-            sprite_index: 12,
-            name: "blaster_size_enhancer",
+        "spice": (
+            item_component: (
+                stat_effects: {
+                    "barrel_cooldown": -0.5,
+                },
+                price: 8,
+                sprite_index: 9,
+                name: "spice",
+            ),
         ),
-        animation_component: Some((
-            start_idx: 12,
-            frame_count: 5,
-            current_frame: 12,
-            frame_time: 0.18,
-            elapsed_time: 0.0,
-            forward: true,
-            animation_type: PingPong,
-        )),
-    ),
-    "frequency_augmentor": (
-        item_component: (
-            stat_effects: {
-                "blast_fire_speed": -0.10,
-                "blast_damage": -4,
-            },
-            price: 8,
-            sprite_index: 17,
-            name: "frequency_augmentor",
+        "enhanced_plating": (
+            item_component: (
+                stat_effects: {
+                    "health_multiply": 1.2,
+                },
+                price: 11,
+                sprite_index: 10,
+                name: "enhanced_plating",
+            ),
         ),
-    ),
-}
+        "structure_reinforcement": (
+            item_component: (
+                stat_effects: {
+                    "health_add": 100.0,
+                },
+                price: 3,
+                sprite_index: 11,
+                name: "structure_reinforcement",
+            ),
+        ),
+        "blaster_size_enhancer": (
+            item_component: (
+                stat_effects: {
+                    "blast_size": 4.0,
+                },
+                price: 12,
+                sprite_index: 12,
+                name: "blaster_size_enhancer",
+            ),
+            animation_component: Some((
+                start_idx: 12,
+                frame_count: 5,
+                current_frame: 12,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            )),
+        ),
+        "frequency_augmentor": (
+            item_component: (
+                stat_effects: {
+                    "blast_fire_speed": -0.10,
+                    "blast_damage": -4,
+                },
+                price: 8,
+                sprite_index: 17,
+                name: "frequency_augmentor",
+            ),
+        ),
+    }
+)

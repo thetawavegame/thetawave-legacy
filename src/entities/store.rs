@@ -9,6 +9,7 @@ pub type StockProbabilities = Vec<(String, f32)>;
 pub fn initialize_store(world: &mut World) {
     let stock_list: StockProbabilities = world
         .read_resource::<ItemsResource>()
+        .item_entities
         .iter()
         .map(|(key, _)| (key.clone(), 1.0)) // all with same probability
         .collect();
