@@ -1,5 +1,5 @@
 use crate::{
-    components::{EnemyComponent, Hitbox2DComponent, Motion2DComponent, SpaceshipComponent},
+    components::{EnemyComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent},
     events::{CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent},
     resources::DebugLinesConfig,
 };
@@ -78,7 +78,7 @@ pub struct CollisionHandlerSystem {
 /// Handles collision events between entities
 impl<'s> System<'s> for CollisionHandlerSystem {
     type SystemData = (
-        ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, EnemyComponent>,
         ReadStorage<'s, Motion2DComponent>,
         Read<'s, EventChannel<CollisionEvent>>,
@@ -98,7 +98,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
     fn run(
         &mut self,
         (
-            spaceships,
+            players,
             enemies,
             motions,
             collision_channel,
@@ -113,7 +113,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                 collision_velocity = Some(motion_component.velocity);
             }
 
-            if let Some(_spaceship) = spaceships.get(event.entity_a) {
+            if let Some(_player) = players.get(event.entity_a) {
                 player_collision_channel.single_write(PlayerCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,

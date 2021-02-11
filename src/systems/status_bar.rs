@@ -1,7 +1,7 @@
 use crate::{
     components::{
-        DefenseTag, HealthComponent, SpaceshipComponent, StatusBarComponent, StatusType,
-        StoreComponent,
+        BarrelRollAbilityComponent, DefenseTag, HealthComponent, PlayerComponent,
+        StatusBarComponent, StatusType, StoreComponent,
     },
     entities::spawn_status_unit,
     resources::SpriteSheetsResource,
@@ -21,7 +21,8 @@ impl<'s> System<'s> for StatusBarSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, StatusBarComponent>,
-        ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, PlayerComponent>,
+        ReadStorage<'s, BarrelRollAbilityComponent>,
         ReadStorage<'s, DefenseTag>,
         ReadStorage<'s, HealthComponent>,
         ReadStorage<'s, StoreComponent>,
@@ -34,7 +35,8 @@ impl<'s> System<'s> for StatusBarSystem {
         (
             entities,
             mut status_bars,
-            spaceships,
+            players,
+            barrel_roll_abilities,
             defense_tags,
             healths,
             stores,
@@ -45,7 +47,7 @@ impl<'s> System<'s> for StatusBarSystem {
         for status_bar in (&mut status_bars).join() {
             match status_bar.status_type {
                 StatusType::Health => {
-                    for (_spaceship, health) in (&spaceships, &healths).join() {
+                    for (_player, health) in (&players, &healths).join() {
                         if let Some(status_position) =
                             status_bar.update_units_y(health.max_value, health.value, &entities)
                         {
@@ -79,10 +81,11 @@ impl<'s> System<'s> for StatusBarSystem {
                 }
 
                 StatusType::Roll => {
-                    for spaceship in (&spaceships).join() {
+                    for barrel_roll_ability in (&barrel_roll_abilities).join() {
                         if let Some(status_position) = status_bar.update_units_x(
-                            spaceship.barrel_cooldown,
-                            spaceship.barrel_cooldown - spaceship.barrel_reset_timer,
+                            barrel_roll_ability.execute_cooldown,
+                            barrel_roll_ability.execute_cooldown
+                                - barrel_roll_ability.execute_timer,
                             &entities,
                         ) {
                             status_bar.status_unit_stack.push(spawn_status_unit(

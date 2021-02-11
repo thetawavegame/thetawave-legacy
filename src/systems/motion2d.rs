@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent, SpaceshipComponent,
+        EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent, PlayerComponent,
     },
     constants::{ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y},
 };
@@ -93,16 +93,16 @@ pub struct EnemyTargetSystem;
 impl<'s> System<'s> for EnemyTargetSystem {
     type SystemData = (
         WriteStorage<'s, EnemyComponent>,
-        ReadStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, Transform>,
     );
 
-    fn run(&mut self, (mut enemies, spaceships, transforms): Self::SystemData) {
+    fn run(&mut self, (mut enemies, players, transforms): Self::SystemData) {
         for (enemy, transform) in (&mut enemies, &transforms).join() {
             if let EnemyType::Missile = enemy.enemy_type {
                 let mut closest_player_position: Option<Vector2<f32>> = None;
 
-                for (_spaceship, player_transform) in (&spaceships, &transforms).join() {
+                for (_player, player_transform) in (&players, &transforms).join() {
                     if let Some(closest_position) = closest_player_position {
                         if get_distance(
                             player_transform.translation().x,

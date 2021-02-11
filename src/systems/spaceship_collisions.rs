@@ -1,8 +1,8 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlastComponent, BlastType, CharacterComponent, ConsumableComponent, DefenseTag,
-        EnemyComponent, HealthComponent, ItemComponent, Motion2DComponent, SpaceshipComponent,
+        BlastComponent, BlastType, ConsumableComponent, DefenseTag, EnemyComponent,
+        HealthComponent, ItemComponent, Motion2DComponent, PlayerComponent,
     },
     entities::spawn_blast_explosion,
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
@@ -23,7 +23,6 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         ReadStorage<'s, EnemyComponent>,
-        WriteStorage<'s, SpaceshipComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
     );
@@ -39,28 +38,15 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
     fn run(
         &mut self,
-        (collision_event_channel, enemies, mut spaceships, mut motions, mut healths): Self::SystemData,
+        (collision_event_channel, enemies, mut motions, mut healths): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with an enemy component?
             if let Some(enemy) = enemies.get(event.colliding_entity) {
-                let spaceship = spaceships.get_mut(event.player_entity).unwrap();
                 let spaceship_motion = motions.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
 
-                if spaceship.barrel_action_left {
-                    spaceship.barrel_action_right = true;
-                    spaceship.barrel_action_left = false;
-                } else if spaceship.barrel_action_right {
-                    spaceship.barrel_action_left = true;
-                    spaceship.barrel_action_right = false;
-                }
-
-                if !spaceship.steel_barrel
-                    || (!spaceship.barrel_action_left && !spaceship.barrel_action_right)
-                {
-                    spaceship_health.take_damage(enemy.collision_damage);
-                }
+                spaceship_health.take_damage(enemy.collision_damage);
 
                 if let Some(velocity) = event.collision_velocity {
                     // Push the ship in the opposite direction.
@@ -206,7 +192,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
         ReadStorage<'s, ConsumableComponent>,
-        WriteStorage<'s, CharacterComponent>,
+        WriteStorage<'s, PlayerComponent>,
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -228,7 +214,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             collision_event_channel,
             entities,
             consumables,
-            mut characters,
+            mut players,
             defense_tags,
             mut healths,
             mut play_audio_channel,
@@ -239,11 +225,11 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             // Is the player colliding with an entity with an item component?
             if let Some(consumable) = consumables.get(event.colliding_entity) {
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
-                let character = characters.get_mut(event.player_entity).unwrap();
+                let player = players.get_mut(event.player_entity).unwrap();
 
                 spaceship_health.value += consumable.health_value;
                 spaceship_health.armor += consumable.armor_value;
-                character.money += consumable.money_value;
+                player.money += consumable.money_value;
                 for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
                     defense_health.value += consumable.defense_value;
                 }

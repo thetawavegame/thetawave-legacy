@@ -1,8 +1,8 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlastComponent, BlastType, CharacterComponent, EnemyComponent, EnemyType, HealthComponent,
-        Motion2DComponent,
+        BlastComponent, BlastType, EnemyComponent, EnemyType, HealthComponent, Motion2DComponent,
+        PlayerComponent,
     },
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
@@ -23,7 +23,7 @@ pub struct EnemyPlayerCollisionSystem {
 impl<'s> System<'s> for EnemyPlayerCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
-        ReadStorage<'s, CharacterComponent>,
+        ReadStorage<'s, PlayerComponent>,
         WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
@@ -44,7 +44,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
         &mut self,
         (
             enemy_collision_event_channel,
-            characters,
+            players,
             mut enemies,
             mut motions,
             mut healths,
@@ -54,7 +54,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
     ) {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the enemy colliding with an entity with a spaceship component?
-            if let Some(character) = characters.get(event.colliding_entity) {
+            if let Some(player) = players.get(event.colliding_entity) {
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["metal_crash"].clone(),
                 });
@@ -71,7 +71,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                     && enemy.name != "repeater_left_arm"
                 {
                     if let Some(velocity) = event.collision_velocity {
-                        enemy_health.value -= character.collision_damage;
+                        enemy_health.value -= player.collision_damage;
                         enemy_motion.velocity.y += velocity.y;
                         enemy_motion.velocity.x += velocity.x;
 

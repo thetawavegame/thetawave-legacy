@@ -1,3 +1,4 @@
+mod ability;
 mod animation;
 mod autofire_system;
 mod boss;
@@ -22,6 +23,7 @@ mod store;
 mod timelimit;
 
 pub use self::{
+    ability::BarrelRollAbilitySystem,
     animation::AnimationSystem,
     autofire_system::AutoFireSystem,
     boss::BossSystem,

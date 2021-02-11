@@ -1,7 +1,7 @@
+mod abilities;
 mod animation;
 mod blast;
 mod boss;
-mod character;
 mod consumable;
 mod despawn;
 mod enemy;
@@ -11,7 +11,7 @@ mod hitbox;
 mod item;
 mod motion2d;
 mod planet;
-mod spaceship;
+mod player;
 mod spawner;
 mod status_bar;
 mod store;
@@ -20,10 +20,10 @@ mod timelimit;
 mod weapons;
 
 pub use self::{
+    abilities::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
     animation::{AnimationComponent, AnimationType},
     blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,
-    character::CharacterComponent,
     consumable::ConsumableComponent,
     despawn::DespawnAtBorderComponent,
     enemy::{EnemyComponent, EnemySpawnerTag, EnemyType},
@@ -33,7 +33,7 @@ pub use self::{
     item::ItemComponent,
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
-    spaceship::SpaceshipComponent,
+    player::PlayerComponent,
     spawner::{choose_random_name, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
     store::StoreComponent,

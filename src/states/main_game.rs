@@ -47,6 +47,11 @@ impl Default for MainGameState {
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::EnemyTargetSystem, "enemy_target_system", &[])
                 .with(
+                    systems::BarrelRollAbilitySystem,
+                    "barrel_roll_ability_system",
+                    &[],
+                )
+                .with(
                     systems::EnemyMotion2DSystem,
                     "enemy_motion_2d_system",
                     &["enemy_target_system"],

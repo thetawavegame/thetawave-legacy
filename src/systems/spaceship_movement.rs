@@ -1,5 +1,5 @@
 use crate::{
-    components::{Hitbox2DComponent, Motion2DComponent, SpaceshipComponent},
+    components::{Hitbox2DComponent, Motion2DComponent, PlayerComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
 };
 use amethyst::{
@@ -11,8 +11,8 @@ pub struct SpaceshipMovementSystem;
 
 impl<'s> System<'s> for SpaceshipMovementSystem {
     type SystemData = (
+        ReadStorage<'s, PlayerComponent>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, SpaceshipComponent>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
@@ -20,27 +20,20 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
 
     fn run(
         &mut self,
-        (mut transforms, mut spaceships, mut motion_2d_components, hitboxes, input): Self::SystemData,
+        (players, mut transforms, mut motion_2d_components, hitboxes, input): Self::SystemData,
     ) {
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;
 
-        for (spaceship, transform, motion_2d, hitbox) in (
-            &mut spaceships,
+        for (_player, transform, motion_2d, hitbox) in (
+            &players,
             &mut transforms,
             &mut motion_2d_components,
             &hitboxes,
         )
             .join()
         {
-            // if barrel-rolling a direction use the barrel roll x velocity, otherwise accelerate normally
-            if spaceship.barrel_action_left {
-                motion_2d.velocity.x = -1.0 * spaceship.barrel_speed;
-            } else if spaceship.barrel_action_right {
-                motion_2d.velocity.x = spaceship.barrel_speed;
-            } else {
-                handle_spaceship_movement(motion_2d, x_move, y_move);
-            }
+            handle_spaceship_movement(motion_2d, x_move, y_move);
 
             constrain_spaceship_to_arena(motion_2d, transform, hitbox)
         }
