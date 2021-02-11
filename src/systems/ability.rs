@@ -1,21 +1,47 @@
-use crate::components::{BarrelRollAbilityComponent, CooldownAbility};
+use crate::{
+    components::{
+        AbilityDirection, BarrelRollAbilityComponent, CooldownAbility, EnemyComponent,
+        Motion2DComponent,
+    },
+    events::PlayerCollisionEvent,
+};
 use amethyst::{
     core::timing::Time,
-    ecs::{Join, Read, System, WriteStorage},
+    ecs::*,
+    ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
+    shrev::{EventChannel, ReaderId},
 };
 
-pub struct BarrelRollAbilitySystem;
+#[derive(Default)]
+pub struct BarrelRollAbilitySystem {
+    event_reader: Option<ReaderId<PlayerCollisionEvent>>,
+}
 
 impl<'s> System<'s> for BarrelRollAbilitySystem {
     type SystemData = (
+        Read<'s, EventChannel<PlayerCollisionEvent>>,
         Read<'s, InputHandler<StringBindings>>,
         Read<'s, Time>,
         WriteStorage<'s, BarrelRollAbilityComponent>,
+        WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, EnemyComponent>,
     );
 
-    fn run(&mut self, (input, time, mut barrel_roll_abilities): Self::SystemData) {
-        for barrel_roll_ability in (&mut barrel_roll_abilities).join() {
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
+    }
+
+    fn run(
+        &mut self,
+        (collision_event_channel, input, time, mut barrel_roll_abilities, mut motion2ds, enemies): Self::SystemData,
+    ) {
+        for (barrel_roll_ability, motion2d) in (&mut barrel_roll_abilities, &mut motion2ds).join() {
             /*
             println!(
                 "execute cooldown: {}\texecute timer: {}\taction_cooldown: {}\taction timer: {}\tability direction: {:?}",
@@ -32,6 +58,34 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
 
             // update ability and timers
             barrel_roll_ability.update(time.delta_seconds());
+
+            // change direction if colliding with enemy
+            for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
+                if let Some(_enemy) = enemies.get(event.colliding_entity) {
+                    match barrel_roll_ability.action_direction {
+                        AbilityDirection::Left => {
+                            barrel_roll_ability.action_direction = AbilityDirection::Right;
+                        }
+                        AbilityDirection::Right => {
+                            barrel_roll_ability.action_direction = AbilityDirection::Left;
+                        }
+                        AbilityDirection::None => {}
+                    }
+                }
+            }
+
+            // change velocity if colliding with left or right border
+
+            // change velocity if barrel rolling
+            match barrel_roll_ability.action_direction {
+                AbilityDirection::Left => {
+                    motion2d.velocity.x = -barrel_roll_ability.speed;
+                }
+                AbilityDirection::Right => {
+                    motion2d.velocity.x = barrel_roll_ability.speed;
+                }
+                AbilityDirection::None => {}
+            }
         }
     }
 }

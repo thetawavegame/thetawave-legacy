@@ -41,7 +41,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
         (collision_event_channel, enemies, mut motions, mut healths): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // Is the player colliding with an entity with an enemy component?
+            // Is the player colliding with an enemy entity?
             if let Some(enemy) = enemies.get(event.colliding_entity) {
                 let spaceship_motion = motions.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
