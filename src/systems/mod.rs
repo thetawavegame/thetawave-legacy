@@ -32,7 +32,8 @@ pub use self::{
     despawn::DespawnAtBorderSystem,
     enemy::EnemySystem,
     enemy_collisions::{
-        EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem, EnemyPlayerCollisionSystem,
+        EnemyArenaBorderCollisionSystem, EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem,
+        EnemyPlayerCollisionSystem,
     },
     enemy_destroyed::EnemyDestroyedSystem,
     enemy_spawn::SpawnerSystem,

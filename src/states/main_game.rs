@@ -78,6 +78,11 @@ impl Default for MainGameState {
                     &["collision_detection_system"],
                 )
                 .with(
+                    systems::EnemyArenaBorderCollisionSystem::default(),
+                    "enemy_arena_border_collsion_system",
+                    &["collision_handler_system"],
+                )
+                .with(
                     systems::SpaceshipArenaBorderCollisionSystem::default(),
                     "spaceship_arena_border_collision_system",
                     &["collision_handler_system"],

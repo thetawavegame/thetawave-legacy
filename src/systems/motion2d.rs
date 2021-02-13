@@ -59,8 +59,6 @@ impl<'s> System<'s> for Motion2DSystem {
                     motion_2d.velocity.y = -motion_2d.max_speed.y;
                 }
             }
-
-            // constrain motion2d entities to area
         }
     }
 }
@@ -81,8 +79,6 @@ impl<'s> System<'s> for EnemyMotion2DSystem {
             (&enemies, &mut motion_2ds, &mut hitbox_2ds, &mut transforms).join()
         {
             move_enemy(&enemy, transform, motion_2d, hitbox_2d);
-
-            //constrain_enemies_to_arena(transform, motion_2d, hitbox_2d);
         }
     }
 }
@@ -230,20 +226,6 @@ fn move_enemy(
                 motion_2d.move_up();
             }
         }
-    }
-}
-
-// how enemies behave upon coming into contact with the edges of the arena
-fn constrain_enemies_to_arena(
-    transform: &mut Transform,
-    motion_2d: &mut Motion2DComponent,
-    hitbox_2d: &Hitbox2DComponent,
-) {
-    // right and left sides
-    if transform.translation().x + (hitbox_2d.width / 2.0) > ARENA_MAX_X
-        || transform.translation().x - (hitbox_2d.width / 2.0) < ARENA_MIN_X
-    {
-        motion_2d.velocity.x *= -1.0;
     }
 }
 

@@ -1,8 +1,8 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlastComponent, BlastType, EnemyComponent, EnemyType, HealthComponent, Motion2DComponent,
-        PlayerComponent,
+        ArenaBorderTag, BlastComponent, BlastType, EnemyComponent, EnemyType, HealthComponent,
+        Motion2DComponent, PlayerComponent,
     },
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
@@ -215,6 +215,65 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                     }
 
                     _ => {}
+                }
+            }
+        }
+    }
+}
+
+#[derive(Default)]
+pub struct EnemyArenaBorderCollisionSystem {
+    event_reader: Option<ReaderId<EnemyCollisionEvent>>,
+}
+
+impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
+    type SystemData = (
+        Read<'s, EventChannel<EnemyCollisionEvent>>,
+        ReadStorage<'s, ArenaBorderTag>,
+        ReadStorage<'s, EnemyComponent>,
+        WriteStorage<'s, Motion2DComponent>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
+    );
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<EnemyCollisionEvent>>()
+                .register_reader(),
+        );
+    }
+
+    fn run(
+        &mut self,
+        (
+            collision_event_channel,
+            arena_borders,
+            enemies,
+            mut motion_2ds,
+            mut play_audio_channel,
+            sounds,
+        ): Self::SystemData,
+    ) {
+        for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
+            // is the enemy colliding with an arena border?
+            if let Some(_arena_border) = arena_borders.get(event.colliding_entity) {
+                let enemy = enemies.get(event.enemy_entity).unwrap();
+
+                match enemy.enemy_type {
+                    EnemyType::Missile => {}
+
+                    _ => {
+                        if let Some(collision_velocity) = event.collision_velocity {
+                            let enemy_motion_2d = motion_2ds.get_mut(event.enemy_entity).unwrap();
+                            enemy_motion_2d.velocity = collision_velocity;
+                        }
+
+                        play_audio_channel.single_write(PlayAudioEvent {
+                            source: sounds.sound_effects["force_field"].clone(),
+                        });
+                    }
                 }
             }
         }
