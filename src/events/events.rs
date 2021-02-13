@@ -67,6 +67,27 @@ impl EnemyCollisionEvent {
 }
 
 #[derive(Debug)]
+pub struct ArenaBorderCollisionEvent {
+    pub arena_border_entity: Entity,
+    pub colliding_entity: Entity,
+    pub collision_velocity: Option<Vector2<f32>>,
+}
+
+impl ArenaBorderCollisionEvent {
+    pub fn new(
+        entity_a: Entity,
+        entity_b: Entity,
+        velocity: Option<Vector2<f32>>,
+    ) -> ArenaBorderCollisionEvent {
+        ArenaBorderCollisionEvent {
+            arena_border_entity: entity_a,
+            colliding_entity: entity_b,
+            collision_velocity: velocity,
+        }
+    }
+}
+
+#[derive(Debug)]
 pub struct ItemGetEvent {
     pub player_entity: Entity,
     pub stat_effects: HashMap<String, f32>,

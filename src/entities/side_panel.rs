@@ -1,10 +1,13 @@
-use crate::constants::{
-    ARENA_HEIGHT, ARENA_MAX_X, SIDE_PANEL_LEFT_SPRITE_INDEX, SIDE_PANEL_RIGHT_SPRITE_INDEX,
-    SIDE_PANEL_WIDTH, SIDE_PANEL_Z,
+use crate::{
+    components::{ArenaBorderTag, Hitbox2DComponent},
+    constants::{
+        ARENA_HEIGHT, ARENA_MAX_X, SIDE_PANEL_LEFT_SPRITE_INDEX, SIDE_PANEL_RIGHT_SPRITE_INDEX,
+        SIDE_PANEL_WIDTH, SIDE_PANEL_Z,
+    },
 };
 use amethyst::{
     assets::Handle,
-    core::transform::Transform,
+    core::{math::Vector2, transform::Transform},
     ecs::{World, WorldExt},
     prelude::Builder,
     renderer::{SpriteRender, SpriteSheet},
@@ -35,15 +38,26 @@ pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<Spr
         SIDE_PANEL_Z,
     );
 
+    let hitbox_component = Hitbox2DComponent {
+        width: SIDE_PANEL_WIDTH,
+        height: ARENA_HEIGHT,
+        offset: Vector2::new(0.0, 0.0),
+        offset_rotation: 0.0,
+    };
+
     world
         .create_entity()
         .with(local_transform_left)
         .with(sprite_render_left)
+        .with(hitbox_component.clone())
+        .with(ArenaBorderTag::default())
         .build();
 
     world
         .create_entity()
         .with(local_transform_right)
         .with(sprite_render_right)
+        .with(hitbox_component)
+        .with(ArenaBorderTag::default())
         .build();
 }

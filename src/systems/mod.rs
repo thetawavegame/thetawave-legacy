@@ -43,8 +43,9 @@ pub use self::{
     play_audio::PlayAudioSystem,
     spaceship::SpaceshipSystem,
     spaceship_collisions::{
-        SpaceshipBlastCollisionSystem, SpaceshipConsumableCollisionSystem,
-        SpaceshipEnemyCollisionSystem, SpaceshipItemCollisionSystem,
+        SpaceshipArenaBorderCollisionSystem, SpaceshipBlastCollisionSystem,
+        SpaceshipConsumableCollisionSystem, SpaceshipEnemyCollisionSystem,
+        SpaceshipItemCollisionSystem,
     },
     spaceship_movement::SpaceshipMovementSystem,
     stat_tracker::StatTrackerSystem,

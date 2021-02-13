@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlastComponent, BlastType, ConsumableComponent, DefenseTag, EnemyComponent,
+        ArenaBorderTag, BlastComponent, BlastType, ConsumableComponent, DefenseTag, EnemyComponent,
         HealthComponent, ItemComponent, Motion2DComponent, PlayerComponent,
     },
     entities::spawn_blast_explosion,
@@ -222,7 +222,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // Is the player colliding with an entity with an item component?
+            // Is the player colliding with an entity with a consumable entity?
             if let Some(consumable) = consumables.get(event.colliding_entity) {
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 let player = players.get_mut(event.player_entity).unwrap();
@@ -241,6 +241,54 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                 entities
                     .delete(event.colliding_entity)
                     .expect("unable to delete entity");
+            }
+        }
+    }
+}
+
+#[derive(Default)]
+pub struct SpaceshipArenaBorderCollisionSystem {
+    event_reader: Option<ReaderId<PlayerCollisionEvent>>,
+}
+
+impl<'s> System<'s> for SpaceshipArenaBorderCollisionSystem {
+    type SystemData = (
+        Read<'s, EventChannel<PlayerCollisionEvent>>,
+        ReadStorage<'s, ArenaBorderTag>,
+        WriteStorage<'s, Motion2DComponent>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
+    );
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
+    }
+
+    fn run(
+        &mut self,
+        (
+            collision_event_channel,
+            arena_borders,
+            mut motion_2ds,
+            mut play_audio_channel,
+            sounds,
+        ): Self::SystemData,
+    ) {
+        for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
+            // Is the player colliding with an entity with an arena border?
+            if let Some(_arena_border) = arena_borders.get(event.colliding_entity) {
+                if let Some(collision_velocity) = event.collision_velocity {
+                    let player_motion_2d = motion_2ds.get_mut(event.player_entity).unwrap();
+                    player_motion_2d.velocity = collision_velocity;
+                }
+                play_audio_channel.single_write(PlayAudioEvent {
+                    source: sounds.sound_effects["force_field"].clone(),
+                });
             }
         }
     }

@@ -1,7 +1,7 @@
 use crate::{
     components::{
-        AbilityDirection, BarrelRollAbilityComponent, CooldownAbility, EnemyComponent,
-        Motion2DComponent,
+        AbilityDirection, ArenaBorderTag, BarrelRollAbilityComponent, CooldownAbility,
+        EnemyComponent, Motion2DComponent,
     },
     events::PlayerCollisionEvent,
 };
@@ -26,6 +26,7 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
         WriteStorage<'s, BarrelRollAbilityComponent>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, ArenaBorderTag>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -39,20 +40,17 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
 
     fn run(
         &mut self,
-        (collision_event_channel, input, time, mut barrel_roll_abilities, mut motion2ds, enemies): Self::SystemData,
+        (
+            collision_event_channel,
+            input,
+            time,
+            mut barrel_roll_abilities,
+            mut motion2ds,
+            enemies,
+            arena_borders,
+        ): Self::SystemData,
     ) {
         for (barrel_roll_ability, motion2d) in (&mut barrel_roll_abilities, &mut motion2ds).join() {
-            /*
-            println!(
-                "execute cooldown: {}\texecute timer: {}\taction_cooldown: {}\taction timer: {}\tability direction: {:?}",
-                barrel_roll_ability.execute_cooldown,
-                barrel_roll_ability.execute_timer,
-                barrel_roll_ability.action_cooldown,
-                barrel_roll_ability.action_timer,
-                barrel_roll_ability.action_direction,
-            );
-            */
-
             // execute barrel roll on input down
             barrel_roll_ability.execute_action(&input);
 
@@ -62,19 +60,11 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
             // change direction if colliding with enemy
             for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
                 if let Some(_enemy) = enemies.get(event.colliding_entity) {
-                    match barrel_roll_ability.action_direction {
-                        AbilityDirection::Left => {
-                            barrel_roll_ability.action_direction = AbilityDirection::Right;
-                        }
-                        AbilityDirection::Right => {
-                            barrel_roll_ability.action_direction = AbilityDirection::Left;
-                        }
-                        AbilityDirection::None => {}
-                    }
+                    barrel_roll_ability.invert_direction();
+                } else if let Some(_arena_border) = arena_borders.get(event.colliding_entity) {
+                    barrel_roll_ability.invert_direction();
                 }
             }
-
-            // change velocity if colliding with left or right border
 
             // change velocity if barrel rolling
             match barrel_roll_ability.action_direction {

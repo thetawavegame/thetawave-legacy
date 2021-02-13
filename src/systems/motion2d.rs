@@ -82,7 +82,7 @@ impl<'s> System<'s> for EnemyMotion2DSystem {
         {
             move_enemy(&enemy, transform, motion_2d, hitbox_2d);
 
-            constrain_enemies_to_arena(transform, motion_2d, hitbox_2d);
+            //constrain_enemies_to_arena(transform, motion_2d, hitbox_2d);
         }
     }
 }

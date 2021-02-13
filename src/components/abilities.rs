@@ -88,3 +88,17 @@ impl CooldownAbility for BarrelRollAbilityComponent {
         }
     }
 }
+
+impl BarrelRollAbilityComponent {
+    pub fn invert_direction(&mut self) {
+        match self.action_direction {
+            AbilityDirection::Left => {
+                self.action_direction = AbilityDirection::Right;
+            }
+            AbilityDirection::Right => {
+                self.action_direction = AbilityDirection::Left;
+            }
+            AbilityDirection::None => {}
+        }
+    }
+}

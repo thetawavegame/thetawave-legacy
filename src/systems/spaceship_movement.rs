@@ -70,12 +70,14 @@ fn constrain_spaceship_to_arena(
     transform: &Transform,
     hitbox: &Hitbox2DComponent,
 ) {
-    let x_pos = transform.translation().x - (hitbox.width / 2.0);
+    //let x_pos = transform.translation().x - (hitbox.width / 2.0);
     let y_pos = transform.translation().y - (hitbox.height / 2.0);
 
+    /*
     if x_pos < ARENA_MIN_X || x_pos > ARENA_MAX_X {
         motion.velocity.x *= -1.0;
     }
+    */
 
     if y_pos < ARENA_MIN_Y || y_pos > ARENA_MAX_Y {
         motion.velocity.y *= -1.0;

@@ -1,6 +1,10 @@
 use crate::{
-    components::{EnemyComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent},
-    events::{CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent},
+    components::{
+        ArenaBorderTag, EnemyComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent,
+    },
+    events::{
+        ArenaBorderCollisionEvent, CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent,
+    },
     resources::DebugLinesConfig,
 };
 use amethyst::{
@@ -80,10 +84,12 @@ impl<'s> System<'s> for CollisionHandlerSystem {
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, ArenaBorderTag>,
         ReadStorage<'s, Motion2DComponent>,
         Read<'s, EventChannel<CollisionEvent>>,
         Write<'s, EventChannel<PlayerCollisionEvent>>,
         Write<'s, EventChannel<EnemyCollisionEvent>>,
+        Write<'s, EventChannel<ArenaBorderCollisionEvent>>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -100,10 +106,12 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         (
             players,
             enemies,
+            arena_borders,
             motions,
             collision_channel,
             mut player_collision_channel,
             mut enemy_collision_channel,
+            mut arena_border_collision_channel,
         ): Self::SystemData,
     ) {
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
@@ -114,13 +122,28 @@ impl<'s> System<'s> for CollisionHandlerSystem {
             }
 
             if let Some(_player) = players.get(event.entity_a) {
+                // if player impacts arena border invert the velocity
+                if let Some(_arena_border) = arena_borders.get(event.entity_b) {
+                    if let Some(player_motion_component) = motions.get(event.entity_a) {
+                        collision_velocity = Some(-player_motion_component.velocity);
+                    }
+                }
+
                 player_collision_channel.single_write(PlayerCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,
                     collision_velocity,
                 ));
             } else if let Some(_enemy) = enemies.get(event.entity_a) {
+                //TODO: change collision velocity to zero for unmovable enemies (repeater boss parts)
+
                 enemy_collision_channel.single_write(EnemyCollisionEvent::new(
+                    event.entity_a,
+                    event.entity_b,
+                    collision_velocity,
+                ));
+            } else if let Some(_arena_border) = arena_borders.get(event.entity_a) {
+                arena_border_collision_channel.single_write(ArenaBorderCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,
                     collision_velocity,
