@@ -1,12 +1,13 @@
 use crate::{
     audio::Sounds,
     components::{
-        ArenaBorderTag, BlastComponent, BlastType, ConsumableComponent, DefenseTag, EnemyComponent,
-        HealthComponent, ItemComponent, Motion2DComponent, PlayerComponent,
+        BarrierComponent, BlastComponent, BlastType, ConsumableComponent, DefenseTag,
+        EnemyComponent, HealthComponent, ItemComponent, Motion2DComponent, PlayerComponent,
     },
     entities::spawn_blast_explosion,
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::SpriteSheetsResource,
+    systems::standard_collision,
 };
 use amethyst::{
     core::transform::Transform,
@@ -48,10 +49,8 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
                 spaceship_health.take_damage(enemy.collision_damage);
 
-                if let Some(velocity) = event.collision_velocity {
-                    // Push the ship in the opposite direction.
-                    spaceship_motion.velocity.x = velocity.x - spaceship_motion.velocity.x;
-                    spaceship_motion.velocity.y = velocity.y - spaceship_motion.velocity.y;
+                if let Some(collision_velocity) = event.collision_velocity {
+                    standard_collision(spaceship_motion, collision_velocity, 50.0);
                 }
             }
         }
@@ -254,8 +253,9 @@ pub struct SpaceshipArenaBorderCollisionSystem {
 impl<'s> System<'s> for SpaceshipArenaBorderCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
-        ReadStorage<'s, ArenaBorderTag>,
+        ReadStorage<'s, BarrierComponent>,
         WriteStorage<'s, Motion2DComponent>,
+        WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
@@ -273,18 +273,38 @@ impl<'s> System<'s> for SpaceshipArenaBorderCollisionSystem {
         &mut self,
         (
             collision_event_channel,
-            arena_borders,
+            barriers,
             mut motion_2ds,
+            mut healths,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // Is the player colliding with an entity with an arena border?
-            if let Some(_arena_border) = arena_borders.get(event.colliding_entity) {
+            // Is the player colliding with a barrier?
+            if let Some(barrier) = barriers.get(event.colliding_entity) {
                 if let Some(collision_velocity) = event.collision_velocity {
                     let player_motion_2d = motion_2ds.get_mut(event.player_entity).unwrap();
-                    player_motion_2d.velocity = collision_velocity;
+                    let player_health = healths.get_mut(event.player_entity).unwrap();
+
+                    // set velocity to deflection velocity if collision velocity under deflection velocity
+                    if barrier.deflection_velocity.x.abs() > 0.0 {
+                        if collision_velocity.x.abs() < barrier.deflection_velocity.x.abs() {
+                            player_motion_2d.velocity.x = barrier.deflection_velocity.x;
+                        } else {
+                            player_motion_2d.velocity.x = collision_velocity.x;
+                        }
+                    }
+
+                    if barrier.deflection_velocity.y.abs() > 0.0 {
+                        if collision_velocity.y.abs() < barrier.deflection_velocity.y.abs() {
+                            player_motion_2d.velocity.y = barrier.deflection_velocity.y;
+                        } else {
+                            player_motion_2d.velocity.y = collision_velocity.y;
+                        }
+                    }
+
+                    player_health.value -= barrier.damage;
                 }
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["force_field"].clone(),

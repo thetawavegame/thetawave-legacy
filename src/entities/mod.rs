@@ -1,3 +1,4 @@
+pub mod barriers;
 pub mod blast;
 pub mod boss;
 pub mod consumable;
@@ -8,13 +9,13 @@ pub mod explosion;
 pub mod gamemaster;
 pub mod items;
 pub mod planet;
-pub mod side_panel;
 pub mod spaceship;
 pub mod status_bar;
 pub mod status_unit;
 pub mod store;
 
 pub use self::{
+    barriers::initialize_arena_barriers,
     blast::spawn_blasts,
     boss::spawn_repeater,
     consumable::{spawn_consumable, spawn_random_consumable},
@@ -25,7 +26,6 @@ pub use self::{
     gamemaster::initialize_gamemaster,
     items::spawn_item,
     planet::initialize_planet,
-    side_panel::initialize_side_panels,
     spaceship::initialize_spaceship,
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,

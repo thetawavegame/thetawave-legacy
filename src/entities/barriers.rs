@@ -1,5 +1,5 @@
 use crate::{
-    components::{ArenaBorderTag, Hitbox2DComponent},
+    components::{BarrierComponent, Hitbox2DComponent},
     constants::{
         ARENA_HEIGHT, ARENA_MAX_X, SIDE_PANEL_LEFT_SPRITE_INDEX, SIDE_PANEL_RIGHT_SPRITE_INDEX,
         SIDE_PANEL_WIDTH, SIDE_PANEL_Z,
@@ -13,7 +13,7 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet},
 };
 
-pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
+pub fn initialize_arena_barriers(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let sprite_render_left = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),
         sprite_number: SIDE_PANEL_LEFT_SPRITE_INDEX,
@@ -45,12 +45,22 @@ pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<Spr
         offset_rotation: 0.0,
     };
 
+    let left_barrier_component = BarrierComponent {
+        deflection_velocity: Vector2::new(30.0, 0.0),
+        damage: 1.0,
+    };
+
+    let right_barrier_component = BarrierComponent {
+        deflection_velocity: Vector2::new(-30.0, 0.0),
+        damage: 1.0,
+    };
+
     world
         .create_entity()
         .with(local_transform_left)
         .with(sprite_render_left)
         .with(hitbox_component.clone())
-        .with(ArenaBorderTag::default())
+        .with(left_barrier_component)
         .build();
 
     world
@@ -58,6 +68,6 @@ pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<Spr
         .with(local_transform_right)
         .with(sprite_render_right)
         .with(hitbox_component)
-        .with(ArenaBorderTag::default())
+        .with(right_barrier_component)
         .build();
 }

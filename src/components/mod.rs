@@ -1,5 +1,6 @@
 mod abilities;
 mod animation;
+mod barriers;
 mod blast;
 mod boss;
 mod consumable;
@@ -22,6 +23,7 @@ mod weapons;
 pub use self::{
     abilities::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
     animation::{AnimationComponent, AnimationType},
+    barriers::BarrierComponent,
     blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,
     consumable::ConsumableComponent,
@@ -37,7 +39,7 @@ pub use self::{
     spawner::{choose_random_name, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
     store::StoreComponent,
-    tags::{ArenaBorderTag, DefenseTag},
+    tags::DefenseTag,
     timelimit::TimeLimitComponent,
     weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };

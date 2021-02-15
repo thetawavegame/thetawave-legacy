@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        ArenaBorderTag, EnemyComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent,
+        BarrierComponent, EnemyComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent,
     },
     events::{
         ArenaBorderCollisionEvent, CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent,
@@ -84,7 +84,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, EnemyComponent>,
-        ReadStorage<'s, ArenaBorderTag>,
+        ReadStorage<'s, BarrierComponent>,
         ReadStorage<'s, Motion2DComponent>,
         Read<'s, EventChannel<CollisionEvent>>,
         Write<'s, EventChannel<PlayerCollisionEvent>>,
@@ -106,7 +106,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         (
             players,
             enemies,
-            arena_borders,
+            barriers,
             motions,
             collision_channel,
             mut player_collision_channel,
@@ -123,7 +123,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
 
             if let Some(_player) = players.get(event.entity_a) {
                 // if player impacts arena border set the collision velocity to the inverted velocity of the player
-                if let Some(_arena_border) = arena_borders.get(event.entity_b) {
+                if let Some(_arena_border) = barriers.get(event.entity_b) {
                     if let Some(player_motion_component) = motions.get(event.entity_a) {
                         collision_velocity = Some(-player_motion_component.velocity);
                     }
@@ -138,7 +138,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                 //TODO: change collision velocity to zero for unmovable enemies (repeater boss parts)
 
                 // if enemy impacts arena border set the collision velocity to the inverted velocity of the enemy
-                if let Some(_arena_border) = arena_borders.get(event.entity_b) {
+                if let Some(_arena_border) = barriers.get(event.entity_b) {
                     if let Some(enemy_motion_component) = motions.get(event.entity_a) {
                         collision_velocity = Some(-enemy_motion_component.velocity);
                     }
@@ -149,7 +149,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                     event.entity_b,
                     collision_velocity,
                 ));
-            } else if let Some(_arena_border) = arena_borders.get(event.entity_a) {
+            } else if let Some(_arena_border) = barriers.get(event.entity_a) {
                 arena_border_collision_channel.single_write(ArenaBorderCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,

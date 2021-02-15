@@ -1,12 +1,13 @@
 use crate::{
     audio::Sounds,
     components::{
-        ArenaBorderTag, BlastComponent, BlastType, EnemyComponent, EnemyType, HealthComponent,
+        BarrierComponent, BlastComponent, BlastType, EnemyComponent, EnemyType, HealthComponent,
         Motion2DComponent, PlayerComponent,
     },
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
     resources::SpriteSheetsResource,
+    systems::standard_collision,
 };
 use amethyst::{
     core::transform::Transform,
@@ -63,6 +64,16 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                 let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
+                match enemy.enemy_type {
+                    EnemyType::Missile => {
+                        enemy_health.value = 0.0;
+                    }
+
+                    _ => {
+                        enemy_health.value -= player.collision_damage;
+                    }
+                }
+
                 if enemy.name != "repeater_body"
                     && enemy.name != "repeater_head"
                     && enemy.name != "repeater_right_shoulder"
@@ -70,17 +81,8 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                     && enemy.name != "repeater_right_arm"
                     && enemy.name != "repeater_left_arm"
                 {
-                    if let Some(velocity) = event.collision_velocity {
-                        enemy_health.value -= player.collision_damage;
-                        enemy_motion.velocity.y += velocity.y;
-                        enemy_motion.velocity.x += velocity.x;
-
-                        // if velocities are opposite the strafer switches direction
-                        if let EnemyType::Strafer = enemy.enemy_type {
-                            if enemy_motion.velocity.x * velocity.x < 0.0 {
-                                enemy_motion.velocity.x *= -1.0;
-                            }
-                        }
+                    if let Some(collision_velocity) = event.collision_velocity {
+                        standard_collision(enemy_motion, collision_velocity, 50.0);
                     }
                 }
             }
@@ -96,10 +98,11 @@ pub struct EnemyEnemyCollisionSystem {
 impl<'s> System<'s> for EnemyEnemyCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
-        Entities<'s>,
         ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
+        Write<'s, EventChannel<PlayAudioEvent>>,
+        ReadExpect<'s, Sounds>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -113,29 +116,43 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
 
     fn run(
         &mut self,
-        (enemy_collision_event_channel, entities, enemies, mut motions, mut healths): Self::SystemData,
+        (
+            enemy_collision_event_channel,
+            enemies,
+            mut motions,
+            mut healths,
+            mut play_audio_channel,
+            sounds,
+        ): Self::SystemData,
     ) {
         for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             if let Some(colliding_enemy) = enemies.get(event.colliding_entity) {
-                for (enemy, enemy_motion, enemy_health, enemy_entity) in
-                    (&enemies, &mut motions, &mut healths, &entities).join()
-                {
-                    if enemy_entity == event.enemy_entity
-                        && enemy.name != "repeater_body"
-                        && enemy.name != "repeater_head"
-                    {
-                        if let Some(velocity) = event.collision_velocity {
-                            enemy_health.value -= colliding_enemy.collision_damage;
-                            enemy_motion.velocity.y += velocity.y;
-                            enemy_motion.velocity.x += velocity.x;
+                play_audio_channel.single_write(PlayAudioEvent {
+                    source: sounds.sound_effects["metal_crash"].clone(),
+                });
+                let enemy = enemies.get(event.enemy_entity).unwrap();
+                let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
+                let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
-                            // if velocities are opposite the strafer switches direction
-                            if let EnemyType::Strafer = enemy.enemy_type {
-                                if enemy_motion.velocity.x * velocity.x < 0.0 {
-                                    enemy_motion.velocity.x *= -1.0;
-                                }
-                            }
-                        }
+                match enemy.enemy_type {
+                    EnemyType::Missile => {
+                        enemy_health.value = 0.0;
+                    }
+
+                    _ => {
+                        enemy_health.value -= colliding_enemy.collision_damage;
+                    }
+                }
+
+                if enemy.name != "repeater_body"
+                    && enemy.name != "repeater_head"
+                    && enemy.name != "repeater_right_shoulder"
+                    && enemy.name != "repeater_left_shoulder"
+                    && enemy.name != "repeater_right_arm"
+                    && enemy.name != "repeater_left_arm"
+                {
+                    if let Some(collision_velocity) = event.collision_velocity {
+                        standard_collision(enemy_motion, collision_velocity, 50.0);
                     }
                 }
             }
@@ -229,9 +246,10 @@ pub struct EnemyArenaBorderCollisionSystem {
 impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
-        ReadStorage<'s, ArenaBorderTag>,
+        ReadStorage<'s, BarrierComponent>,
         ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
+        WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
@@ -249,16 +267,17 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
         &mut self,
         (
             collision_event_channel,
-            arena_borders,
+            barriers,
             enemies,
             mut motion_2ds,
+            mut healths,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // is the enemy colliding with an arena border?
-            if let Some(_arena_border) = arena_borders.get(event.colliding_entity) {
+            // is the enemy colliding with a barrier?
+            if let Some(barrier) = barriers.get(event.colliding_entity) {
                 let enemy = enemies.get(event.enemy_entity).unwrap();
 
                 match enemy.enemy_type {
@@ -267,7 +286,27 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
                     _ => {
                         if let Some(collision_velocity) = event.collision_velocity {
                             let enemy_motion_2d = motion_2ds.get_mut(event.enemy_entity).unwrap();
-                            enemy_motion_2d.velocity = collision_velocity;
+                            let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
+
+                            if barrier.deflection_velocity.x.abs() > 0.0 {
+                                if collision_velocity.x.abs() < barrier.deflection_velocity.x.abs()
+                                {
+                                    enemy_motion_2d.velocity.x = barrier.deflection_velocity.x;
+                                } else {
+                                    enemy_motion_2d.velocity.x = collision_velocity.x;
+                                }
+                            }
+
+                            if barrier.deflection_velocity.y.abs() > 0.0 {
+                                if collision_velocity.y.abs() < barrier.deflection_velocity.y.abs()
+                                {
+                                    enemy_motion_2d.velocity.y = barrier.deflection_velocity.y;
+                                } else {
+                                    enemy_motion_2d.velocity.y = collision_velocity.y;
+                                }
+                            }
+
+                            enemy_health.value -= barrier.damage;
                         }
 
                         play_audio_channel.single_write(PlayAudioEvent {
