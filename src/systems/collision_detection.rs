@@ -116,21 +116,25 @@ impl<'s> System<'s> for CollisionHandlerSystem {
     ) {
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
             let mut collision_velocity: Option<Vector2<f32>> = None;
+            let mut collider_immovable = false;
 
             if let Some(motion_component) = motions.get(event.entity_b) {
                 collision_velocity = Some(motion_component.velocity);
+                collider_immovable = motion_component.immovable;
             }
 
             if let Some(_player) = players.get(event.entity_a) {
                 player_collision_channel.single_write(PlayerCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,
+                    collider_immovable,
                     collision_velocity,
                 ));
             } else if let Some(_enemy) = enemies.get(event.entity_a) {
                 enemy_collision_channel.single_write(EnemyCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,
+                    collider_immovable,
                     collision_velocity,
                 ));
             } else if let Some(_arena_border) = barriers.get(event.entity_a) {

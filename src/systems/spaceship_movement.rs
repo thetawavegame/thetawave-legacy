@@ -34,8 +34,6 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
             .join()
         {
             handle_spaceship_movement(motion_2d, x_move, y_move);
-
-            //constrain_spaceship_to_arena(motion_2d, transform, hitbox)
         }
     }
 }
@@ -63,23 +61,4 @@ fn handle_spaceship_movement(motion: &mut Motion2DComponent, x_move: f32, y_move
     // Accelerate in the x,y direction
     motion.velocity.x += x_move * motion.acceleration.x;
     motion.velocity.y += y_move * motion.acceleration.y;
-}
-
-fn constrain_spaceship_to_arena(
-    motion: &mut Motion2DComponent,
-    transform: &Transform,
-    hitbox: &Hitbox2DComponent,
-) {
-    //let x_pos = transform.translation().x - (hitbox.width / 2.0);
-    let y_pos = transform.translation().y - (hitbox.height / 2.0);
-
-    /*
-    if x_pos < ARENA_MIN_X || x_pos > ARENA_MAX_X {
-        motion.velocity.x *= -1.0;
-    }
-    */
-
-    if y_pos < ARENA_MIN_Y || y_pos > ARENA_MAX_Y {
-        motion.velocity.y *= -1.0;
-    }
 }

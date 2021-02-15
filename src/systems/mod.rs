@@ -174,3 +174,103 @@ pub fn barrier_collision(
         }
     }
 }
+
+pub fn immovable_collision(
+    motion_component: &mut Motion2DComponent,
+    collision_velocity: Vector2<f32>,
+    min_velocity: f32,
+) {
+    // Case 1: velocities in opposite direction (including entity with 0)
+    if (motion_component.velocity.x as i32).signum() != (collision_velocity.x as i32).signum()
+        && (collision_velocity.x as i32).signum() != 0
+    {
+        if collision_velocity.x.abs() + motion_component.velocity.x.abs() > min_velocity {
+            motion_component.velocity.x = ((collision_velocity.x as i32).signum() as f32)
+                * (collision_velocity.x.abs() + motion_component.velocity.x.abs())
+        } else {
+            motion_component.velocity.x =
+                ((collision_velocity.x as i32).signum() as f32) * min_velocity;
+        }
+    }
+    // Case 2: colliding velocity is 0
+    else if (collision_velocity.x as i32).signum() == 0 {
+        if motion_component.velocity.x.abs() > min_velocity {
+            motion_component.velocity.x *= -1.0;
+        } else {
+            motion_component.velocity.x =
+                -((motion_component.velocity.x as i32).signum() as f32) * min_velocity;
+        }
+    }
+    // Case 3: same direction with faster colliding velocity
+    else if (motion_component.velocity.x as i32).signum()
+        == (collision_velocity.x as i32).signum()
+        && collision_velocity.x.abs() > motion_component.velocity.x.abs()
+    {
+        // if the sum of the entity and collision entity's velocity is greater than the minimum velocity
+        if (motion_component.velocity.x + collision_velocity.x).abs() > min_velocity {
+            motion_component.velocity.x += collision_velocity.x; //add the collision velocity to the entity's velocity
+        } else {
+            motion_component.velocity.x =
+                ((collision_velocity.x as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+        }
+    }
+    // Case 4: same direction with slower colliding entity
+    else if (motion_component.velocity.x as i32).signum()
+        == (collision_velocity.x as i32).signum()
+        && collision_velocity.x.abs() < motion_component.velocity.x.abs()
+    {
+        if motion_component.velocity.x.abs() > min_velocity {
+            motion_component.velocity.x *= -1.0;
+        } else {
+            motion_component.velocity.x =
+                -((motion_component.velocity.x as i32).signum() as f32) * min_velocity;
+        }
+    }
+
+    // Case 1: velocities in opposite direction (including entity with 0)
+    if (motion_component.velocity.y as i32).signum() != (collision_velocity.y as i32).signum()
+        && (collision_velocity.y as i32).signum() != 0
+    {
+        if collision_velocity.y.abs() + motion_component.velocity.y.abs() > min_velocity {
+            motion_component.velocity.y = ((collision_velocity.y as i32).signum() as f32)
+                * (collision_velocity.y.abs() + motion_component.velocity.y.abs())
+        } else {
+            motion_component.velocity.y =
+                ((collision_velocity.y as i32).signum() as f32) * min_velocity;
+        }
+    }
+    // Case 2: colliding velocity is 0
+    else if (collision_velocity.y as i32).signum() == 0 {
+        if motion_component.velocity.y.abs() > min_velocity {
+            motion_component.velocity.y *= -1.0;
+        } else {
+            motion_component.velocity.y =
+                -((motion_component.velocity.y as i32).signum() as f32) * min_velocity;
+        }
+    }
+    // Case 3: same direction with faster colliding velocity
+    else if (motion_component.velocity.y as i32).signum()
+        == (collision_velocity.y as i32).signum()
+        && collision_velocity.y.abs() > motion_component.velocity.y.abs()
+    {
+        // if the sum of the entity and collision entity's velocity is greater than the minimum velocity
+        if (motion_component.velocity.y + collision_velocity.y).abs() > min_velocity {
+            motion_component.velocity.y += collision_velocity.y; //add the collision velocity to the entity's velocity
+        } else {
+            motion_component.velocity.y =
+                ((collision_velocity.y as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+        }
+    }
+    // Case 4: same direction with slower colliding entity
+    else if (motion_component.velocity.y as i32).signum()
+        == (collision_velocity.y as i32).signum()
+        && collision_velocity.y.abs() < motion_component.velocity.y.abs()
+    {
+        if motion_component.velocity.y.abs() > min_velocity {
+            motion_component.velocity.y *= -1.0;
+        } else {
+            motion_component.velocity.y =
+                -((motion_component.velocity.y as i32).signum() as f32) * min_velocity;
+        }
+    }
+}

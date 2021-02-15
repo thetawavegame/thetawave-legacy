@@ -7,7 +7,7 @@ use crate::{
     entities::spawn_blast_explosion,
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::SpriteSheetsResource,
-    systems::{barrier_collision, standard_collision},
+    systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
     core::transform::Transform,
@@ -50,7 +50,11 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                 spaceship_health.take_damage(enemy.collision_damage);
 
                 if let Some(collision_velocity) = event.collision_velocity {
-                    standard_collision(spaceship_motion, collision_velocity, 50.0);
+                    if event.collider_immovable {
+                        immovable_collision(spaceship_motion, collision_velocity, 50.0);
+                    } else {
+                        standard_collision(spaceship_motion, collision_velocity, 50.0);
+                    }
                 }
             }
         }

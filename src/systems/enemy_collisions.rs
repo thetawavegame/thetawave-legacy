@@ -7,7 +7,7 @@ use crate::{
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
     resources::SpriteSheetsResource,
-    systems::{barrier_collision, standard_collision},
+    systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
     core::transform::Transform,
@@ -74,13 +74,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                     }
                 }
 
-                if enemy.name != "repeater_body"
-                    && enemy.name != "repeater_head"
-                    && enemy.name != "repeater_right_shoulder"
-                    && enemy.name != "repeater_left_shoulder"
-                    && enemy.name != "repeater_right_arm"
-                    && enemy.name != "repeater_left_arm"
-                {
+                if !enemy_motion.immovable {
                     if let Some(collision_velocity) = event.collision_velocity {
                         standard_collision(enemy_motion, collision_velocity, 50.0);
                     }
@@ -144,15 +138,13 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
                     }
                 }
 
-                if enemy.name != "repeater_body"
-                    && enemy.name != "repeater_head"
-                    && enemy.name != "repeater_right_shoulder"
-                    && enemy.name != "repeater_left_shoulder"
-                    && enemy.name != "repeater_right_arm"
-                    && enemy.name != "repeater_left_arm"
-                {
+                if !enemy_motion.immovable {
                     if let Some(collision_velocity) = event.collision_velocity {
-                        standard_collision(enemy_motion, collision_velocity, 50.0);
+                        if event.collider_immovable {
+                            immovable_collision(enemy_motion, collision_velocity, 50.0);
+                        } else {
+                            standard_collision(enemy_motion, collision_velocity, 50.0);
+                        }
                     }
                 }
             }
