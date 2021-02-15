@@ -1,8 +1,9 @@
 use crate::{
     components::{BarrierComponent, Hitbox2DComponent, PushDirection},
     constants::{
-        ARENA_HEIGHT, ARENA_MAX_X, SIDE_PANEL_LEFT_SPRITE_INDEX, SIDE_PANEL_RIGHT_SPRITE_INDEX,
-        SIDE_PANEL_WIDTH, SIDE_PANEL_Z,
+        ARENA_HEIGHT, ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ARENA_WIDTH,
+        SIDE_PANEL_LEFT_SPRITE_INDEX, SIDE_PANEL_RIGHT_SPRITE_INDEX, SIDE_PANEL_WIDTH,
+        SIDE_PANEL_Z,
     },
 };
 use amethyst::{
@@ -38,9 +39,30 @@ pub fn initialize_arena_barriers(world: &mut World, sprite_sheet_handle: Handle<
         SIDE_PANEL_Z,
     );
 
-    let hitbox_component = Hitbox2DComponent {
+    let mut local_transform_top = Transform::default();
+    local_transform_top.set_translation_xyz(
+        SIDE_PANEL_WIDTH + (ARENA_WIDTH / 2.0),
+        ARENA_MAX_Y + 10.0,
+        SIDE_PANEL_Z,
+    );
+
+    let mut local_transform_bottom = Transform::default();
+    local_transform_bottom.set_translation_xyz(
+        SIDE_PANEL_WIDTH + (ARENA_WIDTH / 2.0),
+        ARENA_MIN_Y - 10.0,
+        SIDE_PANEL_Z,
+    );
+
+    let vertical_hitbox_component = Hitbox2DComponent {
         width: SIDE_PANEL_WIDTH,
         height: ARENA_HEIGHT,
+        offset: Vector2::new(0.0, 0.0),
+        offset_rotation: 0.0,
+    };
+
+    let horizontal_hitbox_component = Hitbox2DComponent {
+        width: ARENA_WIDTH,
+        height: 20.0,
         offset: Vector2::new(0.0, 0.0),
         offset_rotation: 0.0,
     };
@@ -48,20 +70,36 @@ pub fn initialize_arena_barriers(world: &mut World, sprite_sheet_handle: Handle<
     let left_barrier_component = BarrierComponent {
         deflection_speed: Vector2::new(30.0, 0.0),
         damage: 1.0,
+        enemies_pass: false,
         push_direction: PushDirection::Right,
     };
 
     let right_barrier_component = BarrierComponent {
         deflection_speed: Vector2::new(30.0, 0.0),
         damage: 1.0,
+        enemies_pass: false,
         push_direction: PushDirection::Left,
+    };
+
+    let top_barrier_component = BarrierComponent {
+        deflection_speed: Vector2::new(0.0, 30.0),
+        damage: 1.0,
+        enemies_pass: true,
+        push_direction: PushDirection::Down,
+    };
+
+    let bottom_barrier_component = BarrierComponent {
+        deflection_speed: Vector2::new(0.0, 30.0),
+        damage: 1.0,
+        enemies_pass: true,
+        push_direction: PushDirection::Up,
     };
 
     world
         .create_entity()
         .with(local_transform_left)
         .with(sprite_render_left)
-        .with(hitbox_component.clone())
+        .with(vertical_hitbox_component.clone())
         .with(left_barrier_component)
         .build();
 
@@ -69,7 +107,21 @@ pub fn initialize_arena_barriers(world: &mut World, sprite_sheet_handle: Handle<
         .create_entity()
         .with(local_transform_right)
         .with(sprite_render_right)
-        .with(hitbox_component)
+        .with(vertical_hitbox_component)
         .with(right_barrier_component)
+        .build();
+
+    world
+        .create_entity()
+        .with(local_transform_top)
+        .with(horizontal_hitbox_component.clone())
+        .with(top_barrier_component)
+        .build();
+
+    world
+        .create_entity()
+        .with(local_transform_bottom)
+        .with(horizontal_hitbox_component.clone())
+        .with(bottom_barrier_component)
         .build();
 }

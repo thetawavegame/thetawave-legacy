@@ -35,7 +35,7 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
         {
             handle_spaceship_movement(motion_2d, x_move, y_move);
 
-            constrain_spaceship_to_arena(motion_2d, transform, hitbox)
+            //constrain_spaceship_to_arena(motion_2d, transform, hitbox)
         }
     }
 }

@@ -280,20 +280,22 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
             if let Some(barrier) = barriers.get(event.colliding_entity) {
                 let enemy = enemies.get(event.enemy_entity).unwrap();
 
-                match enemy.enemy_type {
-                    EnemyType::Missile => {}
+                if !barrier.enemies_pass {
+                    match enemy.enemy_type {
+                        EnemyType::Missile => {}
 
-                    _ => {
-                        let enemy_motion = motion_2ds.get_mut(event.enemy_entity).unwrap();
-                        let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
+                        _ => {
+                            let enemy_motion = motion_2ds.get_mut(event.enemy_entity).unwrap();
+                            let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
-                        barrier_collision(enemy_motion, barrier);
+                            barrier_collision(enemy_motion, barrier);
 
-                        enemy_health.value -= barrier.damage;
+                            enemy_health.value -= barrier.damage;
 
-                        play_audio_channel.single_write(PlayAudioEvent {
-                            source: sounds.sound_effects["force_field"].clone(),
-                        });
+                            play_audio_channel.single_write(PlayAudioEvent {
+                                source: sounds.sound_effects["force_field"].clone(),
+                            });
+                        }
                     }
                 }
             }

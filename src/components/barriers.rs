@@ -17,6 +17,7 @@ pub enum PushDirection {
 pub struct BarrierComponent {
     pub deflection_speed: Vector2<f32>,
     pub damage: f32,
+    pub enemies_pass: bool,
     pub push_direction: PushDirection,
 }
 

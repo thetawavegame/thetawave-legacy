@@ -159,4 +159,18 @@ pub fn barrier_collision(
             _ => motion_component.velocity.x,
         }
     }
+
+    if barrier_component.deflection_speed.y.abs() > motion_component.velocity.y.abs() {
+        motion_component.velocity.y = match barrier_component.push_direction {
+            PushDirection::Down => -barrier_component.deflection_speed.y,
+            PushDirection::Up => barrier_component.deflection_speed.y,
+            _ => motion_component.velocity.y,
+        }
+    } else {
+        motion_component.velocity.y = match barrier_component.push_direction {
+            PushDirection::Down => -motion_component.velocity.y.abs(),
+            PushDirection::Up => motion_component.velocity.y.abs(),
+            _ => motion_component.velocity.y,
+        }
+    }
 }
