@@ -1,4 +1,4 @@
-use crate::components::Motion2DComponent;
+use crate::components::{BarrierComponent, Motion2DComponent, PushDirection};
 use amethyst::core::math::Vector2;
 
 mod ability;
@@ -139,5 +139,24 @@ pub fn standard_collision(
     {
         motion_component.velocity.y =
             -((motion_component.velocity.y as i32).signum() as f32) * min_velocity;
+    }
+}
+
+pub fn barrier_collision(
+    motion_component: &mut Motion2DComponent,
+    barrier_component: &BarrierComponent,
+) {
+    if barrier_component.deflection_speed.x.abs() > motion_component.velocity.x.abs() {
+        motion_component.velocity.x = match barrier_component.push_direction {
+            PushDirection::Left => -barrier_component.deflection_speed.x,
+            PushDirection::Right => barrier_component.deflection_speed.x,
+            _ => motion_component.velocity.x,
+        }
+    } else {
+        motion_component.velocity.x = match barrier_component.push_direction {
+            PushDirection::Left => -motion_component.velocity.x.abs(),
+            PushDirection::Right => motion_component.velocity.x.abs(),
+            _ => motion_component.velocity.x,
+        }
     }
 }

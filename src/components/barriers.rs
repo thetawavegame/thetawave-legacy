@@ -6,9 +6,18 @@ use amethyst::{
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone)]
+pub enum PushDirection {
+    Left,
+    Right,
+    Down,
+    Up,
+}
+
+#[derive(Clone)]
 pub struct BarrierComponent {
-    pub deflection_velocity: Vector2<f32>,
+    pub deflection_speed: Vector2<f32>,
     pub damage: f32,
+    pub push_direction: PushDirection,
 }
 
 impl Component for BarrierComponent {

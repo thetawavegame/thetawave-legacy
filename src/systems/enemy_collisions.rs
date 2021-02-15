@@ -7,7 +7,7 @@ use crate::{
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
     resources::SpriteSheetsResource,
-    systems::standard_collision,
+    systems::{barrier_collision, standard_collision},
 };
 use amethyst::{
     core::transform::Transform,
@@ -284,30 +284,12 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
                     EnemyType::Missile => {}
 
                     _ => {
-                        if let Some(collision_velocity) = event.collision_velocity {
-                            let enemy_motion_2d = motion_2ds.get_mut(event.enemy_entity).unwrap();
-                            let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
+                        let enemy_motion = motion_2ds.get_mut(event.enemy_entity).unwrap();
+                        let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
-                            if barrier.deflection_velocity.x.abs() > 0.0 {
-                                if collision_velocity.x.abs() < barrier.deflection_velocity.x.abs()
-                                {
-                                    enemy_motion_2d.velocity.x = barrier.deflection_velocity.x;
-                                } else {
-                                    enemy_motion_2d.velocity.x = collision_velocity.x;
-                                }
-                            }
+                        barrier_collision(enemy_motion, barrier);
 
-                            if barrier.deflection_velocity.y.abs() > 0.0 {
-                                if collision_velocity.y.abs() < barrier.deflection_velocity.y.abs()
-                                {
-                                    enemy_motion_2d.velocity.y = barrier.deflection_velocity.y;
-                                } else {
-                                    enemy_motion_2d.velocity.y = collision_velocity.y;
-                                }
-                            }
-
-                            enemy_health.value -= barrier.damage;
-                        }
+                        enemy_health.value -= barrier.damage;
 
                         play_audio_channel.single_write(PlayAudioEvent {
                             source: sounds.sound_effects["force_field"].clone(),

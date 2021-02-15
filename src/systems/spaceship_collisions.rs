@@ -7,7 +7,7 @@ use crate::{
     entities::spawn_blast_explosion,
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::SpriteSheetsResource,
-    systems::standard_collision,
+    systems::{barrier_collision, standard_collision},
 };
 use amethyst::{
     core::transform::Transform,
@@ -283,29 +283,13 @@ impl<'s> System<'s> for SpaceshipArenaBorderCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with a barrier?
             if let Some(barrier) = barriers.get(event.colliding_entity) {
-                if let Some(collision_velocity) = event.collision_velocity {
-                    let player_motion_2d = motion_2ds.get_mut(event.player_entity).unwrap();
-                    let player_health = healths.get_mut(event.player_entity).unwrap();
+                let player_motion = motion_2ds.get_mut(event.player_entity).unwrap();
+                let player_health = healths.get_mut(event.player_entity).unwrap();
 
-                    // set velocity to deflection velocity if collision velocity under deflection velocity
-                    if barrier.deflection_velocity.x.abs() > 0.0 {
-                        if collision_velocity.x.abs() < barrier.deflection_velocity.x.abs() {
-                            player_motion_2d.velocity.x = barrier.deflection_velocity.x;
-                        } else {
-                            player_motion_2d.velocity.x = collision_velocity.x;
-                        }
-                    }
+                barrier_collision(player_motion, barrier);
 
-                    if barrier.deflection_velocity.y.abs() > 0.0 {
-                        if collision_velocity.y.abs() < barrier.deflection_velocity.y.abs() {
-                            player_motion_2d.velocity.y = barrier.deflection_velocity.y;
-                        } else {
-                            player_motion_2d.velocity.y = collision_velocity.y;
-                        }
-                    }
+                player_health.value -= barrier.damage;
 
-                    player_health.value -= barrier.damage;
-                }
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["force_field"].clone(),
                 });

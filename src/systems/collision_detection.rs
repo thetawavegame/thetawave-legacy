@@ -122,28 +122,12 @@ impl<'s> System<'s> for CollisionHandlerSystem {
             }
 
             if let Some(_player) = players.get(event.entity_a) {
-                // if player impacts arena border set the collision velocity to the inverted velocity of the player
-                if let Some(_arena_border) = barriers.get(event.entity_b) {
-                    if let Some(player_motion_component) = motions.get(event.entity_a) {
-                        collision_velocity = Some(-player_motion_component.velocity);
-                    }
-                }
-
                 player_collision_channel.single_write(PlayerCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,
                     collision_velocity,
                 ));
             } else if let Some(_enemy) = enemies.get(event.entity_a) {
-                //TODO: change collision velocity to zero for unmovable enemies (repeater boss parts)
-
-                // if enemy impacts arena border set the collision velocity to the inverted velocity of the enemy
-                if let Some(_arena_border) = barriers.get(event.entity_b) {
-                    if let Some(enemy_motion_component) = motions.get(event.entity_a) {
-                        collision_velocity = Some(-enemy_motion_component.velocity);
-                    }
-                }
-
                 enemy_collision_channel.single_write(EnemyCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,

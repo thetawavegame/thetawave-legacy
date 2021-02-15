@@ -1,5 +1,5 @@
 use crate::{
-    components::{BarrierComponent, Hitbox2DComponent},
+    components::{BarrierComponent, Hitbox2DComponent, PushDirection},
     constants::{
         ARENA_HEIGHT, ARENA_MAX_X, SIDE_PANEL_LEFT_SPRITE_INDEX, SIDE_PANEL_RIGHT_SPRITE_INDEX,
         SIDE_PANEL_WIDTH, SIDE_PANEL_Z,
@@ -46,13 +46,15 @@ pub fn initialize_arena_barriers(world: &mut World, sprite_sheet_handle: Handle<
     };
 
     let left_barrier_component = BarrierComponent {
-        deflection_velocity: Vector2::new(30.0, 0.0),
+        deflection_speed: Vector2::new(30.0, 0.0),
         damage: 1.0,
+        push_direction: PushDirection::Right,
     };
 
     let right_barrier_component = BarrierComponent {
-        deflection_velocity: Vector2::new(-30.0, 0.0),
+        deflection_speed: Vector2::new(30.0, 0.0),
         damage: 1.0,
+        push_direction: PushDirection::Left,
     };
 
     world
