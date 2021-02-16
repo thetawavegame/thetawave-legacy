@@ -12,6 +12,7 @@ mod enemy;
 mod enemy_collisions;
 mod enemy_destroyed;
 mod enemy_spawn;
+mod fade;
 mod gamemaster;
 mod manualblaster_system;
 mod motion2d;
@@ -40,6 +41,7 @@ pub use self::{
     },
     enemy_destroyed::EnemyDestroyedSystem,
     enemy_spawn::SpawnerSystem,
+    fade::OpaqueFadeSystem,
     gamemaster::GameMasterSystem,
     manualblaster_system::ManualBlasterSystem,
     motion2d::{EnemyMotion2DSystem, EnemyTargetSystem, Motion2DSystem},

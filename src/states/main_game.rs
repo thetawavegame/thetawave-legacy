@@ -5,9 +5,9 @@ use crate::{
         CAMERA_Z,
     },
     entities::{
-        initialize_arena_barriers, initialize_defense, initialize_enemy_spawner,
-        initialize_gamemaster, initialize_planet, initialize_spaceship, initialize_status_bars,
-        initialize_store,
+        initialize_arena_barriers, initialize_background, initialize_defense,
+        initialize_enemy_spawner, initialize_gamemaster, initialize_planet, initialize_spaceship,
+        initialize_status_bars, initialize_store,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
     states::PausedState,
@@ -151,6 +151,7 @@ impl Default for MainGameState {
                     "play_audio_system",
                     &[],
                 )
+                .with(systems::OpaqueFadeSystem, "opaque_fade_system", &[])
                 .build(),
         }
     }
@@ -188,6 +189,7 @@ impl SimpleState for MainGameState {
             0.0,
             0.005,
         );
+        initialize_background(world, spritesheets.spritesheets["backgrounds"].clone());
         initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
         initialize_enemy_spawner(world);
         initialize_arena_barriers(world, spritesheets.spritesheets["side_panels"].clone());

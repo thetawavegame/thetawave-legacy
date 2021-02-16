@@ -1,3 +1,4 @@
+pub mod backgrounds;
 pub mod barriers;
 pub mod blast;
 pub mod boss;
@@ -15,6 +16,7 @@ pub mod status_unit;
 pub mod store;
 
 pub use self::{
+    backgrounds::initialize_background,
     barriers::initialize_arena_barriers,
     blast::spawn_blasts,
     boss::spawn_repeater,

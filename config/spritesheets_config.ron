@@ -3,6 +3,10 @@
         image: "side_panel_spritesheet.png",
         data: "side_panel_spritesheet.ron",
     ),
+    "backgrounds": (
+        image: "vein_background.png",
+        data: "vein_background.ron",
+    ),
     "items": (
         image: "items_spritesheet.png",
         data: "items_spritesheet.ron",
