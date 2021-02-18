@@ -62,7 +62,7 @@ pub fn initialize_background(world: &mut World, sprite_sheet_handle: Handle<Spri
     let current_color_value = 0.05;
 
     let opaque_fade = OpaqueFadeComponent {
-        color_change: 0.00003,
+        color_change: 0.00005,
         max_color_value: 0.58,
         min_color_value: 0.0,
         current_color_value,

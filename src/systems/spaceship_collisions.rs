@@ -1,8 +1,9 @@
 use crate::{
     audio::Sounds,
     components::{
-        BarrierComponent, BlastComponent, BlastType, ConsumableComponent, DefenseTag,
-        EnemyComponent, HealthComponent, ItemComponent, Motion2DComponent, PlayerComponent,
+        AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, BlastComponent, BlastType,
+        ConsumableComponent, DefenseTag, EnemyComponent, HealthComponent, ItemComponent,
+        Motion2DComponent, PlayerComponent,
     },
     entities::spawn_blast_explosion,
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
@@ -26,6 +27,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
         ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
+        ReadStorage<'s, BarrelRollAbilityComponent>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -39,7 +41,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
     fn run(
         &mut self,
-        (collision_event_channel, enemies, mut motions, mut healths): Self::SystemData,
+        (collision_event_channel, enemies, mut motions, mut healths, barrel_roll_abilities): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an enemy entity?
@@ -47,7 +49,21 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                 let spaceship_motion = motions.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
 
-                spaceship_health.take_damage(enemy.collision_damage);
+                let collision_damage_immune = if let Some(barrel_roll_ability) =
+                    barrel_roll_abilities.get(event.player_entity)
+                {
+                    if let AbilityDirection::None = barrel_roll_ability.action_direction {
+                        false
+                    } else {
+                        barrel_roll_ability.steel_barrel
+                    }
+                } else {
+                    false
+                };
+
+                if !collision_damage_immune {
+                    spaceship_health.take_damage(enemy.collision_damage);
+                }
 
                 if let Some(collision_velocity) = event.collision_velocity {
                     if event.collider_immovable {
@@ -72,6 +88,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         Entities<'s>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
+        ReadStorage<'s, BarrelRollAbilityComponent>,
         ReadStorage<'s, Transform>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
@@ -93,6 +110,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
             entities,
             mut healths,
             mut blasts,
+            barrel_roll_abilities,
             transforms,
             sprite_resource,
             lazy_update,
@@ -104,25 +122,39 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
                 let blast_transform = transforms.get(event.colliding_entity).unwrap();
 
+                let player_hittable = if let Some(barrel_roll_ability) =
+                    barrel_roll_abilities.get(event.player_entity)
+                {
+                    if let AbilityDirection::None = barrel_roll_ability.action_direction {
+                        true
+                    } else {
+                        false
+                    }
+                } else {
+                    true
+                };
+
                 // first check if the blast is allied with the player
                 // TODO blast should not hit if player is currently barrel rolling
-                match blast.blast_type {
-                    // using match here for ease of adding enemy blast effects (such as poison) in the future
-                    BlastType::Enemy => {
-                        entities
-                            .delete(event.colliding_entity)
-                            .expect("unable to delete entity");
+                if player_hittable {
+                    match blast.blast_type {
+                        // using match here for ease of adding enemy blast effects (such as poison) in the future
+                        BlastType::Enemy => {
+                            entities
+                                .delete(event.colliding_entity)
+                                .expect("unable to delete entity");
 
-                        spawn_blast_explosion(
-                            &entities,
-                            sprite_resource.spritesheets["blast_explosions"].clone(),
-                            blast.blast_type.clone(),
-                            blast_transform.clone(),
-                            &lazy_update,
-                        );
-                        spaceship_health.take_damage(blast.damage);
+                            spawn_blast_explosion(
+                                &entities,
+                                sprite_resource.spritesheets["blast_explosions"].clone(),
+                                blast.blast_type.clone(),
+                                blast_transform.clone(),
+                                &lazy_update,
+                            );
+                            spaceship_health.take_damage(blast.damage);
+                        }
+                        _ => {}
                     }
-                    _ => {}
                 }
             }
         }
