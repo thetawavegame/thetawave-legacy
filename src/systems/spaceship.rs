@@ -8,7 +8,7 @@ use crate::{
     resources::SpriteSheetsResource,
 };
 use amethyst::{
-    core::{timing::Time, Transform},
+    core::Transform,
     ecs::*,
     ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
@@ -30,7 +30,6 @@ impl<'s> System<'s> for SpaceshipSystem {
         WriteStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
         Read<'s, InputHandler<StringBindings>>,
-        Read<'s, Time>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, EventChannel<ItemGetEvent>>,
@@ -58,7 +57,6 @@ impl<'s> System<'s> for SpaceshipSystem {
             mut blasters,
             mut manual_fires,
             input,
-            time,
             sprite_resource,
             lazy_update,
             item_get_event_channel,

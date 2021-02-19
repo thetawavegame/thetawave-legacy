@@ -7,7 +7,7 @@ use crate::{
     },
     entities::spawn_blast_explosion,
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
-    resources::SpriteSheetsResource,
+    resources::{GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
@@ -24,6 +24,7 @@ pub struct SpaceshipEnemyCollisionSystem {
 impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
+        Read<'s, GameParametersResource>,
         ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
@@ -41,7 +42,14 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
     fn run(
         &mut self,
-        (collision_event_channel, enemies, mut motions, mut healths, barrel_roll_abilities): Self::SystemData,
+        (
+            collision_event_channel,
+            game_parameters,
+            enemies,
+            mut motions,
+            mut healths,
+            barrel_roll_abilities,
+        ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an enemy entity?
@@ -67,9 +75,17 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
 
                 if let Some(collision_velocity) = event.collision_velocity {
                     if event.collider_immovable {
-                        immovable_collision(spaceship_motion, collision_velocity, 50.0);
+                        immovable_collision(
+                            spaceship_motion,
+                            collision_velocity,
+                            game_parameters.min_collision_knockback,
+                        );
                     } else {
-                        standard_collision(spaceship_motion, collision_velocity, 50.0);
+                        standard_collision(
+                            spaceship_motion,
+                            collision_velocity,
+                            game_parameters.min_collision_knockback,
+                        );
                     }
                 }
             }

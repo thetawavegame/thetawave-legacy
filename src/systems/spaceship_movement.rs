@@ -1,9 +1,5 @@
-use crate::{
-    components::{Hitbox2DComponent, Motion2DComponent, PlayerComponent},
-    constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
-};
+use crate::components::{Motion2DComponent, PlayerComponent};
 use amethyst::{
-    core::Transform,
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
@@ -12,27 +8,15 @@ pub struct SpaceshipMovementSystem;
 impl<'s> System<'s> for SpaceshipMovementSystem {
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
-        WriteStorage<'s, Transform>,
         WriteStorage<'s, Motion2DComponent>,
-        ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
     );
 
-    fn run(
-        &mut self,
-        (players, mut transforms, mut motion_2d_components, hitboxes, input): Self::SystemData,
-    ) {
+    fn run(&mut self, (players, mut motion_2d_components, input): Self::SystemData) {
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;
 
-        for (_player, transform, motion_2d, hitbox) in (
-            &players,
-            &mut transforms,
-            &mut motion_2d_components,
-            &hitboxes,
-        )
-            .join()
-        {
+        for (_player, motion_2d) in (&players, &mut motion_2d_components).join() {
             handle_spaceship_movement(motion_2d, x_move, y_move);
         }
     }

@@ -7,7 +7,6 @@ mod consumable;
 mod despawn;
 mod enemy;
 mod fade;
-mod gamemaster;
 mod health;
 mod hitbox;
 mod item;
@@ -31,7 +30,6 @@ pub use self::{
     despawn::DespawnAtBorderComponent,
     enemy::{EnemyComponent, EnemySpawnerTag, EnemyType},
     fade::OpaqueFadeComponent,
-    gamemaster::{BossType, GameMasterComponent, Phase, PhaseType},
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
     item::ItemComponent,

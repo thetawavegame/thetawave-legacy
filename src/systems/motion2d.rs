@@ -2,7 +2,7 @@ use crate::{
     components::{
         EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent, PlayerComponent,
     },
-    constants::{ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y},
+    constants::{ARENA_HEIGHT, ARENA_MIN_Y},
 };
 use amethyst::{
     core::{math::Vector2, timing::Time, transform::Transform},

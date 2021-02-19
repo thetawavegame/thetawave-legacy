@@ -1,18 +1,5 @@
-use crate::{
-    components::{
-        AbilityDirection, AnimationComponent, AnimationType, BarrelRollAbilityComponent, BlastType,
-        BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
-        Motion2DComponent, OpaqueFadeComponent,
-    },
-    constants::{
-        ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
-        POISON_BLAST_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
-        SPACESHIP_BARREL_COOLDOWN, SPACESHIP_BARREL_DURATION, SPACESHIP_BARREL_SPEED,
-        SPACESHIP_BLAST_SPRITE_INDEX, SPACESHIP_DAMAGE, SPACESHIP_DECELERATION_X,
-        SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT,
-        SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
-    },
-    resources::PlayersResource,
+use crate::components::{
+    AnimationComponent, AnimationType, Motion2DComponent, OpaqueFadeComponent,
 };
 use amethyst::{
     assets::Handle,
@@ -22,9 +9,8 @@ use amethyst::{
     },
     ecs::{World, WorldExt},
     prelude::Builder,
-    renderer::{palette::Srgba, resources::Tint, SpriteRender, SpriteSheet, Transparent},
+    renderer::{palette::Srgba, resources::Tint, SpriteRender, SpriteSheet},
 };
-use std::collections::HashMap;
 
 pub fn initialize_background(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let mut local_transform = Transform::default();

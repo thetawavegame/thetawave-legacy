@@ -1,0 +1,39 @@
+(
+    phase_map: [
+        (
+            phase_type: Rest,
+            boss_type: None,
+            length: 8,
+            boss_spawned: false,
+        ),
+        (
+            phase_type: Invasion,
+            boss_type: None,
+            length: 60,
+            boss_spawned: false,
+        ),
+        (
+            phase_type: Rest,
+            boss_type: None,
+            length: 4,
+            boss_spawned: false,
+        ),
+        (
+            phase_type: Boss,
+            boss_type: Repeater,
+            length: 0,
+            boss_spawned: false,
+        ),
+        (
+            phase_type: Rest,
+            boss_type: None,
+            length: 200,
+            boss_spawned: false,
+        ),
+    ],
+    phase_idx: 0,
+    last_phase: 4,
+    current_tick: 0,
+    tick_timer: 1.0,
+    tick_length: 1.0,
+)

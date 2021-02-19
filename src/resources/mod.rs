@@ -10,6 +10,12 @@ use amethyst::{
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+pub mod game_parameters;
+pub mod phases;
+
+pub use self::game_parameters::GameParametersResource;
+pub use self::phases::{BossType, Phase, PhaseManagerResource, PhaseType};
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
     pub animation_component: AnimationComponent,

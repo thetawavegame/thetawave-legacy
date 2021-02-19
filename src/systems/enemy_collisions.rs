@@ -6,7 +6,7 @@ use crate::{
     },
     entities::spawn_blast_explosion,
     events::{EnemyCollisionEvent, PlayAudioEvent},
-    resources::SpriteSheetsResource,
+    resources::{GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
@@ -24,6 +24,7 @@ pub struct EnemyPlayerCollisionSystem {
 impl<'s> System<'s> for EnemyPlayerCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
+        Read<'s, GameParametersResource>,
         ReadStorage<'s, PlayerComponent>,
         WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
@@ -45,6 +46,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
         &mut self,
         (
             enemy_collision_event_channel,
+            game_parameters,
             players,
             mut enemies,
             mut motions,
@@ -76,7 +78,11 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
 
                 if !enemy_motion.immovable {
                     if let Some(collision_velocity) = event.collision_velocity {
-                        standard_collision(enemy_motion, collision_velocity, 50.0);
+                        standard_collision(
+                            enemy_motion,
+                            collision_velocity,
+                            game_parameters.min_collision_knockback,
+                        );
                     }
                 }
             }
@@ -92,6 +98,7 @@ pub struct EnemyEnemyCollisionSystem {
 impl<'s> System<'s> for EnemyEnemyCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
+        Read<'s, GameParametersResource>,
         ReadStorage<'s, EnemyComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
@@ -112,6 +119,7 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
         &mut self,
         (
             enemy_collision_event_channel,
+            game_parameters,
             enemies,
             mut motions,
             mut healths,
@@ -141,9 +149,17 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
                 if !enemy_motion.immovable {
                     if let Some(collision_velocity) = event.collision_velocity {
                         if event.collider_immovable {
-                            immovable_collision(enemy_motion, collision_velocity, 50.0);
+                            immovable_collision(
+                                enemy_motion,
+                                collision_velocity,
+                                game_parameters.min_collision_knockback,
+                            );
                         } else {
-                            standard_collision(enemy_motion, collision_velocity, 50.0);
+                            standard_collision(
+                                enemy_motion,
+                                collision_velocity,
+                                game_parameters.min_collision_knockback,
+                            );
                         }
                     }
                 }

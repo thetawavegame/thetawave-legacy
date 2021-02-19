@@ -3,8 +3,6 @@ use amethyst::{
     ecs::prelude::{Component, DenseVecStorage},
 };
 
-use serde::{Deserialize, Serialize};
-
 #[derive(Clone)]
 pub enum PushDirection {
     Left,

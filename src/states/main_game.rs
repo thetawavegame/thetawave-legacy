@@ -6,7 +6,7 @@ use crate::{
     },
     entities::{
         initialize_arena_barriers, initialize_background, initialize_defense,
-        initialize_enemy_spawner, initialize_gamemaster, initialize_planet, initialize_spaceship,
+        initialize_enemy_spawner, initialize_planet, initialize_side_panels, initialize_spaceship,
         initialize_status_bars, initialize_store,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
@@ -166,9 +166,9 @@ impl SimpleState for MainGameState {
 
         initialize_audio(world);
         initialise_ui(world);
-        initialize_gamemaster(world);
         initialize_defense(world);
         initialize_status_bars(world);
+        initialize_side_panels(world, spritesheets.spritesheets["side_panels"].clone());
         initialize_planet(
             world,
             "earth_planet.glb",
@@ -192,7 +192,7 @@ impl SimpleState for MainGameState {
         initialize_background(world, spritesheets.spritesheets["backgrounds"].clone());
         initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
         initialize_enemy_spawner(world);
-        initialize_arena_barriers(world, spritesheets.spritesheets["side_panels"].clone());
+        initialize_arena_barriers(world);
         initialize_store(world);
         initialise_camera(world);
 
@@ -565,11 +565,9 @@ fn get_paused_text(world: &mut World) -> Entity {
         Anchor::Middle,
     );
 
-    let entity = world
+    world
         .create_entity()
         .with(ui_transform)
         .with(ui_text)
-        .build();
-
-    entity
+        .build()
 }
