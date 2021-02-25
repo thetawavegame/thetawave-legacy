@@ -30,10 +30,10 @@ pub fn spawn_blasts(
             .with(blast_transform.clone())
             .with(Transparent)
             .with(DespawnAtBorderComponent {
-                top_offset: Some(-20.0),
-                bottom_offset: Some(20.0),
-                left_offset: Some(20.0),
-                right_offset: Some(-20.0),
+                top_offset: Some(2.0),
+                bottom_offset: Some(-2.0),
+                left_offset: Some(-2.0),
+                right_offset: Some(2.0),
             })
             .build();
 

@@ -44,7 +44,7 @@
             immovable: false,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "pawn": (
@@ -110,7 +110,7 @@
             immovable: false,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "hauler": (
@@ -153,7 +153,7 @@
             immovable: false,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "strafer": (
@@ -220,7 +220,7 @@
             immovable: false,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "missile_launcher": (
@@ -269,7 +269,7 @@
             immovable: false,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "missile": (
@@ -314,7 +314,7 @@
             immovable: false,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "repeater_body": (
@@ -362,7 +362,7 @@
             immovable: true,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "repeater_head": (
@@ -410,7 +410,7 @@
             immovable: true,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "repeater_right_shoulder": (
@@ -460,7 +460,7 @@
             immovable: true,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "repeater_left_shoulder": (
@@ -510,7 +510,7 @@
             immovable: true,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
     "repeater_right_arm": (
@@ -560,7 +560,7 @@
             immovable: true,
         ),
         despawn_component: (
-            bottom_offset: Some(20.0),
+            bottom_offset: Some(-20.0),
         ),
     ),
 }

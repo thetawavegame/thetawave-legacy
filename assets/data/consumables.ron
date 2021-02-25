@@ -12,7 +12,7 @@
         immovable: false,
     ),
     despawn_border_component: (
-        bottom_offset: Some(20.0),
+        bottom_offset: Some(-20.0),
     ),
     consumable_entities: {
         "defense_wrench": (
