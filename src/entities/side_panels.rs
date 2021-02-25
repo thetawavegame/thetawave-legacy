@@ -21,15 +21,15 @@ pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<Spr
         sprite_number: SIDE_PANEL_RIGHT_SPRITE_INDEX,
     };
 
-    let mut local_transform_left = Transform::default();
-    local_transform_left.set_translation_xyz(
+    let mut transform_left = Transform::default();
+    transform_left.set_translation_xyz(
         SIDE_PANEL_WIDTH / 2.0,
         (ARENA_HEIGHT / 2.0) - 1.0,
         SIDE_PANEL_Z,
     );
 
-    let mut local_transform_right = Transform::default();
-    local_transform_right.set_translation_xyz(
+    let mut transform_right = Transform::default();
+    transform_right.set_translation_xyz(
         ARENA_MAX_X + (SIDE_PANEL_WIDTH / 2.0),
         (ARENA_HEIGHT / 2.0) - 1.0,
         SIDE_PANEL_Z,
@@ -37,13 +37,13 @@ pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<Spr
 
     world
         .create_entity()
-        .with(local_transform_left)
+        .with(transform_left)
         .with(sprite_render_left)
         .build();
 
     world
         .create_entity()
-        .with(local_transform_right)
+        .with(transform_right)
         .with(sprite_render_right)
         .build();
 }

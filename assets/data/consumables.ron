@@ -9,6 +9,7 @@
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
         angular_speed: 0.0,
+        immovable: false,
     ),
     despawn_border_component: (
         bottom_offset: Some(20.0),

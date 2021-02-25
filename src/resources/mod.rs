@@ -1,7 +1,7 @@
 use crate::components::{
-    AnimationComponent, AutoFireComponent, BlasterComponent, CharacterComponent,
-    ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, HealthComponent,
-    Hitbox2DComponent, ItemComponent, Motion2DComponent,
+    AnimationComponent, AutoFireComponent, BlasterComponent, ConsumableComponent,
+    DespawnAtBorderComponent, EnemyComponent, HealthComponent, Hitbox2DComponent, ItemComponent,
+    Motion2DComponent, PlayerComponent,
 };
 use amethyst::{
     assets::Handle,
@@ -9,6 +9,12 @@ use amethyst::{
 };
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+pub mod game_parameters;
+pub mod phases;
+
+pub use self::game_parameters::GameParametersResource;
+pub use self::phases::{BossType, Phase, PhaseManagerResource, PhaseType};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
@@ -42,7 +48,7 @@ pub struct ConsumableEntityData {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct PlayerEntityData {
-    pub character_component: CharacterComponent,
+    pub player_component: PlayerComponent,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

@@ -9,6 +9,7 @@
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
         angular_speed: 0.0,
+        immovable: true,
     ),
     hitbox2d_component: (
         width: 14.0,

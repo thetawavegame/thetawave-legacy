@@ -5,8 +5,9 @@ use crate::{
         CAMERA_Z,
     },
     entities::{
-        initialize_defense, initialize_enemy_spawner, initialize_gamemaster, initialize_planet,
-        initialize_side_panels, initialize_spaceship, initialize_status_bars, initialize_store,
+        initialize_arena_barriers, initialize_background, initialize_defense,
+        initialize_enemy_spawner, initialize_planet, initialize_side_panels, initialize_spaceship,
+        initialize_status_bars, initialize_store,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
     states::PausedState,
@@ -47,6 +48,11 @@ impl Default for MainGameState {
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::EnemyTargetSystem, "enemy_target_system", &[])
                 .with(
+                    systems::BarrelRollAbilitySystem::default(),
+                    "barrel_roll_ability_system",
+                    &[],
+                )
+                .with(
                     systems::EnemyMotion2DSystem,
                     "enemy_motion_2d_system",
                     &["enemy_target_system"],
@@ -71,6 +77,16 @@ impl Default for MainGameState {
                     systems::CollisionHandlerSystem::default(),
                     "collision_handler_system",
                     &["collision_detection_system"],
+                )
+                .with(
+                    systems::EnemyArenaBorderCollisionSystem::default(),
+                    "enemy_arena_border_collsion_system",
+                    &["collision_handler_system"],
+                )
+                .with(
+                    systems::SpaceshipArenaBorderCollisionSystem::default(),
+                    "spaceship_arena_border_collision_system",
+                    &["collision_handler_system"],
                 )
                 .with(
                     systems::SpaceshipEnemyCollisionSystem::default(),
@@ -135,6 +151,7 @@ impl Default for MainGameState {
                     "play_audio_system",
                     &[],
                 )
+                .with(systems::OpaqueFadeSystem, "opaque_fade_system", &[])
                 .build(),
         }
     }
@@ -149,9 +166,9 @@ impl SimpleState for MainGameState {
 
         initialize_audio(world);
         initialise_ui(world);
-        initialize_gamemaster(world);
         initialize_defense(world);
         initialize_status_bars(world);
+        initialize_side_panels(world, spritesheets.spritesheets["side_panels"].clone());
         initialize_planet(
             world,
             "earth_planet.glb",
@@ -172,9 +189,10 @@ impl SimpleState for MainGameState {
             0.0,
             0.005,
         );
+        initialize_background(world, spritesheets.spritesheets["backgrounds"].clone());
         initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
         initialize_enemy_spawner(world);
-        initialize_side_panels(world, spritesheets.spritesheets["side_panels"].clone());
+        initialize_arena_barriers(world);
         initialize_store(world);
         initialise_camera(world);
 
@@ -547,11 +565,9 @@ fn get_paused_text(world: &mut World) -> Entity {
         Anchor::Middle,
     );
 
-    let entity = world
+    world
         .create_entity()
         .with(ui_transform)
         .with(ui_text)
-        .build();
-
-    entity
+        .build()
 }

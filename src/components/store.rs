@@ -1,5 +1,5 @@
 use crate::{
-    components::{CharacterComponent, ConsumableComponent},
+    components::{ConsumableComponent, PlayerComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ITEM_SPAWN_Y_OFFSET},
     entities::spawn_item,
     resources::{ItemEntityData, ItemsResource, SpriteSheetsResource},
@@ -101,19 +101,19 @@ impl StoreComponent {
         &mut self,
         item_index: usize,
         entities: &Entities,
-        character: &mut CharacterComponent,
+        player: &mut PlayerComponent,
         transform: &Transform,
         items_resource: &ReadExpect<ItemsResource>,
         sprite_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
         if let Some(item) = &self.item_inventory[item_index] {
-            if character.money >= item.item_component.price {
+            if player.money >= item.item_component.price {
                 println!(
                     "purchasing {} located in slot #{} for {}",
                     item.item_component.name, item_index, item.item_component.price
                 );
-                character.money -= item.item_component.price;
+                player.money -= item.item_component.price;
                 spawn_item(
                     entities,
                     sprite_resource,

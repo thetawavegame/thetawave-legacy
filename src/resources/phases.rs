@@ -1,19 +1,19 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum PhaseType {
     Invasion,
     Rest,
     Boss,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum BossType {
     Repeater,
     None,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Phase {
     pub phase_type: PhaseType,
     pub boss_type: BossType,
@@ -21,8 +21,8 @@ pub struct Phase {
     pub boss_spawned: bool,
 }
 
-#[derive(Clone)]
-pub struct GameMasterComponent {
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
+pub struct PhaseManagerResource {
     pub phase_map: Vec<Phase>,
     pub phase_idx: usize,
     pub last_phase: usize,
@@ -31,12 +31,8 @@ pub struct GameMasterComponent {
     pub tick_length: f32,
 }
 
-impl Component for GameMasterComponent {
-    type Storage = DenseVecStorage<Self>;
-}
-
-impl GameMasterComponent {
-    pub fn iterate_tick(&mut self, dt: f32) {
+impl PhaseManagerResource {
+    pub fn update(&mut self, dt: f32) {
         if self.tick_timer > 0.0 {
             self.tick_timer -= dt;
         } else {

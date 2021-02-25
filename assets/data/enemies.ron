@@ -41,6 +41,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: false,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -106,6 +107,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: false,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -148,6 +150,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: false,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -214,6 +217,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: false,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -262,6 +266,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: false,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -300,12 +305,13 @@
             velocity: [0.0, 0.0],
             acceleration: [5.0, 5.0],
             deceleration: [2.0, 2.0],
-            speed: [48, 48],
+            speed: [50, 50],
             max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.2,
             angular_deceleration: 0.0,
             angular_speed: 1.2,
+            immovable: false,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -353,6 +359,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: true,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -400,6 +407,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: true,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -449,6 +457,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.05,
+            immovable: true,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -498,6 +507,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.05,
+            immovable: true,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),
@@ -547,6 +557,7 @@
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
             angular_speed: 0.0,
+            immovable: true,
         ),
         despawn_component: (
             bottom_offset: Some(20.0),

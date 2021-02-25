@@ -1,7 +1,7 @@
 use crate::{
     components::{
-        BlastType, BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
-        Motion2DComponent, SpaceshipComponent,
+        AbilityDirection, BarrelRollAbilityComponent, BlastType, BlasterComponent, HealthComponent,
+        Hitbox2DComponent, ManualFireComponent, Motion2DComponent,
     },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
@@ -25,7 +25,7 @@ use std::collections::HashMap;
 pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let player = {
         let players_resource = world.read_resource::<PlayersResource>();
-        players_resource["juggernaut"].character_component.clone()
+        players_resource["juggernaut"].player_component.clone()
     };
 
     let mut local_transform = Transform::default();
@@ -62,6 +62,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         angular_speed: 0.0,
         speed: Vector2::new(SPACESHIP_MAX_SPEED, SPACESHIP_MAX_SPEED),
         max_speed: Vector2::new(SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_KNOCKBACK_SPEED),
+        immovable: false,
     };
 
     let blaster = BlasterComponent {
@@ -90,19 +91,20 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         armor: 0,
     };
 
+    let barrel_roll_ability = BarrelRollAbilityComponent {
+        execute_cooldown: SPACESHIP_BARREL_COOLDOWN,
+        execute_timer: 0.0,
+        action_cooldown: SPACESHIP_BARREL_DURATION,
+        action_timer: 0.0,
+        action_direction: AbilityDirection::None,
+        speed: SPACESHIP_BARREL_SPEED,
+        steel_barrel: false,
+    };
+
     world
         .create_entity()
         .with(sprite_render)
-        .with(SpaceshipComponent {
-            barrel_cooldown: SPACESHIP_BARREL_COOLDOWN,
-            barrel_reset_timer: 0.0,
-            barrel_speed: SPACESHIP_BARREL_SPEED,
-            barrel_action_right: false,
-            barrel_action_left: false,
-            barrel_duration: SPACESHIP_BARREL_DURATION,
-            barrel_action_timer: SPACESHIP_BARREL_DURATION,
-            steel_barrel: false,
-        })
+        .with(barrel_roll_ability)
         .with(blaster)
         .with(manual_fire)
         .with(hitbox)

@@ -17,6 +17,7 @@ pub struct Motion2DComponent {
     pub angular_acceleration: f32,
     pub angular_deceleration: f32,
     pub angular_speed: f32,
+    pub immovable: bool, // can't be moved from outside forces
 }
 
 impl Component for Motion2DComponent {
