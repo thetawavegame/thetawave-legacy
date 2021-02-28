@@ -4,8 +4,8 @@ use crate::{
         BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
-    entities::{spawn_blasts, EntityType},
-    resources::SpriteSheetsResource,
+    entities::{spawn_blasts, spawn_enemy, EntityType},
+    resources::{EnemiesResource, SpriteSheetsResource, ThrustersResource},
 };
 
 use amethyst::{
@@ -162,12 +162,33 @@ impl Component for AutoChildEnemySpawnerComponent {
 }
 
 impl AutoChildEnemySpawnerComponent {
-    pub fn spawn_when_ready(&mut self, delta_time: f32) {
+    pub fn spawn_when_ready(
+        &mut self,
+        delta_time: f32,
+        spawn_position: Vector3<f32>,
+        sprite_sheets_resource: &ReadExpect<SpriteSheetsResource>,
+        enemies_resource: &ReadExpect<EnemiesResource>,
+        thrusters_resource: &ReadExpect<ThrustersResource>,
+        entities: &Entities,
+        lazy_update: &ReadExpect<LazyUpdate>,
+    ) {
         self.timer -= delta_time;
 
         if self.timer < 0.0 {
             self.timer = self.period;
-            //spawn enemy with type
+            spawn_enemy(
+                &self.child_entity_type,
+                Vector3::new(
+                    spawn_position.x + self.offset.x,
+                    spawn_position.y + self.offset.y,
+                    spawn_position.z,
+                ),
+                &sprite_sheets_resource,
+                &enemies_resource,
+                &thrusters_resource,
+                &entities,
+                &lazy_update,
+            );
         }
     }
 }

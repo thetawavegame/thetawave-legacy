@@ -266,6 +266,12 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        auto_child_enemy_spawner_component: Some((
+            child_entity_type: Missile,
+            offset: [0.0, -20.0],
+            period: 3.5,
+            timer: 3.5,
+        ))
     ),
     Missile: (
         animation_component: (
@@ -292,14 +298,14 @@
             armor: 0,
         ),
         hitbox_component: (
-            width: 10.0,
-            height: 15.0,
+            width: 7.0,
+            height: 10.0,
         ),
         motion2d_component: (
             velocity: [0.0, 0.0],
             acceleration: [5.0, 5.0],
             deceleration: [2.0, 2.0],
-            speed: [50, 50],
+            speed: [60, 60],
             max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.2,

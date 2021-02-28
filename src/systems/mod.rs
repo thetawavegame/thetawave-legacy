@@ -40,7 +40,7 @@ pub use self::{
         EnemyPlayerCollisionSystem,
     },
     enemy_destroyed::EnemyDestroyedSystem,
-    enemy_spawn::SpawnerSystem,
+    enemy_spawn::{AutoChildEnemySpawnerSystem, SpawnerSystem},
     fade::OpaqueFadeSystem,
     gamemaster::GameMasterSystem,
     manualblaster_system::ManualBlasterSystem,

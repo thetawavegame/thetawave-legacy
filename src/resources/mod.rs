@@ -77,7 +77,7 @@ pub struct ItemsResource {
 }
 
 pub type EnemiesResource = HashMap<EntityType, EnemyEntityData>;
-pub type ThrustersResource = HashMap<EntityType, ThrusterEntityData>;
+pub type ThrustersResource = HashMap<EntityType, Option<ThrusterEntityData>>;
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 #[derive(Clone)]
@@ -92,11 +92,4 @@ pub type SoundsConfig = HashMap<String, String>;
 pub struct DebugLinesConfig {
     pub line_width: f32,
     pub hitbox_color: Srgba,
-}
-
-#[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct EntityPoolsResource {
-    pub item_pool: Vec<EntityType>,
-    pub enemy_pool: Vec<EntityType>,
-    pub consumable_pool: Vec<EntityType>,
 }

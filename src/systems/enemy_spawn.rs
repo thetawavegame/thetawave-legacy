@@ -35,11 +35,11 @@ impl<'s> System<'s> for SpawnerSystem {
             mut spawners,
             spawner_tag,
             time,
-            enemy_resource,
+            sprite_sheets_resource,
             mut phase_manager,
             lazy_update,
-            enemy_pool,
-            thruster_pool,
+            enemies_resource,
+            thrusters_resource,
         ): Self::SystemData,
     ) {
         if phase_manager.phase_idx < phase_manager.last_phase {
@@ -58,12 +58,12 @@ impl<'s> System<'s> for SpawnerSystem {
                             );
 
                             spawn_enemy(
-                                &entities,
-                                enemy_resource.spritesheets["enemies"].clone(),
-                                Some(enemy_resource.spritesheets["thrusters"].clone()),
-                                enemy_pool[enemy_type].clone(),
-                                Some(thruster_pool[enemy_type].clone()),
+                                enemy_type,
                                 spawn_position,
+                                &sprite_sheets_resource,
+                                &enemies_resource,
+                                &thrusters_resource,
+                                &entities,
                                 &lazy_update,
                             );
                         }
@@ -76,9 +76,10 @@ impl<'s> System<'s> for SpawnerSystem {
                             // spawn repeater boss
                             if !phase_manager.phase_map[phase_manager.phase_idx].boss_spawned {
                                 spawn_repeater(
+                                    &sprite_sheets_resource,
+                                    &enemies_resource,
+                                    &thrusters_resource,
                                     &entities,
-                                    enemy_resource.spritesheets["repeater"].clone(),
-                                    &enemy_pool,
                                     &lazy_update,
                                 );
                                 let phase_idx = phase_manager.phase_idx;
@@ -100,30 +101,46 @@ pub struct AutoChildEnemySpawnerSystem;
 
 impl<'s> System<'s> for AutoChildEnemySpawnerSystem {
     type SystemData = (
-        WriteStorage<'s, Transform>,
+        ReadStorage<'s, Transform>,
         WriteStorage<'s, AutoChildEnemySpawnerComponent>,
         Read<'s, Time>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemiesResource>,
         ReadExpect<'s, ThrustersResource>,
+        ReadExpect<'s, SpriteSheetsResource>,
+        Entities<'s>,
     );
 
     fn run(
         &mut self,
         (
-            mut transforms,
+            transforms,
             mut auto_child_enemy_spawners,
             time,
             lazy_update,
-            enemy_pool,
-            thruster_pool,
+            enemies_resource,
+            thrusters_resource,
+            sprite_sheets_resource,
+            entities,
         ): Self::SystemData,
     ) {
         for (transform, auto_child_enemy_spawner) in
-            (&transforms, &auto_child_enemy_spawners).join()
+            (&transforms, &mut auto_child_enemy_spawners).join()
         {
-            // update timer
-            // spawn enemy
+            let spawn_position = Vector3::new(
+                transform.translation().x,
+                transform.translation().y,
+                transform.translation().z,
+            );
+            auto_child_enemy_spawner.spawn_when_ready(
+                time.delta_seconds(),
+                spawn_position,
+                &sprite_sheets_resource,
+                &enemies_resource,
+                &thrusters_resource,
+                &entities,
+                &lazy_update,
+            );
         }
     }
 }
