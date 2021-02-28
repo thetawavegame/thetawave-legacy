@@ -56,7 +56,7 @@ pub const SIDE_PANEL_WIDTH: f32 = 45.0;
 
 // offsets
 pub const ITEM_SPAWN_Y_OFFSET: f32 = -20.0;
-pub const SPAWNER_Y_OFFSET: f32 = -20.0; // TODO: change back to 20.0
+pub const SPAWNER_Y_OFFSET: f32 = 20.0; // TODO: change back to 20.0
 pub const BLAST_OFFSET: f32 = 7.0; //spacing of blasts when multiple are fired
 
 // spawn ratios
