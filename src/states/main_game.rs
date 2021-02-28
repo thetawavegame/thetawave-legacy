@@ -41,7 +41,7 @@ impl Default for MainGameState {
                 .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
                 .with(systems::GameMasterSystem, "gamemaster_system", &[])
-                .with(systems::EnemySystem, "enemy_system", &[])
+                .with(systems::EnemyBehaviorSystem, "enemy_behavior_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
@@ -144,7 +144,7 @@ impl Default for MainGameState {
                 .with(
                     systems::EnemyDestroyedSystem::default(),
                     "enemy_destroyed_system",
-                    &["enemy_system"],
+                    &["enemy_behavior_system"],
                 )
                 .with(
                     systems::PlayAudioSystem::default(),

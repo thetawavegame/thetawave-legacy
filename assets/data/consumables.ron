@@ -15,7 +15,7 @@
         bottom_offset: Some(-20.0),
     ),
     consumable_entities: {
-        "defense_wrench": (
+        DefenseWrench: (
             consumable_component: (
                 sound_effect: "metal_clang",
                 defense_value: 70,
@@ -29,7 +29,7 @@
                 offset_rotation: 0.0,
             ),
         ),
-        "money_1": (
+        Money1: (
             consumable_component: (
                 sound_effect: "small_rock",
                 money_value: 1,
@@ -43,7 +43,7 @@
                 offset_rotation: 0.0,
             ),
         ),
-        "money_5": (
+        Money5: (
             consumable_component: (
                 sound_effect: "large_rock",
                 money_value: 5,
@@ -57,7 +57,7 @@
                 offset_rotation: 0.0,
             ),
         ),
-        "health_wrench": (
+        HealthWrench: (
             consumable_component: (
                 sound_effect: "metal_clang",
                 health_value: 30,
@@ -71,7 +71,7 @@
                 offset_rotation: 0.0,
             ),
         ),
-        "armor": (
+        Armor: (
             consumable_component: (
                 sound_effect: "armor_up",
                 armor_value: 1,

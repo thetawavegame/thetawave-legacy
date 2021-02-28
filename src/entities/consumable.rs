@@ -1,5 +1,5 @@
 use crate::{
-    components::{choose_random_name, EnemyComponent},
+    components::{choose_random_entity, EnemyComponent},
     resources::{ConsumableEntityData, ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
@@ -44,13 +44,13 @@ pub fn spawn_random_consumable(
     spawn_position: &Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
-    let name = choose_random_name(&enemy.collectables_probs);
+    let consumable_type = choose_random_entity(&enemy.loot_probs);
 
-    if !name.is_empty() {
+    if let Some(consumable_type) = consumable_type {
         spawn_consumable(
             entities,
             sprite_resource,
-            &consumables_resource.consumable_entities[name],
+            &consumables_resource.consumable_entities[consumable_type],
             consumables_resource,
             spawn_position,
             lazy_update,

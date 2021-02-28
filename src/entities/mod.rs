@@ -1,3 +1,5 @@
+use serde::{Deserialize, Serialize};
+
 pub mod backgrounds;
 pub mod barriers;
 pub mod blast;
@@ -33,3 +35,40 @@ pub use self::{
     status_unit::spawn_status_unit,
     store::initialize_store,
 };
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum EntityType {
+    // Enemies
+    Pawn,
+    Drone,
+    Strafer,
+    Hauler, //ally
+    MissileLauncher,
+    Missile,
+    RepeaterBody,
+    RepeaterHead,
+    RepeaterLeftShoulder,
+    RepeaterRightShoulder,
+    RepeaterLeftArm,
+    RepeaterRightArm,
+    // Consumables
+    DefenseWrench,
+    Money1,
+    Money5,
+    HealthWrench,
+    Armor,
+    // Items
+    SteelBarrel,
+    PlasmaBlasts,
+    HazardousReactor,
+    WarpThruster,
+    QuadrupedalTentaclover,
+    DefenseSatellite,
+    DoubleBarrel,
+    YithianPlague,
+    Spice,
+    EnhancedPlating,
+    StructureReinforcement,
+    BlasterSizeEnhancer,
+    FrequencyAugmentor,
+}

@@ -28,8 +28,9 @@ pub mod states;
 pub mod systems;
 
 use resources::{
-    ConsumablesResource, DebugLinesConfig, EnemiesResource, GameParametersResource, ItemsResource,
-    PhaseManagerResource, PlayersResource, SoundsConfig, SpriteSheetsConfig, ThrustersResource,
+    ConsumablesResource, DebugLinesConfig, EnemiesResource, EntityPoolsResource,
+    GameParametersResource, ItemsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
+    SpriteSheetsConfig, ThrustersResource,
 };
 use states::MainGameState;
 
@@ -68,6 +69,8 @@ fn main() -> amethyst::Result<()> {
     let game_parameters =
         <GameParametersResource as Config>::load(data_path.join("game_parameters.ron"))
             .expect("failed to lead data file: game_parameters.ron");
+    let entity_pools = <EntityPoolsResource as Config>::load(data_path.join("entity_pools.ron"))
+        .expect("failed to lead data file: entity_pools.ron");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])
@@ -98,6 +101,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(debug_lines)
         .with_resource(phases)
         .with_resource(game_parameters)
+        .with_resource(entity_pools)
         .build(game_data)?;
 
     game.run();

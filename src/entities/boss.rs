@@ -6,7 +6,9 @@ use amethyst::{
 };
 
 use crate::entities::spawn_enemy;
-use crate::{components::RepeaterComponent, constants, resources::EnemiesResource};
+use crate::{
+    components::RepeaterComponent, constants, entities::EntityType, resources::EnemiesResource,
+};
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(
@@ -40,11 +42,11 @@ pub fn spawn_repeater(
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 40.0,
         constants::BOSS_Z_2,
     );
-    let body_entity_data = enemy_pool[&"repeater_body".to_string()].clone();
-    let head_entity_data = enemy_pool[&"repeater_head".to_string()].clone();
-    let right_shoulder_entity_data = enemy_pool[&"repeater_right_shoulder".to_string()].clone();
-    let left_shoulder_entity_data = enemy_pool[&"repeater_left_shoulder".to_string()].clone();
-    let _right_arm_entity_data = enemy_pool[&"repeater_right_arm".to_string()].clone();
+    let body_entity_data = enemy_pool[&EntityType::RepeaterBody].clone();
+    let head_entity_data = enemy_pool[&EntityType::RepeaterHead].clone();
+    let right_shoulder_entity_data = enemy_pool[&EntityType::RepeaterRightShoulder].clone();
+    let left_shoulder_entity_data = enemy_pool[&EntityType::RepeaterLeftShoulder].clone();
+    let _right_arm_entity_data = enemy_pool[&EntityType::RepeaterRightArm].clone();
 
     let body = spawn_enemy(
         &entities,

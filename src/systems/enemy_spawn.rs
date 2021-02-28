@@ -1,5 +1,5 @@
 use crate::{
-    components::{EnemySpawnerTag, SpawnerComponent},
+    components::{AutoChildEnemySpawnerComponent, EnemySpawnerTag, SpawnerComponent},
     entities::{spawn_enemy, spawn_repeater},
     resources::{
         BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource,
@@ -48,7 +48,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     for (spawner, transform, _) in
                         (&mut spawners, &mut transforms, &spawner_tag).join()
                     {
-                        if let Some((new_x, name)) =
+                        if let Some((new_x, Some(enemy_type))) =
                             spawner.spawn_with_position(time.delta_seconds())
                         {
                             let spawn_position = Vector3::new(
@@ -61,8 +61,8 @@ impl<'s> System<'s> for SpawnerSystem {
                                 &entities,
                                 enemy_resource.spritesheets["enemies"].clone(),
                                 Some(enemy_resource.spritesheets["thrusters"].clone()),
-                                enemy_pool[name].clone(),
-                                Some(thruster_pool[name].clone()),
+                                enemy_pool[enemy_type].clone(),
+                                Some(thruster_pool[enemy_type].clone()),
                                 spawn_position,
                                 &lazy_update,
                             );
@@ -92,6 +92,38 @@ impl<'s> System<'s> for SpawnerSystem {
 
                 PhaseType::Rest => {}
             }
+        }
+    }
+}
+
+pub struct AutoChildEnemySpawnerSystem;
+
+impl<'s> System<'s> for AutoChildEnemySpawnerSystem {
+    type SystemData = (
+        WriteStorage<'s, Transform>,
+        WriteStorage<'s, AutoChildEnemySpawnerComponent>,
+        Read<'s, Time>,
+        ReadExpect<'s, LazyUpdate>,
+        ReadExpect<'s, EnemiesResource>,
+        ReadExpect<'s, ThrustersResource>,
+    );
+
+    fn run(
+        &mut self,
+        (
+            mut transforms,
+            mut auto_child_enemy_spawners,
+            time,
+            lazy_update,
+            enemy_pool,
+            thruster_pool,
+        ): Self::SystemData,
+    ) {
+        for (transform, auto_child_enemy_spawner) in
+            (&transforms, &auto_child_enemy_spawners).join()
+        {
+            // update timer
+            // spawn enemy
         }
     }
 }

@@ -7,9 +7,9 @@ use amethyst::{
     shrev::EventChannel,
 };
 
-pub struct EnemySystem;
+pub struct EnemyBehaviorSystem;
 
-impl<'s> System<'s> for EnemySystem {
+impl<'s> System<'s> for EnemyBehaviorSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, EnemyComponent>,
