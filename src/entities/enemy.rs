@@ -64,7 +64,7 @@ pub fn spawn_enemy(
 
     // Spawn thruster entity as child of enemy entity
 
-    if let Some(thruster_data) = thrusters_resource[&enemy_type].clone() {
+    if let Some(thruster_data) = thrusters_resource.get(&enemy_type) {
         let thruster_parent = Parent::new(enemy_entity);
 
         let thruster_sprite_render = SpriteRender {
@@ -80,7 +80,7 @@ pub fn spawn_enemy(
             .with(thruster_parent)
             .with(thruster_transform)
             .with(thruster_sprite_render)
-            .with(thruster_data.animation_component)
+            .with(thruster_data.animation_component.clone())
             .with(Transparent)
             .build();
     }

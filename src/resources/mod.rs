@@ -77,7 +77,7 @@ pub struct ItemsResource {
 }
 
 pub type EnemiesResource = HashMap<EntityType, EnemyEntityData>;
-pub type ThrustersResource = HashMap<EntityType, Option<ThrusterEntityData>>;
+pub type ThrustersResource = HashMap<EntityType, ThrusterEntityData>;
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 #[derive(Clone)]

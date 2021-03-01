@@ -1,5 +1,5 @@
 {
-    Drone: Some((
+    Drone: (
         animation_component: (
             start_idx: 0,
             frame_count: 3,
@@ -10,8 +10,8 @@
             animation_type: PingPong,
         ),
         y_offset: 11.0,
-    )),
-    Pawn: Some((
+    ),
+    Pawn: (
         animation_component: (
             start_idx: 3,
             frame_count: 3,
@@ -22,8 +22,8 @@
             animation_type: PingPong,
         ),
         y_offset: 11.0,
-    )),
-    Strafer: Some((
+    ),
+    Strafer: (
         animation_component: (
             start_idx: 6,
             frame_count: 3,
@@ -34,8 +34,8 @@
             animation_type: PingPong,
         ),
         y_offset: 7.0,
-    )),
-    Hauler: Some((
+    ),
+    Hauler: (
         animation_component: (
             start_idx: 9,
             frame_count: 3,
@@ -46,8 +46,8 @@
             animation_type: PingPong,
         ),
         y_offset: 18.0,
-    )),
-    MissileLauncher: Some((
+    ),
+    MissileLauncher: (
         animation_component: (
             start_idx: 12,
             frame_count: 3,
@@ -58,8 +58,8 @@
             animation_type: PingPong,
         ),
         y_offset: 13.0,
-    )),
-    Missile: Some((
+    ),
+    Missile: (
         animation_component: (
             start_idx: 15,
             frame_count: 4,
@@ -70,11 +70,5 @@
             animation_type: Forward,
         ),
         y_offset: 9.0,
-    )),
-    RepeaterBody: None,
-    RepeaterHead: None,
-    RepeaterLeftShoulder: None,
-    RepeaterRightShoulder: None,
-    RepeaterLeftArm: None,
-    RepeaterRightArm: None,
+    ),
 }
