@@ -1,8 +1,7 @@
 use crate::{
-    components::{
-        EnemyComponent, EnemyType, Hitbox2DComponent, Motion2DComponent, PlayerComponent,
-    },
+    components::{EnemyComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent},
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
+    entities::EntityType,
 };
 use amethyst::{
     core::{math::Vector2, timing::Time, transform::Transform},
@@ -95,7 +94,7 @@ impl<'s> System<'s> for EnemyTargetSystem {
 
     fn run(&mut self, (mut enemies, players, transforms): Self::SystemData) {
         for (enemy, transform) in (&mut enemies, &transforms).join() {
-            if let EnemyType::Missile = enemy.enemy_type {
+            if let EntityType::Missile = enemy.entity_type {
                 let mut closest_player_position: Option<Vector2<f32>> = None;
 
                 for (_player, player_transform) in (&players, &transforms).join() {
@@ -136,20 +135,20 @@ fn move_enemy(
     motion_2d: &mut Motion2DComponent,
     hitbox_2d: &mut Hitbox2DComponent,
 ) {
-    match enemy.enemy_type {
-        EnemyType::Pawn => {
+    match enemy.entity_type {
+        EntityType::Pawn => {
             motion_2d.move_down();
             motion_2d.brake_horizontal();
         }
-        EnemyType::Drone => {
+        EntityType::Drone => {
             motion_2d.move_down();
             motion_2d.brake_horizontal();
         }
-        EnemyType::Hauler => {
+        EntityType::Hauler => {
             motion_2d.move_down();
             motion_2d.brake_horizontal();
         }
-        EnemyType::Strafer => {
+        EntityType::Strafer => {
             motion_2d.move_down();
 
             // accelerate to speed stat in the x direction
@@ -167,11 +166,11 @@ fn move_enemy(
                 }
             }
         }
-        EnemyType::MissileLauncher => {
+        EntityType::MissileLauncher => {
             motion_2d.move_down();
             motion_2d.brake_horizontal();
         }
-        EnemyType::Missile => {
+        EntityType::Missile => {
             if let Some(target_position) = enemy.target_position {
                 //turn towards target
                 motion_2d.turn_towards_target(
@@ -187,7 +186,7 @@ fn move_enemy(
                 motion_2d.brake_horizontal();
             }
         }
-        EnemyType::RepeaterBody => {
+        EntityType::RepeaterBody => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 30.0 {
                 motion_2d.move_down();
@@ -195,7 +194,7 @@ fn move_enemy(
                 motion_2d.move_up();
             }
         }
-        EnemyType::RepeaterHead => {
+        EntityType::RepeaterHead => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 67.0 {
                 motion_2d.move_down();
@@ -203,7 +202,7 @@ fn move_enemy(
                 motion_2d.move_up();
             }
         }
-        EnemyType::RepeaterShoulder => {
+        EntityType::RepeaterRightShoulder | EntityType::RepeaterLeftShoulder => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                 motion_2d.move_down();
@@ -218,7 +217,7 @@ fn move_enemy(
                 motion_2d.angular_velocity = -0.05;
             }
         }
-        EnemyType::RepeaterArm => {
+        EntityType::RepeaterRightArm | EntityType::RepeaterLeftArm => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                 motion_2d.move_down();
@@ -226,6 +225,8 @@ fn move_enemy(
                 motion_2d.move_up();
             }
         }
+
+        _ => {}
     }
 }
 

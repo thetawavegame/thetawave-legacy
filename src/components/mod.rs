@@ -28,7 +28,7 @@ pub use self::{
     boss::RepeaterComponent,
     consumable::ConsumableComponent,
     despawn::DespawnAtBorderComponent,
-    enemy::{EnemyComponent, EnemySpawnerTag, EnemyType},
+    enemy::{EnemyComponent, EnemySpawnerTag},
     fade::OpaqueFadeComponent,
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
@@ -36,12 +36,14 @@ pub use self::{
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
     player::PlayerComponent,
-    spawner::{choose_random_name, SpawnProbabilities, SpawnerComponent},
+    spawner::{choose_random_entity, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
     store::StoreComponent,
     tags::DefenseTag,
     timelimit::TimeLimitComponent,
-    weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
+    weapons::{
+        AutoChildEnemySpawnerComponent, AutoFireComponent, BlasterComponent, ManualFireComponent,
+    },
 };
 
 // livings can "die" and have a max health cap

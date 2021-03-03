@@ -8,7 +8,7 @@ mod boss;
 mod collision_detection;
 mod defense;
 mod despawn;
-mod enemy;
+mod enemy_behavior;
 mod enemy_collisions;
 mod enemy_destroyed;
 mod enemy_spawn;
@@ -34,13 +34,13 @@ pub use self::{
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
     despawn::DespawnAtBorderSystem,
-    enemy::EnemySystem,
+    enemy_behavior::EnemyBehaviorSystem,
     enemy_collisions::{
         EnemyArenaBorderCollisionSystem, EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem,
         EnemyPlayerCollisionSystem,
     },
     enemy_destroyed::EnemyDestroyedSystem,
-    enemy_spawn::SpawnerSystem,
+    enemy_spawn::{AutoChildEnemySpawnerSystem, SpawnerSystem},
     fade::OpaqueFadeSystem,
     gamemaster::GameMasterSystem,
     manualblaster_system::ManualBlasterSystem,

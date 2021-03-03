@@ -7,6 +7,7 @@ use amethyst::{
 pub type StockProbabilities = Vec<(String, f32)>;
 
 pub fn initialize_store(world: &mut World) {
+    //TODO: only add things from the shop item pool (to be defined in entity_pools.ron) to shop stock with rarities
     let stock_list: StockProbabilities = world
         .read_resource::<ItemsResource>()
         .item_entities

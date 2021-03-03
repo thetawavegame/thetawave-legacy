@@ -1,5 +1,5 @@
 {
-    "drone": (
+    Drone: (
         animation_component: (
             start_idx: 0,
             frame_count: 3,
@@ -11,7 +11,7 @@
         ),
         y_offset: 11.0,
     ),
-    "pawn": (
+    Pawn: (
         animation_component: (
             start_idx: 3,
             frame_count: 3,
@@ -23,7 +23,7 @@
         ),
         y_offset: 11.0,
     ),
-    "strafer": (
+    Strafer: (
         animation_component: (
             start_idx: 6,
             frame_count: 3,
@@ -35,7 +35,7 @@
         ),
         y_offset: 7.0,
     ),
-    "hauler": (
+    Hauler: (
         animation_component: (
             start_idx: 9,
             frame_count: 3,
@@ -47,7 +47,7 @@
         ),
         y_offset: 18.0,
     ),
-    "missile_launcher": (
+    MissileLauncher: (
         animation_component: (
             start_idx: 12,
             frame_count: 3,
@@ -59,7 +59,7 @@
         ),
         y_offset: 13.0,
     ),
-    "missile": (
+    Missile: (
         animation_component: (
             start_idx: 15,
             frame_count: 4,

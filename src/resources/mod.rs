@@ -1,7 +1,10 @@
-use crate::components::{
-    AnimationComponent, AutoFireComponent, BlasterComponent, ConsumableComponent,
-    DespawnAtBorderComponent, EnemyComponent, HealthComponent, Hitbox2DComponent, ItemComponent,
-    Motion2DComponent, PlayerComponent,
+use crate::{
+    components::{
+        AnimationComponent, AutoChildEnemySpawnerComponent, AutoFireComponent, BlasterComponent,
+        ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, HealthComponent,
+        Hitbox2DComponent, ItemComponent, Motion2DComponent, PlayerComponent,
+    },
+    entities::EntityType,
 };
 use amethyst::{
     assets::Handle,
@@ -26,6 +29,7 @@ pub struct EnemyEntityData {
     pub motion2d_component: Motion2DComponent,
     pub health_component: HealthComponent,
     pub despawn_component: DespawnAtBorderComponent,
+    pub auto_child_enemy_spawner_component: Option<AutoChildEnemySpawnerComponent>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -61,7 +65,7 @@ pub struct SpriteSheetData {
 pub struct ConsumablesResource {
     pub motion2d_component: Motion2DComponent,
     pub despawn_border_component: DespawnAtBorderComponent,
-    pub consumable_entities: HashMap<String, ConsumableEntityData>,
+    pub consumable_entities: HashMap<EntityType, ConsumableEntityData>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -72,8 +76,8 @@ pub struct ItemsResource {
     pub item_entities: HashMap<String, ItemEntityData>,
 }
 
-pub type EnemiesResource = HashMap<String, EnemyEntityData>;
-pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
+pub type EnemiesResource = HashMap<EntityType, EnemyEntityData>;
+pub type ThrustersResource = HashMap<EntityType, ThrusterEntityData>;
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 #[derive(Clone)]
