@@ -1,5 +1,5 @@
 {
-    "drone": (
+    Drone: (
         animation_component: (
             start_idx: 0,
             frame_count: 3,
@@ -10,17 +10,16 @@
             animation_type: PingPong,
         ),
         enemy_component: (
-            name: "drone",
             defense_damage: 30,
-            collectables_probs: [
-                ("", 0.5),
-                ("health_wrench", 0.03),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.02),
-                ("armor", 0.03),
+            loot_probs: [
+                (None, 0.5),
+                (Some(HealthWrench), 0.03),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.02),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: Drone,
+            entity_type: Drone,
         ),
         health_component: (
             max_value: 60,
@@ -32,17 +31,22 @@
             height: 14.0,
         ),
         motion2d_component: (
-            velocity: [0.0, -40.0],
+            velocity: [0.0, 0.0],
             acceleration: [0.0, 4.0],
-            deceleration: [1.0, 1.0],
-            max_speed: [40, 40],
-            knockback_max_speed: [100.0, 100.0],
+            deceleration: [2.0, 2.0],
+            speed: [40, 40],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: false,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "pawn": (
+    Pawn: (
         animation_component: (
             start_idx: 3,
             frame_count: 3,
@@ -71,17 +75,16 @@
             weapon_type: Blast,
         )),
         enemy_component: (
-            name: "pawn",
             defense_damage: 50,
-            collectables_probs: [
-                ("", 0.5),
-                ("health_wrench", 0.03),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.02),
-                ("armor", 0.03),
+            loot_probs: [
+                (None, 0.5),
+                (Some(HealthWrench), 0.03),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.02),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: Pawn,
+            entity_type: Pawn,
         ),
         health_component: (
             max_value: 110,
@@ -93,17 +96,22 @@
             height: 14.0,
         ),
         motion2d_component: (
-            velocity: [0.0, -30.0],
+            velocity: [0.0, 0.0],
             acceleration: [0.0, 4.0],
-            deceleration: [1.0, 1.0],
-            max_speed: [30, 30],
-            knockback_max_speed: [100.0, 100.0],
+            deceleration: [2.0, 2.0],
+            speed: [30, 30],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: false,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "hauler": (
+    Hauler: (
         animation_component: (
             start_idx: 9,
             frame_count: 3,
@@ -114,12 +122,11 @@
             animation_type: PingPong,
         ),
         enemy_component: (
-            name: "hauler",
             defense_damage: -100,
-            collectables_probs: [
-                ("", 1.0) // doesn't drop anything
+            loot_probs: [
+                (None, 1.0),
             ],
-            enemy_type: Hauler,
+            entity_type: Hauler,
         ),
         health_component: (
             max_value: 220,
@@ -131,17 +138,22 @@
             height: 28.0,
         ),
         motion2d_component: (
-            velocity: [0.0, -20.0],
+            velocity: [0.0, 0.0],
             acceleration: [0.0, 4.0],
-            deceleration: [1.0, 1.0],
-            max_speed: [25, 25],
-            knockback_max_speed: [100.0, 100.0],
+            deceleration: [2.0, 2.0],
+            speed: [25, 25],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: false,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "strafer": (
+    Strafer: (
         animation_component: (
             start_idx: 6,
             frame_count: 3,
@@ -170,18 +182,17 @@
             weapon_type: Blast,
         )),
         enemy_component: (
-            name: "strafer",
             defense_damage: 25,
             max_speed: 25,
-            collectables_probs: [
-                ("", 0.5),
-                ("health_wrench", 0.03),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.02),
-                ("armor", 0.03),
+            loot_probs: [
+                (None, 0.5),
+                (Some(HealthWrench), 0.03),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.02),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: Strafer,
+            entity_type: Strafer,
         ),
         health_component: (
             max_value: 75,
@@ -193,17 +204,22 @@
             height: 10.0,
         ),
         motion2d_component: (
-            velocity: [25.0, -25.0],
+            velocity: [0.0, 0.0],
             acceleration: [2.0, 4.0],
-            deceleration: [1.0, 1.0],
-            max_speed: [25, 25],
-            knockback_max_speed: [100.0, 100.0],
+            deceleration: [2.0, 2.0],
+            speed: [25, 25],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: false,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "missile_launcher": (
+    MissileLauncher: (
         animation_component: (
             start_idx: 12,
             frame_count: 3,
@@ -214,18 +230,17 @@
             animation_type: PingPong,
         ),
         enemy_component: (
-            name: "missile_launcher",
             defense_damage: 25,
             max_speed: 10,
-            collectables_probs: [
-                ("", 0.5),
-                ("health_wrench", 0.03),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.02),
-                ("armor", 0.03),
+            loot_probs: [
+                (None, 0.5),
+                (Some(HealthWrench), 0.03),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.02),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: MissileLauncher,
+            entity_type: MissileLauncher,
         ),
         health_component: (
             max_value: 300,
@@ -237,17 +252,28 @@
             height: 20.0,
         ),
         motion2d_component: (
-            velocity: [0.0, -5.0],
+            velocity: [0.0, 0.0],
             acceleration: [0.0, 4.0],
-            deceleration: [1.0, 1.0],
-            max_speed: [10, 10],
-            knockback_max_speed: [15.0, 15.0],
+            deceleration: [2.0, 2.0],
+            speed: [10, 10],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: false,
         ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
+        ),
+        auto_child_enemy_spawner_component: Some((
+            child_entity_type: Missile,
+            offset: [0.0, -20.0],
+            period: 3.5,
+            timer: 3.5,
+        ))
     ),
-    "missile": (
+    Missile: (
         animation_component: (
             start_idx: 15,
             frame_count: 4,
@@ -258,14 +284,13 @@
             animation_type: Forward,
         ),
         enemy_component: (
-            name: "missile",
             defense_damage: 10,
             collision_damage: 200,
             max_speed: 45,
-            collectables_probs: [
-                ("", 1.0),
+            loot_probs: [
+                (None, 1.0),
             ],
-            enemy_type: Missile,
+            entity_type: Missile,
         ),
         health_component: (
             max_value: 50,
@@ -273,21 +298,26 @@
             armor: 0,
         ),
         hitbox_component: (
-            width: 10.0,
-            height: 15.0,
+            width: 7.0,
+            height: 10.0,
         ),
         motion2d_component: (
-            velocity: [0.0, -40.0],
+            velocity: [0.0, 0.0],
             acceleration: [5.0, 5.0],
-            deceleration: [1.0, 1.0],
-            max_speed: [45, 45],
-            knockback_max_speed: [50.0, 50.0],
+            deceleration: [2.0, 2.0],
+            speed: [60, 60],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
-            angular_acceleration: 0.0,
+            angular_acceleration: 0.2,
             angular_deceleration: 0.0,
+            angular_speed: 1.2,
+            immovable: false,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "repeater_body": (
+    RepeaterBody: (
         animation_component: (
             start_idx: 0,
             frame_count: 3,
@@ -298,17 +328,16 @@
             animation_type: PingPong,
         ),
         enemy_component: (
-            name: "repeater_body",
             defense_damage: 0,
-            collectables_probs: [
-                ("", 0.0),
-                ("health_wrench", 0.04),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.5),
-                ("armor", 0.04),
+            loot_probs: [
+                (None, 0.0),
+                (Some(HealthWrench), 0.04),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.5),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: RepeaterBody,
+            entity_type: RepeaterBody,
         ),
         health_component: (
             max_value: 10000,
@@ -320,17 +349,22 @@
             height: 26.0,
         ),
         motion2d_component: (
-            velocity: [0.0, -30.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            max_speed: [30, 30],
-            knockback_max_speed: [100.0, 100.0],
+            velocity: [0.0, 0.0],
+            acceleration: [0.0, 0.7],
+            deceleration: [0.0, 0.7],
+            speed: [30, 30],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: true,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "repeater_head": (
+    RepeaterHead: (
         animation_component: (
             start_idx: 3,
             frame_count: 3,
@@ -341,17 +375,16 @@
             animation_type: PingPong,
         ),
         enemy_component: (
-            name: "repeater_head",
             defense_damage: 0,
-            collectables_probs: [
-                ("", 0.0),
-                ("health_wrench", 0.04),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.5),
-                ("armor", 0.04),
+            loot_probs: [
+                (None, 0.0),
+                (Some(HealthWrench), 0.04),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.5),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: RepeaterHead,
+            entity_type: RepeaterHead,
         ),
         health_component: (
             max_value: 2000,
@@ -363,17 +396,22 @@
             height: 28.0,
         ),
         motion2d_component: (
-            velocity: [0.0, -30.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            max_speed: [30, 30],
-            knockback_max_speed: [100.0, 100.0],
+            velocity: [0.0, 0.0],
+            acceleration: [0.0, 0.7],
+            deceleration: [0.0, 0.7],
+            speed: [30, 30],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: true,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "repeater_right_shoulder": (
+    RepeaterRightShoulder: (
         animation_component: (
             start_idx: 6,
             frame_count: 1,
@@ -384,17 +422,16 @@
             animation_type: NoAnimation,
         ),
         enemy_component: (
-            name: "repeater_right_shoulder",
             defense_damage: 0,
-            collectables_probs: [
-                ("", 0.0),
-                ("health_wrench", 0.04),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.5),
-                ("armor", 0.04),
+            loot_probs: [
+                (None, 0.0),
+                (Some(HealthWrench), 0.04),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.5),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: RepeaterShoulder,
+            entity_type: RepeaterRightShoulder,
         ),
         health_component: (
             max_value: 2000,
@@ -408,17 +445,22 @@
             offset_rotation: 0.7,
         ),
         motion2d_component: (
-            velocity: [0.0, -30.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            max_speed: [30, 30],
-            knockback_max_speed: [100.0, 100.0],
+            velocity: [0.0, 0.0],
+            acceleration: [0.0, 0.7],
+            deceleration: [0.0, 0.7],
+            speed: [30, 30],
+            max_speed: [100.0, 100.0],
             angular_velocity: -0.05,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.05,
+            immovable: true,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "repeater_left_shoulder": (
+    RepeaterLeftShoulder: (
         animation_component: (
             start_idx: 7,
             frame_count: 1,
@@ -429,17 +471,16 @@
             animation_type: NoAnimation,
         ),
         enemy_component: (
-            name: "repeater_left_shoulder",
             defense_damage: 0,
-            collectables_probs: [
-                ("", 0.0),
-                ("health_wrench", 0.04),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.5),
-                ("armor", 0.04),
+            loot_probs: [
+                (None, 0.0),
+                (Some(HealthWrench), 0.04),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.5),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: RepeaterShoulder,
+            entity_type: RepeaterLeftShoulder,
         ),
         health_component: (
             max_value: 2000,
@@ -453,17 +494,22 @@
             offset_rotation: -0.7,
         ),
         motion2d_component: (
-            velocity: [0.0, -30.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            max_speed: [30, 30],
-            knockback_max_speed: [100.0, 100.0],
+            velocity: [0.0, 0.0],
+            acceleration: [0.0, 0.7],
+            deceleration: [0.0, 0.7],
+            speed: [30, 30],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.05,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.05,
+            immovable: true,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
-    "repeater_right_arm": (
+    RepeaterRightArm: (
         animation_component: (
             start_idx: 8,
             frame_count: 1,
@@ -474,18 +520,17 @@
             animation_type: NoAnimation,
         ),
         enemy_component: (
-            name: "repeater_right_arm",
             defense_damage: 0,
             current_velocity_y: -30,
-            collectables_probs: [
-                ("", 0.0),
-                ("health_wrench", 0.04),
-                ("defense_wrench", 0.02),
-                ("money_1", 0.40),
-                ("money_5", 0.5),
-                ("armor", 0.04),
+            loot_probs: [
+                (None, 0.0),
+                (Some(HealthWrench), 0.04),
+                (Some(DefenseWrench), 0.02),
+                (Some(Money1), 0.40),
+                (Some(Money5), 0.5),
+                (Some(Armor), 0.03),
             ],
-            enemy_type: RepeaterArm,
+            entity_type: RepeaterRightArm,
         ),
         health_component: (
             max_value: 2000,
@@ -498,14 +543,19 @@
             offset: [0.0, -60.0],
         ),
         motion2d_component: (
-            velocity: [0.0, -30.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            max_speed: [30, 30],
-            knockback_max_speed: [100.0, 100.0],
+            velocity: [0.0, 0.0],
+            acceleration: [0.0, 0.7],
+            deceleration: [0.0, 0.7],
+            speed: [30, 30],
+            max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
             angular_deceleration: 0.0,
+            angular_speed: 0.0,
+            immovable: true,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
         ),
     ),
 }

@@ -1,50 +1,48 @@
-use crate::components::{Hitbox2DComponent, Motion2DComponent, Rigidbody, SpaceshipComponent};
+use crate::components::{Motion2DComponent, PlayerComponent};
 use amethyst::{
-    core::{timing::Time, Transform},
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
-
 pub struct SpaceshipMovementSystem;
 
 impl<'s> System<'s> for SpaceshipMovementSystem {
     type SystemData = (
-        WriteStorage<'s, Transform>,
-        WriteStorage<'s, SpaceshipComponent>,
+        ReadStorage<'s, PlayerComponent>,
         WriteStorage<'s, Motion2DComponent>,
-        ReadStorage<'s, Hitbox2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
-        Read<'s, Time>,
     );
 
-    fn run(
-        &mut self,
-        (mut transforms, mut spaceships, mut motion_2d_components, hitboxes, input, time): Self::SystemData,
-    ) {
+    fn run(&mut self, (players, mut motion_2d_components, input): Self::SystemData) {
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;
 
-        for (spaceship, transform, motion_2d, hitbox) in (
-            &mut spaceships,
-            &mut transforms,
-            &mut motion_2d_components,
-            &hitboxes,
-        )
-            .join()
-        {
-            //keep spaceship with bounds of arena
-            spaceship.constrain_to_arena(transform, motion_2d, hitbox);
-
-            //if barrel rolling a direction use the barrel roll x velocity, otherwise accelerate normally
-            if spaceship.barrel_action_left {
-                motion_2d.velocity.x = -1.0 * spaceship.barrel_speed;
-            } else if spaceship.barrel_action_right {
-                motion_2d.velocity.x = spaceship.barrel_speed;
-            } else {
-                spaceship.accelerate(x_move, y_move, motion_2d);
-            }
-
-            spaceship.update_position(transform, time.delta_seconds(), motion_2d);
+        for (_player, motion_2d) in (&players, &mut motion_2d_components).join() {
+            handle_spaceship_movement(motion_2d, x_move, y_move);
         }
     }
+}
+
+// Handles acceleration and deceleration of spaceship based on given x,y direction inputs.
+fn handle_spaceship_movement(motion: &mut Motion2DComponent, x_move: f32, y_move: f32) {
+    // Handle deceleration in the x direction while moving.
+    if x_move == 0.0 && motion.velocity.x != 0.0 {
+        if motion.velocity.x > 0.0 {
+            motion.velocity.x += -motion.deceleration.x;
+        } else {
+            motion.velocity.x += motion.deceleration.x;
+        }
+    }
+
+    // Handle deceleration in the y direction while moving.
+    if y_move == 0.0 && motion.velocity.y != 0.0 {
+        if motion.velocity.y > 0.0 {
+            motion.velocity.y += -motion.deceleration.y;
+        } else {
+            motion.velocity.y += motion.deceleration.y;
+        }
+    }
+
+    // Accelerate in the x,y direction
+    motion.velocity.x += x_move * motion.acceleration.x;
+    motion.velocity.y += y_move * motion.acceleration.y;
 }

@@ -1,7 +1,10 @@
-use crate::components::{
-    AnimationComponent, AutoFireComponent, BlasterComponent, CharacterComponent,
-    ConsumableComponent, EnemyComponent, HealthComponent, Hitbox2DComponent, ItemComponent,
-    Motion2DComponent,
+use crate::{
+    components::{
+        AnimationComponent, AutoChildEnemySpawnerComponent, AutoFireComponent, BlasterComponent,
+        ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, HealthComponent,
+        Hitbox2DComponent, ItemComponent, Motion2DComponent, PlayerComponent,
+    },
+    entities::EntityType,
 };
 use amethyst::{
     assets::Handle,
@@ -9,6 +12,12 @@ use amethyst::{
 };
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+pub mod game_parameters;
+pub mod phases;
+
+pub use self::game_parameters::GameParametersResource;
+pub use self::phases::{BossType, Phase, PhaseManagerResource, PhaseType};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
@@ -19,6 +28,8 @@ pub struct EnemyEntityData {
     pub autofire_component: Option<AutoFireComponent>,
     pub motion2d_component: Motion2DComponent,
     pub health_component: HealthComponent,
+    pub despawn_component: DespawnAtBorderComponent,
+    pub auto_child_enemy_spawner_component: Option<AutoChildEnemySpawnerComponent>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -41,7 +52,7 @@ pub struct ConsumableEntityData {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct PlayerEntityData {
-    pub character_component: CharacterComponent,
+    pub player_component: PlayerComponent,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -50,10 +61,23 @@ pub struct SpriteSheetData {
     pub data: String,
 }
 
-pub type EnemiesResource = HashMap<String, EnemyEntityData>;
-pub type ThrustersResource = HashMap<String, ThrusterEntityData>;
-pub type ItemsResource = HashMap<String, ItemEntityData>;
-pub type ConsumablesResource = HashMap<String, ConsumableEntityData>;
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ConsumablesResource {
+    pub motion2d_component: Motion2DComponent,
+    pub despawn_border_component: DespawnAtBorderComponent,
+    pub consumable_entities: HashMap<EntityType, ConsumableEntityData>,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct ItemsResource {
+    pub motion2d_component: Motion2DComponent,
+    pub hitbox2d_component: Hitbox2DComponent,
+    pub despawn_border_component: DespawnAtBorderComponent,
+    pub item_entities: HashMap<String, ItemEntityData>,
+}
+
+pub type EnemiesResource = HashMap<EntityType, EnemyEntityData>;
+pub type ThrustersResource = HashMap<EntityType, ThrusterEntityData>;
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 #[derive(Clone)]

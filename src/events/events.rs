@@ -28,6 +28,7 @@ impl EnemyDestroyedEvent {
 pub struct PlayerCollisionEvent {
     pub player_entity: Entity,
     pub colliding_entity: Entity,
+    pub collider_immovable: bool,
     pub collision_velocity: Option<Vector2<f32>>,
 }
 
@@ -35,11 +36,13 @@ impl PlayerCollisionEvent {
     pub fn new(
         entity_a: Entity,
         entity_b: Entity,
+        immovable: bool,
         velocity: Option<Vector2<f32>>,
     ) -> PlayerCollisionEvent {
         PlayerCollisionEvent {
             player_entity: entity_a,
             colliding_entity: entity_b,
+            collider_immovable: immovable,
             collision_velocity: velocity,
         }
     }
@@ -49,6 +52,7 @@ impl PlayerCollisionEvent {
 pub struct EnemyCollisionEvent {
     pub enemy_entity: Entity,
     pub colliding_entity: Entity,
+    pub collider_immovable: bool,
     pub collision_velocity: Option<Vector2<f32>>,
 }
 
@@ -56,10 +60,33 @@ impl EnemyCollisionEvent {
     pub fn new(
         entity_a: Entity,
         entity_b: Entity,
+        immovable: bool,
         velocity: Option<Vector2<f32>>,
     ) -> EnemyCollisionEvent {
         EnemyCollisionEvent {
             enemy_entity: entity_a,
+            colliding_entity: entity_b,
+            collider_immovable: immovable,
+            collision_velocity: velocity,
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct ArenaBorderCollisionEvent {
+    pub arena_border_entity: Entity,
+    pub colliding_entity: Entity,
+    pub collision_velocity: Option<Vector2<f32>>,
+}
+
+impl ArenaBorderCollisionEvent {
+    pub fn new(
+        entity_a: Entity,
+        entity_b: Entity,
+        velocity: Option<Vector2<f32>>,
+    ) -> ArenaBorderCollisionEvent {
+        ArenaBorderCollisionEvent {
+            arena_border_entity: entity_a,
             colliding_entity: entity_b,
             collision_velocity: velocity,
         }

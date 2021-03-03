@@ -1,6 +1,6 @@
 use crate::{
     audio::Sounds,
-    components::{CharacterComponent, StoreComponent},
+    components::{PlayerComponent, StoreComponent},
     events::PlayAudioEvent,
     resources::{ItemsResource, SpriteSheetsResource},
 };
@@ -22,7 +22,7 @@ impl<'s> System<'s> for StoreSystem {
         WriteStorage<'s, StoreComponent>,
         Read<'s, Time>,
         Read<'s, InputHandler<StringBindings>>,
-        WriteStorage<'s, CharacterComponent>,
+        WriteStorage<'s, PlayerComponent>,
         ReadStorage<'s, Transform>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
@@ -38,7 +38,7 @@ impl<'s> System<'s> for StoreSystem {
             mut stores,
             time,
             input,
-            mut characters,
+            mut players,
             transforms,
             mut play_audio_channel,
             sounds,
@@ -57,13 +57,15 @@ impl<'s> System<'s> for StoreSystem {
                 &lazy_update,
             );
 
-            for (character, transform) in (&mut characters, &transforms).join() {
+            // TODO: streamline purchase_item function with constant component in item data file
+            for (character, transform) in (&mut players, &transforms).join() {
                 if (buy_0_action
                     && store.purchase_item(
                         0,
                         &entities,
                         character,
                         transform,
+                        &item_pool,
                         &sprite_resource,
                         &lazy_update,
                     ))
@@ -73,6 +75,7 @@ impl<'s> System<'s> for StoreSystem {
                             &entities,
                             character,
                             transform,
+                            &item_pool,
                             &sprite_resource,
                             &lazy_update,
                         ))
@@ -82,6 +85,7 @@ impl<'s> System<'s> for StoreSystem {
                             &entities,
                             character,
                             transform,
+                            &item_pool,
                             &sprite_resource,
                             &lazy_update,
                         ))

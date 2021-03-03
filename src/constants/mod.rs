@@ -55,8 +55,8 @@ pub const BLAST_HITBOX_DIAMETER: f32 = 2.0;
 pub const SIDE_PANEL_WIDTH: f32 = 45.0;
 
 // offsets
-pub const ITEM_SPAWN_Y_OFFSET: f32 = 20.0;
-pub const SPAWNER_Y_OFFSET: f32 = 20.0;
+pub const ITEM_SPAWN_Y_OFFSET: f32 = -20.0;
+pub const SPAWNER_Y_OFFSET: f32 = 20.0; // TODO: change back to 20.0
 pub const BLAST_OFFSET: f32 = 7.0; //spacing of blasts when multiple are fired
 
 // spawn ratios
@@ -78,7 +78,7 @@ pub const SPACESHIP_MAX_SPEED: f32 = 70.0;
 pub const SPACESHIP_MAX_KNOCKBACK_SPEED: f32 = 100.0;
 pub const SPACESHIP_FIRE_SPEED: f32 = 0.3;
 pub const SPACESHIP_DAMAGE: f32 = 40.0;
-pub const SPACESHIP_BARREL_COOLDOWN: f32 = 1.5;
+pub const SPACESHIP_BARREL_COOLDOWN: f32 = 2.0;
 pub const SPACESHIP_BARREL_SPEED: f32 = 180.0;
 pub const SPACESHIP_BARREL_DURATION: f32 = 0.3;
 pub const SPACESHIP_HEALTH: f32 = 400.0;

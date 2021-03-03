@@ -1,14 +1,14 @@
 use crate::{
     audio::Sounds,
     components::{
-        BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent,
-        SpaceshipComponent,
+        BarrelRollAbilityComponent, BlasterComponent, HealthComponent, ManualFireComponent,
+        Motion2DComponent,
     },
     events::{ItemGetEvent, PlayAudioEvent},
     resources::SpriteSheetsResource,
 };
 use amethyst::{
-    core::{timing::Time, Transform},
+    core::Transform,
     ecs::*,
     ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, Write, WriteStorage},
     input::{InputHandler, StringBindings},
@@ -24,13 +24,12 @@ impl<'s> System<'s> for SpaceshipSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, SpaceshipComponent>,
+        WriteStorage<'s, BarrelRollAbilityComponent>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
         Read<'s, InputHandler<StringBindings>>,
-        Read<'s, Time>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Read<'s, EventChannel<ItemGetEvent>>,
@@ -52,13 +51,12 @@ impl<'s> System<'s> for SpaceshipSystem {
         (
             entities,
             mut transforms,
-            mut spaceships,
+            mut barrel_roll_abilities,
             mut healths,
             mut motion2ds,
             mut blasters,
             mut manual_fires,
             input,
-            time,
             sprite_resource,
             lazy_update,
             item_get_event_channel,
@@ -68,11 +66,8 @@ impl<'s> System<'s> for SpaceshipSystem {
     ) {
         // collect input bools
         let shoot_action = input.action_is_down("shoot").unwrap();
-        let mut barrel_left = input.action_is_down("barrel_left").unwrap();
-        let mut barrel_right = input.action_is_down("barrel_right").unwrap();
 
-        for (spaceship, health, transform, motion2d, blaster, manual_fire) in (
-            &mut spaceships,
+        for (health, transform, motion2d, blaster, manual_fire) in (
             &mut healths,
             &mut transforms,
             &mut motion2ds,
@@ -81,25 +76,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         )
             .join()
         {
-            // barrel roll input cooldown
-            // amount of time until new barrel roll can be initiated
-            if spaceship.barrel_input_cooldown(time.delta_seconds()) {
-                barrel_left = false;
-                barrel_right = false;
-            }
-
-            //barrel roll action cooldown
-            //amount of time until barrel roll is complete
-            if spaceship.barrel_action_cooldown(time.delta_seconds(), motion2d) {
-                barrel_left = false;
-                barrel_right = false;
-            }
-
-            if !spaceship.barrel_action_left
-                && !spaceship.barrel_action_right
-                && shoot_action
-                && manual_fire.ready
-            {
+            if shoot_action && manual_fire.ready {
                 blaster.fire(
                     motion2d,
                     transform,
@@ -113,19 +90,18 @@ impl<'s> System<'s> for SpaceshipSystem {
                 });
             }
 
-            spaceship.initiate_barrel_roll(barrel_left, barrel_right);
             health.constrain();
         }
 
         for event in item_get_event_channel.read(self.item_get_event_reader.as_mut().unwrap()) {
-            let spaceship = spaceships.get_mut(event.player_entity).unwrap();
+            let barrel_roll_ability = barrel_roll_abilities.get_mut(event.player_entity).unwrap();
             let spaceship_health = healths.get_mut(event.player_entity).unwrap();
             let blaster = blasters.get_mut(event.player_entity).unwrap();
             let manual_fire = manual_fires.get_mut(event.player_entity).unwrap();
             let motion = motion2ds.get_mut(event.player_entity).unwrap();
 
             if event.bool_effects.contains_key("barrel_immunity") {
-                spaceship.steel_barrel = event.bool_effects["barrel_immunity"];
+                barrel_roll_ability.steel_barrel = event.bool_effects["barrel_immunity"];
             }
 
             if event.stat_effects.contains_key("blast_count") {
@@ -153,7 +129,7 @@ impl<'s> System<'s> for SpaceshipSystem {
             }
 
             if event.stat_effects.contains_key("barrel_cooldown") {
-                spaceship.barrel_cooldown += event.stat_effects["barrel_cooldown"];
+                barrel_roll_ability.execute_cooldown += event.stat_effects["barrel_cooldown"];
             }
 
             if event.stat_effects.contains_key("acceleration") {

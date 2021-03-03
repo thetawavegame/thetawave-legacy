@@ -4,7 +4,9 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
 };
 
-use crate::components::{BlastComponent, Hitbox2DComponent, Motion2DComponent};
+use crate::components::{
+    BlastComponent, DespawnAtBorderComponent, Hitbox2DComponent, Motion2DComponent,
+};
 
 // spaces and creates blast entities
 pub fn spawn_blasts(
@@ -27,6 +29,12 @@ pub fn spawn_blasts(
             .with(blast_sprite_render.clone())
             .with(blast_transform.clone())
             .with(Transparent)
+            .with(DespawnAtBorderComponent {
+                top_offset: Some(2.0),
+                bottom_offset: Some(-2.0),
+                left_offset: Some(-2.0),
+                right_offset: Some(2.0),
+            })
             .build();
 
         blast_transform.prepend_translation_x(blast_spacing);
