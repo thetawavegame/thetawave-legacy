@@ -30,6 +30,7 @@ pub struct EnemyEntityData {
     pub health_component: HealthComponent,
     pub despawn_component: DespawnAtBorderComponent,
     pub auto_child_enemy_spawner_component: Option<AutoChildEnemySpawnerComponent>,
+    pub thruster_data: Option<ThrusterEntityData>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -77,7 +78,7 @@ pub struct ItemsResource {
 }
 
 pub type EnemiesResource = HashMap<EnemyType, EnemyEntityData>;
-pub type ThrustersResource = HashMap<EnemyType, ThrusterEntityData>;
+//pub type ThrustersResource = HashMap<EnemyType, ThrusterEntityData>;
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 #[derive(Clone)]

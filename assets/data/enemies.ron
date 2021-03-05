@@ -45,6 +45,18 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 0,
+                frame_count: 3,
+                current_frame: 0,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 11.0,
+        )),
     ),
     Pawn: (
         animation_component: (
@@ -110,6 +122,18 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 3,
+                frame_count: 3,
+                current_frame: 3,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 11.0,
+        )),
     ),
     Hauler: (
         animation_component: (
@@ -152,6 +176,18 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 9,
+                frame_count: 3,
+                current_frame: 9,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 18.0,
+        )),
     ),
     Strafer: (
         animation_component: (
@@ -218,6 +254,18 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 6,
+                frame_count: 3,
+                current_frame: 6,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 7.0,
+        )),
     ),
     MissileLauncher: (
         animation_component: (
@@ -271,7 +319,19 @@
             offset: [0.0, -20.0],
             period: 3.5,
             timer: 3.5,
-        ))
+        )),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 12,
+                frame_count: 3,
+                current_frame: 12,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 13.0,
+        )),
     ),
     Missile: (
         animation_component: (
@@ -316,6 +376,18 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 15,
+                frame_count: 4,
+                current_frame: 15,
+                frame_time: 0.08,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: Forward,
+            ),
+            y_offset: 9.0,
+        )),
     ),
     RepeaterBody: (
         animation_component: (

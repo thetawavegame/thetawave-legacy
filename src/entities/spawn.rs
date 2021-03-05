@@ -2,7 +2,7 @@ use crate::{
     entities::EnemyType,
     resources::{
         ConsumableEntityData, ConsumablesResource, EnemiesResource, ItemEntityData, ItemsResource,
-        SpriteSheetsResource, ThrustersResource,
+        SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -43,7 +43,6 @@ pub fn spawn_enemy(
     enemy_type: &EnemyType,
     sprite_sheets_resource: &ReadExpect<SpriteSheetsResource>,
     enemies_resource: &ReadExpect<EnemiesResource>,
-    thrusters_resource: &ReadExpect<ThrustersResource>,
     spawn_position: Vector3<f32>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
@@ -95,7 +94,7 @@ pub fn spawn_enemy(
 
     // Spawn thruster entity as child of enemy entity
 
-    if let Some(thruster_data) = thrusters_resource.get(&enemy_type) {
+    if let Some(thruster_data) = enemy_data.thruster_data {
         let thruster_parent = Parent::new(enemy_entity);
 
         let thruster_sprite_render = SpriteRender {

@@ -29,7 +29,7 @@ pub mod systems;
 
 use resources::{
     ConsumablesResource, DebugLinesConfig, EnemiesResource, GameParametersResource, ItemsResource,
-    PhaseManagerResource, PlayersResource, SoundsConfig, SpriteSheetsConfig, ThrustersResource,
+    PhaseManagerResource, PlayersResource, SoundsConfig, SpriteSheetsConfig,
 };
 use states::MainGameState;
 
@@ -57,8 +57,6 @@ fn main() -> amethyst::Result<()> {
         .expect("failed to load data file: items.ron");
     let enemies = <EnemiesResource as Config>::load(data_path.join("enemies.ron"))
         .expect("failed to load data file: enemies.ron");
-    let thrusters = <ThrustersResource as Config>::load(data_path.join("thrusters.ron"))
-        .expect("failed to load data file: thrusters.ron");
     let consumables = <ConsumablesResource as Config>::load(data_path.join("consumables.ron"))
         .expect("failed to load data file: consumables.ron");
     let players = <PlayersResource as Config>::load(data_path.join("players.ron"))
@@ -90,7 +88,6 @@ fn main() -> amethyst::Result<()> {
     let mut game = Application::build(app_root.join("assets"), MainGameState::default())?
         .with_resource(items)
         .with_resource(enemies)
-        .with_resource(thrusters)
         .with_resource(consumables)
         .with_resource(players)
         .with_resource(spritesheets)

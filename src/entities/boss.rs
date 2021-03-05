@@ -8,14 +8,13 @@ use crate::{
     components::RepeaterComponent,
     constants,
     entities::{EnemyType, EntityType},
-    resources::{EnemiesResource, SpriteSheetsResource, ThrustersResource},
+    resources::{EnemiesResource, SpriteSheetsResource},
 };
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(
     sprite_sheets_resource: &ReadExpect<SpriteSheetsResource>,
     enemies_resource: &ReadExpect<EnemiesResource>,
-    thrusters_resource: &ReadExpect<ThrustersResource>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
@@ -49,7 +48,6 @@ pub fn spawn_repeater(
         &EnemyType::RepeaterBody,
         sprite_sheets_resource,
         enemies_resource,
-        thrusters_resource,
         body_position,
         entities,
         lazy_update,
@@ -58,7 +56,6 @@ pub fn spawn_repeater(
         &EnemyType::RepeaterHead,
         sprite_sheets_resource,
         enemies_resource,
-        thrusters_resource,
         head_position,
         entities,
         lazy_update,
@@ -67,7 +64,6 @@ pub fn spawn_repeater(
         &EnemyType::RepeaterRightShoulder,
         sprite_sheets_resource,
         enemies_resource,
-        thrusters_resource,
         right_shoulder_position,
         entities,
         lazy_update,
@@ -76,7 +72,6 @@ pub fn spawn_repeater(
         &EnemyType::RepeaterLeftShoulder,
         sprite_sheets_resource,
         enemies_resource,
-        thrusters_resource,
         left_shoulder_position,
         entities,
         lazy_update,

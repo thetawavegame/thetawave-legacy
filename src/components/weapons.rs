@@ -5,7 +5,7 @@ use crate::{
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
     entities::{spawn_blasts, spawn_enemy, EntityType},
-    resources::{EnemiesResource, SpriteSheetsResource, ThrustersResource},
+    resources::{EnemiesResource, SpriteSheetsResource},
 };
 
 use amethyst::{
@@ -169,7 +169,6 @@ impl AutoChildEnemySpawnerComponent {
         spawn_position: Vector3<f32>,
         sprite_sheets_resource: &ReadExpect<SpriteSheetsResource>,
         enemies_resource: &ReadExpect<EnemiesResource>,
-        thrusters_resource: &ReadExpect<ThrustersResource>,
         entities: &Entities,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) {
@@ -183,7 +182,6 @@ impl AutoChildEnemySpawnerComponent {
                     &child_entity_type,
                     &sprite_sheets_resource,
                     &enemies_resource,
-                    &thrusters_resource,
                     Vector3::new(
                         spawn_position.x + self.offset.x,
                         spawn_position.y + self.offset.y,

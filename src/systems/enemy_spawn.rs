@@ -1,10 +1,7 @@
 use crate::{
     components::{AutoChildEnemySpawnerComponent, EnemySpawnerTag, SpawnerComponent},
     entities::{spawn_enemy, spawn_repeater, EntityType},
-    resources::{
-        BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource,
-        ThrustersResource,
-    },
+    resources::{BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource},
 };
 use amethyst::{
     core::{math::Vector3, timing::Time, Transform},
@@ -24,7 +21,6 @@ impl<'s> System<'s> for SpawnerSystem {
         Write<'s, PhaseManagerResource>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemiesResource>,
-        ReadExpect<'s, ThrustersResource>,
     );
 
     fn run(
@@ -39,7 +35,6 @@ impl<'s> System<'s> for SpawnerSystem {
             mut phase_manager,
             lazy_update,
             enemies_resource,
-            thrusters_resource,
         ): Self::SystemData,
     ) {
         if phase_manager.phase_idx < phase_manager.last_phase {
@@ -62,7 +57,6 @@ impl<'s> System<'s> for SpawnerSystem {
                                     enemy_type,
                                     &sprite_sheets_resource,
                                     &enemies_resource,
-                                    &thrusters_resource,
                                     spawn_position,
                                     &entities,
                                     &lazy_update,
@@ -80,7 +74,6 @@ impl<'s> System<'s> for SpawnerSystem {
                                 spawn_repeater(
                                     &sprite_sheets_resource,
                                     &enemies_resource,
-                                    &thrusters_resource,
                                     &entities,
                                     &lazy_update,
                                 );
@@ -108,7 +101,6 @@ impl<'s> System<'s> for AutoChildEnemySpawnerSystem {
         Read<'s, Time>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemiesResource>,
-        ReadExpect<'s, ThrustersResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         Entities<'s>,
     );
@@ -121,7 +113,6 @@ impl<'s> System<'s> for AutoChildEnemySpawnerSystem {
             time,
             lazy_update,
             enemies_resource,
-            thrusters_resource,
             sprite_sheets_resource,
             entities,
         ): Self::SystemData,
@@ -139,7 +130,6 @@ impl<'s> System<'s> for AutoChildEnemySpawnerSystem {
                 spawn_position,
                 &sprite_sheets_resource,
                 &enemies_resource,
-                &thrusters_resource,
                 &entities,
                 &lazy_update,
             );
