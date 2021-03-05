@@ -8,7 +8,6 @@ pub mod consumable;
 pub mod defense;
 pub mod enemy_spawner;
 pub mod explosion;
-pub mod items;
 pub mod planet;
 pub mod side_panels;
 pub mod spaceship;
