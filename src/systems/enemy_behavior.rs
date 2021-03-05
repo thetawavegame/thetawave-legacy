@@ -24,8 +24,6 @@ impl<'s> System<'s> for EnemyBehaviorSystem {
         for (enemy_entity, enemy_component, enemy_health) in
             (&*entities, &mut enemies, &mut healths).join()
         {
-            // TODO: put in a new PoisonSystem or HealthSystem
-            enemy_health.value -= enemy_component.poison;
             enemy_health.constrain();
 
             // conditions for despawning

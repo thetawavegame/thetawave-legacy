@@ -33,6 +33,7 @@ pub fn initialize_background(world: &mut World, sprite_sheet_handle: Handle<Spri
         speed: Vector2::new(120.0, 0.0),
         max_speed: Vector2::new(120.0, 0.0),
         immovable: false,
+        target_position: None,
     };
 
     let animation = AnimationComponent {

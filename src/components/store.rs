@@ -115,7 +115,6 @@ impl StoreComponent {
                 );
                 player.money -= item.item_component.price;
                 spawn_item(
-                    entities,
                     sprite_resource,
                     item.clone(),
                     items_resource,
@@ -124,6 +123,7 @@ impl StoreComponent {
                         ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
                         0.0,
                     ),
+                    entities,
                     lazy_update,
                 );
                 for (i, itm) in self.items.iter().enumerate() {

@@ -1,6 +1,6 @@
 use crate::{
     components::{AutoChildEnemySpawnerComponent, EnemySpawnerTag, SpawnerComponent},
-    entities::{spawn_enemy, spawn_repeater},
+    entities::{spawn_enemy, spawn_repeater, EntityType},
     resources::{
         BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource,
         ThrustersResource,
@@ -57,15 +57,17 @@ impl<'s> System<'s> for SpawnerSystem {
                                 transform.translation()[2],
                             );
 
-                            spawn_enemy(
-                                enemy_type,
-                                spawn_position,
-                                &sprite_sheets_resource,
-                                &enemies_resource,
-                                &thrusters_resource,
-                                &entities,
-                                &lazy_update,
-                            );
+                            if let EntityType::Enemy(enemy_type) = enemy_type {
+                                spawn_enemy(
+                                    enemy_type,
+                                    &sprite_sheets_resource,
+                                    &enemies_resource,
+                                    &thrusters_resource,
+                                    spawn_position,
+                                    &entities,
+                                    &lazy_update,
+                                );
+                            }
                         }
                     }
                 }

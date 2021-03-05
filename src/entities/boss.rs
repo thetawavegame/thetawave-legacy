@@ -7,7 +7,7 @@ use crate::entities::spawn_enemy;
 use crate::{
     components::RepeaterComponent,
     constants,
-    entities::EntityType,
+    entities::{EnemyType, EntityType},
     resources::{EnemiesResource, SpriteSheetsResource, ThrustersResource},
 };
 use amethyst::prelude::Builder;
@@ -46,38 +46,38 @@ pub fn spawn_repeater(
     );
 
     let body = spawn_enemy(
-        &EntityType::RepeaterBody,
-        body_position,
+        &EnemyType::RepeaterBody,
         sprite_sheets_resource,
         enemies_resource,
         thrusters_resource,
+        body_position,
         entities,
         lazy_update,
     );
     let head = spawn_enemy(
-        &EntityType::RepeaterHead,
-        head_position,
+        &EnemyType::RepeaterHead,
         sprite_sheets_resource,
         enemies_resource,
         thrusters_resource,
+        head_position,
         entities,
         lazy_update,
     );
     let right_shoulder = spawn_enemy(
-        &EntityType::RepeaterRightShoulder,
-        right_shoulder_position,
+        &EnemyType::RepeaterRightShoulder,
         sprite_sheets_resource,
         enemies_resource,
         thrusters_resource,
+        right_shoulder_position,
         entities,
         lazy_update,
     );
     let left_shoulder = spawn_enemy(
-        &EntityType::RepeaterLeftShoulder,
-        left_shoulder_position,
+        &EnemyType::RepeaterLeftShoulder,
         sprite_sheets_resource,
         enemies_resource,
         thrusters_resource,
+        left_shoulder_position,
         entities,
         lazy_update,
     );

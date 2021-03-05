@@ -4,7 +4,7 @@ use crate::{
         ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, HealthComponent,
         Hitbox2DComponent, ItemComponent, Motion2DComponent, PlayerComponent,
     },
-    entities::EntityType,
+    entities::{ConsumableType, EnemyType, ItemType},
 };
 use amethyst::{
     assets::Handle,
@@ -65,7 +65,7 @@ pub struct SpriteSheetData {
 pub struct ConsumablesResource {
     pub motion2d_component: Motion2DComponent,
     pub despawn_border_component: DespawnAtBorderComponent,
-    pub consumable_entities: HashMap<EntityType, ConsumableEntityData>,
+    pub consumable_entities: HashMap<ConsumableType, ConsumableEntityData>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -76,8 +76,8 @@ pub struct ItemsResource {
     pub item_entities: HashMap<String, ItemEntityData>,
 }
 
-pub type EnemiesResource = HashMap<EntityType, EnemyEntityData>;
-pub type ThrustersResource = HashMap<EntityType, ThrusterEntityData>;
+pub type EnemiesResource = HashMap<EnemyType, EnemyEntityData>;
+pub type ThrustersResource = HashMap<EnemyType, ThrusterEntityData>;
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 #[derive(Clone)]

@@ -1,5 +1,6 @@
 use crate::{
     components::{choose_random_entity, EnemyComponent},
+    entities::{spawn_consumable, EntityType},
     resources::{ConsumableEntityData, ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
@@ -7,34 +8,6 @@ use amethyst::{
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
-
-pub fn spawn_consumable(
-    entities: &Entities,
-    sprite_resource: &ReadExpect<SpriteSheetsResource>,
-    consumable_data: &ConsumableEntityData,
-    consumables_resource: &ReadExpect<ConsumablesResource>,
-    spawn_position: &Vector3<f32>,
-    lazy_update: &ReadExpect<LazyUpdate>,
-) {
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprite_resource.spritesheets["consumables"].clone(),
-        sprite_number: consumable_data.consumable_component.sprite_index,
-    };
-
-    let mut local_transform = Transform::default();
-    local_transform.set_translation(*spawn_position);
-
-    lazy_update
-        .create_entity(entities)
-        .with(sprite_render)
-        .with(consumable_data.hitbox_component.clone())
-        .with(consumable_data.consumable_component.clone())
-        .with(consumables_resource.motion2d_component.clone())
-        .with(local_transform)
-        .with(Transparent)
-        .with(consumables_resource.despawn_border_component.clone())
-        .build();
-}
 
 pub fn spawn_random_consumable(
     entities: &Entities,
@@ -46,13 +19,13 @@ pub fn spawn_random_consumable(
 ) {
     let consumable_type = choose_random_entity(&enemy.loot_probs);
 
-    if let Some(consumable_type) = consumable_type {
+    if let Some(EntityType::Consumable(consumable_type)) = consumable_type {
         spawn_consumable(
-            entities,
             sprite_resource,
             &consumables_resource.consumable_entities[consumable_type],
             consumables_resource,
             spawn_position,
+            entities,
             lazy_update,
         )
     }

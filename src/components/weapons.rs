@@ -108,6 +108,7 @@ impl BlasterComponent {
             angular_deceleration: 0.0,
             angular_speed: 0.0,
             immovable: false,
+            target_position: None,
         };
 
         let blast_component = BlastComponent {
@@ -176,19 +177,22 @@ impl AutoChildEnemySpawnerComponent {
 
         if self.timer < 0.0 {
             self.timer = self.period;
-            spawn_enemy(
-                &self.child_entity_type,
-                Vector3::new(
-                    spawn_position.x + self.offset.x,
-                    spawn_position.y + self.offset.y,
-                    spawn_position.z,
-                ),
-                &sprite_sheets_resource,
-                &enemies_resource,
-                &thrusters_resource,
-                &entities,
-                &lazy_update,
-            );
+            if let EntityType::Enemy(child_entity_type) = &self.child_entity_type {
+                //TODO: generalize spawn function to be for any entity
+                spawn_enemy(
+                    &child_entity_type,
+                    &sprite_sheets_resource,
+                    &enemies_resource,
+                    &thrusters_resource,
+                    Vector3::new(
+                        spawn_position.x + self.offset.x,
+                        spawn_position.y + self.offset.y,
+                        spawn_position.z,
+                    ),
+                    &entities,
+                    &lazy_update,
+                );
+            }
         }
     }
 }

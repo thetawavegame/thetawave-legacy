@@ -4,7 +4,7 @@ use crate::{
         BarrierComponent, BlastComponent, BlastType, EnemyComponent, HealthComponent,
         Motion2DComponent, PlayerComponent,
     },
-    entities::{spawn_blast_explosion, EntityType},
+    entities::{spawn_blast_explosion, EnemyType, EntityType},
     events::{EnemyCollisionEvent, PlayAudioEvent},
     resources::{GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
@@ -67,7 +67,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
                 match enemy.entity_type {
-                    EntityType::Missile => {
+                    EntityType::Enemy(EnemyType::Missile) => {
                         enemy_health.value = 0.0;
                     }
 
@@ -137,7 +137,7 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
                 match enemy.entity_type {
-                    EntityType::Missile => {
+                    EntityType::Enemy(EnemyType::Missile) => {
                         enemy_health.value = 0.0;
                     }
 
@@ -236,7 +236,8 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                         );
 
                         enemy_health.value -= blast.damage;
-                        enemy.poison = blast.poison_damage;
+                        //TODO: apply poison to enemy health component from blast
+                        //enemy.poison = blast.poison_damage;
                     }
 
                     _ => {}
@@ -290,7 +291,7 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
 
                 if !barrier.enemies_pass {
                     match enemy.entity_type {
-                        EntityType::Missile => {}
+                        EntityType::Enemy(EnemyType::Missile) => {}
 
                         _ => {
                             let enemy_motion = motion_2ds.get_mut(event.enemy_entity).unwrap();

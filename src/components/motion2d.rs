@@ -18,6 +18,7 @@ pub struct Motion2DComponent {
     pub angular_deceleration: f32,
     pub angular_speed: f32,
     pub immovable: bool, // can't be moved from outside forces
+    pub target_position: Option<Vector2<f32>>,
 }
 
 impl Component for Motion2DComponent {
