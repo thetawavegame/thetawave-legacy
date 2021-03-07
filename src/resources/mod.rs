@@ -46,6 +46,6 @@ pub struct DebugLinesConfig {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct SpriteRenderData {
-    pub intial_index: usize,
+    pub initial_index: usize,
     pub spritesheet: String,
 }

@@ -64,25 +64,23 @@ impl Motion2DComponent {
     }
 
     // turn to face the target
-    pub fn turn_towards_target(
-        &mut self,
-        current_position: Vector2<f32>,
-        current_angle: f32,
-        target_position: Vector2<f32>,
-    ) {
-        let target_angle = (current_position.y - target_position.y)
-            .atan2(current_position.x - target_position.x)
-            .to_degrees()
-            + 180.0;
+    pub fn turn_towards_target(&mut self, current_position: Vector2<f32>, current_angle: f32) {
+        if let Some(target_position) = self.target_position {
+            let target_angle = (current_position.y - target_position.y)
+                .atan2(current_position.x - target_position.x)
+                .to_degrees()
+                + 180.0;
 
-        let adjusted_angle = current_angle + 90.0;
+            let adjusted_angle = current_angle + 90.0;
 
-        let smallest_angle = signed_modulo(target_angle - adjusted_angle + 180.0, 360.0) - 180.0;
+            let smallest_angle =
+                signed_modulo(target_angle - adjusted_angle + 180.0, 360.0) - 180.0;
 
-        if smallest_angle >= 0.0 {
-            self.angular_velocity -= self.angular_acceleration;
-        } else {
-            self.angular_velocity += self.angular_acceleration;
+            if smallest_angle >= 0.0 {
+                self.angular_velocity -= self.angular_acceleration;
+            } else {
+                self.angular_velocity += self.angular_acceleration;
+            }
         }
     }
 

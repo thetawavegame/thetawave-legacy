@@ -30,6 +30,7 @@ pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
+    pub sprite_render_data: SpriteRenderData,
     pub animation_component: AnimationComponent,
     pub enemy_component: EnemyComponent,
     pub hitbox_component: Hitbox2DComponent,
@@ -56,6 +57,7 @@ pub struct ItemEntityData {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumableEntityData {
+    pub sprite_render_data: SpriteRenderData,
     pub consumable_component: ConsumableComponent,
     pub hitbox_component: Hitbox2DComponent,
 }

@@ -55,9 +55,9 @@ impl<'s> System<'s> for SpawnerSystem {
                             if let EntityType::Enemy(enemy_type) = enemy_type {
                                 spawn_enemy(
                                     enemy_type,
-                                    &sprite_sheets_resource,
-                                    &enemies_resource,
                                     spawn_position,
+                                    &enemies_resource,
+                                    &sprite_sheets_resource,
                                     &entities,
                                     &lazy_update,
                                 );

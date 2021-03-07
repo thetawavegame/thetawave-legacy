@@ -1,8 +1,8 @@
 use crate::{
-    entities::{EffectType, EnemyType},
+    entities::{ConsumableType, EffectType, EnemyType},
     resources::{
-        ConsumableEntityData, ConsumablesResource, EffectsResource, EnemiesResource,
-        ItemEntityData, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, EnemiesResource, ItemEntityData, ItemsResource,
+        SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -12,28 +12,32 @@ use amethyst::{
 };
 
 pub fn spawn_consumable(
-    sprite_resource: &ReadExpect<SpriteSheetsResource>,
-    consumable_data: &ConsumableEntityData,
+    consumable_type: &ConsumableType,
+    spawn_position: Vector3<f32>,
     consumables_resource: &ReadExpect<ConsumablesResource>,
-    spawn_position: &Vector3<f32>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
+    let consumable_data = consumables_resource.consumable_entities[consumable_type].clone();
+
     let sprite_render = SpriteRender {
-        sprite_sheet: sprite_resource.spritesheets["consumables"].clone(),
-        sprite_number: consumable_data.consumable_component.sprite_index,
+        sprite_sheet: spritesheets_resource.spritesheets
+            [&consumable_data.sprite_render_data.spritesheet]
+            .clone(),
+        sprite_number: consumable_data.sprite_render_data.initial_index,
     };
 
-    let mut local_transform = Transform::default();
-    local_transform.set_translation(*spawn_position);
+    let mut transform = Transform::default();
+    transform.set_translation(spawn_position);
 
     lazy_update
         .create_entity(entities)
         .with(sprite_render)
         .with(consumable_data.hitbox_component.clone())
-        .with(consumable_data.consumable_component.clone())
+        .with(consumable_data.consumable_component)
         .with(consumables_resource.motion2d_component.clone())
-        .with(local_transform)
+        .with(transform)
         .with(Transparent)
         .with(consumables_resource.despawn_border_component.clone())
         .build();
@@ -41,28 +45,19 @@ pub fn spawn_consumable(
 
 pub fn spawn_enemy(
     enemy_type: &EnemyType,
-    sprite_sheets_resource: &ReadExpect<SpriteSheetsResource>,
-    enemies_resource: &ReadExpect<EnemiesResource>,
     spawn_position: Vector3<f32>,
+    enemies_resource: &ReadExpect<EnemiesResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) -> Entity {
     let enemy_data = enemies_resource[enemy_type].clone();
 
-    //TODO: Consider moving all boss and enemy sprites onto single sprite sheet to remove this statement
-    let sprite_sheets_key = match enemy_type {
-        EnemyType::RepeaterBody
-        | EnemyType::RepeaterHead
-        | EnemyType::RepeaterLeftShoulder
-        | EnemyType::RepeaterRightShoulder
-        | EnemyType::RepeaterLeftArm
-        | EnemyType::RepeaterRightArm => "repeater",
-        _ => "enemies",
-    };
-
     let enemy_sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheets_resource.spritesheets[sprite_sheets_key].clone(),
-        sprite_number: enemy_data.animation_component.start_idx,
+        sprite_sheet: spritesheets_resource.spritesheets
+            [&enemy_data.sprite_render_data.spritesheet]
+            .clone(),
+        sprite_number: enemy_data.sprite_render_data.initial_index,
     };
 
     let mut enemy_transform = Transform::default();
@@ -98,7 +93,7 @@ pub fn spawn_enemy(
         let thruster_parent = Parent::new(enemy_entity);
 
         let thruster_sprite_render = SpriteRender {
-            sprite_sheet: sprite_sheets_resource.spritesheets["thrusters"].clone(),
+            sprite_sheet: spritesheets_resource.spritesheets["thrusters"].clone(),
             sprite_number: thruster_data.animation_component.start_idx,
         };
 
@@ -110,7 +105,7 @@ pub fn spawn_enemy(
             .with(thruster_parent)
             .with(thruster_transform)
             .with(thruster_sprite_render)
-            .with(thruster_data.animation_component.clone())
+            .with(thruster_data.animation_component)
             .with(Transparent)
             .build();
     }
@@ -168,7 +163,7 @@ pub fn spawn_effect(
         sprite_sheet: spritesheets_resource.spritesheets
             [&effect_data.sprite_render_data.spritesheet]
             .clone(),
-        sprite_number: effect_data.sprite_render_data.intial_index,
+        sprite_number: effect_data.sprite_render_data.initial_index,
     };
 
     let mut transform = Transform::default();

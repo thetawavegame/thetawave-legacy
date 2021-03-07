@@ -14,17 +14,17 @@ pub fn spawn_random_consumable(
     enemy: &EnemyComponent,
     sprite_resource: &ReadExpect<SpriteSheetsResource>,
     consumables_resource: &ReadExpect<ConsumablesResource>,
-    spawn_position: &Vector3<f32>,
+    spawn_position: Vector3<f32>,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let consumable_type = choose_random_entity(&enemy.loot_probs);
 
     if let Some(EntityType::Consumable(consumable_type)) = consumable_type {
         spawn_consumable(
-            sprite_resource,
-            &consumables_resource.consumable_entities[consumable_type],
-            consumables_resource,
+            consumable_type,
             spawn_position,
+            consumables_resource,
+            sprite_resource,
             entities,
             lazy_update,
         )

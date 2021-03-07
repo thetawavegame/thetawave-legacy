@@ -78,7 +78,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 &enemy_component,
                 &sprite_resource,
                 &consumables_resource,
-                enemy_transform.translation(),
+                *enemy_transform.translation(),
                 &lazy_update,
             );
 

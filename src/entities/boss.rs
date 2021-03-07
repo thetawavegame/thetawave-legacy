@@ -13,7 +13,7 @@ use crate::{
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(
-    sprite_sheets_resource: &ReadExpect<SpriteSheetsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     enemies_resource: &ReadExpect<EnemiesResource>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
@@ -46,33 +46,33 @@ pub fn spawn_repeater(
 
     let body = spawn_enemy(
         &EnemyType::RepeaterBody,
-        sprite_sheets_resource,
-        enemies_resource,
         body_position,
+        enemies_resource,
+        spritesheets_resource,
         entities,
         lazy_update,
     );
     let head = spawn_enemy(
         &EnemyType::RepeaterHead,
-        sprite_sheets_resource,
-        enemies_resource,
         head_position,
+        enemies_resource,
+        spritesheets_resource,
         entities,
         lazy_update,
     );
     let right_shoulder = spawn_enemy(
         &EnemyType::RepeaterRightShoulder,
-        sprite_sheets_resource,
-        enemies_resource,
         right_shoulder_position,
+        enemies_resource,
+        spritesheets_resource,
         entities,
         lazy_update,
     );
     let left_shoulder = spawn_enemy(
         &EnemyType::RepeaterLeftShoulder,
-        sprite_sheets_resource,
-        enemies_resource,
         left_shoulder_position,
+        enemies_resource,
+        spritesheets_resource,
         entities,
         lazy_update,
     );

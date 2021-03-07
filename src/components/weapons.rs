@@ -167,7 +167,7 @@ impl AutoChildEnemySpawnerComponent {
         &mut self,
         delta_time: f32,
         spawn_position: Vector3<f32>,
-        sprite_sheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
         enemies_resource: &ReadExpect<EnemiesResource>,
         entities: &Entities,
         lazy_update: &ReadExpect<LazyUpdate>,
@@ -180,13 +180,13 @@ impl AutoChildEnemySpawnerComponent {
                 //TODO: generalize spawn function to be for any entity
                 spawn_enemy(
                     &child_entity_type,
-                    &sprite_sheets_resource,
-                    &enemies_resource,
                     Vector3::new(
                         spawn_position.x + self.offset.x,
                         spawn_position.y + self.offset.y,
                         spawn_position.z,
                     ),
+                    &enemies_resource,
+                    &spritesheets_resource,
                     &entities,
                     &lazy_update,
                 );

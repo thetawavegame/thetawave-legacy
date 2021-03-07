@@ -14,7 +14,6 @@ pub struct ConsumableComponent {
     pub money_value: usize,
     #[serde(default)]
     pub armor_value: usize,
-    pub sprite_index: usize,
 }
 
 fn des_speed() -> f32 {

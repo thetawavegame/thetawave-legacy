@@ -1,7 +1,7 @@
 {
     EnemyExplosion: (
         sprite_render_data: (
-            intial_index: 0,
+            initial_index: 0,
             spritesheet: "effects",
         ),
         animation_component: Some((
@@ -19,7 +19,7 @@
     ),
     AllyBlastExplosion: (
         sprite_render_data: (
-            intial_index: 10,
+            initial_index: 10,
             spritesheet: "effects",
         ),
         animation_component: Some((
@@ -37,7 +37,7 @@
     ),
     EnemyBlastExplosion: (
         sprite_render_data: (
-            intial_index: 17,
+            initial_index: 17,
             spritesheet: "effects",
         ),
         animation_component: Some((
@@ -55,7 +55,7 @@
     ),
     PoisonBlastExplosion: (
         sprite_render_data: (
-            intial_index: 31,
+            initial_index: 31,
             spritesheet: "effects",
         ),
         animation_component: Some((
@@ -73,7 +73,7 @@
     ),
     CriticalBlastExplosion: (
         sprite_render_data: (
-            intial_index: 24,
+            initial_index: 24,
             spritesheet: "effects",
         ),
         animation_component: Some((

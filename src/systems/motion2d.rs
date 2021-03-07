@@ -172,12 +172,11 @@ fn move_enemy(
             motion_2d.brake_horizontal();
         }
         EntityType::Enemy(EnemyType::Missile) => {
-            if let Some(target_position) = motion_2d.target_position {
+            if motion_2d.target_position.is_some() {
                 //turn towards target
                 motion_2d.turn_towards_target(
                     Vector2::new(transform.translation().x, transform.translation().y),
                     transform.euler_angles().2.to_degrees() + 180.0,
-                    target_position,
                 );
                 hitbox_2d.set_offset_rotation(transform.euler_angles().2);
 
