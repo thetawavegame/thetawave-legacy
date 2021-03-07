@@ -1,0 +1,92 @@
+{
+    EnemyExplosion: (
+        sprite_render_data: (
+            intial_index: 0,
+            spritesheet: "effects",
+        ),
+        animation_component: Some((
+            start_idx: 0,
+            frame_count: 10,
+            current_frame: 0,
+            frame_time: 0.1,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: Forward,
+        )),
+        time_limit_component: Some((
+            duration: 0.9,
+        )),
+    ),
+    AllyBlastExplosion: (
+        sprite_render_data: (
+            intial_index: 10,
+            spritesheet: "effects",
+        ),
+        animation_component: Some((
+            start_idx: 10,
+            frame_count: 7,
+            current_frame: 10,
+            frame_time: 0.08,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: Forward,
+        )),
+        time_limit_component: Some((
+            duration: 0.48,
+        )),
+    ),
+    EnemyBlastExplosion: (
+        sprite_render_data: (
+            intial_index: 17,
+            spritesheet: "effects",
+        ),
+        animation_component: Some((
+            start_idx: 17,
+            frame_count: 7,
+            current_frame: 17,
+            frame_time: 0.08,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: Forward,
+        )),
+        time_limit_component: Some((
+            duration: 0.48,
+        )),
+    ),
+    PoisonBlastExplosion: (
+        sprite_render_data: (
+            intial_index: 31,
+            spritesheet: "effects",
+        ),
+        animation_component: Some((
+            start_idx: 31,
+            frame_count: 7,
+            current_frame: 31,
+            frame_time: 0.08,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: Forward,
+        )),
+        time_limit_component: Some((
+            duration: 0.48,
+        )),
+    ),
+    CriticalBlastExplosion: (
+        sprite_render_data: (
+            intial_index: 24,
+            spritesheet: "effects",
+        ),
+        animation_component: Some((
+            start_idx: 24,
+            frame_count: 7,
+            current_frame: 24,
+            frame_time: 0.08,
+            elapsed_time: 0.0,
+            forward: true,
+            animation_type: Forward,
+        )),
+        time_limit_component: Some((
+            duration: 0.48,
+        )),
+    ),
+}

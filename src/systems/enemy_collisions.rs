@@ -4,9 +4,9 @@ use crate::{
         BarrierComponent, BlastComponent, BlastType, EnemyComponent, HealthComponent,
         Motion2DComponent, PlayerComponent,
     },
-    entities::{spawn_blast_explosion, EnemyType, EntityType},
+    entities::{spawn_effect, EffectType, EnemyType, EntityType},
     events::{EnemyCollisionEvent, PlayAudioEvent},
-    resources::{GameParametersResource, SpriteSheetsResource},
+    resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
@@ -181,6 +181,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
+        ReadExpect<'s, EffectsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -205,6 +206,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
             mut healths,
             mut blasts,
             transforms,
+            effects_resource,
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
@@ -227,11 +229,19 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                             source: sounds.sound_effects["metal_ping"].clone(),
                         });
 
-                        spawn_blast_explosion(
+                        spawn_effect(
+                            match blast.blast_type {
+                                BlastType::Ally => &EffectType::AllyBlastExplosion,
+                                BlastType::AllyCritical => &EffectType::CriticalBlastExplosion,
+                                BlastType::AllyPoison => &EffectType::PoisonBlastExplosion,
+                                _ => {
+                                    panic!("unreachable")
+                                }
+                            },
+                            *blast_transform.translation(),
+                            &effects_resource,
+                            &sprite_resource,
                             &entities,
-                            sprite_resource.spritesheets["blast_explosions"].clone(),
-                            blast.blast_type.clone(),
-                            blast_transform.clone(),
                             &lazy_update,
                         );
 

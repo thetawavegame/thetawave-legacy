@@ -1,9 +1,9 @@
 use crate::{
     audio::Sounds,
     components::EnemyComponent,
-    entities::{spawn_explosion, spawn_random_consumable},
+    entities::{spawn_effect, spawn_random_consumable, EffectType},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
-    resources::{ConsumablesResource, SpriteSheetsResource},
+    resources::{ConsumablesResource, EffectsResource, SpriteSheetsResource},
 };
 use amethyst::{
     core::transform::Transform,
@@ -25,6 +25,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, EnemyComponent>,
         ReadExpect<'s, ConsumablesResource>,
+        ReadExpect<'s, EffectsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -48,6 +49,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             transforms,
             enemies,
             consumables_resource,
+            effects_resource,
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
@@ -62,11 +64,12 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 source: sounds.sound_effects["explosion"].clone(),
             });
 
-            spawn_explosion(
-                &entities,
+            spawn_effect(
+                &EffectType::EnemyExplosion,
+                *enemy_transform.translation(),
+                &effects_resource,
                 &sprite_resource,
-                enemy_component.explosion_sprite_idx,
-                enemy_transform.translation(),
+                &entities,
                 &lazy_update,
             );
 

@@ -1,8 +1,8 @@
 use crate::{
-    entities::EnemyType,
+    entities::{EffectType, EnemyType},
     resources::{
-        ConsumableEntityData, ConsumablesResource, EnemiesResource, ItemEntityData, ItemsResource,
-        SpriteSheetsResource,
+        ConsumableEntityData, ConsumablesResource, EffectsResource, EnemiesResource,
+        ItemEntityData, ItemsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -151,5 +151,45 @@ pub fn spawn_item(
 
     if let Some(animation_component) = item.animation_component {
         lazy_update.insert(item_entity, animation_component);
+    }
+}
+
+pub fn spawn_effect(
+    effect_type: &EffectType,
+    spawn_position: Vector3<f32>,
+    effects_resource: &ReadExpect<EffectsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    let effect_data = effects_resource[effect_type].clone();
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: spritesheets_resource.spritesheets
+            [&effect_data.sprite_render_data.spritesheet]
+            .clone(),
+        sprite_number: effect_data.sprite_render_data.intial_index,
+    };
+
+    let mut transform = Transform::default();
+    transform.set_translation(spawn_position);
+
+    let effect_entity = lazy_update
+        .create_entity(entities)
+        .with(sprite_render)
+        .with(transform)
+        .with(Transparent)
+        .build();
+
+    if let Some(animation_component) = effect_data.animation_component {
+        lazy_update.insert(effect_entity, animation_component);
+    }
+
+    if let Some(time_limit_component) = effect_data.time_limit_component {
+        lazy_update.insert(effect_entity, time_limit_component);
+    }
+
+    if let Some(motion2d_component) = effect_data.motion2d_component {
+        lazy_update.insert(effect_entity, motion2d_component);
     }
 }

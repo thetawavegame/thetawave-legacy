@@ -5,9 +5,9 @@ use crate::{
         ConsumableComponent, DefenseTag, EnemyComponent, HealthComponent, ItemComponent,
         Motion2DComponent, PlayerComponent,
     },
-    entities::spawn_blast_explosion,
+    entities::{spawn_effect, EffectType},
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
-    resources::{GameParametersResource, SpriteSheetsResource},
+    resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
@@ -106,6 +106,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, BarrelRollAbilityComponent>,
         ReadStorage<'s, Transform>,
+        ReadExpect<'s, EffectsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
     );
@@ -128,6 +129,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
             mut blasts,
             barrel_roll_abilities,
             transforms,
+            effects_resource,
             sprite_resource,
             lazy_update,
         ): Self::SystemData,
@@ -160,11 +162,12 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                                 .delete(event.colliding_entity)
                                 .expect("unable to delete entity");
 
-                            spawn_blast_explosion(
+                            spawn_effect(
+                                &EffectType::EnemyBlastExplosion,
+                                *blast_transform.translation(),
+                                &effects_resource,
+                                &sprite_resource,
                                 &entities,
-                                sprite_resource.spritesheets["blast_explosions"].clone(),
-                                blast.blast_type.clone(),
-                                blast_transform.clone(),
                                 &lazy_update,
                             );
                             spaceship_health.take_damage(blast.damage);

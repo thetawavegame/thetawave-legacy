@@ -7,7 +7,6 @@ pub mod boss;
 pub mod consumable;
 pub mod defense;
 pub mod enemy_spawner;
-pub mod explosion;
 pub mod planet;
 pub mod side_panels;
 pub mod spaceship;
@@ -24,11 +23,10 @@ pub use self::{
     consumable::spawn_random_consumable,
     defense::initialize_defense,
     enemy_spawner::initialize_enemy_spawner,
-    explosion::{spawn_blast_explosion, spawn_explosion},
     planet::initialize_planet,
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,
-    spawn::{spawn_consumable, spawn_enemy, spawn_item},
+    spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_item},
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
     store::initialize_store,
@@ -39,6 +37,7 @@ pub enum EntityType {
     Enemy(EnemyType),
     Consumable(ConsumableType),
     Item(ItemType),
+    Effect(EffectType),
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
@@ -81,4 +80,14 @@ pub enum ItemType {
     StructureReinforcement,
     BlasterSizeEnhancer,
     FrequencyAugmentor,
+}
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum EffectType {
+    AllyBlastExplosion,
+    EnemyBlastExplosion,
+    PoisonBlastExplosion,
+    CriticalBlastExplosion,
+    EnemyExplosion,
+    Star,   //TODO: implement background stars
+    Giblet, //TODO: implement giblets
 }
