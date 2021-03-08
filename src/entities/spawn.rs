@@ -1,12 +1,11 @@
 use crate::{
-    entities::{ConsumableType, EffectType, EnemyType},
+    entities::{ConsumableType, EffectType, EnemyType, ItemType},
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, ItemEntityData, ItemsResource,
-        SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
-    core::{math::Vector3, transform::Transform, Named, Parent},
+    core::{math::Vector3, transform::Transform, Parent},
     ecs::prelude::{Builder, Entities, Entity, LazyUpdate, ReadExpect},
     renderer::{SpriteRender, Transparent},
 };
@@ -114,44 +113,43 @@ pub fn spawn_enemy(
 }
 
 pub fn spawn_item(
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    item: ItemEntityData,
-    items_resource: &ReadExpect<ItemsResource>,
+    item_type: &ItemType,
     spawn_position: Vector3<f32>,
+    items_resource: &ReadExpect<ItemsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
+    let item_data = items_resource.item_entities[item_type].clone();
+
     let sprite_render = SpriteRender {
-        sprite_sheet: spritesheets_resource.spritesheets["items"].clone(),
-        sprite_number: item.item_component.sprite_index,
+        sprite_sheet: spritesheets_resource.spritesheets[&item_data.sprite_render_data.spritesheet]
+            .clone(),
+        sprite_number: item_data.sprite_render_data.initial_index,
     };
-    let mut local_transform = Transform::default();
-    local_transform.set_translation(spawn_position);
 
-    let name = Named::new("item");
-
-    println!("{} spawned!", item.item_component.name);
+    let mut transform = Transform::default();
+    transform.set_translation(spawn_position);
 
     let item_entity = lazy_update
         .create_entity(entities)
         .with(sprite_render)
-        .with(item.item_component)
+        .with(item_data.item_component)
         .with(items_resource.hitbox2d_component.clone())
         .with(items_resource.motion2d_component.clone())
-        .with(local_transform)
+        .with(transform)
         .with(Transparent)
-        .with(name)
         .with(items_resource.despawn_border_component.clone())
         .build();
 
-    if let Some(animation_component) = item.animation_component {
+    if let Some(animation_component) = item_data.animation_component {
         lazy_update.insert(item_entity, animation_component);
     }
 }
 
 pub fn spawn_effect(
     effect_type: &EffectType,
-    spawn_position: Vector3<f32>,
+    spawn_transform: Transform,
     effects_resource: &ReadExpect<EffectsResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
@@ -166,13 +164,10 @@ pub fn spawn_effect(
         sprite_number: effect_data.sprite_render_data.initial_index,
     };
 
-    let mut transform = Transform::default();
-    transform.set_translation(spawn_position);
-
     let effect_entity = lazy_update
         .create_entity(entities)
         .with(sprite_render)
-        .with(transform)
+        .with(spawn_transform)
         .with(Transparent)
         .build();
 

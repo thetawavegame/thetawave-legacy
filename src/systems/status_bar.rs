@@ -1,10 +1,10 @@
 use crate::{
     components::{
         BarrelRollAbilityComponent, DefenseTag, HealthComponent, PlayerComponent,
-        StatusBarComponent, StatusType, StoreComponent,
+        StatusBarComponent, StatusType,
     },
     entities::spawn_status_unit,
-    resources::SpriteSheetsResource,
+    resources::{SpriteSheetsResource, StoreResource},
 };
 use amethyst::ecs::prelude::{
     Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage,
@@ -25,7 +25,7 @@ impl<'s> System<'s> for StatusBarSystem {
         ReadStorage<'s, BarrelRollAbilityComponent>,
         ReadStorage<'s, DefenseTag>,
         ReadStorage<'s, HealthComponent>,
-        ReadStorage<'s, StoreComponent>,
+        ReadExpect<'s, StoreResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
     );
@@ -39,7 +39,7 @@ impl<'s> System<'s> for StatusBarSystem {
             barrel_roll_abilities,
             defense_tags,
             healths,
-            stores,
+            store_resource,
             sprite_resource,
             lazy_update,
         ): Self::SystemData,
@@ -100,20 +100,18 @@ impl<'s> System<'s> for StatusBarSystem {
                 }
 
                 StatusType::Restock => {
-                    for store in (&stores).join() {
-                        if let Some(status_position) = status_bar.update_units_x(
-                            store.restock_interval,
-                            store.restock_interval - store.restock_timer,
+                    if let Some(status_position) = status_bar.update_units_x(
+                        store_resource.restock_period,
+                        store_resource.restock_period - store_resource.restock_timer,
+                        &entities,
+                    ) {
+                        status_bar.status_unit_stack.push(spawn_status_unit(
                             &entities,
-                        ) {
-                            status_bar.status_unit_stack.push(spawn_status_unit(
-                                &entities,
-                                &sprite_resource,
-                                RESTOCK_SPRITE_INDEX,
-                                status_position,
-                                &lazy_update,
-                            ));
-                        }
+                            &sprite_resource,
+                            RESTOCK_SPRITE_INDEX,
+                            status_position,
+                            &lazy_update,
+                        ));
                     }
                 }
             }

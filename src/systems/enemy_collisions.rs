@@ -177,7 +177,6 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
         Entities<'s>,
-        WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
@@ -202,7 +201,6 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
         (
             collision_channel,
             entities,
-            mut enemies,
             mut healths,
             mut blasts,
             transforms,
@@ -215,7 +213,6 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
     ) {
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
             if let Some(blast) = blasts.get_mut(event.colliding_entity) {
-                let enemy = enemies.get_mut(event.enemy_entity).unwrap();
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
                 let blast_transform = transforms.get(event.colliding_entity).unwrap();
 
@@ -238,7 +235,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                                     panic!("unreachable")
                                 }
                             },
-                            *blast_transform.translation(),
+                            blast_transform.clone(),
                             &effects_resource,
                             &sprite_resource,
                             &entities,

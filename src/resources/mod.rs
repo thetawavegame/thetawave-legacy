@@ -9,6 +9,7 @@ use std::collections::HashMap;
 pub mod entities;
 pub mod game_parameters;
 pub mod phases;
+pub mod store;
 
 pub use self::entities::{
     ConsumableEntityData, ConsumablesResource, EffectEntityData, EffectsResource, EnemiesResource,
@@ -16,6 +17,7 @@ pub use self::entities::{
 };
 pub use self::game_parameters::GameParametersResource;
 pub use self::phases::{BossType, Phase, PhaseManagerResource, PhaseType};
+pub use self::store::StoreResource;
 
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 

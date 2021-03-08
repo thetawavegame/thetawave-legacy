@@ -1,7 +1,7 @@
 {
     "juggernaut": (
         player_component: (
-            money: 50,
+            money: 200,
             collision_damage: 50.0, 
         )
     )

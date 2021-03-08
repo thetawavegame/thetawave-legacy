@@ -1,12 +1,11 @@
 use crate::{
     components::{choose_random_entity, EnemyComponent},
     entities::{spawn_consumable, EntityType},
-    resources::{ConsumableEntityData, ConsumablesResource, SpriteSheetsResource},
+    resources::{ConsumablesResource, SpriteSheetsResource},
 };
 use amethyst::{
-    core::{math::Vector3, transform::Transform},
-    ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent},
+    core::math::Vector3,
+    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 
 pub fn spawn_random_consumable(

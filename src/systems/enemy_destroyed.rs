@@ -66,7 +66,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
 
             spawn_effect(
                 &EffectType::EnemyExplosion,
-                *enemy_transform.translation(),
+                enemy_transform.clone(),
                 &effects_resource,
                 &sprite_resource,
                 &entities,

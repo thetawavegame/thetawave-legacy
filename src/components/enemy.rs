@@ -1,7 +1,4 @@
-use amethyst::{
-    core::math::Vector2,
-    ecs::prelude::{Component, DenseVecStorage, NullStorage},
-};
+use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
 
 use crate::{components::SpawnProbabilities, entities::EntityType};
 

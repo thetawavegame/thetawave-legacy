@@ -19,6 +19,7 @@
             consumable_component: (
                 sound_effect: "metal_clang",
                 defense_value: 70,
+                price: 4,
             ),
             hitbox_component: (
                 width: 10.0,
@@ -36,6 +37,7 @@
             consumable_component: (
                 sound_effect: "small_rock",
                 money_value: 1,
+                price: 1,
             ),
             hitbox_component: (
                 width: 6.0,
@@ -53,6 +55,7 @@
             consumable_component: (
                 sound_effect: "large_rock",
                 money_value: 5,
+                price: 5,
             ),
             hitbox_component: (
                 width: 10.0,
@@ -70,6 +73,7 @@
             consumable_component: (
                 sound_effect: "metal_clang",
                 health_value: 30,
+                price: 4,
             ),
             hitbox_component: (
                 width: 10.0,
@@ -87,6 +91,7 @@
             consumable_component: (
                 sound_effect: "armor_up",
                 armor_value: 1,
+                price: 4,
             ),
             hitbox_component: (
                 width: 10.0,

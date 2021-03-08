@@ -1,0 +1,27 @@
+(
+    stock_probs: [
+        (Item(SteelBarrel), 1.0),
+        (Item(PlasmaBlasts), 1.0),
+        (Item(HazardousReactor), 1.0),
+        (Item(WarpThruster), 1.0),
+        (Item(Tentaclover), 1.0),
+        (Item(DefenseSatellite), 1.0),
+        (Item(DoubleBarrel), 1.0),
+        (Item(YithianPlague), 1.0),
+        (Item(Spice), 1.0),
+        (Item(EnhancedPlating), 1.0),
+        (Item(StructureReinforcement), 1.0),
+        (Item(BlasterSizeEnhancer), 1.0),
+        (Item(FrequencyAugmentor), 1.0),
+        (Consumable(HealthWrench), 1.0),
+        (Consumable(DefenseWrench), 1.0),
+        (Consumable(Armor), 1.0),
+    ],
+    restock_timer: 10.0,
+    restock_period: 10.0,
+    inventory: [
+        None,
+        None,
+        None
+    ],
+)

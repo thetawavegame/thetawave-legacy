@@ -164,7 +164,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
 
                             spawn_effect(
                                 &EffectType::EnemyBlastExplosion,
-                                *blast_transform.translation(),
+                                blast_transform.clone(),
                                 &effects_resource,
                                 &sprite_resource,
                                 &entities,

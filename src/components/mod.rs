@@ -15,7 +15,8 @@ mod planet;
 mod player;
 mod spawner;
 mod status_bar;
-mod store;
+//mod store;
+mod store_icon;
 mod tags;
 mod timelimit;
 mod weapons;
@@ -38,7 +39,8 @@ pub use self::{
     player::PlayerComponent,
     spawner::{choose_random_entity, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
-    store::StoreComponent,
+    //store::StoreComponent,
+    store_icon::StoreIconComponent,
     tags::DefenseTag,
     timelimit::TimeLimitComponent,
     weapons::{

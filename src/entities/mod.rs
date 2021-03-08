@@ -13,7 +13,7 @@ pub mod spaceship;
 pub mod spawn;
 pub mod status_bar;
 pub mod status_unit;
-pub mod store;
+pub mod store_icons;
 
 pub use self::{
     backgrounds::initialize_background,
@@ -29,7 +29,7 @@ pub use self::{
     spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_item},
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
-    store::initialize_store,
+    store_icons::initialize_store_icons,
 };
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
@@ -71,7 +71,7 @@ pub enum ItemType {
     PlasmaBlasts,
     HazardousReactor,
     WarpThruster,
-    QuadrupedalTentaclover,
+    Tentaclover,
     DefenseSatellite,
     DoubleBarrel,
     YithianPlague,

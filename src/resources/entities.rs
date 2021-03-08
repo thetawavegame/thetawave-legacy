@@ -22,7 +22,7 @@ pub struct ItemsResource {
     pub motion2d_component: Motion2DComponent,
     pub hitbox2d_component: Hitbox2DComponent,
     pub despawn_border_component: DespawnAtBorderComponent,
-    pub item_entities: HashMap<String, ItemEntityData>,
+    pub item_entities: HashMap<ItemType, ItemEntityData>,
 }
 
 pub type EnemiesResource = HashMap<EnemyType, EnemyEntityData>;
@@ -51,6 +51,7 @@ pub struct ThrusterEntityData {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ItemEntityData {
+    pub sprite_render_data: SpriteRenderData,
     pub item_component: ItemComponent,
     pub animation_component: Option<AnimationComponent>,
 }

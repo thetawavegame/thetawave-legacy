@@ -30,7 +30,7 @@ pub mod systems;
 use resources::{
     ConsumablesResource, DebugLinesConfig, EffectsResource, EnemiesResource,
     GameParametersResource, ItemsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
-    SpriteSheetsConfig,
+    SpriteSheetsConfig, StoreResource,
 };
 use states::MainGameState;
 
@@ -66,6 +66,8 @@ fn main() -> amethyst::Result<()> {
         .expect("failed to load data file: players.ron");
     let phases = <PhaseManagerResource as Config>::load(data_path.join("phases.ron"))
         .expect("failed to lead data file: phases.ron");
+    let store = <StoreResource as Config>::load(data_path.join("store.ron"))
+        .expect("failed to lead data file: store.ron");
     let game_parameters =
         <GameParametersResource as Config>::load(data_path.join("game_parameters.ron"))
             .expect("failed to lead data file: game_parameters.ron");
@@ -98,6 +100,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(sounds)
         .with_resource(debug_lines)
         .with_resource(phases)
+        .with_resource(store)
         .with_resource(game_parameters)
         .build(game_data)?;
 

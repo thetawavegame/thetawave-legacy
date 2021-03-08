@@ -7,7 +7,7 @@ use crate::entities::spawn_enemy;
 use crate::{
     components::RepeaterComponent,
     constants,
-    entities::{EnemyType, EntityType},
+    entities::EnemyType,
     resources::{EnemiesResource, SpriteSheetsResource},
 };
 use amethyst::prelude::Builder;
