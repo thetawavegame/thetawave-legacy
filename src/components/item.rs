@@ -18,10 +18,3 @@ pub struct ItemComponent {
 impl Component for ItemComponent {
     type Storage = DenseVecStorage<Self>;
 }
-
-#[derive(Default)]
-pub struct ItemSpawnerTag;
-
-impl Component for ItemSpawnerTag {
-    type Storage = NullStorage<Self>;
-}

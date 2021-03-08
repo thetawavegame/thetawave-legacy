@@ -47,63 +47,56 @@ impl<'s> System<'s> for StatTrackerSystem {
         }
 
         if let Some(text) = ui_text.get_mut(tracked_stats.item_price_1) {
-            if let Some(EntityType::Item(item_type)) = &store_resource.inventory[0] {
-                text.text = format!(
-                    "${}",
-                    items_resource.item_entities[item_type].item_component.price
-                );
-            } else if let Some(EntityType::Consumable(consumable_type)) =
-                &store_resource.inventory[0]
-            {
-                text.text = format!(
-                    "${}",
-                    consumables_resource.consumable_entities[consumable_type]
-                        .consumable_component
-                        .price
-                );
-            } else {
-                text.text = "$0".to_string();
-            }
+            text.text = format!(
+                "${}",
+                inventory_price(
+                    &store_resource.inventory[0],
+                    &items_resource,
+                    &consumables_resource
+                )
+            );
         }
 
         if let Some(text) = ui_text.get_mut(tracked_stats.item_price_2) {
-            if let Some(EntityType::Item(item_type)) = &store_resource.inventory[1] {
-                text.text = format!(
-                    "${}",
-                    items_resource.item_entities[item_type].item_component.price
-                );
-            } else if let Some(EntityType::Consumable(consumable_type)) =
-                &store_resource.inventory[0]
-            {
-                text.text = format!(
-                    "${}",
-                    consumables_resource.consumable_entities[consumable_type]
-                        .consumable_component
-                        .price
-                );
-            } else {
-                text.text = "$0".to_string();
-            }
+            text.text = format!(
+                "${}",
+                inventory_price(
+                    &store_resource.inventory[1],
+                    &items_resource,
+                    &consumables_resource
+                )
+            );
         }
 
         if let Some(text) = ui_text.get_mut(tracked_stats.item_price_3) {
-            if let Some(EntityType::Item(item_type)) = &store_resource.inventory[2] {
-                text.text = format!(
-                    "${}",
-                    items_resource.item_entities[item_type].item_component.price
-                );
-            } else if let Some(EntityType::Consumable(consumable_type)) =
-                &store_resource.inventory[0]
-            {
-                text.text = format!(
-                    "${}",
-                    consumables_resource.consumable_entities[consumable_type]
-                        .consumable_component
-                        .price
-                );
-            } else {
-                text.text = "$0".to_string();
-            }
+            text.text = format!(
+                "${}",
+                inventory_price(
+                    &store_resource.inventory[2],
+                    &items_resource,
+                    &consumables_resource
+                )
+            );
         }
+    }
+}
+
+fn inventory_price(
+    inventory_entity: &Option<EntityType>,
+    items_resource: &ReadExpect<ItemsResource>,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+) -> usize {
+    match inventory_entity {
+        Some(EntityType::Item(item_type)) => {
+            items_resource.item_entities[&item_type]
+                .item_component
+                .price
+        }
+        Some(EntityType::Consumable(consumable_type)) => {
+            consumables_resource.consumable_entities[&consumable_type]
+                .consumable_component
+                .price
+        }
+        _ => 0,
     }
 }

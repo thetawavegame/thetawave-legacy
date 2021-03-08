@@ -4,8 +4,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumableComponent {
     pub sound_effect: String,
-    #[serde(default = "des_speed")]
-    pub speed: f32,
     #[serde(default)]
     pub health_value: f32,
     #[serde(default)]
@@ -15,10 +13,6 @@ pub struct ConsumableComponent {
     #[serde(default)]
     pub armor_value: usize,
     pub price: usize,
-}
-
-fn des_speed() -> f32 {
-    35.0
 }
 
 impl Component for ConsumableComponent {

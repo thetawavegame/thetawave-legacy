@@ -47,7 +47,7 @@ pub use self::{
         AutoChildEnemySpawnerComponent, AutoFireComponent, BlasterComponent, ManualFireComponent,
     },
 };
-
+/*
 // livings can "die" and have a max health cap
 pub trait Living {
     fn health(&self) -> f32;
@@ -63,3 +63,4 @@ pub trait Living {
         }
     }
 }
+*/
