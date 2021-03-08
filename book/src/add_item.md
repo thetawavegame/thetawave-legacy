@@ -1,6 +1,6 @@
 # Adding Items
 
-Collecting items is a core gameplay element of space_shooter_rs. Items can vary
+Collecting items is a core gameplay element of Theta Wave. Items can vary
 a lot in complexity. The simplest items can simply increase or decrease an
 attribute. The most complex items can change the logic for abilities, or even
 change overarching rules of the game.

@@ -5,15 +5,15 @@ components provide bits of functionality to the entity that, when combined
 together, make it easier to conceptualize the expected behaviour of the entity.
 
 There are several
-[entities](https://github.com/amethyst/space_shooter_rs/tree/master/src/entities)
+[entities](https://github.com/amethyst/theta-wave/tree/master/src/entities)
 and
-[components](https://github.com/amethyst/space_shooter_rs/tree/master/src/components)
-in space_shooter_rs. This might make the game's code seem
+[components](https://github.com/amethyst/theta-wave/tree/master/src/components)
+in Theta Wave. This might make the game's code seem
 intimidating and needlessly complex, but being able to break down functionality
 of an entity into smaller pieces of data makes it much easier to expand upon
 as the game grows.
 
-We will look at three entities present in space_shooter_rs: `Spaceship`
+We will look at three entities present in Theta Wave: `Spaceship`
 (refers to the player), `Enemy`
 and `Item`. For each one, we can define a set of requirements these entities
 should have:
@@ -41,7 +41,7 @@ the entity's behavior.
 Enemy, and Item. Made with Excalidraw.*
 
 You might notice that each entity in this example has a component with the same
-name. In space_shooter_rs, functionality that is specific to an entity should
+name. In Theta Wave, functionality that is specific to an entity should
 be contained by its own specific component. For example, the `Item` component
 has properties that are specific to an `Item` entity:
 
@@ -96,4 +96,4 @@ nothing else. These tag components should be added to `src/components/tags.rs`.
 
 Having entities and components alone doesn't actually add functionality to the game.
 This is where the "Systems" in ECS comes in. In the next sections of this chapter,
-we will go over a few of the systems present in space_shooter_rs.
+we will go over a few of the systems present in Theta Wave.
