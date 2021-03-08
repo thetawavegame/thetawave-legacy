@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Entities and Their Components - space_shooter_rs Documentation</title>
+        <title>Entities and Their Components - Theta Wave Documentation</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -113,7 +113,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">space_shooter_rs Documentation</h1>
+                    <h1 class="menu-title">Theta Wave Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -152,14 +152,14 @@
 components provide bits of functionality to the entity that, when combined
 together, make it easier to conceptualize the expected behaviour of the entity.</p>
 <p>There are several
-<a href="https://github.com/amethyst/space_shooter_rs/tree/master/src/entities">entities</a>
+<a href="https://github.com/amethyst/theta-wave/tree/master/src/entities">entities</a>
 and
-<a href="https://github.com/amethyst/space_shooter_rs/tree/master/src/components">components</a>
-in space_shooter_rs. This might make the game's code seem
+<a href="https://github.com/amethyst/theta-wave/tree/master/src/components">components</a>
+in Theta Wave. This might make the game's code seem
 intimidating and needlessly complex, but being able to break down functionality
 of an entity into smaller pieces of data makes it much easier to expand upon
 as the game grows.</p>
-<p>We will look at three entities present in space_shooter_rs: <code>Spaceship</code>
+<p>We will look at three entities present in Theta Wave: <code>Spaceship</code>
 (refers to the player), <code>Enemy</code>
 and <code>Item</code>. For each one, we can define a set of requirements these entities
 should have:</p>
@@ -183,7 +183,7 @@ the entity's behavior.</p>
 <em>Drawing that groups together components relevant to each entity: Spaceship,
 Enemy, and Item. Made with Excalidraw.</em></p>
 <p>You might notice that each entity in this example has a component with the same
-name. In space_shooter_rs, functionality that is specific to an entity should
+name. In Theta Wave, functionality that is specific to an entity should
 be contained by its own specific component. For example, the <code>Item</code> component
 has properties that are specific to an <code>Item</code> entity:</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -237,7 +237,7 @@ nothing else. These tag components should be added to <code>src/components/tags.
 <h2><a class="header" href="#conclusion" id="conclusion">Conclusion</a></h2>
 <p>Having entities and components alone doesn't actually add functionality to the game.
 This is where the &quot;Systems&quot; in ECS comes in. In the next sections of this chapter,
-we will go over a few of the systems present in space_shooter_rs.</p>
+we will go over a few of the systems present in Theta Wave.</p>
 
                     </main>
 

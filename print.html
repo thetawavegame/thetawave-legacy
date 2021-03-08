@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>space_shooter_rs Documentation</title>
+        <title>Theta Wave Documentation</title>
         
         <meta name="robots" content="noindex" />
         
@@ -115,7 +115,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">space_shooter_rs Documentation</h1>
+                    <h1 class="menu-title">Theta Wave Documentation</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -150,20 +150,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
-<p>Hey there! Welcome to the book for the space_shooter_rs game. It aims to serve
+<p>Hey there! Welcome to the book for the Theta Wave game. It aims to serve
 as the primary source of documentation for those interested in contributing to
 a game using the <a href="https://amethyst.rs/">Amethyst game engine</a>.</p>
 <p>This book is being actively updated. So there may be sections that are still
 under construction.</p>
 <h1><a class="header" href="#gameplay" id="gameplay">Gameplay</a></h1>
-<p>In space_shooter_rs, you play as a spaceship defending an objective. The goal
+<p>In Theta Wave, you play as a spaceship defending an objective. The goal
 of the game is to survive levels by destroying enemies, collecting consumables,
 buying items, and defeating the final boss.</p>
 <p>In this section you can find detailed information about the enemies,
 consumables, items, enemies, allies, and bosses in the game.</p>
 <p><img src="assets/gameplay.gif" alt="gameplay of space_shooter_rs" /></p>
 <h1><a class="header" href="#controls" id="controls">Controls</a></h1>
-<p>In space_shooter_rs you control a spaceship character. You can move around,
+<p>In Theta Wave you control a spaceship character. You can move around,
 shoot, use abilities, and buy items from the store.</p>
 <table><thead><tr><th align="center">Key</th><th align="center"></th><th align="center">Action</th></tr></thead><tbody>
 <tr><td align="center">W</td><td align="center"><img src="assets/w_key.gif" alt="w_key" /></td><td align="center">Accelerate up.</td></tr>
@@ -229,7 +229,7 @@ chance to drop consumables.</p>
 <tr><td align="center">Repeater</td><td align="center"><img src="assets/repeater_portrait.png" alt="repeater_boss" /></td><td align="center">WIP.</td></tr>
 </tbody></table>
 <h1><a class="header" href="#contributing" id="contributing">Contributing</a></h1>
-<p>If you haven't already, please take some time to read the community <a href="https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>.</p>
+<p>If you haven't already, please take some time to read the community <a href="https://github.com/amethyst/theta-wave/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>.</p>
 <h2><a class="header" href="#the-basics" id="the-basics">The Basics</a></h2>
 <p>If you're familiar with the basics of the <a href="https://amethyst.rs/">Amethyst</a> engine
 or programming with Rust, then you can contribute! And even if you aren't, these
@@ -257,8 +257,8 @@ this:</p>
 <li>Write the patch, create a PR, and request a review</li>
 </ul>
 <h3><a class="header" href="#pick-an-issue-to-work-on" id="pick-an-issue-to-work-on">Pick an issue to work on</a></h3>
-<p>Take a look at the <a href="https://github.com/amethyst/space_shooter_rs/issues">issues list</a>
-and choose an issue you'd like to work on. Issues labeled as <a href="https://github.com/amethyst/space_shooter_rs/issues?q=is%3Aissue+label%3A%22good+first+issue%22+is%3Aopen">good first issue</a>
+<p>Take a look at the <a href="https://github.com/amethyst/theta-wave/issues">issues list</a>
+and choose an issue you'd like to work on. Issues labeled as <a href="https://github.com/amethyst/theta-wave/issues?q=is%3Aissue+label%3A%22good+first+issue%22+is%3Aopen">good first issue</a>
 are a great way to get started with the codebase.</p>
 <p>Make sure to claim the issue by
 commenting you'd like to work on it and mentioning either <strong>@cdsupina</strong> or
@@ -285,13 +285,13 @@ the proper <a href="https://github.com/amethyst/amethyst/blob/master/README.md#d
 on your dev machine.</p>
 </li>
 <li>
-<p><a href="https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository">Fork</a> the space_shooter_rs project.</p>
+<p><a href="https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository">Fork</a> the Theta Wave project.</p>
 </li>
 <li>
 <p><a href="https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#step-2-create-a-local-clone-of-your-fork">Create a local clone of the fork</a></p>
 </li>
 <li>
-<p><a href="https://github.com/amethyst/space_shooter_rs#to-run">Run the game</a></p>
+<p><a href="https://github.com/amethyst/theta-wave#to-run">Run the game</a></p>
 </li>
 </ol>
 <p>Once you're able to successfully build the game, you can start writing some code!</p>
@@ -313,10 +313,10 @@ build warnings are present in your PR.</p>
 <p>and <a href="https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/creating-an-issue-or-pull-request#creating-a-pull-request">create that PR</a> for review!</p>
 <p><strong><em>Please make sure to link the issue you selected earlier in the PR's description.</em></strong></p>
 <h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
-<p>space_shooter_rs is made with the Amethyst game engine. This means that
-the design methodology space_shooter_rs uses is ECS (Entity Component System).
+<p>Theta Wave is made with the Amethyst game engine. This means that
+the design methodology Theta Wave uses is ECS (Entity Component System).
 This section will provide an overview of the Entities, Components, and Systems
-present in space_shooter_rs. The aim here is to provide a resource for how
+present in Theta Wave. The aim here is to provide a resource for how
 ECS is applied to this specific game. But it can also serve as an example of
 what a game architecture using ECS could look like in practice.</p>
 <p><img src="./assets/entity-component-image.png" alt="entity-component-diagram" /></p>
@@ -326,14 +326,14 @@ what a game architecture using ECS could look like in practice.</p>
 components provide bits of functionality to the entity that, when combined
 together, make it easier to conceptualize the expected behaviour of the entity.</p>
 <p>There are several
-<a href="https://github.com/amethyst/space_shooter_rs/tree/master/src/entities">entities</a>
+<a href="https://github.com/amethyst/theta-wave/tree/master/src/entities">entities</a>
 and
-<a href="https://github.com/amethyst/space_shooter_rs/tree/master/src/components">components</a>
-in space_shooter_rs. This might make the game's code seem
+<a href="https://github.com/amethyst/theta-wave/tree/master/src/components">components</a>
+in Theta Wave. This might make the game's code seem
 intimidating and needlessly complex, but being able to break down functionality
 of an entity into smaller pieces of data makes it much easier to expand upon
 as the game grows.</p>
-<p>We will look at three entities present in space_shooter_rs: <code>Spaceship</code>
+<p>We will look at three entities present in Theta Wave: <code>Spaceship</code>
 (refers to the player), <code>Enemy</code>
 and <code>Item</code>. For each one, we can define a set of requirements these entities
 should have:</p>
@@ -357,7 +357,7 @@ the entity's behavior.</p>
 <em>Drawing that groups together components relevant to each entity: Spaceship,
 Enemy, and Item. Made with Excalidraw.</em></p>
 <p>You might notice that each entity in this example has a component with the same
-name. In space_shooter_rs, functionality that is specific to an entity should
+name. In Theta Wave, functionality that is specific to an entity should
 be contained by its own specific component. For example, the <code>Item</code> component
 has properties that are specific to an <code>Item</code> entity:</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -411,12 +411,12 @@ nothing else. These tag components should be added to <code>src/components/tags.
 <h2><a class="header" href="#conclusion" id="conclusion">Conclusion</a></h2>
 <p>Having entities and components alone doesn't actually add functionality to the game.
 This is where the &quot;Systems&quot; in ECS comes in. In the next sections of this chapter,
-we will go over a few of the systems present in space_shooter_rs.</p>
+we will go over a few of the systems present in Theta Wave.</p>
 <h1><a class="header" href="#under-construction" id="under-construction">Under construction</a></h1>
 <h1><a class="header" href="#under-construction-1" id="under-construction-1">Under construction</a></h1>
 <h1><a class="header" href="#under-construction-2" id="under-construction-2">Under construction</a></h1>
 <h1><a class="header" href="#adding-items" id="adding-items">Adding Items</a></h1>
-<p>Collecting items is a core gameplay element of space_shooter_rs. Items can vary
+<p>Collecting items is a core gameplay element of Theta Wave. Items can vary
 a lot in complexity. The simplest items can simply increase or decrease an
 attribute. The most complex items can change the logic for abilities, or even
 change overarching rules of the game.</p>
@@ -437,11 +437,11 @@ according to their net benefit.)</li>
 </ul>
 <p>Once you have an idea for each of the points listed above, you should be ready
 to start implementing your item. However, if you have ideas for the presentation
-of the item in the game (keeping our <a href="https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>
+of the item in the game (keeping our <a href="https://github.com/amethyst/theta-wave/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>
 in mind) you can come up with those now too. This includes:</p>
 <ul>
 <li>What will the item be called? Try keeping your item's name consistent with
-space_shooter_rs's sci-fi/cosmic-horror theme.</li>
+theta-wave's sci-fi/cosmic-horror theme.</li>
 <li>What will the item look like? The item's sprite should be a visual
 representation of the name you gave it.</li>
 </ul>
