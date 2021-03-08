@@ -1,6 +1,6 @@
 # Controls
 
-In space_shooter_rs you control a spaceship character. You can move around,
+In Theta Wave you control a spaceship character. You can move around,
 shoot, use abilities, and buy items from the store.
 
 |Key||Action|

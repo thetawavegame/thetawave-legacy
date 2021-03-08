@@ -3,7 +3,7 @@ authors = ["Micah Tigley", "Carlo Supina"]
 language = "en"
 multilingual = false
 src = "src"
-title = "space_shooter_rs Documentation"
+title = "Theta Wave Documentation"
 
 [output.html]
 default-theme = "rust"

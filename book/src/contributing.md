@@ -1,6 +1,6 @@
 # Contributing
 
-If you haven't already, please take some time to read the community [Code of Conduct](https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md).
+If you haven't already, please take some time to read the community [Code of Conduct](https://github.com/amethyst/theta-wave/blob/master/CODE_OF_CONDUCT.md).
 
 ## The Basics
 
@@ -34,8 +34,8 @@ this:
 
 ### Pick an issue to work on
 
-Take a look at the [issues list](https://github.com/amethyst/space_shooter_rs/issues)
-and choose an issue you'd like to work on. Issues labeled as [good first issue](https://github.com/amethyst/space_shooter_rs/issues?q=is%3Aissue+label%3A%22good+first+issue%22+is%3Aopen)
+Take a look at the [issues list](https://github.com/amethyst/theta-wave/issues)
+and choose an issue you'd like to work on. Issues labeled as [good first issue](https://github.com/amethyst/theta-wave/issues?q=is%3Aissue+label%3A%22good+first+issue%22+is%3Aopen)
 are a great way to get started with the codebase.
 
 Make sure to claim the issue by
@@ -67,11 +67,11 @@ up your development machine to be able to build and run it.
 the proper [dependencies installed](https://github.com/amethyst/amethyst/blob/master/README.md#dependencies)
  on your dev machine.
 
-2. [Fork][fork-link] the space_shooter_rs project.
+2. [Fork][fork-link] the Theta Wave project.
 
 3. [Create a local clone of the fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#step-2-create-a-local-clone-of-your-fork)
 
-4. [Run the game](https://github.com/amethyst/space_shooter_rs#to-run)
+4. [Run the game](https://github.com/amethyst/theta-wave#to-run)
 
 Once you're able to successfully build the game, you can start writing some code!
 

@@ -12,11 +12,11 @@ You should consider the following attributes for the item:
 
 Once you have an idea for each of the points listed above, you should be ready
 to start implementing your item. However, if you have ideas for the presentation
-of the item in the game (keeping our [Code of Conduct](https://github.com/amethyst/space_shooter_rs/blob/master/CODE_OF_CONDUCT.md)
+of the item in the game (keeping our [Code of Conduct](https://github.com/amethyst/theta-wave/blob/master/CODE_OF_CONDUCT.md)
 in mind) you can come up with those now too. This includes:
 
 - What will the item be called? Try keeping your item's name consistent with
-  space_shooter_rs's sci-fi/cosmic-horror theme.
+  theta-wave's sci-fi/cosmic-horror theme.
 - What will the item look like? The item's sprite should be a visual
   representation of the name you gave it.
 
