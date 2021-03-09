@@ -5,6 +5,7 @@ mod ability;
 mod animation;
 mod autofire_system;
 mod boss;
+mod child_spawner;
 mod collision_detection;
 mod defense;
 mod despawn;
@@ -31,6 +32,7 @@ pub use self::{
     animation::AnimationSystem,
     autofire_system::AutoFireSystem,
     boss::BossSystem,
+    child_spawner::AutoChildEntitySpawnerSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
     despawn::DespawnAtBorderSystem,
@@ -40,7 +42,7 @@ pub use self::{
         EnemyPlayerCollisionSystem,
     },
     enemy_destroyed::EnemyDestroyedSystem,
-    enemy_spawn::{AutoChildEnemySpawnerSystem, SpawnerSystem},
+    enemy_spawn::SpawnerSystem,
     fade::OpaqueFadeSystem,
     gamemaster::GameMasterSystem,
     manualblaster_system::ManualBlasterSystem,

@@ -334,7 +334,7 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
-        auto_child_enemy_spawner_component: Some((
+        auto_child_entity_spawner_component: Some((
             child_entity_type: Enemy(Missile),
             offset: [0.0, -20.0],
             period: 3.5,

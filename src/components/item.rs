@@ -1,5 +1,5 @@
 use crate::entities::EntityType;
-use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
 use std::collections::HashMap;
 

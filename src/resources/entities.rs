@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        AnimationComponent, AutoChildEnemySpawnerComponent, AutoFireComponent, BlasterComponent,
+        AnimationComponent, AutoChildEntitySpawnerComponent, AutoFireComponent, BlasterComponent,
         ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, HealthComponent,
         Hitbox2DComponent, ItemComponent, Motion2DComponent, TimeLimitComponent,
     },
@@ -39,7 +39,7 @@ pub struct EnemyEntityData {
     pub motion2d_component: Motion2DComponent,
     pub health_component: HealthComponent,
     pub despawn_component: DespawnAtBorderComponent,
-    pub auto_child_enemy_spawner_component: Option<AutoChildEnemySpawnerComponent>,
+    pub auto_child_entity_spawner_component: Option<AutoChildEntitySpawnerComponent>,
     pub thruster_data: Option<ThrusterEntityData>,
 }
 

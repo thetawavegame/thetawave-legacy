@@ -1,5 +1,5 @@
 use crate::{
-    components::{AutoChildEnemySpawnerComponent, EnemySpawnerTag, SpawnerComponent},
+    components::{EnemySpawnerTag, SpawnerComponent},
     entities::{spawn_enemy, spawn_repeater, EntityType},
     resources::{BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource},
 };
@@ -88,51 +88,6 @@ impl<'s> System<'s> for SpawnerSystem {
 
                 PhaseType::Rest => {}
             }
-        }
-    }
-}
-
-pub struct AutoChildEnemySpawnerSystem;
-
-impl<'s> System<'s> for AutoChildEnemySpawnerSystem {
-    type SystemData = (
-        ReadStorage<'s, Transform>,
-        WriteStorage<'s, AutoChildEnemySpawnerComponent>,
-        Read<'s, Time>,
-        ReadExpect<'s, LazyUpdate>,
-        ReadExpect<'s, EnemiesResource>,
-        ReadExpect<'s, SpriteSheetsResource>,
-        Entities<'s>,
-    );
-
-    fn run(
-        &mut self,
-        (
-            transforms,
-            mut auto_child_enemy_spawners,
-            time,
-            lazy_update,
-            enemies_resource,
-            sprite_sheets_resource,
-            entities,
-        ): Self::SystemData,
-    ) {
-        for (transform, auto_child_enemy_spawner) in
-            (&transforms, &mut auto_child_enemy_spawners).join()
-        {
-            let spawn_position = Vector3::new(
-                transform.translation().x,
-                transform.translation().y,
-                transform.translation().z,
-            );
-            auto_child_enemy_spawner.spawn_when_ready(
-                time.delta_seconds(),
-                spawn_position,
-                &sprite_sheets_resource,
-                &enemies_resource,
-                &entities,
-                &lazy_update,
-            );
         }
     }
 }

@@ -4,8 +4,8 @@ use crate::{
         BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
-    entities::{spawn_blasts, spawn_enemy, EntityType},
-    resources::{EnemiesResource, SpriteSheetsResource},
+    entities::spawn_blasts,
+    resources::SpriteSheetsResource,
 };
 
 use amethyst::{
@@ -147,51 +147,6 @@ impl BlasterComponent {
             entities,
             lazy_update,
         );
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AutoChildEnemySpawnerComponent {
-    pub child_entity_type: EntityType,
-    pub offset: Vector2<f32>,
-    period: f32,
-    timer: f32,
-}
-
-impl Component for AutoChildEnemySpawnerComponent {
-    type Storage = DenseVecStorage<Self>;
-}
-
-impl AutoChildEnemySpawnerComponent {
-    pub fn spawn_when_ready(
-        &mut self,
-        delta_time: f32,
-        spawn_position: Vector3<f32>,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
-    ) {
-        self.timer -= delta_time;
-
-        if self.timer < 0.0 {
-            self.timer = self.period;
-            if let EntityType::Enemy(child_entity_type) = &self.child_entity_type {
-                //TODO: generalize spawn function to be for any entity
-                spawn_enemy(
-                    &child_entity_type,
-                    Vector3::new(
-                        spawn_position.x + self.offset.x,
-                        spawn_position.y + self.offset.y,
-                        spawn_position.z,
-                    ),
-                    &enemies_resource,
-                    &spritesheets_resource,
-                    &entities,
-                    &lazy_update,
-                );
-            }
-        }
     }
 }
 

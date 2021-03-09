@@ -13,13 +13,8 @@ pub struct EnemyComponent {
     pub allied: bool,
     pub loot_probs: SpawnProbabilities,
     pub entity_type: EntityType,
-    #[serde(default = "des_explosion_sprite_idx")]
-    pub explosion_sprite_idx: usize,
 }
 
-fn des_explosion_sprite_idx() -> usize {
-    0
-}
 fn des_collision_damage() -> f32 {
     30.0
 }

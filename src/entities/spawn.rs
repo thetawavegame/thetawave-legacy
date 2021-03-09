@@ -81,9 +81,10 @@ pub fn spawn_enemy(
     if let Some(autofire_component) = enemy_data.autofire_component {
         lazy_update.insert(enemy_entity, autofire_component);
     }
-    if let Some(auto_child_enemy_spawner_component) = enemy_data.auto_child_enemy_spawner_component
+    if let Some(auto_child_entity_spawner_component) =
+        enemy_data.auto_child_entity_spawner_component
     {
-        lazy_update.insert(enemy_entity, auto_child_enemy_spawner_component);
+        lazy_update.insert(enemy_entity, auto_child_entity_spawner_component);
     }
 
     // Spawn thruster entity as child of enemy entity
