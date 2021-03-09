@@ -156,7 +156,7 @@ impl Default for MainGameState {
                     "play_audio_system",
                     &[],
                 )
-                .with(systems::OpaqueFadeSystem, "opaque_fade_system", &[])
+                .with(systems::FadeSystem, "fade_system", &[])
                 .build(),
         }
     }

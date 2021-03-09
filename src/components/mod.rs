@@ -31,7 +31,7 @@ pub use self::{
     consumable::ConsumableComponent,
     despawn::DespawnAtBorderComponent,
     enemy::{EnemyComponent, EnemySpawnerTag},
-    fade::OpaqueFadeComponent,
+    fade::{ColorChannelChange, FadeComponent},
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
     item::ItemComponent,

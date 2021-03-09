@@ -43,7 +43,7 @@ pub use self::{
     },
     enemy_destroyed::EnemyDestroyedSystem,
     enemy_spawn::SpawnerSystem,
-    fade::OpaqueFadeSystem,
+    fade::FadeSystem,
     gamemaster::GameMasterSystem,
     manualblaster_system::ManualBlasterSystem,
     motion2d::{EnemyMotion2DSystem, EnemyTargetSystem, Motion2DSystem},
