@@ -1,5 +1,5 @@
 use amethyst::{
-    core::math::Vector3,
+    core::{math::Vector3, transform::Transform},
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 
@@ -18,35 +18,34 @@ pub fn spawn_repeater(
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
-    let body_position = Vector3::new(
+    let mut body_transform = Transform::default();
+    body_transform.set_translation(Vector3::new(
         constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0),
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 100.0,
         constants::BOSS_Z_1,
-    );
-    let head_position = Vector3::new(
+    ));
+    let mut head_transform = Transform::default();
+    head_transform.set_translation(Vector3::new(
         constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0),
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 63.0,
         constants::BOSS_Z_2,
-    );
-    let right_shoulder_position = Vector3::new(
+    ));
+    let mut right_shoulder_transform = Transform::default();
+    right_shoulder_transform.set_translation(Vector3::new(
         constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) + 36.0,
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 98.0,
         constants::BOSS_Z_1,
-    );
-    let left_shoulder_position = Vector3::new(
+    ));
+    let mut left_shoulder_transform = Transform::default();
+    left_shoulder_transform.set_translation(Vector3::new(
         constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) - 36.0,
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 98.0,
         constants::BOSS_Z_1,
-    );
-    let _right_arm_position = Vector3::new(
-        constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) + 30.0,
-        constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 40.0,
-        constants::BOSS_Z_2,
-    );
+    ));
 
     let body = spawn_enemy(
         &EnemyType::RepeaterBody,
-        body_position,
+        body_transform,
         enemies_resource,
         spritesheets_resource,
         entities,
@@ -54,7 +53,7 @@ pub fn spawn_repeater(
     );
     let head = spawn_enemy(
         &EnemyType::RepeaterHead,
-        head_position,
+        head_transform,
         enemies_resource,
         spritesheets_resource,
         entities,
@@ -62,7 +61,7 @@ pub fn spawn_repeater(
     );
     let right_shoulder = spawn_enemy(
         &EnemyType::RepeaterRightShoulder,
-        right_shoulder_position,
+        right_shoulder_transform,
         enemies_resource,
         spritesheets_resource,
         entities,
@@ -70,7 +69,7 @@ pub fn spawn_repeater(
     );
     let left_shoulder = spawn_enemy(
         &EnemyType::RepeaterLeftShoulder,
-        left_shoulder_position,
+        left_shoulder_transform,
         enemies_resource,
         spritesheets_resource,
         entities,

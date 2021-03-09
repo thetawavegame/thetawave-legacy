@@ -39,8 +39,12 @@
         image: "thrusters_spritesheet.png",
         data: "thrusters_spritesheet.ron",
     ),
-    "effects": (
-        image: "effects_spritesheet.png",
-        data: "effects_spritesheet.ron",
+    "blast_explosions": (
+        image: "blast_explosions_spritesheet.png",
+        data: "blast_explosions_spritesheet.ron",
+    ),
+    "explosions": (
+        image: "explosions_spritesheet.png",
+        data: "explosions_spritesheet.ron",
     )
 }

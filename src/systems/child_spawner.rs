@@ -43,14 +43,9 @@ impl<'s> System<'s> for AutoChildEntitySpawnerSystem {
         for (transform, auto_child_entity_spawner) in
             (&transforms, &mut auto_child_entity_spawners).join()
         {
-            let spawn_position = Vector3::new(
-                transform.translation().x,
-                transform.translation().y,
-                transform.translation().z,
-            );
             auto_child_entity_spawner.spawn_when_ready(
                 time.delta_seconds(),
-                spawn_position,
+                transform.clone(),
                 &sprite_sheets_resource,
                 &enemies_resource,
                 &consumables_resource,

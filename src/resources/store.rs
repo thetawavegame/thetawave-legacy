@@ -75,13 +75,16 @@ impl StoreResource {
                     if player.money >= item_data.item_component.price {
                         player.money -= item_data.item_component.price;
 
+                        let mut spawn_transform = Transform::default();
+                        spawn_transform.set_translation_xyz(
+                            transform.translation().x,
+                            ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
+                            0.0,
+                        );
+
                         spawn_item(
                             item_type,
-                            Vector3::new(
-                                transform.translation().x,
-                                ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
-                                0.0,
-                            ),
+                            spawn_transform,
                             items_resource,
                             sprite_resource,
                             entities,
@@ -104,13 +107,16 @@ impl StoreResource {
                     if player.money >= consumable_data.consumable_component.price {
                         player.money -= consumable_data.consumable_component.price;
 
+                        let mut spawn_transform = Transform::default();
+                        spawn_transform.set_translation_xyz(
+                            transform.translation().x,
+                            ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
+                            0.0,
+                        );
+
                         spawn_consumable(
                             consumable_type,
-                            Vector3::new(
-                                transform.translation().x,
-                                ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
-                                0.0,
-                            ),
+                            spawn_transform,
                             consumables_resource,
                             sprite_resource,
                             entities,
@@ -127,40 +133,6 @@ impl StoreResource {
             }
         }
         false
-        /*
-            if player.money >= item.item_component.price {
-                player.money -= item.item_component.price;
-
-                if let EntityType::Item(item_type) = item.item_component.entity_type.clone() {
-                    spawn_item(
-                        &item_type,
-                        Vector3::new(
-                            transform.translation().x,
-                            ARENA_MAX_Y + ITEM_SPAWN_Y_OFFSET,
-                            0.0,
-                        ),
-                        items_resource,
-                        sprite_resource,
-                        entities,
-                        lazy_update,
-                    );
-                    for (i, itm) in self.stock_probs.iter().enumerate() {
-                        if let EntityType::Item(item_type) = item.item_component.entity_type.clone()
-                        {
-                            if itm.0 == item_type {
-                                self.stock_probs[i].1 = 0.0; //set probability of appearing again to 0
-                                break;
-                            }
-                        }
-                    }
-                    self.inventory[item_index] = None; //change item slot data to None
-
-                    return true;
-                }
-            }
-        }
-        false
-        */
     }
 
     pub fn restock_when_ready(&mut self, dt: f32) -> bool {

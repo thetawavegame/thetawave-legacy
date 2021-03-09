@@ -12,7 +12,7 @@ use amethyst::{
 
 pub fn spawn_consumable(
     consumable_type: &ConsumableType,
-    spawn_position: Vector3<f32>,
+    spawn_transform: Transform,
     consumables_resource: &ReadExpect<ConsumablesResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
@@ -27,16 +27,13 @@ pub fn spawn_consumable(
         sprite_number: consumable_data.sprite_render_data.initial_index,
     };
 
-    let mut transform = Transform::default();
-    transform.set_translation(spawn_position);
-
     lazy_update
         .create_entity(entities)
         .with(sprite_render)
         .with(consumable_data.hitbox_component.clone())
         .with(consumable_data.consumable_component)
         .with(consumables_resource.motion2d_component.clone())
-        .with(transform)
+        .with(spawn_transform)
         .with(Transparent)
         .with(consumables_resource.despawn_border_component.clone())
         .build();
@@ -44,7 +41,7 @@ pub fn spawn_consumable(
 
 pub fn spawn_enemy(
     enemy_type: &EnemyType,
-    spawn_position: Vector3<f32>,
+    spawn_transform: Transform,
     enemies_resource: &ReadExpect<EnemiesResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
@@ -59,9 +56,6 @@ pub fn spawn_enemy(
         sprite_number: enemy_data.sprite_render_data.initial_index,
     };
 
-    let mut enemy_transform = Transform::default();
-    enemy_transform.set_translation(spawn_position);
-
     let enemy_entity = lazy_update
         .create_entity(entities)
         .with(enemy_sprite_render)
@@ -71,7 +65,7 @@ pub fn spawn_enemy(
         .with(enemy_data.motion2d_component)
         .with(enemy_data.health_component)
         .with(enemy_data.despawn_component)
-        .with(enemy_transform)
+        .with(spawn_transform)
         .with(Transparent)
         .build();
 
@@ -115,7 +109,7 @@ pub fn spawn_enemy(
 
 pub fn spawn_item(
     item_type: &ItemType,
-    spawn_position: Vector3<f32>,
+    spawn_transform: Transform,
     items_resource: &ReadExpect<ItemsResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
@@ -129,16 +123,13 @@ pub fn spawn_item(
         sprite_number: item_data.sprite_render_data.initial_index,
     };
 
-    let mut transform = Transform::default();
-    transform.set_translation(spawn_position);
-
     let item_entity = lazy_update
         .create_entity(entities)
         .with(sprite_render)
         .with(item_data.item_component)
         .with(items_resource.hitbox2d_component.clone())
         .with(items_resource.motion2d_component.clone())
-        .with(transform)
+        .with(spawn_transform)
         .with(Transparent)
         .with(items_resource.despawn_border_component.clone())
         .build();

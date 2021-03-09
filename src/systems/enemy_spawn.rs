@@ -46,7 +46,8 @@ impl<'s> System<'s> for SpawnerSystem {
                         if let Some((new_x, Some(enemy_type))) =
                             spawner.spawn_with_position(time.delta_seconds())
                         {
-                            let spawn_position = Vector3::new(
+                            let mut spawn_transform = Transform::default();
+                            spawn_transform.set_translation_xyz(
                                 new_x,
                                 transform.translation()[1],
                                 transform.translation()[2],
@@ -55,7 +56,7 @@ impl<'s> System<'s> for SpawnerSystem {
                             if let EntityType::Enemy(enemy_type) = enemy_type {
                                 spawn_enemy(
                                     enemy_type,
-                                    spawn_position,
+                                    spawn_transform,
                                     &enemies_resource,
                                     &sprite_sheets_resource,
                                     &entities,

@@ -5,6 +5,7 @@ use crate::{
 };
 use amethyst::{
     core::math::Vector3,
+    core::transform::Transform,
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 
@@ -13,7 +14,7 @@ pub fn spawn_random_consumable(
     enemy: &EnemyComponent,
     sprite_resource: &ReadExpect<SpriteSheetsResource>,
     consumables_resource: &ReadExpect<ConsumablesResource>,
-    spawn_position: Vector3<f32>,
+    spawn_transform: Transform,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     let consumable_type = choose_random_entity(&enemy.loot_probs);
@@ -21,7 +22,7 @@ pub fn spawn_random_consumable(
     if let Some(EntityType::Consumable(consumable_type)) = consumable_type {
         spawn_consumable(
             consumable_type,
-            spawn_position,
+            spawn_transform,
             consumables_resource,
             sprite_resource,
             entities,

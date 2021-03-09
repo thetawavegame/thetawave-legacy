@@ -2,7 +2,7 @@
     EnemyExplosion: (
         sprite_render_data: (
             initial_index: 0,
-            spritesheet: "effects",
+            spritesheet: "explosions",
         ),
         animation_component: Some((
             start_idx: 0,
@@ -19,13 +19,13 @@
     ),
     AllyBlastExplosion: (
         sprite_render_data: (
-            initial_index: 10,
-            spritesheet: "effects",
+            initial_index: 0,
+            spritesheet: "blast_explosions",
         ),
         animation_component: Some((
-            start_idx: 10,
+            start_idx: 0,
             frame_count: 7,
-            current_frame: 10,
+            current_frame: 0,
             frame_time: 0.08,
             elapsed_time: 0.0,
             forward: true,
@@ -37,13 +37,13 @@
     ),
     EnemyBlastExplosion: (
         sprite_render_data: (
-            initial_index: 17,
-            spritesheet: "effects",
+            initial_index: 7,
+            spritesheet: "blast_explosions",
         ),
         animation_component: Some((
-            start_idx: 17,
+            start_idx: 7,
             frame_count: 7,
-            current_frame: 17,
+            current_frame: 7,
             frame_time: 0.08,
             elapsed_time: 0.0,
             forward: true,
@@ -55,13 +55,13 @@
     ),
     PoisonBlastExplosion: (
         sprite_render_data: (
-            initial_index: 31,
-            spritesheet: "effects",
+            initial_index: 21,
+            spritesheet: "blast_explosions",
         ),
         animation_component: Some((
-            start_idx: 31,
+            start_idx: 21,
             frame_count: 7,
-            current_frame: 31,
+            current_frame: 21,
             frame_time: 0.08,
             elapsed_time: 0.0,
             forward: true,
@@ -73,13 +73,13 @@
     ),
     CriticalBlastExplosion: (
         sprite_render_data: (
-            initial_index: 24,
-            spritesheet: "effects",
+            initial_index: 14,
+            spritesheet: "blast_explosions",
         ),
         animation_component: Some((
-            start_idx: 24,
+            start_idx: 14,
             frame_count: 7,
-            current_frame: 24,
+            current_frame: 14,
             frame_time: 0.08,
             elapsed_time: 0.0,
             forward: true,
