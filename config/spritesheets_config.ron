@@ -46,5 +46,9 @@
     "explosions": (
         image: "explosions_spritesheet.png",
         data: "explosions_spritesheet.ron",
+    ),
+    "giblets": (
+        image: "giblets_spritesheet.png",
+        data: "giblets_spritesheet.ron",
     )
 }

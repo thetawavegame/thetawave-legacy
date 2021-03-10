@@ -47,11 +47,16 @@ impl AutoChildEntitySpawnerComponent {
 
         if self.timer < 0.0 {
             self.timer = self.period;
+
+            let mut adjusted_transform = spawn_transform;
+            adjusted_transform.prepend_translation_x(self.offset.x);
+            adjusted_transform.prepend_translation_y(self.offset.y);
+
             match &self.child_entity_type {
                 EntityType::Enemy(enemy_type) => {
                     spawn_enemy(
                         &enemy_type,
-                        spawn_transform,
+                        adjusted_transform,
                         &enemies_resource,
                         &spritesheets_resource,
                         &entities,
@@ -62,7 +67,7 @@ impl AutoChildEntitySpawnerComponent {
                 EntityType::Consumable(consumable_type) => {
                     spawn_consumable(
                         &consumable_type,
-                        spawn_transform,
+                        adjusted_transform,
                         &consumables_resource,
                         &spritesheets_resource,
                         &entities,
@@ -73,7 +78,7 @@ impl AutoChildEntitySpawnerComponent {
                 EntityType::Item(item_type) => {
                     spawn_item(
                         &item_type,
-                        spawn_transform,
+                        adjusted_transform,
                         &items_resource,
                         &spritesheets_resource,
                         &entities,
@@ -84,7 +89,7 @@ impl AutoChildEntitySpawnerComponent {
                 EntityType::Effect(effect_type) => {
                     spawn_effect(
                         &effect_type,
-                        spawn_transform,
+                        adjusted_transform,
                         &effects_resource,
                         &spritesheets_resource,
                         &entities,
@@ -122,9 +127,14 @@ impl AutoChildEnemySpawnerComponent {
 
         if self.timer < 0.0 {
             self.timer = self.period;
+
+            let mut adjusted_transform = spawn_transform;
+            adjusted_transform.prepend_translation_x(self.offset.x);
+            adjusted_transform.prepend_translation_y(self.offset.y);
+
             spawn_enemy(
                 &self.child_enemy_type,
-                spawn_transform,
+                adjusted_transform,
                 &enemies_resource,
                 &spritesheets_resource,
                 &entities,
@@ -159,9 +169,14 @@ impl AutoChildConsumableSpawnerComponent {
 
         if self.timer < 0.0 {
             self.timer = self.period;
+
+            let mut adjusted_transform = spawn_transform;
+            adjusted_transform.prepend_translation_x(self.offset.x);
+            adjusted_transform.prepend_translation_y(self.offset.y);
+
             spawn_consumable(
                 &self.child_consumable_type,
-                spawn_transform,
+                adjusted_transform,
                 &consumables_resource,
                 &spritesheets_resource,
                 &entities,
@@ -197,9 +212,14 @@ impl AutoChildItemSpawnerComponent {
 
         if self.timer < 0.0 {
             self.timer = self.period;
+
+            let mut adjusted_transform = spawn_transform;
+            adjusted_transform.prepend_translation_x(self.offset.x);
+            adjusted_transform.prepend_translation_y(self.offset.y);
+
             spawn_item(
                 &self.child_item_type,
-                spawn_transform,
+                adjusted_transform,
                 &items_resource,
                 &spritesheets_resource,
                 &entities,
@@ -225,7 +245,7 @@ impl AutoChildEffectSpawnerComponent {
     pub fn spawn_when_ready(
         &mut self,
         delta_time: f32,
-        spawn_position: Vector3<f32>,
+        spawn_transform: Transform,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
         effects_resource: &ReadExpect<EffectsResource>,
         entities: &Entities,
@@ -236,16 +256,13 @@ impl AutoChildEffectSpawnerComponent {
         if self.timer < 0.0 {
             self.timer = self.period;
 
-            let mut transform = Transform::default();
-            transform.set_translation_xyz(
-                spawn_position.x + self.offset.x,
-                spawn_position.y + self.offset.y,
-                spawn_position.z,
-            );
+            let mut adjusted_transform = spawn_transform;
+            adjusted_transform.prepend_translation_x(self.offset.x);
+            adjusted_transform.prepend_translation_y(self.offset.y);
 
             spawn_effect(
                 &self.child_effect_type,
-                transform,
+                adjusted_transform,
                 &effects_resource,
                 &spritesheets_resource,
                 &entities,
