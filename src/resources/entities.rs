@@ -7,8 +7,13 @@ use crate::{
     entities::{ConsumableType, EffectType, EnemyType, ItemType},
     resources::SpriteRenderData,
 };
+
+use amethyst::core::math::Vector2;
+
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+pub type RandomRange2D = Vector2<(f32, f32)>;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumablesResource {
@@ -62,8 +67,16 @@ pub struct ConsumableEntityData {
     pub consumable_component: ConsumableComponent,
     pub hitbox_component: Hitbox2DComponent,
 }
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct RandomInitialMotion {
+    pub initial_base: Vector2<f32>,
+    pub random_offset: RandomRange2D,
+}
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EffectEntityData {
+    pub random_initial_motion: Option<RandomInitialMotion>,
     pub sprite_render_data: SpriteRenderData,
     pub time_limit_component: Option<TimeLimitComponent>,
     pub motion2d_component: Option<Motion2DComponent>,

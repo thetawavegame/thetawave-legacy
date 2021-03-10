@@ -88,6 +88,9 @@ pub enum EffectType {
     PoisonBlastExplosion,
     CriticalBlastExplosion,
     EnemyExplosion,
-    Star,   //TODO: implement background stars
-    Giblet, //TODO: implement giblets
+    Star, //TODO: implement background stars
+    DroneGiblet1,
+    DroneGiblet2,
+    DroneGiblet3,
+    DroneGiblet4,
 }

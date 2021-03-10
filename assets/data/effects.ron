@@ -89,4 +89,13 @@
             duration: 0.48,
         )),
     ),
+    DroneGiblet1: (
+        sprite_render_data: (
+            initial_index: 0,
+            spritesheet: "giblets",
+        ),
+        time_limit_component: Some((
+            duration: 1.0,
+        )),
+    )
 }
