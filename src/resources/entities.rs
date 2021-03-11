@@ -32,7 +32,13 @@ pub struct ItemsResource {
 }
 
 pub type EnemiesResource = HashMap<EnemyType, EnemyEntityData>;
-pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
+//pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct EffectsResource {
+    pub giblet_data: GibletEntityData, // shared components of giblets
+    pub effect_entities: HashMap<EffectType, EffectEntityData>,
+}
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
@@ -83,5 +89,13 @@ pub struct EffectEntityData {
     pub motion2d_component: Option<Motion2DComponent>,
     pub animation_component: Option<AnimationComponent>,
     pub fade_component: Option<FadeComponent>,
-    pub tint_component: Option<Tint>,
+    //pub tint_component: Option<Tint>,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct GibletEntityData {
+    pub random_initial_motion: RandomMotionRange2D,
+    pub time_limit_component: TimeLimitComponent,
+    pub motion2d_component: Motion2DComponent,
+    pub fade_component: FadeComponent,
 }

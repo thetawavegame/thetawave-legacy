@@ -1,107 +1,13 @@
-{
-    EnemyExplosion: (
-        sprite_render_data: (
-            initial_index: 0,
-            spritesheet: "explosions",
-        ),
-        animation_component: Some((
-            start_idx: 0,
-            frame_count: 10,
-            current_frame: 0,
-            frame_time: 0.1,
-            elapsed_time: 0.0,
-            forward: true,
-            animation_type: Forward,
-        )),
-        time_limit_component: Some((
-            duration: 0.9,
-        )),
-    ),
-    AllyBlastExplosion: (
-        sprite_render_data: (
-            initial_index: 0,
-            spritesheet: "blast_explosions",
-        ),
-        animation_component: Some((
-            start_idx: 0,
-            frame_count: 7,
-            current_frame: 0,
-            frame_time: 0.08,
-            elapsed_time: 0.0,
-            forward: true,
-            animation_type: Forward,
-        )),
-        time_limit_component: Some((
-            duration: 0.48,
-        )),
-    ),
-    EnemyBlastExplosion: (
-        sprite_render_data: (
-            initial_index: 7,
-            spritesheet: "blast_explosions",
-        ),
-        animation_component: Some((
-            start_idx: 7,
-            frame_count: 7,
-            current_frame: 7,
-            frame_time: 0.08,
-            elapsed_time: 0.0,
-            forward: true,
-            animation_type: Forward,
-        )),
-        time_limit_component: Some((
-            duration: 0.48,
-        )),
-    ),
-    PoisonBlastExplosion: (
-        sprite_render_data: (
-            initial_index: 21,
-            spritesheet: "blast_explosions",
-        ),
-        animation_component: Some((
-            start_idx: 21,
-            frame_count: 7,
-            current_frame: 21,
-            frame_time: 0.08,
-            elapsed_time: 0.0,
-            forward: true,
-            animation_type: Forward,
-        )),
-        time_limit_component: Some((
-            duration: 0.48,
-        )),
-    ),
-    CriticalBlastExplosion: (
-        sprite_render_data: (
-            initial_index: 14,
-            spritesheet: "blast_explosions",
-        ),
-        animation_component: Some((
-            start_idx: 14,
-            frame_count: 7,
-            current_frame: 14,
-            frame_time: 0.08,
-            elapsed_time: 0.0,
-            forward: true,
-            animation_type: Forward,
-        )),
-        time_limit_component: Some((
-            duration: 0.48,
-        )),
-    ),
-    DroneGiblet1: (
-        sprite_render_data: (
-            initial_index: 0,
-            spritesheet: "giblets",
-        ),
-        time_limit_component: Some((
+(
+    giblet_data: (
+        time_limit_component: (
             duration: 3.0,
-        )),
-        random_initial_motion: Some((
+        ),
+        random_initial_motion: (
             linear: [(-100, 100), (-100, 100)],
             angular: (-10, 10),
-        )),
-        motion2d_component: Some((
+        ),
+        motion2d_component: (
             velocity: [0.0, 0.0],
             acceleration: [0.0, 0.0],
             deceleration: [0.0, 0.0],
@@ -112,8 +18,8 @@
             angular_deceleration: 0.0,
             angular_speed: 5.0,
             immovable: false,
-        )),
-        fade_component: Some((
+        ),
+        fade_component: (
             red_change: Some((
                 delta_value: -0.01,
                 value: 1.0,
@@ -138,1179 +44,243 @@
                 min_value: 0.0,
                 max_value: 1.0,
             )),
-        )),
-    ),
-    DroneGiblet2: (
-        sprite_render_data: (
-            initial_index: 1,
-            spritesheet: "giblets",
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
     ),
-    DroneGiblet3: (
-        sprite_render_data: (
-            initial_index: 2,
-            spritesheet: "giblets",
+    effect_entities: {
+        EnemyExplosion: (
+            sprite_render_data: (
+                initial_index: 0,
+                spritesheet: "explosions",
+            ),
+            animation_component: Some((
+                start_idx: 0,
+                frame_count: 10,
+                current_frame: 0,
+                frame_time: 0.1,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: Forward,
+            )),
+            time_limit_component: Some((
+                duration: 0.9,
+            )),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+        AllyBlastExplosion: (
+            sprite_render_data: (
+                initial_index: 0,
+                spritesheet: "blast_explosions",
+            ),
+            animation_component: Some((
+                start_idx: 0,
+                frame_count: 7,
+                current_frame: 0,
+                frame_time: 0.08,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: Forward,
             )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+            time_limit_component: Some((
+                duration: 0.48,
             )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    DroneGiblet4: (
-        sprite_render_data: (
-            initial_index: 3,
-            spritesheet: "giblets",
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+        EnemyBlastExplosion: (
+            sprite_render_data: (
+                initial_index: 7,
+                spritesheet: "blast_explosions",
+            ),
+            animation_component: Some((
+                start_idx: 7,
+                frame_count: 7,
+                current_frame: 7,
+                frame_time: 0.08,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: Forward,
             )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+            time_limit_component: Some((
+                duration: 0.48,
             )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    PawnGiblet1: (
-        sprite_render_data: (
-            initial_index: 4,
-            spritesheet: "giblets",
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+        PoisonBlastExplosion: (
+            sprite_render_data: (
+                initial_index: 21,
+                spritesheet: "blast_explosions",
+            ),
+            animation_component: Some((
+                start_idx: 21,
+                frame_count: 7,
+                current_frame: 21,
+                frame_time: 0.08,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: Forward,
             )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+            time_limit_component: Some((
+                duration: 0.48,
             )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    PawnGiblet2: (
-        sprite_render_data: (
-            initial_index: 5,
-            spritesheet: "giblets",
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+        CriticalBlastExplosion: (
+            sprite_render_data: (
+                initial_index: 14,
+                spritesheet: "blast_explosions",
+            ),
+            animation_component: Some((
+                start_idx: 14,
+                frame_count: 7,
+                current_frame: 14,
+                frame_time: 0.08,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: Forward,
             )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
+            time_limit_component: Some((
+                duration: 0.48,
             )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    PawnGiblet3: (
-        sprite_render_data: (
-            initial_index: 6,
-            spritesheet: "giblets",
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    PawnGiblet4: (
-        sprite_render_data: (
-            initial_index: 7,
-            spritesheet: "giblets",
+        DroneGiblet1: (
+            sprite_render_data: (
+                initial_index: 0,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    StraferGiblet1: (
-        sprite_render_data: (
-            initial_index: 8,
-            spritesheet: "giblets",
+        DroneGiblet2: (
+            sprite_render_data: (
+                initial_index: 1,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    StraferGiblet2: (
-        sprite_render_data: (
-            initial_index: 9,
-            spritesheet: "giblets",
+        DroneGiblet3: (
+            sprite_render_data: (
+                initial_index: 2,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    StraferGiblet3: (
-        sprite_render_data: (
-            initial_index: 10,
-            spritesheet: "giblets",
+        DroneGiblet4: (
+            sprite_render_data: (
+                initial_index: 3,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    StraferGiblet4: (
-        sprite_render_data: (
-            initial_index: 11,
-            spritesheet: "giblets",
+        PawnGiblet1: (
+            sprite_render_data: (
+                initial_index: 4,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    HaulerGiblet1: (
-        sprite_render_data: (
-            initial_index: 12,
-            spritesheet: "giblets",
+        PawnGiblet2: (
+            sprite_render_data: (
+                initial_index: 5,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    HaulerGiblet2: (
-        sprite_render_data: (
-            initial_index: 13,
-            spritesheet: "giblets",
+        PawnGiblet3: (
+            sprite_render_data: (
+                initial_index: 6,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    HaulerGiblet3: (
-        sprite_render_data: (
-            initial_index: 14,
-            spritesheet: "giblets",
+        PawnGiblet4: (
+            sprite_render_data: (
+                initial_index: 7,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    HaulerGiblet4: (
-        sprite_render_data: (
-            initial_index: 15,
-            spritesheet: "giblets",
+        StraferGiblet1: (
+            sprite_render_data: (
+                initial_index: 8,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileLauncherGiblet1: (
-        sprite_render_data: (
-            initial_index: 16,
-            spritesheet: "giblets",
+        StraferGiblet2: (
+            sprite_render_data: (
+                initial_index: 9,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileLauncherGiblet2: (
-        sprite_render_data: (
-            initial_index: 17,
-            spritesheet: "giblets",
+        StraferGiblet3: (
+            sprite_render_data: (
+                initial_index: 10,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileLauncherGiblet3: (
-        sprite_render_data: (
-            initial_index: 18,
-            spritesheet: "giblets",
+        StraferGiblet4: (
+            sprite_render_data: (
+                initial_index: 11,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileLauncherGiblet4: (
-        sprite_render_data: (
-            initial_index: 19,
-            spritesheet: "giblets",
+        HaulerGiblet1: (
+            sprite_render_data: (
+                initial_index: 12,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileGiblet1: (
-        sprite_render_data: (
-            initial_index: 20,
-            spritesheet: "giblets",
+        HaulerGiblet2: (
+            sprite_render_data: (
+                initial_index: 13,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileGiblet2: (
-        sprite_render_data: (
-            initial_index: 21,
-            spritesheet: "giblets",
+        HaulerGiblet3: (
+            sprite_render_data: (
+                initial_index: 14,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileGiblet3: (
-        sprite_render_data: (
-            initial_index: 22,
-            spritesheet: "giblets",
+        HaulerGiblet4: (
+            sprite_render_data: (
+                initial_index: 15,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    ),
-    MissileGiblet4: (
-        sprite_render_data: (
-            initial_index: 23,
-            spritesheet: "giblets",
+        MissileLauncherGiblet1: (
+            sprite_render_data: (
+                initial_index: 16,
+                spritesheet: "giblets",
+            ),
         ),
-        time_limit_component: Some((
-            duration: 3.0,
-        )),
-        random_initial_motion: Some((
-            linear: [(-100, 100), (-100, 100)],
-            angular: (-10, 10),
-        )),
-        motion2d_component: Some((
-            velocity: [0.0, 0.0],
-            acceleration: [0.0, 0.0],
-            deceleration: [0.0, 0.0],
-            speed: [100.0, 100.0],
-            max_speed: [100.0, 100.0],
-            angular_velocity: 0.0,
-            angular_acceleration: 0.0,
-            angular_deceleration: 0.0,
-            angular_speed: 5.0,
-            immovable: false,
-        )),
-        fade_component: Some((
-            red_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            green_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            blue_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-            alpha_change: Some((
-                delta_value: -0.01,
-                value: 1.0,
-                min_value: 0.0,
-                max_value: 1.0,
-            )),
-        )),
-    )
-}
+        MissileLauncherGiblet2: (
+            sprite_render_data: (
+                initial_index: 17,
+                spritesheet: "giblets",
+            ),
+        ),
+        MissileLauncherGiblet3: (
+            sprite_render_data: (
+                initial_index: 18,
+                spritesheet: "giblets",
+            ),
+        ),
+        MissileLauncherGiblet4: (
+            sprite_render_data: (
+                initial_index: 19,
+                spritesheet: "giblets",
+            ),
+        ),
+        MissileGiblet1: (
+            sprite_render_data: (
+                initial_index: 20,
+                spritesheet: "giblets",
+            ),
+        ),
+        MissileGiblet2: (
+            sprite_render_data: (
+                initial_index: 21,
+                spritesheet: "giblets",
+            ),
+        ),
+        MissileGiblet3: (
+            sprite_render_data: (
+                initial_index: 22,
+                spritesheet: "giblets",
+            ),
+        ),
+        MissileGiblet4: (
+            sprite_render_data: (
+                initial_index: 23,
+                spritesheet: "giblets",
+            ),
+            
+        )
+    }
+)
