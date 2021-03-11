@@ -1,19 +1,20 @@
 use crate::{
     components::{
         AnimationComponent, AutoChildEntitySpawnerComponent, AutoFireComponent, BlasterComponent,
-        ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, HealthComponent,
-        Hitbox2DComponent, ItemComponent, Motion2DComponent, TimeLimitComponent,
+        ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, FadeComponent,
+        HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent, TimeLimitComponent,
     },
     entities::{ConsumableType, EffectType, EnemyType, ItemType},
     resources::SpriteRenderData,
 };
 
-use amethyst::core::math::Vector2;
+use amethyst::{
+    core::math::Vector2,
+    renderer::{palette::Srgba, resources::Tint},
+};
 
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-
-pub type RandomRange2D = Vector2<(f32, f32)>;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumablesResource {
@@ -69,16 +70,18 @@ pub struct ConsumableEntityData {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct RandomInitialMotion {
-    pub initial_base: Vector2<f32>,
-    pub random_offset: RandomRange2D,
+pub struct RandomMotionRange2D {
+    pub linear: Vector2<(f32, f32)>,
+    pub angular: (f32, f32),
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EffectEntityData {
-    pub random_initial_motion: Option<RandomInitialMotion>,
+    pub random_initial_motion: Option<RandomMotionRange2D>,
     pub sprite_render_data: SpriteRenderData,
     pub time_limit_component: Option<TimeLimitComponent>,
     pub motion2d_component: Option<Motion2DComponent>,
     pub animation_component: Option<AnimationComponent>,
+    pub fade_component: Option<FadeComponent>,
+    pub tint_component: Option<Tint>,
 }

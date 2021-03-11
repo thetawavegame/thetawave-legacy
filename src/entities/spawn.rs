@@ -7,8 +7,10 @@ use crate::{
 use amethyst::{
     core::{math::Vector3, transform::Transform, Parent},
     ecs::prelude::{Builder, Entities, Entity, LazyUpdate, ReadExpect},
-    renderer::{SpriteRender, Transparent},
+    renderer::{palette::Srgba, resources::Tint, SpriteRender, Transparent},
 };
+
+use rand::{thread_rng, Rng};
 
 pub fn spawn_consumable(
     consumable_type: &ConsumableType,
@@ -171,7 +173,291 @@ pub fn spawn_effect(
         lazy_update.insert(effect_entity, time_limit_component);
     }
 
-    if let Some(motion2d_component) = effect_data.motion2d_component {
+    if let Some(mut motion2d_component) = effect_data.motion2d_component.clone() {
+        if let Some(random_initial_motion) = effect_data.random_initial_motion {
+            motion2d_component.velocity.x = thread_rng().gen_range(
+                random_initial_motion.linear.x.0,
+                random_initial_motion.linear.x.1,
+            );
+            motion2d_component.velocity.y = thread_rng().gen_range(
+                random_initial_motion.linear.y.0,
+                random_initial_motion.linear.y.1,
+            );
+            motion2d_component.angular_velocity = thread_rng().gen_range(
+                random_initial_motion.angular.0,
+                random_initial_motion.angular.1,
+            );
+        }
         lazy_update.insert(effect_entity, motion2d_component);
+    } else if effect_data.random_initial_motion.is_some() {
+        panic!("Effects with RandomInitialMotion must also have a motion component.")
+    }
+
+    if let Some(fade_component) = effect_data.fade_component {
+        let tint_component = Tint(Srgba::new(
+            if let Some(red_change) = fade_component.red_change.clone() {
+                red_change.value
+            } else {
+                1.0
+            },
+            if let Some(green_change) = fade_component.green_change.clone() {
+                green_change.value
+            } else {
+                1.0
+            },
+            if let Some(blue_change) = fade_component.blue_change.clone() {
+                blue_change.value
+            } else {
+                1.0
+            },
+            if let Some(alpha_change) = fade_component.alpha_change.clone() {
+                alpha_change.value
+            } else {
+                1.0
+            },
+        ));
+
+        lazy_update.insert(effect_entity, tint_component);
+        lazy_update.insert(effect_entity, fade_component);
+    }
+}
+
+pub fn spawn_giblets(
+    enemy_type: &EnemyType,
+    spawn_transform: Transform,
+    effects_resource: &ReadExpect<EffectsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    match enemy_type {
+        EnemyType::Drone => {
+            spawn_effect(
+                &EffectType::DroneGiblet1,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::DroneGiblet2,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::DroneGiblet3,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::DroneGiblet4,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+        }
+
+        EnemyType::Pawn => {
+            spawn_effect(
+                &EffectType::PawnGiblet1,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::PawnGiblet2,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::PawnGiblet3,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::PawnGiblet4,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+        }
+
+        EnemyType::Strafer => {
+            spawn_effect(
+                &EffectType::StraferGiblet1,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::StraferGiblet2,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::StraferGiblet3,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::StraferGiblet4,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+        }
+
+        EnemyType::Hauler => {
+            spawn_effect(
+                &EffectType::HaulerGiblet1,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::HaulerGiblet2,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::HaulerGiblet3,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::HaulerGiblet4,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+        }
+
+        EnemyType::MissileLauncher => {
+            spawn_effect(
+                &EffectType::MissileLauncherGiblet1,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::MissileLauncherGiblet2,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::MissileLauncherGiblet3,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::MissileLauncherGiblet4,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+        }
+
+        EnemyType::Missile => {
+            spawn_effect(
+                &EffectType::MissileGiblet1,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::MissileGiblet2,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::MissileGiblet3,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+
+            spawn_effect(
+                &EffectType::MissileGiblet4,
+                spawn_transform.clone(),
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
+                &lazy_update,
+            );
+        }
+        _ => {}
     }
 }

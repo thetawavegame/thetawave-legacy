@@ -1,7 +1,9 @@
 use crate::{
     audio::Sounds,
     components::EnemyComponent,
-    entities::{spawn_effect, spawn_random_consumable, EffectType},
+    entities::{
+        spawn_effect, spawn_giblets, spawn_random_consumable, EffectType, EnemyType, EntityType,
+    },
     events::{EnemyDestroyedEvent, PlayAudioEvent},
     resources::{ConsumablesResource, EffectsResource, SpriteSheetsResource},
 };
@@ -72,6 +74,17 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 &entities,
                 &lazy_update,
             );
+
+            if let EntityType::Enemy(enemy_type) = &enemy_component.entity_type {
+                spawn_giblets(
+                    enemy_type,
+                    enemy_transform.clone(),
+                    &effects_resource,
+                    &sprite_resource,
+                    &entities,
+                    &lazy_update,
+                );
+            }
 
             spawn_random_consumable(
                 &entities,
