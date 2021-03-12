@@ -34,13 +34,13 @@ pub fn spawn_repeater(
     right_shoulder_transform.set_translation(Vector3::new(
         constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) + 36.0,
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 98.0,
-        constants::BOSS_Z_1,
+        constants::BOSS_Z_2,
     ));
     let mut left_shoulder_transform = Transform::default();
     left_shoulder_transform.set_translation(Vector3::new(
         constants::ARENA_MIN_X + (constants::ARENA_WIDTH / 2.0) - 36.0,
         constants::ARENA_MIN_Y + constants::ARENA_HEIGHT + 98.0,
-        constants::BOSS_Z_1,
+        constants::BOSS_Z_2,
     ));
 
     let body = spawn_enemy(
