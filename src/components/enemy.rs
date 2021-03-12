@@ -1,6 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
 
-use crate::{components::SpawnProbabilities, entities::EntityType};
+use crate::{components::SpawnProbabilities, entities::SpawnableType};
 
 use serde::{Deserialize, Serialize};
 
@@ -12,7 +12,7 @@ pub struct EnemyComponent {
     #[serde(default = "des_allied")]
     pub allied: bool,
     pub loot_probs: SpawnProbabilities,
-    pub entity_type: EntityType,
+    pub spawnable_type: SpawnableType,
 }
 
 fn des_collision_damage() -> f32 {

@@ -29,7 +29,7 @@
                     "barrel_immunity": true,
                 },
                 price: 9,
-                entity_type: Item(SteelBarrel),
+                spawnable_type: Item(SteelBarrel),
             ),
         ),
         PlasmaBlasts: (
@@ -43,7 +43,7 @@
                 "blast_damage": 5,
                 },
                 price: 15,
-                entity_type: Item(PlasmaBlasts),
+                spawnable_type: Item(PlasmaBlasts),
             ),
         ),
         HazardousReactor: (
@@ -56,7 +56,7 @@
                     "max_speed": 20,
                 },
                 price: 7,
-                entity_type: Item(HazardousReactor),
+                spawnable_type: Item(HazardousReactor),
             ),
         ),
         WarpThruster: (
@@ -70,7 +70,7 @@
                 "acceleration": 1,
                 },
                 price: 10,
-                entity_type: Item(WarpThruster),
+                spawnable_type: Item(WarpThruster),
             ),
         ),
         Tentaclover: (
@@ -83,7 +83,7 @@
                     "crit_chance": 0.05,
                 },
                 price: 12,
-                entity_type: Item(Tentaclover),
+                spawnable_type: Item(Tentaclover),
             ),
         ),
         DefenseSatellite: (
@@ -96,7 +96,7 @@
                     "max_defense": 100,
                 },
                 price: 11,
-                entity_type: Item(DefenseSatellite),
+                spawnable_type: Item(DefenseSatellite),
             ),
         ),
         DoubleBarrel: (
@@ -109,7 +109,7 @@
                     "blast_count": 1,
                 },
                 price: 18,
-                entity_type: Item(DoubleBarrel),
+                spawnable_type: Item(DoubleBarrel),
             ),
         ),
         YithianPlague: (
@@ -122,7 +122,7 @@
                     "poison_chance": 0.10,
                 },
                 price: 14,
-                entity_type: Item(YithianPlague),
+                spawnable_type: Item(YithianPlague),
             ),
         ),
         Spice: (
@@ -135,7 +135,7 @@
                     "barrel_cooldown": -0.5,
                 },
                 price: 8,
-                entity_type: Item(Spice),
+                spawnable_type: Item(Spice),
             ),
         ),
         EnhancedPlating: (
@@ -148,7 +148,7 @@
                     "health_multiply": 1.2,
                 },
                 price: 11,
-                entity_type: Item(EnhancedPlating),
+                spawnable_type: Item(EnhancedPlating),
             ),
         ),
         StructureReinforcement: (
@@ -161,7 +161,7 @@
                     "health_add": 100.0,
                 },
                 price: 3,
-                entity_type: Item(StructureReinforcement),
+                spawnable_type: Item(StructureReinforcement),
             ),
         ),
         BlasterSizeEnhancer: (
@@ -174,7 +174,7 @@
                     "blast_size": 4.0,
                 },
                 price: 12,
-                entity_type: Item(BlasterSizeEnhancer),
+                spawnable_type: Item(BlasterSizeEnhancer),
             ),
             animation_component: Some((
                 start_idx: 13,
@@ -197,7 +197,7 @@
                     "blast_damage": -4,
                 },
                 price: 8,
-                entity_type: Item(FrequencyAugmentor),
+                spawnable_type: Item(FrequencyAugmentor),
             ),
         ),
     }

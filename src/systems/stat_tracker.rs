@@ -1,6 +1,6 @@
 use crate::{
     components::{HealthComponent, PlayerComponent},
-    entities::EntityType,
+    entities::SpawnableType,
     resources::{ConsumablesResource, ItemsResource, StoreResource},
     states::TrackedStats,
 };
@@ -82,17 +82,17 @@ impl<'s> System<'s> for StatTrackerSystem {
 }
 
 fn inventory_price(
-    inventory_entity: &Option<EntityType>,
+    inventory_entity: &Option<SpawnableType>,
     items_resource: &ReadExpect<ItemsResource>,
     consumables_resource: &ReadExpect<ConsumablesResource>,
 ) -> usize {
     match inventory_entity {
-        Some(EntityType::Item(item_type)) => {
+        Some(SpawnableType::Item(item_type)) => {
             items_resource.item_entities[&item_type]
                 .item_component
                 .price
         }
-        Some(EntityType::Consumable(consumable_type)) => {
+        Some(SpawnableType::Consumable(consumable_type)) => {
             consumables_resource.consumable_entities[&consumable_type]
                 .consumable_component
                 .price

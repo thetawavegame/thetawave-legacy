@@ -1,24 +1,24 @@
 use crate::{
     components::PlayerComponent,
     constants::{ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
-    entities::{spawn_consumable, spawn_item, EntityType},
+    entities::{spawn_consumable, spawn_item, SpawnableType},
     resources::{ConsumablesResource, ItemsResource, SpriteSheetsResource},
 };
 use amethyst::{
-    core::{math::Vector3, transform::Transform},
+    core::transform::Transform,
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
 
-pub type StockProbabilities = Vec<(EntityType, f32)>;
+pub type StockProbabilities = Vec<(SpawnableType, f32)>;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct StoreResource {
     pub stock_probs: StockProbabilities,
     pub restock_timer: f32,
     pub restock_period: f32,
-    pub inventory: Vec<Option<EntityType>>,
+    pub inventory: Vec<Option<SpawnableType>>,
 }
 
 impl StoreResource {
@@ -47,7 +47,7 @@ impl StoreResource {
                         .position(|element| element == &(entity_type.clone(), value))
                         .unwrap();
 
-                    if let EntityType::Item(_) = entity_type {
+                    if let SpawnableType::Item(_) = entity_type {
                         self.stock_probs[entity_index].1 /= 2.0; // divide probability of item appearing in store by 2
                     }
 
@@ -70,7 +70,7 @@ impl StoreResource {
     ) -> bool {
         if let Some(entity_type) = &self.inventory[inventory_index] {
             match entity_type {
-                EntityType::Item(item_type) => {
+                SpawnableType::Item(item_type) => {
                     let item_data = items_resource.item_entities[item_type].clone();
                     if player.money >= item_data.item_component.price {
                         player.money -= item_data.item_component.price;
@@ -101,7 +101,7 @@ impl StoreResource {
                         return true;
                     }
                 }
-                EntityType::Consumable(consumable_type) => {
+                SpawnableType::Consumable(consumable_type) => {
                     let consumable_data =
                         consumables_resource.consumable_entities[consumable_type].clone();
                     if player.money >= consumable_data.consumable_component.price {

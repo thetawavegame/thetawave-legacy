@@ -1,4 +1,4 @@
-use crate::entities::EntityType;
+use crate::entities::SpawnableType;
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
 use std::collections::HashMap;
@@ -12,7 +12,7 @@ pub struct ItemComponent {
     pub stat_effects: HashMap<String, f32>,
     #[serde(default)]
     pub bool_effects: HashMap<String, bool>,
-    pub entity_type: EntityType,
+    pub spawnable_type: SpawnableType,
 }
 
 impl Component for ItemComponent {

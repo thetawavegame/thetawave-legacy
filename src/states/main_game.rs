@@ -47,11 +47,7 @@ impl Default for MainGameState {
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::EnemyTargetSystem, "enemy_target_system", &[])
-                .with(
-                    systems::AutoChildEntitySpawnerSystem,
-                    "auto_child_entity_spawner_system",
-                    &[],
-                )
+                .with(systems::AutoSpawnerSystem, "auto_spawner_system", &[])
                 .with(
                     systems::BarrelRollAbilitySystem::default(),
                     "barrel_roll_ability_system",

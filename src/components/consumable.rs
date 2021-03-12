@@ -1,6 +1,8 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 
+use crate::entities::SpawnableType;
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumableComponent {
     pub sound_effect: String,
@@ -13,6 +15,7 @@ pub struct ConsumableComponent {
     #[serde(default)]
     pub armor_value: usize,
     pub price: usize,
+    pub spawnable_type: SpawnableType,
 }
 
 impl Component for ConsumableComponent {

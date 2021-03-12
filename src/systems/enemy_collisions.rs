@@ -4,7 +4,7 @@ use crate::{
         BarrierComponent, BlastComponent, BlastType, EnemyComponent, HealthComponent,
         Motion2DComponent, PlayerComponent,
     },
-    entities::{spawn_effect, EffectType, EnemyType, EntityType},
+    entities::{spawn_effect, EffectType, EnemyType, SpawnableType},
     events::{EnemyCollisionEvent, PlayAudioEvent},
     resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
@@ -66,8 +66,8 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                 let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
-                match enemy.entity_type {
-                    EntityType::Enemy(EnemyType::Missile) => {
+                match enemy.spawnable_type {
+                    SpawnableType::Enemy(EnemyType::Missile) => {
                         enemy_health.value = 0.0;
                     }
 
@@ -136,8 +136,8 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
                 let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
-                match enemy.entity_type {
-                    EntityType::Enemy(EnemyType::Missile) => {
+                match enemy.spawnable_type {
+                    SpawnableType::Enemy(EnemyType::Missile) => {
                         enemy_health.value = 0.0;
                     }
 
@@ -297,8 +297,8 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
                 let enemy = enemies.get(event.enemy_entity).unwrap();
 
                 if !barrier.enemies_pass {
-                    match enemy.entity_type {
-                        EntityType::Enemy(EnemyType::Missile) => {}
+                    match enemy.spawnable_type {
+                        SpawnableType::Enemy(EnemyType::Missile) => {}
 
                         _ => {
                             let enemy_motion = motion_2ds.get_mut(event.enemy_entity).unwrap();

@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     components::{PlayerComponent, StoreIconComponent},
-    entities::EntityType,
+    entities::SpawnableType,
     events::PlayAudioEvent,
     resources::{ConsumablesResource, ItemsResource, SpriteSheetsResource, StoreResource},
 };
@@ -62,7 +62,7 @@ impl<'s> System<'s> for StoreSystem {
         if store_resource.restock_when_ready(time.delta_seconds()) {
             // change store icons
             for (store_icon, sprite_render) in (&store_icons, &mut sprite_renders).join() {
-                if let Some(EntityType::Item(item_type)) =
+                if let Some(SpawnableType::Item(item_type)) =
                     store_resource.inventory[store_icon.inventory_index].clone()
                 {
                     let item_data = items_resource.item_entities[&item_type].clone();
@@ -72,7 +72,7 @@ impl<'s> System<'s> for StoreSystem {
                             .clone(),
                         sprite_number: item_data.sprite_render_data.initial_index,
                     }
-                } else if let Some(EntityType::Consumable(consumable_type)) =
+                } else if let Some(SpawnableType::Consumable(consumable_type)) =
                     store_resource.inventory[store_icon.inventory_index].clone()
                 {
                     let consumable_data =

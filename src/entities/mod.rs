@@ -26,14 +26,14 @@ pub use self::{
     planet::initialize_planet,
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,
-    spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_giblets, spawn_item},
+    spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_item},
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
     store_icons::initialize_store_icons,
 };
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
-pub enum EntityType {
+pub enum SpawnableType {
     Enemy(EnemyType),
     Consumable(ConsumableType),
     Item(ItemType),
@@ -89,28 +89,5 @@ pub enum EffectType {
     CriticalBlastExplosion,
     EnemyExplosion,
     Star, //TODO: implement background stars
-    DroneGiblet1,
-    DroneGiblet2,
-    DroneGiblet3,
-    DroneGiblet4,
-    PawnGiblet1,
-    PawnGiblet2,
-    PawnGiblet3,
-    PawnGiblet4,
-    StraferGiblet1,
-    StraferGiblet2,
-    StraferGiblet3,
-    StraferGiblet4,
-    HaulerGiblet1,
-    HaulerGiblet2,
-    HaulerGiblet3,
-    HaulerGiblet4,
-    MissileLauncherGiblet1,
-    MissileLauncherGiblet2,
-    MissileLauncherGiblet3,
-    MissileLauncherGiblet4,
-    MissileGiblet1,
-    MissileGiblet2,
-    MissileGiblet3,
-    MissileGiblet4,
+    Giblets(EnemyType),
 }

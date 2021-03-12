@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        AnimationComponent, AutoChildEntitySpawnerComponent, AutoFireComponent, BlasterComponent,
+        AnimationComponent, AutoFireComponent, AutoSpawnerComponent, BlasterComponent,
         ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, FadeComponent,
         HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent, TimeLimitComponent,
     },
@@ -8,10 +8,7 @@ use crate::{
     resources::SpriteRenderData,
 };
 
-use amethyst::{
-    core::math::Vector2,
-    renderer::{palette::Srgba, resources::Tint},
-};
+use amethyst::core::math::Vector2;
 
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -32,13 +29,7 @@ pub struct ItemsResource {
 }
 
 pub type EnemiesResource = HashMap<EnemyType, EnemyEntityData>;
-//pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
-
-#[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct EffectsResource {
-    pub giblet_data: GibletEntityData, // shared components of giblets
-    pub effect_entities: HashMap<EffectType, EffectEntityData>,
-}
+pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EnemyEntityData {
@@ -51,7 +42,7 @@ pub struct EnemyEntityData {
     pub motion2d_component: Motion2DComponent,
     pub health_component: HealthComponent,
     pub despawn_component: DespawnAtBorderComponent,
-    pub auto_child_entity_spawner_component: Option<AutoChildEntitySpawnerComponent>,
+    pub auto_spawner_component: Option<AutoSpawnerComponent>,
     pub thruster_data: Option<ThrusterEntityData>,
 }
 
@@ -84,12 +75,11 @@ pub struct RandomMotionRange2D {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct EffectEntityData {
     pub random_initial_motion: Option<RandomMotionRange2D>,
-    pub sprite_render_data: SpriteRenderData,
+    pub sprite_render_data: Vec<SpriteRenderData>,
     pub time_limit_component: Option<TimeLimitComponent>,
     pub motion2d_component: Option<Motion2DComponent>,
     pub animation_component: Option<AnimationComponent>,
     pub fade_component: Option<FadeComponent>,
-    //pub tint_component: Option<Tint>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

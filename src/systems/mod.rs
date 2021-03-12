@@ -32,7 +32,7 @@ pub use self::{
     animation::AnimationSystem,
     autofire_system::AutoFireSystem,
     boss::BossSystem,
-    child_spawner::AutoChildEntitySpawnerSystem,
+    child_spawner::AutoSpawnerSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
     despawn::DespawnAtBorderSystem,

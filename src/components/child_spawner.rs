@@ -1,7 +1,7 @@
 use crate::{
     entities::{
         spawn_consumable, spawn_effect, spawn_enemy, spawn_item, ConsumableType, EffectType,
-        EnemyType, EntityType, ItemType,
+        EnemyType, ItemType, SpawnableType,
     },
     resources::{
         ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
@@ -9,28 +9,25 @@ use crate::{
 };
 
 use amethyst::{
-    core::{
-        math::{Vector2, Vector3},
-        transform::Transform,
-    },
+    core::{math::Vector2, transform::Transform},
     ecs::prelude::{Component, DenseVecStorage, Entities, LazyUpdate, ReadExpect},
 };
 
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AutoChildEntitySpawnerComponent {
-    pub child_entity_type: EntityType,
+pub struct AutoSpawnerComponent {
+    pub child_entity_type: SpawnableType,
     pub offset: Vector2<f32>,
     period: f32,
     timer: f32,
 }
 
-impl Component for AutoChildEntitySpawnerComponent {
+impl Component for AutoSpawnerComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl AutoChildEntitySpawnerComponent {
+impl AutoSpawnerComponent {
     pub fn spawn_when_ready(
         &mut self,
         delta_time: f32,
@@ -53,7 +50,7 @@ impl AutoChildEntitySpawnerComponent {
             adjusted_transform.prepend_translation_y(self.offset.y);
 
             match &self.child_entity_type {
-                EntityType::Enemy(enemy_type) => {
+                SpawnableType::Enemy(enemy_type) => {
                     spawn_enemy(
                         &enemy_type,
                         adjusted_transform,
@@ -64,7 +61,7 @@ impl AutoChildEntitySpawnerComponent {
                     );
                 }
 
-                EntityType::Consumable(consumable_type) => {
+                SpawnableType::Consumable(consumable_type) => {
                     spawn_consumable(
                         &consumable_type,
                         adjusted_transform,
@@ -75,7 +72,7 @@ impl AutoChildEntitySpawnerComponent {
                     );
                 }
 
-                EntityType::Item(item_type) => {
+                SpawnableType::Item(item_type) => {
                     spawn_item(
                         &item_type,
                         adjusted_transform,
@@ -86,7 +83,7 @@ impl AutoChildEntitySpawnerComponent {
                     );
                 }
 
-                EntityType::Effect(effect_type) => {
+                SpawnableType::Effect(effect_type) => {
                     spawn_effect(
                         &effect_type,
                         adjusted_transform,

@@ -1,10 +1,10 @@
 use crate::{
     components::{EnemySpawnerTag, SpawnerComponent},
-    entities::{spawn_enemy, spawn_repeater, EntityType},
+    entities::{spawn_enemy, spawn_repeater, SpawnableType},
     resources::{BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource},
 };
 use amethyst::{
-    core::{math::Vector3, timing::Time, Transform},
+    core::{timing::Time, Transform},
     ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, Write, WriteStorage},
 };
 
@@ -53,7 +53,7 @@ impl<'s> System<'s> for SpawnerSystem {
                                 transform.translation()[2],
                             );
 
-                            if let EntityType::Enemy(enemy_type) = enemy_type {
+                            if let SpawnableType::Enemy(enemy_type) = enemy_type {
                                 spawn_enemy(
                                     enemy_type,
                                     spawn_transform,

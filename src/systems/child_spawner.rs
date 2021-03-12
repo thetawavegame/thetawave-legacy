@@ -1,20 +1,20 @@
 use crate::{
-    components::AutoChildEntitySpawnerComponent,
+    components::AutoSpawnerComponent,
     resources::{
         ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
-    core::{math::Vector3, timing::Time, Transform},
+    core::{timing::Time, Transform},
     ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, WriteStorage},
 };
 
-pub struct AutoChildEntitySpawnerSystem;
+pub struct AutoSpawnerSystem;
 
-impl<'s> System<'s> for AutoChildEntitySpawnerSystem {
+impl<'s> System<'s> for AutoSpawnerSystem {
     type SystemData = (
         ReadStorage<'s, Transform>,
-        WriteStorage<'s, AutoChildEntitySpawnerComponent>,
+        WriteStorage<'s, AutoSpawnerComponent>,
         Read<'s, Time>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemiesResource>,

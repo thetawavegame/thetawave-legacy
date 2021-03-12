@@ -23,7 +23,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Enemy(Drone),
+            spawnable_type: Enemy(Drone),
         ),
         health_component: (
             max_value: 60,
@@ -104,7 +104,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Enemy(Pawn),
+            spawnable_type: Enemy(Pawn),
         ),
         health_component: (
             max_value: 110,
@@ -162,7 +162,7 @@
             loot_probs: [
                 (None, 1.0),
             ],
-            entity_type: Enemy(Hauler),
+            spawnable_type: Enemy(Hauler),
         ),
         health_component: (
             max_value: 220,
@@ -244,7 +244,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Enemy(Strafer),
+            spawnable_type: Enemy(Strafer),
         ),
         health_component: (
             max_value: 75,
@@ -308,7 +308,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Enemy(MissileLauncher),
+            spawnable_type: Enemy(MissileLauncher),
         ),
         health_component: (
             max_value: 300,
@@ -334,7 +334,7 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
-        auto_child_entity_spawner_component: Some((
+        auto_spawner_component: Some((
             child_entity_type: Enemy(Missile),
             offset: [0.0, -20.0],
             period: 3.5,
@@ -374,7 +374,7 @@
             loot_probs: [
                 (None, 1.0),
             ],
-            entity_type: Enemy(Missile),
+            spawnable_type: Enemy(Missile),
         ),
         health_component: (
             max_value: 50,
@@ -437,7 +437,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Enemy(RepeaterBody),
+            spawnable_type: Enemy(RepeaterBody),
         ),
         health_component: (
             max_value: 10000,
@@ -488,7 +488,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Enemy(RepeaterHead),
+            spawnable_type: Enemy(RepeaterHead),
         ),
         health_component: (
             max_value: 2000,
@@ -539,7 +539,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03)
             ],
-            entity_type: Enemy(RepeaterRightShoulder),
+            spawnable_type: Enemy(RepeaterRightShoulder),
         ),
         health_component: (
             max_value: 2000,
@@ -592,7 +592,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03)
             ],
-            entity_type: Enemy(RepeaterLeftShoulder),
+            spawnable_type: Enemy(RepeaterLeftShoulder),
         ),
         health_component: (
             max_value: 2000,
@@ -646,7 +646,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Enemy(RepeaterRightArm),
+            spawnable_type: Enemy(RepeaterRightArm),
         ),
         health_component: (
             max_value: 2000,
