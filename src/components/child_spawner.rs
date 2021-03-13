@@ -99,18 +99,19 @@ impl AutoSpawnerComponent {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AutoChildEnemySpawnerComponent {
+pub struct AutoEnemySpawnerComponent {
     pub child_enemy_type: EnemyType,
     pub offset: Vector2<f32>,
     period: f32,
     timer: f32,
 }
 
-impl Component for AutoChildEnemySpawnerComponent {
+impl Component for AutoEnemySpawnerComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl AutoChildEnemySpawnerComponent {
+impl AutoEnemySpawnerComponent {
+    #[allow(dead_code)]
     pub fn spawn_when_ready(
         &mut self,
         delta_time: f32,
@@ -141,18 +142,19 @@ impl AutoChildEnemySpawnerComponent {
     }
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AutoChildConsumableSpawnerComponent {
+pub struct AutoConsumableSpawnerComponent {
     pub child_consumable_type: ConsumableType,
     pub offset: Vector2<f32>,
     period: f32,
     timer: f32,
 }
 
-impl Component for AutoChildConsumableSpawnerComponent {
+impl Component for AutoConsumableSpawnerComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl AutoChildConsumableSpawnerComponent {
+impl AutoConsumableSpawnerComponent {
+    #[allow(dead_code)]
     pub fn spawn_when_ready(
         &mut self,
         delta_time: f32,
@@ -184,18 +186,19 @@ impl AutoChildConsumableSpawnerComponent {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AutoChildItemSpawnerComponent {
+pub struct AutoItemSpawnerComponent {
     pub child_item_type: ItemType,
     pub offset: Vector2<f32>,
     period: f32,
     timer: f32,
 }
 
-impl Component for AutoChildItemSpawnerComponent {
+impl Component for AutoItemSpawnerComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl AutoChildItemSpawnerComponent {
+impl AutoItemSpawnerComponent {
+    #[allow(dead_code)]
     pub fn spawn_when_ready(
         &mut self,
         delta_time: f32,
@@ -227,18 +230,19 @@ impl AutoChildItemSpawnerComponent {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AutoChildEffectSpawnerComponent {
+pub struct AutoEffectSpawnerComponent {
     pub child_effect_type: EffectType,
     pub offset: Vector2<f32>,
     period: f32,
     timer: f32,
 }
 
-impl Component for AutoChildEffectSpawnerComponent {
+impl Component for AutoEffectSpawnerComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl AutoChildEffectSpawnerComponent {
+impl AutoEffectSpawnerComponent {
+    #[allow(dead_code)]
     pub fn spawn_when_ready(
         &mut self,
         delta_time: f32,

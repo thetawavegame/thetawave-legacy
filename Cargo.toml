@@ -1,6 +1,6 @@
 [package]
 name = "space_shooter"
-version = "0.1.0"
+version = "0.1.4"
 authors = []
 edition = "2018"
 

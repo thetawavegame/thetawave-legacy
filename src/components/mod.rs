@@ -27,7 +27,10 @@ pub use self::{
     barriers::{BarrierComponent, PushDirection},
     blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,
-    child_spawner::AutoSpawnerComponent,
+    child_spawner::{
+        AutoConsumableSpawnerComponent, AutoEffectSpawnerComponent, AutoEnemySpawnerComponent,
+        AutoItemSpawnerComponent, AutoSpawnerComponent,
+    },
     consumable::ConsumableComponent,
     despawn::DespawnAtBorderComponent,
     enemy::{EnemyComponent, EnemySpawnerTag},
