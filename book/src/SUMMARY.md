@@ -10,6 +10,8 @@
   - [Allies](./allies.md)
   - [Bosses](./bosses.md)
 - [Contibuting code](./contributing.md)
+
+<!--
 - [Architecture](./architecture.md)
   - [Entities and Their Components](./entities-components.md)
   - [Systems](./TODO.md)
@@ -26,3 +28,4 @@
 - [Appendix A: Item Effects](./item_effects.md)
   - [Stat Effects](./stat_effects.md)
   - [Bool Effects](./bool_effects.md)
+-->
