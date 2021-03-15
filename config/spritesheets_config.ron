@@ -31,20 +31,24 @@
         image: "blasts_spritesheet.png",
         data: "blasts_spritesheet.ron",
     ),
-    "explosions": (
-        image: "explosions_spritesheet.png",
-        data: "explosions_spritesheet.ron",
-    ),
     "repeater": (
         image: "repeater_spritesheet.png",
         data: "repeater_spritesheet.ron",
-    ),
-    "blast_explosions": (
-        image: "blast_explosions_spritesheet.png",
-        data: "blast_explosions_spritesheet.ron",
     ),
     "thrusters": (
         image: "thrusters_spritesheet.png",
         data: "thrusters_spritesheet.ron",
     ),
+    "blast_explosions": (
+        image: "blast_explosions_spritesheet.png",
+        data: "blast_explosions_spritesheet.ron",
+    ),
+    "explosions": (
+        image: "explosions_spritesheet.png",
+        data: "explosions_spritesheet.ron",
+    ),
+    "giblets": (
+        image: "giblets_spritesheet.png",
+        data: "giblets_spritesheet.ron",
+    )
 }

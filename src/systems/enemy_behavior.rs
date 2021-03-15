@@ -21,11 +21,9 @@ impl<'s> System<'s> for EnemyBehaviorSystem {
         &mut self,
         (entities, mut enemies, mut healths, mut enemy_destroyed_event_channel): Self::SystemData,
     ) {
-        for (enemy_entity, enemy_component, enemy_health) in
+        for (enemy_entity, _enemy_component, enemy_health) in
             (&*entities, &mut enemies, &mut healths).join()
         {
-            // TODO: put in a new PoisonSystem or HealthSystem
-            enemy_health.value -= enemy_component.poison;
             enemy_health.constrain();
 
             // conditions for despawning

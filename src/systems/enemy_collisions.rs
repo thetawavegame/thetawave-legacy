@@ -4,9 +4,9 @@ use crate::{
         BarrierComponent, BlastComponent, BlastType, EnemyComponent, HealthComponent,
         Motion2DComponent, PlayerComponent,
     },
-    entities::{spawn_blast_explosion, EntityType},
+    entities::{spawn_effect, EffectType, EnemyType, SpawnableType},
     events::{EnemyCollisionEvent, PlayAudioEvent},
-    resources::{GameParametersResource, SpriteSheetsResource},
+    resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
@@ -66,8 +66,8 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
                 let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
-                match enemy.entity_type {
-                    EntityType::Missile => {
+                match enemy.spawnable_type {
+                    SpawnableType::Enemy(EnemyType::Missile) => {
                         enemy_health.value = 0.0;
                     }
 
@@ -136,8 +136,8 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
                 let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
 
-                match enemy.entity_type {
-                    EntityType::Missile => {
+                match enemy.spawnable_type {
+                    SpawnableType::Enemy(EnemyType::Missile) => {
                         enemy_health.value = 0.0;
                     }
 
@@ -177,10 +177,10 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<EnemyCollisionEvent>>,
         Entities<'s>,
-        WriteStorage<'s, EnemyComponent>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
         ReadStorage<'s, Transform>,
+        ReadExpect<'s, EffectsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -201,10 +201,10 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
         (
             collision_channel,
             entities,
-            mut enemies,
             mut healths,
             mut blasts,
             transforms,
+            effects_resource,
             sprite_resource,
             lazy_update,
             mut play_audio_channel,
@@ -213,7 +213,6 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
     ) {
         for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
             if let Some(blast) = blasts.get_mut(event.colliding_entity) {
-                let enemy = enemies.get_mut(event.enemy_entity).unwrap();
                 let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
                 let blast_transform = transforms.get(event.colliding_entity).unwrap();
 
@@ -227,16 +226,25 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                             source: sounds.sound_effects["metal_ping"].clone(),
                         });
 
-                        spawn_blast_explosion(
-                            &entities,
-                            sprite_resource.spritesheets["blast_explosions"].clone(),
-                            blast.blast_type.clone(),
+                        spawn_effect(
+                            match blast.blast_type {
+                                BlastType::Ally => &EffectType::AllyBlastExplosion,
+                                BlastType::AllyCritical => &EffectType::CriticalBlastExplosion,
+                                BlastType::AllyPoison => &EffectType::PoisonBlastExplosion,
+                                _ => {
+                                    panic!("unreachable")
+                                }
+                            },
                             blast_transform.clone(),
+                            &effects_resource,
+                            &sprite_resource,
+                            &entities,
                             &lazy_update,
                         );
 
                         enemy_health.value -= blast.damage;
-                        enemy.poison = blast.poison_damage;
+                        //TODO: apply poison to enemy health component from blast
+                        //enemy.poison = blast.poison_damage;
                     }
 
                     _ => {}
@@ -289,8 +297,8 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
                 let enemy = enemies.get(event.enemy_entity).unwrap();
 
                 if !barrier.enemies_pass {
-                    match enemy.entity_type {
-                        EntityType::Missile => {}
+                    match enemy.spawnable_type {
+                        SpawnableType::Enemy(EnemyType::Missile) => {}
 
                         _ => {
                             let enemy_motion = motion_2ds.get_mut(event.enemy_entity).unwrap();

@@ -1,9 +1,6 @@
-use amethyst::{
-    core::math::Vector2,
-    ecs::prelude::{Component, DenseVecStorage, NullStorage},
-};
+use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
 
-use crate::{components::SpawnProbabilities, entities::EntityType};
+use crate::{components::SpawnProbabilities, entities::SpawnableType};
 
 use serde::{Deserialize, Serialize};
 
@@ -12,25 +9,14 @@ pub struct EnemyComponent {
     pub defense_damage: f32,
     #[serde(default = "des_collision_damage")]
     pub collision_damage: f32,
-    #[serde(default = "des_poison")]
-    pub poison: f32,
     #[serde(default = "des_allied")]
     pub allied: bool,
     pub loot_probs: SpawnProbabilities,
-    pub entity_type: EntityType,
-    #[serde(default = "des_explosion_sprite_idx")]
-    pub explosion_sprite_idx: usize,
-    pub target_position: Option<Vector2<f32>>,
+    pub spawnable_type: SpawnableType,
 }
 
-fn des_explosion_sprite_idx() -> usize {
-    0
-}
 fn des_collision_damage() -> f32 {
     30.0
-}
-fn des_poison() -> f32 {
-    0.0
 }
 fn des_allied() -> bool {
     false

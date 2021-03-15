@@ -5,7 +5,7 @@ use crate::{
         ENEMY_MISSILE_LAUNCHER_RATIO, ENEMY_PAWN_RATIO, ENEMY_SPAWN_INTERVAL, ENEMY_STRAFER_RATIO,
         SPAWNER_Y_OFFSET,
     },
-    entities::EntityType,
+    entities::{EnemyType, SpawnableType},
 };
 use amethyst::{
     core::transform::Transform,
@@ -24,12 +24,24 @@ pub fn initialize_enemy_spawner(world: &mut World) {
         .create_entity()
         .with(SpawnerComponent::new(
             vec![
-                (Some(EntityType::Pawn), ENEMY_PAWN_RATIO),
-                (Some(EntityType::Drone), ENEMY_DRONE_RATIO),
-                (Some(EntityType::Hauler), ENEMY_HAULER_RATIO),
-                (Some(EntityType::Strafer), ENEMY_STRAFER_RATIO),
                 (
-                    Some(EntityType::MissileLauncher),
+                    Some(SpawnableType::Enemy(EnemyType::Pawn)),
+                    ENEMY_PAWN_RATIO,
+                ),
+                (
+                    Some(SpawnableType::Enemy(EnemyType::Drone)),
+                    ENEMY_DRONE_RATIO,
+                ),
+                (
+                    Some(SpawnableType::Enemy(EnemyType::Hauler)),
+                    ENEMY_HAULER_RATIO,
+                ),
+                (
+                    Some(SpawnableType::Enemy(EnemyType::Strafer)),
+                    ENEMY_STRAFER_RATIO,
+                ),
+                (
+                    Some(SpawnableType::Enemy(EnemyType::MissileLauncher)),
                     ENEMY_MISSILE_LAUNCHER_RATIO,
                 ),
             ],

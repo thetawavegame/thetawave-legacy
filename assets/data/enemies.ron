@@ -1,5 +1,9 @@
 {
     Drone: (
+        sprite_render_data: (
+            initial_index: 0,
+            spritesheet: "enemies",
+        ),
         animation_component: (
             start_idx: 0,
             frame_count: 3,
@@ -13,13 +17,13 @@
             defense_damage: 30,
             loot_probs: [
                 (None, 0.5),
-                (Some(HealthWrench), 0.03),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.02),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.03),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.02),
+                (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Drone,
+            spawnable_type: Enemy(Drone),
         ),
         health_component: (
             max_value: 60,
@@ -45,8 +49,24 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 0,
+                frame_count: 3,
+                current_frame: 0,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 11.0,
+        )),
     ),
     Pawn: (
+        sprite_render_data: (
+            initial_index: 3,
+            spritesheet: "enemies",
+        ),
         animation_component: (
             start_idx: 3,
             frame_count: 3,
@@ -78,13 +98,13 @@
             defense_damage: 50,
             loot_probs: [
                 (None, 0.5),
-                (Some(HealthWrench), 0.03),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.02),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.03),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.02),
+                (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Pawn,
+            spawnable_type: Enemy(Pawn),
         ),
         health_component: (
             max_value: 110,
@@ -110,8 +130,24 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 3,
+                frame_count: 3,
+                current_frame: 3,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 11.0,
+        )),
     ),
     Hauler: (
+        sprite_render_data: (
+            initial_index: 9,
+            spritesheet: "enemies",
+        ),
         animation_component: (
             start_idx: 9,
             frame_count: 3,
@@ -126,7 +162,7 @@
             loot_probs: [
                 (None, 1.0),
             ],
-            entity_type: Hauler,
+            spawnable_type: Enemy(Hauler),
         ),
         health_component: (
             max_value: 220,
@@ -152,8 +188,24 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 9,
+                frame_count: 3,
+                current_frame: 9,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 18.0,
+        )),
     ),
     Strafer: (
+        sprite_render_data: (
+            initial_index: 6,
+            spritesheet: "enemies",
+        ),
         animation_component: (
             start_idx: 6,
             frame_count: 3,
@@ -186,13 +238,13 @@
             max_speed: 25,
             loot_probs: [
                 (None, 0.5),
-                (Some(HealthWrench), 0.03),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.02),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.03),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.02),
+                (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: Strafer,
+            spawnable_type: Enemy(Strafer),
         ),
         health_component: (
             max_value: 75,
@@ -218,8 +270,24 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 6,
+                frame_count: 3,
+                current_frame: 6,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 7.0,
+        )),
     ),
     MissileLauncher: (
+        sprite_render_data: (
+            initial_index: 12,
+            spritesheet: "enemies",
+        ),
         animation_component: (
             start_idx: 12,
             frame_count: 3,
@@ -234,13 +302,13 @@
             max_speed: 10,
             loot_probs: [
                 (None, 0.5),
-                (Some(HealthWrench), 0.03),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.02),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.03),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.02),
+                (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: MissileLauncher,
+            spawnable_type: Enemy(MissileLauncher),
         ),
         health_component: (
             max_value: 300,
@@ -266,14 +334,30 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
-        auto_child_enemy_spawner_component: Some((
-            child_entity_type: Missile,
+        auto_spawner_component: Some((
+            child_entity_type: Enemy(Missile),
             offset: [0.0, -20.0],
             period: 3.5,
             timer: 3.5,
-        ))
+        )),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 12,
+                frame_count: 3,
+                current_frame: 12,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            ),
+            y_offset: 13.0,
+        )),
     ),
     Missile: (
+        sprite_render_data: (
+            initial_index: 15,
+            spritesheet: "enemies",
+        ),
         animation_component: (
             start_idx: 15,
             frame_count: 4,
@@ -290,7 +374,7 @@
             loot_probs: [
                 (None, 1.0),
             ],
-            entity_type: Missile,
+            spawnable_type: Enemy(Missile),
         ),
         health_component: (
             max_value: 50,
@@ -316,8 +400,24 @@
         despawn_component: (
             bottom_offset: Some(-20.0),
         ),
+        thruster_data: Some((
+            animation_component: (
+                start_idx: 15,
+                frame_count: 4,
+                current_frame: 15,
+                frame_time: 0.08,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: Forward,
+            ),
+            y_offset: 9.0,
+        )),
     ),
     RepeaterBody: (
+        sprite_render_data: (
+            initial_index: 0,
+            spritesheet: "repeater",
+        ),
         animation_component: (
             start_idx: 0,
             frame_count: 3,
@@ -331,13 +431,13 @@
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
-                (Some(HealthWrench), 0.04),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.5),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.04),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.5),
+                (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: RepeaterBody,
+            spawnable_type: Enemy(RepeaterBody),
         ),
         health_component: (
             max_value: 10000,
@@ -365,6 +465,10 @@
         ),
     ),
     RepeaterHead: (
+        sprite_render_data: (
+            initial_index: 3,
+            spritesheet: "repeater",
+        ),
         animation_component: (
             start_idx: 3,
             frame_count: 3,
@@ -378,13 +482,13 @@
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
-                (Some(HealthWrench), 0.04),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.5),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.04),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.5),
+                (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: RepeaterHead,
+            spawnable_type: Enemy(RepeaterHead),
         ),
         health_component: (
             max_value: 2000,
@@ -412,6 +516,10 @@
         ),
     ),
     RepeaterRightShoulder: (
+        sprite_render_data: (
+            initial_index: 6,
+            spritesheet: "repeater",
+        ),
         animation_component: (
             start_idx: 6,
             frame_count: 1,
@@ -425,13 +533,13 @@
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
-                (Some(HealthWrench), 0.04),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.5),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.04),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.5),
+                (Some(Consumable(Armor)), 0.03)
             ],
-            entity_type: RepeaterRightShoulder,
+            spawnable_type: Enemy(RepeaterRightShoulder),
         ),
         health_component: (
             max_value: 2000,
@@ -461,6 +569,10 @@
         ),
     ),
     RepeaterLeftShoulder: (
+        sprite_render_data: (
+            initial_index: 7,
+            spritesheet: "repeater",
+        ),
         animation_component: (
             start_idx: 7,
             frame_count: 1,
@@ -474,13 +586,13 @@
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
-                (Some(HealthWrench), 0.04),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.5),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.04),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.5),
+                (Some(Consumable(Armor)), 0.03)
             ],
-            entity_type: RepeaterLeftShoulder,
+            spawnable_type: Enemy(RepeaterLeftShoulder),
         ),
         health_component: (
             max_value: 2000,
@@ -510,6 +622,10 @@
         ),
     ),
     RepeaterRightArm: (
+        sprite_render_data: (
+            initial_index: 8,
+            spritesheet: "repeater",
+        ),
         animation_component: (
             start_idx: 8,
             frame_count: 1,
@@ -524,13 +640,13 @@
             current_velocity_y: -30,
             loot_probs: [
                 (None, 0.0),
-                (Some(HealthWrench), 0.04),
-                (Some(DefenseWrench), 0.02),
-                (Some(Money1), 0.40),
-                (Some(Money5), 0.5),
-                (Some(Armor), 0.03),
+                (Some(Consumable(HealthWrench)), 0.04),
+                (Some(Consumable(DefenseWrench)), 0.02),
+                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money5)), 0.5),
+                (Some(Consumable(Armor)), 0.03),
             ],
-            entity_type: RepeaterRightArm,
+            spawnable_type: Enemy(RepeaterRightArm),
         ),
         health_component: (
             max_value: 2000,

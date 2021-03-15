@@ -1,11 +1,11 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 
+use crate::entities::SpawnableType;
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumableComponent {
     pub sound_effect: String,
-    #[serde(default = "des_speed")]
-    pub speed: f32,
     #[serde(default)]
     pub health_value: f32,
     #[serde(default)]
@@ -14,11 +14,8 @@ pub struct ConsumableComponent {
     pub money_value: usize,
     #[serde(default)]
     pub armor_value: usize,
-    pub sprite_index: usize,
-}
-
-fn des_speed() -> f32 {
-    35.0
+    pub price: usize,
+    pub spawnable_type: SpawnableType,
 }
 
 impl Component for ConsumableComponent {

@@ -7,7 +7,7 @@ use crate::{
     entities::{
         initialize_arena_barriers, initialize_background, initialize_defense,
         initialize_enemy_spawner, initialize_planet, initialize_side_panels, initialize_spaceship,
-        initialize_status_bars, initialize_store,
+        initialize_status_bars, initialize_store_icons,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
     states::PausedState,
@@ -47,11 +47,7 @@ impl Default for MainGameState {
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::EnemyTargetSystem, "enemy_target_system", &[])
-                .with(
-                    systems::AutoChildEnemySpawnerSystem,
-                    "auto_child_enemy_spawner_system",
-                    &[],
-                )
+                .with(systems::AutoSpawnerSystem, "auto_spawner_system", &[])
                 .with(
                     systems::BarrelRollAbilitySystem::default(),
                     "barrel_roll_ability_system",
@@ -156,7 +152,7 @@ impl Default for MainGameState {
                     "play_audio_system",
                     &[],
                 )
-                .with(systems::OpaqueFadeSystem, "opaque_fade_system", &[])
+                .with(systems::FadeSystem, "fade_system", &[])
                 .build(),
         }
     }
@@ -198,7 +194,8 @@ impl SimpleState for MainGameState {
         initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
         initialize_enemy_spawner(world);
         initialize_arena_barriers(world);
-        initialize_store(world);
+        //initialize_store(world);
+        initialize_store_icons(world, spritesheets.spritesheets["items"].clone());
         initialise_camera(world);
 
         world.insert(DebugLines::new());

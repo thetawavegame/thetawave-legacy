@@ -1,5 +1,5 @@
 use crate::components::{
-    AnimationComponent, AnimationType, Motion2DComponent, OpaqueFadeComponent,
+    AnimationComponent, AnimationType, ColorChannelChange, FadeComponent, Motion2DComponent,
 };
 use amethyst::{
     assets::Handle,
@@ -33,6 +33,7 @@ pub fn initialize_background(world: &mut World, sprite_sheet_handle: Handle<Spri
         speed: Vector2::new(120.0, 0.0),
         max_speed: Vector2::new(120.0, 0.0),
         immovable: false,
+        target_position: None,
     };
 
     let animation = AnimationComponent {
@@ -47,11 +48,18 @@ pub fn initialize_background(world: &mut World, sprite_sheet_handle: Handle<Spri
 
     let current_color_value = 0.05;
 
-    let opaque_fade = OpaqueFadeComponent {
-        color_change: 0.00005,
-        max_color_value: 0.58,
-        min_color_value: 0.0,
-        current_color_value,
+    let rgb_change = ColorChannelChange {
+        delta_value: 0.00005,
+        value: current_color_value,
+        max_value: 0.58,
+        min_value: 0.0,
+    };
+
+    let fade = FadeComponent {
+        red_change: Some(rgb_change.clone()),
+        green_change: Some(rgb_change.clone()),
+        blue_change: Some(rgb_change),
+        alpha_change: None,
     };
 
     world
@@ -66,6 +74,6 @@ pub fn initialize_background(world: &mut World, sprite_sheet_handle: Handle<Spri
             current_color_value,
             1.0,
         )))
-        .with(opaque_fade)
+        .with(fade)
         .build();
 }

@@ -1,13 +1,10 @@
 use crate::{
-    components::{AutoChildEnemySpawnerComponent, EnemySpawnerTag, SpawnerComponent},
-    entities::{spawn_enemy, spawn_repeater},
-    resources::{
-        BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource,
-        ThrustersResource,
-    },
+    components::{EnemySpawnerTag, SpawnerComponent},
+    entities::{spawn_enemy, spawn_repeater, SpawnableType},
+    resources::{BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource},
 };
 use amethyst::{
-    core::{math::Vector3, timing::Time, Transform},
+    core::{timing::Time, Transform},
     ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, Write, WriteStorage},
 };
 
@@ -24,7 +21,6 @@ impl<'s> System<'s> for SpawnerSystem {
         Write<'s, PhaseManagerResource>,
         ReadExpect<'s, LazyUpdate>,
         ReadExpect<'s, EnemiesResource>,
-        ReadExpect<'s, ThrustersResource>,
     );
 
     fn run(
@@ -39,7 +35,6 @@ impl<'s> System<'s> for SpawnerSystem {
             mut phase_manager,
             lazy_update,
             enemies_resource,
-            thrusters_resource,
         ): Self::SystemData,
     ) {
         if phase_manager.phase_idx < phase_manager.last_phase {
@@ -51,21 +46,23 @@ impl<'s> System<'s> for SpawnerSystem {
                         if let Some((new_x, Some(enemy_type))) =
                             spawner.spawn_with_position(time.delta_seconds())
                         {
-                            let spawn_position = Vector3::new(
+                            let mut spawn_transform = Transform::default();
+                            spawn_transform.set_translation_xyz(
                                 new_x,
                                 transform.translation()[1],
                                 transform.translation()[2],
                             );
 
-                            spawn_enemy(
-                                enemy_type,
-                                spawn_position,
-                                &sprite_sheets_resource,
-                                &enemies_resource,
-                                &thrusters_resource,
-                                &entities,
-                                &lazy_update,
-                            );
+                            if let SpawnableType::Enemy(enemy_type) = enemy_type {
+                                spawn_enemy(
+                                    enemy_type,
+                                    spawn_transform,
+                                    &enemies_resource,
+                                    &sprite_sheets_resource,
+                                    &entities,
+                                    &lazy_update,
+                                );
+                            }
                         }
                     }
                 }
@@ -78,7 +75,6 @@ impl<'s> System<'s> for SpawnerSystem {
                                 spawn_repeater(
                                     &sprite_sheets_resource,
                                     &enemies_resource,
-                                    &thrusters_resource,
                                     &entities,
                                     &lazy_update,
                                 );
@@ -93,54 +89,6 @@ impl<'s> System<'s> for SpawnerSystem {
 
                 PhaseType::Rest => {}
             }
-        }
-    }
-}
-
-pub struct AutoChildEnemySpawnerSystem;
-
-impl<'s> System<'s> for AutoChildEnemySpawnerSystem {
-    type SystemData = (
-        ReadStorage<'s, Transform>,
-        WriteStorage<'s, AutoChildEnemySpawnerComponent>,
-        Read<'s, Time>,
-        ReadExpect<'s, LazyUpdate>,
-        ReadExpect<'s, EnemiesResource>,
-        ReadExpect<'s, ThrustersResource>,
-        ReadExpect<'s, SpriteSheetsResource>,
-        Entities<'s>,
-    );
-
-    fn run(
-        &mut self,
-        (
-            transforms,
-            mut auto_child_enemy_spawners,
-            time,
-            lazy_update,
-            enemies_resource,
-            thrusters_resource,
-            sprite_sheets_resource,
-            entities,
-        ): Self::SystemData,
-    ) {
-        for (transform, auto_child_enemy_spawner) in
-            (&transforms, &mut auto_child_enemy_spawners).join()
-        {
-            let spawn_position = Vector3::new(
-                transform.translation().x,
-                transform.translation().y,
-                transform.translation().z,
-            );
-            auto_child_enemy_spawner.spawn_when_ready(
-                time.delta_seconds(),
-                spawn_position,
-                &sprite_sheets_resource,
-                &enemies_resource,
-                &thrusters_resource,
-                &entities,
-                &lazy_update,
-            );
         }
     }
 }

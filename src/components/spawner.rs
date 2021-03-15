@@ -1,11 +1,11 @@
 use crate::{
     constants::{ARENA_MAX_X, ARENA_MIN_X, ARENA_SPAWN_OFFSET},
-    entities::EntityType,
+    entities::SpawnableType,
 };
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use rand::{thread_rng, Rng};
 
-pub type SpawnProbabilities = Vec<(Option<EntityType>, f32)>;
+pub type SpawnProbabilities = Vec<(Option<SpawnableType>, f32)>;
 
 pub struct SpawnerComponent {
     probabilities: SpawnProbabilities,
@@ -35,7 +35,7 @@ impl SpawnerComponent {
         }
     }
     /// spawn random item with position, if timer has expired
-    pub fn spawn_with_position(&mut self, dt: f32) -> Option<(f32, &Option<EntityType>)> {
+    pub fn spawn_with_position(&mut self, dt: f32) -> Option<(f32, &Option<SpawnableType>)> {
         if self.timer > 0.0 {
             self.timer -= dt;
             None
@@ -67,7 +67,7 @@ fn calculate_total_probabilities(probs: &SpawnProbabilities) -> f32 {
     probs.iter().fold(0.0, |sum, item| sum + item.1)
 }
 
-pub fn choose_random_entity(probs: &SpawnProbabilities) -> &Option<EntityType> {
+pub fn choose_random_entity(probs: &SpawnProbabilities) -> &Option<SpawnableType> {
     choose_entity_precalculated(calculate_total_probabilities(&probs), &probs)
 }
 
@@ -80,7 +80,7 @@ fn choose_position() -> f32 {
 fn choose_entity_precalculated(
     total_probs: f32,
     probs: &SpawnProbabilities,
-) -> &Option<EntityType> {
+) -> &Option<SpawnableType> {
     // pos is in [0..total_probs)
     let pos = thread_rng().gen::<f32>() * total_probs;
     let mut sum = 0.0;
