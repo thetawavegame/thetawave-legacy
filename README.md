@@ -9,13 +9,11 @@ channel and my write-up about using Amethyst on my [website](https://micronote.t
 
 ## Game Introduction
 
-In this game you control a spaceship. Your goal is to defend an objective from
-the incoming invasion of enemy spaceships while not letting your health deplete
-in the process. You can shoot the enemies with your spaceships blasters or ram
-into them with your barrel roll dealing damage to yourself in the process. How
-long can you last?
+In Theta Wave, you play as a spaceship defending an objective. The goal of the
+game is to survive levels by destroying enemies, collecting consumables, buying
+helpful things, and defeating the final boss.
 
-![gameplay of theta wave](book/src/assets/missile_launchers_large.gif)
+![gameplay of theta wave](book/src/assets/gameplay.gif)
 
 ## Documentation
 
