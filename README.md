@@ -20,6 +20,12 @@ Documentation for Theta Wave is [available online](https://amethyst.github.io/th
 You can find out more about the game from its [gameplay](https://amethyst.github.io/theta-wave/gameplay.html)
 to contributing [code](https://amethyst.github.io/theta-wave/contributing.html).
 
+## Build and Run
+
+If you are on MacOS remove the `vulkan` feature in Cargo.toml and replace with `metal`.
+
+To build and run: `cargo run --release`
+
 ## Credits
 
 - Font: [Space Madness](https://mozz.itch.io/space-madness) by Robert Frye -
