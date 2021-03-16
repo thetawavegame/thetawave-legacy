@@ -3,9 +3,7 @@
 ## Project Introduction
 
 This game was made with the [Amethyst](https://amethyst.rs/) engine. It is
-inspired by games like Raiden and The Binding of Isaac. Checkout my development
-journey on my [youtube](https://www.youtube.com/watch?v=OtN5vL80u4Q&list=PL4Dmmk1VXA5p0tVmxNUr8j0ly5ERbL1hN)
-channel and my write-up about using Amethyst on my [website](https://micronote.tech/2019/06/Space-Shooter-Game/).
+inspired by games like Raiden and The Binding of Isaac.
 
 ## Game Introduction
 
