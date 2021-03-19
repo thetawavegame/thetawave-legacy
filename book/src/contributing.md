@@ -77,7 +77,7 @@ Once you're able to successfully build the game, you can start writing some code
 
 ### Write the patch, PR, and request a review
 
-Before writing your patch, branch off `develop`:
+Before writing your patch, branch off `master`:
 
 ```none
 git checkout -b <branch-name> develop
