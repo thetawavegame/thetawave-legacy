@@ -235,7 +235,6 @@
         )),
         enemy_component: (
             defense_damage: 25,
-            max_speed: 25,
             loot_probs: [
                 (None, 0.5),
                 (Some(Consumable(HealthWrench)), 0.03),
@@ -299,7 +298,6 @@
         ),
         enemy_component: (
             defense_damage: 25,
-            max_speed: 10,
             loot_probs: [
                 (None, 0.5),
                 (Some(Consumable(HealthWrench)), 0.03),
@@ -323,7 +321,7 @@
             velocity: [0.0, 0.0],
             acceleration: [0.0, 4.0],
             deceleration: [2.0, 2.0],
-            speed: [10, 10],
+            speed: [20, 20],
             max_speed: [100.0, 100.0],
             angular_velocity: 0.0,
             angular_acceleration: 0.0,
@@ -370,7 +368,6 @@
         enemy_component: (
             defense_damage: 10,
             collision_damage: 200,
-            max_speed: 45,
             loot_probs: [
                 (None, 1.0),
             ],
@@ -637,7 +634,6 @@
         ),
         enemy_component: (
             defense_damage: 0,
-            current_velocity_y: -30,
             loot_probs: [
                 (None, 0.0),
                 (Some(Consumable(HealthWrench)), 0.04),

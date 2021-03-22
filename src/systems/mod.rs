@@ -44,7 +44,7 @@ pub use self::{
     enemy_destroyed::EnemyDestroyedSystem,
     enemy_spawn::SpawnerSystem,
     fade::FadeSystem,
-    gamemaster::GameMasterSystem,
+    gamemaster::PhaseManagerSystem,
     manualblaster_system::ManualBlasterSystem,
     motion2d::{EnemyMotion2DSystem, EnemyTargetSystem, Motion2DSystem},
     planets::PlanetsSystem,

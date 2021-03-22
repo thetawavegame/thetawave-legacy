@@ -1,5 +1,5 @@
 use crate::{
-    entities::{ConsumableType, EffectType, EnemyType, ItemType},
+    entities::{ConsumableType, EffectType, EnemyType, ItemType, SpawnableType},
     resources::{
         ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
     },
@@ -220,6 +220,64 @@ pub fn spawn_effect(
 
             lazy_update.insert(effect_entity, tint_component);
             lazy_update.insert(effect_entity, fade_component);
+        }
+    }
+}
+
+pub fn spawn_spawnable(
+    spawnable_type: &SpawnableType,
+    spawn_transform: Transform,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    enemies_resource: &ReadExpect<EnemiesResource>,
+    items_resource: &ReadExpect<ItemsResource>,
+    effects_resource: &ReadExpect<EffectsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    match spawnable_type {
+        SpawnableType::Consumable(consumable_type) => {
+            spawn_consumable(
+                consumable_type,
+                spawn_transform,
+                consumables_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Enemy(enemy_type) => {
+            spawn_enemy(
+                enemy_type,
+                spawn_transform,
+                enemies_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Item(item_type) => {
+            spawn_item(
+                item_type,
+                spawn_transform,
+                items_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Effect(effect_type) => {
+            spawn_effect(
+                effect_type,
+                spawn_transform,
+                effects_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
         }
     }
 }

@@ -1,0 +1,82 @@
+(
+    period: 7.0,
+    timer: 0.0,
+    formations: [
+        (
+            formation_spawnables: [
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [160, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [180, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [200, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [140, 330],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [160, 330],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [180, 330],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [200, 330],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [220, 330],
+                ),
+                (
+                    spawnable_type: Enemy(Pawn),
+                    position: [100, 360],
+                ),
+                (
+                    spawnable_type: Enemy(Pawn),
+                    position: [260, 360],
+                ),
+            ]
+        ),
+        (
+            formation_spawnables: [
+                (
+                    spawnable_type: Enemy(MissileLauncher),
+                    position: [100, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Pawn),
+                    position: [140, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [160, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [180, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Drone),
+                    position: [200, 300],
+                ),
+                (
+                    spawnable_type: Enemy(Pawn),
+                    position: [220, 300],
+                ),
+                (
+                    spawnable_type: Enemy(MissileLauncher),
+                    position: [260, 300],
+                ),
+            ]
+        )
+    ],
+)

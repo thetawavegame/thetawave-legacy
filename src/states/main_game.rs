@@ -40,7 +40,7 @@ impl Default for MainGameState {
             dispatcher: DispatcherBuilder::new()
                 .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
-                .with(systems::GameMasterSystem, "gamemaster_system", &[])
+                .with(systems::PhaseManagerSystem, "phase_manager_system", &[])
                 .with(systems::EnemyBehaviorSystem, "enemy_behavior_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
