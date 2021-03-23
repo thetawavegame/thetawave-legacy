@@ -12,7 +12,6 @@ mod despawn;
 mod enemy_behavior;
 mod enemy_collisions;
 mod enemy_destroyed;
-mod enemy_spawn;
 mod fade;
 mod gamemaster;
 mod manualblaster_system;
@@ -22,6 +21,7 @@ mod play_audio;
 mod spaceship;
 mod spaceship_collisions;
 mod spaceship_movement;
+mod spawner;
 mod stat_tracker;
 mod status_bar;
 mod store;
@@ -42,7 +42,6 @@ pub use self::{
         EnemyPlayerCollisionSystem,
     },
     enemy_destroyed::EnemyDestroyedSystem,
-    enemy_spawn::SpawnerSystem,
     fade::FadeSystem,
     gamemaster::PhaseManagerSystem,
     manualblaster_system::ManualBlasterSystem,
@@ -56,6 +55,7 @@ pub use self::{
         SpaceshipItemCollisionSystem,
     },
     spaceship_movement::SpaceshipMovementSystem,
+    spawner::SpawnerSystem,
     stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem,
     store::StoreSystem,

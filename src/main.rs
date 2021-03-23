@@ -44,6 +44,7 @@ fn main() -> amethyst::Result<()> {
     let data_path = app_root.join("assets").join("data");
 
     let display_config_path = config_path.join("display_config_960.ron");
+    //let display_config_path = config_path.join("display_fullscreen.ron");
     let bindings_path = config_path.join("bindings_config.ron");
 
     let debug_lines =

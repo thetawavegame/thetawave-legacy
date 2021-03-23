@@ -44,7 +44,8 @@ pub enum SpawnableType {
 pub enum EnemyType {
     Pawn,
     Drone,
-    Strafer,
+    StraferRight,
+    StraferLeft,
     Hauler, //ally
     MissileLauncher,
     Missile,
