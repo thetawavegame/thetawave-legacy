@@ -1,9 +1,9 @@
 (
     phase_map: [
         (
-            phase_type: FormationInvasion,
+            phase_type: RandomInvasion,
             boss_type: None,
-            length: 120,
+            length: 60,
             boss_spawned: false,
         ),
         (
@@ -13,9 +13,9 @@
             boss_spawned: false,
         ),
         (
-            phase_type: RandomInvasion,
+            phase_type: FormationInvasion,
             boss_type: None,
-            length: 60,
+            length: 120,
             boss_spawned: false,
         ),
         (

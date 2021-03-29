@@ -28,9 +28,9 @@ pub mod states;
 pub mod systems;
 
 use resources::{
-    ConsumablesResource, DebugLinesConfig, EffectsResource, EnemiesResource, FormationsResource,
+    ConsumablesResource, DebugLinesConfig, EffectsResource, EnemiesResource,
     GameParametersResource, ItemsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
-    SpriteSheetsConfig, StoreResource,
+    SpawnerResource, SpriteSheetsConfig, StoreResource,
 };
 use states::MainGameState;
 
@@ -72,7 +72,7 @@ fn main() -> amethyst::Result<()> {
     let game_parameters =
         <GameParametersResource as Config>::load(data_path.join("game_parameters.ron"))
             .expect("failed to load data file: game_parameters.ron");
-    let formations = <FormationsResource as Config>::load(data_path.join("formations.ron"))
+    let spawner = <SpawnerResource as Config>::load(data_path.join("spawner.ron"))
         .expect("failed to load data file: formations.ron");
 
     let game_data = GameDataBuilder::default()
@@ -105,7 +105,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(phases)
         .with_resource(store)
         .with_resource(game_parameters)
-        .with_resource(formations)
+        .with_resource(spawner)
         .build(game_data)?;
 
     game.run();

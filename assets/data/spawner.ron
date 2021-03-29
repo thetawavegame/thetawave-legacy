@@ -1,7 +1,7 @@
 (
     period: 10.0,
     timer: 0.0,
-    formations: [
+    formation_pool: [
         (
             formation_spawnables: [
                 (
@@ -90,5 +90,15 @@
                 ),
             ]
         )
+    ],
+    random_pool: [
+        (
+            spawnable_type: Some(Enemy(Drone)),
+            weight: 1.0,
+        ),
+        (
+            spawnable_type: Some(Consumable(Money1)),
+            weight: 1.0
+        ),
     ],
 )
