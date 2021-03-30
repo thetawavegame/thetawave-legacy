@@ -12,9 +12,9 @@ mod enemy_behavior;
 mod enemy_collisions;
 mod enemy_destroyed;
 mod fade;
-mod gamemaster;
 mod manualblaster_system;
 mod motion2d;
+mod phase_manager;
 mod planets;
 mod play_audio;
 mod spaceship;
@@ -41,9 +41,9 @@ pub use self::{
     },
     enemy_destroyed::EnemyDestroyedSystem,
     fade::FadeSystem,
-    gamemaster::PhaseManagerSystem,
     manualblaster_system::ManualBlasterSystem,
     motion2d::{EnemyMotion2DSystem, EnemyTargetSystem, Motion2DSystem},
+    phase_manager::PhaseManagerSystem,
     planets::PlanetsSystem,
     play_audio::PlayAudioSystem,
     spaceship::SpaceshipSystem,

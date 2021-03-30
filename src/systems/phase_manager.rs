@@ -11,11 +11,11 @@ impl<'s> System<'s> for PhaseManagerSystem {
 
     fn run(&mut self, (mut phase_manager, time): Self::SystemData) {
         match phase_manager.phase_map[phase_manager.phase_idx].phase_type {
-            PhaseType::RandomInvasion => {
+            PhaseType::InvasionRandom(_) => {
                 phase_manager.update(time.delta_seconds());
             }
 
-            PhaseType::FormationInvasion => {
+            PhaseType::InvasionFormation(_) => {
                 phase_manager.update(time.delta_seconds());
             }
 

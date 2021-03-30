@@ -2,7 +2,8 @@ use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_SPAWN_OFFSET, SPAWNER_Y_OFFSET},
     entities::{spawn::spawn_spawnable, SpawnableType},
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, EnemiesResource, InvasionFormationPool,
+        InvasionRandomPool, ItemsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -11,8 +12,8 @@ use amethyst::{
 };
 
 use rand::Rng;
-
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct FormationSpawnable {
@@ -70,8 +71,8 @@ pub struct RandomSpawnable {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct SpawnerResource {
-    pub random_pool: Vec<RandomSpawnable>, //TODO: change to HashMap of Vec<SpawnableType> for AsteroidField, Drones, etc.
-    pub formation_pool: Vec<Formation>, //TODO: change to HashMap of Vec<Formation> for Level1Formations, Level2Formations, etc.
+    pub random_pools: HashMap<InvasionRandomPool, Vec<RandomSpawnable>>, //TODO: change to HashMap of Vec<SpawnableType> for AsteroidField, Drones, etc.
+    pub formation_pools: HashMap<InvasionFormationPool, Vec<Formation>>, //TODO: change to HashMap of Vec<Formation> for Level1Formations, Level2Formations, etc.
     pub timer: f32,
 }
 
@@ -82,15 +83,16 @@ impl SpawnerResource {
         ARENA_MIN_X + ARENA_SPAWN_OFFSET + rand::thread_rng().gen::<f32>() * (max_width - min_width)
     }
 
-    fn choose_random_spawnable(&self) -> &RandomSpawnable {
-        let prob_space = self
-            .random_pool
+    fn choose_random_spawnable(&self, random_pool_type: &InvasionRandomPool) -> &RandomSpawnable {
+        let random_pool = &self.random_pools[random_pool_type];
+
+        let prob_space = random_pool
             .iter()
             .fold(0.0, |sum, rand_spawnable| sum + rand_spawnable.weight);
 
         let pos = rand::thread_rng().gen::<f32>() * prob_space;
         let mut sum = 0.0;
-        for random_spawnable in self.random_pool.iter() {
+        for random_spawnable in random_pool.iter() {
             sum += random_spawnable.weight;
             if sum > pos {
                 return &random_spawnable;
@@ -101,6 +103,7 @@ impl SpawnerResource {
 
     pub fn spawn_random_spawnable_when_ready(
         &mut self,
+        random_pool_type: &InvasionRandomPool,
         dt: f32,
         consumables_resource: &ReadExpect<ConsumablesResource>,
         enemies_resource: &ReadExpect<EnemiesResource>,
@@ -113,7 +116,7 @@ impl SpawnerResource {
         self.timer -= dt;
 
         if self.timer <= 0.0 {
-            let random_spawnable = self.choose_random_spawnable();
+            let random_spawnable = self.choose_random_spawnable(random_pool_type);
             let mut spawn_transform = Transform::default();
             spawn_transform.set_translation_xyz(
                 Self::choose_spawn_position(),
@@ -139,15 +142,16 @@ impl SpawnerResource {
         }
     }
 
-    fn choose_random_formation(&self) -> &Formation {
-        let prob_space = self
-            .formation_pool
+    fn choose_random_formation(&self, formation_pool_type: &InvasionFormationPool) -> &Formation {
+        let formation_pool = &self.formation_pools[formation_pool_type];
+
+        let prob_space = formation_pool
             .iter()
             .fold(0.0, |sum, formation| sum + formation.weight);
 
         let pos = rand::thread_rng().gen::<f32>() * prob_space;
         let mut sum = 0.0;
-        for formation in self.formation_pool.iter() {
+        for formation in formation_pool.iter() {
             sum += formation.weight;
             if sum > pos {
                 return &formation;
@@ -158,6 +162,7 @@ impl SpawnerResource {
 
     pub fn spawn_random_formation_when_ready(
         &mut self,
+        formation_pool_type: &InvasionFormationPool,
         dt: f32,
         consumables_resource: &ReadExpect<ConsumablesResource>,
         enemies_resource: &ReadExpect<EnemiesResource>,
@@ -170,7 +175,7 @@ impl SpawnerResource {
         self.timer -= dt;
 
         if self.timer <= 0.0 {
-            let formation = self.choose_random_formation();
+            let formation = self.choose_random_formation(formation_pool_type);
             formation.spawn_formation(
                 consumables_resource,
                 enemies_resource,

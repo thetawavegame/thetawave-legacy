@@ -1,9 +1,18 @@
 use serde::{Deserialize, Serialize};
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum InvasionRandomPool {
+    Level1,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum InvasionFormationPool {
+    Level1,
+}
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum PhaseType {
-    RandomInvasion,
-    FormationInvasion,
+    InvasionRandom(InvasionRandomPool),
+    InvasionFormation(InvasionFormationPool),
     Rest,
     Boss,
 }

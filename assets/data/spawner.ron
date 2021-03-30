@@ -1,121 +1,125 @@
 (
     timer: 0.0,
-    formation_pool: [
-        (
-            formation_spawnables: [
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [160, 300],
-                ),
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [180, 300],
-                ),
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [200, 300],
-                ),
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [160, 330],
-                ),
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [180, 330],
-                ),
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [200, 330],
-                ),
-                (
-                    spawnable_type: Enemy(Pawn),
-                    position: [100, 380],
-                ),
-                (
-                    spawnable_type: Enemy(Pawn),
-                    position: [260, 380],
-                ),
-            ],
-            weight: 1.5,
-            period: 10.0,
-        ),
-        (
-            formation_spawnables: [
-                (
-                    spawnable_type: Enemy(Pawn),
-                    position: [120, 340],
-                ),
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [150, 340],
-                ),
-                (
-                    spawnable_type: Enemy(MissileLauncher),
-                    position: [180, 300],
-                ),
-                (
-                    spawnable_type: Enemy(Drone),
-                    position: [210, 340],
-                ),
-                (
-                    spawnable_type: Enemy(Pawn),
-                    position: [240, 340],
-                ),
-            ],
-            weight: 0.8,
-            period: 12.0,
-        ),
-        (
-            formation_spawnables: [
-                (
-                    spawnable_type: Enemy(StraferRight),
-                    position: [180, 300],
-                ),
-                (
-                    spawnable_type: Enemy(StraferLeft),
-                    position: [180, 320],
-                ),
-                (
-                    spawnable_type: Enemy(StraferRight),
-                    position: [170, 340],
-                ),
-                (
-                    spawnable_type: Enemy(StraferLeft),
-                    position: [190, 360],
-                ),
-                (
-                    spawnable_type: Enemy(StraferRight),
-                    position: [160, 380],
-                ),
-                (
-                    spawnable_type: Enemy(StraferLeft),
-                    position: [200, 400],
-                ),
-            ],
-            weight: 1.0,
-            period: 8.0,
-        )
-    ],
-    random_pool: [
-        (
-            spawnable_type: Some(Enemy(Drone)),
-            weight: 1.0,
-            period: 1.5,
-        ),
-        (
-            spawnable_type: Some(Enemy(Pawn)),
-            weight: 0.9,
-            period: 2.0,
-        ),
-        (
-            spawnable_type: Some(Consumable(Money1)),
-            weight: 0.2,
-            period: 0.3,
-        ),
-        (
-            spawnable_type: None,
-            weight: 0.5,
-            period: 0.3,
-        )
-    ],
+    formation_pools: {
+        Level1: [
+            (
+                formation_spawnables: [
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [160, 300],
+                    ),
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [180, 300],
+                    ),
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [200, 300],
+                    ),
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [160, 330],
+                    ),
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [180, 330],
+                    ),
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [200, 330],
+                    ),
+                    (
+                        spawnable_type: Enemy(Pawn),
+                        position: [100, 380],
+                    ),
+                    (
+                        spawnable_type: Enemy(Pawn),
+                        position: [260, 380],
+                    ),
+                ],
+                weight: 1.5,
+                period: 10.0,
+            ),
+            (
+                formation_spawnables: [
+                    (
+                        spawnable_type: Enemy(Pawn),
+                        position: [120, 340],
+                    ),
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [150, 340],
+                    ),
+                    (
+                        spawnable_type: Enemy(MissileLauncher),
+                        position: [180, 300],
+                    ),
+                    (
+                        spawnable_type: Enemy(Drone),
+                        position: [210, 340],
+                    ),
+                    (
+                        spawnable_type: Enemy(Pawn),
+                        position: [240, 340],
+                    ),
+                ],
+                weight: 0.8,
+                period: 12.0,
+            ),
+            (
+                formation_spawnables: [
+                    (
+                        spawnable_type: Enemy(StraferRight),
+                        position: [180, 300],
+                    ),
+                    (
+                        spawnable_type: Enemy(StraferLeft),
+                        position: [180, 320],
+                    ),
+                    (
+                        spawnable_type: Enemy(StraferRight),
+                        position: [170, 340],
+                    ),
+                    (
+                        spawnable_type: Enemy(StraferLeft),
+                        position: [190, 360],
+                    ),
+                    (
+                        spawnable_type: Enemy(StraferRight),
+                        position: [160, 380],
+                    ),
+                    (
+                        spawnable_type: Enemy(StraferLeft),
+                        position: [200, 400],
+                    ),
+                ],
+                weight: 1.0,
+                period: 8.0,
+            )
+        ],
+    },
+    random_pools: {
+        Level1: [
+            (
+                spawnable_type: Some(Enemy(Drone)),
+                weight: 1.0,
+                period: 1.5,
+            ),
+            (
+                spawnable_type: Some(Enemy(Pawn)),
+                weight: 0.9,
+                period: 2.0,
+            ),
+            (
+                spawnable_type: Some(Consumable(Money1)),
+                weight: 0.2,
+                period: 0.3,
+            ),
+            (
+                spawnable_type: None,
+                weight: 0.5,
+                period: 0.3,
+            )
+        ],
+    }
 )

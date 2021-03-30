@@ -2,8 +2,9 @@ use crate::{
     components::AutoSpawnerComponent,
     entities::spawn_repeater,
     resources::{
-        BossType, ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource,
-        PhaseManagerResource, PhaseType, SpawnerResource, SpriteSheetsResource,
+        BossType, ConsumablesResource, EffectsResource, EnemiesResource, InvasionFormationPool,
+        InvasionRandomPool, ItemsResource, PhaseManagerResource, PhaseType, SpawnerResource,
+        SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -46,28 +47,32 @@ impl<'s> System<'s> for SpawnerSystem {
         ): Self::SystemData,
     ) {
         if phase_manager.phase_idx < phase_manager.last_phase {
-            match phase_manager.phase_map[phase_manager.phase_idx].phase_type {
-                PhaseType::RandomInvasion => spawner_resource.spawn_random_spawnable_when_ready(
-                    time.delta_seconds(),
-                    &consumables_resource,
-                    &enemies_resource,
-                    &items_resource,
-                    &effects_resource,
-                    &spritesheets_resource,
-                    &entities,
-                    &lazy_update,
-                ),
+            match &phase_manager.phase_map[phase_manager.phase_idx].phase_type {
+                PhaseType::InvasionRandom(random_pool_type) => spawner_resource
+                    .spawn_random_spawnable_when_ready(
+                        &random_pool_type,
+                        time.delta_seconds(),
+                        &consumables_resource,
+                        &enemies_resource,
+                        &items_resource,
+                        &effects_resource,
+                        &spritesheets_resource,
+                        &entities,
+                        &lazy_update,
+                    ),
 
-                PhaseType::FormationInvasion => spawner_resource.spawn_random_formation_when_ready(
-                    time.delta_seconds(),
-                    &consumables_resource,
-                    &enemies_resource,
-                    &items_resource,
-                    &effects_resource,
-                    &spritesheets_resource,
-                    &entities,
-                    &lazy_update,
-                ),
+                PhaseType::InvasionFormation(formation_pool_type) => spawner_resource
+                    .spawn_random_formation_when_ready(
+                        &&formation_pool_type,
+                        time.delta_seconds(),
+                        &consumables_resource,
+                        &enemies_resource,
+                        &items_resource,
+                        &effects_resource,
+                        &spritesheets_resource,
+                        &entities,
+                        &lazy_update,
+                    ),
 
                 PhaseType::Boss => {
                     match phase_manager.phase_map[phase_manager.phase_idx].boss_type {

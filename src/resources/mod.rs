@@ -13,7 +13,9 @@ pub mod spawner;
 pub mod store;
 
 pub use self::game_parameters::GameParametersResource;
-pub use self::phases::{BossType, Phase, PhaseManagerResource, PhaseType};
+pub use self::phases::{
+    BossType, InvasionFormationPool, InvasionRandomPool, Phase, PhaseManagerResource, PhaseType,
+};
 pub use self::spawnables::{
     ConsumableEntityData, ConsumablesResource, EffectEntityData, EffectsResource, EnemiesResource,
     EnemyEntityData, ItemEntityData, ItemsResource,
