@@ -1,13 +1,13 @@
 use crate::{
-    components::{EnemySpawnerTag, SpawnerComponent},
-    entities::{spawn_enemy, spawn_repeater, SpawnableType},
+    components::AutoSpawnerComponent,
+    entities::spawn_repeater,
     resources::{
         BossType, ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource,
         PhaseManagerResource, PhaseType, SpawnerResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
-    core::{timing::Time, Transform},
+    core::{timing::Time, transform::Transform},
     ecs::{
         Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, Write, WriteExpect,
         WriteStorage,
@@ -19,9 +19,6 @@ pub struct SpawnerSystem;
 impl<'s> System<'s> for SpawnerSystem {
     type SystemData = (
         Entities<'s>,
-        WriteStorage<'s, Transform>,
-        WriteStorage<'s, SpawnerComponent>,
-        ReadStorage<'s, EnemySpawnerTag>,
         Read<'s, Time>,
         WriteExpect<'s, SpawnerResource>,
         ReadExpect<'s, SpriteSheetsResource>,
@@ -37,9 +34,6 @@ impl<'s> System<'s> for SpawnerSystem {
         &mut self,
         (
             entities,
-            mut transforms,
-            mut spawners,
-            spawner_tag,
             time,
             mut spawner_resource,
             spritesheets_resource,
@@ -97,6 +91,55 @@ impl<'s> System<'s> for SpawnerSystem {
 
                 PhaseType::Rest => {}
             }
+        }
+    }
+}
+
+pub struct AutoSpawnerSystem;
+
+impl<'s> System<'s> for AutoSpawnerSystem {
+    type SystemData = (
+        ReadStorage<'s, Transform>,
+        WriteStorage<'s, AutoSpawnerComponent>,
+        Read<'s, Time>,
+        ReadExpect<'s, LazyUpdate>,
+        ReadExpect<'s, EnemiesResource>,
+        ReadExpect<'s, ConsumablesResource>,
+        ReadExpect<'s, ItemsResource>,
+        ReadExpect<'s, EffectsResource>,
+        ReadExpect<'s, SpriteSheetsResource>,
+        Entities<'s>,
+    );
+
+    fn run(
+        &mut self,
+        (
+            transforms,
+            mut auto_child_entity_spawners,
+            time,
+            lazy_update,
+            enemies_resource,
+            consumables_resource,
+            items_resource,
+            effects_resource,
+            sprite_sheets_resource,
+            entities,
+        ): Self::SystemData,
+    ) {
+        for (transform, auto_child_entity_spawner) in
+            (&transforms, &mut auto_child_entity_spawners).join()
+        {
+            auto_child_entity_spawner.spawn_when_ready(
+                time.delta_seconds(),
+                transform.clone(),
+                &sprite_sheets_resource,
+                &enemies_resource,
+                &consumables_resource,
+                &items_resource,
+                &effects_resource,
+                &entities,
+                &lazy_update,
+            );
         }
     }
 }

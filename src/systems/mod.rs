@@ -5,7 +5,6 @@ mod ability;
 mod animation;
 mod autofire_system;
 mod boss;
-mod child_spawner;
 mod collision_detection;
 mod defense;
 mod despawn;
@@ -32,7 +31,6 @@ pub use self::{
     animation::AnimationSystem,
     autofire_system::AutoFireSystem,
     boss::BossSystem,
-    child_spawner::AutoSpawnerSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
     despawn::DespawnAtBorderSystem,
@@ -55,7 +53,7 @@ pub use self::{
         SpaceshipItemCollisionSystem,
     },
     spaceship_movement::SpaceshipMovementSystem,
-    spawner::SpawnerSystem,
+    spawner::{AutoSpawnerSystem, SpawnerSystem},
     stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem,
     store::StoreSystem,

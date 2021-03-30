@@ -5,9 +5,9 @@ use crate::{
         CAMERA_Z,
     },
     entities::{
-        initialize_arena_barriers, initialize_background, initialize_defense,
-        initialize_enemy_spawner, initialize_planet, initialize_side_panels, initialize_spaceship,
-        initialize_status_bars, initialize_store_icons,
+        initialize_arena_barriers, initialize_background, initialize_defense, initialize_planet,
+        initialize_side_panels, initialize_spaceship, initialize_status_bars,
+        initialize_store_icons,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
     states::PausedState,
@@ -192,9 +192,7 @@ impl SimpleState for MainGameState {
         );
         initialize_background(world, spritesheets.spritesheets["backgrounds"].clone());
         initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
-        initialize_enemy_spawner(world);
         initialize_arena_barriers(world);
-        //initialize_store(world);
         initialize_store_icons(world, spritesheets.spritesheets["items"].clone());
         initialise_camera(world);
 

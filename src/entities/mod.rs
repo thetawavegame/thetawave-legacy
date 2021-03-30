@@ -4,9 +4,7 @@ pub mod backgrounds;
 pub mod barriers;
 pub mod blast;
 pub mod boss;
-pub mod consumable;
 pub mod defense;
-pub mod enemy_spawner;
 pub mod planet;
 pub mod side_panels;
 pub mod spaceship;
@@ -20,13 +18,14 @@ pub use self::{
     barriers::initialize_arena_barriers,
     blast::spawn_blasts,
     boss::spawn_repeater,
-    consumable::spawn_random_consumable,
     defense::initialize_defense,
-    enemy_spawner::initialize_enemy_spawner,
     planet::initialize_planet,
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,
-    spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_item, spawn_spawnable},
+    spawn::{
+        spawn_consumable, spawn_effect, spawn_enemy, spawn_item, spawn_random_spawnable,
+        spawn_spawnable, LootTable,
+    },
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
     store_icons::initialize_store_icons,

@@ -1,9 +1,11 @@
 use crate::{
     audio::Sounds,
     components::EnemyComponent,
-    entities::{spawn_effect, spawn_random_consumable, EffectType, SpawnableType},
+    entities::{spawn_effect, spawn_random_spawnable, EffectType, SpawnableType},
     events::{EnemyDestroyedEvent, PlayAudioEvent},
-    resources::{ConsumablesResource, EffectsResource, SpriteSheetsResource},
+    resources::{
+        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
+    },
 };
 use amethyst::{
     core::transform::Transform,
@@ -25,7 +27,9 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, EnemyComponent>,
         ReadExpect<'s, ConsumablesResource>,
+        ReadExpect<'s, EnemiesResource>,
         ReadExpect<'s, EffectsResource>,
+        ReadExpect<'s, ItemsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -49,8 +53,10 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             transforms,
             enemies,
             consumables_resource,
+            enemies_resource,
             effects_resource,
-            sprite_resource,
+            items_resource,
+            spritesheets_resource,
             lazy_update,
             mut play_audio_channel,
             sounds,
@@ -68,7 +74,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 &EffectType::EnemyExplosion,
                 enemy_transform.clone(),
                 &effects_resource,
-                &sprite_resource,
+                &spritesheets_resource,
                 &entities,
                 &lazy_update,
             );
@@ -82,19 +88,22 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                         &EffectType::Giblets(enemy_type),
                         enemy_transform.clone(),
                         &effects_resource,
-                        &sprite_resource,
+                        &spritesheets_resource,
                         &entities,
                         &lazy_update,
                     );
                 }
             }
 
-            spawn_random_consumable(
-                &entities,
-                &enemy_component,
-                &sprite_resource,
-                &consumables_resource,
+            spawn_random_spawnable(
+                &enemy_component.loot_probs,
                 enemy_transform.clone(),
+                &consumables_resource,
+                &enemies_resource,
+                &items_resource,
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
                 &lazy_update,
             );
 

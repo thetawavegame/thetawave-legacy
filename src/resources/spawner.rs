@@ -10,7 +10,7 @@ use amethyst::{
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 
-use rand::{seq::SliceRandom, thread_rng, Rng};
+use rand::Rng;
 
 use serde::{Deserialize, Serialize};
 
@@ -23,6 +23,8 @@ pub struct FormationSpawnable {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Formation {
     pub formation_spawnables: Vec<FormationSpawnable>,
+    pub weight: f32,
+    pub period: f32,
 }
 
 impl Formation {
@@ -63,13 +65,13 @@ impl Formation {
 pub struct RandomSpawnable {
     pub spawnable_type: Option<SpawnableType>,
     pub weight: f32,
+    pub period: f32,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct SpawnerResource {
     pub random_pool: Vec<RandomSpawnable>, //TODO: change to HashMap of Vec<SpawnableType> for AsteroidField, Drones, etc.
     pub formation_pool: Vec<Formation>, //TODO: change to HashMap of Vec<Formation> for Level1Formations, Level2Formations, etc.
-    pub period: f32,
     pub timer: f32,
 }
 
@@ -80,7 +82,7 @@ impl SpawnerResource {
         ARENA_MIN_X + ARENA_SPAWN_OFFSET + rand::thread_rng().gen::<f32>() * (max_width - min_width)
     }
 
-    fn choose_random_spawnable(&self) -> &Option<SpawnableType> {
+    fn choose_random_spawnable(&self) -> &RandomSpawnable {
         let prob_space = self
             .random_pool
             .iter()
@@ -91,11 +93,10 @@ impl SpawnerResource {
         for random_spawnable in self.random_pool.iter() {
             sum += random_spawnable.weight;
             if sum > pos {
-                return &random_spawnable.spawnable_type;
+                return &random_spawnable;
             }
         }
-
-        &None
+        unreachable!("Error in probabilities of random spawnable pool.");
     }
 
     pub fn spawn_random_spawnable_when_ready(
@@ -112,16 +113,15 @@ impl SpawnerResource {
         self.timer -= dt;
 
         if self.timer <= 0.0 {
-            self.timer = self.period;
+            let random_spawnable = self.choose_random_spawnable();
+            let mut spawn_transform = Transform::default();
+            spawn_transform.set_translation_xyz(
+                Self::choose_spawn_position(),
+                ARENA_MAX_Y + SPAWNER_Y_OFFSET,
+                0.0,
+            );
 
-            if let Some(spawnable_type) = self.choose_random_spawnable() {
-                let mut spawn_transform = Transform::default();
-                spawn_transform.set_translation_xyz(
-                    Self::choose_spawn_position(),
-                    ARENA_MAX_Y + SPAWNER_Y_OFFSET,
-                    0.0,
-                );
-
+            if let Some(spawnable_type) = &random_spawnable.spawnable_type {
                 spawn_spawnable(
                     spawnable_type,
                     spawn_transform,
@@ -134,7 +134,26 @@ impl SpawnerResource {
                     lazy_update,
                 );
             }
+
+            self.timer = random_spawnable.period;
         }
+    }
+
+    fn choose_random_formation(&self) -> &Formation {
+        let prob_space = self
+            .formation_pool
+            .iter()
+            .fold(0.0, |sum, formation| sum + formation.weight);
+
+        let pos = rand::thread_rng().gen::<f32>() * prob_space;
+        let mut sum = 0.0;
+        for formation in self.formation_pool.iter() {
+            sum += formation.weight;
+            if sum > pos {
+                return &formation;
+            }
+        }
+        unreachable!("Error in probabilities of formation pool.");
     }
 
     pub fn spawn_random_formation_when_ready(
@@ -151,20 +170,18 @@ impl SpawnerResource {
         self.timer -= dt;
 
         if self.timer <= 0.0 {
-            self.timer = self.period;
+            let formation = self.choose_random_formation();
+            formation.spawn_formation(
+                consumables_resource,
+                enemies_resource,
+                items_resource,
+                effects_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
 
-            self.formation_pool
-                .choose(&mut rand::thread_rng())
-                .unwrap()
-                .spawn_formation(
-                    consumables_resource,
-                    enemies_resource,
-                    items_resource,
-                    effects_resource,
-                    spritesheets_resource,
-                    entities,
-                    lazy_update,
-                );
+            self.timer = formation.period;
         }
     }
 }

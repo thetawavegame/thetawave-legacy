@@ -1,5 +1,4 @@
 (
-    period: 10.0,
     timer: 0.0,
     formation_pool: [
         (
@@ -36,7 +35,9 @@
                     spawnable_type: Enemy(Pawn),
                     position: [260, 380],
                 ),
-            ]
+            ],
+            weight: 1.5,
+            period: 10.0,
         ),
         (
             formation_spawnables: [
@@ -60,7 +61,9 @@
                     spawnable_type: Enemy(Pawn),
                     position: [240, 340],
                 ),
-            ]
+            ],
+            weight: 0.8,
+            period: 12.0,
         ),
         (
             formation_spawnables: [
@@ -88,17 +91,31 @@
                     spawnable_type: Enemy(StraferLeft),
                     position: [200, 400],
                 ),
-            ]
+            ],
+            weight: 1.0,
+            period: 8.0,
         )
     ],
     random_pool: [
         (
             spawnable_type: Some(Enemy(Drone)),
             weight: 1.0,
+            period: 1.5,
+        ),
+        (
+            spawnable_type: Some(Enemy(Pawn)),
+            weight: 0.9,
+            period: 2.0,
         ),
         (
             spawnable_type: Some(Consumable(Money1)),
-            weight: 1.0
+            weight: 0.2,
+            period: 0.3,
         ),
+        (
+            spawnable_type: None,
+            weight: 0.5,
+            period: 0.3,
+        )
     ],
 )

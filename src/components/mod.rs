@@ -14,7 +14,6 @@ mod item;
 mod motion2d;
 mod planet;
 mod player;
-mod spawner;
 mod status_bar;
 mod store_icon;
 mod tags;
@@ -33,7 +32,7 @@ pub use self::{
     },
     consumable::ConsumableComponent,
     despawn::DespawnAtBorderComponent,
-    enemy::{EnemyComponent, EnemySpawnerTag},
+    enemy::EnemyComponent,
     fade::{ColorChannelChange, FadeComponent},
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
@@ -41,7 +40,6 @@ pub use self::{
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
     player::PlayerComponent,
-    spawner::{choose_random_entity, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
     store_icon::StoreIconComponent,
     tags::DefenseTag,
