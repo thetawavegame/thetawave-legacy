@@ -1,7 +1,7 @@
 (
     phase_map: [
         (
-            phase_type: InvasionRandom(Level1),
+            phase_type: InvasionFormation(Level1Easy),
             boss_type: None,
             length: 60,
             boss_spawned: false,
@@ -9,13 +9,25 @@
         (
             phase_type: Rest,
             boss_type: None,
-            length: 8,
+            length: 4,
             boss_spawned: false,
         ),
         (
-            phase_type: InvasionFormation(Level1),
+            phase_type: InvasionRandom(Level1Easy),
             boss_type: None,
-            length: 120,
+            length: 30,
+            boss_spawned: false,
+        ),
+        (
+            phase_type: Rest,
+            boss_type: None,
+            length: 4,
+            boss_spawned: false,
+        ),
+        (
+            phase_type: InvasionFormation(Level1Medium),
+            boss_type: None,
+            length: 60,
             boss_spawned: false,
         ),
         (
@@ -38,7 +50,7 @@
         ),
     ],
     phase_idx: 0,
-    last_phase: 5,
+    last_phase: 8,
     current_tick: 0,
     tick_timer: 1.0,
     tick_length: 1.0,

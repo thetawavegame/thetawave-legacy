@@ -16,10 +16,10 @@
         enemy_component: (
             defense_damage: 30,
             loot_probs: [
-                (None, 0.5),
+                (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
                 (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money1)), 0.30),
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
@@ -97,10 +97,10 @@
         enemy_component: (
             defense_damage: 50,
             loot_probs: [
-                (None, 0.5),
+                (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
                 (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money1)), 0.30),
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
@@ -236,10 +236,10 @@
         enemy_component: (
             defense_damage: 25,
             loot_probs: [
-                (None, 0.5),
+                (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
                 (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money1)), 0.30),
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
@@ -317,10 +317,10 @@
         enemy_component: (
             defense_damage: 25,
             loot_probs: [
-                (None, 0.5),
+                (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
                 (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money1)), 0.30),
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
@@ -380,10 +380,10 @@
         enemy_component: (
             defense_damage: 25,
             loot_probs: [
-                (None, 0.5),
+                (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
                 (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
+                (Some(Consumable(Money1)), 0.30),
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],

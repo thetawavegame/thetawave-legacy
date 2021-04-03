@@ -1,12 +1,13 @@
 use serde::{Deserialize, Serialize};
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum InvasionRandomPool {
-    Level1,
+    Level1Easy,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum InvasionFormationPool {
-    Level1,
+    Level1Easy,
+    Level1Medium,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
