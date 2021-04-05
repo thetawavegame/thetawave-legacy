@@ -26,7 +26,6 @@ pub mod events;
 pub mod resources;
 pub mod states;
 pub mod systems;
-mod confgen;
 
 use resources::{
     ConsumablesResource, DebugLinesConfig, EffectsResource, EnemiesResource, FormationsResource,
@@ -39,8 +38,6 @@ use amethyst::config::Config;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
-
-    confgen::generate_configs();
 
     let app_root = application_root_dir()?;
     let config_path = app_root.join("config");
