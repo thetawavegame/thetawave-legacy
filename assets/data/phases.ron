@@ -33,7 +33,7 @@
         (
             phase_type: Rest,
             boss_type: None,
-            length: 4,
+            length: 8,
             boss_spawned: false,
         ),
         (
@@ -42,15 +42,8 @@
             length: 0,
             boss_spawned: false,
         ),
-        (
-            phase_type: Rest,
-            boss_type: None,
-            length: 200,
-            boss_spawned: false,
-        ),
     ],
     phase_idx: 0,
-    last_phase: 8,
     current_tick: 0,
     tick_timer: 1.0,
     tick_length: 1.0,

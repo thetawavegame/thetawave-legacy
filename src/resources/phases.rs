@@ -36,7 +36,6 @@ pub struct Phase {
 pub struct PhaseManagerResource {
     pub phase_map: Vec<Phase>,
     pub phase_idx: usize,
-    pub last_phase: usize,
     pub current_tick: usize,
     pub tick_timer: f32,
     pub tick_length: f32,
@@ -54,9 +53,13 @@ impl PhaseManagerResource {
             self.tick_timer = self.tick_length;
             self.current_tick += 1;
 
-            if self.phase_idx < self.last_phase
-                && self.current_tick >= self.phase_map[self.phase_idx].length
-            {
+            // check if the phase is over
+            if self.current_tick >= self.phase_map[self.phase_idx].length {
+                if self.phase_idx == self.phase_map.len() - 1 {
+                    // level is over
+                    // TODO: end level
+                    self.phase_idx -= 1; // repeat last phase for now
+                }
                 self.phase_idx += 1;
                 self.current_tick = 0;
             }
