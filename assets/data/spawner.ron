@@ -6,7 +6,7 @@
                 formation_spawnables: [
                     (
                         spawnable_type: Enemy(Drone),
-                        position: [160, 300],
+                        position: [150, 310],
                     ),
                     (
                         spawnable_type: Enemy(Drone),
@@ -14,27 +14,15 @@
                     ),
                     (
                         spawnable_type: Enemy(Drone),
-                        position: [200, 300],
-                    ),
-                    (
-                        spawnable_type: Enemy(Drone),
-                        position: [160, 330],
-                    ),
-                    (
-                        spawnable_type: Enemy(Drone),
-                        position: [180, 330],
-                    ),
-                    (
-                        spawnable_type: Enemy(Drone),
-                        position: [200, 330],
+                        position: [210, 310],
                     ),
                     (
                         spawnable_type: Enemy(Pawn),
-                        position: [100, 380],
+                        position: [100, 390],
                     ),
                     (
                         spawnable_type: Enemy(Pawn),
-                        position: [260, 380],
+                        position: [260, 390],
                     ),
                 ],
                 weight: 1.5,
@@ -44,11 +32,11 @@
                 formation_spawnables: [
                     (
                         spawnable_type: Enemy(Pawn),
-                        position: [120, 340],
+                        position: [110, 390],
                     ),
                     (
                         spawnable_type: Enemy(Drone),
-                        position: [150, 340],
+                        position: [150, 370],
                     ),
                     (
                         spawnable_type: Enemy(MissileLauncher),
@@ -56,11 +44,11 @@
                     ),
                     (
                         spawnable_type: Enemy(Drone),
-                        position: [210, 340],
+                        position: [210, 370],
                     ),
                     (
                         spawnable_type: Enemy(Pawn),
-                        position: [240, 340],
+                        position: [250, 390],
                     ),
                 ],
                 weight: 0.8,
@@ -114,11 +102,11 @@
                     ),
                     (
                         spawnable_type: Enemy(Pawn),
-                        position: [80, 310],
+                        position: [80, 330],
                     ),
                     (
                         spawnable_type: Enemy(Pawn),
-                        position: [280, 310],
+                        position: [280, 330],
                     ),
                     (
                         spawnable_type: Enemy(StraferRight),
