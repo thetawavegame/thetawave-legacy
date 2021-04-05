@@ -219,7 +219,72 @@
             )),
         )),
     ),
-    Giblets(Strafer): (
+    Giblets(StraferRight): (
+        sprite_render_data: [
+            (
+                initial_index: 8,
+                spritesheet: "giblets",
+            ),
+            (
+                initial_index: 9,
+                spritesheet: "giblets",
+            ),
+            (
+                initial_index: 10,
+                spritesheet: "giblets",
+            ),
+            (
+                initial_index: 11,
+                spritesheet: "giblets",
+            ),
+        ],
+        time_limit_component: Some((
+            duration: 3.0,
+        )),
+        random_initial_motion: Some((
+            linear: [(-200, 200), (-200, 200)],
+            angular: (-40, 40),
+        )),
+        motion2d_component: Some((
+            velocity: [0.0, 0.0],
+            acceleration: [0.0, 0.0],
+            deceleration: [0.0, 0.0],
+            speed: [1000.0, 1000.0],
+            max_speed: [1000.0, 1000.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+            angular_speed: 100,
+            immovable: false,
+        )),
+        fade_component: Some((
+            red_change: Some((
+                delta_value: -0.01,
+                value: 1.0,
+                min_value: 0.0,
+                max_value: 1.0,
+            )),
+            green_change: Some((
+                delta_value: -0.01,
+                value: 1.0,
+                min_value: 0.0,
+                max_value: 1.0,
+            )),
+            blue_change: Some((
+                delta_value: -0.01,
+                value: 1.0,
+                min_value: 0.0,
+                max_value: 1.0,
+            )),
+            alpha_change: Some((
+                delta_value: -0.01,
+                value: 1.0,
+                min_value: 0.0,
+                max_value: 1.0,
+            )),
+        )),
+    ),
+    Giblets(StraferLeft): (
         sprite_render_data: [
             (
                 initial_index: 8,

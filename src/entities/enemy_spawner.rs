@@ -37,7 +37,11 @@ pub fn initialize_enemy_spawner(world: &mut World) {
                     ENEMY_HAULER_RATIO,
                 ),
                 (
-                    Some(SpawnableType::Enemy(EnemyType::Strafer)),
+                    Some(SpawnableType::Enemy(EnemyType::StraferRight)),
+                    ENEMY_STRAFER_RATIO,
+                ),
+                (
+                    Some(SpawnableType::Enemy(EnemyType::StraferLeft)),
                     ENEMY_STRAFER_RATIO,
                 ),
                 (

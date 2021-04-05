@@ -4,14 +4,18 @@ use amethyst::{
     ecs::prelude::{Read, System, Write},
 };
 
-pub struct GameMasterSystem;
+pub struct PhaseManagerSystem;
 
-impl<'s> System<'s> for GameMasterSystem {
+impl<'s> System<'s> for PhaseManagerSystem {
     type SystemData = (Write<'s, PhaseManagerResource>, Read<'s, Time>);
 
     fn run(&mut self, (mut phase_manager, time): Self::SystemData) {
         match phase_manager.phase_map[phase_manager.phase_idx].phase_type {
-            PhaseType::Invasion => {
+            PhaseType::RandomInvasion => {
+                phase_manager.update(time.delta_seconds());
+            }
+
+            PhaseType::FormationInvasion => {
                 phase_manager.update(time.delta_seconds());
             }
 
