@@ -149,7 +149,7 @@ fn move_enemy(
             motion_2d.move_down();
             motion_2d.brake_horizontal();
         }
-        SpawnableType::Enemy(EnemyType::Strafer) => {
+        SpawnableType::Enemy(EnemyType::StraferRight) => {
             motion_2d.move_down();
 
             // accelerate to speed stat in the x direction
@@ -158,6 +158,24 @@ fn move_enemy(
                     motion_2d.velocity.x += motion_2d.acceleration.x;
                 } else {
                     motion_2d.velocity.x -= motion_2d.acceleration.x;
+                }
+            } else if motion_2d.velocity.x.abs() >= motion_2d.speed.x {
+                if motion_2d.velocity.x > 0.0 {
+                    motion_2d.velocity.x -= motion_2d.deceleration.x;
+                } else {
+                    motion_2d.velocity.x += motion_2d.deceleration.x;
+                }
+            }
+        }
+        SpawnableType::Enemy(EnemyType::StraferLeft) => {
+            motion_2d.move_down();
+
+            // accelerate to speed stat in the x direction
+            if motion_2d.velocity.x.abs() < motion_2d.speed.x {
+                if motion_2d.velocity.x <= 0.0 {
+                    motion_2d.velocity.x -= motion_2d.acceleration.x;
+                } else {
+                    motion_2d.velocity.x += motion_2d.acceleration.x;
                 }
             } else if motion_2d.velocity.x.abs() >= motion_2d.speed.x {
                 if motion_2d.velocity.x > 0.0 {

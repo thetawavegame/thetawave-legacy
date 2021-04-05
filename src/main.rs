@@ -28,7 +28,7 @@ pub mod states;
 pub mod systems;
 
 use resources::{
-    ConsumablesResource, DebugLinesConfig, EffectsResource, EnemiesResource,
+    ConsumablesResource, DebugLinesConfig, EffectsResource, EnemiesResource, FormationsResource,
     GameParametersResource, ItemsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
     SpriteSheetsConfig, StoreResource,
 };
@@ -44,6 +44,7 @@ fn main() -> amethyst::Result<()> {
     let data_path = app_root.join("assets").join("data");
 
     let display_config_path = config_path.join("display_config_960.ron");
+    //let display_config_path = config_path.join("display_fullscreen.ron");
     let bindings_path = config_path.join("bindings_config.ron");
 
     let debug_lines =
@@ -65,12 +66,14 @@ fn main() -> amethyst::Result<()> {
     let players = <PlayersResource as Config>::load(data_path.join("players.ron"))
         .expect("failed to load data file: players.ron");
     let phases = <PhaseManagerResource as Config>::load(data_path.join("phases.ron"))
-        .expect("failed to lead data file: phases.ron");
+        .expect("failed to load data file: phases.ron");
     let store = <StoreResource as Config>::load(data_path.join("store.ron"))
-        .expect("failed to lead data file: store.ron");
+        .expect("failed to load data file: store.ron");
     let game_parameters =
         <GameParametersResource as Config>::load(data_path.join("game_parameters.ron"))
-            .expect("failed to lead data file: game_parameters.ron");
+            .expect("failed to load data file: game_parameters.ron");
+    let formations = <FormationsResource as Config>::load(data_path.join("formations.ron"))
+        .expect("failed to load data file: formations.ron");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])
@@ -102,6 +105,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(phases)
         .with_resource(store)
         .with_resource(game_parameters)
+        .with_resource(formations)
         .build(game_data)?;
 
     game.run();

@@ -6,11 +6,13 @@ use amethyst::{
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+pub mod formations;
 pub mod game_parameters;
 pub mod phases;
 pub mod spawnables;
 pub mod store;
 
+pub use self::formations::FormationsResource;
 pub use self::game_parameters::GameParametersResource;
 pub use self::phases::{BossType, Phase, PhaseManagerResource, PhaseType};
 pub use self::spawnables::{

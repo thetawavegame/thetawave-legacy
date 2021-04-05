@@ -1,11 +1,17 @@
 use crate::{
     components::{EnemySpawnerTag, SpawnerComponent},
     entities::{spawn_enemy, spawn_repeater, SpawnableType},
-    resources::{BossType, EnemiesResource, PhaseManagerResource, PhaseType, SpriteSheetsResource},
+    resources::{
+        BossType, ConsumablesResource, EffectsResource, EnemiesResource, FormationsResource,
+        ItemsResource, PhaseManagerResource, PhaseType, SpriteSheetsResource,
+    },
 };
 use amethyst::{
     core::{timing::Time, Transform},
-    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, Write, WriteStorage},
+    ecs::{
+        Entities, Join, LazyUpdate, Read, ReadExpect, ReadStorage, System, Write, WriteExpect,
+        WriteStorage,
+    },
 };
 
 pub struct SpawnerSystem;
@@ -17,9 +23,13 @@ impl<'s> System<'s> for SpawnerSystem {
         WriteStorage<'s, SpawnerComponent>,
         ReadStorage<'s, EnemySpawnerTag>,
         Read<'s, Time>,
+        WriteExpect<'s, FormationsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         Write<'s, PhaseManagerResource>,
         ReadExpect<'s, LazyUpdate>,
+        ReadExpect<'s, ConsumablesResource>,
+        ReadExpect<'s, ItemsResource>,
+        ReadExpect<'s, EffectsResource>,
         ReadExpect<'s, EnemiesResource>,
     );
 
@@ -31,15 +41,19 @@ impl<'s> System<'s> for SpawnerSystem {
             mut spawners,
             spawner_tag,
             time,
-            sprite_sheets_resource,
+            mut formations_resource,
+            spritesheets_resource,
             mut phase_manager,
             lazy_update,
+            consumables_resource,
+            items_resource,
+            effects_resource,
             enemies_resource,
         ): Self::SystemData,
     ) {
         if phase_manager.phase_idx < phase_manager.last_phase {
             match phase_manager.phase_map[phase_manager.phase_idx].phase_type {
-                PhaseType::Invasion => {
+                PhaseType::RandomInvasion => {
                     for (spawner, transform, _) in
                         (&mut spawners, &mut transforms, &spawner_tag).join()
                     {
@@ -58,7 +72,7 @@ impl<'s> System<'s> for SpawnerSystem {
                                     enemy_type,
                                     spawn_transform,
                                     &enemies_resource,
-                                    &sprite_sheets_resource,
+                                    &spritesheets_resource,
                                     &entities,
                                     &lazy_update,
                                 );
@@ -67,13 +81,25 @@ impl<'s> System<'s> for SpawnerSystem {
                     }
                 }
 
+                PhaseType::FormationInvasion => formations_resource
+                    .spawn_random_formation_when_ready(
+                        time.delta_seconds(),
+                        &consumables_resource,
+                        &enemies_resource,
+                        &items_resource,
+                        &effects_resource,
+                        &spritesheets_resource,
+                        &entities,
+                        &lazy_update,
+                    ),
+
                 PhaseType::Boss => {
                     match phase_manager.phase_map[phase_manager.phase_idx].boss_type {
                         BossType::Repeater => {
                             // spawn repeater boss
                             if !phase_manager.phase_map[phase_manager.phase_idx].boss_spawned {
                                 spawn_repeater(
-                                    &sprite_sheets_resource,
+                                    &spritesheets_resource,
                                     &enemies_resource,
                                     &entities,
                                     &lazy_update,

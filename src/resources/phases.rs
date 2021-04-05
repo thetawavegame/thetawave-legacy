@@ -2,7 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum PhaseType {
-    Invasion,
+    RandomInvasion,
+    FormationInvasion,
     Rest,
     Boss,
 }

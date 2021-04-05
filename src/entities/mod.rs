@@ -26,7 +26,7 @@ pub use self::{
     planet::initialize_planet,
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,
-    spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_item},
+    spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_item, spawn_spawnable},
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
     store_icons::initialize_store_icons,
@@ -44,7 +44,8 @@ pub enum SpawnableType {
 pub enum EnemyType {
     Pawn,
     Drone,
-    Strafer,
+    StraferRight,
+    StraferLeft,
     Hauler, //ally
     MissileLauncher,
     Missile,
