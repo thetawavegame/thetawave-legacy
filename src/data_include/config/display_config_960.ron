@@ -1,0 +1,6 @@
+(
+  title: "space_shooter",
+  dimensions: Some((960, 720)),
+  max_dimensions: Some((960, 720)),
+  min_dimensions: Some((960, 720)),
+)

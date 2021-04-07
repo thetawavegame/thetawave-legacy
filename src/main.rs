@@ -21,6 +21,7 @@ use amethyst::{
 pub mod audio;
 pub mod components;
 pub mod constants;
+mod data_include;
 pub mod entities;
 pub mod events;
 pub mod resources;
@@ -36,12 +37,15 @@ use states::MainGameState;
 
 use amethyst::config::Config;
 
+use data_include::{generate_configs, load_include_data, IncludeData};
+
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
+    generate_configs();
+
     let app_root = application_root_dir()?;
     let config_path = app_root.join("config");
-    let data_path = app_root.join("assets").join("data");
 
     let display_config_path = config_path.join("display_config_960.ron");
     //let display_config_path = config_path.join("display_fullscreen.ron");
@@ -55,25 +59,37 @@ fn main() -> amethyst::Result<()> {
             .expect("failed to load configuration file: spritesheets_config.ron");
     let sounds = <SoundsConfig as Config>::load(config_path.join("sounds_config.ron"))
         .expect("failed to load configuration file: sounds_config.ron");
-    let items = <ItemsResource as Config>::load(data_path.join("items.ron"))
-        .expect("failed to load data file: items.ron");
-    let enemies = <EnemiesResource as Config>::load(data_path.join("enemies.ron"))
+
+    let IncludeData {
+        items,
+        enemies,
+        consumables,
+        effects,
+        players,
+        phases,
+        store,
+        game_parameters,
+        spawner,
+    } = load_include_data();
+
+    let items =
+        <ItemsResource as Config>::load_bytes(items).expect("failed to load data file: items.ron");
+    let enemies = <EnemiesResource as Config>::load_bytes(enemies)
         .expect("failed to load data file: enemies.ron");
-    let consumables = <ConsumablesResource as Config>::load(data_path.join("consumables.ron"))
+    let consumables = <ConsumablesResource as Config>::load_bytes(consumables)
         .expect("failed to load data file: consumables.ron");
-    let effects = <EffectsResource as Config>::load(data_path.join("effects.ron"))
+    let effects = <EffectsResource as Config>::load_bytes(effects)
         .expect("failed to load data file: effects.ron");
-    let players = <PlayersResource as Config>::load(data_path.join("players.ron"))
+    let players = <PlayersResource as Config>::load_bytes(players)
         .expect("failed to load data file: players.ron");
-    let phases = <PhaseManagerResource as Config>::load(data_path.join("phases.ron"))
+    let phases = <PhaseManagerResource as Config>::load_bytes(phases)
         .expect("failed to load data file: phases.ron");
-    let store = <StoreResource as Config>::load(data_path.join("store.ron"))
-        .expect("failed to load data file: store.ron");
-    let game_parameters =
-        <GameParametersResource as Config>::load(data_path.join("game_parameters.ron"))
-            .expect("failed to load data file: game_parameters.ron");
-    let spawner = <SpawnerResource as Config>::load(data_path.join("spawner.ron"))
-        .expect("failed to load data file: formations.ron");
+    let store =
+        <StoreResource as Config>::load_bytes(store).expect("failed to load data file: store.ron");
+    let game_parameters = <GameParametersResource as Config>::load_bytes(game_parameters)
+        .expect("failed to load data file: game_parameters.ron");
+    let spawner = <SpawnerResource as Config>::load_bytes(spawner)
+        .expect("failed to load data file: spawner.ron");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])
