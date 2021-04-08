@@ -3,4 +3,4 @@
 target/
 Cargo.lock
 book/book
-./config/
+config/
