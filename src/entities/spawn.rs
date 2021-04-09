@@ -1,7 +1,7 @@
 use crate::{
-    entities::{ConsumableType, EffectType, EnemyType, ItemType, SpawnableType},
+    entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -41,50 +41,49 @@ pub fn spawn_consumable(
         .build();
 }
 
-pub fn spawn_enemy(
-    enemy_type: &EnemyType,
+pub fn spawn_mob(
+    mob_type: &MobType,
     spawn_transform: Transform,
-    enemies_resource: &ReadExpect<EnemiesResource>,
+    mobs_resource: &ReadExpect<MobsResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) -> Entity {
-    let enemy_data = enemies_resource[enemy_type].clone();
+    let mob_data = mobs_resource[mob_type].clone();
 
-    let enemy_sprite_render = SpriteRender {
-        sprite_sheet: spritesheets_resource.spritesheets
-            [&enemy_data.sprite_render_data.spritesheet]
+    let mob_sprite_render = SpriteRender {
+        sprite_sheet: spritesheets_resource.spritesheets[&mob_data.sprite_render_data.spritesheet]
             .clone(),
-        sprite_number: enemy_data.sprite_render_data.initial_index,
+        sprite_number: mob_data.sprite_render_data.initial_index,
     };
 
-    let enemy_entity = lazy_update
+    let mob_entity = lazy_update
         .create_entity(entities)
-        .with(enemy_sprite_render)
-        .with(enemy_data.animation_component)
-        .with(enemy_data.enemy_component)
-        .with(enemy_data.hitbox_component)
-        .with(enemy_data.motion2d_component)
-        .with(enemy_data.health_component)
-        .with(enemy_data.despawn_component)
+        .with(mob_sprite_render)
+        .with(mob_data.animation_component)
+        .with(mob_data.mob_component)
+        .with(mob_data.hitbox_component)
+        .with(mob_data.motion2d_component)
+        .with(mob_data.health_component)
+        .with(mob_data.despawn_component)
         .with(spawn_transform)
         .with(Transparent)
         .build();
 
-    if let Some(blaster_component) = enemy_data.blaster_component {
-        lazy_update.insert(enemy_entity, blaster_component);
+    if let Some(blaster_component) = mob_data.blaster_component {
+        lazy_update.insert(mob_entity, blaster_component);
     }
-    if let Some(autofire_component) = enemy_data.autofire_component {
-        lazy_update.insert(enemy_entity, autofire_component);
+    if let Some(autofire_component) = mob_data.autofire_component {
+        lazy_update.insert(mob_entity, autofire_component);
     }
-    if let Some(auto_child_entity_spawner_component) = enemy_data.auto_spawner_component {
-        lazy_update.insert(enemy_entity, auto_child_entity_spawner_component);
+    if let Some(auto_child_entity_spawner_component) = mob_data.auto_spawner_component {
+        lazy_update.insert(mob_entity, auto_child_entity_spawner_component);
     }
 
-    // Spawn thruster entity as child of enemy entity
+    // Spawn thruster entity as child of mob entity
 
-    if let Some(thruster_data) = enemy_data.thruster_data {
-        let thruster_parent = Parent::new(enemy_entity);
+    if let Some(thruster_data) = mob_data.thruster_data {
+        let thruster_parent = Parent::new(mob_entity);
 
         let thruster_sprite_render = SpriteRender {
             sprite_sheet: spritesheets_resource.spritesheets["thrusters"].clone(),
@@ -104,7 +103,7 @@ pub fn spawn_enemy(
             .build();
     }
 
-    enemy_entity
+    mob_entity
 }
 
 pub fn spawn_item(
@@ -228,7 +227,7 @@ pub fn spawn_spawnable(
     spawnable_type: &SpawnableType,
     spawn_transform: Transform,
     consumables_resource: &ReadExpect<ConsumablesResource>,
-    enemies_resource: &ReadExpect<EnemiesResource>,
+    mobs_resource: &ReadExpect<MobsResource>,
     items_resource: &ReadExpect<ItemsResource>,
     effects_resource: &ReadExpect<EffectsResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -247,11 +246,11 @@ pub fn spawn_spawnable(
             );
         }
 
-        SpawnableType::Enemy(enemy_type) => {
-            spawn_enemy(
-                enemy_type,
+        SpawnableType::Mob(mob_type) => {
+            spawn_mob(
+                mob_type,
                 spawn_transform,
-                enemies_resource,
+                mobs_resource,
                 spritesheets_resource,
                 entities,
                 lazy_update,

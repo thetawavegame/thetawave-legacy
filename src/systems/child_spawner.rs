@@ -1,7 +1,7 @@
 use crate::{
     components::AutoSpawnerComponent,
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -17,7 +17,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
         WriteStorage<'s, AutoSpawnerComponent>,
         Read<'s, Time>,
         ReadExpect<'s, LazyUpdate>,
-        ReadExpect<'s, EnemiesResource>,
+        ReadExpect<'s, MobsResource>,
         ReadExpect<'s, ConsumablesResource>,
         ReadExpect<'s, ItemsResource>,
         ReadExpect<'s, EffectsResource>,
@@ -32,7 +32,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
             mut auto_child_entity_spawners,
             time,
             lazy_update,
-            enemies_resource,
+            mobs_resource,
             consumables_resource,
             items_resource,
             effects_resource,
@@ -47,7 +47,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
                 time.delta_seconds(),
                 transform.clone(),
                 &sprite_sheets_resource,
-                &enemies_resource,
+                &mobs_resource,
                 &consumables_resource,
                 &items_resource,
                 &effects_resource,

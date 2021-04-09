@@ -5,7 +5,7 @@ use crate::{components::SpawnProbabilities, entities::SpawnableType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct EnemyComponent {
+pub struct MobComponent {
     pub defense_damage: f32,
     #[serde(default = "des_collision_damage")]
     pub collision_damage: f32,
@@ -22,13 +22,13 @@ fn des_allied() -> bool {
     false
 }
 
-impl Component for EnemyComponent {
+impl Component for MobComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
 #[derive(Default)]
-pub struct EnemySpawnerTag;
+pub struct MobSpawnerTag;
 
-impl Component for EnemySpawnerTag {
+impl Component for MobSpawnerTag {
     type Storage = NullStorage<Self>;
 }

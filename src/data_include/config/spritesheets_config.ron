@@ -19,9 +19,9 @@
         image: "status_bar_unit_spritesheet.png",
         data: "status_bar_unit_spritesheet.ron",
     ),
-    "enemies": (
-        image: "enemies_spritesheet.png",
-        data: "enemies_spritesheet.ron",
+    "mobs": (
+        image: "mobs_spritesheet.png",
+        data: "mobs_spritesheet.ron",
     ),
     "characters": (
         image: "player_spritesheet.png",

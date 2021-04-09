@@ -14,13 +14,13 @@ impl CollisionEvent {
 }
 
 #[derive(Debug)]
-pub struct EnemyDestroyedEvent {
-    pub enemy: Entity,
+pub struct MobDestroyedEvent {
+    pub mob: Entity,
 }
 
-impl EnemyDestroyedEvent {
-    pub fn new(enemy: Entity) -> EnemyDestroyedEvent {
-        EnemyDestroyedEvent { enemy }
+impl MobDestroyedEvent {
+    pub fn new(mob: Entity) -> MobDestroyedEvent {
+        MobDestroyedEvent { mob }
     }
 }
 
@@ -49,22 +49,22 @@ impl PlayerCollisionEvent {
 }
 
 #[derive(Debug)]
-pub struct EnemyCollisionEvent {
-    pub enemy_entity: Entity,
+pub struct MobCollisionEvent {
+    pub mob_entity: Entity,
     pub colliding_entity: Entity,
     pub collider_immovable: bool,
     pub collision_velocity: Option<Vector2<f32>>,
 }
 
-impl EnemyCollisionEvent {
+impl MobCollisionEvent {
     pub fn new(
         entity_a: Entity,
         entity_b: Entity,
         immovable: bool,
         velocity: Option<Vector2<f32>>,
-    ) -> EnemyCollisionEvent {
-        EnemyCollisionEvent {
-            enemy_entity: entity_a,
+    ) -> MobCollisionEvent {
+        MobCollisionEvent {
+            mob_entity: entity_a,
             colliding_entity: entity_b,
             collider_immovable: immovable,
             collision_velocity: velocity,
@@ -115,13 +115,13 @@ impl ItemGetEvent {
 }
 
 #[derive(Debug)]
-pub struct EnemyReachedBottomEvent {
+pub struct MobReachedBottomEvent {
     pub damage: f32,
 }
 
-impl EnemyReachedBottomEvent {
-    pub fn new(damage: f32) -> EnemyReachedBottomEvent {
-        EnemyReachedBottomEvent { damage }
+impl MobReachedBottomEvent {
+    pub fn new(damage: f32) -> MobReachedBottomEvent {
+        MobReachedBottomEvent { damage }
     }
 }
 

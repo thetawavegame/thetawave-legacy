@@ -1,6 +1,6 @@
 use crate::{
     components::{DefenseTag, HealthComponent},
-    events::{EnemyReachedBottomEvent, ItemGetEvent},
+    events::{ItemGetEvent, MobReachedBottomEvent},
 };
 use amethyst::{
     ecs::prelude::{Join, ReadStorage, System, WriteStorage},
@@ -11,13 +11,13 @@ use amethyst::{
 #[derive(Default)]
 pub struct DefenseSystem {
     item_get_event_reader: Option<ReaderId<ItemGetEvent>>,
-    enemy_reached_bottom_event_reader: Option<ReaderId<EnemyReachedBottomEvent>>,
+    mob_reached_bottom_event_reader: Option<ReaderId<MobReachedBottomEvent>>,
 }
 
 impl<'s> System<'s> for DefenseSystem {
     type SystemData = (
         Read<'s, EventChannel<ItemGetEvent>>,
-        Read<'s, EventChannel<EnemyReachedBottomEvent>>,
+        Read<'s, EventChannel<MobReachedBottomEvent>>,
         ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
     );
@@ -29,9 +29,9 @@ impl<'s> System<'s> for DefenseSystem {
                 .fetch_mut::<EventChannel<ItemGetEvent>>()
                 .register_reader(),
         );
-        self.enemy_reached_bottom_event_reader = Some(
+        self.mob_reached_bottom_event_reader = Some(
             world
-                .fetch_mut::<EventChannel<EnemyReachedBottomEvent>>()
+                .fetch_mut::<EventChannel<MobReachedBottomEvent>>()
                 .register_reader(),
         );
     }
@@ -40,7 +40,7 @@ impl<'s> System<'s> for DefenseSystem {
         &mut self,
         (
             item_get_event_channel,
-            enemy_reached_bottom_event_channel,
+            mob_reached_bottom_event_channel,
             defense_tags,
             mut healths,
         ): Self::SystemData,
@@ -58,8 +58,8 @@ impl<'s> System<'s> for DefenseSystem {
             }
         }
 
-        for event in enemy_reached_bottom_event_channel
-            .read(self.enemy_reached_bottom_event_reader.as_mut().unwrap())
+        for event in mob_reached_bottom_event_channel
+            .read(self.mob_reached_bottom_event_reader.as_mut().unwrap())
         {
             for (_defense_tag, health) in (&defense_tags, &mut healths).join() {
                 health.value -= event.damage;

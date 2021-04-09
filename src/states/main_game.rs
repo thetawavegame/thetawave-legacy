@@ -6,7 +6,7 @@ use crate::{
     },
     entities::{
         initialize_arena_barriers, initialize_background, initialize_defense,
-        initialize_enemy_spawner, initialize_planet, initialize_side_panels, initialize_spaceship,
+        initialize_mob_spawner, initialize_planet, initialize_side_panels, initialize_spaceship,
         initialize_status_bars, initialize_store_icons,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
@@ -41,12 +41,12 @@ impl Default for MainGameState {
                 .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
                 .with(systems::PhaseManagerSystem, "phase_manager_system", &[])
-                .with(systems::EnemyBehaviorSystem, "enemy_behavior_system", &[])
+                .with(systems::MobBehaviorSystem, "mob_behavior_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
                 .with(systems::SpawnerSystem, "spawner_system", &[])
                 .with(systems::TimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
-                .with(systems::EnemyTargetSystem, "enemy_target_system", &[])
+                .with(systems::MobTargetSystem, "mob_target_system", &[])
                 .with(systems::AutoSpawnerSystem, "auto_spawner_system", &[])
                 .with(
                     systems::BarrelRollAbilitySystem::default(),
@@ -54,9 +54,9 @@ impl Default for MainGameState {
                     &[],
                 )
                 .with(
-                    systems::EnemyMotion2DSystem,
-                    "enemy_motion_2d_system",
-                    &["enemy_target_system"],
+                    systems::MobMotion2DSystem,
+                    "mob_motion_2d_system",
+                    &["mob_target_system"],
                 )
                 .with(
                     systems::DespawnAtBorderSystem,
@@ -80,8 +80,8 @@ impl Default for MainGameState {
                     &["collision_detection_system"],
                 )
                 .with(
-                    systems::EnemyArenaBorderCollisionSystem::default(),
-                    "enemy_arena_border_collsion_system",
+                    systems::MobArenaBorderCollisionSystem::default(),
+                    "mob_arena_border_collsion_system",
                     &["collision_handler_system"],
                 )
                 .with(
@@ -90,8 +90,8 @@ impl Default for MainGameState {
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::SpaceshipEnemyCollisionSystem::default(),
-                    "spaceship_enemy_collision_system",
+                    systems::SpaceshipMobCollisionSystem::default(),
+                    "spaceship_mob_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
@@ -110,18 +110,18 @@ impl Default for MainGameState {
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::EnemyPlayerCollisionSystem::default(),
-                    "enemy_player_collision",
+                    systems::MobPlayerCollisionSystem::default(),
+                    "mob_player_collision",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::EnemyEnemyCollisionSystem::default(),
-                    "enemy_enemy_collision",
+                    systems::MobMobCollisionSystem::default(),
+                    "mob_mob_collision",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::EnemyBlastCollisionSystem::default(),
-                    "enemy_blast_collision",
+                    systems::MobBlastCollisionSystem::default(),
+                    "mob_blast_collision",
                     &["collision_handler_system"],
                 )
                 .with(
@@ -143,9 +143,9 @@ impl Default for MainGameState {
                 .with(systems::AutoFireSystem, "autoblaster_system", &[])
                 .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
                 .with(
-                    systems::EnemyDestroyedSystem::default(),
-                    "enemy_destroyed_system",
-                    &["enemy_behavior_system"],
+                    systems::MobDestroyedSystem::default(),
+                    "mob_destroyed_system",
+                    &["mob_behavior_system"],
                 )
                 .with(
                     systems::PlayAudioSystem::default(),
@@ -192,7 +192,7 @@ impl SimpleState for MainGameState {
         );
         initialize_background(world, spritesheets.spritesheets["backgrounds"].clone());
         initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
-        initialize_enemy_spawner(world);
+        initialize_mob_spawner(world);
         initialize_arena_barriers(world);
         //initialize_store(world);
         initialize_store_icons(world, spritesheets.spritesheets["items"].clone());

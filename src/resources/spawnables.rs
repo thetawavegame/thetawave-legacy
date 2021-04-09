@@ -1,10 +1,10 @@
 use crate::{
     components::{
         AnimationComponent, AutoFireComponent, AutoSpawnerComponent, BlasterComponent,
-        ConsumableComponent, DespawnAtBorderComponent, EnemyComponent, FadeComponent,
-        HealthComponent, Hitbox2DComponent, ItemComponent, Motion2DComponent, TimeLimitComponent,
+        ConsumableComponent, DespawnAtBorderComponent, FadeComponent, HealthComponent,
+        Hitbox2DComponent, ItemComponent, MobComponent, Motion2DComponent, TimeLimitComponent,
     },
-    entities::{ConsumableType, EffectType, EnemyType, ItemType},
+    entities::{ConsumableType, EffectType, ItemType, MobType},
     resources::SpriteRenderData,
 };
 
@@ -28,14 +28,14 @@ pub struct ItemsResource {
     pub item_entities: HashMap<ItemType, ItemEntityData>,
 }
 
-pub type EnemiesResource = HashMap<EnemyType, EnemyEntityData>;
+pub type MobsResource = HashMap<MobType, MobEntityData>;
 pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct EnemyEntityData {
+pub struct MobEntityData {
     pub sprite_render_data: SpriteRenderData,
     pub animation_component: AnimationComponent,
-    pub enemy_component: EnemyComponent,
+    pub mob_component: MobComponent,
     pub hitbox_component: Hitbox2DComponent,
     pub blaster_component: Option<BlasterComponent>,
     pub autofire_component: Option<AutoFireComponent>,
