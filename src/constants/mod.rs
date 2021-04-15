@@ -44,13 +44,6 @@ pub const SIDE_PANEL_WIDTH: f32 = 45.0;
 pub const ITEM_SPAWN_Y_OFFSET: f32 = 20.0;
 pub const SPAWNER_Y_OFFSET: f32 = 20.0;
 
-// spawn ratios
-pub const ENEMY_PAWN_RATIO: f32 = 50.0;
-pub const ENEMY_DRONE_RATIO: f32 = 100.0;
-pub const ENEMY_STRAFER_RATIO: f32 = 75.0;
-pub const ALLY_HAULER_RATIO: f32 = 5.0;
-pub const ENEMY_MISSILE_LAUNCHER_RATIO: f32 = 40.0;
-
 // player starting stats
 pub const SPACESHIP_HITBOX_HEIGHT: f32 = 13.0;
 pub const SPACESHIP_HITBOX_WIDTH: f32 = 6.0;

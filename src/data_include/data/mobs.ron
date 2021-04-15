@@ -494,7 +494,7 @@
     Enemy(RepeaterBody): (
         sprite_render_data: (
             initial_index: 0,
-            spritesheet: "mobs",
+            spritesheet: "repeater",
         ),
         animation_component: (
             start_idx: 0,
