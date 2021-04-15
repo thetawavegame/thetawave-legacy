@@ -5,17 +5,16 @@ mod ability;
 mod animation;
 mod autofire_system;
 mod boss;
-mod child_spawner;
 mod collision_detection;
 mod defense;
 mod despawn;
 mod fade;
-mod gamemaster;
 mod manualblaster_system;
 mod mob_behavior;
 mod mob_collisions;
 mod mob_destroyed;
 mod motion2d;
+mod phase_manager;
 mod planets;
 mod play_audio;
 mod spaceship;
@@ -32,12 +31,10 @@ pub use self::{
     animation::AnimationSystem,
     autofire_system::AutoFireSystem,
     boss::BossSystem,
-    child_spawner::AutoSpawnerSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
     despawn::DespawnAtBorderSystem,
     fade::FadeSystem,
-    gamemaster::PhaseManagerSystem,
     manualblaster_system::ManualBlasterSystem,
     mob_behavior::MobBehaviorSystem,
     mob_collisions::{
@@ -46,6 +43,7 @@ pub use self::{
     },
     mob_destroyed::MobDestroyedSystem,
     motion2d::{MobMotion2DSystem, MobTargetSystem, Motion2DSystem},
+    phase_manager::PhaseManagerSystem,
     planets::PlanetsSystem,
     play_audio::PlayAudioSystem,
     spaceship::SpaceshipSystem,
@@ -55,7 +53,7 @@ pub use self::{
         SpaceshipMobCollisionSystem,
     },
     spaceship_movement::SpaceshipMovementSystem,
-    spawner::SpawnerSystem,
+    spawner::{AutoSpawnerSystem, SpawnerSystem},
     stat_tracker::StatTrackerSystem,
     status_bar::StatusBarSystem,
     store::StoreSystem,

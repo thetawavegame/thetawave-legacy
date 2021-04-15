@@ -12,6 +12,24 @@ use amethyst::{
 
 use rand::{thread_rng, Rng};
 
+pub type LootTable = Vec<(Option<SpawnableType>, f32)>;
+
+pub fn choose_loot(loot_table: &LootTable) -> &Option<SpawnableType> {
+    let prob_space = loot_table
+        .iter()
+        .fold(0.0, |sum, loot_prob| sum + loot_prob.1);
+
+    let pos = rand::thread_rng().gen::<f32>() * prob_space;
+    let mut sum = 0.0;
+    for loot_prob in loot_table.iter() {
+        sum += loot_prob.1;
+        if sum > pos {
+            return &loot_prob.0;
+        }
+    }
+    unreachable!("Error in probabilities of random spawnable pool.")
+}
+
 pub fn spawn_consumable(
     consumable_type: &ConsumableType,
     spawn_transform: Transform,
@@ -278,5 +296,32 @@ pub fn spawn_spawnable(
                 lazy_update,
             );
         }
+    }
+}
+
+pub fn spawn_random_spawnable(
+    loot_table: &LootTable,
+    spawn_transform: Transform,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    mobs_resource: &ReadExpect<MobsResource>,
+    items_resource: &ReadExpect<ItemsResource>,
+    effects_resource: &ReadExpect<EffectsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    // choose random spawnable
+    if let Some(spawnable_type) = choose_loot(&loot_table) {
+        spawn_spawnable(
+            &spawnable_type,
+            spawn_transform,
+            consumables_resource,
+            mobs_resource,
+            items_resource,
+            effects_resource,
+            spritesheets_resource,
+            entities,
+            lazy_update,
+        );
     }
 }

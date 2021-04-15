@@ -1,6 +1,6 @@
-use amethyst::ecs::prelude::{Component, DenseVecStorage, NullStorage};
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-use crate::{components::SpawnProbabilities, entities::SpawnableType};
+use crate::entities::{LootTable, SpawnableType};
 
 use serde::{Deserialize, Serialize};
 
@@ -11,7 +11,7 @@ pub struct MobComponent {
     pub collision_damage: f32,
     #[serde(default = "des_allied")]
     pub allied: bool,
-    pub loot_probs: SpawnProbabilities,
+    pub loot_probs: LootTable,
     pub spawnable_type: SpawnableType,
 }
 
@@ -24,11 +24,4 @@ fn des_allied() -> bool {
 
 impl Component for MobComponent {
     type Storage = DenseVecStorage<Self>;
-}
-
-#[derive(Default)]
-pub struct MobSpawnerTag;
-
-impl Component for MobSpawnerTag {
-    type Storage = NullStorage<Self>;
 }

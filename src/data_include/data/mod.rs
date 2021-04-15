@@ -7,7 +7,7 @@ pub struct IncludeData<'a> {
     pub phases: &'a [u8],
     pub store: &'a [u8],
     pub game_parameters: &'a [u8],
-    pub formations: &'a [u8],
+    pub spawner: &'a [u8],
 }
 
 pub fn load_include_data() -> IncludeData<'static> {
@@ -20,6 +20,6 @@ pub fn load_include_data() -> IncludeData<'static> {
         phases: include_bytes!("phases.ron"),
         store: include_bytes!("store.ron"),
         game_parameters: include_bytes!("game_parameters.ron"),
-        formations: include_bytes!("formations.ron"),
+        spawner: include_bytes!("spawner.ron"),
     }
 }

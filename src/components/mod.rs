@@ -14,7 +14,6 @@ mod mob;
 mod motion2d;
 mod planet;
 mod player;
-mod spawner;
 mod status_bar;
 mod store_icon;
 mod tags;
@@ -37,11 +36,10 @@ pub use self::{
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
     item::ItemComponent,
-    mob::{MobComponent, MobSpawnerTag},
+    mob::{MobComponent},
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
     player::PlayerComponent,
-    spawner::{choose_random_entity, SpawnProbabilities, SpawnerComponent},
     status_bar::{StatusBarComponent, StatusType},
     store_icon::StoreIconComponent,
     tags::DefenseTag,

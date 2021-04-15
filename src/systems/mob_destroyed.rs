@@ -1,9 +1,11 @@
 use crate::{
     audio::Sounds,
     components::MobComponent,
-    entities::{spawn_effect, spawn_random_consumable, EffectType, SpawnableType},
+    entities::{spawn_effect, spawn_random_spawnable, EffectType, SpawnableType},
     events::{MobDestroyedEvent, PlayAudioEvent},
-    resources::{ConsumablesResource, EffectsResource, SpriteSheetsResource},
+    resources::{
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
+    },
 };
 use amethyst::{
     core::transform::Transform,
@@ -25,7 +27,9 @@ impl<'s> System<'s> for MobDestroyedSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, MobComponent>,
         ReadExpect<'s, ConsumablesResource>,
+        ReadExpect<'s, MobsResource>,
         ReadExpect<'s, EffectsResource>,
+        ReadExpect<'s, ItemsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -49,8 +53,10 @@ impl<'s> System<'s> for MobDestroyedSystem {
             transforms,
             mobs,
             consumables_resource,
+            mobs_resource,
             effects_resource,
-            sprite_resource,
+            items_resource,
+            spritesheets_resource,
             lazy_update,
             mut play_audio_channel,
             sounds,
@@ -68,7 +74,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
                 &EffectType::MobExplosion,
                 mob_transform.clone(),
                 &effects_resource,
-                &sprite_resource,
+                &spritesheets_resource,
                 &entities,
                 &lazy_update,
             );
@@ -82,19 +88,22 @@ impl<'s> System<'s> for MobDestroyedSystem {
                         &EffectType::Giblets(mob_type),
                         mob_transform.clone(),
                         &effects_resource,
-                        &sprite_resource,
+                        &spritesheets_resource,
                         &entities,
                         &lazy_update,
                     );
                 }
             }
 
-            spawn_random_consumable(
-                &entities,
-                &mob_component,
-                &sprite_resource,
-                &consumables_resource,
+            spawn_random_spawnable(
+                &mob_component.loot_probs,
                 mob_transform.clone(),
+                &consumables_resource,
+                &mobs_resource,
+                &items_resource,
+                &effects_resource,
+                &spritesheets_resource,
+                &entities,
                 &lazy_update,
             );
 
