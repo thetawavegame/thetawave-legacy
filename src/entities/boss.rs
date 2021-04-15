@@ -3,18 +3,18 @@ use amethyst::{
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 
-use crate::entities::spawn_enemy;
+use crate::entities::spawn_mob;
 use crate::{
     components::RepeaterComponent,
     constants,
-    entities::EnemyType,
-    resources::{EnemiesResource, SpriteSheetsResource},
+    entities::{EnemyType, MobType},
+    resources::{MobsResource, SpriteSheetsResource},
 };
 use amethyst::prelude::Builder;
 
 pub fn spawn_repeater(
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    enemies_resource: &ReadExpect<EnemiesResource>,
+    mobs_resource: &ReadExpect<MobsResource>,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
@@ -43,34 +43,34 @@ pub fn spawn_repeater(
         constants::BOSS_Z_2,
     ));
 
-    let body = spawn_enemy(
-        &EnemyType::RepeaterBody,
+    let body = spawn_mob(
+        &MobType::Enemy(EnemyType::RepeaterBody),
         body_transform,
-        enemies_resource,
+        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,
     );
-    let head = spawn_enemy(
-        &EnemyType::RepeaterHead,
+    let head = spawn_mob(
+        &MobType::Enemy(EnemyType::RepeaterHead),
         head_transform,
-        enemies_resource,
+        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,
     );
-    let right_shoulder = spawn_enemy(
-        &EnemyType::RepeaterRightShoulder,
+    let right_shoulder = spawn_mob(
+        &MobType::Enemy(EnemyType::RepeaterRightShoulder),
         right_shoulder_transform,
-        enemies_resource,
+        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,
     );
-    let left_shoulder = spawn_enemy(
-        &EnemyType::RepeaterLeftShoulder,
+    let left_shoulder = spawn_mob(
+        &MobType::Enemy(EnemyType::RepeaterLeftShoulder),
         left_shoulder_transform,
-        enemies_resource,
+        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,

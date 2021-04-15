@@ -1,5 +1,5 @@
 use crate::{
-    components::{choose_random_entity, EnemyComponent},
+    components::{choose_random_entity, MobComponent},
     entities::{spawn_consumable, SpawnableType},
     resources::{ConsumablesResource, SpriteSheetsResource},
 };
@@ -10,13 +10,13 @@ use amethyst::{
 
 pub fn spawn_random_consumable(
     entities: &Entities,
-    enemy: &EnemyComponent,
+    mob: &MobComponent,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     consumables_resource: &ReadExpect<ConsumablesResource>,
     spawn_transform: Transform,
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
-    let consumable_type = choose_random_entity(&enemy.loot_probs);
+    let consumable_type = choose_random_entity(&mob.loot_probs);
 
     if let Some(SpawnableType::Consumable(consumable_type)) = consumable_type {
         spawn_consumable(

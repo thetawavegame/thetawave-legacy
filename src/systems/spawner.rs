@@ -1,9 +1,9 @@
 use crate::{
-    components::{EnemySpawnerTag, SpawnerComponent},
-    entities::{spawn_enemy, spawn_repeater, SpawnableType},
+    components::{MobSpawnerTag, SpawnerComponent},
+    entities::{spawn_mob, spawn_repeater, SpawnableType},
     resources::{
-        BossType, ConsumablesResource, EffectsResource, EnemiesResource, FormationsResource,
-        ItemsResource, PhaseManagerResource, PhaseType, SpriteSheetsResource,
+        BossType, ConsumablesResource, EffectsResource, FormationsResource, ItemsResource,
+        MobsResource, PhaseManagerResource, PhaseType, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -21,7 +21,7 @@ impl<'s> System<'s> for SpawnerSystem {
         Entities<'s>,
         WriteStorage<'s, Transform>,
         WriteStorage<'s, SpawnerComponent>,
-        ReadStorage<'s, EnemySpawnerTag>,
+        ReadStorage<'s, MobSpawnerTag>,
         Read<'s, Time>,
         WriteExpect<'s, FormationsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
@@ -30,7 +30,7 @@ impl<'s> System<'s> for SpawnerSystem {
         ReadExpect<'s, ConsumablesResource>,
         ReadExpect<'s, ItemsResource>,
         ReadExpect<'s, EffectsResource>,
-        ReadExpect<'s, EnemiesResource>,
+        ReadExpect<'s, MobsResource>,
     );
 
     fn run(
@@ -48,7 +48,7 @@ impl<'s> System<'s> for SpawnerSystem {
             consumables_resource,
             items_resource,
             effects_resource,
-            enemies_resource,
+            mobs_resource,
         ): Self::SystemData,
     ) {
         if phase_manager.phase_idx < phase_manager.last_phase {
@@ -57,7 +57,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     for (spawner, transform, _) in
                         (&mut spawners, &mut transforms, &spawner_tag).join()
                     {
-                        if let Some((new_x, Some(enemy_type))) =
+                        if let Some((new_x, Some(spawnable_type))) =
                             spawner.spawn_with_position(time.delta_seconds())
                         {
                             let mut spawn_transform = Transform::default();
@@ -67,11 +67,11 @@ impl<'s> System<'s> for SpawnerSystem {
                                 transform.translation()[2],
                             );
 
-                            if let SpawnableType::Enemy(enemy_type) = enemy_type {
-                                spawn_enemy(
-                                    enemy_type,
+                            if let SpawnableType::Mob(mob_type) = spawnable_type {
+                                spawn_mob(
+                                    mob_type,
                                     spawn_transform,
-                                    &enemies_resource,
+                                    &mobs_resource,
                                     &spritesheets_resource,
                                     &entities,
                                     &lazy_update,
@@ -85,7 +85,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     .spawn_random_formation_when_ready(
                         time.delta_seconds(),
                         &consumables_resource,
-                        &enemies_resource,
+                        &mobs_resource,
                         &items_resource,
                         &effects_resource,
                         &spritesheets_resource,
@@ -100,7 +100,7 @@ impl<'s> System<'s> for SpawnerSystem {
                             if !phase_manager.phase_map[phase_manager.phase_idx].boss_spawned {
                                 spawn_repeater(
                                     &spritesheets_resource,
-                                    &enemies_resource,
+                                    &mobs_resource,
                                     &entities,
                                     &lazy_update,
                                 );

@@ -1,7 +1,7 @@
 use crate::{
     entities::{spawn::spawn_spawnable, SpawnableType},
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -28,7 +28,7 @@ impl Formation {
     pub fn spawn_formation(
         &self,
         consumables_resource: &ReadExpect<ConsumablesResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
+        mobs_resource: &ReadExpect<MobsResource>,
         items_resource: &ReadExpect<ItemsResource>,
         effects_resource: &ReadExpect<EffectsResource>,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -47,7 +47,7 @@ impl Formation {
                 &formation_spawnable.spawnable_type,
                 spawn_transform,
                 consumables_resource,
-                enemies_resource,
+                mobs_resource,
                 items_resource,
                 effects_resource,
                 spritesheets_resource,
@@ -70,7 +70,7 @@ impl FormationsResource {
         &mut self,
         dt: f32,
         consumables_resource: &ReadExpect<ConsumablesResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
+        mobs_resource: &ReadExpect<MobsResource>,
         items_resource: &ReadExpect<ItemsResource>,
         effects_resource: &ReadExpect<EffectsResource>,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -87,7 +87,7 @@ impl FormationsResource {
                 .unwrap()
                 .spawn_formation(
                     consumables_resource,
-                    enemies_resource,
+                    mobs_resource,
                     items_resource,
                     effects_resource,
                     spritesheets_resource,

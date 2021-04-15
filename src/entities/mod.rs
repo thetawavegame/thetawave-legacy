@@ -6,7 +6,7 @@ pub mod blast;
 pub mod boss;
 pub mod consumable;
 pub mod defense;
-pub mod enemy_spawner;
+pub mod mob_spawner;
 pub mod planet;
 pub mod side_panels;
 pub mod spaceship;
@@ -22,11 +22,11 @@ pub use self::{
     boss::spawn_repeater,
     consumable::spawn_random_consumable,
     defense::initialize_defense,
-    enemy_spawner::initialize_enemy_spawner,
+    mob_spawner::initialize_mob_spawner,
     planet::initialize_planet,
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,
-    spawn::{spawn_consumable, spawn_effect, spawn_enemy, spawn_item, spawn_spawnable},
+    spawn::{spawn_consumable, spawn_effect, spawn_item, spawn_mob, spawn_spawnable},
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
     store_icons::initialize_store_icons,
@@ -34,10 +34,16 @@ pub use self::{
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum SpawnableType {
-    Enemy(EnemyType),
     Consumable(ConsumableType),
     Item(ItemType),
     Effect(EffectType),
+    Mob(MobType),
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum MobType {
+    Enemy(EnemyType),
+    Ally(AllyType),
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
@@ -46,7 +52,6 @@ pub enum EnemyType {
     Drone,
     StraferRight,
     StraferLeft,
-    Hauler, //ally
     MissileLauncher,
     Missile,
     RepeaterBody,
@@ -55,6 +60,11 @@ pub enum EnemyType {
     RepeaterRightShoulder,
     RepeaterLeftArm,
     RepeaterRightArm,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum AllyType {
+    Hauler,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
@@ -88,7 +98,7 @@ pub enum EffectType {
     EnemyBlastExplosion,
     PoisonBlastExplosion,
     CriticalBlastExplosion,
-    EnemyExplosion,
+    MobExplosion,
     Star, //TODO: implement background stars
-    Giblets(EnemyType),
+    Giblets(MobType),
 }
