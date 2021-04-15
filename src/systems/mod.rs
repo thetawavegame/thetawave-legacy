@@ -8,11 +8,11 @@ mod boss;
 mod collision_detection;
 mod defense;
 mod despawn;
-mod enemy_behavior;
-mod enemy_collisions;
-mod enemy_destroyed;
 mod fade;
 mod manualblaster_system;
+mod mob_behavior;
+mod mob_collisions;
+mod mob_destroyed;
 mod motion2d;
 mod phase_manager;
 mod planets;
@@ -34,23 +34,23 @@ pub use self::{
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
     despawn::DespawnAtBorderSystem,
-    enemy_behavior::EnemyBehaviorSystem,
-    enemy_collisions::{
-        EnemyArenaBorderCollisionSystem, EnemyBlastCollisionSystem, EnemyEnemyCollisionSystem,
-        EnemyPlayerCollisionSystem,
-    },
-    enemy_destroyed::EnemyDestroyedSystem,
     fade::FadeSystem,
     manualblaster_system::ManualBlasterSystem,
-    motion2d::{EnemyMotion2DSystem, EnemyTargetSystem, Motion2DSystem},
+    mob_behavior::MobBehaviorSystem,
+    mob_collisions::{
+        MobArenaBorderCollisionSystem, MobBlastCollisionSystem, MobMobCollisionSystem,
+        MobPlayerCollisionSystem,
+    },
+    mob_destroyed::MobDestroyedSystem,
+    motion2d::{MobMotion2DSystem, MobTargetSystem, Motion2DSystem},
     phase_manager::PhaseManagerSystem,
     planets::PlanetsSystem,
     play_audio::PlayAudioSystem,
     spaceship::SpaceshipSystem,
     spaceship_collisions::{
         SpaceshipArenaBorderCollisionSystem, SpaceshipBlastCollisionSystem,
-        SpaceshipConsumableCollisionSystem, SpaceshipEnemyCollisionSystem,
-        SpaceshipItemCollisionSystem,
+        SpaceshipConsumableCollisionSystem, SpaceshipItemCollisionSystem,
+        SpaceshipMobCollisionSystem,
     },
     spaceship_movement::SpaceshipMovementSystem,
     spawner::{AutoSpawnerSystem, SpawnerSystem},

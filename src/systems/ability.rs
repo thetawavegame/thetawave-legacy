@@ -1,7 +1,7 @@
 use crate::{
     components::{
         AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, CooldownAbility,
-        EnemyComponent, Motion2DComponent,
+        MobComponent, Motion2DComponent,
     },
     events::PlayerCollisionEvent,
 };
@@ -25,7 +25,7 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
         Read<'s, Time>,
         WriteStorage<'s, BarrelRollAbilityComponent>,
         WriteStorage<'s, Motion2DComponent>,
-        ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, MobComponent>,
         ReadStorage<'s, BarrierComponent>,
     );
 
@@ -46,7 +46,7 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
             time,
             mut barrel_roll_abilities,
             mut motion2ds,
-            enemies,
+            mobs,
             barriers,
         ): Self::SystemData,
     ) {
@@ -57,9 +57,9 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
             // update ability and timers
             barrel_roll_ability.update(time.delta_seconds());
 
-            // change direction if colliding with enemy
+            // change direction if colliding with mob
             for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-                if let Some(_enemy) = enemies.get(event.colliding_entity) {
+                if let Some(_mob) = mobs.get(event.colliding_entity) {
                     barrel_roll_ability.invert_direction();
                 } else if let Some(_barrier) = barriers.get(event.colliding_entity) {
                     barrel_roll_ability.invert_direction();

@@ -1,10 +1,10 @@
 use crate::{
     audio::Sounds,
-    components::EnemyComponent,
+    components::MobComponent,
     entities::{spawn_effect, spawn_random_spawnable, EffectType, SpawnableType},
-    events::{EnemyDestroyedEvent, PlayAudioEvent},
+    events::{MobDestroyedEvent, PlayAudioEvent},
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -16,18 +16,18 @@ use amethyst::{
 };
 
 #[derive(Default)]
-pub struct EnemyDestroyedSystem {
-    event_reader: Option<ReaderId<EnemyDestroyedEvent>>,
+pub struct MobDestroyedSystem {
+    event_reader: Option<ReaderId<MobDestroyedEvent>>,
 }
 
-impl<'s> System<'s> for EnemyDestroyedSystem {
+impl<'s> System<'s> for MobDestroyedSystem {
     type SystemData = (
-        Read<'s, EventChannel<EnemyDestroyedEvent>>,
+        Read<'s, EventChannel<MobDestroyedEvent>>,
         Entities<'s>,
         ReadStorage<'s, Transform>,
-        ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, MobComponent>,
         ReadExpect<'s, ConsumablesResource>,
-        ReadExpect<'s, EnemiesResource>,
+        ReadExpect<'s, MobsResource>,
         ReadExpect<'s, EffectsResource>,
         ReadExpect<'s, ItemsResource>,
         ReadExpect<'s, SpriteSheetsResource>,
@@ -40,7 +40,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
         Self::SystemData::setup(world);
         self.event_reader = Some(
             world
-                .fetch_mut::<EventChannel<EnemyDestroyedEvent>>()
+                .fetch_mut::<EventChannel<MobDestroyedEvent>>()
                 .register_reader(),
         );
     }
@@ -48,12 +48,12 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
     fn run(
         &mut self,
         (
-            enemy_destroyed_event_channel,
+            mob_destroyed_event_channel,
             entities,
             transforms,
-            enemies,
+            mobs,
             consumables_resource,
-            enemies_resource,
+            mobs_resource,
             effects_resource,
             items_resource,
             spritesheets_resource,
@@ -62,31 +62,31 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             sounds,
         ): Self::SystemData,
     ) {
-        for event in enemy_destroyed_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            let enemy_transform = transforms.get(event.enemy).unwrap();
-            let enemy_component = enemies.get(event.enemy).unwrap();
+        for event in mob_destroyed_event_channel.read(self.event_reader.as_mut().unwrap()) {
+            let mob_transform = transforms.get(event.mob).unwrap();
+            let mob_component = mobs.get(event.mob).unwrap();
 
             play_audio_channel.single_write(PlayAudioEvent {
                 source: sounds.sound_effects["explosion"].clone(),
             });
 
             spawn_effect(
-                &EffectType::EnemyExplosion,
-                enemy_transform.clone(),
+                &EffectType::MobExplosion,
+                mob_transform.clone(),
                 &effects_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
             );
 
-            if let SpawnableType::Enemy(enemy_type) = enemy_component.spawnable_type.clone() {
+            if let SpawnableType::Mob(mob_type) = mob_component.spawnable_type.clone() {
                 if effects_resource
-                    .get(&EffectType::Giblets(enemy_type.clone()))
+                    .get(&EffectType::Giblets(mob_type.clone()))
                     .is_some()
                 {
                     spawn_effect(
-                        &EffectType::Giblets(enemy_type),
-                        enemy_transform.clone(),
+                        &EffectType::Giblets(mob_type),
+                        mob_transform.clone(),
                         &effects_resource,
                         &spritesheets_resource,
                         &entities,
@@ -96,10 +96,10 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
             }
 
             spawn_random_spawnable(
-                &enemy_component.loot_probs,
-                enemy_transform.clone(),
+                &mob_component.loot_probs,
+                mob_transform.clone(),
                 &consumables_resource,
-                &enemies_resource,
+                &mobs_resource,
                 &items_resource,
                 &effects_resource,
                 &spritesheets_resource,
@@ -107,9 +107,7 @@ impl<'s> System<'s> for EnemyDestroyedSystem {
                 &lazy_update,
             );
 
-            entities
-                .delete(event.enemy)
-                .expect("unable to delete entity");
+            entities.delete(event.mob).expect("unable to delete entity");
         }
     }
 }

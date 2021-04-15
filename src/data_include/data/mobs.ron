@@ -1,8 +1,8 @@
 {
-    Drone: (
+    Enemy(Drone): (
         sprite_render_data: (
             initial_index: 0,
-            spritesheet: "enemies",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 0,
@@ -13,7 +13,7 @@
             forward: true,
             animation_type: PingPong,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 30,
             loot_probs: [
                 (None, 0.6),
@@ -23,7 +23,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(Drone),
+            spawnable_type: Mob(Enemy(Drone)),
         ),
         health_component: (
             max_value: 60,
@@ -62,10 +62,10 @@
             y_offset: 11.0,
         )),
     ),
-    Pawn: (
+    Enemy(Pawn): (
         sprite_render_data: (
             initial_index: 3,
-            spritesheet: "enemies",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 3,
@@ -94,7 +94,7 @@
             timer: 1.0,
             weapon_type: Blast,
         )),
-        enemy_component: (
+        mob_component: (
             defense_damage: 50,
             loot_probs: [
                 (None, 0.6),
@@ -104,7 +104,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(Pawn),
+            spawnable_type: Mob(Enemy(Pawn)),
         ),
         health_component: (
             max_value: 110,
@@ -143,10 +143,10 @@
             y_offset: 11.0,
         )),
     ),
-    Hauler: (
+    Ally(Hauler): (
         sprite_render_data: (
             initial_index: 9,
-            spritesheet: "enemies",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 9,
@@ -157,12 +157,12 @@
             forward: true,
             animation_type: PingPong,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: -100,
             loot_probs: [
                 (None, 1.0),
             ],
-            spawnable_type: Enemy(Hauler),
+            spawnable_type: Mob(Ally(Hauler)),
         ),
         health_component: (
             max_value: 220,
@@ -201,10 +201,10 @@
             y_offset: 18.0,
         )),
     ),
-    StraferRight: (
+    Enemy(StraferRight): (
         sprite_render_data: (
             initial_index: 6,
-            spritesheet: "enemies",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 6,
@@ -233,7 +233,7 @@
             timer: 1.0,
             weapon_type: Blast,
         )),
-        enemy_component: (
+        mob_component: (
             defense_damage: 25,
             loot_probs: [
                 (None, 0.6),
@@ -243,7 +243,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(StraferRight),
+            spawnable_type: Mob(Enemy(StraferRight)),
         ),
         health_component: (
             max_value: 75,
@@ -282,10 +282,10 @@
             y_offset: 7.0,
         )),
     ),
-    StraferLeft: (
+    Enemy(StraferLeft): (
         sprite_render_data: (
             initial_index: 6,
-            spritesheet: "enemies",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 6,
@@ -314,7 +314,7 @@
             timer: 1.0,
             weapon_type: Blast,
         )),
-        enemy_component: (
+        mob_component: (
             defense_damage: 25,
             loot_probs: [
                 (None, 0.6),
@@ -324,7 +324,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(StraferLeft),
+            spawnable_type: Mob(Enemy(StraferLeft)),
         ),
         health_component: (
             max_value: 75,
@@ -363,10 +363,10 @@
             y_offset: 7.0,
         )),
     ),
-    MissileLauncher: (
+    Enemy(MissileLauncher): (
         sprite_render_data: (
             initial_index: 12,
-            spritesheet: "enemies",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 12,
@@ -377,7 +377,7 @@
             forward: true,
             animation_type: PingPong,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 25,
             loot_probs: [
                 (None, 0.6),
@@ -387,7 +387,7 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(MissileLauncher),
+            spawnable_type: Mob(Enemy(MissileLauncher)),
         ),
         health_component: (
             max_value: 150,
@@ -414,7 +414,7 @@
             bottom_offset: Some(-20.0),
         ),
         auto_spawner_component: Some((
-            child_entity_type: Enemy(Missile),
+            child_entity_type: Mob(Enemy(Missile)),
             offset: [0.0, -20.0],
             period: 3.5,
             timer: 3.5,
@@ -432,10 +432,10 @@
             y_offset: 13.0,
         )),
     ),
-    Missile: (
+    Enemy(Missile): (
         sprite_render_data: (
             initial_index: 15,
-            spritesheet: "enemies",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 15,
@@ -446,13 +446,13 @@
             forward: true,
             animation_type: Forward,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 10,
             collision_damage: 200,
             loot_probs: [
                 (None, 1.0),
             ],
-            spawnable_type: Enemy(Missile),
+            spawnable_type: Mob(Enemy(Missile)),
         ),
         health_component: (
             max_value: 50,
@@ -491,10 +491,10 @@
             y_offset: 9.0,
         )),
     ),
-    RepeaterBody: (
+    Enemy(RepeaterBody): (
         sprite_render_data: (
             initial_index: 0,
-            spritesheet: "repeater",
+            spritesheet: "mobs",
         ),
         animation_component: (
             start_idx: 0,
@@ -505,7 +505,7 @@
             forward: true,
             animation_type: PingPong,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
@@ -515,7 +515,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(RepeaterBody),
+            spawnable_type: Mob(Enemy(RepeaterBody)),
         ),
         health_component: (
             max_value: 10000,
@@ -542,7 +542,7 @@
             bottom_offset: Some(-20.0),
         ),
     ),
-    RepeaterHead: (
+    Enemy(RepeaterHead): (
         sprite_render_data: (
             initial_index: 3,
             spritesheet: "repeater",
@@ -556,7 +556,7 @@
             forward: true,
             animation_type: PingPong,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
@@ -566,7 +566,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(RepeaterHead),
+            spawnable_type: Mob(Enemy(RepeaterHead)),
         ),
         health_component: (
             max_value: 2000,
@@ -593,7 +593,7 @@
             bottom_offset: Some(-20.0),
         ),
     ),
-    RepeaterRightShoulder: (
+    Enemy(RepeaterRightShoulder): (
         sprite_render_data: (
             initial_index: 6,
             spritesheet: "repeater",
@@ -607,7 +607,7 @@
             forward: true,
             animation_type: NoAnimation,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
@@ -617,7 +617,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03)
             ],
-            spawnable_type: Enemy(RepeaterRightShoulder),
+            spawnable_type: Mob(Enemy(RepeaterRightShoulder)),
         ),
         health_component: (
             max_value: 2000,
@@ -646,7 +646,7 @@
             bottom_offset: Some(-20.0),
         ),
     ),
-    RepeaterLeftShoulder: (
+    Enemy(RepeaterLeftShoulder): (
         sprite_render_data: (
             initial_index: 7,
             spritesheet: "repeater",
@@ -660,7 +660,7 @@
             forward: true,
             animation_type: NoAnimation,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
@@ -670,7 +670,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03)
             ],
-            spawnable_type: Enemy(RepeaterLeftShoulder),
+            spawnable_type: Mob(Enemy(RepeaterLeftShoulder)),
         ),
         health_component: (
             max_value: 2000,
@@ -699,7 +699,7 @@
             bottom_offset: Some(-20.0),
         ),
     ),
-    RepeaterRightArm: (
+    Enemy(RepeaterRightArm): (
         sprite_render_data: (
             initial_index: 8,
             spritesheet: "repeater",
@@ -713,7 +713,7 @@
             forward: true,
             animation_type: NoAnimation,
         ),
-        enemy_component: (
+        mob_component: (
             defense_damage: 0,
             loot_probs: [
                 (None, 0.0),
@@ -723,7 +723,7 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
-            spawnable_type: Enemy(RepeaterRightArm),
+            spawnable_type: Mob(Enemy(RepeaterRightArm)),
         ),
         health_component: (
             max_value: 2000,

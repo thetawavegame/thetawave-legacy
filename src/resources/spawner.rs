@@ -2,8 +2,8 @@ use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_SPAWN_OFFSET, SPAWNER_Y_OFFSET},
     entities::{spawn::spawn_spawnable, SpawnableType},
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, InvasionFormationPool,
-        InvasionRandomPool, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, InvasionFormationPool, InvasionRandomPool,
+        ItemsResource, MobsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -32,7 +32,7 @@ impl Formation {
     pub fn spawn_formation(
         &self,
         consumables_resource: &ReadExpect<ConsumablesResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
+        mobs_resource: &ReadExpect<MobsResource>,
         items_resource: &ReadExpect<ItemsResource>,
         effects_resource: &ReadExpect<EffectsResource>,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -51,7 +51,7 @@ impl Formation {
                 &formation_spawnable.spawnable_type,
                 spawn_transform,
                 consumables_resource,
-                enemies_resource,
+                mobs_resource,
                 items_resource,
                 effects_resource,
                 spritesheets_resource,
@@ -106,7 +106,7 @@ impl SpawnerResource {
         random_pool_type: &InvasionRandomPool,
         dt: f32,
         consumables_resource: &ReadExpect<ConsumablesResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
+        mobs_resource: &ReadExpect<MobsResource>,
         items_resource: &ReadExpect<ItemsResource>,
         effects_resource: &ReadExpect<EffectsResource>,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -129,7 +129,7 @@ impl SpawnerResource {
                     spawnable_type,
                     spawn_transform,
                     consumables_resource,
-                    enemies_resource,
+                    mobs_resource,
                     items_resource,
                     effects_resource,
                     spritesheets_resource,
@@ -165,7 +165,7 @@ impl SpawnerResource {
         formation_pool_type: &InvasionFormationPool,
         dt: f32,
         consumables_resource: &ReadExpect<ConsumablesResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
+        mobs_resource: &ReadExpect<MobsResource>,
         items_resource: &ReadExpect<ItemsResource>,
         effects_resource: &ReadExpect<EffectsResource>,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -178,7 +178,7 @@ impl SpawnerResource {
             let formation = self.choose_random_formation(formation_pool_type);
             formation.spawn_formation(
                 consumables_resource,
-                enemies_resource,
+                mobs_resource,
                 items_resource,
                 effects_resource,
                 spritesheets_resource,

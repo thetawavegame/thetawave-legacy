@@ -1,7 +1,7 @@
 use crate::{
-    components::{DespawnAtBorderComponent, EnemyComponent},
+    components::{DespawnAtBorderComponent, MobComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
-    events::EnemyReachedBottomEvent,
+    events::MobReachedBottomEvent,
 };
 use amethyst::{
     core::transform::Transform,
@@ -17,13 +17,13 @@ impl<'s> System<'s> for DespawnAtBorderSystem {
         Entities<'s>,
         ReadStorage<'s, DespawnAtBorderComponent>,
         ReadStorage<'s, Transform>,
-        ReadStorage<'s, EnemyComponent>,
-        Write<'s, EventChannel<EnemyReachedBottomEvent>>,
+        ReadStorage<'s, MobComponent>,
+        Write<'s, EventChannel<MobReachedBottomEvent>>,
     );
 
     fn run(
         &mut self,
-        (entities, despawn_borders, transforms, enemies, mut enemy_reached_bottom_event_channel): Self::SystemData,
+        (entities, despawn_borders, transforms, mobs, mut mob_reached_bottom_event_channel): Self::SystemData,
     ) {
         for (entity, despawn_border, transform) in
             (&*entities, &despawn_borders, &transforms).join()
@@ -36,9 +36,9 @@ impl<'s> System<'s> for DespawnAtBorderSystem {
 
             if let Some(bottom_border_offset) = despawn_border.bottom_offset {
                 if transform.translation().y < ARENA_MIN_Y + bottom_border_offset {
-                    if let Some(enemy) = enemies.get(entity) {
-                        enemy_reached_bottom_event_channel
-                            .single_write(EnemyReachedBottomEvent::new(enemy.defense_damage));
+                    if let Some(mob) = mobs.get(entity) {
+                        mob_reached_bottom_event_channel
+                            .single_write(MobReachedBottomEvent::new(mob.defense_damage));
                     }
                     entities.delete(entity).expect("unable to delete entity");
                 }

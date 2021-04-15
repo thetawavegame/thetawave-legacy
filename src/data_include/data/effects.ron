@@ -1,5 +1,5 @@
 {
-    EnemyExplosion: (
+    MobExplosion: (
         sprite_render_data: [(
             initial_index: 0,
             spritesheet: "explosions",
@@ -89,7 +89,7 @@
             duration: 0.48,
         )),
     ),
-    Giblets(Drone): (
+    Giblets(Enemy(Drone)): (
         sprite_render_data: [
             (
                 initial_index: 0,
@@ -154,7 +154,7 @@
             )),
         )),
     ),
-    Giblets(Pawn): (
+    Giblets(Enemy(Pawn)): (
         sprite_render_data: [
             (
                 initial_index: 4,
@@ -219,7 +219,7 @@
             )),
         )),
     ),
-    Giblets(StraferRight): (
+    Giblets(Enemy(StraferRight)): (
         sprite_render_data: [
             (
                 initial_index: 8,
@@ -284,7 +284,7 @@
             )),
         )),
     ),
-    Giblets(StraferLeft): (
+    Giblets(Enemy(StraferLeft)): (
         sprite_render_data: [
             (
                 initial_index: 8,
@@ -349,7 +349,7 @@
             )),
         )),
     ),
-    Giblets(Hauler): (
+    Giblets(Ally(Hauler)): (
         sprite_render_data: [
             (
                 initial_index: 12,
@@ -414,7 +414,7 @@
             )),
         )),
     ),
-    Giblets(MissileLauncher): (
+    Giblets(Enemy(MissileLauncher)): (
         sprite_render_data: [
             (
                 initial_index: 16,
@@ -479,7 +479,7 @@
             )),
         )),
     ),
-    Giblets(Missile): (
+    Giblets(Enemy(Missile)): (
         sprite_render_data: [
             (
                 initial_index: 20,

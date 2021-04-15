@@ -1,10 +1,10 @@
 use crate::{
     entities::{
-        spawn_consumable, spawn_effect, spawn_enemy, spawn_item, ConsumableType, EffectType,
-        EnemyType, ItemType, SpawnableType,
+        spawn_consumable, spawn_effect, spawn_item, spawn_mob, ConsumableType, EffectType,
+        ItemType, MobType, SpawnableType,
     },
     resources::{
-        ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
     },
 };
 
@@ -33,7 +33,7 @@ impl AutoSpawnerComponent {
         delta_time: f32,
         spawn_transform: Transform,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
+        mobs_resource: &ReadExpect<MobsResource>,
         consumables_resource: &ReadExpect<ConsumablesResource>,
         items_resource: &ReadExpect<ItemsResource>,
         effects_resource: &ReadExpect<EffectsResource>,
@@ -50,11 +50,11 @@ impl AutoSpawnerComponent {
             adjusted_transform.prepend_translation_y(self.offset.y);
 
             match &self.child_entity_type {
-                SpawnableType::Enemy(enemy_type) => {
-                    spawn_enemy(
-                        &enemy_type,
+                SpawnableType::Mob(mob_type) => {
+                    spawn_mob(
+                        &mob_type,
                         adjusted_transform,
-                        &enemies_resource,
+                        &mobs_resource,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -99,25 +99,25 @@ impl AutoSpawnerComponent {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct AutoEnemySpawnerComponent {
-    pub child_enemy_type: EnemyType,
+pub struct AutoMobSpawnerComponent {
+    pub child_mob_type: MobType,
     pub offset: Vector2<f32>,
     period: f32,
     timer: f32,
 }
 
-impl Component for AutoEnemySpawnerComponent {
+impl Component for AutoMobSpawnerComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-impl AutoEnemySpawnerComponent {
+impl AutoMobSpawnerComponent {
     #[allow(dead_code)]
     pub fn spawn_when_ready(
         &mut self,
         delta_time: f32,
         spawn_transform: Transform,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        enemies_resource: &ReadExpect<EnemiesResource>,
+        mobs_resource: &ReadExpect<MobsResource>,
         entities: &Entities,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) {
@@ -130,10 +130,10 @@ impl AutoEnemySpawnerComponent {
             adjusted_transform.prepend_translation_x(self.offset.x);
             adjusted_transform.prepend_translation_y(self.offset.y);
 
-            spawn_enemy(
-                &self.child_enemy_type,
+            spawn_mob(
+                &self.child_mob_type,
                 adjusted_transform,
-                &enemies_resource,
+                &mobs_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,

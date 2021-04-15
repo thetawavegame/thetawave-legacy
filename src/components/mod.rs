@@ -6,11 +6,11 @@ mod boss;
 mod child_spawner;
 mod consumable;
 mod despawn;
-mod enemy;
 mod fade;
 mod health;
 mod hitbox;
 mod item;
+mod mob;
 mod motion2d;
 mod planet;
 mod player;
@@ -27,16 +27,16 @@ pub use self::{
     blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,
     child_spawner::{
-        AutoConsumableSpawnerComponent, AutoEffectSpawnerComponent, AutoEnemySpawnerComponent,
-        AutoItemSpawnerComponent, AutoSpawnerComponent,
+        AutoConsumableSpawnerComponent, AutoEffectSpawnerComponent, AutoItemSpawnerComponent,
+        AutoMobSpawnerComponent, AutoSpawnerComponent,
     },
     consumable::ConsumableComponent,
     despawn::DespawnAtBorderComponent,
-    enemy::EnemyComponent,
     fade::{ColorChannelChange, FadeComponent},
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
     item::ItemComponent,
+    mob::{MobComponent},
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
     player::PlayerComponent,

@@ -23,7 +23,7 @@ pub use self::{
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,
     spawn::{
-        spawn_consumable, spawn_effect, spawn_enemy, spawn_item, spawn_random_spawnable,
+        spawn_consumable, spawn_effect, spawn_item, spawn_mob, spawn_random_spawnable,
         spawn_spawnable, LootTable,
     },
     status_bar::initialize_status_bars,
@@ -33,10 +33,16 @@ pub use self::{
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum SpawnableType {
-    Enemy(EnemyType),
     Consumable(ConsumableType),
     Item(ItemType),
     Effect(EffectType),
+    Mob(MobType),
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum MobType {
+    Enemy(EnemyType),
+    Ally(AllyType),
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
@@ -45,7 +51,6 @@ pub enum EnemyType {
     Drone,
     StraferRight,
     StraferLeft,
-    Hauler, //ally
     MissileLauncher,
     Missile,
     RepeaterBody,
@@ -54,6 +59,11 @@ pub enum EnemyType {
     RepeaterRightShoulder,
     RepeaterLeftArm,
     RepeaterRightArm,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum AllyType {
+    Hauler,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
@@ -87,7 +97,7 @@ pub enum EffectType {
     EnemyBlastExplosion,
     PoisonBlastExplosion,
     CriticalBlastExplosion,
-    EnemyExplosion,
+    MobExplosion,
     Star, //TODO: implement background stars
-    Giblets(EnemyType),
+    Giblets(MobType),
 }

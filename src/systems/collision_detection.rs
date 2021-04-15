@@ -1,10 +1,8 @@
 use crate::{
     components::{
-        BarrierComponent, EnemyComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent,
+        BarrierComponent, Hitbox2DComponent, MobComponent, Motion2DComponent, PlayerComponent,
     },
-    events::{
-        ArenaBorderCollisionEvent, CollisionEvent, EnemyCollisionEvent, PlayerCollisionEvent,
-    },
+    events::{ArenaBorderCollisionEvent, CollisionEvent, MobCollisionEvent, PlayerCollisionEvent},
     resources::DebugLinesConfig,
 };
 use amethyst::{
@@ -83,12 +81,12 @@ pub struct CollisionHandlerSystem {
 impl<'s> System<'s> for CollisionHandlerSystem {
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
-        ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, MobComponent>,
         ReadStorage<'s, BarrierComponent>,
         ReadStorage<'s, Motion2DComponent>,
         Read<'s, EventChannel<CollisionEvent>>,
         Write<'s, EventChannel<PlayerCollisionEvent>>,
-        Write<'s, EventChannel<EnemyCollisionEvent>>,
+        Write<'s, EventChannel<MobCollisionEvent>>,
         Write<'s, EventChannel<ArenaBorderCollisionEvent>>,
     );
 
@@ -105,12 +103,12 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         &mut self,
         (
             players,
-            enemies,
+            mobs,
             barriers,
             motions,
             collision_channel,
             mut player_collision_channel,
-            mut enemy_collision_channel,
+            mut mob_collision_channel,
             mut arena_border_collision_channel,
         ): Self::SystemData,
     ) {
@@ -130,8 +128,8 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                     collider_immovable,
                     collision_velocity,
                 ));
-            } else if let Some(_enemy) = enemies.get(event.entity_a) {
-                enemy_collision_channel.single_write(EnemyCollisionEvent::new(
+            } else if let Some(_mob) = mobs.get(event.entity_a) {
+                mob_collision_channel.single_write(MobCollisionEvent::new(
                     event.entity_a,
                     event.entity_b,
                     collider_immovable,

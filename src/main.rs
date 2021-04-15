@@ -29,9 +29,9 @@ pub mod states;
 pub mod systems;
 
 use resources::{
-    ConsumablesResource, DebugLinesConfig, EffectsResource, EnemiesResource,
-    GameParametersResource, ItemsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
-    SpawnerResource, SpriteSheetsConfig, StoreResource,
+    ConsumablesResource, DebugLinesConfig, EffectsResource, GameParametersResource, ItemsResource,
+    MobsResource, PhaseManagerResource, PlayersResource, SoundsConfig, SpawnerResource,
+    SpriteSheetsConfig, StoreResource,
 };
 use states::MainGameState;
 
@@ -62,7 +62,7 @@ fn main() -> amethyst::Result<()> {
 
     let IncludeData {
         items,
-        enemies,
+        mobs,
         consumables,
         effects,
         players,
@@ -74,8 +74,8 @@ fn main() -> amethyst::Result<()> {
 
     let items =
         <ItemsResource as Config>::load_bytes(items).expect("failed to load data file: items.ron");
-    let enemies = <EnemiesResource as Config>::load_bytes(enemies)
-        .expect("failed to load data file: enemies.ron");
+    let mobs =
+        <MobsResource as Config>::load_bytes(mobs).expect("failed to load data file: mobs.ron");
     let consumables = <ConsumablesResource as Config>::load_bytes(consumables)
         .expect("failed to load data file: consumables.ron");
     let effects = <EffectsResource as Config>::load_bytes(effects)
@@ -111,7 +111,7 @@ fn main() -> amethyst::Result<()> {
 
     let mut game = Application::build(app_root.join("assets"), MainGameState::default())?
         .with_resource(items)
-        .with_resource(enemies)
+        .with_resource(mobs)
         .with_resource(consumables)
         .with_resource(effects)
         .with_resource(players)

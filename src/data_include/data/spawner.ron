@@ -5,23 +5,23 @@
             (
                 formation_spawnables: [
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [150, 310],
                     ),
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [180, 300],
                     ),
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [210, 310],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [100, 390],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [260, 390],
                     ),
                 ],
@@ -31,23 +31,23 @@
             (
                 formation_spawnables: [
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [110, 390],
                     ),
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [150, 370],
                     ),
                     (
-                        spawnable_type: Enemy(MissileLauncher),
+                        spawnable_type: Mob(Enemy(MissileLauncher)),
                         position: [180, 300],
                     ),
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [210, 370],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [250, 390],
                     ),
                 ],
@@ -57,27 +57,27 @@
             (
                 formation_spawnables: [
                     (
-                        spawnable_type: Enemy(StraferRight),
+                        spawnable_type: Mob(Enemy(StraferRight)),
                         position: [180, 300],
                     ),
                     (
-                        spawnable_type: Enemy(StraferLeft),
+                        spawnable_type: Mob(Enemy(StraferLeft)),
                         position: [180, 320],
                     ),
                     (
-                        spawnable_type: Enemy(StraferRight),
+                        spawnable_type: Mob(Enemy(StraferRight)),
                         position: [170, 340],
                     ),
                     (
-                        spawnable_type: Enemy(StraferLeft),
+                        spawnable_type: Mob(Enemy(StraferLeft)),
                         position: [190, 360],
                     ),
                     (
-                        spawnable_type: Enemy(StraferRight),
+                        spawnable_type: Mob(Enemy(StraferRight)),
                         position: [160, 380],
                     ),
                     (
-                        spawnable_type: Enemy(StraferLeft),
+                        spawnable_type: Mob(Enemy(StraferLeft)),
                         position: [200, 400],
                     ),
                 ],
@@ -89,39 +89,39 @@
             (
                 formation_spawnables: [
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [150, 310],
                     ),
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [180, 300],
                     ),
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [210, 310],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [80, 330],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [280, 330],
                     ),
                     (
-                        spawnable_type: Enemy(StraferRight),
+                        spawnable_type: Mob(Enemy(StraferRight)),
                         position: [180, 340],
                     ),
                     (
-                        spawnable_type: Enemy(StraferLeft),
+                        spawnable_type: Mob(Enemy(StraferLeft)),
                         position: [180, 360],
                     ),
                     (
-                        spawnable_type: Enemy(StraferRight),
+                        spawnable_type: Mob(Enemy(StraferRight)),
                         position: [170, 380],
                     ),
                     (
-                        spawnable_type: Enemy(StraferLeft),
+                        spawnable_type: Mob(Enemy(StraferLeft)),
                         position: [190, 400],
                     ),
                 ],
@@ -131,36 +131,36 @@
             (
                 formation_spawnables: [
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [170, 320],
                     ),
                     (
-                        spawnable_type: Enemy(Drone),
+                        spawnable_type: Mob(Enemy(Drone)),
                         position: [190, 320],
                         
                     ),
                     (
-                        spawnable_type: Enemy(MissileLauncher),
+                        spawnable_type: Mob(Enemy(MissileLauncher)),
                         position: [140, 300],
                     ),
                     (
-                        spawnable_type: Enemy(MissileLauncher),
+                        spawnable_type: Mob(Enemy(MissileLauncher)),
                         position: [220, 300],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [170, 350],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [190, 350],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [100, 340],
                     ),
                     (
-                        spawnable_type: Enemy(Pawn),
+                        spawnable_type: Mob(Enemy(Pawn)),
                         position: [260, 340],
                     ),
                 ],
@@ -170,39 +170,39 @@
             (
                 formation_spawnables: [
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [180, 300],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [150, 330],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [210, 330],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [120, 360],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [240, 360],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [90, 390],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [270, 390],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [60, 420],
                     ),
                     (
-                        spawnable_type: Enemy(Missile),
+                        spawnable_type: Mob(Enemy(Missile)),
                         position: [300, 420],
                     ),
                     (
@@ -218,12 +218,12 @@
     random_pools: {
         Level1Easy: [
             (
-                spawnable_type: Some(Enemy(Drone)),
+                spawnable_type: Some(Mob(Enemy(Drone))),
                 weight: 1.0,
                 period: 1.5,
             ),
             (
-                spawnable_type: Some(Enemy(Pawn)),
+                spawnable_type: Some(Mob(Enemy(Pawn))),
                 weight: 0.9,
                 period: 2.0,
             ),

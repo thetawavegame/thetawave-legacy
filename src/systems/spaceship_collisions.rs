@@ -2,7 +2,7 @@ use crate::{
     audio::Sounds,
     components::{
         AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, BlastComponent, BlastType,
-        ConsumableComponent, DefenseTag, EnemyComponent, HealthComponent, ItemComponent,
+        ConsumableComponent, DefenseTag, HealthComponent, ItemComponent, MobComponent,
         Motion2DComponent, PlayerComponent,
     },
     entities::{spawn_effect, EffectType},
@@ -17,15 +17,15 @@ use amethyst::{
 };
 
 #[derive(Default)]
-pub struct SpaceshipEnemyCollisionSystem {
+pub struct SpaceshipMobCollisionSystem {
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
-impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
+impl<'s> System<'s> for SpaceshipMobCollisionSystem {
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Read<'s, GameParametersResource>,
-        ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, MobComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
         ReadStorage<'s, BarrelRollAbilityComponent>,
@@ -45,15 +45,15 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
         (
             collision_event_channel,
             game_parameters,
-            enemies,
+            mobs,
             mut motions,
             mut healths,
             barrel_roll_abilities,
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // Is the player colliding with an enemy entity?
-            if let Some(enemy) = enemies.get(event.colliding_entity) {
+            // Is the player colliding with an mob entity?
+            if let Some(mob) = mobs.get(event.colliding_entity) {
                 let spaceship_motion = motions.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
 
@@ -70,7 +70,7 @@ impl<'s> System<'s> for SpaceshipEnemyCollisionSystem {
                 };
 
                 if !collision_damage_immune {
-                    spaceship_health.take_damage(enemy.collision_damage);
+                    spaceship_health.take_damage(mob.collision_damage);
                 }
 
                 if let Some(collision_velocity) = event.collision_velocity {

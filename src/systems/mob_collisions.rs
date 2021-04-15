@@ -1,11 +1,11 @@
 use crate::{
     audio::Sounds,
     components::{
-        BarrierComponent, BlastComponent, BlastType, EnemyComponent, HealthComponent,
+        BarrierComponent, BlastComponent, BlastType, HealthComponent, MobComponent,
         Motion2DComponent, PlayerComponent,
     },
-    entities::{spawn_effect, EffectType, EnemyType, SpawnableType},
-    events::{EnemyCollisionEvent, PlayAudioEvent},
+    entities::{spawn_effect, EffectType, EnemyType, MobType, SpawnableType},
+    events::{MobCollisionEvent, PlayAudioEvent},
     resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
@@ -17,16 +17,16 @@ use amethyst::{
 };
 
 #[derive(Default)]
-pub struct EnemyPlayerCollisionSystem {
-    event_reader: Option<ReaderId<EnemyCollisionEvent>>,
+pub struct MobPlayerCollisionSystem {
+    event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
-impl<'s> System<'s> for EnemyPlayerCollisionSystem {
+impl<'s> System<'s> for MobPlayerCollisionSystem {
     type SystemData = (
-        Read<'s, EventChannel<EnemyCollisionEvent>>,
+        Read<'s, EventChannel<MobCollisionEvent>>,
         Read<'s, GameParametersResource>,
         ReadStorage<'s, PlayerComponent>,
-        WriteStorage<'s, EnemyComponent>,
+        WriteStorage<'s, MobComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -37,7 +37,7 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
         Self::SystemData::setup(world);
         self.event_reader = Some(
             world
-                .fetch_mut::<EventChannel<EnemyCollisionEvent>>()
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
                 .register_reader(),
         );
     }
@@ -45,41 +45,41 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
     fn run(
         &mut self,
         (
-            enemy_collision_event_channel,
+            mob_collision_event_channel,
             game_parameters,
             players,
-            mut enemies,
+            mut mobs,
             mut motions,
             mut healths,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
     ) {
-        for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // Is the enemy colliding with an entity with a spaceship component?
+        for event in mob_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
+            // Is the mob colliding with an entity with a spaceship component?
             if let Some(player) = players.get(event.colliding_entity) {
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["metal_crash"].clone(),
                 });
 
-                let enemy = enemies.get_mut(event.enemy_entity).unwrap();
-                let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
-                let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
+                let mob = mobs.get_mut(event.mob_entity).unwrap();
+                let mob_motion = motions.get_mut(event.mob_entity).unwrap();
+                let mob_health = healths.get_mut(event.mob_entity).unwrap();
 
-                match enemy.spawnable_type {
-                    SpawnableType::Enemy(EnemyType::Missile) => {
-                        enemy_health.value = 0.0;
+                match mob.spawnable_type {
+                    SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {
+                        mob_health.value = 0.0;
                     }
 
                     _ => {
-                        enemy_health.value -= player.collision_damage;
+                        mob_health.value -= player.collision_damage;
                     }
                 }
 
-                if !enemy_motion.immovable {
+                if !mob_motion.immovable {
                     if let Some(collision_velocity) = event.collision_velocity {
                         standard_collision(
-                            enemy_motion,
+                            mob_motion,
                             collision_velocity,
                             game_parameters.min_collision_knockback,
                         );
@@ -91,15 +91,15 @@ impl<'s> System<'s> for EnemyPlayerCollisionSystem {
 }
 
 #[derive(Default)]
-pub struct EnemyEnemyCollisionSystem {
-    event_reader: Option<ReaderId<EnemyCollisionEvent>>,
+pub struct MobMobCollisionSystem {
+    event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
-impl<'s> System<'s> for EnemyEnemyCollisionSystem {
+impl<'s> System<'s> for MobMobCollisionSystem {
     type SystemData = (
-        Read<'s, EventChannel<EnemyCollisionEvent>>,
+        Read<'s, EventChannel<MobCollisionEvent>>,
         Read<'s, GameParametersResource>,
-        ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, MobComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -110,7 +110,7 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
         Self::SystemData::setup(world);
         self.event_reader = Some(
             world
-                .fetch_mut::<EventChannel<EnemyCollisionEvent>>()
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
                 .register_reader(),
         );
     }
@@ -118,45 +118,45 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
     fn run(
         &mut self,
         (
-            enemy_collision_event_channel,
+            mob_collision_event_channel,
             game_parameters,
-            enemies,
+            mobs,
             mut motions,
             mut healths,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
     ) {
-        for event in enemy_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            if let Some(colliding_enemy) = enemies.get(event.colliding_entity) {
+        for event in mob_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
+            if let Some(colliding_mob) = mobs.get(event.colliding_entity) {
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["metal_crash"].clone(),
                 });
-                let enemy = enemies.get(event.enemy_entity).unwrap();
-                let enemy_motion = motions.get_mut(event.enemy_entity).unwrap();
-                let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
+                let mob = mobs.get(event.mob_entity).unwrap();
+                let mob_motion = motions.get_mut(event.mob_entity).unwrap();
+                let mob_health = healths.get_mut(event.mob_entity).unwrap();
 
-                match enemy.spawnable_type {
-                    SpawnableType::Enemy(EnemyType::Missile) => {
-                        enemy_health.value = 0.0;
+                match mob.spawnable_type {
+                    SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {
+                        mob_health.value = 0.0;
                     }
 
                     _ => {
-                        enemy_health.value -= colliding_enemy.collision_damage;
+                        mob_health.value -= colliding_mob.collision_damage;
                     }
                 }
 
-                if !enemy_motion.immovable {
+                if !mob_motion.immovable {
                     if let Some(collision_velocity) = event.collision_velocity {
                         if event.collider_immovable {
                             immovable_collision(
-                                enemy_motion,
+                                mob_motion,
                                 collision_velocity,
                                 game_parameters.min_collision_knockback,
                             );
                         } else {
                             standard_collision(
-                                enemy_motion,
+                                mob_motion,
                                 collision_velocity,
                                 game_parameters.min_collision_knockback,
                             );
@@ -169,13 +169,13 @@ impl<'s> System<'s> for EnemyEnemyCollisionSystem {
 }
 
 #[derive(Default)]
-pub struct EnemyBlastCollisionSystem {
-    event_reader: Option<ReaderId<EnemyCollisionEvent>>,
+pub struct MobBlastCollisionSystem {
+    event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
-impl<'s> System<'s> for EnemyBlastCollisionSystem {
+impl<'s> System<'s> for MobBlastCollisionSystem {
     type SystemData = (
-        Read<'s, EventChannel<EnemyCollisionEvent>>,
+        Read<'s, EventChannel<MobCollisionEvent>>,
         Entities<'s>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, BlastComponent>,
@@ -191,7 +191,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
         Self::SystemData::setup(world);
         self.event_reader = Some(
             world
-                .fetch_mut::<EventChannel<EnemyCollisionEvent>>()
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
                 .register_reader(),
         );
     }
@@ -199,7 +199,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
     fn run(
         &mut self,
         (
-            collision_channel,
+            mob_collision_event_channel,
             entities,
             mut healths,
             mut blasts,
@@ -211,9 +211,9 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
             sounds,
         ): Self::SystemData,
     ) {
-        for event in collision_channel.read(self.event_reader.as_mut().unwrap()) {
+        for event in mob_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             if let Some(blast) = blasts.get_mut(event.colliding_entity) {
-                let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
+                let mob_health = healths.get_mut(event.mob_entity).unwrap();
                 let blast_transform = transforms.get(event.colliding_entity).unwrap();
 
                 match blast.blast_type {
@@ -242,7 +242,7 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
                             &lazy_update,
                         );
 
-                        enemy_health.value -= blast.damage;
+                        mob_health.value -= blast.damage;
                         //TODO: apply poison to enemy health component from blast
                         //enemy.poison = blast.poison_damage;
                     }
@@ -255,15 +255,15 @@ impl<'s> System<'s> for EnemyBlastCollisionSystem {
 }
 
 #[derive(Default)]
-pub struct EnemyArenaBorderCollisionSystem {
-    event_reader: Option<ReaderId<EnemyCollisionEvent>>,
+pub struct MobArenaBorderCollisionSystem {
+    event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
-impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
+impl<'s> System<'s> for MobArenaBorderCollisionSystem {
     type SystemData = (
-        Read<'s, EventChannel<EnemyCollisionEvent>>,
+        Read<'s, EventChannel<MobCollisionEvent>>,
         ReadStorage<'s, BarrierComponent>,
-        ReadStorage<'s, EnemyComponent>,
+        ReadStorage<'s, MobComponent>,
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, HealthComponent>,
         Write<'s, EventChannel<PlayAudioEvent>>,
@@ -274,7 +274,7 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
         Self::SystemData::setup(world);
         self.event_reader = Some(
             world
-                .fetch_mut::<EventChannel<EnemyCollisionEvent>>()
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
                 .register_reader(),
         );
     }
@@ -282,31 +282,31 @@ impl<'s> System<'s> for EnemyArenaBorderCollisionSystem {
     fn run(
         &mut self,
         (
-            collision_event_channel,
+            mob_collision_event_channel,
             barriers,
-            enemies,
+            mobs,
             mut motion_2ds,
             mut healths,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
     ) {
-        for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // is the enemy colliding with a barrier?
+        for event in mob_collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
+            // is the mob colliding with a barrier?
             if let Some(barrier) = barriers.get(event.colliding_entity) {
-                let enemy = enemies.get(event.enemy_entity).unwrap();
+                let mob = mobs.get(event.mob_entity).unwrap();
 
                 if !barrier.enemies_pass {
-                    match enemy.spawnable_type {
-                        SpawnableType::Enemy(EnemyType::Missile) => {}
+                    match mob.spawnable_type {
+                        SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {}
 
                         _ => {
-                            let enemy_motion = motion_2ds.get_mut(event.enemy_entity).unwrap();
-                            let enemy_health = healths.get_mut(event.enemy_entity).unwrap();
+                            let mob_motion = motion_2ds.get_mut(event.mob_entity).unwrap();
+                            let mob_health = healths.get_mut(event.mob_entity).unwrap();
 
-                            barrier_collision(enemy_motion, barrier);
+                            barrier_collision(mob_motion, barrier);
 
-                            enemy_health.value -= barrier.damage;
+                            mob_health.value -= barrier.damage;
 
                             play_audio_channel.single_write(PlayAudioEvent {
                                 source: sounds.sound_effects["force_field"].clone(),

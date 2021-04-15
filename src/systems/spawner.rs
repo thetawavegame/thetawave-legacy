@@ -2,7 +2,7 @@ use crate::{
     components::AutoSpawnerComponent,
     entities::spawn_repeater,
     resources::{
-        BossType, ConsumablesResource, EffectsResource, EnemiesResource, ItemsResource,
+        BossType, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
         PhaseManagerResource, PhaseType, SpawnerResource, SpriteSheetsResource,
     },
 };
@@ -27,7 +27,7 @@ impl<'s> System<'s> for SpawnerSystem {
         ReadExpect<'s, ConsumablesResource>,
         ReadExpect<'s, ItemsResource>,
         ReadExpect<'s, EffectsResource>,
-        ReadExpect<'s, EnemiesResource>,
+        ReadExpect<'s, MobsResource>,
     );
 
     fn run(
@@ -42,7 +42,7 @@ impl<'s> System<'s> for SpawnerSystem {
             consumables_resource,
             items_resource,
             effects_resource,
-            enemies_resource,
+            mobs_resource,
         ): Self::SystemData,
     ) {
         match &phase_manager.phase_map[phase_manager.phase_idx].phase_type {
@@ -51,7 +51,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     &random_pool_type,
                     time.delta_seconds(),
                     &consumables_resource,
-                    &enemies_resource,
+                    &mobs_resource,
                     &items_resource,
                     &effects_resource,
                     &spritesheets_resource,
@@ -64,7 +64,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     &&formation_pool_type,
                     time.delta_seconds(),
                     &consumables_resource,
-                    &enemies_resource,
+                    &mobs_resource,
                     &items_resource,
                     &effects_resource,
                     &spritesheets_resource,
@@ -79,7 +79,7 @@ impl<'s> System<'s> for SpawnerSystem {
                         if !phase_manager.phase_map[phase_manager.phase_idx].boss_spawned {
                             spawn_repeater(
                                 &spritesheets_resource,
-                                &enemies_resource,
+                                &mobs_resource,
                                 &entities,
                                 &lazy_update,
                             );
@@ -105,7 +105,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
         WriteStorage<'s, AutoSpawnerComponent>,
         Read<'s, Time>,
         ReadExpect<'s, LazyUpdate>,
-        ReadExpect<'s, EnemiesResource>,
+        ReadExpect<'s, MobsResource>,
         ReadExpect<'s, ConsumablesResource>,
         ReadExpect<'s, ItemsResource>,
         ReadExpect<'s, EffectsResource>,
@@ -120,7 +120,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
             mut auto_child_entity_spawners,
             time,
             lazy_update,
-            enemies_resource,
+            mobs_resource,
             consumables_resource,
             items_resource,
             effects_resource,
@@ -135,7 +135,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
                 time.delta_seconds(),
                 transform.clone(),
                 &sprite_sheets_resource,
-                &enemies_resource,
+                &mobs_resource,
                 &consumables_resource,
                 &items_resource,
                 &effects_resource,

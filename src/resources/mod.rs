@@ -17,8 +17,8 @@ pub use self::phases::{
     BossType, InvasionFormationPool, InvasionRandomPool, Phase, PhaseManagerResource, PhaseType,
 };
 pub use self::spawnables::{
-    ConsumableEntityData, ConsumablesResource, EffectEntityData, EffectsResource, EnemiesResource,
-    EnemyEntityData, ItemEntityData, ItemsResource,
+    ConsumableEntityData, ConsumablesResource, EffectEntityData, EffectsResource, ItemEntityData,
+    ItemsResource, MobEntityData, MobsResource,
 };
 pub use self::spawner::SpawnerResource;
 pub use self::store::StoreResource;
