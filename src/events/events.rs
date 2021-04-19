@@ -1,5 +1,5 @@
+use crate::entities::ItemType;
 use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
-use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct CollisionEvent {
@@ -96,22 +96,7 @@ impl ArenaBorderCollisionEvent {
 #[derive(Debug)]
 pub struct ItemGetEvent {
     pub player_entity: Entity,
-    pub stat_effects: HashMap<String, f32>,
-    pub bool_effects: HashMap<String, bool>,
-}
-
-impl ItemGetEvent {
-    pub fn new(
-        player_entity: Entity,
-        stat_effects: HashMap<String, f32>,
-        bool_effects: HashMap<String, bool>,
-    ) -> ItemGetEvent {
-        ItemGetEvent {
-            player_entity,
-            stat_effects,
-            bool_effects,
-        }
-    }
+    pub item_type: ItemType,
 }
 
 #[derive(Debug)]

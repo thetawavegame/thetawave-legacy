@@ -218,11 +218,10 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with an item component?
             if let Some(item) = items.get(event.colliding_entity) {
-                item_get_event_channel.single_write(ItemGetEvent::new(
-                    event.player_entity,
-                    item.stat_effects.clone(),
-                    item.bool_effects.clone(),
-                ));
+                item_get_event_channel.single_write(ItemGetEvent {
+                    player_entity: event.player_entity,
+                    item_type: item.item_type.clone(),
+                });
 
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["shotgun_cock"].clone(),

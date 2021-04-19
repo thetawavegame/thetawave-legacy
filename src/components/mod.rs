@@ -36,7 +36,7 @@ pub use self::{
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
     item::ItemComponent,
-    mob::{MobComponent},
+    mob::MobComponent,
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
     player::PlayerComponent,

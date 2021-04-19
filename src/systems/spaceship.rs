@@ -1,9 +1,6 @@
 use crate::{
     audio::Sounds,
-    components::{
-        BarrelRollAbilityComponent, BlasterComponent, HealthComponent, ManualFireComponent,
-        Motion2DComponent,
-    },
+    components::{BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent},
     events::{ItemGetEvent, PlayAudioEvent},
     resources::SpriteSheetsResource,
 };
@@ -24,15 +21,13 @@ impl<'s> System<'s> for SpaceshipSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, BarrelRollAbilityComponent>,
         WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
-        WriteStorage<'s, BlasterComponent>,
+        ReadStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
         Read<'s, InputHandler<StringBindings>>,
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
-        Read<'s, EventChannel<ItemGetEvent>>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
@@ -51,15 +46,13 @@ impl<'s> System<'s> for SpaceshipSystem {
         (
             entities,
             mut transforms,
-            mut barrel_roll_abilities,
             mut healths,
             mut motion2ds,
-            mut blasters,
+            blasters,
             mut manual_fires,
             input,
             sprite_resource,
             lazy_update,
-            item_get_event_channel,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
@@ -91,70 +84,6 @@ impl<'s> System<'s> for SpaceshipSystem {
             }
 
             health.constrain();
-        }
-
-        for event in item_get_event_channel.read(self.item_get_event_reader.as_mut().unwrap()) {
-            let barrel_roll_ability = barrel_roll_abilities.get_mut(event.player_entity).unwrap();
-            let spaceship_health = healths.get_mut(event.player_entity).unwrap();
-            let blaster = blasters.get_mut(event.player_entity).unwrap();
-            let manual_fire = manual_fires.get_mut(event.player_entity).unwrap();
-            let motion = motion2ds.get_mut(event.player_entity).unwrap();
-
-            if event.bool_effects.contains_key("barrel_immunity") {
-                barrel_roll_ability.steel_barrel = event.bool_effects["barrel_immunity"];
-            }
-
-            if event.stat_effects.contains_key("blast_count") {
-                blaster.count += event.stat_effects["blast_count"] as usize;
-            }
-
-            if event.stat_effects.contains_key("blast_fire_speed") {
-                manual_fire.period += event.stat_effects["blast_fire_speed"];
-            }
-
-            if event.stat_effects.contains_key("blast_damage") {
-                blaster.damage += event.stat_effects["blast_damage"];
-            }
-
-            if event.stat_effects.contains_key("max_speed") {
-                motion.max_speed.x += event.stat_effects["max_speed"];
-                motion.max_speed.y += event.stat_effects["max_speed"];
-            }
-            if event.stat_effects.contains_key("crit_chance") {
-                blaster.crit_chance += event.stat_effects["crit_chance"];
-            }
-
-            if event.stat_effects.contains_key("poison_chance") {
-                blaster.poison_chance += event.stat_effects["poison_chance"];
-            }
-
-            if event.stat_effects.contains_key("barrel_cooldown") {
-                barrel_roll_ability.execute_cooldown += event.stat_effects["barrel_cooldown"];
-            }
-
-            if event.stat_effects.contains_key("acceleration") {
-                motion.acceleration.x += event.stat_effects["acceleration"];
-                motion.acceleration.y += event.stat_effects["acceleration"];
-            }
-
-            if event.stat_effects.contains_key("deceleration") {
-                motion.deceleration.x += event.stat_effects["deceleration"];
-                motion.deceleration.y += event.stat_effects["deceleration"];
-            }
-
-            if event.stat_effects.contains_key("health_multiply") {
-                spaceship_health.max_value *= event.stat_effects["health_multiply"];
-                spaceship_health.value = spaceship_health.max_value;
-            }
-
-            if event.stat_effects.contains_key("health_add") {
-                spaceship_health.max_value += event.stat_effects["health_add"];
-                spaceship_health.value = spaceship_health.max_value;
-            }
-
-            if event.stat_effects.contains_key("blast_size") {
-                blaster.size_multiplier += event.stat_effects["blast_size"];
-            }
         }
     }
 }

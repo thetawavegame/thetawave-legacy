@@ -1,0 +1,44 @@
+{
+    SteelBarrel: [
+        BarrelImmunity(true),
+    ],
+    PlasmaBlasts: [
+        ProjectileFirePeriod(-0.05),
+        ProjectileDamage(5.0),
+    ],
+    HazardousReactor: [
+        MaximumSpeed(20.0),
+    ],
+    WarpThruster: [
+        Acceleration(1.0),
+        Deceleration(1.0),
+    ],
+    Tentaclover: [
+        CriticalDamageChance(0.05),
+    ],
+    DefenseSatellite: [
+        MaximumDefense(100.0),
+    ],
+    DoubleBarrel: [
+        ProjectileCount(1),
+    ],
+    YithianPlague: [
+        PoisonChance(0.10),
+    ],
+    Spice: [
+        AbilityCooldown(-0.5),
+    ],
+    EnhancedPlating: [
+        MaximumHealth(100.0),
+    ],
+    StructureReinforcement: [
+        MaximumHealth(100.0),
+    ],
+    BlasterSizeEnhancer: [
+        ProjectileSize(4.0),
+    ],
+    FrequencyAugmentor: [
+        ProjectileFirePeriod(-0.10),
+        ProjectileDamage(-4.0),
+    ],
+}

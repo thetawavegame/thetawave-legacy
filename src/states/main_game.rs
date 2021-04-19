@@ -105,6 +105,11 @@ impl Default for MainGameState {
                     &["collision_handler_system"],
                 )
                 .with(
+                    systems::ModifiersSystem::default(),
+                    "modifiers_system",
+                    &["spaceship_item_collision_system"],
+                )
+                .with(
                     systems::SpaceshipConsumableCollisionSystem::default(),
                     "spaceship_consumable_collision_system",
                     &["collision_handler_system"],
@@ -129,11 +134,7 @@ impl Default for MainGameState {
                     "defense_system",
                     &["spaceship_item_collision_system"],
                 )
-                .with(
-                    systems::SpaceshipSystem::default(),
-                    "spaceship_system",
-                    &["spaceship_item_collision_system"],
-                )
+                .with(systems::SpaceshipSystem::default(), "spaceship_system", &[])
                 .with(systems::StoreSystem, "store_system", &[])
                 .with(
                     systems::StatTrackerSystem,
