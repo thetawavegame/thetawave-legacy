@@ -6,6 +6,7 @@ use amethyst::{
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+pub mod defense;
 pub mod game_parameters;
 pub mod modifiers;
 pub mod phases;
@@ -13,6 +14,7 @@ pub mod spawnables;
 pub mod spawner;
 pub mod store;
 
+pub use self::defense::DefenseResource;
 pub use self::game_parameters::GameParametersResource;
 pub use self::modifiers::{ConsumableModifiersResource, ItemModifiersResource, Modifier};
 pub use self::phases::{

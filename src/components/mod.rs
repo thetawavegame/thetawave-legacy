@@ -16,7 +16,6 @@ mod planet;
 mod player;
 mod status_bar;
 mod store_icon;
-mod tags;
 mod timelimit;
 mod weapons;
 
@@ -42,7 +41,6 @@ pub use self::{
     player::PlayerComponent,
     status_bar::{StatusBarComponent, StatusType},
     store_icon::StoreIconComponent,
-    tags::DefenseTag,
     timelimit::TimeLimitComponent,
     weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };

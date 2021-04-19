@@ -5,7 +5,7 @@ use crate::{
         CAMERA_Z,
     },
     entities::{
-        initialize_arena_barriers, initialize_background, initialize_defense, initialize_planet,
+        initialize_arena_barriers, initialize_background, initialize_planet,
         initialize_side_panels, initialize_spaceship, initialize_status_bars,
         initialize_store_icons,
     },
@@ -168,7 +168,6 @@ impl SimpleState for MainGameState {
 
         initialize_audio(world);
         initialise_ui(world);
-        initialize_defense(world);
         initialize_status_bars(world);
         initialize_side_panels(world, spritesheets.spritesheets["side_panels"].clone());
         initialize_planet(

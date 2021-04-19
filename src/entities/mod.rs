@@ -4,7 +4,6 @@ pub mod backgrounds;
 pub mod barriers;
 pub mod blast;
 pub mod boss;
-pub mod defense;
 pub mod planet;
 pub mod side_panels;
 pub mod spaceship;
@@ -18,7 +17,6 @@ pub use self::{
     barriers::initialize_arena_barriers,
     blast::spawn_blasts,
     boss::spawn_repeater,
-    defense::initialize_defense,
     planet::initialize_planet,
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,

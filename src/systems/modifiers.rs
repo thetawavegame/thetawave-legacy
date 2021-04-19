@@ -1,17 +1,14 @@
 use crate::{
-    audio::Sounds,
     components::{
-        BarrelRollAbilityComponent, BlasterComponent, DefenseTag, HealthComponent,
-        ManualFireComponent, Motion2DComponent, PlayerComponent,
+        BarrelRollAbilityComponent, BlasterComponent, HealthComponent, ManualFireComponent,
+        Motion2DComponent, PlayerComponent,
     },
-    events::{ItemGetEvent, PlayAudioEvent},
-    resources::{ItemModifiersResource, Modifier},
+    events::ItemGetEvent,
+    resources::{DefenseResource, ItemModifiersResource, Modifier},
 };
 use amethyst::{
-    core::Transform,
     ecs::*,
-    ecs::{Entities, Join, LazyUpdate, Read, ReadExpect, System, Write, WriteStorage},
-    input::{InputHandler, StringBindings},
+    ecs::{Read, ReadExpect, System, WriteStorage},
     shrev::EventChannel,
 };
 
@@ -30,6 +27,7 @@ impl<'s> System<'s> for ModifiersSystem {
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, PlayerComponent>,
         ReadExpect<'s, ItemModifiersResource>,
+        WriteExpect<'s, DefenseResource>,
     );
 
     fn setup(&mut self, world: &mut World) {
@@ -52,6 +50,7 @@ impl<'s> System<'s> for ModifiersSystem {
             mut motion2ds,
             mut player_components,
             item_modifiers_resource,
+            mut defense_resource,
         ): Self::SystemData,
     ) {
         for event in item_get_event_channel.read(self.item_get_event_reader.as_mut().unwrap()) {
@@ -121,7 +120,8 @@ impl<'s> System<'s> for ModifiersSystem {
                     }
 
                     Modifier::MaximumDefense(val) => {
-                        // TODO: send event to defense system
+                        defense_resource.max_defense += val;
+                        defense_resource.value += val;
                     }
                 }
             }

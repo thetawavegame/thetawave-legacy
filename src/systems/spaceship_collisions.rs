@@ -2,12 +2,12 @@ use crate::{
     audio::Sounds,
     components::{
         AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, BlastComponent, BlastType,
-        ConsumableComponent, DefenseTag, HealthComponent, ItemComponent, MobComponent,
-        Motion2DComponent, PlayerComponent,
+        ConsumableComponent, HealthComponent, ItemComponent, MobComponent, Motion2DComponent,
+        PlayerComponent,
     },
     entities::{spawn_effect, EffectType},
     events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
-    resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
+    resources::{DefenseResource, EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
@@ -246,8 +246,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Entities<'s>,
         ReadStorage<'s, ConsumableComponent>,
         WriteStorage<'s, PlayerComponent>,
-        ReadStorage<'s, DefenseTag>,
         WriteStorage<'s, HealthComponent>,
+        WriteExpect<'s, DefenseResource>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
@@ -268,8 +268,8 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             entities,
             consumables,
             mut players,
-            defense_tags,
             mut healths,
+            mut defense_resource,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
@@ -283,9 +283,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
                 spaceship_health.value += consumable.health_value;
                 spaceship_health.armor += consumable.armor_value;
                 player.money += consumable.money_value;
-                for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
-                    defense_health.value += consumable.defense_value;
-                }
+                defense_resource.value += consumable.defense_value;
 
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects[&consumable.sound_effect].clone(),
