@@ -1,0 +1,17 @@
+{
+    HealthWrench: [
+        Health(30.0),
+    ],
+    DefenseWrench: [
+        Defense(70.0),
+    ],
+    Armor: [
+        Armor(1),
+    ],
+    Money1: [
+        Money(1),
+    ],
+    Money5: [
+        Money(5),
+    ],
+}

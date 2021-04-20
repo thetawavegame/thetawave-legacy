@@ -18,6 +18,7 @@
     ],
     DefenseSatellite: [
         MaximumDefense(100.0),
+        Defense(100.0),
     ],
     DoubleBarrel: [
         ProjectileCount(1),
@@ -30,9 +31,11 @@
     ],
     EnhancedPlating: [
         MaximumHealth(100.0),
+        Health(100.0),
     ],
     StructureReinforcement: [
         MaximumHealth(100.0),
+        Health(100.0),
     ],
     BlasterSizeEnhancer: [
         ProjectileSize(4.0),

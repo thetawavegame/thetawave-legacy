@@ -4,6 +4,7 @@ use std::collections::HashMap;
 
 pub type ItemModifiersResource = HashMap<ItemType, Vec<Modifier>>;
 pub type ConsumableModifiersResource = HashMap<ConsumableType, Vec<Modifier>>;
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum Modifier {
     BarrelImmunity(bool),
@@ -15,8 +16,12 @@ pub enum Modifier {
     CriticalDamageChance(f32),
     PoisonChance(f32),
     MaximumDefense(f32),
+    Defense(f32),
     ProjectileCount(usize),
     AbilityCooldown(f32),
     MaximumHealth(f32),
+    Health(f32),
     ProjectileSize(f32),
+    Armor(usize),
+    Money(usize),
 }

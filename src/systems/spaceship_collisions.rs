@@ -3,11 +3,10 @@ use crate::{
     components::{
         AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, BlastComponent, BlastType,
         ConsumableComponent, HealthComponent, ItemComponent, MobComponent, Motion2DComponent,
-        PlayerComponent,
     },
     entities::{spawn_effect, EffectType},
-    events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
-    resources::{DefenseResource, EffectsResource, GameParametersResource, SpriteSheetsResource},
+    events::{ConsumableGetEvent, ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
+    resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
 use amethyst::{
@@ -245,9 +244,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
         ReadStorage<'s, ConsumableComponent>,
-        WriteStorage<'s, PlayerComponent>,
-        WriteStorage<'s, HealthComponent>,
-        WriteExpect<'s, DefenseResource>,
+        Write<'s, EventChannel<ConsumableGetEvent>>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
@@ -267,9 +264,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             collision_event_channel,
             entities,
             consumables,
-            mut players,
-            mut healths,
-            mut defense_resource,
+            mut consumable_get_event_channel,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
@@ -277,13 +272,10 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with a consumable entity?
             if let Some(consumable) = consumables.get(event.colliding_entity) {
-                let spaceship_health = healths.get_mut(event.player_entity).unwrap();
-                let player = players.get_mut(event.player_entity).unwrap();
-
-                spaceship_health.value += consumable.health_value;
-                spaceship_health.armor += consumable.armor_value;
-                player.money += consumable.money_value;
-                defense_resource.value += consumable.defense_value;
+                consumable_get_event_channel.single_write(ConsumableGetEvent {
+                    player_entity: event.player_entity,
+                    consumable_type: consumable.consumable_type.clone(),
+                });
 
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects[&consumable.sound_effect].clone(),

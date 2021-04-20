@@ -1,4 +1,4 @@
-use crate::entities::ItemType;
+use crate::entities::{ConsumableType, ItemType};
 use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
 
 #[derive(Debug)]
@@ -97,6 +97,12 @@ impl ArenaBorderCollisionEvent {
 pub struct ItemGetEvent {
     pub player_entity: Entity,
     pub item_type: ItemType,
+}
+
+#[derive(Debug)]
+pub struct ConsumableGetEvent {
+    pub player_entity: Entity,
+    pub consumable_type: ConsumableType,
 }
 
 #[derive(Debug)]
