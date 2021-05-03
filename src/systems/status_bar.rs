@@ -1,10 +1,10 @@
 use crate::{
     components::{
-        BarrelRollAbilityComponent, DefenseTag, HealthComponent, PlayerComponent,
-        StatusBarComponent, StatusType,
+        BarrelRollAbilityComponent, HealthComponent, PlayerComponent, StatusBarComponent,
+        StatusType,
     },
     entities::spawn_status_unit,
-    resources::{SpriteSheetsResource, StoreResource},
+    resources::{DefenseResource, SpriteSheetsResource, StoreResource},
 };
 use amethyst::ecs::prelude::{
     Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage,
@@ -23,10 +23,10 @@ impl<'s> System<'s> for StatusBarSystem {
         WriteStorage<'s, StatusBarComponent>,
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, BarrelRollAbilityComponent>,
-        ReadStorage<'s, DefenseTag>,
         ReadStorage<'s, HealthComponent>,
         ReadExpect<'s, StoreResource>,
         ReadExpect<'s, SpriteSheetsResource>,
+        ReadExpect<'s, DefenseResource>,
         ReadExpect<'s, LazyUpdate>,
     );
 
@@ -37,10 +37,10 @@ impl<'s> System<'s> for StatusBarSystem {
             mut status_bars,
             players,
             barrel_roll_abilities,
-            defense_tags,
             healths,
             store_resource,
             sprite_resource,
+            defense_resource,
             lazy_update,
         ): Self::SystemData,
     ) {
@@ -63,20 +63,18 @@ impl<'s> System<'s> for StatusBarSystem {
                 }
 
                 StatusType::Defense => {
-                    for (_defense_tag, defense_health) in (&defense_tags, &healths).join() {
-                        if let Some(status_position) = status_bar.update_units_y(
-                            defense_health.max_value,
-                            defense_health.value,
+                    if let Some(status_position) = status_bar.update_units_y(
+                        defense_resource.max_defense,
+                        defense_resource.value,
+                        &entities,
+                    ) {
+                        status_bar.status_unit_stack.push(spawn_status_unit(
                             &entities,
-                        ) {
-                            status_bar.status_unit_stack.push(spawn_status_unit(
-                                &entities,
-                                &sprite_resource,
-                                DEFENSE_SPRITE_INDEX,
-                                status_position,
-                                &lazy_update,
-                            ));
-                        }
+                            &sprite_resource,
+                            DEFENSE_SPRITE_INDEX,
+                            status_position,
+                            &lazy_update,
+                        ));
                     }
                 }
 

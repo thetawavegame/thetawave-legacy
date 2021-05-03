@@ -2,11 +2,10 @@ use crate::{
     audio::Sounds,
     components::{
         AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, BlastComponent, BlastType,
-        ConsumableComponent, DefenseTag, HealthComponent, ItemComponent, MobComponent,
-        Motion2DComponent, PlayerComponent,
+        ConsumableComponent, HealthComponent, ItemComponent, MobComponent, Motion2DComponent,
     },
     entities::{spawn_effect, EffectType},
-    events::{ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
+    events::{ConsumableGetEvent, ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
 };
@@ -218,11 +217,10 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with an item component?
             if let Some(item) = items.get(event.colliding_entity) {
-                item_get_event_channel.single_write(ItemGetEvent::new(
-                    event.player_entity,
-                    item.stat_effects.clone(),
-                    item.bool_effects.clone(),
-                ));
+                item_get_event_channel.single_write(ItemGetEvent {
+                    player_entity: event.player_entity,
+                    item_type: item.item_type.clone(),
+                });
 
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["shotgun_cock"].clone(),
@@ -246,9 +244,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
         ReadStorage<'s, ConsumableComponent>,
-        WriteStorage<'s, PlayerComponent>,
-        ReadStorage<'s, DefenseTag>,
-        WriteStorage<'s, HealthComponent>,
+        Write<'s, EventChannel<ConsumableGetEvent>>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
@@ -268,9 +264,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
             collision_event_channel,
             entities,
             consumables,
-            mut players,
-            defense_tags,
-            mut healths,
+            mut consumable_get_event_channel,
             mut play_audio_channel,
             sounds,
         ): Self::SystemData,
@@ -278,15 +272,10 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
             // Is the player colliding with an entity with a consumable entity?
             if let Some(consumable) = consumables.get(event.colliding_entity) {
-                let spaceship_health = healths.get_mut(event.player_entity).unwrap();
-                let player = players.get_mut(event.player_entity).unwrap();
-
-                spaceship_health.value += consumable.health_value;
-                spaceship_health.armor += consumable.armor_value;
-                player.money += consumable.money_value;
-                for (_defense_tag, defense_health) in (&defense_tags, &mut healths).join() {
-                    defense_health.value += consumable.defense_value;
-                }
+                consumable_get_event_channel.single_write(ConsumableGetEvent {
+                    player_entity: event.player_entity,
+                    consumable_type: consumable.consumable_type.clone(),
+                });
 
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects[&consumable.sound_effect].clone(),

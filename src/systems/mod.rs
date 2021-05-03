@@ -13,6 +13,7 @@ mod manualblaster_system;
 mod mob_behavior;
 mod mob_collisions;
 mod mob_destroyed;
+mod modifiers;
 mod motion2d;
 mod phase_manager;
 mod planets;
@@ -42,6 +43,7 @@ pub use self::{
         MobPlayerCollisionSystem,
     },
     mob_destroyed::MobDestroyedSystem,
+    modifiers::ModifiersSystem,
     motion2d::{MobMotion2DSystem, MobTargetSystem, Motion2DSystem},
     phase_manager::PhaseManagerSystem,
     planets::PlanetsSystem,

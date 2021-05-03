@@ -25,11 +25,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                bool_effects: {
-                    "barrel_immunity": true,
-                },
                 price: 9,
-                spawnable_type: Item(SteelBarrel),
+                item_type: SteelBarrel,
             ),
         ),
         PlasmaBlasts: (
@@ -38,12 +35,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                "blast_fire_speed": -0.05,
-                "blast_damage": 5,
-                },
                 price: 15,
-                spawnable_type: Item(PlasmaBlasts),
+                item_type: PlasmaBlasts,
             ),
         ),
         HazardousReactor: (
@@ -52,11 +45,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "max_speed": 20,
-                },
                 price: 7,
-                spawnable_type: Item(HazardousReactor),
+                item_type: HazardousReactor,
             ),
         ),
         WarpThruster: (
@@ -65,12 +55,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                "deceleration": 1,
-                "acceleration": 1,
-                },
                 price: 10,
-                spawnable_type: Item(WarpThruster),
+                item_type: WarpThruster,
             ),
         ),
         Tentaclover: (
@@ -79,11 +65,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "crit_chance": 0.05,
-                },
                 price: 12,
-                spawnable_type: Item(Tentaclover),
+                item_type: Tentaclover,
             ),
         ),
         DefenseSatellite: (
@@ -92,11 +75,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "max_defense": 100,
-                },
                 price: 11,
-                spawnable_type: Item(DefenseSatellite),
+                item_type: DefenseSatellite,
             ),
         ),
         DoubleBarrel: (
@@ -105,11 +85,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "blast_count": 1,
-                },
                 price: 18,
-                spawnable_type: Item(DoubleBarrel),
+                item_type: DoubleBarrel,
             ),
         ),
         YithianPlague: (
@@ -118,11 +95,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "poison_chance": 0.10,
-                },
                 price: 14,
-                spawnable_type: Item(YithianPlague),
+                item_type: YithianPlague,
             ),
         ),
         Spice: (
@@ -131,11 +105,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "barrel_cooldown": -0.5,
-                },
                 price: 8,
-                spawnable_type: Item(Spice),
+                item_type: Spice,
             ),
         ),
         EnhancedPlating: (
@@ -144,11 +115,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "health_multiply": 1.2,
-                },
                 price: 11,
-                spawnable_type: Item(EnhancedPlating),
+                item_type: EnhancedPlating,
             ),
         ),
         StructureReinforcement: (
@@ -157,11 +125,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "health_add": 100.0,
-                },
                 price: 3,
-                spawnable_type: Item(StructureReinforcement),
+                item_type: StructureReinforcement,
             ),
         ),
         BlasterSizeEnhancer: (
@@ -170,11 +135,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "blast_size": 4.0,
-                },
                 price: 12,
-                spawnable_type: Item(BlasterSizeEnhancer),
+                item_type: BlasterSizeEnhancer,
             ),
             animation_component: Some((
                 start_idx: 13,
@@ -192,12 +154,8 @@
                 spritesheet: "items",
             ),
             item_component: (
-                stat_effects: {
-                    "blast_fire_speed": -0.10,
-                    "blast_damage": -4,
-                },
                 price: 8,
-                spawnable_type: Item(FrequencyAugmentor),
+                item_type: FrequencyAugmentor,
             ),
         ),
     }

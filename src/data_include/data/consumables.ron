@@ -18,9 +18,8 @@
         DefenseWrench: (
             consumable_component: (
                 sound_effect: "metal_clang",
-                defense_value: 70,
                 price: 4,
-                spawnable_type: Consumable(DefenseWrench), 
+                consumable_type: DefenseWrench, 
             ),
             hitbox_component: (
                 width: 10.0,
@@ -37,9 +36,8 @@
         Money1: (
             consumable_component: (
                 sound_effect: "small_rock",
-                money_value: 1,
                 price: 1,
-                spawnable_type: Consumable(Money1), 
+                consumable_type: Money1, 
             ),
             hitbox_component: (
                 width: 6.0,
@@ -56,9 +54,8 @@
         Money5: (
             consumable_component: (
                 sound_effect: "large_rock",
-                money_value: 5,
                 price: 5,
-                spawnable_type: Consumable(Money5), 
+                consumable_type: Money5, 
             ),
             hitbox_component: (
                 width: 10.0,
@@ -75,9 +72,8 @@
         HealthWrench: (
             consumable_component: (
                 sound_effect: "metal_clang",
-                health_value: 30,
                 price: 4,
-                spawnable_type: Consumable(HealthWrench), 
+                consumable_type: HealthWrench, 
             ),
             hitbox_component: (
                 width: 10.0,
@@ -94,9 +90,8 @@
         Armor: (
             consumable_component: (
                 sound_effect: "armor_up",
-                armor_value: 1,
                 price: 4,
-                spawnable_type: Consumable(Armor), 
+                consumable_type: Armor, 
             ),
             hitbox_component: (
                 width: 10.0,

@@ -16,7 +16,6 @@ mod planet;
 mod player;
 mod status_bar;
 mod store_icon;
-mod tags;
 mod timelimit;
 mod weapons;
 
@@ -36,13 +35,12 @@ pub use self::{
     health::HealthComponent,
     hitbox::Hitbox2DComponent,
     item::ItemComponent,
-    mob::{MobComponent},
+    mob::MobComponent,
     motion2d::Motion2DComponent,
     planet::PlanetComponent,
     player::PlayerComponent,
     status_bar::{StatusBarComponent, StatusType},
     store_icon::StoreIconComponent,
-    tags::DefenseTag,
     timelimit::TimeLimitComponent,
     weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };

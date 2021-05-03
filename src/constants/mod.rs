@@ -23,10 +23,6 @@ pub const BLAST_Z: f32 = 0.9;
 pub const STATUS_BAR_Z: f32 = 0.9;
 pub const SIDE_PANEL_Z: f32 = 0.8;
 
-// stats
-pub const DEFENSE: f32 = 500.0;
-pub const ENEMY_SPAWN_INTERVAL: f32 = 1.5; // time between enemy spawns
-
 // sprites
 pub const PLAYER_BLAST_SPRITE_INDEX: usize = 0;
 pub const ENEMY_BLAST_SPRITE_INDEX: usize = 1;
