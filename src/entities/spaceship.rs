@@ -1,7 +1,8 @@
 use crate::{
     components::{
-        AbilityDirection, BarrelRollAbilityComponent, BlastType, BlasterComponent, HealthComponent,
-        Hitbox2DComponent, ManualFireComponent, Motion2DComponent,
+        AbilityDirection, AttractorComponent, BarrelRollAbilityComponent, BlastType,
+        BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
+        Motion2DComponent,
     },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
@@ -11,6 +12,7 @@ use crate::{
         SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT,
         SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
     },
+    entities::SpawnableCategory,
     resources::PlayersResource,
 };
 use amethyst::{
@@ -102,6 +104,12 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         steel_barrel: false,
     };
 
+    let attractor = AttractorComponent {
+        attracted_spawnables: vec![SpawnableCategory::Consumable, SpawnableCategory::Item],
+        attraction_radius: 20.0,
+        attraction_acceleration: 0.8,
+    };
+
     world
         .create_entity()
         .with(sprite_render)
@@ -114,5 +122,6 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         .with(local_transform)
         .with(Transparent)
         .with(player)
+        .with(attractor)
         .build();
 }

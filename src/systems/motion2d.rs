@@ -1,11 +1,16 @@
 use crate::{
-    components::{Hitbox2DComponent, MobComponent, Motion2DComponent, PlayerComponent},
+    components::{
+        ConsumableComponent, Hitbox2DComponent, MobComponent, Motion2DComponent, PlayerComponent,
+    },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
-    entities::{AllyType, EnemyType, MobType, SpawnableType},
+    entities::{AllyType, EnemyType, MobType, SpawnableCategory, SpawnableType},
+    events::AttractionEvent,
 };
 use amethyst::{
     core::{math::Vector2, timing::Time, transform::Transform},
     ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
+    ecs::*,
+    shrev::{EventChannel, ReaderId},
 };
 
 // basic physics for all Motion2D entities
@@ -56,6 +61,65 @@ impl<'s> System<'s> for Motion2DSystem {
                     motion_2d.velocity.y = motion_2d.max_speed.y;
                 } else {
                     motion_2d.velocity.y = -motion_2d.max_speed.y;
+                }
+            }
+        }
+    }
+}
+
+// motion behavior for consumables
+#[derive(Default)]
+pub struct ConsumableMotion2DSystem {
+    event_reader: Option<ReaderId<AttractionEvent>>,
+}
+
+impl<'s> System<'s> for ConsumableMotion2DSystem {
+    type SystemData = (
+        WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, ConsumableComponent>,
+        WriteStorage<'s, Transform>,
+        Read<'s, EventChannel<AttractionEvent>>,
+    );
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<AttractionEvent>>()
+                .register_reader(),
+        );
+    }
+
+    fn run(
+        &mut self,
+        (mut motion_2ds, consumables, mut transforms, attraction_channel): Self::SystemData,
+    ) {
+        for event in attraction_channel.read(self.event_reader.as_mut().unwrap()) {
+            for (_consumable, motion_2d, transform) in
+                (&consumables, &mut motion_2ds, &mut transforms).join()
+            {
+                // check if spawnable is in area of influence
+                if get_distance(
+                    transform.translation().x,
+                    event.target_position.x,
+                    transform.translation().y,
+                    event.target_position.y,
+                ) < event.radius
+                {
+                    for spawnable_category in event.affected_spawnables.iter() {
+                        if let SpawnableCategory::Consumable = spawnable_category {
+                            // accelerate towards attractor
+                            println!("attracting");
+                            motion_2d.target_position = Some(event.target_position);
+                            motion_2d.acceleration.x = event.acceleration;
+                            motion_2d.acceleration.y = event.acceleration;
+                            motion_2d.move_towards_target(Vector2::new(
+                                transform.translation().x,
+                                transform.translation().y,
+                            ));
+                            break;
+                        }
+                    }
                 }
             }
         }

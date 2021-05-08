@@ -1,4 +1,4 @@
-use crate::entities::{ConsumableType, ItemType};
+use crate::entities::{ConsumableType, ItemType, SpawnableCategory};
 use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
 
 #[derive(Debug)]
@@ -114,6 +114,14 @@ impl MobReachedBottomEvent {
     pub fn new(damage: f32) -> MobReachedBottomEvent {
         MobReachedBottomEvent { damage }
     }
+}
+
+#[derive(Debug)]
+pub struct AttractionEvent {
+    pub affected_spawnables: Vec<SpawnableCategory>,
+    pub target_position: Vector2<f32>,
+    pub radius: f32,
+    pub acceleration: f32,
 }
 
 #[derive(Debug)]

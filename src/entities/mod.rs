@@ -30,6 +30,14 @@ pub use self::{
 };
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum SpawnableCategory {
+    Consumable,
+    Item,
+    Effect,
+    Mob,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum SpawnableType {
     Consumable(ConsumableType),
     Item(ItemType),
