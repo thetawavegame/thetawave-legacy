@@ -18,3 +18,4 @@ permanent augmentations.
 | Structure Reinforcement | ![structure_reinforcement](assets/structure_reinforcement_portrait.png) |                     Increases maximum health                     |
 |   Blast Size Enhancer   |     ![blast_size_enhancer](assets/blast_size_enhancer_portrait.png)     |                     Increases size of blasts                     |
 |   Frequency Augmentor   |     ![frequency_augmentor](assets/frequency_augmentor_portrait.png)     | Sharply increases fire rate of blasts at the cost of some damage |
+|   Tractor Beam          |     ![tractor_beam](assets/tractor_beam_portrait.png)                   | Increases attraction radiuses for items and consumables |
