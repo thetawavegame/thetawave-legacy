@@ -96,6 +96,7 @@ pub enum ItemType {
     StructureReinforcement,
     BlasterSizeEnhancer,
     FrequencyAugmentor,
+    TractorBeam,
 }
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum EffectType {
