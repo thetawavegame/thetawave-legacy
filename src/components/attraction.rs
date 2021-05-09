@@ -1,12 +1,16 @@
 use crate::entities::SpawnableCategory;
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct AttractData {
+    pub radius: f32,
+    pub acceleration: f32,
+}
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct AttractorComponent {
-    pub attracted_spawnables: Vec<SpawnableCategory>,
-    pub attraction_radius: f32,
-    pub attraction_acceleration: f32,
+    pub attracted_spawnables: HashMap<SpawnableCategory, AttractData>,
 }
 
 impl Component for AttractorComponent {

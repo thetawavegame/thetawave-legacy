@@ -23,7 +23,7 @@ mod weapons;
 pub use self::{
     abilities::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
     animation::{AnimationComponent, AnimationType},
-    attraction::AttractorComponent,
+    attraction::{AttractData, AttractorComponent},
     barriers::{BarrierComponent, PushDirection},
     blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,

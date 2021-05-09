@@ -1,8 +1,8 @@
 (
     motion2d_component: (
         velocity: [0.0, -50.0],
-        acceleration: [0.0, 0.0],
-        deceleration: [0.0, 0.0],
+        acceleration: [0.5, 0.5],
+        deceleration: [3.0, 3.0],
         speed: [0.0, 50.0],
         max_speed: [100.0, 100.0],
         angular_velocity: 0.0,
@@ -40,8 +40,8 @@
                 consumable_type: Money1, 
             ),
             hitbox_component: (
-                width: 6.0,
-                height: 6.0,
+                width: 5.0,
+                height: 5.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,
@@ -58,8 +58,8 @@
                 consumable_type: Money5, 
             ),
             hitbox_component: (
-                width: 10.0,
-                height: 10.0,
+                width: 8.0,
+                height: 8.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,
@@ -76,8 +76,8 @@
                 consumable_type: HealthWrench, 
             ),
             hitbox_component: (
-                width: 10.0,
-                height: 10.0,
+                width: 8.0,
+                height: 8.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,
@@ -94,8 +94,8 @@
                 consumable_type: Armor, 
             ),
             hitbox_component: (
-                width: 10.0,
-                height: 10.0,
+                width: 8.0,
+                height: 8.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,

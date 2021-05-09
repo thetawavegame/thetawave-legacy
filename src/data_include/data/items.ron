@@ -1,10 +1,10 @@
 (   
     motion2d_component: (
-        velocity: [0.0, -70.0],
-        acceleration: [0.0, 0.0],
-        deceleration: [0.0, 0.0],
-        speed: [0.0, 70.0],
-        max_speed: [0.0, 70.0],
+        velocity: [0.0, -50.0],
+        acceleration: [0.5, 0.5],
+        deceleration: [3.0, 3.0],
+        speed: [0.0, 50.0],
+        max_speed: [100, 100.0],
         angular_velocity: 0.0,
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
@@ -12,8 +12,8 @@
         immovable: true,
     ),
     hitbox2d_component: (
-        width: 14.0,
-        height: 14.0,
+        width: 10.0,
+        height: 10.0,
     ),
     despawn_border_component: (
         bottom_offset: Some(-20.0),

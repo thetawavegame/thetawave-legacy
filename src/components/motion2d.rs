@@ -84,7 +84,11 @@ impl Motion2DComponent {
         }
     }
 
-    pub fn move_towards_target(&mut self, current_position: Vector2<f32>) {
+    pub fn move_towards_target(
+        &mut self,
+        current_position: Vector2<f32>,
+        bonus_acceleration: Vector2<f32>,
+    ) {
         if let Some(target_position) = self.target_position {
             let target_angle = (current_position.y - target_position.y)
                 .atan2(current_position.x - target_position.x)
@@ -97,8 +101,10 @@ impl Motion2DComponent {
                 target_position.y,
             );
 
-            self.velocity.x += self.acceleration.x * distance * target_angle.cos();
-            self.velocity.y += self.acceleration.y * distance * target_angle.sin();
+            self.velocity.x +=
+                (self.acceleration.x + bonus_acceleration.x) * distance * target_angle.cos();
+            self.velocity.y +=
+                (self.acceleration.y + bonus_acceleration.y) * distance * target_angle.sin();
         }
     }
 

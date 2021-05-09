@@ -50,6 +50,11 @@ impl Default for MainGameState {
                 .with(systems::AutoSpawnerSystem, "auto_spawner_system", &[])
                 .with(systems::AttractorSystem, "attractor_system", &[])
                 .with(
+                    systems::ItemMotion2DSystem::default(),
+                    "item_motion_2d_system",
+                    &["attractor_system"],
+                )
+                .with(
                     systems::ConsumableMotion2DSystem::default(),
                     "consumable_motion_2d_system",
                     &["attractor_system"],

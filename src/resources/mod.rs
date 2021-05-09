@@ -52,7 +52,8 @@ pub type SoundsConfig = HashMap<String, String>;
 pub struct DebugLinesConfig {
     pub line_width: f32,
     pub hitbox_color: Srgba,
-    pub attractor_color: Srgba,
+    pub item_attractor_color: Srgba,
+    pub consumable_attractor_color: Srgba,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

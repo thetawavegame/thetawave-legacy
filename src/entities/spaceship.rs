@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        AbilityDirection, AttractorComponent, BarrelRollAbilityComponent, BlastType,
+        AbilityDirection, AttractData, AttractorComponent, BarrelRollAbilityComponent, BlastType,
         BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
         Motion2DComponent,
     },
@@ -104,10 +104,24 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         steel_barrel: false,
     };
 
+    let mut attracted_spawnables = HashMap::new();
+    attracted_spawnables.insert(
+        SpawnableCategory::Consumable,
+        AttractData {
+            radius: 20.0,
+            acceleration: 0.3,
+        },
+    );
+    attracted_spawnables.insert(
+        SpawnableCategory::Item,
+        AttractData {
+            radius: 18.0,
+            acceleration: 0.3,
+        },
+    );
+
     let attractor = AttractorComponent {
-        attracted_spawnables: vec![SpawnableCategory::Consumable, SpawnableCategory::Item],
-        attraction_radius: 20.0,
-        attraction_acceleration: 0.8,
+        attracted_spawnables,
     };
 
     world

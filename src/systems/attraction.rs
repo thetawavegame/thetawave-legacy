@@ -1,4 +1,7 @@
-use crate::{components::AttractorComponent, events::AttractionEvent, resources::DebugLinesConfig};
+use crate::{
+    components::AttractorComponent, entities::SpawnableCategory, events::AttractionEvent,
+    resources::DebugLinesConfig,
+};
 use amethyst::{
     core::{math::Vector2, Transform},
     ecs::prelude::{Join, Read, ReadStorage, System, Write},
@@ -25,23 +28,31 @@ impl<'s> System<'s> for AttractorSystem {
             attraction_channel.single_write(AttractionEvent {
                 affected_spawnables: attractor.attracted_spawnables.clone(),
                 target_position: Vector2::new(transform.translation().x, transform.translation().y),
-                radius: attractor.attraction_radius,
-                acceleration: attractor.attraction_acceleration,
             });
 
             if cfg!(debug_assertions) {
-                // draw attractor ranges
-                debug_lines.draw_circle(
-                    [
-                        transform.translation().x,
-                        transform.translation().y,
-                        transform.translation().z,
-                    ]
-                    .into(),
-                    attractor.attraction_radius,
-                    15,
-                    debug_lines_config.attractor_color,
-                )
+                for (spawnable_category, attract_data) in attractor.attracted_spawnables.iter() {
+                    // draw attractor ranges
+                    debug_lines.draw_circle(
+                        [
+                            transform.translation().x,
+                            transform.translation().y,
+                            transform.translation().z,
+                        ]
+                        .into(),
+                        attract_data.radius,
+                        15,
+                        match spawnable_category {
+                            SpawnableCategory::Consumable => {
+                                debug_lines_config.consumable_attractor_color
+                            }
+                            SpawnableCategory::Item => debug_lines_config.item_attractor_color,
+                            _ => {
+                                panic!("SpawnableCategory  debug lines unimplemented!");
+                            }
+                        },
+                    );
+                }
             }
         }
     }

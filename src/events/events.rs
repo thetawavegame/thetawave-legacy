@@ -1,5 +1,9 @@
-use crate::entities::{ConsumableType, ItemType, SpawnableCategory};
+use crate::{
+    components::AttractData,
+    entities::{ConsumableType, ItemType, SpawnableCategory},
+};
 use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
+use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct CollisionEvent {
@@ -118,10 +122,8 @@ impl MobReachedBottomEvent {
 
 #[derive(Debug)]
 pub struct AttractionEvent {
-    pub affected_spawnables: Vec<SpawnableCategory>,
+    pub affected_spawnables: HashMap<SpawnableCategory, AttractData>,
     pub target_position: Vector2<f32>,
-    pub radius: f32,
-    pub acceleration: f32,
 }
 
 #[derive(Debug)]
