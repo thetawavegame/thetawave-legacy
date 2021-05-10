@@ -15,6 +15,7 @@
         ),
         mob_component: (
             defense_damage: 30,
+            /*
             loot_probs: [
                 (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
@@ -23,6 +24,14 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(Drone)),
         ),
         health_component: (
@@ -96,6 +105,7 @@
         )),
         mob_component: (
             defense_damage: 50,
+            /*
             loot_probs: [
                 (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
@@ -104,6 +114,14 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(Pawn)),
         ),
         health_component: (
@@ -159,9 +177,17 @@
         ),
         mob_component: (
             defense_damage: -100,
+            /*
             loot_probs: [
                 (None, 1.0),
             ],
+            */
+            drop_rolls: (
+                roll_count: 0,
+                roll_probs: [
+                    (NoDrop, 1.0),
+                ],
+            ),
             spawnable_type: Mob(Ally(Hauler)),
         ),
         health_component: (
@@ -235,6 +261,7 @@
         )),
         mob_component: (
             defense_damage: 25,
+            /*
             loot_probs: [
                 (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
@@ -243,6 +270,14 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(StraferRight)),
         ),
         health_component: (
@@ -316,6 +351,7 @@
         )),
         mob_component: (
             defense_damage: 25,
+            /*
             loot_probs: [
                 (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
@@ -324,6 +360,14 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(StraferLeft)),
         ),
         health_component: (
@@ -379,6 +423,7 @@
         ),
         mob_component: (
             defense_damage: 25,
+            /*
             loot_probs: [
                 (None, 0.6),
                 (Some(Consumable(HealthWrench)), 0.03),
@@ -387,6 +432,14 @@
                 (Some(Consumable(Money5)), 0.02),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(MissileLauncher)),
         ),
         health_component: (
@@ -449,9 +502,17 @@
         mob_component: (
             defense_damage: 10,
             collision_damage: 200,
+            /*
             loot_probs: [
                 (None, 1.0),
             ],
+            */
+            drop_rolls: (
+                roll_count: 0,
+                roll_probs: [
+                    (NoDrop, 1.0),
+                ],
+            ),
             spawnable_type: Mob(Enemy(Missile)),
         ),
         health_component: (
@@ -507,6 +568,7 @@
         ),
         mob_component: (
             defense_damage: 0,
+            /*
             loot_probs: [
                 (None, 0.0),
                 (Some(Consumable(HealthWrench)), 0.04),
@@ -515,6 +577,14 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterBody)),
         ),
         health_component: (
@@ -558,6 +628,7 @@
         ),
         mob_component: (
             defense_damage: 0,
+            /*
             loot_probs: [
                 (None, 0.0),
                 (Some(Consumable(HealthWrench)), 0.04),
@@ -566,6 +637,14 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterHead)),
         ),
         health_component: (
@@ -609,6 +688,7 @@
         ),
         mob_component: (
             defense_damage: 0,
+            /*
             loot_probs: [
                 (None, 0.0),
                 (Some(Consumable(HealthWrench)), 0.04),
@@ -617,6 +697,14 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03)
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterRightShoulder)),
         ),
         health_component: (
@@ -662,6 +750,7 @@
         ),
         mob_component: (
             defense_damage: 0,
+            /*
             loot_probs: [
                 (None, 0.0),
                 (Some(Consumable(HealthWrench)), 0.04),
@@ -670,6 +759,14 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03)
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterLeftShoulder)),
         ),
         health_component: (
@@ -715,6 +812,7 @@
         ),
         mob_component: (
             defense_damage: 0,
+            /*
             loot_probs: [
                 (None, 0.0),
                 (Some(Consumable(HealthWrench)), 0.04),
@@ -723,6 +821,14 @@
                 (Some(Consumable(Money5)), 0.5),
                 (Some(Consumable(Armor)), 0.03),
             ],
+            */
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (NoDrop, 0.6),
+                    (Standard, 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterRightArm)),
         ),
         health_component: (

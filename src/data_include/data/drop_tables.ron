@@ -1,0 +1,20 @@
+{
+    NoDrop: [
+        // leave empty
+        // :(
+    ],
+    Standard: [
+        (Consumable(HealthWrench), 0.03),
+        (Consumable(DefenseWrench), 0.02),
+        (Consumable(Money1), 0.30),
+        (Consumable(Money5), 0.02),
+        (Consumable(Armor), 0.03),
+    ],
+    Boss: [
+        (Consumable(HealthWrench), 0.03),
+        (Consumable(DefenseWrench), 0.02),
+        (Consumable(Money1), 0.30),
+        (Item(PlasmaBlasts), 0.02),
+        (Item(Tentaclover), 0.03),
+    ],
+}

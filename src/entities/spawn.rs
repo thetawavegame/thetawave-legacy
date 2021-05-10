@@ -1,7 +1,8 @@
 use crate::{
     entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
     resources::{
-        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
+        ConsumablesResource, DropProbabilities, DropRolls, DropTableType, DropTablesResource,
+        EffectsResource, ItemsResource, MobsResource, RollProbabilities, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -14,17 +15,17 @@ use rand::{thread_rng, Rng};
 
 pub type LootTable = Vec<(Option<SpawnableType>, f32)>;
 
-pub fn choose_loot(loot_table: &LootTable) -> &Option<SpawnableType> {
-    let prob_space = loot_table
+pub fn choose_loot(drop_probs: &DropProbabilities) -> &SpawnableType {
+    let prob_space = drop_probs
         .iter()
-        .fold(0.0, |sum, loot_prob| sum + loot_prob.1);
+        .fold(0.0, |sum, drop_prob| sum + drop_prob.1);
 
     let pos = rand::thread_rng().gen::<f32>() * prob_space;
     let mut sum = 0.0;
-    for loot_prob in loot_table.iter() {
-        sum += loot_prob.1;
+    for drop_prob in drop_probs.iter() {
+        sum += drop_prob.1;
         if sum > pos {
-            return &loot_prob.0;
+            return &drop_prob.0;
         }
     }
     unreachable!("Error in probabilities of random spawnable pool.")
@@ -300,7 +301,7 @@ pub fn spawn_spawnable(
 }
 
 pub fn spawn_random_spawnable(
-    loot_table: &LootTable,
+    drop_probs: &DropProbabilities,
     spawn_transform: Transform,
     consumables_resource: &ReadExpect<ConsumablesResource>,
     mobs_resource: &ReadExpect<MobsResource>,
@@ -311,17 +312,63 @@ pub fn spawn_random_spawnable(
     lazy_update: &ReadExpect<LazyUpdate>,
 ) {
     // choose random spawnable
-    if let Some(spawnable_type) = choose_loot(&loot_table) {
-        spawn_spawnable(
-            &spawnable_type,
-            spawn_transform,
-            consumables_resource,
-            mobs_resource,
-            items_resource,
-            effects_resource,
-            spritesheets_resource,
-            entities,
-            lazy_update,
-        );
+    spawn_spawnable(
+        choose_loot(drop_probs),
+        spawn_transform,
+        consumables_resource,
+        mobs_resource,
+        items_resource,
+        effects_resource,
+        spritesheets_resource,
+        entities,
+        lazy_update,
+    );
+}
+
+pub fn spawn_drops(
+    drop_rolls: &DropRolls,
+    spawn_transform: Transform,
+    drop_tables_resource: &ReadExpect<DropTablesResource>,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    mobs_resource: &ReadExpect<MobsResource>,
+    items_resource: &ReadExpect<ItemsResource>,
+    effects_resource: &ReadExpect<EffectsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    for _ in 0..drop_rolls.roll_count {
+        // pick a drop table
+        let drop_table = choose_drop_table(&drop_rolls.roll_probs);
+        if let DropTableType::NoDrop = drop_table {
+        } else {
+            spawn_random_spawnable(
+                &drop_tables_resource[drop_table],
+                spawn_transform.clone(),
+                consumables_resource,
+                mobs_resource,
+                items_resource,
+                effects_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            )
+        }
     }
+}
+
+pub fn choose_drop_table(roll_probs: &RollProbabilities) -> &DropTableType {
+    let prob_space = roll_probs
+        .iter()
+        .fold(0.0, |sum, roll_prob| sum + roll_prob.1);
+
+    let pos = rand::thread_rng().gen::<f32>() * prob_space;
+    let mut sum = 0.0;
+    for roll_prob in roll_probs.iter() {
+        sum += roll_prob.1;
+        if sum > pos {
+            return &roll_prob.0;
+        }
+    }
+    unreachable!("Error in probabilities of random spawnable pool.")
 }

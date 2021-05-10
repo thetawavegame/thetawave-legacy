@@ -30,9 +30,9 @@ pub mod systems;
 
 use resources::{
     ConsumableModifiersResource, ConsumablesResource, DebugLinesConfig, DefenseResource,
-    EffectsResource, GameParametersResource, ItemModifiersResource, ItemsResource, MobsResource,
-    PhaseManagerResource, PlayersResource, SoundsConfig, SpawnerResource, SpriteSheetsConfig,
-    StoreResource,
+    DropTablesResource, EffectsResource, GameParametersResource, ItemModifiersResource,
+    ItemsResource, MobsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
+    SpawnerResource, SpriteSheetsConfig, StoreResource,
 };
 use states::MainGameState;
 
@@ -74,6 +74,7 @@ fn main() -> amethyst::Result<()> {
         game_parameters,
         spawner,
         defense,
+        drop_tables,
     } = load_include_data();
 
     let items =
@@ -101,6 +102,8 @@ fn main() -> amethyst::Result<()> {
         .expect("failed to load data file: spawner.ron");
     let defense = <DefenseResource as Config>::load_bytes(defense)
         .expect("failed to load data file: defense.ron");
+    let drop_tables = <DropTablesResource as Config>::load_bytes(drop_tables)
+        .expect("failed to load data file: drop_tables.ron");
 
     let game_data = GameDataBuilder::default()
         .with_system_desc(GltfSceneLoaderSystemDesc::default(), "gltf_system", &[])
@@ -136,6 +139,7 @@ fn main() -> amethyst::Result<()> {
         .with_resource(game_parameters)
         .with_resource(spawner)
         .with_resource(defense)
+        .with_resource(drop_tables)
         .build(game_data)?;
 
     game.run();

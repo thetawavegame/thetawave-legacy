@@ -1,10 +1,11 @@
 use crate::{
     audio::Sounds,
     components::MobComponent,
-    entities::{spawn_effect, spawn_random_spawnable, EffectType, SpawnableType},
+    entities::{spawn_drops, spawn_effect, spawn_random_spawnable, EffectType, SpawnableType},
     events::{MobDestroyedEvent, PlayAudioEvent},
     resources::{
-        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
+        ConsumablesResource, DropTablesResource, EffectsResource, ItemsResource, MobsResource,
+        SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -26,6 +27,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
         Entities<'s>,
         ReadStorage<'s, Transform>,
         ReadStorage<'s, MobComponent>,
+        ReadExpect<'s, DropTablesResource>,
         ReadExpect<'s, ConsumablesResource>,
         ReadExpect<'s, MobsResource>,
         ReadExpect<'s, EffectsResource>,
@@ -52,6 +54,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
             entities,
             transforms,
             mobs,
+            drop_tables_resource,
             consumables_resource,
             mobs_resource,
             effects_resource,
@@ -95,9 +98,10 @@ impl<'s> System<'s> for MobDestroyedSystem {
                 }
             }
 
-            spawn_random_spawnable(
-                &mob_component.loot_probs,
+            spawn_drops(
+                &mob_component.drop_rolls,
                 mob_transform.clone(),
+                &drop_tables_resource,
                 &consumables_resource,
                 &mobs_resource,
                 &items_resource,
