@@ -58,8 +58,14 @@ impl Motion2DComponent {
     pub fn brake_horizontal(&mut self) {
         if self.velocity.x > 0.0 {
             self.velocity.x -= self.deceleration.x;
+            if self.velocity.x < 0.0 {
+                self.velocity.x = 0.0;
+            }
         } else if self.velocity.x < 0.0 {
             self.velocity.x += self.deceleration.x;
+            if self.velocity.x > 0.0 {
+                self.velocity.x = 0.0;
+            }
         }
     }
 

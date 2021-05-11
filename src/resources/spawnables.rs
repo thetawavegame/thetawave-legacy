@@ -70,8 +70,8 @@ pub struct ConsumableEntityData {
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct RandomMotionRange2D {
-    pub linear: Vector2<(f32, f32)>,
-    pub angular: (f32, f32),
+    pub linear: Option<Vector2<(f32, f32)>>,
+    pub angular: Option<(f32, f32)>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

@@ -22,7 +22,7 @@ pub use self::{
     spaceship::initialize_spaceship,
     spawn::{
         spawn_consumable, spawn_drops, spawn_effect, spawn_item, spawn_mob, spawn_random_spawnable,
-        spawn_spawnable, LootTable,
+        spawn_spawnable,
     },
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,

@@ -13,24 +13,6 @@ use amethyst::{
 
 use rand::{thread_rng, Rng};
 
-pub type LootTable = Vec<(Option<SpawnableType>, f32)>;
-
-pub fn choose_loot(drop_probs: &DropProbabilities) -> &SpawnableType {
-    let prob_space = drop_probs
-        .iter()
-        .fold(0.0, |sum, drop_prob| sum + drop_prob.1);
-
-    let pos = rand::thread_rng().gen::<f32>() * prob_space;
-    let mut sum = 0.0;
-    for drop_prob in drop_probs.iter() {
-        sum += drop_prob.1;
-        if sum > pos {
-            return &drop_prob.0;
-        }
-    }
-    unreachable!("Error in probabilities of random spawnable pool.")
-}
-
 pub fn spawn_consumable(
     consumable_type: &ConsumableType,
     spawn_transform: Transform,
@@ -78,18 +60,18 @@ pub fn spawn_consumable_drop(
     };
 
     let mut motion2d_component = consumables_resource.motion2d_component.clone();
-    motion2d_component.velocity.x = thread_rng().gen_range(
-        consumables_resource.random_initial_motion.linear.x.0,
-        consumables_resource.random_initial_motion.linear.x.1,
-    );
-    motion2d_component.velocity.y = thread_rng().gen_range(
-        consumables_resource.random_initial_motion.linear.y.0,
-        consumables_resource.random_initial_motion.linear.y.1,
-    );
-    motion2d_component.angular_velocity = thread_rng().gen_range(
-        consumables_resource.random_initial_motion.angular.0,
-        consumables_resource.random_initial_motion.angular.1,
-    );
+
+    if let Some(linear_motion) = consumables_resource.random_initial_motion.linear {
+        motion2d_component.velocity.x =
+            thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+        motion2d_component.velocity.y =
+            thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+    }
+
+    if let Some(angular_motion) = consumables_resource.random_initial_motion.angular {
+        motion2d_component.angular_velocity =
+            thread_rng().gen_range(angular_motion.0, angular_motion.1);
+    }
 
     lazy_update
         .create_entity(entities)
@@ -217,18 +199,17 @@ pub fn spawn_item_drop(
     };
 
     let mut motion2d_component = items_resource.motion2d_component.clone();
-    motion2d_component.velocity.x = thread_rng().gen_range(
-        items_resource.random_initial_motion.linear.x.0,
-        items_resource.random_initial_motion.linear.x.1,
-    );
-    motion2d_component.velocity.y = thread_rng().gen_range(
-        items_resource.random_initial_motion.linear.y.0,
-        items_resource.random_initial_motion.linear.y.1,
-    );
-    motion2d_component.angular_velocity = thread_rng().gen_range(
-        items_resource.random_initial_motion.angular.0,
-        items_resource.random_initial_motion.angular.1,
-    );
+    if let Some(linear_motion) = items_resource.random_initial_motion.linear {
+        motion2d_component.velocity.x =
+            thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+        motion2d_component.velocity.y =
+            thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+    }
+
+    if let Some(angular_motion) = items_resource.random_initial_motion.angular {
+        motion2d_component.angular_velocity =
+            thread_rng().gen_range(angular_motion.0, angular_motion.1);
+    }
 
     let item_entity = lazy_update
         .create_entity(entities)
@@ -283,18 +264,17 @@ pub fn spawn_effect(
 
         if let Some(mut motion2d_component) = effect_data.motion2d_component.clone() {
             if let Some(random_initial_motion) = effect_data.random_initial_motion.clone() {
-                motion2d_component.velocity.x = thread_rng().gen_range(
-                    random_initial_motion.linear.x.0,
-                    random_initial_motion.linear.x.1,
-                );
-                motion2d_component.velocity.y = thread_rng().gen_range(
-                    random_initial_motion.linear.y.0,
-                    random_initial_motion.linear.y.1,
-                );
-                motion2d_component.angular_velocity = thread_rng().gen_range(
-                    random_initial_motion.angular.0,
-                    random_initial_motion.angular.1,
-                );
+                if let Some(linear_motion) = random_initial_motion.linear {
+                    motion2d_component.velocity.x =
+                        thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+                    motion2d_component.velocity.y =
+                        thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+                }
+
+                if let Some(angular_motion) = random_initial_motion.angular {
+                    motion2d_component.angular_velocity =
+                        thread_rng().gen_range(angular_motion.0, angular_motion.1);
+                }
             }
             lazy_update.insert(effect_entity, motion2d_component);
         } else if effect_data.random_initial_motion.is_some() {
@@ -529,18 +509,25 @@ pub fn spawn_drops(
     }
 }
 
-pub fn choose_drop_table(roll_probs: &RollProbabilities) -> &DropTableType {
-    let prob_space = roll_probs
-        .iter()
-        .fold(0.0, |sum, roll_prob| sum + roll_prob.1);
-
+pub fn weighted_rng(probs: Vec<f32>) -> usize {
+    let prob_space = probs.iter().fold(0.0, |sum, prob| sum + prob);
     let pos = rand::thread_rng().gen::<f32>() * prob_space;
     let mut sum = 0.0;
-    for roll_prob in roll_probs.iter() {
-        sum += roll_prob.1;
+    for (idx, prob) in probs.iter().enumerate() {
+        sum += prob;
         if sum > pos {
-            return &roll_prob.0;
+            return idx;
         }
     }
-    unreachable!("Error in probabilities of random spawnable pool.")
+    unreachable!("Error in probabilities of random spawnable pool.");
+}
+
+pub fn choose_drop_table(roll_probs: &RollProbabilities) -> &DropTableType {
+    let probs = roll_probs.iter().map(|roll_prob| roll_prob.1).collect();
+    &roll_probs[weighted_rng(probs)].0
+}
+
+pub fn choose_loot(drop_probs: &DropProbabilities) -> &SpawnableType {
+    let probs = drop_probs.iter().map(|drop_prob| drop_prob.1).collect();
+    &drop_probs[weighted_rng(probs)].0
 }

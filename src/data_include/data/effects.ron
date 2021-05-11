@@ -112,8 +112,8 @@
             duration: 3.0,
         )),
         random_initial_motion: Some((
-            linear: [(-200, 200), (-200, 200)],
-            angular: (-40, 40),
+            linear: Some([(-200, 200), (-200, 200)]),
+            angular: Some((-40, 40)),
         )),
         motion2d_component: Some((
             velocity: [0.0, 0.0],
@@ -177,8 +177,8 @@
             duration: 3.0,
         )),
         random_initial_motion: Some((
-            linear: [(-200, 200), (-200, 200)],
-            angular: (-40, 40),
+            linear: Some([(-200, 200), (-200, 200)]),
+            angular: Some((-40, 40)),
         )),
         motion2d_component: Some((
             velocity: [0.0, 0.0],
@@ -242,8 +242,8 @@
             duration: 3.0,
         )),
         random_initial_motion: Some((
-            linear: [(-200, 200), (-200, 200)],
-            angular: (-40, 40),
+            linear: Some([(-200, 200), (-200, 200)]),
+            angular: Some((-40, 40)),
         )),
         motion2d_component: Some((
             velocity: [0.0, 0.0],
@@ -307,8 +307,8 @@
             duration: 3.0,
         )),
         random_initial_motion: Some((
-            linear: [(-200, 200), (-200, 200)],
-            angular: (-40, 40),
+            linear: Some([(-200, 200), (-200, 200)]),
+            angular: Some((-40, 40)),
         )),
         motion2d_component: Some((
             velocity: [0.0, 0.0],
@@ -372,8 +372,8 @@
             duration: 3.0,
         )),
         random_initial_motion: Some((
-            linear: [(-200, 200), (-200, 200)],
-            angular: (-40, 40),
+            linear: Some([(-200, 200), (-200, 200)]),
+            angular: Some((-40, 40)),
         )),
         motion2d_component: Some((
             velocity: [0.0, 0.0],
@@ -437,8 +437,8 @@
             duration: 3.0,
         )),
         random_initial_motion: Some((
-            linear: [(-200, 200), (-200, 200)],
-            angular: (-40, 40),
+            linear: Some([(-200, 200), (-200, 200)]),
+            angular: Some((-40, 40)),
         )),
         motion2d_component: Some((
             velocity: [0.0, 0.0],
@@ -502,8 +502,8 @@
             duration: 3.0,
         )),
         random_initial_motion: Some((
-            linear: [(-200, 200), (-200, 200)],
-            angular: (-40, 40),
+            linear: Some([(-200, 200), (-200, 200)]),
+            angular: Some((-40, 40)),
         )),
         motion2d_component: Some((
             velocity: [0.0, 0.0],
