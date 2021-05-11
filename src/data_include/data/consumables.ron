@@ -1,7 +1,7 @@
 (
     motion2d_component: (
         velocity: [0.0, -50.0],
-        acceleration: [0.5, 0.5],
+        acceleration: [5.0, 5.0],
         deceleration: [5.0, 5.0],
         speed: [0.0, 50.0],
         max_speed: [100.0, 100.0],
