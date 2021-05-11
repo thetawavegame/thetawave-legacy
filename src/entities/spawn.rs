@@ -60,6 +60,49 @@ pub fn spawn_consumable(
         .build();
 }
 
+pub fn spawn_consumable_drop(
+    consumable_type: &ConsumableType,
+    spawn_transform: Transform,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    let consumable_data = consumables_resource.consumable_entities[consumable_type].clone();
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: spritesheets_resource.spritesheets
+            [&consumable_data.sprite_render_data.spritesheet]
+            .clone(),
+        sprite_number: consumable_data.sprite_render_data.initial_index,
+    };
+
+    let mut motion2d_component = consumables_resource.motion2d_component.clone();
+    motion2d_component.velocity.x = thread_rng().gen_range(
+        consumables_resource.random_initial_motion.linear.x.0,
+        consumables_resource.random_initial_motion.linear.x.1,
+    );
+    motion2d_component.velocity.y = thread_rng().gen_range(
+        consumables_resource.random_initial_motion.linear.y.0,
+        consumables_resource.random_initial_motion.linear.y.1,
+    );
+    motion2d_component.angular_velocity = thread_rng().gen_range(
+        consumables_resource.random_initial_motion.angular.0,
+        consumables_resource.random_initial_motion.angular.1,
+    );
+
+    lazy_update
+        .create_entity(entities)
+        .with(sprite_render)
+        .with(consumable_data.hitbox_component.clone())
+        .with(consumable_data.consumable_component)
+        .with(motion2d_component)
+        .with(spawn_transform)
+        .with(Transparent)
+        .with(consumables_resource.despawn_border_component.clone())
+        .build();
+}
+
 pub fn spawn_mob(
     mob_type: &MobType,
     spawn_transform: Transform,
@@ -147,6 +190,52 @@ pub fn spawn_item(
         .with(item_data.item_component)
         .with(items_resource.hitbox2d_component.clone())
         .with(items_resource.motion2d_component.clone())
+        .with(spawn_transform)
+        .with(Transparent)
+        .with(items_resource.despawn_border_component.clone())
+        .build();
+
+    if let Some(animation_component) = item_data.animation_component {
+        lazy_update.insert(item_entity, animation_component);
+    }
+}
+
+pub fn spawn_item_drop(
+    item_type: &ItemType,
+    spawn_transform: Transform,
+    items_resource: &ReadExpect<ItemsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    let item_data = items_resource.item_entities[item_type].clone();
+
+    let sprite_render = SpriteRender {
+        sprite_sheet: spritesheets_resource.spritesheets[&item_data.sprite_render_data.spritesheet]
+            .clone(),
+        sprite_number: item_data.sprite_render_data.initial_index,
+    };
+
+    let mut motion2d_component = items_resource.motion2d_component.clone();
+    motion2d_component.velocity.x = thread_rng().gen_range(
+        items_resource.random_initial_motion.linear.x.0,
+        items_resource.random_initial_motion.linear.x.1,
+    );
+    motion2d_component.velocity.y = thread_rng().gen_range(
+        items_resource.random_initial_motion.linear.y.0,
+        items_resource.random_initial_motion.linear.y.1,
+    );
+    motion2d_component.angular_velocity = thread_rng().gen_range(
+        items_resource.random_initial_motion.angular.0,
+        items_resource.random_initial_motion.angular.1,
+    );
+
+    let item_entity = lazy_update
+        .create_entity(entities)
+        .with(sprite_render)
+        .with(item_data.item_component)
+        .with(items_resource.hitbox2d_component.clone())
+        .with(motion2d_component)
         .with(spawn_transform)
         .with(Transparent)
         .with(items_resource.despawn_border_component.clone())
@@ -300,6 +389,64 @@ pub fn spawn_spawnable(
     }
 }
 
+pub fn spawn_spawnable_drop(
+    spawnable_type: &SpawnableType,
+    spawn_transform: Transform,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    mobs_resource: &ReadExpect<MobsResource>,
+    items_resource: &ReadExpect<ItemsResource>,
+    effects_resource: &ReadExpect<EffectsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    match spawnable_type {
+        SpawnableType::Consumable(consumable_type) => {
+            spawn_consumable_drop(
+                consumable_type,
+                spawn_transform,
+                consumables_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Mob(mob_type) => {
+            spawn_mob(
+                mob_type,
+                spawn_transform,
+                mobs_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Item(item_type) => {
+            spawn_item_drop(
+                item_type,
+                spawn_transform,
+                items_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Effect(effect_type) => {
+            spawn_effect(
+                effect_type,
+                spawn_transform,
+                effects_resource,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+    }
+}
+
 pub fn spawn_random_spawnable(
     drop_probs: &DropProbabilities,
     spawn_transform: Transform,
@@ -313,6 +460,31 @@ pub fn spawn_random_spawnable(
 ) {
     // choose random spawnable
     spawn_spawnable(
+        choose_loot(drop_probs),
+        spawn_transform,
+        consumables_resource,
+        mobs_resource,
+        items_resource,
+        effects_resource,
+        spritesheets_resource,
+        entities,
+        lazy_update,
+    );
+}
+
+pub fn spawn_random_drop(
+    drop_probs: &DropProbabilities,
+    spawn_transform: Transform,
+    consumables_resource: &ReadExpect<ConsumablesResource>,
+    mobs_resource: &ReadExpect<MobsResource>,
+    items_resource: &ReadExpect<ItemsResource>,
+    effects_resource: &ReadExpect<EffectsResource>,
+    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    // choose random spawnable
+    spawn_spawnable_drop(
         choose_loot(drop_probs),
         spawn_transform,
         consumables_resource,
@@ -342,7 +514,7 @@ pub fn spawn_drops(
         let drop_table = choose_drop_table(&drop_rolls.roll_probs);
         if let DropTableType::NoDrop = drop_table {
         } else {
-            spawn_random_spawnable(
+            spawn_random_drop(
                 &drop_tables_resource[drop_table],
                 spawn_transform.clone(),
                 consumables_resource,

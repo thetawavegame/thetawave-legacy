@@ -17,6 +17,7 @@ use std::collections::HashMap;
 pub struct ConsumablesResource {
     pub motion2d_component: Motion2DComponent,
     pub despawn_border_component: DespawnAtBorderComponent,
+    pub random_initial_motion: RandomMotionRange2D,
     pub consumable_entities: HashMap<ConsumableType, ConsumableEntityData>,
 }
 
@@ -25,6 +26,7 @@ pub struct ItemsResource {
     pub motion2d_component: Motion2DComponent,
     pub hitbox2d_component: Hitbox2DComponent,
     pub despawn_border_component: DespawnAtBorderComponent,
+    pub random_initial_motion: RandomMotionRange2D,
     pub item_entities: HashMap<ItemType, ItemEntityData>,
 }
 

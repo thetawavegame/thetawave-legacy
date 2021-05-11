@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     components::MobComponent,
-    entities::{spawn_drops, spawn_effect, spawn_random_spawnable, EffectType, SpawnableType},
+    entities::{spawn_drops, spawn_effect, EffectType, SpawnableType},
     events::{MobDestroyedEvent, PlayAudioEvent},
     resources::{
         ConsumablesResource, DropTablesResource, EffectsResource, ItemsResource, MobsResource,

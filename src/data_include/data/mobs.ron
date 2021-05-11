@@ -15,16 +15,6 @@
         ),
         mob_component: (
             defense_damage: 30,
-            /*
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -105,16 +95,6 @@
         )),
         mob_component: (
             defense_damage: 50,
-            /*
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -177,11 +157,6 @@
         ),
         mob_component: (
             defense_damage: -100,
-            /*
-            loot_probs: [
-                (None, 1.0),
-            ],
-            */
             drop_rolls: (
                 roll_count: 0,
                 roll_probs: [
@@ -261,16 +236,6 @@
         )),
         mob_component: (
             defense_damage: 25,
-            /*
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -351,16 +316,6 @@
         )),
         mob_component: (
             defense_damage: 25,
-            /*
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -423,16 +378,6 @@
         ),
         mob_component: (
             defense_damage: 25,
-            /*
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -502,11 +447,6 @@
         mob_component: (
             defense_damage: 10,
             collision_damage: 200,
-            /*
-            loot_probs: [
-                (None, 1.0),
-            ],
-            */
             drop_rolls: (
                 roll_count: 0,
                 roll_probs: [
@@ -568,16 +508,6 @@
         ),
         mob_component: (
             defense_damage: 0,
-            /*
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -628,16 +558,6 @@
         ),
         mob_component: (
             defense_damage: 0,
-            /*
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -688,16 +608,6 @@
         ),
         mob_component: (
             defense_damage: 0,
-            /*
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03)
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -750,16 +660,6 @@
         ),
         mob_component: (
             defense_damage: 0,
-            /*
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03)
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
@@ -812,16 +712,6 @@
         ),
         mob_component: (
             defense_damage: 0,
-            /*
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03),
-            ],
-            */
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [

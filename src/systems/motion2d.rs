@@ -1,5 +1,7 @@
 use crate::{
-    components::{Hitbox2DComponent, MobComponent, Motion2DComponent, PlayerComponent},
+    components::{
+        ConsumableComponent, Hitbox2DComponent, MobComponent, Motion2DComponent, PlayerComponent,
+    },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
     entities::{AllyType, EnemyType, MobType, SpawnableType},
 };
@@ -61,7 +63,22 @@ impl<'s> System<'s> for Motion2DSystem {
         }
     }
 }
+// motion behavior for consumables
+pub struct ConsumableMotion2DSystem;
 
+impl<'s> System<'s> for ConsumableMotion2DSystem {
+    type SystemData = (
+        WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, ConsumableComponent>,
+    );
+
+    fn run(&mut self, (mut motion_2ds, consumables): Self::SystemData) {
+        for (_consumable, motion_2d) in (&consumables, &mut motion_2ds).join() {
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
+        }
+    }
+}
 // motion behavior for enemies
 pub struct MobMotion2DSystem;
 

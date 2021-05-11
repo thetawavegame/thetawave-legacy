@@ -1,10 +1,10 @@
 (   
     motion2d_component: (
-        velocity: [0.0, -70.0],
-        acceleration: [0.0, 0.0],
-        deceleration: [0.0, 0.0],
-        speed: [0.0, 70.0],
-        max_speed: [0.0, 70.0],
+        velocity: [0.0, -50.0],
+        acceleration: [5.0, 5.0],
+        deceleration: [5.0, 5.0],
+        speed: [0.0, 50.0],
+        max_speed: [100.0, 100.0],
         angular_velocity: 0.0,
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
@@ -17,6 +17,10 @@
     ),
     despawn_border_component: (
         bottom_offset: Some(-20.0),
+    ),
+    random_initial_motion: (
+        linear: [(-100, 100), (0, 50)],
+        angular: (-1, 1),
     ),
     item_entities: {
         SteelBarrel: (

@@ -1,9 +1,6 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-use crate::{
-    entities::{LootTable, SpawnableType},
-    resources::DropRolls,
-};
+use crate::{entities::SpawnableType, resources::DropRolls};
 
 use serde::{Deserialize, Serialize};
 
@@ -14,7 +11,6 @@ pub struct MobComponent {
     pub collision_damage: f32,
     #[serde(default = "des_allied")]
     pub allied: bool,
-    //pub loot_probs: LootTable,
     pub drop_rolls: DropRolls,
     pub spawnable_type: SpawnableType,
 }
