@@ -18,8 +18,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(Drone)),
@@ -98,8 +98,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(Pawn)),
@@ -160,7 +160,7 @@
             drop_rolls: (
                 roll_count: 0,
                 roll_probs: [
-                    (NoDrop, 1.0),
+                    (None, 1.0),
                 ],
             ),
             spawnable_type: Mob(Ally(Hauler)),
@@ -239,8 +239,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(StraferRight)),
@@ -319,8 +319,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(StraferLeft)),
@@ -381,8 +381,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(MissileLauncher)),
@@ -450,7 +450,7 @@
             drop_rolls: (
                 roll_count: 0,
                 roll_probs: [
-                    (NoDrop, 1.0),
+                    (None, 1.0),
                 ],
             ),
             spawnable_type: Mob(Enemy(Missile)),
@@ -511,8 +511,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterBody)),
@@ -561,8 +561,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterHead)),
@@ -611,8 +611,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterRightShoulder)),
@@ -663,8 +663,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterLeftShoulder)),
@@ -715,8 +715,8 @@
             drop_rolls: (
                 roll_count: 5,
                 roll_probs: [
-                    (NoDrop, 0.6),
-                    (Standard, 0.4),
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterRightArm)),

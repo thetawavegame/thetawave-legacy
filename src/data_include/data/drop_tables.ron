@@ -1,8 +1,4 @@
 {
-    NoDrop: [
-        // leave empty
-        // :(
-    ],
     Standard: [
         (Consumable(HealthWrench), 0.03),
         (Consumable(DefenseWrench), 0.02),

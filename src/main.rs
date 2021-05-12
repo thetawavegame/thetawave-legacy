@@ -18,15 +18,16 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-pub mod audio;
-pub mod components;
-pub mod constants;
+mod audio;
+mod components;
+mod constants;
 mod data_include;
-pub mod entities;
-pub mod events;
-pub mod resources;
-pub mod states;
-pub mod systems;
+mod entities;
+mod events;
+mod resources;
+mod states;
+mod systems;
+mod tools;
 
 use resources::{
     ConsumableModifiersResource, ConsumablesResource, DebugLinesConfig, DefenseResource,

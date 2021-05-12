@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     components::MobComponent,
-    entities::{spawn_drops, spawn_effect, EffectType, SpawnableType},
+    entities::{spawn_effect, EffectType, SpawnableType},
     events::{MobDestroyedEvent, PlayAudioEvent},
     resources::{
         ConsumablesResource, DropTablesResource, EffectsResource, ItemsResource, MobsResource,
@@ -97,9 +97,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
                     );
                 }
             }
-
-            spawn_drops(
-                &mob_component.drop_rolls,
+            mob_component.drop_rolls.spawn(
                 mob_transform.clone(),
                 &drop_tables_resource,
                 &consumables_resource,

@@ -4,6 +4,7 @@ use crate::{
     },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
     entities::{AllyType, EnemyType, MobType, SpawnableType},
+    tools::distance,
 };
 use amethyst::{
     core::{math::Vector2, timing::Time, transform::Transform},
@@ -117,12 +118,12 @@ impl<'s> System<'s> for MobTargetSystem {
 
                 for (_player, player_transform) in (&players, &transforms).join() {
                     if let Some(closest_position) = closest_player_position {
-                        if get_distance(
+                        if distance(
                             player_transform.translation().x,
                             transform.translation().x,
                             player_transform.translation().y,
                             transform.translation().y,
-                        ) < get_distance(
+                        ) < distance(
                             closest_position.x,
                             transform.translation().x,
                             closest_position.y,
@@ -265,8 +266,4 @@ fn move_mob(
 
         _ => {}
     }
-}
-
-fn get_distance(x1: f32, x2: f32, y1: f32, y2: f32) -> f32 {
-    ((x1 - x2).powi(2) + (y1 - y2).powi(2)).sqrt()
 }

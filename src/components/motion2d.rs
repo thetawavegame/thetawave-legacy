@@ -1,3 +1,4 @@
+use crate::tools::signed_modulo;
 use amethyst::{
     core::math::Vector2,
     ecs::prelude::{Component, DenseVecStorage},
@@ -104,8 +105,4 @@ impl Motion2DComponent {
             self.velocity.y -= self.acceleration.y;
         }
     }
-}
-
-fn signed_modulo(a: f32, n: f32) -> f32 {
-    a - (a / n).floor() * n
 }

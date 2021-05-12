@@ -1,8 +1,7 @@
 use crate::{
     entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
     resources::{
-        ConsumablesResource, DropProbabilities, DropRolls, DropTableType, DropTablesResource,
-        EffectsResource, ItemsResource, MobsResource, RollProbabilities, SpriteSheetsResource,
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
     },
 };
 use amethyst::{
@@ -425,109 +424,4 @@ pub fn spawn_spawnable_drop(
             );
         }
     }
-}
-
-pub fn spawn_random_spawnable(
-    drop_probs: &DropProbabilities,
-    spawn_transform: Transform,
-    consumables_resource: &ReadExpect<ConsumablesResource>,
-    mobs_resource: &ReadExpect<MobsResource>,
-    items_resource: &ReadExpect<ItemsResource>,
-    effects_resource: &ReadExpect<EffectsResource>,
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
-) {
-    // choose random spawnable
-    spawn_spawnable(
-        choose_loot(drop_probs),
-        spawn_transform,
-        consumables_resource,
-        mobs_resource,
-        items_resource,
-        effects_resource,
-        spritesheets_resource,
-        entities,
-        lazy_update,
-    );
-}
-
-pub fn spawn_random_drop(
-    drop_probs: &DropProbabilities,
-    spawn_transform: Transform,
-    consumables_resource: &ReadExpect<ConsumablesResource>,
-    mobs_resource: &ReadExpect<MobsResource>,
-    items_resource: &ReadExpect<ItemsResource>,
-    effects_resource: &ReadExpect<EffectsResource>,
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
-) {
-    // choose random spawnable
-    spawn_spawnable_drop(
-        choose_loot(drop_probs),
-        spawn_transform,
-        consumables_resource,
-        mobs_resource,
-        items_resource,
-        effects_resource,
-        spritesheets_resource,
-        entities,
-        lazy_update,
-    );
-}
-
-pub fn spawn_drops(
-    drop_rolls: &DropRolls,
-    spawn_transform: Transform,
-    drop_tables_resource: &ReadExpect<DropTablesResource>,
-    consumables_resource: &ReadExpect<ConsumablesResource>,
-    mobs_resource: &ReadExpect<MobsResource>,
-    items_resource: &ReadExpect<ItemsResource>,
-    effects_resource: &ReadExpect<EffectsResource>,
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
-) {
-    for _ in 0..drop_rolls.roll_count {
-        // pick a drop table
-        let drop_table = choose_drop_table(&drop_rolls.roll_probs);
-        if let DropTableType::NoDrop = drop_table {
-        } else {
-            spawn_random_drop(
-                &drop_tables_resource[drop_table],
-                spawn_transform.clone(),
-                consumables_resource,
-                mobs_resource,
-                items_resource,
-                effects_resource,
-                spritesheets_resource,
-                entities,
-                lazy_update,
-            )
-        }
-    }
-}
-
-pub fn weighted_rng(probs: Vec<f32>) -> usize {
-    let prob_space = probs.iter().fold(0.0, |sum, prob| sum + prob);
-    let pos = rand::thread_rng().gen::<f32>() * prob_space;
-    let mut sum = 0.0;
-    for (idx, prob) in probs.iter().enumerate() {
-        sum += prob;
-        if sum > pos {
-            return idx;
-        }
-    }
-    unreachable!("Error in probabilities of random spawnable pool.");
-}
-
-pub fn choose_drop_table(roll_probs: &RollProbabilities) -> &DropTableType {
-    let probs = roll_probs.iter().map(|roll_prob| roll_prob.1).collect();
-    &roll_probs[weighted_rng(probs)].0
-}
-
-pub fn choose_loot(drop_probs: &DropProbabilities) -> &SpawnableType {
-    let probs = drop_probs.iter().map(|drop_prob| drop_prob.1).collect();
-    &drop_probs[weighted_rng(probs)].0
 }
