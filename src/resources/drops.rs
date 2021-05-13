@@ -1,5 +1,5 @@
 use crate::{
-    entities::{spawn_spawnable_drop, SpawnableType},
+    entities::{spawn_spawnable, SpawnableType},
     resources::{
         ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
     },
@@ -48,8 +48,10 @@ impl DropRolls {
         for _ in 0..self.roll_count {
             // pick a drop table
             if let Some(drop_table) = Self::choose_drop_table(&self.roll_probs) {
-                spawn_spawnable_drop(
+                // spawn a drop from the table
+                spawn_spawnable(
                     Self::choose_drop(&drop_tables_resource[drop_table]),
+                    true,
                     spawn_transform.clone(),
                     consumables_resource,
                     mobs_resource,
@@ -68,4 +70,5 @@ impl DropRolls {
 pub enum DropTableType {
     Standard,
     Boss,
+    MoneyAsteroid,
 }

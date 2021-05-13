@@ -1,9 +1,10 @@
 use crate::{
     components::{
-        ConsumableComponent, Hitbox2DComponent, MobComponent, Motion2DComponent, PlayerComponent,
+        ConsumableComponent, Hitbox2DComponent, ItemComponent, MobComponent, Motion2DComponent,
+        PlayerComponent,
     },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
-    entities::{AllyType, EnemyType, MobType, SpawnableType},
+    entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableType},
     tools::distance,
 };
 use amethyst::{
@@ -64,6 +65,7 @@ impl<'s> System<'s> for Motion2DSystem {
         }
     }
 }
+
 // motion behavior for consumables
 pub struct ConsumableMotion2DSystem;
 
@@ -80,6 +82,24 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
         }
     }
 }
+
+// motion behavior for items
+pub struct ItemMotion2DSystem;
+
+impl<'s> System<'s> for ItemMotion2DSystem {
+    type SystemData = (
+        WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, ItemComponent>,
+    );
+
+    fn run(&mut self, (mut motion_2ds, items): Self::SystemData) {
+        for (_item, motion_2d) in (&items, &mut motion_2ds).join() {
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
+        }
+    }
+}
+
 // motion behavior for enemies
 pub struct MobMotion2DSystem;
 
@@ -155,6 +175,10 @@ fn move_mob(
     hitbox_2d: &mut Hitbox2DComponent,
 ) {
     match mob.spawnable_type {
+        SpawnableType::Mob(MobType::Neutral(NeutralType::MoneyAsteroid)) => {
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
+        }
         SpawnableType::Mob(MobType::Enemy(EnemyType::Pawn)) => {
             motion_2d.move_down();
             motion_2d.brake_horizontal();

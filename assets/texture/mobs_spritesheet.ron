@@ -116,5 +116,11 @@ List((
             width: 11,
             height: 17,
         ),
+        (
+            x: 0,
+            y: 127,
+            width: 21,
+            height: 21,
+        ),
     ],
 ))

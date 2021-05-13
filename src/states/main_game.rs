@@ -53,6 +53,7 @@ impl Default for MainGameState {
                     "consumable_motion_2d_system",
                     &[],
                 )
+                .with(systems::ItemMotion2DSystem, "item_motion_2d_system", &[])
                 .with(
                     systems::BarrelRollAbilitySystem::default(),
                     "barrel_roll_ability_system",

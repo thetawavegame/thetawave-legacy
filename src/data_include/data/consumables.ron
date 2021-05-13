@@ -8,16 +8,13 @@
         angular_velocity: 0.0,
         angular_acceleration: 0.0,
         angular_deceleration: 0.0,
-        angular_speed: 0.0,
+        angular_speed: 40.0,
         immovable: false,
     ),
     despawn_border_component: (
         bottom_offset: Some(-20.0),
     ),
-    random_initial_motion: (
-        linear: Some([(-100, 100), (0, 70)]),
-        angular: None,
-    ),
+
     consumable_entities: {
         DefenseWrench: (
             consumable_component: (
@@ -35,6 +32,10 @@
             sprite_render_data: (
                 initial_index: 1,
                 spritesheet: "consumables"
+            ),
+            random_initial_motion: (
+                linear: Some([(-100, 100), (0, 70)]),
+                angular: None,
             ),
         ),
         Money1: (
@@ -54,6 +55,10 @@
                 initial_index: 3,
                 spritesheet: "consumables"
             ),
+            random_initial_motion: (
+                linear: Some([(-100, 100), (0, 70)]),
+                angular: Some((-10, 10)),
+            ),
         ),
         Money5: (
             consumable_component: (
@@ -71,6 +76,10 @@
             sprite_render_data: (
                 initial_index: 2,
                 spritesheet: "consumables"
+            ),
+            random_initial_motion: (
+                linear: Some([(-100, 100), (0, 70)]),
+                angular: Some((-5, 5)),
             ),
         ),
         HealthWrench: (
@@ -90,6 +99,10 @@
                 initial_index: 0,
                 spritesheet: "consumables"
             ),
+            random_initial_motion: (
+                linear: Some([(-100, 100), (0, 70)]),
+                angular: None,
+            ),
         ),
         Armor: (
             consumable_component: (
@@ -107,6 +120,10 @@
             sprite_render_data: (
                 initial_index: 4,
                 spritesheet: "consumables"
+            ),
+            random_initial_motion: (
+                linear: Some([(-100, 100), (0, 70)]),
+                angular: None,
             ),
         ),
     }

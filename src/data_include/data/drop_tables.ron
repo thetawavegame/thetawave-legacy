@@ -6,6 +6,10 @@
         (Consumable(Money5), 0.02),
         (Consumable(Armor), 0.03),
     ],
+    MoneyAsteroid: [
+        (Consumable(Money1), 0.8),
+        (Consumable(Money5), 0.2),
+    ],
     Boss: [
         (Consumable(HealthWrench), 0.03),
         (Consumable(DefenseWrench), 0.02),

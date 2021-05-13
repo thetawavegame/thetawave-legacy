@@ -228,9 +228,9 @@
                 period: 2.0,
             ),
             (
-                spawnable_type: Some(Consumable(Money1)),
+                spawnable_type: Some(Mob(Neutral(MoneyAsteroid))),
                 weight: 0.2,
-                period: 0.3,
+                period: 0.5,
             ),
             (
                 spawnable_type: None,

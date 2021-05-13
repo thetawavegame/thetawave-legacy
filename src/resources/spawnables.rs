@@ -17,7 +17,6 @@ use std::collections::HashMap;
 pub struct ConsumablesResource {
     pub motion2d_component: Motion2DComponent,
     pub despawn_border_component: DespawnAtBorderComponent,
-    pub random_initial_motion: RandomMotionRange2D,
     pub consumable_entities: HashMap<ConsumableType, ConsumableEntityData>,
 }
 
@@ -36,7 +35,7 @@ pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct MobEntityData {
     pub sprite_render_data: SpriteRenderData,
-    pub animation_component: AnimationComponent,
+    pub animation_component: Option<AnimationComponent>,
     pub mob_component: MobComponent,
     pub hitbox_component: Hitbox2DComponent,
     pub blaster_component: Option<BlasterComponent>,
@@ -46,6 +45,7 @@ pub struct MobEntityData {
     pub despawn_component: DespawnAtBorderComponent,
     pub auto_spawner_component: Option<AutoSpawnerComponent>,
     pub thruster_data: Option<ThrusterEntityData>,
+    pub random_initial_motion: Option<RandomMotionRange2D>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -66,6 +66,7 @@ pub struct ConsumableEntityData {
     pub sprite_render_data: SpriteRenderData,
     pub consumable_component: ConsumableComponent,
     pub hitbox_component: Hitbox2DComponent,
+    pub random_initial_motion: RandomMotionRange2D,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

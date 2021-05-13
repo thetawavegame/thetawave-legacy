@@ -14,35 +14,7 @@ use rand::{thread_rng, Rng};
 
 pub fn spawn_consumable(
     consumable_type: &ConsumableType,
-    spawn_transform: Transform,
-    consumables_resource: &ReadExpect<ConsumablesResource>,
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
-) {
-    let consumable_data = consumables_resource.consumable_entities[consumable_type].clone();
-
-    let sprite_render = SpriteRender {
-        sprite_sheet: spritesheets_resource.spritesheets
-            [&consumable_data.sprite_render_data.spritesheet]
-            .clone(),
-        sprite_number: consumable_data.sprite_render_data.initial_index,
-    };
-
-    lazy_update
-        .create_entity(entities)
-        .with(sprite_render)
-        .with(consumable_data.hitbox_component.clone())
-        .with(consumable_data.consumable_component)
-        .with(consumables_resource.motion2d_component.clone())
-        .with(spawn_transform)
-        .with(Transparent)
-        .with(consumables_resource.despawn_border_component.clone())
-        .build();
-}
-
-pub fn spawn_consumable_drop(
-    consumable_type: &ConsumableType,
+    is_drop: bool,
     spawn_transform: Transform,
     consumables_resource: &ReadExpect<ConsumablesResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -60,16 +32,18 @@ pub fn spawn_consumable_drop(
 
     let mut motion2d_component = consumables_resource.motion2d_component.clone();
 
-    if let Some(linear_motion) = consumables_resource.random_initial_motion.linear {
-        motion2d_component.velocity.x =
-            thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
-        motion2d_component.velocity.y =
-            thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
-    }
+    if is_drop {
+        if let Some(linear_motion) = consumable_data.random_initial_motion.linear {
+            motion2d_component.velocity.x =
+                thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+            motion2d_component.velocity.y =
+                thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+        }
 
-    if let Some(angular_motion) = consumables_resource.random_initial_motion.angular {
-        motion2d_component.angular_velocity =
-            thread_rng().gen_range(angular_motion.0, angular_motion.1);
+        if let Some(angular_motion) = consumable_data.random_initial_motion.angular {
+            motion2d_component.angular_velocity =
+                thread_rng().gen_range(angular_motion.0, angular_motion.1);
+        }
     }
 
     lazy_update
@@ -100,19 +74,37 @@ pub fn spawn_mob(
         sprite_number: mob_data.sprite_render_data.initial_index,
     };
 
+    let mut motion2d_component = mob_data.motion2d_component;
+
+    if let Some(random_initial_motion) = mob_data.random_initial_motion {
+        if let Some(linear_motion) = random_initial_motion.linear {
+            motion2d_component.velocity.x =
+                thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+            motion2d_component.velocity.y =
+                thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+        }
+
+        if let Some(angular_motion) = random_initial_motion.angular {
+            motion2d_component.angular_velocity =
+                thread_rng().gen_range(angular_motion.0, angular_motion.1);
+        }
+    }
+
     let mob_entity = lazy_update
         .create_entity(entities)
         .with(mob_sprite_render)
-        .with(mob_data.animation_component)
         .with(mob_data.mob_component)
         .with(mob_data.hitbox_component)
-        .with(mob_data.motion2d_component)
+        .with(motion2d_component)
         .with(mob_data.health_component)
         .with(mob_data.despawn_component)
         .with(spawn_transform)
         .with(Transparent)
         .build();
 
+    if let Some(animation_component) = mob_data.animation_component {
+        lazy_update.insert(mob_entity, animation_component);
+    }
     if let Some(blaster_component) = mob_data.blaster_component {
         lazy_update.insert(mob_entity, blaster_component);
     }
@@ -151,38 +143,7 @@ pub fn spawn_mob(
 
 pub fn spawn_item(
     item_type: &ItemType,
-    spawn_transform: Transform,
-    items_resource: &ReadExpect<ItemsResource>,
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
-) {
-    let item_data = items_resource.item_entities[item_type].clone();
-
-    let sprite_render = SpriteRender {
-        sprite_sheet: spritesheets_resource.spritesheets[&item_data.sprite_render_data.spritesheet]
-            .clone(),
-        sprite_number: item_data.sprite_render_data.initial_index,
-    };
-
-    let item_entity = lazy_update
-        .create_entity(entities)
-        .with(sprite_render)
-        .with(item_data.item_component)
-        .with(items_resource.hitbox2d_component.clone())
-        .with(items_resource.motion2d_component.clone())
-        .with(spawn_transform)
-        .with(Transparent)
-        .with(items_resource.despawn_border_component.clone())
-        .build();
-
-    if let Some(animation_component) = item_data.animation_component {
-        lazy_update.insert(item_entity, animation_component);
-    }
-}
-
-pub fn spawn_item_drop(
-    item_type: &ItemType,
+    is_drop: bool,
     spawn_transform: Transform,
     items_resource: &ReadExpect<ItemsResource>,
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
@@ -198,16 +159,19 @@ pub fn spawn_item_drop(
     };
 
     let mut motion2d_component = items_resource.motion2d_component.clone();
-    if let Some(linear_motion) = items_resource.random_initial_motion.linear {
-        motion2d_component.velocity.x =
-            thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
-        motion2d_component.velocity.y =
-            thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
-    }
 
-    if let Some(angular_motion) = items_resource.random_initial_motion.angular {
-        motion2d_component.angular_velocity =
-            thread_rng().gen_range(angular_motion.0, angular_motion.1);
+    if is_drop {
+        if let Some(linear_motion) = items_resource.random_initial_motion.linear {
+            motion2d_component.velocity.x =
+                thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+            motion2d_component.velocity.y =
+                thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+        }
+
+        if let Some(angular_motion) = items_resource.random_initial_motion.angular {
+            motion2d_component.angular_velocity =
+                thread_rng().gen_range(angular_motion.0, angular_motion.1);
+        }
     }
 
     let item_entity = lazy_update
@@ -312,6 +276,7 @@ pub fn spawn_effect(
 
 pub fn spawn_spawnable(
     spawnable_type: &SpawnableType,
+    is_drop: bool,
     spawn_transform: Transform,
     consumables_resource: &ReadExpect<ConsumablesResource>,
     mobs_resource: &ReadExpect<MobsResource>,
@@ -325,6 +290,7 @@ pub fn spawn_spawnable(
         SpawnableType::Consumable(consumable_type) => {
             spawn_consumable(
                 consumable_type,
+                is_drop,
                 spawn_transform,
                 consumables_resource,
                 spritesheets_resource,
@@ -347,64 +313,7 @@ pub fn spawn_spawnable(
         SpawnableType::Item(item_type) => {
             spawn_item(
                 item_type,
-                spawn_transform,
-                items_resource,
-                spritesheets_resource,
-                entities,
-                lazy_update,
-            );
-        }
-
-        SpawnableType::Effect(effect_type) => {
-            spawn_effect(
-                effect_type,
-                spawn_transform,
-                effects_resource,
-                spritesheets_resource,
-                entities,
-                lazy_update,
-            );
-        }
-    }
-}
-
-pub fn spawn_spawnable_drop(
-    spawnable_type: &SpawnableType,
-    spawn_transform: Transform,
-    consumables_resource: &ReadExpect<ConsumablesResource>,
-    mobs_resource: &ReadExpect<MobsResource>,
-    items_resource: &ReadExpect<ItemsResource>,
-    effects_resource: &ReadExpect<EffectsResource>,
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
-) {
-    match spawnable_type {
-        SpawnableType::Consumable(consumable_type) => {
-            spawn_consumable_drop(
-                consumable_type,
-                spawn_transform,
-                consumables_resource,
-                spritesheets_resource,
-                entities,
-                lazy_update,
-            );
-        }
-
-        SpawnableType::Mob(mob_type) => {
-            spawn_mob(
-                mob_type,
-                spawn_transform,
-                mobs_resource,
-                spritesheets_resource,
-                entities,
-                lazy_update,
-            );
-        }
-
-        SpawnableType::Item(item_type) => {
-            spawn_item_drop(
-                item_type,
+                is_drop,
                 spawn_transform,
                 items_resource,
                 spritesheets_resource,

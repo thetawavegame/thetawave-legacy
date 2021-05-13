@@ -44,7 +44,10 @@ pub use self::{
     },
     mob_destroyed::MobDestroyedSystem,
     modifiers::ModifiersSystem,
-    motion2d::{ConsumableMotion2DSystem, MobMotion2DSystem, MobTargetSystem, Motion2DSystem},
+    motion2d::{
+        ConsumableMotion2DSystem, ItemMotion2DSystem, MobMotion2DSystem, MobTargetSystem,
+        Motion2DSystem,
+    },
     phase_manager::PhaseManagerSystem,
     planets::PlanetsSystem,
     play_audio::PlayAudioSystem,
