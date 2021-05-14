@@ -2,7 +2,7 @@
     Standard: [
         (Consumable(HealthWrench), 0.03),
         (Consumable(DefenseWrench), 0.02),
-        (Consumable(Money1), 0.30),
+        (Consumable(Money1), 0.50),
         (Consumable(Money5), 0.02),
         (Consumable(Armor), 0.03),
     ],
