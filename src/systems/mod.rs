@@ -3,6 +3,7 @@ use amethyst::core::math::Vector2;
 
 mod ability;
 mod animation;
+mod attraction;
 mod autofire_system;
 mod boss;
 mod collision_detection;
@@ -30,6 +31,7 @@ mod timelimit;
 pub use self::{
     ability::BarrelRollAbilitySystem,
     animation::AnimationSystem,
+    attraction::AttractorSystem,
     autofire_system::AutoFireSystem,
     boss::BossSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},

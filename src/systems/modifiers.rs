@@ -1,9 +1,9 @@
 use crate::{
     components::{
-        BarrelRollAbilityComponent, BlasterComponent, HealthComponent, ManualFireComponent,
-        Motion2DComponent, PlayerComponent,
+        AttractorComponent, BarrelRollAbilityComponent, BlasterComponent, HealthComponent,
+        ManualFireComponent, Motion2DComponent, PlayerComponent,
     },
-    entities::SpawnableType,
+    entities::{SpawnableCategory, SpawnableType},
     events::{ConsumableGetEvent, ItemGetEvent},
     resources::{ConsumableModifiersResource, DefenseResource, ItemModifiersResource, Modifier},
 };
@@ -28,6 +28,7 @@ impl<'s> System<'s> for ModifiersSystem {
         WriteStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
         WriteStorage<'s, Motion2DComponent>,
+        WriteStorage<'s, AttractorComponent>,
         WriteStorage<'s, PlayerComponent>,
         ReadExpect<'s, ItemModifiersResource>,
         ReadExpect<'s, ConsumableModifiersResource>,
@@ -58,6 +59,7 @@ impl<'s> System<'s> for ModifiersSystem {
             mut blaster_components,
             mut manual_fire_components,
             mut motion_2d_components,
+            mut attractor_components,
             mut player_components,
             item_modifiers_resource,
             consumable_modifiers_resource,
@@ -74,6 +76,7 @@ impl<'s> System<'s> for ModifiersSystem {
                 &mut blaster_components,
                 &mut manual_fire_components,
                 &mut motion_2d_components,
+                &mut attractor_components,
                 &mut player_components,
                 &mut defense_resource,
             )
@@ -91,6 +94,7 @@ impl<'s> System<'s> for ModifiersSystem {
                 &mut blaster_components,
                 &mut manual_fire_components,
                 &mut motion_2d_components,
+                &mut attractor_components,
                 &mut player_components,
                 &mut defense_resource,
             )
@@ -110,6 +114,7 @@ pub fn apply_modifiers(
     blaster_components: &mut WriteStorage<BlasterComponent>,
     manual_fire_components: &mut WriteStorage<ManualFireComponent>,
     motion_2d_components: &mut WriteStorage<Motion2DComponent>,
+    attractor_components: &mut WriteStorage<AttractorComponent>,
     player_components: &mut WriteStorage<PlayerComponent>,
     defense_resource: &mut WriteExpect<DefenseResource>,
 ) {
@@ -120,6 +125,7 @@ pub fn apply_modifiers(
     let player_blaster = blaster_components.get_mut(player_entity).unwrap();
     let player_manual_fire = manual_fire_components.get_mut(player_entity).unwrap();
     let player_motion2d = motion_2d_components.get_mut(player_entity).unwrap();
+    let player_attractor = attractor_components.get_mut(player_entity).unwrap();
     let player_component = player_components.get_mut(player_entity).unwrap();
 
     match spawnable_type {
@@ -205,6 +211,42 @@ pub fn apply_modifiers(
 
             Modifier::Money(val) => {
                 player_component.money += val;
+            }
+
+            Modifier::ConsumableAttractorRadius(val) => {
+                if let Some(consumable_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Consumable)
+                {
+                    consumable_attract_data.radius += val;
+                }
+            }
+
+            Modifier::ItemAttractorRadius(val) => {
+                if let Some(item_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Item)
+                {
+                    item_attract_data.radius += val;
+                }
+            }
+
+            Modifier::ConsumableAttractorAcceleration(val) => {
+                if let Some(consumable_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Consumable)
+                {
+                    consumable_attract_data.acceleration += val;
+                }
+            }
+
+            Modifier::ItemAttractorAcceleration(val) => {
+                if let Some(item_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Item)
+                {
+                    item_attract_data.acceleration += val;
+                }
             }
         }
     }

@@ -12,8 +12,8 @@
         immovable: false,
     ),
     hitbox2d_component: (
-        width: 14.0,
-        height: 14.0,
+        width: 10.0,
+        height: 10.0,
     ),
     despawn_border_component: (
         bottom_offset: Some(-20.0),
@@ -162,5 +162,15 @@
                 item_type: FrequencyAugmentor,
             ),
         ),
+        TractorBeam: (
+            sprite_render_data: (
+                initial_index: 19,
+                spritesheet: "items",
+            ),
+            item_component: (
+                price: 6,
+                item_type: TractorBeam,
+            )
+        )
     }
 )

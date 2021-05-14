@@ -48,12 +48,17 @@ impl Default for MainGameState {
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::MobTargetSystem, "mob_target_system", &[])
                 .with(systems::AutoSpawnerSystem, "auto_spawner_system", &[])
+                .with(systems::AttractorSystem, "attractor_system", &[])
                 .with(
-                    systems::ConsumableMotion2DSystem,
-                    "consumable_motion_2d_system",
-                    &[],
+                    systems::ItemMotion2DSystem::default(),
+                    "item_motion_2d_system",
+                    &["attractor_system"],
                 )
-                .with(systems::ItemMotion2DSystem, "item_motion_2d_system", &[])
+                .with(
+                    systems::ConsumableMotion2DSystem::default(),
+                    "consumable_motion_2d_system",
+                    &["attractor_system"],
+                )
                 .with(
                     systems::BarrelRollAbilitySystem::default(),
                     "barrel_roll_ability_system",

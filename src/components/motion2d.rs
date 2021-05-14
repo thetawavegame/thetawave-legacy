@@ -1,4 +1,4 @@
-use crate::tools::signed_modulo;
+use crate::tools::{distance, signed_modulo};
 use amethyst::{
     core::math::Vector2,
     ecs::prelude::{Component, DenseVecStorage},
@@ -88,6 +88,30 @@ impl Motion2DComponent {
             } else {
                 self.angular_velocity += self.angular_acceleration;
             }
+        }
+    }
+
+    pub fn move_towards_target(
+        &mut self,
+        current_position: Vector2<f32>,
+        bonus_acceleration: Vector2<f32>,
+    ) {
+        if let Some(target_position) = self.target_position {
+            let target_angle = (current_position.y - target_position.y)
+                .atan2(current_position.x - target_position.x)
+                + std::f32::consts::PI;
+
+            let distance = distance(
+                current_position.x,
+                target_position.x,
+                current_position.y,
+                target_position.y,
+            );
+
+            self.velocity.x +=
+                (self.acceleration.x + bonus_acceleration.x) * distance * target_angle.cos();
+            self.velocity.y +=
+                (self.acceleration.y + bonus_acceleration.y) * distance * target_angle.sin();
         }
     }
 

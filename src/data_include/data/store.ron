@@ -13,6 +13,7 @@
         (Item(StructureReinforcement), 1.0),
         (Item(BlasterSizeEnhancer), 1.0),
         (Item(FrequencyAugmentor), 1.0),
+        (Item(TractorBeam), 1.0),
         (Consumable(HealthWrench), 1.0),
         (Consumable(DefenseWrench), 1.0),
         (Consumable(Armor), 1.0),

@@ -45,8 +45,8 @@
                 consumable_type: Money1, 
             ),
             hitbox_component: (
-                width: 6.0,
-                height: 6.0,
+                width: 5.0,
+                height: 5.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,
@@ -67,8 +67,8 @@
                 consumable_type: Money5, 
             ),
             hitbox_component: (
-                width: 10.0,
-                height: 10.0,
+                width: 8.0,
+                height: 8.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,
@@ -89,8 +89,8 @@
                 consumable_type: HealthWrench, 
             ),
             hitbox_component: (
-                width: 10.0,
-                height: 10.0,
+                width: 8.0,
+                height: 8.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,
@@ -111,8 +111,8 @@
                 consumable_type: Armor, 
             ),
             hitbox_component: (
-                width: 10.0,
-                height: 10.0,
+                width: 8.0,
+                height: 8.0,
                 offset_x: 0.0,
                 offset_y: 0.0,
                 offset_rotation: 0.0,
