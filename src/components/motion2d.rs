@@ -84,6 +84,30 @@ impl Motion2DComponent {
         }
     }
 
+    pub fn move_towards_target(
+        &mut self,
+        current_position: Vector2<f32>,
+        bonus_acceleration: Vector2<f32>,
+    ) {
+        if let Some(target_position) = self.target_position {
+            let target_angle = (current_position.y - target_position.y)
+                .atan2(current_position.x - target_position.x)
+                + std::f32::consts::PI;
+
+            let distance = get_distance(
+                current_position.x,
+                target_position.x,
+                current_position.y,
+                target_position.y,
+            );
+
+            self.velocity.x +=
+                (self.acceleration.x + bonus_acceleration.x) * distance * target_angle.cos();
+            self.velocity.y +=
+                (self.acceleration.y + bonus_acceleration.y) * distance * target_angle.sin();
+        }
+    }
+
     // move in direction that the entity is facing
     pub fn move_forward(&mut self, angle: f32) {
         if self.velocity.x < self.speed.x * (angle - std::f32::consts::FRAC_PI_2).cos() {
@@ -102,4 +126,8 @@ impl Motion2DComponent {
 
 fn signed_modulo(a: f32, n: f32) -> f32 {
     a - (a / n).floor() * n
+}
+
+fn get_distance(x1: f32, x2: f32, y1: f32, y2: f32) -> f32 {
+    ((x1 - x2).powi(2) + (y1 - y2).powi(2)).sqrt()
 }

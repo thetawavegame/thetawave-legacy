@@ -1,5 +1,6 @@
 mod abilities;
 mod animation;
+mod attraction;
 mod barriers;
 mod blast;
 mod boss;
@@ -22,6 +23,7 @@ mod weapons;
 pub use self::{
     abilities::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
     animation::{AnimationComponent, AnimationType},
+    attraction::{AttractData, AttractorComponent},
     barriers::{BarrierComponent, PushDirection},
     blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,

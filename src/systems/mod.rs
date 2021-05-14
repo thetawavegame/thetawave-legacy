@@ -3,6 +3,7 @@ use amethyst::core::math::Vector2;
 
 mod ability;
 mod animation;
+mod attraction;
 mod autofire_system;
 mod boss;
 mod collision_detection;
@@ -30,6 +31,7 @@ mod timelimit;
 pub use self::{
     ability::BarrelRollAbilitySystem,
     animation::AnimationSystem,
+    attraction::AttractorSystem,
     autofire_system::AutoFireSystem,
     boss::BossSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
@@ -44,7 +46,10 @@ pub use self::{
     },
     mob_destroyed::MobDestroyedSystem,
     modifiers::ModifiersSystem,
-    motion2d::{MobMotion2DSystem, MobTargetSystem, Motion2DSystem},
+    motion2d::{
+        ConsumableMotion2DSystem, ItemMotion2DSystem, MobMotion2DSystem, MobTargetSystem,
+        Motion2DSystem,
+    },
     phase_manager::PhaseManagerSystem,
     planets::PlanetsSystem,
     play_audio::PlayAudioSystem,

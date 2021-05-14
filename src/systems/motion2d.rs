@@ -1,11 +1,17 @@
 use crate::{
-    components::{Hitbox2DComponent, MobComponent, Motion2DComponent, PlayerComponent},
+    components::{
+        ConsumableComponent, Hitbox2DComponent, ItemComponent, MobComponent, Motion2DComponent,
+        PlayerComponent,
+    },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
-    entities::{AllyType, EnemyType, MobType, SpawnableType},
+    entities::{AllyType, EnemyType, MobType, SpawnableCategory, SpawnableType},
+    events::AttractionEvent,
 };
 use amethyst::{
     core::{math::Vector2, timing::Time, transform::Transform},
     ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
+    ecs::*,
+    shrev::{EventChannel, ReaderId},
 };
 
 // basic physics for all Motion2D entities
@@ -57,6 +63,136 @@ impl<'s> System<'s> for Motion2DSystem {
                 } else {
                     motion_2d.velocity.y = -motion_2d.max_speed.y;
                 }
+            }
+        }
+    }
+}
+
+// motion behavior for consumables
+#[derive(Default)]
+pub struct ConsumableMotion2DSystem {
+    event_reader: Option<ReaderId<AttractionEvent>>,
+}
+
+impl<'s> System<'s> for ConsumableMotion2DSystem {
+    type SystemData = (
+        WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, ConsumableComponent>,
+        WriteStorage<'s, Transform>,
+        Read<'s, EventChannel<AttractionEvent>>,
+    );
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<AttractionEvent>>()
+                .register_reader(),
+        );
+    }
+
+    fn run(
+        &mut self,
+        (mut motion_2ds, consumables, mut transforms, attraction_channel): Self::SystemData,
+    ) {
+        let mut attracted = false;
+        for event in attraction_channel.read(self.event_reader.as_mut().unwrap()) {
+            for (_consumable, motion_2d, transform) in
+                (&consumables, &mut motion_2ds, &mut transforms).join()
+            {
+                if let Some(attract_data) = event
+                    .affected_spawnables
+                    .get(&SpawnableCategory::Consumable)
+                {
+                    // check if spawnable is in area of influence
+                    if get_distance(
+                        transform.translation().x,
+                        event.target_position.x,
+                        transform.translation().y,
+                        event.target_position.y,
+                    ) < attract_data.radius
+                    {
+                        // accelerate towards attractor
+                        attracted = true;
+                        motion_2d.target_position = Some(event.target_position);
+                        motion_2d.move_towards_target(
+                            Vector2::new(transform.translation().x, transform.translation().y),
+                            Vector2::new(attract_data.acceleration, attract_data.acceleration),
+                        );
+                        break;
+                    }
+                }
+            }
+        }
+
+        if !attracted {
+            for (_consumable, motion_2d) in (&consumables, &mut motion_2ds).join() {
+                motion_2d.target_position = None;
+                motion_2d.move_down();
+                motion_2d.brake_horizontal();
+            }
+        }
+    }
+}
+
+// motion behavior for consumables
+#[derive(Default)]
+pub struct ItemMotion2DSystem {
+    event_reader: Option<ReaderId<AttractionEvent>>,
+}
+
+impl<'s> System<'s> for ItemMotion2DSystem {
+    type SystemData = (
+        WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, ItemComponent>,
+        WriteStorage<'s, Transform>,
+        Read<'s, EventChannel<AttractionEvent>>,
+    );
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<AttractionEvent>>()
+                .register_reader(),
+        );
+    }
+
+    fn run(
+        &mut self,
+        (mut motion_2ds, items, mut transforms, attraction_channel): Self::SystemData,
+    ) {
+        let mut attracted = false;
+        for event in attraction_channel.read(self.event_reader.as_mut().unwrap()) {
+            for (_item, motion_2d, transform) in (&items, &mut motion_2ds, &mut transforms).join() {
+                if let Some(attract_data) = event.affected_spawnables.get(&SpawnableCategory::Item)
+                {
+                    // check if spawnable is in area of influence
+                    if get_distance(
+                        transform.translation().x,
+                        event.target_position.x,
+                        transform.translation().y,
+                        event.target_position.y,
+                    ) < attract_data.radius
+                    {
+                        // accelerate towards attractor
+                        attracted = true;
+                        motion_2d.target_position = Some(event.target_position);
+                        motion_2d.move_towards_target(
+                            Vector2::new(transform.translation().x, transform.translation().y),
+                            Vector2::new(attract_data.acceleration, attract_data.acceleration),
+                        );
+                        break;
+                    }
+                }
+            }
+        }
+
+        if !attracted {
+            for (_item, motion_2d) in (&items, &mut motion_2ds).join() {
+                motion_2d.target_position = None;
+                motion_2d.move_down();
+                motion_2d.brake_horizontal();
             }
         }
     }

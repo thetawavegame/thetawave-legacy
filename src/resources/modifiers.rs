@@ -24,4 +24,8 @@ pub enum Modifier {
     ProjectileSize(f32),
     Armor(usize),
     Money(usize),
+    ConsumableAttractorRadius(f32),
+    ConsumableAttractorAcceleration(f32),
+    ItemAttractorRadius(f32),
+    ItemAttractorAcceleration(f32),
 }
