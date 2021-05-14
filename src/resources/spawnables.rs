@@ -25,6 +25,7 @@ pub struct ItemsResource {
     pub motion2d_component: Motion2DComponent,
     pub hitbox2d_component: Hitbox2DComponent,
     pub despawn_border_component: DespawnAtBorderComponent,
+    pub random_initial_motion: RandomMotionRange2D,
     pub item_entities: HashMap<ItemType, ItemEntityData>,
 }
 
@@ -34,7 +35,7 @@ pub type EffectsResource = HashMap<EffectType, EffectEntityData>;
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct MobEntityData {
     pub sprite_render_data: SpriteRenderData,
-    pub animation_component: AnimationComponent,
+    pub animation_component: Option<AnimationComponent>,
     pub mob_component: MobComponent,
     pub hitbox_component: Hitbox2DComponent,
     pub blaster_component: Option<BlasterComponent>,
@@ -44,6 +45,7 @@ pub struct MobEntityData {
     pub despawn_component: DespawnAtBorderComponent,
     pub auto_spawner_component: Option<AutoSpawnerComponent>,
     pub thruster_data: Option<ThrusterEntityData>,
+    pub random_initial_motion: Option<RandomMotionRange2D>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -64,12 +66,13 @@ pub struct ConsumableEntityData {
     pub sprite_render_data: SpriteRenderData,
     pub consumable_component: ConsumableComponent,
     pub hitbox_component: Hitbox2DComponent,
+    pub random_initial_motion: RandomMotionRange2D,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct RandomMotionRange2D {
-    pub linear: Vector2<(f32, f32)>,
-    pub angular: (f32, f32),
+    pub linear: Option<Vector2<(f32, f32)>>,
+    pub angular: Option<(f32, f32)>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

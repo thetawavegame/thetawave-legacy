@@ -4,8 +4,9 @@ use crate::{
         PlayerComponent,
     },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
-    entities::{AllyType, EnemyType, MobType, SpawnableCategory, SpawnableType},
+    entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableCategory, SpawnableType},
     events::AttractionEvent,
+    tools::distance,
 };
 use amethyst::{
     core::{math::Vector2, timing::Time, transform::Transform},
@@ -105,7 +106,7 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
                     .get(&SpawnableCategory::Consumable)
                 {
                     // check if spawnable is in area of influence
-                    if get_distance(
+                    if distance(
                         transform.translation().x,
                         event.target_position.x,
                         transform.translation().y,
@@ -168,7 +169,7 @@ impl<'s> System<'s> for ItemMotion2DSystem {
                 if let Some(attract_data) = event.affected_spawnables.get(&SpawnableCategory::Item)
                 {
                     // check if spawnable is in area of influence
-                    if get_distance(
+                    if distance(
                         transform.translation().x,
                         event.target_position.x,
                         transform.translation().y,
@@ -236,12 +237,12 @@ impl<'s> System<'s> for MobTargetSystem {
 
                 for (_player, player_transform) in (&players, &transforms).join() {
                     if let Some(closest_position) = closest_player_position {
-                        if get_distance(
+                        if distance(
                             player_transform.translation().x,
                             transform.translation().x,
                             player_transform.translation().y,
                             transform.translation().y,
-                        ) < get_distance(
+                        ) < distance(
                             closest_position.x,
                             transform.translation().x,
                             closest_position.y,
@@ -273,6 +274,10 @@ fn move_mob(
     hitbox_2d: &mut Hitbox2DComponent,
 ) {
     match mob.spawnable_type {
+        SpawnableType::Mob(MobType::Neutral(NeutralType::MoneyAsteroid)) => {
+            motion_2d.move_down();
+            motion_2d.brake_horizontal();
+        }
         SpawnableType::Mob(MobType::Enemy(EnemyType::Pawn)) => {
             motion_2d.move_down();
             motion_2d.brake_horizontal();
@@ -384,8 +389,4 @@ fn move_mob(
 
         _ => {}
     }
-}
-
-fn get_distance(x1: f32, x2: f32, y1: f32, y2: f32) -> f32 {
-    ((x1 - x2).powi(2) + (y1 - y2).powi(2)).sqrt()
 }

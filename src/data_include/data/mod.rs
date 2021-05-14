@@ -11,6 +11,7 @@ pub struct IncludeData<'a> {
     pub game_parameters: &'a [u8],
     pub spawner: &'a [u8],
     pub defense: &'a [u8],
+    pub drop_tables: &'a [u8],
 }
 
 pub fn load_include_data() -> IncludeData<'static> {
@@ -27,5 +28,6 @@ pub fn load_include_data() -> IncludeData<'static> {
         game_parameters: include_bytes!("game_parameters.ron"),
         spawner: include_bytes!("spawner.ron"),
         defense: include_bytes!("defense.ron"),
+        drop_tables: include_bytes!("drop_tables.ron"),
     }
 }

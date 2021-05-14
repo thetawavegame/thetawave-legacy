@@ -84,6 +84,7 @@ impl StoreResource {
 
                         spawn_item(
                             item_type,
+                            false,
                             spawn_transform,
                             items_resource,
                             sprite_resource,
@@ -116,6 +117,7 @@ impl StoreResource {
 
                         spawn_consumable(
                             consumable_type,
+                            false,
                             spawn_transform,
                             consumables_resource,
                             sprite_resource,

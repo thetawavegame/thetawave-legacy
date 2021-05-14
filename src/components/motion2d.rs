@@ -1,3 +1,4 @@
+use crate::tools::{distance, signed_modulo};
 use amethyst::{
     core::math::Vector2,
     ecs::prelude::{Component, DenseVecStorage},
@@ -58,8 +59,14 @@ impl Motion2DComponent {
     pub fn brake_horizontal(&mut self) {
         if self.velocity.x > 0.0 {
             self.velocity.x -= self.deceleration.x;
+            if self.velocity.x < 0.0 {
+                self.velocity.x = 0.0;
+            }
         } else if self.velocity.x < 0.0 {
             self.velocity.x += self.deceleration.x;
+            if self.velocity.x > 0.0 {
+                self.velocity.x = 0.0;
+            }
         }
     }
 
@@ -94,7 +101,7 @@ impl Motion2DComponent {
                 .atan2(current_position.x - target_position.x)
                 + std::f32::consts::PI;
 
-            let distance = get_distance(
+            let distance = distance(
                 current_position.x,
                 target_position.x,
                 current_position.y,
@@ -122,12 +129,4 @@ impl Motion2DComponent {
             self.velocity.y -= self.acceleration.y;
         }
     }
-}
-
-fn signed_modulo(a: f32, n: f32) -> f32 {
-    a - (a / n).floor() * n
-}
-
-fn get_distance(x1: f32, x2: f32, y1: f32, y2: f32) -> f32 {
-    ((x1 - x2).powi(2) + (y1 - y2).powi(2)).sqrt()
 }

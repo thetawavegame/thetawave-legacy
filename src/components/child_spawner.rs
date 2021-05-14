@@ -64,6 +64,7 @@ impl AutoSpawnerComponent {
                 SpawnableType::Consumable(consumable_type) => {
                     spawn_consumable(
                         &consumable_type,
+                        false,
                         adjusted_transform,
                         &consumables_resource,
                         &spritesheets_resource,
@@ -75,6 +76,7 @@ impl AutoSpawnerComponent {
                 SpawnableType::Item(item_type) => {
                     spawn_item(
                         &item_type,
+                        false,
                         adjusted_transform,
                         &items_resource,
                         &spritesheets_resource,
@@ -175,6 +177,7 @@ impl AutoConsumableSpawnerComponent {
 
             spawn_consumable(
                 &self.child_consumable_type,
+                false,
                 adjusted_transform,
                 &consumables_resource,
                 &spritesheets_resource,
@@ -219,6 +222,7 @@ impl AutoItemSpawnerComponent {
 
             spawn_item(
                 &self.child_item_type,
+                false,
                 adjusted_transform,
                 &items_resource,
                 &spritesheets_resource,

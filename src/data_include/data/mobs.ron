@@ -1,10 +1,54 @@
 {
+    Neutral(MoneyAsteroid): (
+        sprite_render_data: (
+            initial_index: 19,
+            spritesheet: "mobs",
+        ),
+        mob_component: (
+            defense_damage: 0,
+            drop_rolls: (
+                roll_count: 5,
+                roll_probs: [
+                    (Some(MoneyAsteroid), 1.0),
+                ],
+            ),
+            spawnable_type: Mob(Neutral(MoneyAsteroid)),
+        ),
+        health_component: (
+            max_value: 100,
+            value: 100,
+            armor: 3,
+        ),
+        hitbox_component: (
+            width: 18.0,
+            height: 18.0,
+        ),
+        motion2d_component: (
+            velocity: [0.0, 0.0],
+            acceleration: [0.0, 4.0],
+            deceleration: [2.0, 2.0],
+            speed: [28, 28],
+            max_speed: [100.0, 100.0],
+            angular_velocity: 0.0,
+            angular_acceleration: 0.0,
+            angular_deceleration: 0.0,
+            angular_speed: 5.0,
+            immovable: false,
+        ),
+        despawn_component: (
+            bottom_offset: Some(-20.0),
+        ),
+        random_initial_motion: Some((
+            linear: None,
+            angular: Some((-5, 5)),
+        )),
+    ),
     Enemy(Drone): (
         sprite_render_data: (
             initial_index: 0,
             spritesheet: "mobs",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 0,
             frame_count: 3,
             current_frame: 0,
@@ -12,17 +56,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         mob_component: (
             defense_damage: 30,
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 1,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(Drone)),
         ),
         health_component: (
@@ -67,7 +110,7 @@
             initial_index: 3,
             spritesheet: "mobs",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 3,
             frame_count: 3,
             current_frame: 3,
@@ -75,7 +118,7 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         blaster_component: Some((
             count: 1,
             blast_type: Enemy,
@@ -96,14 +139,13 @@
         )),
         mob_component: (
             defense_damage: 50,
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 1,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(Pawn)),
         ),
         health_component: (
@@ -148,7 +190,7 @@
             initial_index: 9,
             spritesheet: "mobs",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 9,
             frame_count: 3,
             current_frame: 9,
@@ -156,12 +198,15 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         mob_component: (
             defense_damage: -100,
-            loot_probs: [
-                (None, 1.0),
-            ],
+            drop_rolls: (
+                roll_count: 0,
+                roll_probs: [
+                    (None, 1.0),
+                ],
+            ),
             spawnable_type: Mob(Ally(Hauler)),
         ),
         health_component: (
@@ -206,7 +251,7 @@
             initial_index: 6,
             spritesheet: "mobs",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 6,
             frame_count: 3,
             current_frame: 6,
@@ -214,7 +259,7 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         blaster_component: Some((
             count: 1,
             blast_type: Enemy,
@@ -235,14 +280,13 @@
         )),
         mob_component: (
             defense_damage: 25,
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 2,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(StraferRight)),
         ),
         health_component: (
@@ -287,7 +331,7 @@
             initial_index: 6,
             spritesheet: "mobs",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 6,
             frame_count: 3,
             current_frame: 6,
@@ -295,7 +339,7 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         blaster_component: Some((
             count: 1,
             blast_type: Enemy,
@@ -316,14 +360,13 @@
         )),
         mob_component: (
             defense_damage: 25,
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 2,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(StraferLeft)),
         ),
         health_component: (
@@ -368,7 +411,7 @@
             initial_index: 12,
             spritesheet: "mobs",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 12,
             frame_count: 3,
             current_frame: 12,
@@ -376,17 +419,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         mob_component: (
             defense_damage: 25,
-            loot_probs: [
-                (None, 0.6),
-                (Some(Consumable(HealthWrench)), 0.03),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.30),
-                (Some(Consumable(Money5)), 0.02),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 3,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(MissileLauncher)),
         ),
         health_component: (
@@ -437,7 +479,7 @@
             initial_index: 15,
             spritesheet: "mobs",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 15,
             frame_count: 4,
             current_frame: 15,
@@ -445,13 +487,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: Forward,
-        ),
+        )),
         mob_component: (
             defense_damage: 10,
             collision_damage: 200,
-            loot_probs: [
-                (None, 1.0),
-            ],
+            drop_rolls: (
+                roll_count: 0,
+                roll_probs: [
+                    (None, 1.0),
+                ],
+            ),
             spawnable_type: Mob(Enemy(Missile)),
         ),
         health_component: (
@@ -496,7 +541,7 @@
             initial_index: 0,
             spritesheet: "repeater",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 0,
             frame_count: 3,
             current_frame: 0,
@@ -504,17 +549,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         mob_component: (
             defense_damage: 0,
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 3,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterBody)),
         ),
         health_component: (
@@ -547,7 +591,7 @@
             initial_index: 3,
             spritesheet: "repeater",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 3,
             frame_count: 3,
             current_frame: 3,
@@ -555,17 +599,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: PingPong,
-        ),
+        )),
         mob_component: (
             defense_damage: 0,
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 3,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Boss), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterHead)),
         ),
         health_component: (
@@ -598,7 +641,7 @@
             initial_index: 6,
             spritesheet: "repeater",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 6,
             frame_count: 1,
             current_frame: 6,
@@ -606,17 +649,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: NoAnimation,
-        ),
+        )),
         mob_component: (
             defense_damage: 0,
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03)
-            ],
+            drop_rolls: (
+                roll_count: 3,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterRightShoulder)),
         ),
         health_component: (
@@ -651,7 +693,7 @@
             initial_index: 7,
             spritesheet: "repeater",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 7,
             frame_count: 1,
             current_frame: 7,
@@ -659,17 +701,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: NoAnimation,
-        ),
+        )),
         mob_component: (
             defense_damage: 0,
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03)
-            ],
+            drop_rolls: (
+                roll_count: 3,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterLeftShoulder)),
         ),
         health_component: (
@@ -704,7 +745,7 @@
             initial_index: 8,
             spritesheet: "repeater",
         ),
-        animation_component: (
+        animation_component: Some((
             start_idx: 8,
             frame_count: 1,
             current_frame: 8,
@@ -712,17 +753,16 @@
             elapsed_time: 0.0,
             forward: true,
             animation_type: NoAnimation,
-        ),
+        )),
         mob_component: (
             defense_damage: 0,
-            loot_probs: [
-                (None, 0.0),
-                (Some(Consumable(HealthWrench)), 0.04),
-                (Some(Consumable(DefenseWrench)), 0.02),
-                (Some(Consumable(Money1)), 0.40),
-                (Some(Consumable(Money5)), 0.5),
-                (Some(Consumable(Armor)), 0.03),
-            ],
+            drop_rolls: (
+                roll_count: 3,
+                roll_probs: [
+                    (None, 0.6),
+                    (Some(Standard), 0.4),
+                ],
+            ),
             spawnable_type: Mob(Enemy(RepeaterRightArm)),
         ),
         health_component: (

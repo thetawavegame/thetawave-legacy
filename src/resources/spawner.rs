@@ -49,6 +49,7 @@ impl Formation {
 
             spawn_spawnable(
                 &formation_spawnable.spawnable_type,
+                false,
                 spawn_transform,
                 consumables_resource,
                 mobs_resource,
@@ -127,6 +128,7 @@ impl SpawnerResource {
             if let Some(spawnable_type) = &random_spawnable.spawnable_type {
                 spawn_spawnable(
                     spawnable_type,
+                    false,
                     spawn_transform,
                     consumables_resource,
                     mobs_resource,

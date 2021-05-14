@@ -20,10 +20,7 @@ pub use self::{
     planet::initialize_planet,
     side_panels::initialize_side_panels,
     spaceship::initialize_spaceship,
-    spawn::{
-        spawn_consumable, spawn_effect, spawn_item, spawn_mob, spawn_random_spawnable,
-        spawn_spawnable, LootTable,
-    },
+    spawn::{spawn_consumable, spawn_effect, spawn_item, spawn_mob, spawn_spawnable},
     status_bar::initialize_status_bars,
     status_unit::spawn_status_unit,
     store_icons::initialize_store_icons,
@@ -49,6 +46,7 @@ pub enum SpawnableType {
 pub enum MobType {
     Enemy(EnemyType),
     Ally(AllyType),
+    Neutral(NeutralType),
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
@@ -70,6 +68,11 @@ pub enum EnemyType {
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum AllyType {
     Hauler,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum NeutralType {
+    MoneyAsteroid,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
