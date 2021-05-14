@@ -7,7 +7,7 @@
         mob_component: (
             defense_damage: 0,
             drop_rolls: (
-                roll_count: 10,
+                roll_count: 5,
                 roll_probs: [
                     (Some(MoneyAsteroid), 1.0),
                 ],
@@ -60,7 +60,7 @@
         mob_component: (
             defense_damage: 30,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 1,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -140,7 +140,7 @@
         mob_component: (
             defense_damage: 50,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 1,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -281,7 +281,7 @@
         mob_component: (
             defense_damage: 25,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 2,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -361,7 +361,7 @@
         mob_component: (
             defense_damage: 25,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 2,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -423,7 +423,7 @@
         mob_component: (
             defense_damage: 25,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 3,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -553,7 +553,7 @@
         mob_component: (
             defense_damage: 0,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 3,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -603,10 +603,10 @@
         mob_component: (
             defense_damage: 0,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 3,
                 roll_probs: [
                     (None, 0.6),
-                    (Some(Standard), 0.4),
+                    (Some(Boss), 0.4),
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterHead)),
@@ -653,7 +653,7 @@
         mob_component: (
             defense_damage: 0,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 3,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -705,7 +705,7 @@
         mob_component: (
             defense_damage: 0,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 3,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
@@ -757,7 +757,7 @@
         mob_component: (
             defense_damage: 0,
             drop_rolls: (
-                roll_count: 5,
+                roll_count: 3,
                 roll_probs: [
                     (None, 0.6),
                     (Some(Standard), 0.4),
