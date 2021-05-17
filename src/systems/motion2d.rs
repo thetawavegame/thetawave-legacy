@@ -1,7 +1,7 @@
 use crate::{
     components::{
-        BlastComponent, ConsumableComponent, Hitbox2DComponent, ItemComponent, MobComponent,
-        Motion2DComponent, PlayerComponent,
+        BlastComponent, BlastType, ConsumableComponent, Hitbox2DComponent, ItemComponent,
+        MobComponent, Motion2DComponent, PlayerComponent,
     },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
     entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableCategory, SpawnableType},
@@ -97,7 +97,7 @@ impl<'s> System<'s> for BlastMotion2DSystem {
     ) {
         let mut attracted = false;
         for event in attraction_channel.read(self.event_reader.as_mut().unwrap()) {
-            for (_blast, motion_2d, transform) in (&blasts, &mut motion_2ds, &mut transforms).join()
+            for (blast, motion_2d, transform) in (&blasts, &mut motion_2ds, &mut transforms).join()
             {
                 if let Some(attract_data) = event.affected_spawnables.get(&SpawnableCategory::Blast)
                 {
@@ -113,12 +113,23 @@ impl<'s> System<'s> for BlastMotion2DSystem {
                     {
                         // accelerate towards attractor
                         attracted = true;
-                        motion_2d.target_position = Some(event.target_position);
-                        motion_2d.move_towards_target(
-                            Vector2::new(transform.translation().x, transform.translation().y),
-                            Vector2::new(attract_data.acceleration, attract_data.acceleration),
-                            attract_data.should_repel,
-                        );
+                        match blast.blast_type {
+                            BlastType::Enemy => {
+                                motion_2d.target_position = Some(event.target_position);
+                                motion_2d.move_towards_target(
+                                    Vector2::new(
+                                        transform.translation().x,
+                                        transform.translation().y,
+                                    ),
+                                    Vector2::new(
+                                        attract_data.acceleration,
+                                        attract_data.acceleration,
+                                    ),
+                                    attract_data.should_repel,
+                                );
+                            }
+                            _ => {}
+                        }
                         break;
                     }
                 }

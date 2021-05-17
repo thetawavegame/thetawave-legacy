@@ -104,7 +104,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         steel_barrel: false,
     };
 
-    // At spawnables whose `AttractData` component is influenced by the player entity.
+    // Attach spawnables affected by the player's AttractorData component.
     let mut attracted_spawnables = HashMap::new();
     attracted_spawnables.insert(
         SpawnableCategory::Consumable,
@@ -127,7 +127,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         AttractData {
             radius: 25.0,
             acceleration: 0.3,
-            should_repel: true,
+            should_repel: false,
         },
     );
 

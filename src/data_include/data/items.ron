@@ -171,6 +171,16 @@
                 price: 6,
                 item_type: TractorBeam,
             )
+        ),
+        BlastRepeller: (
+            sprite_render_data: (
+                initial_index: 1,
+                spritesheet: "items",
+            ),
+            item_component: (
+                price: 10,
+                item_type: BlastRepeller
+            )
         )
     }
 )

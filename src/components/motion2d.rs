@@ -118,7 +118,7 @@ impl Motion2DComponent {
                 (self.acceleration.y + bonus_acceleration.y) * distance * target_angle.sin();
 
             // Target accelerate slightly faster when being repelled
-            if (should_repel) {
+            if should_repel {
                 self.acceleration.x += 0.25;
                 self.acceleration.y += 0.25;
             }

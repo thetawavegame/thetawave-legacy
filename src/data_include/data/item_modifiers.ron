@@ -49,5 +49,8 @@
         ConsumableAttractorAcceleration(0.2),
         ItemAttractorRadius(12.0),
         ItemAttractorAcceleration(0.2),
+    ],
+    BlastRepeller: [
+        RepelBlasts(false),
     ]
 }

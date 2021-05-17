@@ -248,6 +248,15 @@ pub fn apply_modifiers(
                     item_attract_data.acceleration += val;
                 }
             }
+
+            Modifier::RepelBlasts(_) => {
+                if let Some(blast_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Blast)
+                {
+                    blast_attract_data.should_repel = true;
+                }
+            }
         }
     }
 }

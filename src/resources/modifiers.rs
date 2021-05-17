@@ -28,4 +28,5 @@ pub enum Modifier {
     ConsumableAttractorAcceleration(f32),
     ItemAttractorRadius(f32),
     ItemAttractorAcceleration(f32),
+    RepelBlasts(bool),
 }
