@@ -58,6 +58,7 @@ pub struct DebugLinesConfig {
     pub hitbox_color: Srgba,
     pub item_attractor_color: Srgba,
     pub consumable_attractor_color: Srgba,
+    pub blast_attractor_color: Srgba,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]

@@ -95,11 +95,15 @@ impl Motion2DComponent {
         &mut self,
         current_position: Vector2<f32>,
         bonus_acceleration: Vector2<f32>,
+        should_repel: bool,
     ) {
         if let Some(target_position) = self.target_position {
-            let target_angle = (current_position.y - target_position.y)
-                .atan2(current_position.x - target_position.x)
-                + std::f32::consts::PI;
+            let mut target_angle = (current_position.y - target_position.y)
+                .atan2(current_position.x - target_position.x);
+
+            if !should_repel {
+                target_angle += std::f32::consts::PI;
+            }
 
             let distance = distance(
                 current_position.x,
@@ -112,6 +116,12 @@ impl Motion2DComponent {
                 (self.acceleration.x + bonus_acceleration.x) * distance * target_angle.cos();
             self.velocity.y +=
                 (self.acceleration.y + bonus_acceleration.y) * distance * target_angle.sin();
+
+            // Target accelerate slightly faster when being repelled
+            if (should_repel) {
+                self.acceleration.x += 0.25;
+                self.acceleration.y += 0.25;
+            }
         }
     }
 

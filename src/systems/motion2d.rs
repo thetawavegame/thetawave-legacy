@@ -1,7 +1,7 @@
 use crate::{
     components::{
-        ConsumableComponent, Hitbox2DComponent, ItemComponent, MobComponent, Motion2DComponent,
-        PlayerComponent,
+        BlastComponent, ConsumableComponent, Hitbox2DComponent, ItemComponent, MobComponent,
+        Motion2DComponent, PlayerComponent,
     },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
     entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableCategory, SpawnableType},
@@ -69,6 +69,72 @@ impl<'s> System<'s> for Motion2DSystem {
     }
 }
 
+#[derive(Default)]
+pub struct BlastMotion2DSystem {
+    event_reader: Option<ReaderId<AttractionEvent>>,
+}
+
+impl<'s> System<'s> for BlastMotion2DSystem {
+    type SystemData = (
+        WriteStorage<'s, Motion2DComponent>,
+        ReadStorage<'s, BlastComponent>,
+        WriteStorage<'s, Transform>,
+        Read<'s, EventChannel<AttractionEvent>>,
+    );
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<AttractionEvent>>()
+                .register_reader(),
+        );
+    }
+
+    fn run(
+        &mut self,
+        (mut motion_2ds, blasts, mut transforms, attraction_channel): Self::SystemData,
+    ) {
+        let mut attracted = false;
+        for event in attraction_channel.read(self.event_reader.as_mut().unwrap()) {
+            for (_blast, motion_2d, transform) in (&blasts, &mut motion_2ds, &mut transforms).join()
+            {
+                if let Some(attract_data) = event.affected_spawnables.get(&SpawnableCategory::Blast)
+                {
+                    // check if spawnable is in area of influence
+                    // TODO simplify distance() to take just the transform and event data
+                    // components
+                    if distance(
+                        transform.translation().x,
+                        event.target_position.x,
+                        transform.translation().y,
+                        event.target_position.y,
+                    ) < attract_data.radius
+                    {
+                        // accelerate towards attractor
+                        attracted = true;
+                        motion_2d.target_position = Some(event.target_position);
+                        motion_2d.move_towards_target(
+                            Vector2::new(transform.translation().x, transform.translation().y),
+                            Vector2::new(attract_data.acceleration, attract_data.acceleration),
+                            attract_data.should_repel,
+                        );
+                        break;
+                    }
+                }
+            }
+        }
+
+        if !attracted {
+            for (_blast, motion_2d) in (&blasts, &mut motion_2ds).join() {
+                motion_2d.target_position = None;
+                motion_2d.move_down();
+                motion_2d.brake_horizontal();
+            }
+        }
+    }
+}
+
 // motion behavior for consumables
 #[derive(Default)]
 pub struct ConsumableMotion2DSystem {
@@ -119,6 +185,7 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
                         motion_2d.move_towards_target(
                             Vector2::new(transform.translation().x, transform.translation().y),
                             Vector2::new(attract_data.acceleration, attract_data.acceleration),
+                            attract_data.should_repel,
                         );
                         break;
                     }
@@ -182,6 +249,7 @@ impl<'s> System<'s> for ItemMotion2DSystem {
                         motion_2d.move_towards_target(
                             Vector2::new(transform.translation().x, transform.translation().y),
                             Vector2::new(attract_data.acceleration, attract_data.acceleration),
+                            attract_data.should_repel,
                         );
                         break;
                     }

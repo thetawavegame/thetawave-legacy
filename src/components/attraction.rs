@@ -7,6 +7,7 @@ use std::collections::HashMap;
 pub struct AttractData {
     pub radius: f32,
     pub acceleration: f32,
+    pub should_repel: bool,
 }
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct AttractorComponent {

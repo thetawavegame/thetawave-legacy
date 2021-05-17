@@ -26,12 +26,14 @@ pub use self::{
     store_icons::initialize_store_icons,
 };
 
+// only used for attractors
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum SpawnableCategory {
     Consumable,
     Item,
     Effect,
     Mob,
+    Blast,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
