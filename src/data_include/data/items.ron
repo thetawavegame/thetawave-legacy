@@ -174,13 +174,22 @@
         ),
         BlastRepeller: (
             sprite_render_data: (
-                initial_index: 1,
+                initial_index: 20,
                 spritesheet: "items",
             ),
             item_component: (
                 price: 10,
                 item_type: BlastRepeller
-            )
+            ),
+            animation_component: Some((
+                start_idx: 20,
+                frame_count: 4,
+                current_frame: 20,
+                frame_time: 0.18,
+                elapsed_time: 0.0,
+                forward: true,
+                animation_type: PingPong,
+            )),
         )
     }
 )
