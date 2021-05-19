@@ -60,6 +60,11 @@ impl Default for MainGameState {
                     &["attractor_system"],
                 )
                 .with(
+                    systems::BlastMotion2DSystem::default(),
+                    "blast_motion_2d_system",
+                    &["attractor_system"],
+                )
+                .with(
                     systems::BarrelRollAbilitySystem::default(),
                     "barrel_roll_ability_system",
                     &[],

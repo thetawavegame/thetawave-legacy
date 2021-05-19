@@ -248,6 +248,42 @@ pub fn apply_modifiers(
                     item_attract_data.acceleration += val;
                 }
             }
+
+            Modifier::BlastAttractorIsActive(val) => {
+                if let Some(blast_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Blast)
+                {
+                    blast_attract_data.is_active = *val;
+                }
+            }
+
+            Modifier::BlastAttractorShouldRepel(val) => {
+                if let Some(blast_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Blast)
+                {
+                    blast_attract_data.should_repel = *val;
+                }
+            }
+
+            Modifier::BlastAttractorAcceleration(val) => {
+                if let Some(blast_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Blast)
+                {
+                    blast_attract_data.acceleration += val;
+                }
+            }
+
+            Modifier::BlastAttractorRadius(val) => {
+                if let Some(blast_attract_data) = player_attractor
+                    .attracted_spawnables
+                    .get_mut(&SpawnableCategory::Blast)
+                {
+                    blast_attract_data.radius += val;
+                }
+            }
         }
     }
 }

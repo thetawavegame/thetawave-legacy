@@ -121,6 +121,30 @@ List((
             y: 14,
             width: 14,
             height: 14,
-        )
+        ),
+        (
+            x: 112,
+            y: 14,
+            width: 14,
+            height: 14,
+        ),
+        (
+            x: 126,
+            y: 14,
+            width: 14,
+            height: 14,
+        ),
+        (
+            x: 140,
+            y: 14,
+            width: 14,
+            height: 14,
+        ),
+        (
+            x: 154,
+            y: 14,
+            width: 14,
+            height: 14,
+        ),
     ],
 ))

@@ -47,6 +47,7 @@ impl<'s> System<'s> for AttractorSystem {
                                 debug_lines_config.consumable_attractor_color
                             }
                             SpawnableCategory::Item => debug_lines_config.item_attractor_color,
+                            SpawnableCategory::Blast => debug_lines_config.blast_attractor_color,
                             _ => {
                                 panic!("SpawnableCategory  debug lines unimplemented!");
                             }
