@@ -1,4 +1,5 @@
 use crate::{
+    components::AttractorCategory,
     components::{
         AbilityDirection, AttractData, AttractorComponent, BarrelRollAbilityComponent, BlastType,
         BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
@@ -12,7 +13,6 @@ use crate::{
         SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT,
         SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
     },
-    entities::SpawnableCategory,
     resources::PlayersResource,
 };
 use amethyst::{
@@ -107,7 +107,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
     // Attach spawnables affected by the player's AttractorData component.
     let mut attracted_spawnables = HashMap::new();
     attracted_spawnables.insert(
-        SpawnableCategory::Consumable,
+        AttractorCategory::Consumable,
         AttractData {
             radius: 20.0,
             acceleration: 0.3,
@@ -116,7 +116,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         },
     );
     attracted_spawnables.insert(
-        SpawnableCategory::Item,
+        AttractorCategory::Item,
         AttractData {
             radius: 18.0,
             acceleration: 0.3,
@@ -125,7 +125,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         },
     );
     attracted_spawnables.insert(
-        SpawnableCategory::Blast,
+        AttractorCategory::Blast,
         AttractData {
             radius: 3.0,
             acceleration: 0.0,
