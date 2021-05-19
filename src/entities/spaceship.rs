@@ -112,6 +112,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             radius: 20.0,
             acceleration: 0.3,
             should_repel: false,
+            is_active: true,
         },
     );
     attracted_spawnables.insert(
@@ -120,14 +121,16 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
             radius: 18.0,
             acceleration: 0.3,
             should_repel: false,
+            is_active: true,
         },
     );
     attracted_spawnables.insert(
         SpawnableCategory::Blast,
         AttractData {
-            radius: 25.0,
-            acceleration: 0.3,
-            should_repel: false,
+            radius: 3.0,
+            acceleration: 0.0,
+            should_repel: true,
+            is_active: false,
         },
     );
 

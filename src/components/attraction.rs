@@ -8,6 +8,7 @@ pub struct AttractData {
     pub radius: f32,
     pub acceleration: f32,
     pub should_repel: bool,
+    pub is_active: bool,
 }
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct AttractorComponent {

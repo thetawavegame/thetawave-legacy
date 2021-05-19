@@ -101,6 +101,10 @@ impl<'s> System<'s> for BlastMotion2DSystem {
             {
                 if let Some(attract_data) = event.affected_spawnables.get(&SpawnableCategory::Blast)
                 {
+                    // skip if the target's attract data isn't active.
+                    if !attract_data.is_active {
+                        continue;
+                    }
                     // check if spawnable is in area of influence
                     // TODO simplify distance() to take just the transform and event data
                     // components

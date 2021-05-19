@@ -51,6 +51,9 @@
         ItemAttractorAcceleration(0.2),
     ],
     BlastRepeller: [
-        RepelBlasts(false),
+        BlastAttractorShouldRepel(true),
+        BlastAttractorIsActive(true),
+        BlastAttractorAcceleration(0.3),
+        BlastAttractorRadius(13.0),
     ]
 }
