@@ -1,7 +1,14 @@
-use crate::entities::SpawnableCategory;
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum AttractorCategory {
+    Consumable,
+    Item,
+    Effect,
+    Mob,
+    Blast,
+}
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct AttractData {
@@ -12,7 +19,7 @@ pub struct AttractData {
 }
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct AttractorComponent {
-    pub attracted_spawnables: HashMap<SpawnableCategory, AttractData>,
+    pub attracted_spawnables: HashMap<AttractorCategory, AttractData>,
 }
 
 impl Component for AttractorComponent {

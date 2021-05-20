@@ -45,8 +45,8 @@ impl<'s> System<'s> for SpawnerSystem {
             mobs_resource,
         ): Self::SystemData,
     ) {
-        match &phase_manager.phase_map[phase_manager.phase_idx].phase_type {
-            PhaseType::InvasionRandom(random_pool_type) => spawner_resource
+        match phase_manager.get_current_phase_type() {
+            Some(PhaseType::InvasionRandom(random_pool_type)) => spawner_resource
                 .spawn_random_spawnable_when_ready(
                     &random_pool_type,
                     time.delta_seconds(),
@@ -59,7 +59,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     &lazy_update,
                 ),
 
-            PhaseType::InvasionFormation(formation_pool_type) => spawner_resource
+            Some(PhaseType::InvasionFormation(formation_pool_type)) => spawner_resource
                 .spawn_random_formation_when_ready(
                     &&formation_pool_type,
                     time.delta_seconds(),
@@ -72,7 +72,7 @@ impl<'s> System<'s> for SpawnerSystem {
                     &lazy_update,
                 ),
 
-            PhaseType::Boss => {
+            Some(PhaseType::Boss) => {
                 match phase_manager.phase_map[phase_manager.phase_idx].boss_type {
                     BossType::Repeater => {
                         // spawn repeater boss
@@ -92,7 +92,9 @@ impl<'s> System<'s> for SpawnerSystem {
                 }
             }
 
-            PhaseType::Rest => {}
+            Some(PhaseType::Rest) => {}
+
+            _ => {}
         }
     }
 }

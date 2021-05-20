@@ -1,9 +1,9 @@
 use crate::{
     components::{
-        AttractorComponent, BarrelRollAbilityComponent, BlasterComponent, HealthComponent,
-        ManualFireComponent, Motion2DComponent, PlayerComponent,
+        AttractorCategory, AttractorComponent, BarrelRollAbilityComponent, BlasterComponent,
+        HealthComponent, ManualFireComponent, Motion2DComponent, PlayerComponent,
     },
-    entities::{SpawnableCategory, SpawnableType},
+    entities::SpawnableType,
     events::{ConsumableGetEvent, ItemGetEvent},
     resources::{ConsumableModifiersResource, DefenseResource, ItemModifiersResource, Modifier},
 };
@@ -216,7 +216,7 @@ pub fn apply_modifiers(
             Modifier::ConsumableAttractorRadius(val) => {
                 if let Some(consumable_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Consumable)
+                    .get_mut(&AttractorCategory::Consumable)
                 {
                     consumable_attract_data.radius += val;
                 }
@@ -225,7 +225,7 @@ pub fn apply_modifiers(
             Modifier::ItemAttractorRadius(val) => {
                 if let Some(item_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Item)
+                    .get_mut(&AttractorCategory::Item)
                 {
                     item_attract_data.radius += val;
                 }
@@ -234,7 +234,7 @@ pub fn apply_modifiers(
             Modifier::ConsumableAttractorAcceleration(val) => {
                 if let Some(consumable_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Consumable)
+                    .get_mut(&AttractorCategory::Consumable)
                 {
                     consumable_attract_data.acceleration += val;
                 }
@@ -243,7 +243,7 @@ pub fn apply_modifiers(
             Modifier::ItemAttractorAcceleration(val) => {
                 if let Some(item_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Item)
+                    .get_mut(&AttractorCategory::Item)
                 {
                     item_attract_data.acceleration += val;
                 }
@@ -252,7 +252,7 @@ pub fn apply_modifiers(
             Modifier::BlastAttractorIsActive(val) => {
                 if let Some(blast_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Blast)
+                    .get_mut(&AttractorCategory::Blast)
                 {
                     blast_attract_data.is_active = *val;
                 }
@@ -261,7 +261,7 @@ pub fn apply_modifiers(
             Modifier::BlastAttractorShouldRepel(val) => {
                 if let Some(blast_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Blast)
+                    .get_mut(&AttractorCategory::Blast)
                 {
                     blast_attract_data.should_repel = *val;
                 }
@@ -270,7 +270,7 @@ pub fn apply_modifiers(
             Modifier::BlastAttractorAcceleration(val) => {
                 if let Some(blast_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Blast)
+                    .get_mut(&AttractorCategory::Blast)
                 {
                     blast_attract_data.acceleration += val;
                 }
@@ -279,7 +279,7 @@ pub fn apply_modifiers(
             Modifier::BlastAttractorRadius(val) => {
                 if let Some(blast_attract_data) = player_attractor
                     .attracted_spawnables
-                    .get_mut(&SpawnableCategory::Blast)
+                    .get_mut(&AttractorCategory::Blast)
                 {
                     blast_attract_data.radius += val;
                 }

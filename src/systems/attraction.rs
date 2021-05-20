@@ -1,5 +1,6 @@
 use crate::{
-    components::AttractorComponent, entities::SpawnableCategory, events::AttractionEvent,
+    components::{AttractorCategory, AttractorComponent},
+    events::AttractionEvent,
     resources::DebugLinesConfig,
 };
 use amethyst::{
@@ -43,11 +44,11 @@ impl<'s> System<'s> for AttractorSystem {
                         attract_data.radius,
                         15,
                         match spawnable_category {
-                            SpawnableCategory::Consumable => {
+                            AttractorCategory::Consumable => {
                                 debug_lines_config.consumable_attractor_color
                             }
-                            SpawnableCategory::Item => debug_lines_config.item_attractor_color,
-                            SpawnableCategory::Blast => debug_lines_config.blast_attractor_color,
+                            AttractorCategory::Item => debug_lines_config.item_attractor_color,
+                            AttractorCategory::Blast => debug_lines_config.blast_attractor_color,
                             _ => {
                                 panic!("SpawnableCategory  debug lines unimplemented!");
                             }

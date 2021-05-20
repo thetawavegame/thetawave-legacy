@@ -42,26 +42,41 @@ pub struct PhaseManagerResource {
 }
 
 impl PhaseManagerResource {
-    pub fn update(&mut self, dt: f32) {
-        if self.tick_timer > 0.0 {
-            self.tick_timer -= dt;
+    pub fn get_current_phase(&self) -> Option<&Phase> {
+        self.phase_map.get(self.phase_idx)
+    }
+
+    pub fn get_current_phase_type(&self) -> Option<&PhaseType> {
+        if let Some(phase) = self.get_current_phase() {
+            Some(&phase.phase_type)
         } else {
-            println!(
-                "phase index: {}\tcurrent_tick: {}",
-                self.phase_idx, self.current_tick
-            );
-            self.tick_timer = self.tick_length;
-            self.current_tick += 1;
+            None
+        }
+    }
+
+    pub fn update(&mut self, dt: f32) {
+        // update tick
+        if self.get_current_phase().is_some() {
+            if self.tick_timer > 0.0 {
+                self.tick_timer -= dt;
+            } else {
+                println!(
+                    "phase index: {}\tcurrent_tick: {}",
+                    self.phase_idx, self.current_tick
+                );
+                self.tick_timer = self.tick_length;
+                self.current_tick += 1;
+            }
 
             // check if the phase is over
-            if self.current_tick >= self.phase_map[self.phase_idx].length {
-                if self.phase_idx == self.phase_map.len() - 1 {
-                    // level is over
-                    // TODO: end level
-                    self.phase_idx -= 1; // repeat last phase for now
+            if let Some(phase) = self.get_current_phase() {
+                if self.current_tick >= phase.length {
+                    if self.phase_idx == self.phase_map.len() - 1 {
+                        // TODO: end level
+                    }
+                    self.phase_idx += 1;
+                    self.current_tick = 0;
                 }
-                self.phase_idx += 1;
-                self.current_tick = 0;
             }
         }
     }

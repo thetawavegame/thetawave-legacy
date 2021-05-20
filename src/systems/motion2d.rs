@@ -1,10 +1,10 @@
 use crate::{
     components::{
-        BlastComponent, BlastType, ConsumableComponent, Hitbox2DComponent, ItemComponent,
-        MobComponent, Motion2DComponent, PlayerComponent,
+        AttractorCategory, BlastComponent, BlastType, ConsumableComponent, Hitbox2DComponent,
+        ItemComponent, MobComponent, Motion2DComponent, PlayerComponent,
     },
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
-    entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableCategory, SpawnableType},
+    entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableType},
     events::AttractionEvent,
     tools::distance,
 };
@@ -99,7 +99,7 @@ impl<'s> System<'s> for BlastMotion2DSystem {
         for event in attraction_channel.read(self.event_reader.as_mut().unwrap()) {
             for (blast, motion_2d, transform) in (&blasts, &mut motion_2ds, &mut transforms).join()
             {
-                if let Some(attract_data) = event.affected_spawnables.get(&SpawnableCategory::Blast)
+                if let Some(attract_data) = event.affected_spawnables.get(&AttractorCategory::Blast)
                 {
                     // skip if the target's attract data isn't active.
                     if !attract_data.is_active {
@@ -184,7 +184,7 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
             {
                 if let Some(attract_data) = event
                     .affected_spawnables
-                    .get(&SpawnableCategory::Consumable)
+                    .get(&AttractorCategory::Consumable)
                 {
                     // check if spawnable is in area of influence
                     if distance(
@@ -248,7 +248,7 @@ impl<'s> System<'s> for ItemMotion2DSystem {
         let mut attracted = false;
         for event in attraction_channel.read(self.event_reader.as_mut().unwrap()) {
             for (_item, motion_2d, transform) in (&items, &mut motion_2ds, &mut transforms).join() {
-                if let Some(attract_data) = event.affected_spawnables.get(&SpawnableCategory::Item)
+                if let Some(attract_data) = event.affected_spawnables.get(&AttractorCategory::Item)
                 {
                     // check if spawnable is in area of influence
                     if distance(
