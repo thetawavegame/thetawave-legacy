@@ -2,7 +2,6 @@ mod abilities;
 mod animation;
 mod attraction;
 mod barriers;
-mod blast;
 mod boss;
 mod child_spawner;
 mod consumable;
@@ -18,14 +17,12 @@ mod player;
 mod status_bar;
 mod store_icon;
 mod timelimit;
-mod weapons;
 
 pub use self::{
     abilities::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
     animation::{AnimationComponent, AnimationType},
     attraction::{AttractData, AttractorCategory, AttractorComponent},
     barriers::{BarrierComponent, PushDirection},
-    blast::{BlastComponent, BlastType},
     boss::RepeaterComponent,
     child_spawner::{
         AutoConsumableSpawnerComponent, AutoEffectSpawnerComponent, AutoItemSpawnerComponent,
@@ -44,5 +41,4 @@ pub use self::{
     status_bar::{StatusBarComponent, StatusType},
     store_icon::StoreIconComponent,
     timelimit::TimeLimitComponent,
-    weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };

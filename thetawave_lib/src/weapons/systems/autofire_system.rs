@@ -1,6 +1,7 @@
 use crate::{
-    components::{AutoFireComponent, BlasterComponent, Motion2DComponent},
+    components::Motion2DComponent,
     resources::SpriteSheetsResource,
+    weapons::components::{AutoFireComponent, BlasterComponent},
 };
 
 use amethyst::{

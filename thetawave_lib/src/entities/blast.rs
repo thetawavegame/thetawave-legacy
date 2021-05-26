@@ -4,8 +4,9 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
 };
 
-use crate::components::{
-    BlastComponent, DespawnAtBorderComponent, Hitbox2DComponent, Motion2DComponent,
+use crate::{
+    components::{DespawnAtBorderComponent, Hitbox2DComponent, Motion2DComponent},
+    weapons::components::BlastComponent,
 };
 
 // spaces and creates blast entities

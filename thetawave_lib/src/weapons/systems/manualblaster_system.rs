@@ -1,4 +1,4 @@
-use crate::components::ManualFireComponent;
+use crate::weapons::components::ManualFireComponent;
 
 use amethyst::{
     core::timing::Time,

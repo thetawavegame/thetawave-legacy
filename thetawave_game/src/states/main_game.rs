@@ -1,18 +1,3 @@
-use crate::{
-    audio::initialize_audio,
-    constants::{
-        ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CAMERA_X, CAMERA_Y,
-        CAMERA_Z,
-    },
-    entities::{
-        initialize_arena_barriers, initialize_background, initialize_planet,
-        initialize_side_panels, initialize_spaceship, initialize_status_bars,
-        initialize_store_icons,
-    },
-    resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
-    states::PausedState,
-    systems,
-};
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
@@ -25,6 +10,23 @@ use amethyst::{
     ui::{Anchor, LineMode, TtfFormat, UiText, UiTransform},
 };
 use std::{collections::HashMap, f32::consts::FRAC_PI_3};
+use thetawave_lib::{
+    audio::initialize_audio,
+    constants::{
+        ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CAMERA_X, CAMERA_Y,
+        CAMERA_Z,
+    },
+    entities::{
+        initialize_arena_barriers, initialize_background, initialize_planet,
+        initialize_side_panels, initialize_spaceship, initialize_status_bars,
+        initialize_store_icons,
+    },
+    resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
+    systems,
+    weapons::systems::{AutoFireSystem, ManualBlasterSystem},
+};
+
+use crate::states::PausedState;
 
 pub struct MainGameState {
     is_paused: bool,
@@ -157,8 +159,8 @@ impl Default for MainGameState {
                     "stat_tracker_system",
                     &["store_system", "spaceship_system"],
                 )
-                .with(systems::AutoFireSystem, "autoblaster_system", &[])
-                .with(systems::ManualBlasterSystem, "manualblaster_system", &[])
+                .with(AutoFireSystem, "autoblaster_system", &[])
+                .with(ManualBlasterSystem, "manualblaster_system", &[])
                 .with(
                     systems::MobDestroyedSystem::default(),
                     "mob_destroyed_system",
@@ -306,7 +308,7 @@ fn initialise_camera(world: &mut World) {
         .with(transform)
         .build();
 }
-
+/*
 pub struct TrackedStats {
     pub currency: Entity,
     pub shields: Entity,
@@ -314,6 +316,7 @@ pub struct TrackedStats {
     pub item_price_2: Entity,
     pub item_price_3: Entity,
 }
+*/
 
 fn initialise_ui(world: &mut World) {
     let item_slots_texture_handle = {
@@ -546,7 +549,7 @@ fn initialise_ui(world: &mut World) {
         ))
         .build();
 
-    world.insert(TrackedStats {
+    world.insert(systems::TrackedStats {
         currency: currency_count,
         shields: shields_count,
         item_price_1,

@@ -2,12 +2,20 @@ use crate::{
     components::{HealthComponent, PlayerComponent},
     entities::SpawnableType,
     resources::{ConsumablesResource, ItemsResource, StoreResource},
-    states::TrackedStats,
 };
 use amethyst::{
-    ecs::prelude::{Join, ReadExpect, ReadStorage, System, WriteStorage},
+    ecs::prelude::{Entity, Join, ReadExpect, ReadStorage, System, WriteStorage},
     ui::UiText,
 };
+
+//TODO: this doesn't belong here
+pub struct TrackedStats {
+    pub currency: Entity,
+    pub shields: Entity,
+    pub item_price_1: Entity,
+    pub item_price_2: Entity,
+    pub item_price_3: Entity,
+}
 
 pub struct StatTrackerSystem;
 

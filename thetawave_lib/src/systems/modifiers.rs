@@ -1,11 +1,12 @@
 use crate::{
     components::{
-        AttractorCategory, AttractorComponent, BarrelRollAbilityComponent, BlasterComponent,
-        HealthComponent, ManualFireComponent, Motion2DComponent, PlayerComponent,
+        AttractorCategory, AttractorComponent, BarrelRollAbilityComponent, HealthComponent,
+        Motion2DComponent, PlayerComponent,
     },
     entities::SpawnableType,
     events::{ConsumableGetEvent, ItemGetEvent},
     resources::{ConsumableModifiersResource, DefenseResource, ItemModifiersResource, Modifier},
+    weapons::components::{BlasterComponent, ManualFireComponent},
 };
 use amethyst::{
     ecs::*,

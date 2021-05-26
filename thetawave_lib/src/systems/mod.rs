@@ -4,13 +4,11 @@ use amethyst::core::math::Vector2;
 mod ability;
 mod animation;
 mod attraction;
-mod autofire_system;
 mod boss;
 mod collision_detection;
 mod defense;
 mod despawn;
 mod fade;
-mod manualblaster_system;
 mod mob_behavior;
 mod mob_collisions;
 mod mob_destroyed;
@@ -32,13 +30,11 @@ pub use self::{
     ability::BarrelRollAbilitySystem,
     animation::AnimationSystem,
     attraction::AttractorSystem,
-    autofire_system::AutoFireSystem,
     boss::BossSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     defense::DefenseSystem,
     despawn::DespawnAtBorderSystem,
     fade::FadeSystem,
-    manualblaster_system::ManualBlasterSystem,
     mob_behavior::MobBehaviorSystem,
     mob_collisions::{
         MobArenaBorderCollisionSystem, MobBlastCollisionSystem, MobMobCollisionSystem,
@@ -61,7 +57,7 @@ pub use self::{
     },
     spaceship_movement::SpaceshipMovementSystem,
     spawner::{AutoSpawnerSystem, SpawnerSystem},
-    stat_tracker::StatTrackerSystem,
+    stat_tracker::{StatTrackerSystem, TrackedStats},
     status_bar::StatusBarSystem,
     store::StoreSystem,
     timelimit::TimeLimitSystem,
