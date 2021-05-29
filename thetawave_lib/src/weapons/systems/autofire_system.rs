@@ -3,7 +3,6 @@ use crate::{
     resources::SpriteSheetsResource,
     weapons::components::{AutoFireComponent, BlasterComponent},
 };
-
 use amethyst::{
     core::{timing::Time, transform::Transform},
     ecs::prelude::{
@@ -11,6 +10,7 @@ use amethyst::{
     },
 };
 
+/// Handles periodic firing of weapons
 pub struct AutoFireSystem;
 
 impl<'s> System<'s> for AutoFireSystem {

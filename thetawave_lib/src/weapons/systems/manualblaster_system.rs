@@ -1,10 +1,10 @@
 use crate::weapons::components::ManualFireComponent;
-
 use amethyst::{
     core::timing::Time,
     ecs::prelude::{Join, Read, System, WriteStorage},
 };
 
+/// Handles firing of weapons using input
 pub struct ManualBlasterSystem;
 
 impl<'s> System<'s> for ManualBlasterSystem {
