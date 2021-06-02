@@ -1,11 +1,12 @@
 use crate::{
-    components::{BlastComponent, BlastType, Hitbox2DComponent, Motion2DComponent},
+    components::{Hitbox2DComponent, Motion2DComponent},
     constants::{
         BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
     entities::spawn_blasts,
     resources::SpriteSheetsResource,
+    weapons::{components::BlastComponent, BlastType},
 };
 
 use amethyst::{
@@ -20,19 +21,33 @@ use amethyst::{
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
 
+/// Blaster weapon for spawning blast entities
+///
+/// Used for spawning blast entities
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BlasterComponent {
+    /// Number of fired blasts
     pub count: usize,
+    /// Type of fired blasts
     pub blast_type: BlastType,
+    /// Velocity of fired blasts
     pub shot_velocity: Vector2<f32>,
-    pub velocity_multiplier: f32, // what percentage of the velocity from the source motion2d component will be added to the spawned blasts
-    pub offset: Vector2<f32>,     // spawn position of blasts offset from center of entity
+    /// Proportion of velocity from source transferred to fired blast
+    pub velocity_multiplier: f32,
+    /// Spawn offset of fired blasts from translation of the source
+    pub offset: Vector2<f32>,
+    /// Damage of fired blasts
     pub damage: f32,
-    pub poison_damage: f32, // applies damage to blast when rolled
+    /// Poison damage of fired blasts
+    pub poison_damage: f32,
+    /// Chance of fired blasts to be poison
     pub poison_chance: f32,
+    /// Chance of fired blasts to be critical
     pub crit_chance: f32,
+    /// Size multiplier of fired blasts
     pub size_multiplier: f32,
-    pub spacing: f32, // space between blasts when multiple are fired (along x axis)
+    /// Spacing between fired blasts (when count > 1)
+    pub spacing: f32,
 }
 
 impl Component for BlasterComponent {
@@ -40,6 +55,7 @@ impl Component for BlasterComponent {
 }
 
 impl BlasterComponent {
+    /// Fire blast using the data in the blaster component
     pub fn fire(
         &self,
         source_motion2d: &Motion2DComponent,
@@ -150,20 +166,31 @@ impl BlasterComponent {
     }
 }
 
+/// Automatic firing of a weapon component
+///
+/// Used for firing weapons periodically
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoFireComponent {
-    pub period: f32, // time between firing blasts
-    pub timer: f32,  // tracks time between firing blasts
+    /// Time between firing blasts
+    pub period: f32,
+    /// Stores countdown time from period value
+    pub timer: f32,
 }
 
 impl Component for AutoFireComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
+/// Manual firing of a weapon component
+///
+/// Used for firing weapons with input
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ManualFireComponent {
-    pub period: f32, // time between firing blasts
-    pub timer: f32,  // tracks time between firing blasts
+    /// Minimum time between firing blasts
+    pub period: f32,
+    /// Stores countdown time from period value
+    pub timer: f32,
+    /// Indicates whether weapon is ready to be fired
     pub ready: bool,
 }
 

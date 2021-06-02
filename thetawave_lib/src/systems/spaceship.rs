@@ -1,8 +1,9 @@
 use crate::{
     audio::Sounds,
-    components::{BlasterComponent, HealthComponent, ManualFireComponent, Motion2DComponent},
+    components::{HealthComponent, Motion2DComponent},
     events::{ItemGetEvent, PlayAudioEvent},
     resources::SpriteSheetsResource,
+    weapons::components::{BlasterComponent, ManualFireComponent},
 };
 use amethyst::{
     core::Transform,

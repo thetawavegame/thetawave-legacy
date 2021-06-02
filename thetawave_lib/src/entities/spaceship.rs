@@ -1,9 +1,8 @@
 use crate::{
     components::AttractorCategory,
     components::{
-        AbilityDirection, AttractData, AttractorComponent, BarrelRollAbilityComponent, BlastType,
-        BlasterComponent, HealthComponent, Hitbox2DComponent, ManualFireComponent,
-        Motion2DComponent,
+        AbilityDirection, AttractData, AttractorComponent, BarrelRollAbilityComponent,
+        HealthComponent, Hitbox2DComponent, Motion2DComponent,
     },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
@@ -14,6 +13,10 @@ use crate::{
         SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
     },
     resources::PlayersResource,
+    weapons::{
+        components::{BlasterComponent, ManualFireComponent},
+        BlastType,
+    },
 };
 use amethyst::{
     assets::Handle,

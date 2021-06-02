@@ -1,18 +1,2 @@
-[package]
-name = "theta-wave"
-version = "0.1.5"
-authors = []
-edition = "2018"
-
-[dependencies.amethyst]
-version = "0.15.3"
-default-features = false
-features = ["vulkan", "audio", "gltf"]
-
-[dependencies]
-amethyst_test = "0.15.3"
-rand = "0.6.5"
-serde = "1"
-
-[features]
-fail-on-warnings = []
+[workspace]
+members =["thetawave_lib", "thetawave_game"]

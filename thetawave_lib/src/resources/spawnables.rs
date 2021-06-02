@@ -1,11 +1,12 @@
 use crate::{
     components::{
-        AnimationComponent, AutoFireComponent, AutoSpawnerComponent, BlasterComponent,
-        ConsumableComponent, DespawnAtBorderComponent, FadeComponent, HealthComponent,
-        Hitbox2DComponent, ItemComponent, MobComponent, Motion2DComponent, TimeLimitComponent,
+        AnimationComponent, AutoSpawnerComponent, ConsumableComponent, DespawnAtBorderComponent,
+        FadeComponent, HealthComponent, Hitbox2DComponent, ItemComponent, MobComponent,
+        Motion2DComponent, TimeLimitComponent,
     },
     entities::{ConsumableType, EffectType, ItemType, MobType},
     resources::SpriteRenderData,
+    weapons::components::{AutoFireComponent, BlasterComponent},
 };
 
 use amethyst::core::math::Vector2;

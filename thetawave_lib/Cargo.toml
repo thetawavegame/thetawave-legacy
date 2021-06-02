@@ -1,0 +1,17 @@
+[package]
+name = "thetawave_lib"
+version = "0.1.0"
+authors = ["Carlo Supina <cdsupina@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies.amethyst]
+version = "0.15.3"
+default-features = false
+features = ["vulkan", "audio", "gltf"]
+
+[dependencies]
+amethyst_test = "0.15.3"
+serde = "1"
+rand = "0.6.5"

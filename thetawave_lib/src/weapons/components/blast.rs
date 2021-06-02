@@ -1,20 +1,16 @@
+use crate::weapons::BlastType;
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-use serde::{Deserialize, Serialize};
-
-// used for setting sprite, status rolls, and the entity type spawning the blast
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub enum BlastType {
-    Ally,
-    Enemy,
-    AllyPoison,
-    AllyCritical,
-}
-
+/// Core data for blast entities
+///
+/// Used for data unique to only blast entities
 #[derive(Clone)]
 pub struct BlastComponent {
+    /// Damage that the blast will deal on hit
     pub damage: f32,
+    /// Poison damage that blast will apply on hit
     pub poison_damage: f32,
+    /// Type of blast
     pub blast_type: BlastType,
 }
 

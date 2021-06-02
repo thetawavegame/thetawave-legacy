@@ -3,4 +3,4 @@
 target/
 Cargo.lock
 book/book
-config/
+thetawave_game/config/

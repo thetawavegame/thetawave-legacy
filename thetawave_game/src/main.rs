@@ -1,7 +1,7 @@
 #![cfg_attr(feature = "fail-on-warnings", deny(warnings))]
 
 extern crate amethyst;
-extern crate serde;
+extern crate thetawave_lib;
 
 use amethyst::{
     audio::AudioBundle,
@@ -18,24 +18,16 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-mod audio;
-mod components;
-mod constants;
 mod data_include;
-mod entities;
-mod events;
-mod resources;
 mod states;
-mod systems;
-mod tools;
 
-use resources::{
+use states::MainGameState;
+use thetawave_lib::resources::{
     ConsumableModifiersResource, ConsumablesResource, DebugLinesConfig, DefenseResource,
     DropTablesResource, EffectsResource, GameParametersResource, ItemModifiersResource,
     ItemsResource, MobsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
     SpawnerResource, SpriteSheetsConfig, StoreResource,
 };
-use states::MainGameState;
 
 use amethyst::config::Config;
 
