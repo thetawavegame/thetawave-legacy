@@ -3,12 +3,12 @@ use amethyst::{
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 
-use crate::entities::spawn_mob;
 use crate::{
     components::RepeaterComponent,
     constants,
     entities::{EnemyType, MobType},
-    resources::{MobsResource, SpriteSheetsResource},
+    resources::SpriteSheetsResource,
+    spawnable::{entities::spawn_mob, resources::MobsResource},
 };
 use amethyst::prelude::Builder;
 

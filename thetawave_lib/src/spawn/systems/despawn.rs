@@ -1,7 +1,8 @@
 use crate::{
-    components::{DespawnAtBorderComponent, MobComponent},
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
     events::MobReachedBottomEvent,
+    spawn::components::DespawnAtBorderComponent,
+    spawnable::mob::components::MobComponent,
 };
 use amethyst::{
     core::transform::Transform,

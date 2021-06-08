@@ -1,4 +1,4 @@
-use crate::components::TimeLimitComponent;
+use crate::spawn::components::TimeLimitComponent;
 use amethyst::{
     core::timing::Time,
     ecs::prelude::{Entities, Join, Read, System, WriteStorage},
@@ -36,7 +36,7 @@ mod test {
     };
     use amethyst_test::prelude::*;
 
-    use crate::components::TimeLimitComponent;
+    use crate::spawn::components::TimeLimitComponent;
 
     #[test]
     fn test_timelimit_system() -> Result<(), Error> {

@@ -1,13 +1,14 @@
 use crate::{
-    components::{
-        AttractorCategory, ConsumableComponent, Hitbox2DComponent, ItemComponent, MobComponent,
-        Motion2DComponent, PlayerComponent,
-    },
+    components::{AttractorCategory, Hitbox2DComponent, Motion2DComponent, PlayerComponent},
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
     entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableType},
     events::AttractionEvent,
+    spawnable::{
+        blast::components::BlastComponent, consumable::components::ConsumableComponent,
+        item::components::ItemComponent, mob::components::MobComponent,
+    },
     tools::distance,
-    weapons::{components::BlastComponent, BlastType},
+    weapons::BlastType,
 };
 use amethyst::{
     core::{math::Vector2, timing::Time, transform::Transform},

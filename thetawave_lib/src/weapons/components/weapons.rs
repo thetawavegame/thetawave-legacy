@@ -4,9 +4,9 @@ use crate::{
         BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
-    entities::spawn_blasts,
     resources::SpriteSheetsResource,
-    weapons::{components::BlastComponent, BlastType},
+    spawnable::{blast::components::BlastComponent, entities::spawn_blasts},
+    weapons::BlastType,
 };
 
 use amethyst::{

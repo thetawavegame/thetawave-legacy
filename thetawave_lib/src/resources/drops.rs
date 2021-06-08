@@ -1,8 +1,8 @@
 use crate::{
-    entities::{spawn_spawnable, SpawnableType},
-    resources::{
-        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
-    },
+    entities::SpawnableType,
+    resources::SpriteSheetsResource,
+    spawnable::entities::spawn_spawnable,
+    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
     tools::weighted_rng,
 };
 use amethyst::{

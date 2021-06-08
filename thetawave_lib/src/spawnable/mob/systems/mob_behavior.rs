@@ -1,6 +1,6 @@
 use crate::{
-    components::{HealthComponent, MobComponent},
-    events::MobDestroyedEvent,
+    components::HealthComponent, events::MobDestroyedEvent,
+    spawnable::mob::components::MobComponent,
 };
 use amethyst::{
     ecs::prelude::{Entities, Join, System, Write, WriteStorage},

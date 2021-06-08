@@ -1,9 +1,9 @@
 use crate::{
-    components::AutoSpawnerComponent,
     entities::spawn_repeater,
-    resources::{
-        BossType, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
-        PhaseManagerResource, PhaseType, SpawnerResource, SpriteSheetsResource,
+    resources::{BossType, PhaseManagerResource, PhaseType, SpriteSheetsResource},
+    spawn::components::AutoSpawnerComponent,
+    spawnable::resources::{
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpawnerResource,
     },
 };
 use amethyst::{

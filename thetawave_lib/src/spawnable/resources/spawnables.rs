@@ -1,11 +1,14 @@
 use crate::{
     components::{
-        AnimationComponent, AutoSpawnerComponent, ConsumableComponent, DespawnAtBorderComponent,
-        FadeComponent, HealthComponent, Hitbox2DComponent, ItemComponent, MobComponent,
-        Motion2DComponent, TimeLimitComponent,
+        AnimationComponent, FadeComponent, HealthComponent, Hitbox2DComponent, Motion2DComponent,
     },
     entities::{ConsumableType, EffectType, ItemType, MobType},
     resources::SpriteRenderData,
+    spawn::components::{AutoSpawnerComponent, DespawnAtBorderComponent, TimeLimitComponent},
+    spawnable::{
+        consumable::components::ConsumableComponent, item::components::ItemComponent,
+        mob::components::MobComponent,
+    },
     weapons::components::{AutoFireComponent, BlasterComponent},
 };
 

@@ -1,11 +1,12 @@
 use crate::{
     audio::Sounds,
-    components::MobComponent,
-    entities::{spawn_effect, EffectType, SpawnableType},
+    entities::{EffectType, SpawnableType},
     events::{MobDestroyedEvent, PlayAudioEvent},
-    resources::{
-        ConsumablesResource, DropTablesResource, EffectsResource, ItemsResource, MobsResource,
-        SpriteSheetsResource,
+    resources::{DropTablesResource, SpriteSheetsResource},
+    spawnable::{
+        entities::spawn_effect,
+        mob::components::MobComponent,
+        resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
     },
 };
 use amethyst::{

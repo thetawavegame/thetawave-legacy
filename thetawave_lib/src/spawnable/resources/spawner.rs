@@ -1,9 +1,10 @@
 use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_SPAWN_OFFSET, SPAWNER_Y_OFFSET},
-    entities::{spawn::spawn_spawnable, SpawnableType},
-    resources::{
-        ConsumablesResource, EffectsResource, InvasionFormationPool, InvasionRandomPool,
-        ItemsResource, MobsResource, SpriteSheetsResource,
+    entities::SpawnableType,
+    resources::{InvasionFormationPool, InvasionRandomPool, SpriteSheetsResource},
+    spawnable::{
+        entities::spawn_spawnable,
+        resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
     },
 };
 use amethyst::{

@@ -1,8 +1,7 @@
 use crate::{
     entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
-    resources::{
-        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
-    },
+    resources::SpriteSheetsResource,
+    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
 };
 use amethyst::{
     core::{transform::Transform, Parent},

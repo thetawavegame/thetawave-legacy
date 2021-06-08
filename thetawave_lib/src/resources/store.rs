@@ -1,8 +1,12 @@
 use crate::{
     components::PlayerComponent,
     constants::{ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
-    entities::{spawn_consumable, spawn_item, SpawnableType},
-    resources::{ConsumablesResource, ItemsResource, SpriteSheetsResource},
+    entities::SpawnableType,
+    resources::SpriteSheetsResource,
+    spawnable::{
+        entities::{spawn_consumable, spawn_item},
+        resources::{ConsumablesResource, ItemsResource},
+    },
 };
 use amethyst::{
     core::transform::Transform,

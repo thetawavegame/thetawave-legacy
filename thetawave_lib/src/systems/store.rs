@@ -3,7 +3,8 @@ use crate::{
     components::{PlayerComponent, StoreIconComponent},
     entities::SpawnableType,
     events::PlayAudioEvent,
-    resources::{ConsumablesResource, ItemsResource, SpriteSheetsResource, StoreResource},
+    resources::{SpriteSheetsResource, StoreResource},
+    spawnable::resources::{ConsumablesResource, ItemsResource},
 };
 use amethyst::{
     core::{timing::Time, Transform},

@@ -5,8 +5,9 @@ use amethyst::{
 };
 
 use crate::{
-    components::{DespawnAtBorderComponent, Hitbox2DComponent, Motion2DComponent},
-    weapons::components::BlastComponent,
+    components::{Hitbox2DComponent, Motion2DComponent},
+    spawn::components::DespawnAtBorderComponent,
+    spawnable::blast::components::BlastComponent,
 };
 
 // spaces and creates blast entities
