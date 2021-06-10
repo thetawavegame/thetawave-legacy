@@ -4,7 +4,9 @@ use crate::{
     },
     entities::{ConsumableType, EffectType, ItemType, MobType},
     resources::SpriteRenderData,
-    spawn::components::{AutoSpawnerComponent, DespawnAtBorderComponent, TimeLimitComponent},
+    spawn::components::{
+        AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent,
+    },
     spawnable::{
         consumable::components::ConsumableComponent, item::components::ItemComponent,
         mob::components::MobComponent,
@@ -83,7 +85,7 @@ pub struct RandomMotionRange2D {
 pub struct EffectEntityData {
     pub random_initial_motion: Option<RandomMotionRange2D>,
     pub sprite_render_data: Vec<SpriteRenderData>,
-    pub time_limit_component: Option<TimeLimitComponent>,
+    pub time_limit_component: Option<DespawnTimeLimitComponent>,
     pub motion2d_component: Option<Motion2DComponent>,
     pub animation_component: Option<AnimationComponent>,
     pub fade_component: Option<FadeComponent>,
@@ -92,7 +94,7 @@ pub struct EffectEntityData {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct GibletEntityData {
     pub random_initial_motion: RandomMotionRange2D,
-    pub time_limit_component: TimeLimitComponent,
+    pub time_limit_component: DespawnTimeLimitComponent,
     pub motion2d_component: Motion2DComponent,
     pub fade_component: FadeComponent,
 }

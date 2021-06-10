@@ -22,7 +22,9 @@ use thetawave_lib::{
         initialize_store_icons,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
-    spawn::systems::{AutoSpawnerSystem, DespawnAtBorderSystem, SpawnerSystem, TimeLimitSystem},
+    spawn::systems::{
+        AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
+    },
     spawnable::{
         mob::systems::{MobBehaviorSystem, MobDestroyedSystem},
         systems::ModifiersSystem,
@@ -51,7 +53,7 @@ impl Default for MainGameState {
                 .with(MobBehaviorSystem, "mob_behavior_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
                 .with(SpawnerSystem, "spawner_system", &[])
-                .with(TimeLimitSystem, "timelimit_system", &[])
+                .with(DespawnTimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::MobTargetSystem, "mob_target_system", &[])
                 .with(AutoSpawnerSystem, "auto_spawner_system", &[])

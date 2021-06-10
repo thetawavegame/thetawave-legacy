@@ -12,3 +12,12 @@ pub struct DespawnAtBorderComponent {
 impl Component for DespawnAtBorderComponent {
     type Storage = DenseVecStorage<Self>;
 }
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct DespawnTimeLimitComponent {
+    pub duration: f32,
+}
+
+impl Component for DespawnTimeLimitComponent {
+    type Storage = DenseVecStorage<Self>;
+}

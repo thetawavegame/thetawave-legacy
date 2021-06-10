@@ -1,9 +1,7 @@
 mod despawn;
 mod spawner;
-mod timelimit;
 
 pub use self::{
-    despawn::DespawnAtBorderSystem,
+    despawn::{DespawnAtBorderSystem, DespawnTimeLimitSystem},
     spawner::{AutoSpawnerSystem, SpawnerSystem},
-    timelimit::TimeLimitSystem,
 };

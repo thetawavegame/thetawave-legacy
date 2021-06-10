@@ -1,3 +1,5 @@
+//! `thetawave_lib` weapons module
+
 use serde::{Deserialize, Serialize};
 
 pub mod components;
