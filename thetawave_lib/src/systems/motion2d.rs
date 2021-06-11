@@ -3,10 +3,7 @@ use crate::{
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
     entities::{AllyType, EnemyType, MobType, NeutralType, SpawnableType},
     events::AttractionEvent,
-    spawnable::{
-        blast::components::BlastComponent, consumable::components::ConsumableComponent,
-        item::components::ItemComponent, mob::components::MobComponent,
-    },
+    spawnable::components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
     tools::distance,
     weapons::BlastType,
 };

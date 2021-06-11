@@ -1,12 +1,12 @@
 //! Components for spawning and despawning entities
 
-mod child_spawner;
 mod despawn;
+mod spawn;
 
 pub use self::{
-    child_spawner::{
+    despawn::{DespawnAtBorderComponent, DespawnTimeLimitComponent},
+    spawn::{
         AutoConsumableSpawnerComponent, AutoEffectSpawnerComponent, AutoItemSpawnerComponent,
         AutoMobSpawnerComponent, AutoSpawnerComponent,
     },
-    despawn::{DespawnAtBorderComponent, DespawnTimeLimitComponent},
 };

@@ -8,8 +8,8 @@ use crate::{
     events::{ConsumableGetEvent, ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     resources::{GameParametersResource, SpriteSheetsResource},
     spawnable::{
-        blast::components::BlastComponent, consumable::components::ConsumableComponent,
-        entities::spawn_effect, item::components::ItemComponent, mob::components::MobComponent,
+        components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
+        entities::spawn_effect,
         resources::EffectsResource,
     },
     systems::{barrier_collision, immovable_collision, standard_collision},

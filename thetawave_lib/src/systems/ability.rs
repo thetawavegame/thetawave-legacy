@@ -4,7 +4,7 @@ use crate::{
         Motion2DComponent,
     },
     events::PlayerCollisionEvent,
-    spawnable::mob::components::MobComponent,
+    spawnable::components::MobComponent,
 };
 use amethyst::{
     core::timing::Time,

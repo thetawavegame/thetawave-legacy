@@ -5,7 +5,7 @@ use crate::{
     events::{MobCollisionEvent, PlayAudioEvent},
     resources::{GameParametersResource, SpriteSheetsResource},
     spawnable::{
-        blast::components::BlastComponent, entities::spawn_effect, mob::components::MobComponent,
+        components::BlastComponent, components::MobComponent, entities::spawn_effect,
         resources::EffectsResource,
     },
     systems::{barrier_collision, immovable_collision, standard_collision},

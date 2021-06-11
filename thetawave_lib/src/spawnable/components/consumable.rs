@@ -3,10 +3,14 @@ use serde::{Deserialize, Serialize};
 
 use crate::entities::ConsumableType;
 
+/// Used for data unique to consumable entities
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct ConsumableComponent {
+    /// Name of sound effect played on get
     pub sound_effect: String,
+    /// Store price of the consumable
     pub price: usize,
+    /// Type of consumable
     pub consumable_type: ConsumableType,
 }
 

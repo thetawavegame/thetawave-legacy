@@ -13,6 +13,8 @@
                 ],
             ),
             spawnable_type: Mob(Neutral(MoneyAsteroid)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 100,
@@ -67,6 +69,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(Drone)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 60,
@@ -147,6 +151,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(Pawn)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 110,
@@ -208,6 +214,8 @@
                 ],
             ),
             spawnable_type: Mob(Ally(Hauler)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 220,
@@ -288,6 +296,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(StraferRight)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 75,
@@ -368,6 +378,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(StraferLeft)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 75,
@@ -430,6 +442,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(MissileLauncher)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 150,
@@ -498,6 +512,7 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(Missile)),
+            allied: false,
         ),
         health_component: (
             max_value: 50,
@@ -560,6 +575,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterBody)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 10000,
@@ -610,6 +627,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterHead)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 2000,
@@ -660,6 +679,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterRightShoulder)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 2000,
@@ -712,6 +733,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterLeftShoulder)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 2000,
@@ -764,6 +787,8 @@
                 ],
             ),
             spawnable_type: Mob(Enemy(RepeaterRightArm)),
+            collision_damage: 30.0,
+            allied: false,
         ),
         health_component: (
             max_value: 2000,

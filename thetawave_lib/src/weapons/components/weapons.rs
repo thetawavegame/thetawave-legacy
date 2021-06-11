@@ -5,7 +5,7 @@ use crate::{
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
     resources::SpriteSheetsResource,
-    spawnable::{blast::components::BlastComponent, entities::spawn_blasts},
+    spawnable::{components::BlastComponent, entities::spawn_blasts},
     weapons::BlastType,
 };
 

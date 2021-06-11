@@ -26,8 +26,8 @@ use thetawave_lib::{
         AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
     },
     spawnable::{
-        mob::systems::{MobBehaviorSystem, MobDestroyedSystem},
         systems::ModifiersSystem,
+        systems::{MobBehaviorSystem, MobDestroyedSystem},
     },
     systems,
     weapons::systems::{AutoFireSystem, ManualBlasterSystem},

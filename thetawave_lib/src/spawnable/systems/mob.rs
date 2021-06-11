@@ -1,21 +1,50 @@
 use crate::{
     audio::Sounds,
+    components::HealthComponent,
     entities::{EffectType, SpawnableType},
     events::{MobDestroyedEvent, PlayAudioEvent},
     resources::{DropTablesResource, SpriteSheetsResource},
     spawnable::{
+        components::MobComponent,
         entities::spawn_effect,
-        mob::components::MobComponent,
         resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
     },
 };
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect, ReadStorage, System},
+    ecs::prelude::{
+        Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, Write, WriteStorage,
+    },
     ecs::*,
     ecs::{Read, World},
     shrev::{EventChannel, ReaderId},
 };
+
+pub struct MobBehaviorSystem;
+
+impl<'s> System<'s> for MobBehaviorSystem {
+    type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, MobComponent>,
+        WriteStorage<'s, HealthComponent>,
+        Write<'s, EventChannel<MobDestroyedEvent>>,
+    );
+
+    fn run(
+        &mut self,
+        (entities, mut mobs, mut healths, mut mob_destroyed_event_channel): Self::SystemData,
+    ) {
+        for (mob_entity, _mob_component, mob_health) in (&*entities, &mut mobs, &mut healths).join()
+        {
+            mob_health.constrain();
+
+            // conditions for despawning
+            if mob_health.value <= 0.0 {
+                mob_destroyed_event_channel.single_write(MobDestroyedEvent::new(mob_entity));
+            }
+        }
+    }
+}
 
 #[derive(Default)]
 pub struct MobDestroyedSystem {
