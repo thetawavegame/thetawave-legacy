@@ -21,8 +21,6 @@ use amethyst::{
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
 
-/// Blaster weapon for spawning blast entities
-///
 /// Used for spawning blast entities
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BlasterComponent {
@@ -166,8 +164,6 @@ impl BlasterComponent {
     }
 }
 
-/// Automatic firing of a weapon component
-///
 /// Used for firing weapons periodically
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoFireComponent {
@@ -181,8 +177,6 @@ impl Component for AutoFireComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
-/// Manual firing of a weapon component
-///
 /// Used for firing weapons with input
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ManualFireComponent {

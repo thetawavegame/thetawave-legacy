@@ -16,20 +16,28 @@ use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+/// Used for storing formation spawnable data
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct FormationSpawnable {
+    /// Spawnable entity type
     pub spawnable_type: SpawnableType,
+    /// Position in the formation
     pub position: Vector2<f32>,
 }
 
+/// Used for spawning an organized formation of spawnables
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Formation {
+    /// Vector of formation spawnables (positions and entity types)
     pub formation_spawnables: Vec<FormationSpawnable>,
+    /// Random weight (higher number = more likely to be spawned)
     pub weight: f32,
+    /// Time until next wave is spawned
     pub period: f32,
 }
 
 impl Formation {
+    /// Spawn all entities in formation at their positions
     pub fn spawn_formation(
         &self,
         consumables_resource: &ReadExpect<ConsumablesResource>,
@@ -64,27 +72,37 @@ impl Formation {
     }
 }
 
+/// Used for storing data about a spawnable entity in a random pool
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct RandomSpawnable {
+    /// Optional spawnable entity type
     pub spawnable_type: Option<SpawnableType>,
+    /// Random weight (higher number = more likely to be spawned)
     pub weight: f32,
+    /// Time until next wave is spawned
     pub period: f32,
 }
 
+/// Used for spawning entities/formations from pools
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct SpawnerResource {
-    pub random_pools: HashMap<InvasionRandomPool, Vec<RandomSpawnable>>, //TODO: change to HashMap of Vec<SpawnableType> for AsteroidField, Drones, etc.
-    pub formation_pools: HashMap<InvasionFormationPool, Vec<Formation>>, //TODO: change to HashMap of Vec<Formation> for Level1Formations, Level2Formations, etc.
+    /// Pools of entities to be spawned randomly
+    pub random_pools: HashMap<InvasionRandomPool, Vec<RandomSpawnable>>,
+    /// Pools of formations to be spawned randomly
+    pub formation_pools: HashMap<InvasionFormationPool, Vec<Formation>>,
+    /// Counts down time between spawns
     pub timer: f32,
 }
 
 impl SpawnerResource {
+    /// Choose a random X position within the boundaries of the arena
     fn choose_spawn_position() -> f32 {
         let max_width = ARENA_MAX_X - ARENA_SPAWN_OFFSET;
         let min_width = ARENA_MIN_X + ARENA_SPAWN_OFFSET;
         ARENA_MIN_X + ARENA_SPAWN_OFFSET + rand::thread_rng().gen::<f32>() * (max_width - min_width)
     }
 
+    /// Choose a random spawnable type from the `random_pool` of entities
     fn choose_random_spawnable(&self, random_pool_type: &InvasionRandomPool) -> &RandomSpawnable {
         let random_pool = &self.random_pools[random_pool_type];
 
@@ -103,6 +121,7 @@ impl SpawnerResource {
         unreachable!("Error in probabilities of random spawnable pool.");
     }
 
+    /// Spawn a random spawnable from `random_pools` given a type of pool
     pub fn spawn_random_spawnable_when_ready(
         &mut self,
         random_pool_type: &InvasionRandomPool,
@@ -145,6 +164,7 @@ impl SpawnerResource {
         }
     }
 
+    /// Choose a random formation from the formation pool of the given type from `formation_pools`
     fn choose_random_formation(&self, formation_pool_type: &InvasionFormationPool) -> &Formation {
         let formation_pool = &self.formation_pools[formation_pool_type];
 
@@ -163,6 +183,7 @@ impl SpawnerResource {
         unreachable!("Error in probabilities of formation pool.");
     }
 
+    /// Spawn a random formation from `formation_pools` given a type of pool
     pub fn spawn_random_formation_when_ready(
         &mut self,
         formation_pool_type: &InvasionFormationPool,

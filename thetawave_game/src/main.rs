@@ -28,9 +28,8 @@ use thetawave_lib::{
         GameParametersResource, ItemModifiersResource, PhaseManagerResource, PlayersResource,
         SoundsConfig, SpriteSheetsConfig, StoreResource,
     },
-    spawnable::resources::{
-        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpawnerResource,
-    },
+    spawn::resources::SpawnerResource,
+    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
 };
 
 use amethyst::config::Config;

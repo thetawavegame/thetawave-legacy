@@ -12,8 +12,6 @@ use amethyst::{
 
 use serde::{Deserialize, Serialize};
 
-/// Auto-spawner component
-///
 /// Used for periodically spawning spawnable entities
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoSpawnerComponent {
@@ -110,8 +108,6 @@ impl AutoSpawnerComponent {
     }
 }
 
-/// Auto-mob-spawner component
-///
 /// Used for periodically spawning mob entities
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoMobSpawnerComponent {
@@ -167,8 +163,6 @@ impl AutoMobSpawnerComponent {
     }
 }
 
-/// Auto-consumable-spawner component
-///
 /// Used for periodically spawning consumable entities
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoConsumableSpawnerComponent {
@@ -225,8 +219,6 @@ impl AutoConsumableSpawnerComponent {
     }
 }
 
-/// Auto-item-spawner component
-///
 /// Used for periodically spawning item entities
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoItemSpawnerComponent {
@@ -283,8 +275,6 @@ impl AutoItemSpawnerComponent {
     }
 }
 
-/// Auto-effect-spawner component
-///
 /// Used for periodically spawning effect entities
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoEffectSpawnerComponent {

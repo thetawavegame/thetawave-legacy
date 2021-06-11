@@ -1,10 +1,8 @@
 use crate::{
     entities::spawn_repeater,
     resources::{BossType, PhaseManagerResource, PhaseType, SpriteSheetsResource},
-    spawn::components::AutoSpawnerComponent,
-    spawnable::resources::{
-        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpawnerResource,
-    },
+    spawn::{components::AutoSpawnerComponent, resources::SpawnerResource},
+    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},
@@ -14,6 +12,7 @@ use amethyst::{
     },
 };
 
+/// Handles spawning of entities given the type of the current phase
 pub struct SpawnerSystem;
 
 impl<'s> System<'s> for SpawnerSystem {
@@ -99,6 +98,7 @@ impl<'s> System<'s> for SpawnerSystem {
     }
 }
 
+/// Handles automatic spawning of entities using auto-spawner components
 pub struct AutoSpawnerSystem;
 
 impl<'s> System<'s> for AutoSpawnerSystem {

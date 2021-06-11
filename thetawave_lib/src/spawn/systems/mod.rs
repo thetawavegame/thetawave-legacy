@@ -1,3 +1,5 @@
+//! Systems for spawning and despawning entities
+
 mod despawn;
 mod spawner;
 

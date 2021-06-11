@@ -11,6 +11,7 @@ use amethyst::{
     shrev::EventChannel,
 };
 
+/// Handles despawning of entities at arena borders
 pub struct DespawnAtBorderSystem;
 
 impl<'s> System<'s> for DespawnAtBorderSystem {
@@ -60,6 +61,7 @@ impl<'s> System<'s> for DespawnAtBorderSystem {
     }
 }
 
+/// Handles despawning of entities after a time limit
 pub struct DespawnTimeLimitSystem;
 
 impl<'s> System<'s> for DespawnTimeLimitSystem {
