@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     components::HealthComponent,
-    entities::{EffectType, SpawnableType},
+    entities::EffectType,
     events::{MobDestroyedEvent, PlayAudioEvent},
     resources::{DropTablesResource, SpriteSheetsResource},
     spawnable::{
@@ -112,7 +112,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
                 &lazy_update,
             );
 
-            if let SpawnableType::Mob(mob_type) = mob_component.spawnable_type.clone() {
+            if let mob_type = mob_component.mob_type.clone() {
                 if effects_resource
                     .get(&EffectType::Giblets(mob_type.clone()))
                     .is_some()

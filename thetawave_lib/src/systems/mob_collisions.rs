@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     components::{BarrierComponent, HealthComponent, Motion2DComponent, PlayerComponent},
-    entities::{EffectType, EnemyType, MobType, SpawnableType},
+    entities::{EffectType, EnemyType, MobType},
     events::{MobCollisionEvent, PlayAudioEvent},
     resources::{GameParametersResource, SpriteSheetsResource},
     spawnable::{
@@ -68,8 +68,8 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
                 let mob_motion = motions.get_mut(event.mob_entity).unwrap();
                 let mob_health = healths.get_mut(event.mob_entity).unwrap();
 
-                match mob.spawnable_type {
-                    SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {
+                match mob.mob_type {
+                    MobType::Enemy(EnemyType::Missile) => {
                         mob_health.value = 0.0;
                     }
 
@@ -138,8 +138,8 @@ impl<'s> System<'s> for MobMobCollisionSystem {
                 let mob_motion = motions.get_mut(event.mob_entity).unwrap();
                 let mob_health = healths.get_mut(event.mob_entity).unwrap();
 
-                match mob.spawnable_type {
-                    SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {
+                match mob.mob_type {
+                    MobType::Enemy(EnemyType::Missile) => {
                         mob_health.value = 0.0;
                     }
 
@@ -299,8 +299,8 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
                 let mob = mobs.get(event.mob_entity).unwrap();
 
                 if !barrier.enemies_pass {
-                    match mob.spawnable_type {
-                        SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {}
+                    match mob.mob_type {
+                        MobType::Enemy(EnemyType::Missile) => {}
 
                         _ => {
                             let mob_motion = motion_2ds.get_mut(event.mob_entity).unwrap();
