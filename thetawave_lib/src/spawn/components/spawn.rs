@@ -1,7 +1,6 @@
 use crate::{
     entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
     resources::SpriteSheetsResource,
-    spawnable::entities::{spawn_consumable, spawn_effect, spawn_item, spawn_mob},
     spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
 };
 
@@ -59,10 +58,9 @@ impl AutoSpawnerComponent {
             // call spawn function for spawning child_entity_type
             match &self.child_entity_type {
                 SpawnableType::Mob(mob_type) => {
-                    spawn_mob(
+                    mobs_resource.spawn_mob(
                         &mob_type,
                         adjusted_transform,
-                        &mobs_resource,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -70,11 +68,10 @@ impl AutoSpawnerComponent {
                 }
 
                 SpawnableType::Consumable(consumable_type) => {
-                    spawn_consumable(
+                    consumables_resource.spawn_consumable(
                         &consumable_type,
                         false,
                         adjusted_transform,
-                        &consumables_resource,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -82,11 +79,10 @@ impl AutoSpawnerComponent {
                 }
 
                 SpawnableType::Item(item_type) => {
-                    spawn_item(
+                    items_resource.spawn_item(
                         &item_type,
                         false,
                         adjusted_transform,
-                        &items_resource,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -94,10 +90,9 @@ impl AutoSpawnerComponent {
                 }
 
                 SpawnableType::Effect(effect_type) => {
-                    spawn_effect(
+                    effects_resource.spawn_effect(
                         &effect_type,
                         adjusted_transform,
-                        &effects_resource,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -151,10 +146,9 @@ impl AutoMobSpawnerComponent {
             adjusted_transform.prepend_translation_y(self.offset.y);
 
             // call mob spawn function
-            spawn_mob(
+            mobs_resource.spawn_mob(
                 &self.child_mob_type,
                 adjusted_transform,
-                &mobs_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -206,11 +200,10 @@ impl AutoConsumableSpawnerComponent {
             adjusted_transform.prepend_translation_y(self.offset.y);
 
             // call consumable spawn function
-            spawn_consumable(
+            consumables_resource.spawn_consumable(
                 &self.child_consumable_type,
                 false,
                 adjusted_transform,
-                &consumables_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -262,11 +255,10 @@ impl AutoItemSpawnerComponent {
             adjusted_transform.prepend_translation_y(self.offset.y);
 
             // call item spawn function
-            spawn_item(
+            items_resource.spawn_item(
                 &self.child_item_type,
                 false,
                 adjusted_transform,
-                &items_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -318,10 +310,9 @@ impl AutoEffectSpawnerComponent {
             adjusted_transform.prepend_translation_y(self.offset.y);
 
             // call effect spawn function
-            spawn_effect(
+            effects_resource.spawn_effect(
                 &self.child_effect_type,
                 adjusted_transform,
-                &effects_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,

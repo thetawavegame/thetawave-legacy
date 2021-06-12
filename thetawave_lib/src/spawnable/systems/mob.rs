@@ -6,7 +6,6 @@ use crate::{
     resources::{DropTablesResource, SpriteSheetsResource},
     spawnable::{
         components::MobComponent,
-        entities::spawn_effect,
         resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
     },
 };
@@ -20,6 +19,7 @@ use amethyst::{
     shrev::{EventChannel, ReaderId},
 };
 
+/// Handles health component of mobs
 pub struct MobBehaviorSystem;
 
 impl<'s> System<'s> for MobBehaviorSystem {
@@ -46,6 +46,7 @@ impl<'s> System<'s> for MobBehaviorSystem {
     }
 }
 
+/// Handles destruction of mob
 #[derive(Default)]
 pub struct MobDestroyedSystem {
     event_reader: Option<ReaderId<MobDestroyedEvent>>,
@@ -103,10 +104,9 @@ impl<'s> System<'s> for MobDestroyedSystem {
                 source: sounds.sound_effects["explosion"].clone(),
             });
 
-            spawn_effect(
+            effects_resource.spawn_effect(
                 &EffectType::MobExplosion,
                 mob_transform.clone(),
-                &effects_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -114,13 +114,13 @@ impl<'s> System<'s> for MobDestroyedSystem {
 
             if let mob_type = mob_component.mob_type.clone() {
                 if effects_resource
+                    .effect_entities
                     .get(&EffectType::Giblets(mob_type.clone()))
                     .is_some()
                 {
-                    spawn_effect(
+                    effects_resource.spawn_effect(
                         &EffectType::Giblets(mob_type),
                         mob_transform.clone(),
-                        &effects_resource,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,

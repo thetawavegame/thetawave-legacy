@@ -4,10 +4,7 @@ use crate::{
     entities::{EffectType, EnemyType, MobType},
     events::{MobCollisionEvent, PlayAudioEvent},
     resources::{GameParametersResource, SpriteSheetsResource},
-    spawnable::{
-        components::BlastComponent, components::MobComponent, entities::spawn_effect,
-        resources::EffectsResource,
-    },
+    spawnable::{components::BlastComponent, components::MobComponent, resources::EffectsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
     weapons::BlastType,
 };
@@ -228,7 +225,7 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
                             source: sounds.sound_effects["metal_ping"].clone(),
                         });
 
-                        spawn_effect(
+                        effects_resource.spawn_effect(
                             match blast.blast_type {
                                 BlastType::Ally => &EffectType::AllyBlastExplosion,
                                 BlastType::AllyCritical => &EffectType::CriticalBlastExplosion,
@@ -238,7 +235,6 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
                                 }
                             },
                             blast_transform.clone(),
-                            &effects_resource,
                             &sprite_resource,
                             &entities,
                             &lazy_update,

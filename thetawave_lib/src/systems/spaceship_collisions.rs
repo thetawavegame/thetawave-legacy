@@ -9,7 +9,6 @@ use crate::{
     resources::{GameParametersResource, SpriteSheetsResource},
     spawnable::{
         components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
-        entities::spawn_effect,
         resources::EffectsResource,
     },
     systems::{barrier_collision, immovable_collision, standard_collision},
@@ -167,10 +166,9 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                                 .delete(event.colliding_entity)
                                 .expect("unable to delete entity");
 
-                            spawn_effect(
+                            effects_resource.spawn_effect(
                                 &EffectType::EnemyBlastExplosion,
                                 blast_transform.clone(),
-                                &effects_resource,
                                 &sprite_resource,
                                 &entities,
                                 &lazy_update,
