@@ -1,3 +1,5 @@
+//! Systems used for weapons
+
 mod autofire_system;
 mod manualblaster_system;
 

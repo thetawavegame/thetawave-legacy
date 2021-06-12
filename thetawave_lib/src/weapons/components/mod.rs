@@ -1,7 +1,5 @@
-mod blast;
+//! Components used for weapons
+
 mod weapons;
 
-pub use self::{
-    blast::BlastComponent,
-    weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
-};
+pub use self::weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent};

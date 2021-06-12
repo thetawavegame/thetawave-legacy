@@ -1,10 +1,8 @@
 use crate::{
-    components::AutoSpawnerComponent,
     entities::spawn_repeater,
-    resources::{
-        BossType, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
-        PhaseManagerResource, PhaseType, SpawnerResource, SpriteSheetsResource,
-    },
+    resources::{BossType, PhaseManagerResource, PhaseType, SpriteSheetsResource},
+    spawn::{components::AutoSpawnerComponent, resources::SpawnerResource},
+    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},
@@ -14,9 +12,11 @@ use amethyst::{
     },
 };
 
+/// Handles spawning of entities given the type of the current phase
 pub struct SpawnerSystem;
 
 impl<'s> System<'s> for SpawnerSystem {
+    /// System game logic
     type SystemData = (
         Entities<'s>,
         Read<'s, Time>,
@@ -30,6 +30,7 @@ impl<'s> System<'s> for SpawnerSystem {
         ReadExpect<'s, MobsResource>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -99,9 +100,11 @@ impl<'s> System<'s> for SpawnerSystem {
     }
 }
 
+/// Handles automatic spawning of entities using auto-spawner components
 pub struct AutoSpawnerSystem;
 
 impl<'s> System<'s> for AutoSpawnerSystem {
+    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, Transform>,
         WriteStorage<'s, AutoSpawnerComponent>,
@@ -115,6 +118,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
         Entities<'s>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (

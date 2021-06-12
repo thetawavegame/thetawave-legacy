@@ -1,25 +1,18 @@
+use crate::{entities::MobType, resources::DropRolls};
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
-
-use crate::{entities::SpawnableType, resources::DropRolls};
-
 use serde::{Deserialize, Serialize};
 
+/// Used for data unique to mob entities
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct MobComponent {
+    /// Damage to defense upon crossing bottom arena border
     pub defense_damage: f32,
-    #[serde(default = "des_collision_damage")]
+    /// Damage dealt to colliding entities
     pub collision_damage: f32,
-    #[serde(default = "des_allied")]
-    pub allied: bool,
+    /// Possible drops
     pub drop_rolls: DropRolls,
-    pub spawnable_type: SpawnableType,
-}
-
-fn des_collision_damage() -> f32 {
-    30.0
-}
-fn des_allied() -> bool {
-    false
+    // Type of mob
+    pub mob_type: MobType,
 }
 
 impl Component for MobComponent {

@@ -1,27 +1,60 @@
 use crate::{
     audio::Sounds,
-    components::MobComponent,
-    entities::{spawn_effect, EffectType, SpawnableType},
+    components::HealthComponent,
+    entities::EffectType,
     events::{MobDestroyedEvent, PlayAudioEvent},
-    resources::{
-        ConsumablesResource, DropTablesResource, EffectsResource, ItemsResource, MobsResource,
-        SpriteSheetsResource,
+    resources::{DropTablesResource, SpriteSheetsResource},
+    spawnable::{
+        components::MobComponent,
+        resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
     },
 };
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect, ReadStorage, System},
+    ecs::prelude::{
+        Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, Write, WriteStorage,
+    },
     ecs::*,
     ecs::{Read, World},
     shrev::{EventChannel, ReaderId},
 };
 
+/// Handles health component of mobs
+pub struct MobBehaviorSystem;
+
+impl<'s> System<'s> for MobBehaviorSystem {
+    type SystemData = (
+        Entities<'s>,
+        WriteStorage<'s, MobComponent>,
+        WriteStorage<'s, HealthComponent>,
+        Write<'s, EventChannel<MobDestroyedEvent>>,
+    );
+
+    fn run(
+        &mut self,
+        (entities, mut mobs, mut healths, mut mob_destroyed_event_channel): Self::SystemData,
+    ) {
+        for (mob_entity, _mob_component, mob_health) in (&*entities, &mut mobs, &mut healths).join()
+        {
+            mob_health.constrain();
+
+            // conditions for despawning
+            if mob_health.value <= 0.0 {
+                mob_destroyed_event_channel.single_write(MobDestroyedEvent::new(mob_entity));
+            }
+        }
+    }
+}
+
+/// Handles destruction of mob
 #[derive(Default)]
 pub struct MobDestroyedSystem {
+    /// Reads from the mob destroyed event channel
     event_reader: Option<ReaderId<MobDestroyedEvent>>,
 }
 
 impl<'s> System<'s> for MobDestroyedSystem {
+    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<MobDestroyedEvent>>,
         Entities<'s>,
@@ -38,6 +71,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
         ReadExpect<'s, Sounds>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -47,6 +81,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -73,24 +108,23 @@ impl<'s> System<'s> for MobDestroyedSystem {
                 source: sounds.sound_effects["explosion"].clone(),
             });
 
-            spawn_effect(
+            effects_resource.spawn_effect(
                 &EffectType::MobExplosion,
                 mob_transform.clone(),
-                &effects_resource,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
             );
 
-            if let SpawnableType::Mob(mob_type) = mob_component.spawnable_type.clone() {
+            if let mob_type = mob_component.mob_type.clone() {
                 if effects_resource
+                    .effect_entities
                     .get(&EffectType::Giblets(mob_type.clone()))
                     .is_some()
                 {
-                    spawn_effect(
+                    effects_resource.spawn_effect(
                         &EffectType::Giblets(mob_type),
                         mob_transform.clone(),
-                        &effects_resource,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,

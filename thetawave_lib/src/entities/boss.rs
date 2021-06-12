@@ -3,12 +3,12 @@ use amethyst::{
     ecs::prelude::{Entities, LazyUpdate, ReadExpect},
 };
 
-use crate::entities::spawn_mob;
 use crate::{
     components::RepeaterComponent,
     constants,
     entities::{EnemyType, MobType},
-    resources::{MobsResource, SpriteSheetsResource},
+    resources::SpriteSheetsResource,
+    spawnable::resources::MobsResource,
 };
 use amethyst::prelude::Builder;
 
@@ -43,34 +43,30 @@ pub fn spawn_repeater(
         constants::BOSS_Z_2,
     ));
 
-    let body = spawn_mob(
+    let body = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterBody),
         body_transform,
-        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,
     );
-    let head = spawn_mob(
+    let head = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterHead),
         head_transform,
-        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,
     );
-    let right_shoulder = spawn_mob(
+    let right_shoulder = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterRightShoulder),
         right_shoulder_transform,
-        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,
     );
-    let left_shoulder = spawn_mob(
+    let left_shoulder = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterLeftShoulder),
         left_shoulder_transform,
-        mobs_resource,
         spritesheets_resource,
         entities,
         lazy_update,

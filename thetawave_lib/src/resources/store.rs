@@ -1,8 +1,9 @@
 use crate::{
     components::PlayerComponent,
     constants::{ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
-    entities::{spawn_consumable, spawn_item, SpawnableType},
-    resources::{ConsumablesResource, ItemsResource, SpriteSheetsResource},
+    entities::SpawnableType,
+    resources::SpriteSheetsResource,
+    spawnable::resources::{ConsumablesResource, ItemsResource},
 };
 use amethyst::{
     core::transform::Transform,
@@ -65,7 +66,7 @@ impl StoreResource {
         transform: &Transform,
         items_resource: &ReadExpect<ItemsResource>,
         consumables_resource: &ReadExpect<ConsumablesResource>,
-        sprite_resource: &ReadExpect<SpriteSheetsResource>,
+        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
         if let Some(entity_type) = &self.inventory[inventory_index] {
@@ -82,15 +83,15 @@ impl StoreResource {
                             0.0,
                         );
 
-                        spawn_item(
+                        items_resource.spawn_item(
                             item_type,
                             false,
                             spawn_transform,
-                            items_resource,
-                            sprite_resource,
+                            spritesheets_resource,
                             entities,
                             lazy_update,
                         );
+
                         for (i, e_type) in self.stock_probs.iter().enumerate() {
                             if e_type.0 == *entity_type {
                                 self.stock_probs[i].1 = 0.0; //set probability of appearing again to 0
@@ -115,12 +116,11 @@ impl StoreResource {
                             0.0,
                         );
 
-                        spawn_consumable(
+                        consumables_resource.spawn_consumable(
                             consumable_type,
                             false,
                             spawn_transform,
-                            consumables_resource,
-                            sprite_resource,
+                            spritesheets_resource,
                             entities,
                             lazy_update,
                         );

@@ -22,11 +22,16 @@ mod data_include;
 mod states;
 
 use states::MainGameState;
-use thetawave_lib::resources::{
-    ConsumableModifiersResource, ConsumablesResource, DebugLinesConfig, DefenseResource,
-    DropTablesResource, EffectsResource, GameParametersResource, ItemModifiersResource,
-    ItemsResource, MobsResource, PhaseManagerResource, PlayersResource, SoundsConfig,
-    SpawnerResource, SpriteSheetsConfig, StoreResource,
+use thetawave_lib::{
+    resources::{
+        DebugLinesConfig, DefenseResource, DropTablesResource, GameParametersResource,
+        PhaseManagerResource, PlayersResource, SoundsConfig, SpriteSheetsConfig, StoreResource,
+    },
+    spawn::resources::SpawnerResource,
+    spawnable::resources::{
+        ConsumableModifiersResource, ConsumablesResource, EffectsResource, ItemModifiersResource,
+        ItemsResource, MobsResource,
+    },
 };
 
 use amethyst::config::Config;

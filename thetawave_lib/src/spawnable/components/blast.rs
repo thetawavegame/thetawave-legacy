@@ -1,9 +1,7 @@
 use crate::weapons::BlastType;
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
-/// Core data for blast entities
-///
-/// Used for data unique to only blast entities
+/// Used for data unique to blast entities
 #[derive(Clone)]
 pub struct BlastComponent {
     /// Damage that the blast will deal on hit

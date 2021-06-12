@@ -1,14 +1,18 @@
 use crate::{
     audio::Sounds,
     components::{
-        AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, ConsumableComponent,
-        HealthComponent, ItemComponent, MobComponent, Motion2DComponent,
+        AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, HealthComponent,
+        Motion2DComponent,
     },
-    entities::{spawn_effect, EffectType},
+    entities::EffectType,
     events::{ConsumableGetEvent, ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
-    resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
+    resources::{GameParametersResource, SpriteSheetsResource},
+    spawnable::{
+        components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
+        resources::EffectsResource,
+    },
     systems::{barrier_collision, immovable_collision, standard_collision},
-    weapons::{components::BlastComponent, BlastType},
+    weapons::BlastType,
 };
 use amethyst::{
     core::transform::Transform,
@@ -162,10 +166,9 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
                                 .delete(event.colliding_entity)
                                 .expect("unable to delete entity");
 
-                            spawn_effect(
+                            effects_resource.spawn_effect(
                                 &EffectType::EnemyBlastExplosion,
                                 blast_transform.clone(),
-                                &effects_resource,
                                 &sprite_resource,
                                 &entities,
                                 &lazy_update,

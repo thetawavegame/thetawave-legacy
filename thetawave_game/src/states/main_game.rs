@@ -22,6 +22,13 @@ use thetawave_lib::{
         initialize_store_icons,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
+    spawn::systems::{
+        AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
+    },
+    spawnable::{
+        systems::ModifiersSystem,
+        systems::{MobBehaviorSystem, MobDestroyedSystem},
+    },
     systems,
     weapons::systems::{AutoFireSystem, ManualBlasterSystem},
 };
@@ -43,13 +50,13 @@ impl Default for MainGameState {
                 .with(systems::AnimationSystem, "animation_system", &[])
                 .with(systems::PlanetsSystem, "planets_system", &[])
                 .with(systems::PhaseManagerSystem, "phase_manager_system", &[])
-                .with(systems::MobBehaviorSystem, "mob_behavior_system", &[])
+                .with(MobBehaviorSystem, "mob_behavior_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
-                .with(systems::SpawnerSystem, "spawner_system", &[])
-                .with(systems::TimeLimitSystem, "timelimit_system", &[])
+                .with(SpawnerSystem, "spawner_system", &[])
+                .with(DespawnTimeLimitSystem, "timelimit_system", &[])
                 .with(systems::Motion2DSystem, "motion_2d_system", &[])
                 .with(systems::MobTargetSystem, "mob_target_system", &[])
-                .with(systems::AutoSpawnerSystem, "auto_spawner_system", &[])
+                .with(AutoSpawnerSystem, "auto_spawner_system", &[])
                 .with(systems::AttractorSystem, "attractor_system", &[])
                 .with(
                     systems::ItemMotion2DSystem::default(),
@@ -76,11 +83,7 @@ impl Default for MainGameState {
                     "mob_motion_2d_system",
                     &["mob_target_system"],
                 )
-                .with(
-                    systems::DespawnAtBorderSystem,
-                    "despawn_at_border_system",
-                    &[],
-                )
+                .with(DespawnAtBorderSystem, "despawn_at_border_system", &[])
                 .with(
                     systems::SpaceshipMovementSystem,
                     "spaceship_movement_system",
@@ -123,7 +126,7 @@ impl Default for MainGameState {
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::ModifiersSystem::default(),
+                    ModifiersSystem::default(),
                     "modifiers_system",
                     &["spaceship_item_collision_system"],
                 )
@@ -162,7 +165,7 @@ impl Default for MainGameState {
                 .with(AutoFireSystem, "autoblaster_system", &[])
                 .with(ManualBlasterSystem, "manualblaster_system", &[])
                 .with(
-                    systems::MobDestroyedSystem::default(),
+                    MobDestroyedSystem::default(),
                     "mob_destroyed_system",
                     &["mob_behavior_system"],
                 )

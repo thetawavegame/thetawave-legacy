@@ -2,9 +2,12 @@ use crate::entities::{ConsumableType, ItemType};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+/// Item types mapped to a collection of modifiers
 pub type ItemModifiersResource = HashMap<ItemType, Vec<Modifier>>;
+/// Consumable types mapped to a collection of modifiers
 pub type ConsumableModifiersResource = HashMap<ConsumableType, Vec<Modifier>>;
 
+/// Effects stored in consumables and items that are applied to the player when collected
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub enum Modifier {
     BarrelImmunity(bool),

@@ -1,7 +1,8 @@
 use crate::{
-    entities::{spawn_spawnable, SpawnableType},
-    resources::{
-        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpriteSheetsResource,
+    entities::SpawnableType,
+    resources::SpriteSheetsResource,
+    spawnable::resources::{
+        spawn_spawnable, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
     },
     tools::weighted_rng,
 };

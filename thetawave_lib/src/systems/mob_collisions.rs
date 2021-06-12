@@ -1,13 +1,12 @@
 use crate::{
     audio::Sounds,
-    components::{
-        BarrierComponent, HealthComponent, MobComponent, Motion2DComponent, PlayerComponent,
-    },
-    entities::{spawn_effect, EffectType, EnemyType, MobType, SpawnableType},
+    components::{BarrierComponent, HealthComponent, Motion2DComponent, PlayerComponent},
+    entities::{EffectType, EnemyType, MobType},
     events::{MobCollisionEvent, PlayAudioEvent},
-    resources::{EffectsResource, GameParametersResource, SpriteSheetsResource},
+    resources::{GameParametersResource, SpriteSheetsResource},
+    spawnable::{components::BlastComponent, components::MobComponent, resources::EffectsResource},
     systems::{barrier_collision, immovable_collision, standard_collision},
-    weapons::{components::BlastComponent, BlastType},
+    weapons::BlastType,
 };
 use amethyst::{
     core::transform::Transform,
@@ -66,8 +65,8 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
                 let mob_motion = motions.get_mut(event.mob_entity).unwrap();
                 let mob_health = healths.get_mut(event.mob_entity).unwrap();
 
-                match mob.spawnable_type {
-                    SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {
+                match mob.mob_type {
+                    MobType::Enemy(EnemyType::Missile) => {
                         mob_health.value = 0.0;
                     }
 
@@ -136,8 +135,8 @@ impl<'s> System<'s> for MobMobCollisionSystem {
                 let mob_motion = motions.get_mut(event.mob_entity).unwrap();
                 let mob_health = healths.get_mut(event.mob_entity).unwrap();
 
-                match mob.spawnable_type {
-                    SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {
+                match mob.mob_type {
+                    MobType::Enemy(EnemyType::Missile) => {
                         mob_health.value = 0.0;
                     }
 
@@ -226,7 +225,7 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
                             source: sounds.sound_effects["metal_ping"].clone(),
                         });
 
-                        spawn_effect(
+                        effects_resource.spawn_effect(
                             match blast.blast_type {
                                 BlastType::Ally => &EffectType::AllyBlastExplosion,
                                 BlastType::AllyCritical => &EffectType::CriticalBlastExplosion,
@@ -236,7 +235,6 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
                                 }
                             },
                             blast_transform.clone(),
-                            &effects_resource,
                             &sprite_resource,
                             &entities,
                             &lazy_update,
@@ -297,8 +295,8 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
                 let mob = mobs.get(event.mob_entity).unwrap();
 
                 if !barrier.enemies_pass {
-                    match mob.spawnable_type {
-                        SpawnableType::Mob(MobType::Enemy(EnemyType::Missile)) => {}
+                    match mob.mob_type {
+                        MobType::Enemy(EnemyType::Missile) => {}
 
                         _ => {
                             let mob_motion = motion_2ds.get_mut(event.mob_entity).unwrap();

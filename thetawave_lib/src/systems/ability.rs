@@ -1,9 +1,10 @@
 use crate::{
     components::{
         AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, CooldownAbility,
-        MobComponent, Motion2DComponent,
+        Motion2DComponent,
     },
     events::PlayerCollisionEvent,
+    spawnable::components::MobComponent,
 };
 use amethyst::{
     core::timing::Time,
