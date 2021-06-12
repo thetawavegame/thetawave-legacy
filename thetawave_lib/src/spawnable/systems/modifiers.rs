@@ -5,7 +5,8 @@ use crate::{
     },
     entities::SpawnableType,
     events::{ConsumableGetEvent, ItemGetEvent},
-    resources::{ConsumableModifiersResource, DefenseResource, ItemModifiersResource, Modifier},
+    resources::DefenseResource,
+    spawnable::resources::{ConsumableModifiersResource, ItemModifiersResource, Modifier},
     weapons::components::{BlasterComponent, ManualFireComponent},
 };
 use amethyst::{
@@ -14,13 +15,17 @@ use amethyst::{
     shrev::EventChannel,
 };
 
+/// Handles application of modifiers to player when items/consumables are collected
 #[derive(Default)]
 pub struct ModifiersSystem {
+    /// Reads from the item get event channel
     item_get_event_reader: Option<ReaderId<ItemGetEvent>>,
+    /// Reads from the consumable get event channel
     consumable_get_event_reader: Option<ReaderId<ConsumableGetEvent>>,
 }
 
 impl<'s> System<'s> for ModifiersSystem {
+    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<ItemGetEvent>>,
         Read<'s, EventChannel<ConsumableGetEvent>>,
@@ -36,6 +41,7 @@ impl<'s> System<'s> for ModifiersSystem {
         WriteExpect<'s, DefenseResource>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.item_get_event_reader = Some(
@@ -50,6 +56,7 @@ impl<'s> System<'s> for ModifiersSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -106,6 +113,7 @@ impl<'s> System<'s> for ModifiersSystem {
     }
 }
 
+/// Apply modifier data to values throughout the game
 pub fn apply_modifiers(
     modifiers: &Vec<Modifier>,
     player_entity: Entity,

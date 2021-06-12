@@ -14,6 +14,7 @@ use amethyst::{
 pub struct AutoFireSystem;
 
 impl<'s> System<'s> for AutoFireSystem {
+    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         Read<'s, Time>,
@@ -25,6 +26,7 @@ impl<'s> System<'s> for AutoFireSystem {
         ReadExpect<'s, SpriteSheetsResource>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (

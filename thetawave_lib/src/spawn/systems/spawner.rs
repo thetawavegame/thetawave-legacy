@@ -16,6 +16,7 @@ use amethyst::{
 pub struct SpawnerSystem;
 
 impl<'s> System<'s> for SpawnerSystem {
+    /// System game logic
     type SystemData = (
         Entities<'s>,
         Read<'s, Time>,
@@ -29,6 +30,7 @@ impl<'s> System<'s> for SpawnerSystem {
         ReadExpect<'s, MobsResource>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -102,6 +104,7 @@ impl<'s> System<'s> for SpawnerSystem {
 pub struct AutoSpawnerSystem;
 
 impl<'s> System<'s> for AutoSpawnerSystem {
+    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, Transform>,
         WriteStorage<'s, AutoSpawnerComponent>,
@@ -115,6 +118,7 @@ impl<'s> System<'s> for AutoSpawnerSystem {
         Entities<'s>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (

@@ -1,4 +1,5 @@
+//! `thetawave_lib` spawnable module
+
 pub mod components;
-pub mod entities;
 pub mod resources;
 pub mod systems;

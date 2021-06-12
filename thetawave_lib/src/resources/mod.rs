@@ -9,7 +9,6 @@ use std::collections::HashMap;
 pub mod defense;
 pub mod drops;
 pub mod game_parameters;
-pub mod modifiers;
 pub mod phases;
 pub mod store;
 
@@ -18,7 +17,6 @@ pub use self::drops::{
     DropProbabilities, DropRolls, DropTableType, DropTablesResource, RollProbabilities,
 };
 pub use self::game_parameters::GameParametersResource;
-pub use self::modifiers::{ConsumableModifiersResource, ItemModifiersResource, Modifier};
 pub use self::phases::{
     BossType, InvasionFormationPool, InvasionRandomPool, Phase, PhaseManagerResource, PhaseType,
 };

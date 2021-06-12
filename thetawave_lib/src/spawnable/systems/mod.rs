@@ -1,3 +1,5 @@
+//! Systems for spawnable entities
+
 mod mob;
 mod modifiers;
 
