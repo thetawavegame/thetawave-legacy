@@ -5,8 +5,6 @@ mod barriers;
 mod boss;
 mod fade;
 mod health;
-mod hitbox;
-mod motion2d;
 mod planet;
 mod player;
 mod status_bar;
@@ -20,8 +18,6 @@ pub use self::{
     boss::RepeaterComponent,
     fade::{ColorChannelChange, FadeComponent},
     health::HealthComponent,
-    hitbox::Hitbox2DComponent,
-    motion2d::Motion2DComponent,
     planet::PlanetComponent,
     player::PlayerComponent,
     status_bar::{StatusBarComponent, StatusType},

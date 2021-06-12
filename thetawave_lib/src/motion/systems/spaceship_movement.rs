@@ -1,4 +1,4 @@
-use crate::components::{Motion2DComponent, PlayerComponent};
+use crate::{components::PlayerComponent, motion::components::Motion2DComponent};
 use amethyst::{
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},

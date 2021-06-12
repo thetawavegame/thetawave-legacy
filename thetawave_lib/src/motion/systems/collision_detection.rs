@@ -1,6 +1,7 @@
 use crate::{
-    components::{BarrierComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent},
+    components::{BarrierComponent, PlayerComponent},
     events::{ArenaBorderCollisionEvent, CollisionEvent, MobCollisionEvent, PlayerCollisionEvent},
+    motion::components::{Hitbox2DComponent, Motion2DComponent},
     resources::DebugLinesConfig,
     spawnable::components::MobComponent,
 };

@@ -1,7 +1,7 @@
 //! Resources for spawnable entities
 use crate::{
-    components::{Hitbox2DComponent, Motion2DComponent},
     entities::SpawnableType,
+    motion::components::{Hitbox2DComponent, Motion2DComponent},
     resources::SpriteSheetsResource,
     spawn::components::DespawnAtBorderComponent,
     spawnable::components::BlastComponent,

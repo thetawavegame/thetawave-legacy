@@ -1,9 +1,9 @@
 use crate::{
-    components::{Hitbox2DComponent, Motion2DComponent},
     constants::{
         BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
+    motion::components::{Hitbox2DComponent, Motion2DComponent},
     resources::SpriteSheetsResource,
     spawnable::{components::BlastComponent, resources::spawn_blasts},
     weapons::BlastType,
