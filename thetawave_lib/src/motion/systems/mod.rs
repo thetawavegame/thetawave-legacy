@@ -1,3 +1,5 @@
+//! System for managing entity motion
+
 use crate::{
     components::{BarrierComponent, PushDirection},
     motion::components::Motion2DComponent,
@@ -7,8 +9,8 @@ use amethyst::core::math::Vector2;
 mod collision_detection;
 mod mob_collisions;
 mod motion2d;
-mod spaceship_collisions;
-mod spaceship_movement;
+mod player_collisions;
+mod player_motion2d;
 
 pub use self::{
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
@@ -20,14 +22,14 @@ pub use self::{
         BlastMotion2DSystem, ConsumableMotion2DSystem, ItemMotion2DSystem, MobMotion2DSystem,
         MobTargetSystem, Motion2DSystem,
     },
-    spaceship_collisions::{
-        SpaceshipArenaBorderCollisionSystem, SpaceshipBlastCollisionSystem,
-        SpaceshipConsumableCollisionSystem, SpaceshipItemCollisionSystem,
-        SpaceshipMobCollisionSystem,
+    player_collisions::{
+        PlayerArenaBorderCollisionSystem, PlayerBlastCollisionSystem,
+        PlayerConsumableCollisionSystem, PlayerItemCollisionSystem, PlayerMobCollisionSystem,
     },
-    spaceship_movement::SpaceshipMovementSystem,
+    player_motion2d::PlayerMotion2DSystem,
 };
 
+/// Resolve a standard collision by modifying the motion component
 pub fn standard_collision(
     motion_component: &mut Motion2DComponent,
     collision_velocity: Vector2<f32>,
@@ -104,6 +106,7 @@ pub fn standard_collision(
     }
 }
 
+/// Resolve a collision with a barrier by modifying the motion component
 pub fn barrier_collision(
     motion_component: &mut Motion2DComponent,
     barrier_component: &BarrierComponent,
@@ -137,6 +140,7 @@ pub fn barrier_collision(
     }
 }
 
+/// Resolve a collision with an immovable object by modifying the motion component
 pub fn immovable_collision(
     motion_component: &mut Motion2DComponent,
     collision_velocity: Vector2<f32>,

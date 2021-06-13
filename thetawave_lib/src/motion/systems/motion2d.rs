@@ -15,16 +15,18 @@ use amethyst::{
     shrev::{EventChannel, ReaderId},
 };
 
-// basic physics for all Motion2D entities
+/// Handles core motion
 pub struct Motion2DSystem;
 
 impl<'s> System<'s> for Motion2DSystem {
+    /// Data used by the system
     type SystemData = (
         WriteStorage<'s, Motion2DComponent>,
         WriteStorage<'s, Transform>,
         Read<'s, Time>,
     );
 
+    /// System game logic
     fn run(&mut self, (mut motion_2ds, mut transforms, time): Self::SystemData) {
         for (motion_2d, transform) in (&mut motion_2ds, &mut transforms).join() {
             let dt = time.delta_seconds();
@@ -69,12 +71,15 @@ impl<'s> System<'s> for Motion2DSystem {
     }
 }
 
+/// Handles motion of blasts
 #[derive(Default)]
 pub struct BlastMotion2DSystem {
+    /// Reads from the attraction event channel
     event_reader: Option<ReaderId<AttractionEvent>>,
 }
 
 impl<'s> System<'s> for BlastMotion2DSystem {
+    /// Data used by the system
     type SystemData = (
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, BlastComponent>,
@@ -82,6 +87,7 @@ impl<'s> System<'s> for BlastMotion2DSystem {
         Read<'s, EventChannel<AttractionEvent>>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -91,6 +97,7 @@ impl<'s> System<'s> for BlastMotion2DSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (mut motion_2ds, blasts, mut transforms, attraction_channel): Self::SystemData,
@@ -150,13 +157,15 @@ impl<'s> System<'s> for BlastMotion2DSystem {
     }
 }
 
-// motion behavior for consumables
+/// Handles motion of consumables
 #[derive(Default)]
 pub struct ConsumableMotion2DSystem {
+    /// Reads from the attraction event channel
     event_reader: Option<ReaderId<AttractionEvent>>,
 }
 
 impl<'s> System<'s> for ConsumableMotion2DSystem {
+    /// Data used by the system
     type SystemData = (
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, ConsumableComponent>,
@@ -164,6 +173,7 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
         Read<'s, EventChannel<AttractionEvent>>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -173,6 +183,7 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (mut motion_2ds, consumables, mut transforms, attraction_channel): Self::SystemData,
@@ -218,13 +229,15 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
     }
 }
 
-// motion behavior for consumables
+/// Handles motion of items
 #[derive(Default)]
 pub struct ItemMotion2DSystem {
+    /// Reads from the attraction event channel
     event_reader: Option<ReaderId<AttractionEvent>>,
 }
 
 impl<'s> System<'s> for ItemMotion2DSystem {
+    /// Data used by the system
     type SystemData = (
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, ItemComponent>,
@@ -232,6 +245,7 @@ impl<'s> System<'s> for ItemMotion2DSystem {
         Read<'s, EventChannel<AttractionEvent>>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -241,6 +255,7 @@ impl<'s> System<'s> for ItemMotion2DSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (mut motion_2ds, items, mut transforms, attraction_channel): Self::SystemData,
@@ -282,10 +297,11 @@ impl<'s> System<'s> for ItemMotion2DSystem {
     }
 }
 
-// motion behavior for enemies
+/// Handles motion of mobs
 pub struct MobMotion2DSystem;
 
 impl<'s> System<'s> for MobMotion2DSystem {
+    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, MobComponent>,
         WriteStorage<'s, Motion2DComponent>,
@@ -293,6 +309,7 @@ impl<'s> System<'s> for MobMotion2DSystem {
         WriteStorage<'s, Hitbox2DComponent>,
     );
 
+    /// System game logic
     fn run(&mut self, (mobs, mut motion_2ds, mut transforms, mut hitbox_2ds): Self::SystemData) {
         for (mob, motion_2d, hitbox_2d, transform) in
             (&mobs, &mut motion_2ds, &mut hitbox_2ds, &mut transforms).join()
@@ -302,10 +319,11 @@ impl<'s> System<'s> for MobMotion2DSystem {
     }
 }
 
-// acquire target for targeting enemies
+/// Handles mob targeting
 pub struct MobTargetSystem;
 
 impl<'s> System<'s> for MobTargetSystem {
+    /// Data used by the system
     type SystemData = (
         WriteStorage<'s, MobComponent>,
         WriteStorage<'s, Motion2DComponent>,
@@ -313,6 +331,7 @@ impl<'s> System<'s> for MobTargetSystem {
         ReadStorage<'s, Transform>,
     );
 
+    /// System game logic
     fn run(&mut self, (mut mobs, mut motion_2ds, players, transforms): Self::SystemData) {
         for (mob, transform, motion_2d) in (&mut mobs, &transforms, &mut motion_2ds).join() {
             if let MobType::Enemy(EnemyType::Missile) = mob.mob_type {
@@ -350,6 +369,7 @@ impl<'s> System<'s> for MobTargetSystem {
     }
 }
 
+/// Handle movement of mobs by MobType
 fn move_mob(
     mob: &MobComponent,
     transform: &mut Transform,

@@ -20,12 +20,15 @@ use amethyst::{
     shrev::{EventChannel, ReaderId},
 };
 
+/// Handles collisions between players and mobs
 #[derive(Default)]
-pub struct SpaceshipMobCollisionSystem {
+pub struct PlayerMobCollisionSystem {
+    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
-impl<'s> System<'s> for SpaceshipMobCollisionSystem {
+impl<'s> System<'s> for PlayerMobCollisionSystem {
+    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Read<'s, GameParametersResource>,
@@ -35,6 +38,7 @@ impl<'s> System<'s> for SpaceshipMobCollisionSystem {
         ReadStorage<'s, BarrelRollAbilityComponent>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -44,6 +48,7 @@ impl<'s> System<'s> for SpaceshipMobCollisionSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -97,12 +102,15 @@ impl<'s> System<'s> for SpaceshipMobCollisionSystem {
     }
 }
 
+/// Handles collisions between players and blasts
 #[derive(Default)]
-pub struct SpaceshipBlastCollisionSystem {
+pub struct PlayerBlastCollisionSystem {
+    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
-impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
+impl<'s> System<'s> for PlayerBlastCollisionSystem {
+    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -115,6 +123,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         ReadExpect<'s, LazyUpdate>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -124,6 +133,7 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -183,12 +193,15 @@ impl<'s> System<'s> for SpaceshipBlastCollisionSystem {
     }
 }
 
+/// Handles collisions between players and items
 #[derive(Default)]
-pub struct SpaceshipItemCollisionSystem {
+pub struct PlayerItemCollisionSystem {
+    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
-impl<'s> System<'s> for SpaceshipItemCollisionSystem {
+impl<'s> System<'s> for PlayerItemCollisionSystem {
+    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -198,6 +211,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -207,6 +221,7 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -238,12 +253,15 @@ impl<'s> System<'s> for SpaceshipItemCollisionSystem {
     }
 }
 
+/// Handles collisions between players and consumables
 #[derive(Default)]
-pub struct SpaceshipConsumableCollisionSystem {
+pub struct PlayerConsumableCollisionSystem {
+    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
-impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
+impl<'s> System<'s> for PlayerConsumableCollisionSystem {
+    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -253,6 +271,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
+    // Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -262,6 +281,7 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -293,12 +313,15 @@ impl<'s> System<'s> for SpaceshipConsumableCollisionSystem {
     }
 }
 
+/// Handles collisions between players and arena borders
 #[derive(Default)]
-pub struct SpaceshipArenaBorderCollisionSystem {
+pub struct PlayerArenaBorderCollisionSystem {
+    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
-impl<'s> System<'s> for SpaceshipArenaBorderCollisionSystem {
+impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
+    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         ReadStorage<'s, BarrierComponent>,
@@ -308,6 +331,7 @@ impl<'s> System<'s> for SpaceshipArenaBorderCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -317,6 +341,7 @@ impl<'s> System<'s> for SpaceshipArenaBorderCollisionSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (

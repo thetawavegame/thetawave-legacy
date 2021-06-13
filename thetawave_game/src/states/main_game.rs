@@ -26,9 +26,9 @@ use thetawave_lib::{
         ConsumableMotion2DSystem, ItemMotion2DSystem, MobArenaBorderCollisionSystem,
         MobBlastCollisionSystem, MobMobCollisionSystem, MobMotion2DSystem,
         MobPlayerCollisionSystem, MobTargetSystem, Motion2DSystem,
-        SpaceshipArenaBorderCollisionSystem, SpaceshipBlastCollisionSystem,
-        SpaceshipConsumableCollisionSystem, SpaceshipItemCollisionSystem,
-        SpaceshipMobCollisionSystem, SpaceshipMovementSystem,
+        PlayerArenaBorderCollisionSystem, PlayerBlastCollisionSystem,
+        PlayerConsumableCollisionSystem, PlayerItemCollisionSystem, PlayerMobCollisionSystem,
+        PlayerMotion2DSystem,
     },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
     spawn::systems::{
@@ -93,7 +93,7 @@ impl Default for MainGameState {
                     &["mob_target_system"],
                 )
                 .with(DespawnAtBorderSystem, "despawn_at_border_system", &[])
-                .with(SpaceshipMovementSystem, "spaceship_movement_system", &[])
+                .with(PlayerMotion2DSystem, "spaceship_movement_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
                 .with(CollisionDetectionSystem, "collision_detection_system", &[])
                 .with(
@@ -107,22 +107,22 @@ impl Default for MainGameState {
                     &["collision_handler_system"],
                 )
                 .with(
-                    SpaceshipArenaBorderCollisionSystem::default(),
+                    PlayerArenaBorderCollisionSystem::default(),
                     "spaceship_arena_border_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    SpaceshipMobCollisionSystem::default(),
+                    PlayerMobCollisionSystem::default(),
                     "spaceship_mob_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    SpaceshipBlastCollisionSystem::default(),
+                    PlayerBlastCollisionSystem::default(),
                     "spaceship_blast_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    SpaceshipItemCollisionSystem::default(),
+                    PlayerItemCollisionSystem::default(),
                     "spaceship_item_collision_system",
                     &["collision_handler_system"],
                 )
@@ -132,7 +132,7 @@ impl Default for MainGameState {
                     &["spaceship_item_collision_system"],
                 )
                 .with(
-                    SpaceshipConsumableCollisionSystem::default(),
+                    PlayerConsumableCollisionSystem::default(),
                     "spaceship_consumable_collision_system",
                     &["collision_handler_system"],
                 )

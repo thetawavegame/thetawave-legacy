@@ -1,3 +1,5 @@
+//! Components for managing motion of entities
+
 mod hitbox;
 mod motion;
 
