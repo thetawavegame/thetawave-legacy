@@ -1,17 +1,21 @@
-use crate::components::{Motion2DComponent, PlayerComponent};
+use crate::{components::PlayerComponent, motion::components::Motion2DComponent};
 use amethyst::{
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
 };
-pub struct SpaceshipMovementSystem;
 
-impl<'s> System<'s> for SpaceshipMovementSystem {
+/// Handles motion of players
+pub struct PlayerMotion2DSystem;
+
+impl<'s> System<'s> for PlayerMotion2DSystem {
+    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         WriteStorage<'s, Motion2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
     );
 
+    /// System game logic
     fn run(&mut self, (players, mut motion_2d_components, input): Self::SystemData) {
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;
@@ -22,7 +26,7 @@ impl<'s> System<'s> for SpaceshipMovementSystem {
     }
 }
 
-// Handles acceleration and deceleration of spaceship based on given x,y direction inputs.
+/// Handles acceleration and deceleration of spaceship based on given x/y direction inputs
 fn handle_spaceship_movement(motion: &mut Motion2DComponent, x_move: f32, y_move: f32) {
     // Handle deceleration in the x direction while moving.
     if x_move == 0.0 && motion.velocity.x != 0.0 {

@@ -1,10 +1,11 @@
 use crate::{
     components::{
         AttractorCategory, AttractorComponent, BarrelRollAbilityComponent, HealthComponent,
-        Motion2DComponent, PlayerComponent,
+        PlayerComponent,
     },
     entities::SpawnableType,
     events::{ConsumableGetEvent, ItemGetEvent},
+    motion::components::Motion2DComponent,
     resources::DefenseResource,
     spawnable::resources::{ConsumableModifiersResource, ItemModifiersResource, Modifier},
     weapons::components::{BlasterComponent, ManualFireComponent},

@@ -1,8 +1,7 @@
 use crate::{
-    components::{
-        AnimationComponent, FadeComponent, HealthComponent, Hitbox2DComponent, Motion2DComponent,
-    },
+    components::{AnimationComponent, FadeComponent, HealthComponent},
     entities::{ConsumableType, EffectType, ItemType, MobType},
+    motion::components::{Hitbox2DComponent, Motion2DComponent},
     resources::{SpriteRenderData, SpriteSheetsResource},
     spawn::components::{
         AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent,

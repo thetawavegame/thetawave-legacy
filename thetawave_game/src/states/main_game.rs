@@ -21,6 +21,15 @@ use thetawave_lib::{
         initialize_side_panels, initialize_spaceship, initialize_status_bars,
         initialize_store_icons,
     },
+    motion::systems::{
+        BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
+        ConsumableMotion2DSystem, ItemMotion2DSystem, MobArenaBorderCollisionSystem,
+        MobBlastCollisionSystem, MobMobCollisionSystem, MobMotion2DSystem,
+        MobPlayerCollisionSystem, MobTargetSystem, Motion2DSystem,
+        PlayerArenaBorderCollisionSystem, PlayerBlastCollisionSystem,
+        PlayerConsumableCollisionSystem, PlayerItemCollisionSystem, PlayerMobCollisionSystem,
+        PlayerMotion2DSystem,
+    },
     resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
     spawn::systems::{
         AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
@@ -54,22 +63,22 @@ impl Default for MainGameState {
                 .with(systems::BossSystem, "boss_system", &[])
                 .with(SpawnerSystem, "spawner_system", &[])
                 .with(DespawnTimeLimitSystem, "timelimit_system", &[])
-                .with(systems::Motion2DSystem, "motion_2d_system", &[])
-                .with(systems::MobTargetSystem, "mob_target_system", &[])
+                .with(Motion2DSystem, "motion_2d_system", &[])
+                .with(MobTargetSystem, "mob_target_system", &[])
                 .with(AutoSpawnerSystem, "auto_spawner_system", &[])
                 .with(systems::AttractorSystem, "attractor_system", &[])
                 .with(
-                    systems::ItemMotion2DSystem::default(),
+                    ItemMotion2DSystem::default(),
                     "item_motion_2d_system",
                     &["attractor_system"],
                 )
                 .with(
-                    systems::ConsumableMotion2DSystem::default(),
+                    ConsumableMotion2DSystem::default(),
                     "consumable_motion_2d_system",
                     &["attractor_system"],
                 )
                 .with(
-                    systems::BlastMotion2DSystem::default(),
+                    BlastMotion2DSystem::default(),
                     "blast_motion_2d_system",
                     &["attractor_system"],
                 )
@@ -79,49 +88,41 @@ impl Default for MainGameState {
                     &[],
                 )
                 .with(
-                    systems::MobMotion2DSystem,
+                    MobMotion2DSystem,
                     "mob_motion_2d_system",
                     &["mob_target_system"],
                 )
                 .with(DespawnAtBorderSystem, "despawn_at_border_system", &[])
-                .with(
-                    systems::SpaceshipMovementSystem,
-                    "spaceship_movement_system",
-                    &[],
-                )
+                .with(PlayerMotion2DSystem, "spaceship_movement_system", &[])
                 .with(systems::StatusBarSystem, "status_bar_system", &[])
+                .with(CollisionDetectionSystem, "collision_detection_system", &[])
                 .with(
-                    systems::CollisionDetectionSystem,
-                    "collision_detection_system",
-                    &[],
-                )
-                .with(
-                    systems::CollisionHandlerSystem::default(),
+                    CollisionHandlerSystem::default(),
                     "collision_handler_system",
                     &["collision_detection_system"],
                 )
                 .with(
-                    systems::MobArenaBorderCollisionSystem::default(),
+                    MobArenaBorderCollisionSystem::default(),
                     "mob_arena_border_collsion_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::SpaceshipArenaBorderCollisionSystem::default(),
+                    PlayerArenaBorderCollisionSystem::default(),
                     "spaceship_arena_border_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::SpaceshipMobCollisionSystem::default(),
+                    PlayerMobCollisionSystem::default(),
                     "spaceship_mob_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::SpaceshipBlastCollisionSystem::default(),
+                    PlayerBlastCollisionSystem::default(),
                     "spaceship_blast_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::SpaceshipItemCollisionSystem::default(),
+                    PlayerItemCollisionSystem::default(),
                     "spaceship_item_collision_system",
                     &["collision_handler_system"],
                 )
@@ -131,22 +132,22 @@ impl Default for MainGameState {
                     &["spaceship_item_collision_system"],
                 )
                 .with(
-                    systems::SpaceshipConsumableCollisionSystem::default(),
+                    PlayerConsumableCollisionSystem::default(),
                     "spaceship_consumable_collision_system",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::MobPlayerCollisionSystem::default(),
+                    MobPlayerCollisionSystem::default(),
                     "mob_player_collision",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::MobMobCollisionSystem::default(),
+                    MobMobCollisionSystem::default(),
                     "mob_mob_collision",
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::MobBlastCollisionSystem::default(),
+                    MobBlastCollisionSystem::default(),
                     "mob_blast_collision",
                     &["collision_handler_system"],
                 )

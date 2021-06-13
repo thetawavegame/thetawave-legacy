@@ -6,19 +6,27 @@ use amethyst::{
 
 use serde::{Deserialize, Serialize};
 
+/// Used for detecting 2D collisions with other hitboxes
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Hitbox2DComponent {
+    /// Width of the hitbox
     pub width: f32,
+    /// Height of the hitbox
     pub height: f32,
+    /// X/Y coordinate offset from transform of entity
     #[serde(default = "des_offset")]
     pub offset: Vector2<f32>,
+    /// Rotation offset from square with the arena
     #[serde(default = "des_offset_rotation")]
-    pub offset_rotation: f32, // offset in radians
+    pub offset_rotation: f32,
 }
+
+/// Default to no offset
 fn des_offset() -> Vector2<f32> {
     Vector2::new(0.0, 0.0)
 }
 
+// Default to no offset
 fn des_offset_rotation() -> f32 {
     0.0
 }
@@ -28,10 +36,12 @@ impl Component for Hitbox2DComponent {
 }
 
 impl Hitbox2DComponent {
+    /// Set offset rotation
     pub fn set_offset_rotation(&mut self, current_angle: f32) {
         self.offset_rotation = -current_angle;
     }
 
+    /// Check if the hitbox is colliding with another hitbox
     pub fn is_colliding(
         &self,
         hitbox_b: &Hitbox2DComponent,

@@ -5,20 +5,30 @@ use amethyst::{
 };
 use serde::{Deserialize, Serialize};
 
+/// Used for managing 2D motion of entities
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Motion2DComponent {
+    /// Current velocity of the entity
     pub velocity: Vector2<f32>,
+    /// Velocity gained per frame when accelerating
     pub acceleration: Vector2<f32>,
+    /// Velocity lost per frame when decelerating
     pub deceleration: Vector2<f32>,
-    // x/y speed an entity can accelerate to
+    /// Maximum velocity that entity can accelerate to (absolute value)
     pub speed: Vector2<f32>,
-    // Max x/y speed an entity can reach
+    /// Maximum possible velocity that entity can reach (absolute value)
     pub max_speed: Vector2<f32>,
+    /// Current angular velocity of entity
     pub angular_velocity: f32,
+    /// Angular velocity gained per frame when accelerating angularly
     pub angular_acceleration: f32,
+    /// Angular velocity lost per frame when decelerating angularly
     pub angular_deceleration: f32,
+    /// Maximum angular velocity that entity can angularly accelerate to (absolute value)
     pub angular_speed: f32,
-    pub immovable: bool, // can't be moved from outside forces
+    /// Cannot be moved from outside forces
+    pub immovable: bool,
+    /// Optional target position (used for some types of movement)
     pub target_position: Option<Vector2<f32>>,
 }
 
@@ -27,8 +37,7 @@ impl Component for Motion2DComponent {
 }
 
 impl Motion2DComponent {
-    // accelerate to speed stat in negative y direction
-    // decelerate if over speed stat
+    /// Accelerate to to `speed` in -y direction, decelerate if velocity is greater than `speed`
     pub fn move_down(&mut self) {
         if self.velocity.y.abs() < self.speed.y {
             self.velocity.y -= self.acceleration.y;
@@ -41,8 +50,7 @@ impl Motion2DComponent {
         }
     }
 
-    // accelerate to speed stat in positive y direction
-    // decelerate if over speed stat
+    /// Accelerate to to `speed` in +y direction, decelerate if velocity is greater than `speed`
     pub fn move_up(&mut self) {
         if self.velocity.y.abs() < self.speed.y {
             self.velocity.y += self.acceleration.y;
@@ -55,7 +63,7 @@ impl Motion2DComponent {
         }
     }
 
-    // decelerate if moving in the x direction
+    /// Decelerate to 0 x velocity
     pub fn brake_horizontal(&mut self) {
         if self.velocity.x > 0.0 {
             self.velocity.x -= self.deceleration.x;
@@ -70,7 +78,7 @@ impl Motion2DComponent {
         }
     }
 
-    // turn to face the target
+    /// Accelerate to face `target_position`
     pub fn turn_towards_target(&mut self, current_position: Vector2<f32>, current_angle: f32) {
         if let Some(target_position) = self.target_position {
             let target_angle = (current_position.y - target_position.y)
@@ -91,6 +99,7 @@ impl Motion2DComponent {
         }
     }
 
+    /// Accelerate towards `target_position` (accelerate away if `should_repel` is true)
     pub fn move_towards_target(
         &mut self,
         current_position: Vector2<f32>,
@@ -119,7 +128,7 @@ impl Motion2DComponent {
         }
     }
 
-    // move in direction that the entity is facing
+    /// Accelerate in direction the entity is facing
     pub fn move_forward(&mut self, angle: f32) {
         if self.velocity.x < self.speed.x * (angle - std::f32::consts::FRAC_PI_2).cos() {
             self.velocity.x += self.acceleration.x;

@@ -1,6 +1,7 @@
 use crate::{
-    components::{BarrierComponent, Hitbox2DComponent, Motion2DComponent, PlayerComponent},
+    components::{BarrierComponent, PlayerComponent},
     events::{ArenaBorderCollisionEvent, CollisionEvent, MobCollisionEvent, PlayerCollisionEvent},
+    motion::components::{Hitbox2DComponent, Motion2DComponent},
     resources::DebugLinesConfig,
     spawnable::components::MobComponent,
 };
@@ -14,11 +15,11 @@ use amethyst::{
     shrev::{EventChannel, ReaderId},
 };
 
-#[derive(Default)]
+/// Handles detection of collisions between entities
 pub struct CollisionDetectionSystem;
 
-/// Detects collisions between entities
 impl<'s> System<'s> for CollisionDetectionSystem {
+    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         ReadStorage<'s, Hitbox2DComponent>,
@@ -27,6 +28,8 @@ impl<'s> System<'s> for CollisionDetectionSystem {
         Write<'s, DebugLines>,
         Read<'s, DebugLinesConfig>,
     );
+
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -71,13 +74,15 @@ impl<'s> System<'s> for CollisionDetectionSystem {
     }
 }
 
+/// Handles routing of collision data to specific event channels
 #[derive(Default)]
 pub struct CollisionHandlerSystem {
+    /// Reads from the collision event channel
     event_reader: Option<ReaderId<CollisionEvent>>,
 }
 
-/// Handles collision events between entities
 impl<'s> System<'s> for CollisionHandlerSystem {
+    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, MobComponent>,
@@ -89,6 +94,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         Write<'s, EventChannel<ArenaBorderCollisionEvent>>,
     );
 
+    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -98,6 +104,7 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         );
     }
 
+    /// System game logic
     fn run(
         &mut self,
         (

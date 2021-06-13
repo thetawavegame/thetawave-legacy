@@ -1,5 +1,5 @@
 use crate::{
-    components::Motion2DComponent,
+    motion::components::Motion2DComponent,
     resources::SpriteSheetsResource,
     weapons::components::{AutoFireComponent, BlasterComponent},
 };

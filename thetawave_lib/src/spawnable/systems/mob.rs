@@ -23,6 +23,7 @@ use amethyst::{
 pub struct MobBehaviorSystem;
 
 impl<'s> System<'s> for MobBehaviorSystem {
+    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, MobComponent>,
@@ -30,6 +31,7 @@ impl<'s> System<'s> for MobBehaviorSystem {
         Write<'s, EventChannel<MobDestroyedEvent>>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (entities, mut mobs, mut healths, mut mob_destroyed_event_channel): Self::SystemData,

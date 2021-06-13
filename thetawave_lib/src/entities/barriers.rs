@@ -1,9 +1,10 @@
 use crate::{
-    components::{BarrierComponent, Hitbox2DComponent, PushDirection},
+    components::{BarrierComponent, PushDirection},
     constants::{
         ARENA_HEIGHT, ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ARENA_WIDTH, SIDE_PANEL_WIDTH,
         SIDE_PANEL_Z,
     },
+    motion::components::Hitbox2DComponent,
 };
 use amethyst::{
     core::{math::Vector2, transform::Transform},
