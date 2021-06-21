@@ -246,9 +246,7 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
                                 BlastType::Ally => &EffectType::AllyBlastExplosion,
                                 BlastType::AllyCritical => &EffectType::CriticalBlastExplosion,
                                 BlastType::AllyPoison => &EffectType::PoisonBlastExplosion,
-                                _ => {
-                                    panic!("unreachable")
-                                }
+                                _ => panic!("unreachable"),
                             },
                             blast_transform.clone(),
                             &sprite_resource,

@@ -16,11 +16,7 @@ use thetawave_lib::{
         ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CAMERA_X, CAMERA_Y,
         CAMERA_Z,
     },
-    entities::{
-        initialize_arena_barriers, initialize_background, initialize_planet,
-        initialize_side_panels, initialize_spaceship, initialize_status_bars,
-        initialize_store_icons,
-    },
+    entities::{initialize_arena_barriers, initialize_spaceship},
     motion::systems::{
         BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
         ConsumableMotion2DSystem, ItemMotion2DSystem, MobArenaBorderCollisionSystem,
@@ -39,6 +35,16 @@ use thetawave_lib::{
         systems::{MobBehaviorSystem, MobDestroyedSystem},
     },
     systems,
+    visual::{
+        entities::{
+            initialize_background, initialize_planet, initialize_side_panels,
+            initialize_status_bars, initialize_store_icons,
+        },
+        systems::{
+            AnimationSystem, FadeSystem, PlanetsSystem, StatTrackerSystem, StatusBarSystem,
+            TrackedStats,
+        },
+    },
     weapons::systems::{AutoFireSystem, ManualBlasterSystem},
 };
 
@@ -56,8 +62,8 @@ impl Default for MainGameState {
             is_paused: false,
             pause_display: None,
             dispatcher: DispatcherBuilder::new()
-                .with(systems::AnimationSystem, "animation_system", &[])
-                .with(systems::PlanetsSystem, "planets_system", &[])
+                .with(AnimationSystem, "animation_system", &[])
+                .with(PlanetsSystem, "planets_system", &[])
                 .with(systems::PhaseManagerSystem, "phase_manager_system", &[])
                 .with(MobBehaviorSystem, "mob_behavior_system", &[])
                 .with(systems::BossSystem, "boss_system", &[])
@@ -94,7 +100,7 @@ impl Default for MainGameState {
                 )
                 .with(DespawnAtBorderSystem, "despawn_at_border_system", &[])
                 .with(PlayerMotion2DSystem, "spaceship_movement_system", &[])
-                .with(systems::StatusBarSystem, "status_bar_system", &[])
+                .with(StatusBarSystem, "status_bar_system", &[])
                 .with(CollisionDetectionSystem, "collision_detection_system", &[])
                 .with(
                     CollisionHandlerSystem::default(),
@@ -159,7 +165,7 @@ impl Default for MainGameState {
                 .with(systems::SpaceshipSystem::default(), "spaceship_system", &[])
                 .with(systems::StoreSystem, "store_system", &[])
                 .with(
-                    systems::StatTrackerSystem,
+                    StatTrackerSystem,
                     "stat_tracker_system",
                     &["store_system", "spaceship_system"],
                 )
@@ -175,7 +181,7 @@ impl Default for MainGameState {
                     "play_audio_system",
                     &[],
                 )
-                .with(systems::FadeSystem, "fade_system", &[])
+                .with(FadeSystem, "fade_system", &[])
                 .build(),
         }
     }
@@ -553,7 +559,7 @@ fn initialise_ui(world: &mut World) {
         ))
         .build();
 
-    world.insert(systems::TrackedStats {
+    world.insert(TrackedStats {
         currency: currency_count,
         shields: shields_count,
         item_price_1,

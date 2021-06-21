@@ -1,10 +1,10 @@
 use crate::{
-    components::{
-        BarrelRollAbilityComponent, HealthComponent, PlayerComponent, StatusBarComponent,
-        StatusType,
-    },
-    entities::spawn_status_unit,
+    components::{BarrelRollAbilityComponent, HealthComponent, PlayerComponent},
     resources::{DefenseResource, SpriteSheetsResource, StoreResource},
+    visual::{
+        components::{StatusBarComponent, StatusType},
+        entities::spawn_status_unit,
+    },
 };
 use amethyst::ecs::prelude::{
     Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage,

@@ -4,7 +4,7 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::components::{AnimationComponent, AnimationType};
+use crate::visual::components::{AnimationComponent, AnimationType};
 
 pub struct AnimationSystem;
 

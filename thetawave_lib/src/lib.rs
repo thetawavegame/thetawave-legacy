@@ -9,4 +9,5 @@ pub mod spawn;
 pub mod spawnable;
 pub mod systems;
 pub mod tools;
+pub mod visual;
 pub mod weapons;

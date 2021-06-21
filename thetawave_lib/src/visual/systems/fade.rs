@@ -1,4 +1,4 @@
-use crate::components::FadeComponent;
+use crate::visual::components::FadeComponent;
 use amethyst::{
     ecs::prelude::{Join, System, WriteStorage},
     renderer::resources::Tint,

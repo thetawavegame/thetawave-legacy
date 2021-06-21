@@ -145,9 +145,7 @@ pub fn apply_modifiers(
 
         SpawnableType::Consumable(_consumable_type) => {}
 
-        _ => {
-            panic!("only consumables and items can have modifiers")
-        }
+        _ => panic!("only consumables and items can have modifiers"),
     }
 
     for modifier in modifiers.iter() {

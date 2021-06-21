@@ -1,10 +1,10 @@
 use crate::{
-    components::{StatusBarComponent, StatusType},
     constants::{
         DEFENSE_BAR_LIMIT, DEFENSE_BAR_X, DEFENSE_BAR_Y, HEALTH_BAR_LIMIT, HEALTH_BAR_X,
         HEALTH_BAR_Y, RESTOCK_BAR_LIMIT, RESTOCK_BAR_X, RESTOCK_BAR_Y, ROLL_BAR_LIMIT, ROLL_BAR_X,
         ROLL_BAR_Y,
     },
+    visual::components::{StatusBarComponent, StatusType},
 };
 use amethyst::{
     ecs::{World, WorldExt},

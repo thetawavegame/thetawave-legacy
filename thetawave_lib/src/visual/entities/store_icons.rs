@@ -1,6 +1,6 @@
 use crate::{
-    components::StoreIconComponent,
     constants::{ARENA_MAX_X, ARENA_MIN_Y},
+    visual::components::StoreIconComponent,
 };
 use amethyst::{
     assets::Handle,

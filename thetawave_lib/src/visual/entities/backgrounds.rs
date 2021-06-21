@@ -1,6 +1,6 @@
 use crate::{
-    components::{AnimationComponent, AnimationType, ColorChannelChange, FadeComponent},
     motion::components::Motion2DComponent,
+    visual::components::{AnimationComponent, AnimationType, ColorChannelChange, FadeComponent},
 };
 use amethyst::{
     assets::Handle,
