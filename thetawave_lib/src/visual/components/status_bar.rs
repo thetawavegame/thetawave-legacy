@@ -5,6 +5,7 @@ use amethyst::{
 };
 use std::{cmp::Ordering, vec::Vec};
 
+/// Type of status bar
 pub enum StatusType {
     Health,
     Defense,
@@ -12,11 +13,18 @@ pub enum StatusType {
     Restock,
 }
 
+/// Used for managing status bars
 pub struct StatusBarComponent {
+    /// Type of status bar
     pub status_type: StatusType,
+    // TODO: change to Vector2
+    /// X position
     pub x_pos: f32,
+    /// Y position
     pub y_pos: f32,
+    /// Vector of status bar unit entities
     pub status_unit_stack: Vec<Entity>,
+    /// Total unit capacity
     pub unit_limit: f32,
 }
 
@@ -25,6 +33,7 @@ impl Component for StatusBarComponent {
 }
 
 impl StatusBarComponent {
+    /// Update the status bar units in the x-direction
     pub fn update_units_x(
         &mut self,
         max_value: f32,
@@ -51,6 +60,7 @@ impl StatusBarComponent {
         }
     }
 
+    /// Update the status bar units in the y-direction
     pub fn update_units_y(
         &mut self,
         max_value: f32,

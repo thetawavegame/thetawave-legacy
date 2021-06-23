@@ -1,10 +1,10 @@
 use crate::{
-    components::{
-        BarrelRollAbilityComponent, HealthComponent, PlayerComponent, StatusBarComponent,
-        StatusType,
-    },
-    entities::spawn_status_unit,
+    components::{BarrelRollAbilityComponent, HealthComponent, PlayerComponent},
     resources::{DefenseResource, SpriteSheetsResource, StoreResource},
+    visual::{
+        components::{StatusBarComponent, StatusType},
+        entities::spawn_status_unit,
+    },
 };
 use amethyst::ecs::prelude::{
     Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage,
@@ -15,9 +15,11 @@ const DEFENSE_SPRITE_INDEX: usize = 1;
 const ROLL_SPRITE_INDEX: usize = 2;
 const RESTOCK_SPRITE_INDEX: usize = 3;
 
+/// Handles status bars
 pub struct StatusBarSystem;
 
 impl<'s> System<'s> for StatusBarSystem {
+    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, StatusBarComponent>,
@@ -30,6 +32,7 @@ impl<'s> System<'s> for StatusBarSystem {
         ReadExpect<'s, LazyUpdate>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (

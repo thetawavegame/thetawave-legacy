@@ -1,0 +1,54 @@
+{
+    "side_panels": (
+        image: "side_panel_spritesheet.png",
+        data: "side_panel_spritesheet.ron",
+    ),
+    "backgrounds": (
+        image: "vein_background.png",
+        data: "vein_background.ron",
+    ),
+    "items": (
+        image: "items_spritesheet.png",
+        data: "items_spritesheet.ron",
+    ),
+    "consumables": (
+        image: "consumables_spritesheet.png",
+        data: "consumables_spritesheet.ron",
+    ),
+    "status_bar_unit": (
+        image: "status_bar_unit_spritesheet.png",
+        data: "status_bar_unit_spritesheet.ron",
+    ),
+    "mobs": (
+        image: "mobs_spritesheet.png",
+        data: "mobs_spritesheet.ron",
+    ),
+    "characters": (
+        image: "player_spritesheet.png",
+        data: "player_spritesheet.ron",
+    ),
+    "blasts": (
+        image: "blasts_spritesheet.png",
+        data: "blasts_spritesheet.ron",
+    ),
+    "repeater": (
+        image: "repeater_spritesheet.png",
+        data: "repeater_spritesheet.ron",
+    ),
+    "thrusters": (
+        image: "thrusters_spritesheet.png",
+        data: "thrusters_spritesheet.ron",
+    ),
+    "blast_explosions": (
+        image: "blast_explosions_spritesheet.png",
+        data: "blast_explosions_spritesheet.ron",
+    ),
+    "explosions": (
+        image: "explosions_spritesheet.png",
+        data: "explosions_spritesheet.ron",
+    ),
+    "giblets": (
+        image: "giblets_spritesheet.png",
+        data: "giblets_spritesheet.ron",
+    )
+}

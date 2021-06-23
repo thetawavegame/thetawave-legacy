@@ -1,0 +1,7 @@
+DebugLinesConfig (
+    line_width: 1.0,
+    hitbox_color: {red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0},
+    item_attractor_color: {red: 0.969, green: 0.816, blue: 0.220, alpha: 1.0},
+    consumable_attractor_color: {red: 0.102, green: 0.718, blue: 0.0, alpha: 1.0},
+    blast_attractor_color: {red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0},
+)

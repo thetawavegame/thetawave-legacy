@@ -129,9 +129,7 @@ impl StoreResource {
                         return true;
                     }
                 }
-                _ => {
-                    panic!("Only items and consumables can be purchased in the store.")
-                }
+                _ => panic!("Only items and consumables can be purchased in the store."),
             }
         }
         false

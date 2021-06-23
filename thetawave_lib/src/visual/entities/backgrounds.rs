@@ -1,6 +1,6 @@
 use crate::{
-    components::{AnimationComponent, AnimationType, ColorChannelChange, FadeComponent},
     motion::components::Motion2DComponent,
+    visual::components::{AnimationComponent, AnimationType, ColorChannelChange, FadeComponent},
 };
 use amethyst::{
     assets::Handle,
@@ -13,6 +13,7 @@ use amethyst::{
     renderer::{palette::Srgba, resources::Tint, SpriteRender, SpriteSheet},
 };
 
+/// Initializes the background
 pub fn initialize_background(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(23500.0, 135.0, -15000.0);

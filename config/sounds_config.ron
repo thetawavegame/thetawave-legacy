@@ -1,0 +1,13 @@
+{
+    "small_rock": "small_rock.ogg",
+    "large_rock": "large_rock.ogg",
+    "metal_clang": "wrench.ogg",
+    "shotgun_cock": "item.ogg",
+    "laser_blast": "spaceship_laser.ogg",
+    "metal_crash": "crash.ogg",
+    "explosion": "explosion.ogg",
+    "metal_ping": "spaceship_hit.ogg",
+    "armor_up": "shields_up.ogg",
+    "cash_register_bell": "cash_register_bell.ogg",
+    "force_field": "force_field.ogg",
+}

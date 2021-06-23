@@ -10,6 +10,7 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet},
 };
 
+/// Initialize the two side panels on the right and left
 pub fn initialize_side_panels(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let sprite_render_left = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),

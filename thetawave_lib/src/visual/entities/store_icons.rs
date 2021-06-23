@@ -1,6 +1,6 @@
 use crate::{
-    components::StoreIconComponent,
     constants::{ARENA_MAX_X, ARENA_MIN_Y},
+    visual::components::StoreIconComponent,
 };
 use amethyst::{
     assets::Handle,
@@ -10,6 +10,7 @@ use amethyst::{
     renderer::{SpriteRender, SpriteSheet},
 };
 
+/// Initialize the store icons
 pub fn initialize_store_icons(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let store_icon_1 = StoreIconComponent { inventory_index: 0 };
     let store_icon_2 = StoreIconComponent { inventory_index: 1 };
