@@ -5,6 +5,7 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
+/// Spawn a status unit for a status bar
 pub fn spawn_status_unit(
     entities: &Entities,
     sprite_resource: &ReadExpect<SpriteSheetsResource>,

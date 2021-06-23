@@ -8,6 +8,7 @@ use amethyst::{
     prelude::Builder,
 };
 
+/// Initialize a planet in the background
 pub fn initialize_planet(
     world: &mut World,
     gltf_path: &str,

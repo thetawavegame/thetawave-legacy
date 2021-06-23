@@ -9,7 +9,8 @@ use amethyst::{
     ui::UiText,
 };
 
-//TODO: this doesn't belong here
+/// Holds variable values that are displayed
+// TODO: this doesn't belong here
 pub struct TrackedStats {
     pub currency: Entity,
     pub shields: Entity,
@@ -18,9 +19,11 @@ pub struct TrackedStats {
     pub item_price_3: Entity,
 }
 
+/// Handles and displays tracked stats
 pub struct StatTrackerSystem;
 
 impl<'s> System<'s> for StatTrackerSystem {
+    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, HealthComponent>,
@@ -31,6 +34,7 @@ impl<'s> System<'s> for StatTrackerSystem {
         ReadExpect<'s, ConsumablesResource>,
     );
 
+    /// System game logic
     fn run(
         &mut self,
         (
@@ -90,6 +94,7 @@ impl<'s> System<'s> for StatTrackerSystem {
     }
 }
 
+/// Get the price of an item or consumable in the store
 fn inventory_price(
     inventory_entity: &Option<SpawnableType>,
     items_resource: &ReadExpect<ItemsResource>,

@@ -11,6 +11,7 @@ use amethyst::{
     prelude::Builder,
 };
 
+/// Initialize the health, defense, roll, and store status bars
 pub fn initialize_status_bars(world: &mut World) {
     //health bar
     world

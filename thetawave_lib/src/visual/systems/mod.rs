@@ -1,4 +1,4 @@
-//! System for managing visuals
+//! Systems for managing visuals
 
 mod animation;
 mod fade;
