@@ -1,4 +1,4 @@
-use crate::entities::ItemType;
+use crate::spawnable::resources::ItemType;
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 

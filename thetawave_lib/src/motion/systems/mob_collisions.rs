@@ -1,13 +1,16 @@
 use crate::{
     audio::Sounds,
-    entities::{EffectType, EnemyType, MobType},
     events::{MobCollisionEvent, PlayAudioEvent},
     misc::components::{BarrierComponent, HealthComponent},
     misc::resources::GameParametersResource,
     motion::components::Motion2DComponent,
     motion::systems::{barrier_collision, immovable_collision, standard_collision},
     player::components::PlayerComponent,
-    spawnable::{components::BlastComponent, components::MobComponent, resources::EffectsResource},
+    spawnable::{
+        components::BlastComponent,
+        components::MobComponent,
+        resources::{EffectType, EffectsResource, EnemyType, MobType},
+    },
     visual::resources::SpriteSheetsResource,
     weapons::BlastType,
 };

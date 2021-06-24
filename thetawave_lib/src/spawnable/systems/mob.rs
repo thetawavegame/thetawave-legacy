@@ -1,12 +1,13 @@
 use crate::{
     audio::Sounds,
-    entities::EffectType,
     events::{MobDestroyedEvent, PlayAudioEvent},
     misc::components::HealthComponent,
     spawn::resources::DropTablesResource,
     spawnable::{
         components::MobComponent,
-        resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+        resources::{
+            ConsumablesResource, EffectType, EffectsResource, ItemsResource, MobsResource,
+        },
     },
     visual::resources::SpriteSheetsResource,
 };

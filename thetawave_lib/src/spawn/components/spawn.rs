@@ -1,6 +1,8 @@
 use crate::{
-    entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
-    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+    spawnable::resources::{
+        ConsumableType, ConsumablesResource, EffectType, EffectsResource, ItemType, ItemsResource,
+        MobType, MobsResource, SpawnableType,
+    },
     visual::resources::SpriteSheetsResource,
 };
 

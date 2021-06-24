@@ -1,7 +1,7 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 
-use crate::entities::ConsumableType;
+use crate::spawnable::resources::ConsumableType;
 
 /// Used for data unique to consumable entities
 #[derive(Clone, Serialize, Deserialize, Debug)]

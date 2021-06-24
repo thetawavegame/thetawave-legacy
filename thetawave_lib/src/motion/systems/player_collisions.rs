@@ -1,6 +1,5 @@
 use crate::{
     audio::Sounds,
-    entities::EffectType,
     events::{ConsumableGetEvent, ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
     misc::components::{BarrierComponent, HealthComponent},
     misc::resources::GameParametersResource,
@@ -11,7 +10,7 @@ use crate::{
     player::components::{AbilityDirection, BarrelRollAbilityComponent},
     spawnable::{
         components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
-        resources::EffectsResource,
+        resources::{EffectType, EffectsResource},
     },
     visual::resources::SpriteSheetsResource,
     weapons::BlastType,

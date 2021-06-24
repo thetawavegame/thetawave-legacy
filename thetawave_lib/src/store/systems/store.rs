@@ -1,9 +1,8 @@
 use crate::{
     audio::Sounds,
-    entities::SpawnableType,
     events::PlayAudioEvent,
     player::components::PlayerComponent,
-    spawnable::resources::{ConsumablesResource, ItemsResource},
+    spawnable::resources::{ConsumablesResource, ItemsResource, SpawnableType},
     store::resources::StoreResource,
     visual::components::StoreIconComponent,
     visual::resources::SpriteSheetsResource,

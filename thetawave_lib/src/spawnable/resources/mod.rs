@@ -1,6 +1,5 @@
 //! Resources for spawnable entities
 use crate::{
-    entities::SpawnableType,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     spawn::components::DespawnAtBorderComponent,
     spawnable::components::BlastComponent,
@@ -13,6 +12,8 @@ use amethyst::{
     renderer::{SpriteRender, Transparent},
 };
 
+use serde::{Deserialize, Serialize};
+
 mod modifiers;
 mod spawnables;
 
@@ -24,6 +25,85 @@ pub use self::{
         ThrusterEntityData,
     },
 };
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum SpawnableType {
+    Consumable(ConsumableType),
+    Item(ItemType),
+    Effect(EffectType),
+    Mob(MobType),
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum MobType {
+    Enemy(EnemyType),
+    Ally(AllyType),
+    Neutral(NeutralType),
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum EnemyType {
+    Pawn,
+    Drone,
+    StraferRight,
+    StraferLeft,
+    MissileLauncher,
+    Missile,
+    RepeaterBody,
+    RepeaterHead,
+    RepeaterLeftShoulder,
+    RepeaterRightShoulder,
+    RepeaterLeftArm,
+    RepeaterRightArm,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum AllyType {
+    Hauler,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum NeutralType {
+    MoneyAsteroid,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum ConsumableType {
+    DefenseWrench,
+    Money1,
+    Money5,
+    HealthWrench,
+    Armor,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum ItemType {
+    SteelBarrel,
+    PlasmaBlasts,
+    HazardousReactor,
+    WarpThruster,
+    Tentaclover,
+    DefenseSatellite,
+    DoubleBarrel,
+    YithianPlague,
+    Spice,
+    EnhancedPlating,
+    StructureReinforcement,
+    BlasterSizeEnhancer,
+    FrequencyAugmentor,
+    TractorBeam,
+    BlastRepeller,
+}
+#[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
+pub enum EffectType {
+    AllyBlastExplosion,
+    EnemyBlastExplosion,
+    PoisonBlastExplosion,
+    CriticalBlastExplosion,
+    MobExplosion,
+    Star, //TODO: implement background stars
+    Giblets(MobType),
+}
 
 /// Spawn any kind of spawnable entity
 pub fn spawn_spawnable(

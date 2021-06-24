@@ -1,11 +1,11 @@
 use crate::{
-    entities::{ConsumableType, EffectType, ItemType, MobType},
     misc::components::HealthComponent,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     spawn::components::{
         AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent,
     },
     spawnable::components::{ConsumableComponent, ItemComponent, MobComponent},
+    spawnable::resources::{ConsumableType, EffectType, ItemType, MobType},
     visual::components::{AnimationComponent, FadeComponent},
     visual::resources::{SpriteRenderData, SpriteSheetsResource},
     weapons::components::{AutoFireComponent, BlasterComponent},

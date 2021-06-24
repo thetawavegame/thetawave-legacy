@@ -18,7 +18,7 @@ use thetawave_lib::{
         ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CAMERA_X, CAMERA_Y,
         CAMERA_Z,
     },
-    entities::{initialize_arena_barriers, initialize_spaceship},
+    misc::entities::initialize_arena_barriers,
     misc::resources::DebugLinesConfig,
     misc::systems::{AttractorSystem, DefenseSystem},
     motion::systems::{
@@ -31,6 +31,7 @@ use thetawave_lib::{
         PlayerMotion2DSystem,
     },
     phases::systems::PhaseManagerSystem,
+    player::entities::initialize_spaceship,
     player::systems::{BarrelRollAbilitySystem, SpaceshipSystem},
     spawn::systems::{
         AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,

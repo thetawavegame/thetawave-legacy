@@ -1,9 +1,9 @@
 use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_SPAWN_OFFSET, SPAWNER_Y_OFFSET},
-    entities::SpawnableType,
     phases::resources::{InvasionFormationPool, InvasionRandomPool},
     spawnable::resources::{
         spawn_spawnable, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
+        SpawnableType,
     },
     visual::resources::SpriteSheetsResource,
 };

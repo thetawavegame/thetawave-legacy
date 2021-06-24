@@ -1,5 +1,5 @@
 use crate::{
-    entities::spawn_repeater,
+    boss::entities::spawn_repeater,
     phases::resources::{BossType, PhaseManagerResource, PhaseType},
     spawn::{components::AutoSpawnerComponent, resources::SpawnerResource},
     spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
