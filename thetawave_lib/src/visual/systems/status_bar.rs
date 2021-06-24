@@ -1,6 +1,9 @@
 use crate::{
-    components::{BarrelRollAbilityComponent, HealthComponent, PlayerComponent},
-    resources::{DefenseResource, SpriteSheetsResource, StoreResource},
+    misc::components::HealthComponent,
+    misc::resources::DefenseResource,
+    player::components::{BarrelRollAbilityComponent, PlayerComponent},
+    store::resources::StoreResource,
+    visual::resources::SpriteSheetsResource,
     visual::{
         components::{StatusBarComponent, StatusType},
         entities::spawn_status_unit,

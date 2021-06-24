@@ -1,4 +1,4 @@
-use crate::resources::PhaseManagerResource;
+use crate::phases::resources::PhaseManagerResource;
 use amethyst::{
     core::timing::Time,
     ecs::prelude::{Read, System, Write},

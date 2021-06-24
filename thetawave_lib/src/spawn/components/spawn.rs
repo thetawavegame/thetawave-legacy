@@ -1,7 +1,7 @@
 use crate::{
     entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
-    resources::SpriteSheetsResource,
     spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+    visual::resources::SpriteSheetsResource,
 };
 
 use amethyst::{

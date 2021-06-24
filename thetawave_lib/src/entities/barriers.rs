@@ -1,9 +1,9 @@
 use crate::{
-    components::{BarrierComponent, PushDirection},
     constants::{
         ARENA_HEIGHT, ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_Y, ARENA_WIDTH, SIDE_PANEL_WIDTH,
         SIDE_PANEL_Z,
     },
+    misc::components::{BarrierComponent, PushDirection},
     motion::components::Hitbox2DComponent,
 };
 use amethyst::{

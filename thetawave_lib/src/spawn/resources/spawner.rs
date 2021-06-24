@@ -1,10 +1,11 @@
 use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_SPAWN_OFFSET, SPAWNER_Y_OFFSET},
     entities::SpawnableType,
-    resources::{InvasionFormationPool, InvasionRandomPool, SpriteSheetsResource},
+    phases::resources::{InvasionFormationPool, InvasionRandomPool},
     spawnable::resources::{
         spawn_spawnable, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
     },
+    visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::{math::Vector2, transform::Transform},

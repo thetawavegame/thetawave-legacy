@@ -1,3 +1,11 @@
-mod audio;
+use std::collections::HashMap;
 
-pub use self::audio::{initialize_audio, play_sfx, Sounds};
+mod audio;
+mod play_audio;
+
+pub use self::{
+    audio::{initialize_audio, play_sfx, Sounds},
+    play_audio::PlayAudioSystem,
+};
+
+pub type SoundsConfig = HashMap<String, String>;

@@ -1,4 +1,4 @@
-use crate::components::PlanetComponent;
+use crate::visual::components::PlanetComponent;
 use amethyst::{
     core::Transform,
     ecs::prelude::{Join, System, WriteStorage},

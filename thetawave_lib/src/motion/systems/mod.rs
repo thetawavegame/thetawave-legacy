@@ -1,7 +1,7 @@
 //! System for managing entity motion
 
 use crate::{
-    components::{BarrierComponent, PushDirection},
+    misc::components::{BarrierComponent, PushDirection},
     motion::components::Motion2DComponent,
 };
 use amethyst::core::math::Vector2;

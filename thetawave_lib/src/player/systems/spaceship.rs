@@ -1,9 +1,9 @@
 use crate::{
     audio::Sounds,
-    components::HealthComponent,
     events::{ItemGetEvent, PlayAudioEvent},
+    misc::components::HealthComponent,
     motion::components::Motion2DComponent,
-    resources::SpriteSheetsResource,
+    visual::resources::SpriteSheetsResource,
     weapons::components::{BlasterComponent, ManualFireComponent},
 };
 use amethyst::{

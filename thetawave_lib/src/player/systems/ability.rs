@@ -1,7 +1,8 @@
 use crate::{
-    components::{AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, CooldownAbility},
     events::PlayerCollisionEvent,
+    misc::components::BarrierComponent,
     motion::components::Motion2DComponent,
+    player::components::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
     spawnable::components::MobComponent,
 };
 use amethyst::{

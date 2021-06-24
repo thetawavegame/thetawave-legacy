@@ -1,8 +1,9 @@
 use crate::{
     entities::spawn_repeater,
-    resources::{BossType, PhaseManagerResource, PhaseType, SpriteSheetsResource},
+    phases::resources::{BossType, PhaseManagerResource, PhaseType},
     spawn::{components::AutoSpawnerComponent, resources::SpawnerResource},
     spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+    visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},

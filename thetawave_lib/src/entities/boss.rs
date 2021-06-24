@@ -4,11 +4,11 @@ use amethyst::{
 };
 
 use crate::{
-    components::RepeaterComponent,
+    boss::components::RepeaterComponent,
     constants,
     entities::{EnemyType, MobType},
-    resources::SpriteSheetsResource,
     spawnable::resources::MobsResource,
+    visual::resources::SpriteSheetsResource,
 };
 use amethyst::prelude::Builder;
 

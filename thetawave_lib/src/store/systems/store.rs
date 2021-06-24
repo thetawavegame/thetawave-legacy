@@ -1,11 +1,12 @@
 use crate::{
     audio::Sounds,
-    components::PlayerComponent,
     entities::SpawnableType,
     events::PlayAudioEvent,
-    resources::{SpriteSheetsResource, StoreResource},
+    player::components::PlayerComponent,
     spawnable::resources::{ConsumablesResource, ItemsResource},
+    store::resources::StoreResource,
     visual::components::StoreIconComponent,
+    visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::{timing::Time, Transform},

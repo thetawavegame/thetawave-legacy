@@ -1,4 +1,4 @@
-use crate::{events::MobReachedBottomEvent, resources::DefenseResource};
+use crate::{events::MobReachedBottomEvent, misc::resources::DefenseResource};
 use amethyst::{
     ecs::prelude::{System, WriteExpect},
     ecs::*,

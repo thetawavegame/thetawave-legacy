@@ -23,15 +23,18 @@ mod states;
 
 use states::MainGameState;
 use thetawave_lib::{
-    resources::{
-        DebugLinesConfig, DefenseResource, DropTablesResource, GameParametersResource,
-        PhaseManagerResource, PlayersResource, SoundsConfig, SpriteSheetsConfig, StoreResource,
-    },
-    spawn::resources::SpawnerResource,
+    audio::SoundsConfig,
+    misc::resources::DefenseResource,
+    misc::resources::{DebugLinesConfig, GameParametersResource},
+    phases::resources::PhaseManagerResource,
+    player::resources::PlayersResource,
+    spawn::resources::{DropTablesResource, SpawnerResource},
     spawnable::resources::{
         ConsumableModifiersResource, ConsumablesResource, EffectsResource, ItemModifiersResource,
         ItemsResource, MobsResource,
     },
+    store::resources::StoreResource,
+    visual::resources::SpriteSheetsConfig,
 };
 
 use amethyst::config::Config;

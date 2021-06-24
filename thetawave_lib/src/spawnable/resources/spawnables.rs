@@ -1,13 +1,13 @@
 use crate::{
-    components::HealthComponent,
     entities::{ConsumableType, EffectType, ItemType, MobType},
+    misc::components::HealthComponent,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
-    resources::{SpriteRenderData, SpriteSheetsResource},
     spawn::components::{
         AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent,
     },
     spawnable::components::{ConsumableComponent, ItemComponent, MobComponent},
     visual::components::{AnimationComponent, FadeComponent},
+    visual::resources::{SpriteRenderData, SpriteSheetsResource},
     weapons::components::{AutoFireComponent, BlasterComponent},
 };
 use amethyst::{

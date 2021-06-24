@@ -1,6 +1,6 @@
 use crate::{
-    components::{AttractData, AttractorCategory},
     entities::{ConsumableType, ItemType},
+    misc::components::{AttractData, AttractorCategory},
 };
 use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
 use std::collections::HashMap;

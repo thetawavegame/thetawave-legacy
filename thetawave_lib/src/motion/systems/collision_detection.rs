@@ -1,8 +1,9 @@
 use crate::{
-    components::{BarrierComponent, PlayerComponent},
     events::{ArenaBorderCollisionEvent, CollisionEvent, MobCollisionEvent, PlayerCollisionEvent},
+    misc::components::BarrierComponent,
+    misc::resources::DebugLinesConfig,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
-    resources::DebugLinesConfig,
+    player::components::PlayerComponent,
     spawnable::components::MobComponent,
 };
 use amethyst::{

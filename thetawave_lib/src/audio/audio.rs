@@ -1,4 +1,4 @@
-use crate::resources::SoundsConfig;
+use crate::audio::SoundsConfig;
 use amethyst::{
     assets::{AssetStorage, Handle, Loader},
     audio::{output::Output, OggFormat, Source, SourceHandle},

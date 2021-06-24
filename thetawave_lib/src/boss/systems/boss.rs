@@ -1,4 +1,5 @@
-use crate::components::RepeaterComponent;
+use crate::boss::components::RepeaterComponent;
+
 use amethyst::ecs::prelude::{Entities, Join, System, WriteStorage};
 
 pub struct BossSystem;

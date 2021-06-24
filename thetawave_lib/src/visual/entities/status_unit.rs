@@ -1,4 +1,4 @@
-use crate::resources::SpriteSheetsResource;
+use crate::visual::resources::SpriteSheetsResource;
 use amethyst::{
     core::{math::Vector3, transform::Transform},
     ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},

@@ -1,14 +1,17 @@
 use crate::{
     audio::Sounds,
-    components::{BarrierComponent, HealthComponent, PlayerComponent},
     entities::{EffectType, EnemyType, MobType},
     events::{MobCollisionEvent, PlayAudioEvent},
+    misc::components::{BarrierComponent, HealthComponent},
+    misc::resources::GameParametersResource,
     motion::components::Motion2DComponent,
     motion::systems::{barrier_collision, immovable_collision, standard_collision},
-    resources::{GameParametersResource, SpriteSheetsResource},
+    player::components::PlayerComponent,
     spawnable::{components::BlastComponent, components::MobComponent, resources::EffectsResource},
+    visual::resources::SpriteSheetsResource,
     weapons::BlastType,
 };
+
 use amethyst::{
     core::transform::Transform,
     ecs::*,

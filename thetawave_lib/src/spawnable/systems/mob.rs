@@ -1,13 +1,14 @@
 use crate::{
     audio::Sounds,
-    components::HealthComponent,
     entities::EffectType,
     events::{MobDestroyedEvent, PlayAudioEvent},
-    resources::{DropTablesResource, SpriteSheetsResource},
+    misc::components::HealthComponent,
+    spawn::resources::DropTablesResource,
     spawnable::{
         components::MobComponent,
         resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
     },
+    visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::transform::Transform,

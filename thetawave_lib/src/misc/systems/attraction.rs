@@ -1,7 +1,7 @@
 use crate::{
-    components::{AttractorCategory, AttractorComponent},
     events::AttractionEvent,
-    resources::DebugLinesConfig,
+    misc::components::{AttractorCategory, AttractorComponent},
+    misc::resources::DebugLinesConfig,
 };
 use amethyst::{
     core::{math::Vector2, Transform},
@@ -9,6 +9,7 @@ use amethyst::{
     renderer::debug_drawing::DebugLines,
     shrev::EventChannel,
 };
+
 // check for spawnables within range and send event to attract if they are
 pub struct AttractorSystem;
 

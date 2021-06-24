@@ -2,10 +2,11 @@
 use crate::{
     entities::SpawnableType,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
-    resources::SpriteSheetsResource,
     spawn::components::DespawnAtBorderComponent,
     spawnable::components::BlastComponent,
+    visual::resources::SpriteSheetsResource,
 };
+
 use amethyst::{
     core::transform::Transform,
     ecs::prelude::{Builder, Entities, LazyUpdate, ReadExpect},

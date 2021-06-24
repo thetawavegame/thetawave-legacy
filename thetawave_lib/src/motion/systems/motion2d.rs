@@ -1,9 +1,10 @@
 use crate::{
-    components::{AttractorCategory, PlayerComponent},
     constants::{ARENA_HEIGHT, ARENA_MIN_Y},
     entities::{AllyType, EnemyType, MobType, NeutralType},
     events::AttractionEvent,
+    misc::components::AttractorCategory,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
+    player::components::PlayerComponent,
     spawnable::components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
     tools::distance,
     weapons::BlastType,

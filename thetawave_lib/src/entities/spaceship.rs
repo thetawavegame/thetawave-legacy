@@ -1,9 +1,4 @@
 use crate::{
-    components::AttractorCategory,
-    components::{
-        AbilityDirection, AttractData, AttractorComponent, BarrelRollAbilityComponent,
-        HealthComponent,
-    },
     constants::{
         ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CRIT_BLAST_SPRITE_INDEX,
         POISON_BLAST_SPRITE_INDEX, SPACESHIP_ACCELERATION_X, SPACESHIP_ACCELERATION_Y,
@@ -12,8 +7,10 @@ use crate::{
         SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT,
         SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
     },
+    misc::components::{AttractData, AttractorCategory, AttractorComponent, HealthComponent},
     motion::components::{Hitbox2DComponent, Motion2DComponent},
-    resources::PlayersResource,
+    player::components::{AbilityDirection, BarrelRollAbilityComponent},
+    player::resources::PlayersResource,
     weapons::{
         components::{BlasterComponent, ManualFireComponent},
         BlastType,

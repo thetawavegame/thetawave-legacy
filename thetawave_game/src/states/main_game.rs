@@ -12,11 +12,15 @@ use amethyst::{
 use std::{collections::HashMap, f32::consts::FRAC_PI_3};
 use thetawave_lib::{
     audio::initialize_audio,
+    audio::PlayAudioSystem,
+    boss::systems::BossSystem,
     constants::{
         ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CAMERA_X, CAMERA_Y,
         CAMERA_Z,
     },
     entities::{initialize_arena_barriers, initialize_spaceship},
+    misc::resources::DebugLinesConfig,
+    misc::systems::{AttractorSystem, DefenseSystem},
     motion::systems::{
         BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
         ConsumableMotion2DSystem, ItemMotion2DSystem, MobArenaBorderCollisionSystem,
@@ -26,7 +30,8 @@ use thetawave_lib::{
         PlayerConsumableCollisionSystem, PlayerItemCollisionSystem, PlayerMobCollisionSystem,
         PlayerMotion2DSystem,
     },
-    resources::{DebugLinesConfig, SpriteSheetsConfig, SpriteSheetsResource},
+    phases::systems::PhaseManagerSystem,
+    player::systems::{BarrelRollAbilitySystem, SpaceshipSystem},
     spawn::systems::{
         AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
     },
@@ -34,7 +39,8 @@ use thetawave_lib::{
         systems::ModifiersSystem,
         systems::{MobBehaviorSystem, MobDestroyedSystem},
     },
-    systems,
+    store::systems::StoreSystem,
+    visual::resources::{SpriteSheetsConfig, SpriteSheetsResource},
     visual::{
         entities::{
             initialize_background, initialize_planet, initialize_side_panels,
@@ -64,15 +70,15 @@ impl Default for MainGameState {
             dispatcher: DispatcherBuilder::new()
                 .with(AnimationSystem, "animation_system", &[])
                 .with(PlanetsSystem, "planets_system", &[])
-                .with(systems::PhaseManagerSystem, "phase_manager_system", &[])
+                .with(PhaseManagerSystem, "phase_manager_system", &[])
                 .with(MobBehaviorSystem, "mob_behavior_system", &[])
-                .with(systems::BossSystem, "boss_system", &[])
+                .with(BossSystem, "boss_system", &[])
                 .with(SpawnerSystem, "spawner_system", &[])
                 .with(DespawnTimeLimitSystem, "timelimit_system", &[])
                 .with(Motion2DSystem, "motion_2d_system", &[])
                 .with(MobTargetSystem, "mob_target_system", &[])
                 .with(AutoSpawnerSystem, "auto_spawner_system", &[])
-                .with(systems::AttractorSystem, "attractor_system", &[])
+                .with(AttractorSystem, "attractor_system", &[])
                 .with(
                     ItemMotion2DSystem::default(),
                     "item_motion_2d_system",
@@ -89,7 +95,7 @@ impl Default for MainGameState {
                     &["attractor_system"],
                 )
                 .with(
-                    systems::BarrelRollAbilitySystem::default(),
+                    BarrelRollAbilitySystem::default(),
                     "barrel_roll_ability_system",
                     &[],
                 )
@@ -158,12 +164,12 @@ impl Default for MainGameState {
                     &["collision_handler_system"],
                 )
                 .with(
-                    systems::DefenseSystem::default(),
+                    DefenseSystem::default(),
                     "defense_system",
                     &["spaceship_item_collision_system"],
                 )
-                .with(systems::SpaceshipSystem::default(), "spaceship_system", &[])
-                .with(systems::StoreSystem, "store_system", &[])
+                .with(SpaceshipSystem::default(), "spaceship_system", &[])
+                .with(StoreSystem, "store_system", &[])
                 .with(
                     StatTrackerSystem,
                     "stat_tracker_system",
@@ -176,11 +182,7 @@ impl Default for MainGameState {
                     "mob_destroyed_system",
                     &["mob_behavior_system"],
                 )
-                .with(
-                    systems::PlayAudioSystem::default(),
-                    "play_audio_system",
-                    &[],
-                )
+                .with(PlayAudioSystem::default(), "play_audio_system", &[])
                 .with(FadeSystem, "fade_system", &[])
                 .build(),
         }
