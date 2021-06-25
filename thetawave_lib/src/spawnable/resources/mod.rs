@@ -34,6 +34,17 @@ pub enum SpawnableType {
     Mob(MobType),
 }
 
+impl SpawnableType {
+    pub fn get_spritesheet_name(&self) -> String {
+        match self {
+            &Self::Consumable(_) => String::from("consumables"),
+            &Self::Effect(_) => String::from("effects"),
+            &Self::Item(_) => String::from("items"),
+            &Self::Mob(_) => String::from("mobs"),
+        }
+    }
+}
+
 #[derive(Clone, Serialize, Deserialize, Debug, Hash, PartialEq, Eq)]
 pub enum MobType {
     Enemy(EnemyType),

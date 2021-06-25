@@ -45,7 +45,7 @@ use thetawave_lib::{
     visual::{
         entities::{
             initialize_background, initialize_planet, initialize_side_panels,
-            initialize_status_bars, initialize_store_icons,
+            initialize_status_bars,
         },
         systems::{
             AnimationSystem, FadeSystem, PlanetsSystem, StatTrackerSystem, StatusBarSystem,
@@ -224,7 +224,7 @@ impl SimpleState for MainGameState {
         initialize_background(world, spritesheets.spritesheets["backgrounds"].clone());
         initialize_spaceship(world, spritesheets.spritesheets["characters"].clone());
         initialize_arena_barriers(world);
-        initialize_store_icons(world, spritesheets.spritesheets["items"].clone());
+        //initialize_store_icons(world, spritesheets.spritesheets["items"].clone());
         initialise_camera(world);
 
         world.insert(DebugLines::new());

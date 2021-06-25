@@ -5,9 +5,11 @@ use crate::{
     tools::Timer,
     visual::resources::SpriteSheetsResource,
 };
+use amethyst::prelude::Builder;
 use amethyst::{
-    core::transform::Transform,
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    core::{math::Vector3, transform::Transform},
+    ecs::prelude::{Entities, Entity, LazyUpdate, ReadExpect},
+    renderer::SpriteRender,
 };
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
@@ -22,9 +24,11 @@ pub struct StoreConfig {
 }
 
 pub struct StoreResource {
-    pub stock: StockProbabilities,
     pub inventory: Vec<Option<SpawnableType>>,
     pub timer: Timer,
+    stock: StockProbabilities,
+    icon_positions: Vec<Vector3<f32>>,
+    icon_entities: Vec<Option<Entity>>,
 }
 
 impl From<StoreConfig> for StoreResource {
@@ -39,18 +43,93 @@ impl StoreResource {
             inventory: vec![None, None, None],
             timer: Timer::new(restock_period),
             stock,
+            icon_positions: vec![
+                Vector3::new(327.0, 72.0, 0.9),
+                Vector3::new(327.0, 53.0, 0.9),
+                Vector3::new(327.0, 34.0, 0.9),
+            ],
+            icon_entities: vec![None, None, None],
         }
     }
 
-    pub fn update(&mut self, delta_time: f32) -> bool {
+    fn destroy_icon(&mut self, index: usize, entities: &Entities) {
+        if let Some(icon_entity) = self.icon_entities[index] {
+            entities
+                .delete(icon_entity)
+                .expect("Unable to delete store icon entity.");
+            self.icon_entities[index] = None;
+        }
+    }
+
+    fn create_icon(
+        &mut self,
+        index: usize,
+        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        items_resource: &ReadExpect<ItemsResource>,
+        consumables_resource: &ReadExpect<ConsumablesResource>,
+        entities: &Entities,
+        lazy_update: &ReadExpect<LazyUpdate>,
+    ) {
+        if let Some(spawnable_type) = self.inventory[index].clone() {
+            self.destroy_icon(index, entities);
+
+            let sprite_render = SpriteRender {
+                sprite_sheet: spritesheets_resource.spritesheets
+                    [&spawnable_type.get_spritesheet_name()].clone(),
+                sprite_number: match spawnable_type {
+                    SpawnableType::Consumable(consumable_type) => {
+                        consumables_resource.consumable_entities[&consumable_type].sprite_render_data.initial_index
+                    },
+                    SpawnableType::Item(item_type) => {
+                        items_resource.item_entities[&item_type].sprite_render_data.initial_index
+                    },
+                    _ => {panic!("Attempted to set icon to invalid Spawnable. Icons must be sent to items or consumables.")}
+                },
+            };
+
+            let mut transform = Transform::default();
+            transform.set_translation(self.icon_positions[index].into());
+
+            let icon_entity = lazy_update
+                .create_entity(entities)
+                .with(sprite_render)
+                .with(transform)
+                .build();
+
+            self.icon_entities[index] = Some(icon_entity);
+        }
+    }
+
+    pub fn update(
+        &mut self,
+        delta_time: f32,
+        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        items_resource: &ReadExpect<ItemsResource>,
+        consumables_resource: &ReadExpect<ConsumablesResource>,
+        entities: &Entities,
+        lazy_update: &ReadExpect<LazyUpdate>,
+    ) -> bool {
         if self.timer.update(delta_time) {
-            self.choose_stock();
+            self.choose_stock(
+                spritesheets_resource,
+                items_resource,
+                consumables_resource,
+                entities,
+                lazy_update,
+            );
             return true;
         }
         false
     }
 
-    fn choose_stock(&mut self) {
+    fn choose_stock(
+        &mut self,
+        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        items_resource: &ReadExpect<ItemsResource>,
+        consumables_resource: &ReadExpect<ConsumablesResource>,
+        entities: &Entities,
+        lazy_update: &ReadExpect<LazyUpdate>,
+    ) {
         self.inventory = vec![None, None, None];
         let mut choose_pool = self.stock.clone();
 
@@ -67,7 +146,16 @@ impl StoreResource {
                 if sum > pos {
                     //let item_to_add = &items_resource.item_entities[&item_type];
                     choose_pool.retain(|element| element != &(entity_type.clone(), value)); // remove chosen item from cloned choose pool
+
                     self.inventory[i] = Some(entity_type.clone());
+                    self.create_icon(
+                        i,
+                        spritesheets_resource,
+                        items_resource,
+                        consumables_resource,
+                        entities,
+                        lazy_update,
+                    );
 
                     let entity_index = self
                         .stock
@@ -96,10 +184,11 @@ impl StoreResource {
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
         lazy_update: &ReadExpect<LazyUpdate>,
     ) -> bool {
-        if let Some(entity_type) = &self.inventory[inventory_index] {
-            match entity_type {
+        if let Some(entity_type) = self.inventory[inventory_index].clone() {
+            self.destroy_icon(inventory_index, entities);
+            match &entity_type {
                 SpawnableType::Item(item_type) => {
-                    let item_data = items_resource.item_entities[item_type].clone();
+                    let item_data = items_resource.item_entities[&item_type].clone();
                     if player.money >= item_data.item_component.price {
                         player.money -= item_data.item_component.price;
 
@@ -111,7 +200,7 @@ impl StoreResource {
                         );
 
                         items_resource.spawn_item(
-                            item_type,
+                            &item_type,
                             false,
                             spawn_transform,
                             spritesheets_resource,
@@ -120,7 +209,7 @@ impl StoreResource {
                         );
 
                         for (i, e_type) in self.stock.iter().enumerate() {
-                            if e_type.0 == *entity_type {
+                            if e_type.0 == entity_type {
                                 self.stock[i].1 = 0.0; //set probability of appearing again to 0
                                 break;
                             }
@@ -132,7 +221,7 @@ impl StoreResource {
                 }
                 SpawnableType::Consumable(consumable_type) => {
                     let consumable_data =
-                        consumables_resource.consumable_entities[consumable_type].clone();
+                        consumables_resource.consumable_entities[&consumable_type].clone();
                     if player.money >= consumable_data.consumable_component.price {
                         player.money -= consumable_data.consumable_component.price;
 
@@ -144,7 +233,7 @@ impl StoreResource {
                         );
 
                         consumables_resource.spawn_consumable(
-                            consumable_type,
+                            &consumable_type,
                             false,
                             spawn_transform,
                             spritesheets_resource,

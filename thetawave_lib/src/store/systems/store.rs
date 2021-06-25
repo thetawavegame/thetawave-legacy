@@ -2,9 +2,8 @@ use crate::{
     audio::Sounds,
     events::PlayAudioEvent,
     player::components::PlayerComponent,
-    spawnable::resources::{ConsumablesResource, ItemsResource, SpawnableType},
+    spawnable::resources::{ConsumablesResource, ItemsResource},
     store::StoreResource,
-    visual::components::StoreIconComponent,
     visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
@@ -14,7 +13,6 @@ use amethyst::{
         WriteStorage,
     },
     input::{InputHandler, StringBindings},
-    renderer::SpriteRender,
     shrev::EventChannel,
 };
 
@@ -34,8 +32,6 @@ impl<'s> System<'s> for StoreSystem {
         ReadStorage<'s, Transform>,
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
-        ReadStorage<'s, StoreIconComponent>,
-        WriteStorage<'s, SpriteRender>,
     );
 
     fn run(
@@ -53,49 +49,22 @@ impl<'s> System<'s> for StoreSystem {
             transforms,
             mut play_audio_channel,
             sounds,
-            store_icons,
-            mut sprite_renders,
         ): Self::SystemData,
     ) {
         let buy_0_action = input.action_is_down("buy_0").unwrap();
         let buy_1_action = input.action_is_down("buy_1").unwrap();
         let buy_2_action = input.action_is_down("buy_2").unwrap();
 
-        if store_resource.update(time.delta_seconds()) {
-            // change store icons
-            for (store_icon, sprite_render) in (&store_icons, &mut sprite_renders).join() {
-                if let Some(SpawnableType::Item(item_type)) =
-                    store_resource.inventory[store_icon.inventory_index].clone()
-                {
-                    let item_data = items_resource.item_entities[&item_type].clone();
-                    *sprite_render = SpriteRender {
-                        sprite_sheet: spritesheets_resource.spritesheets
-                            [&item_data.sprite_render_data.spritesheet]
-                            .clone(),
-                        sprite_number: item_data.sprite_render_data.initial_index,
-                    }
-                } else if let Some(SpawnableType::Consumable(consumable_type)) =
-                    store_resource.inventory[store_icon.inventory_index].clone()
-                {
-                    let consumable_data =
-                        consumables_resource.consumable_entities[&consumable_type].clone();
-                    *sprite_render = SpriteRender {
-                        sprite_sheet: spritesheets_resource.spritesheets
-                            [&consumable_data.sprite_render_data.spritesheet]
-                            .clone(),
-                        sprite_number: consumable_data.sprite_render_data.initial_index,
-                    }
-                } else {
-                    // if no inventory in slot put blank sprite
-                    *sprite_render = SpriteRender {
-                        sprite_sheet: spritesheets_resource.spritesheets["items"].clone(),
-                        sprite_number: 0,
-                    }
-                }
-            }
-        }
+        store_resource.update(
+            time.delta_seconds(),
+            &spritesheets_resource,
+            &items_resource,
+            &consumables_resource,
+            &entities,
+            &lazy_update,
+        );
 
-        // TODO: streamline purchase_item function with constant component in item data file
+        // purchase store inventory on input if availabe
         for (character, transform) in (&mut players, &transforms).join() {
             if (buy_0_action
                 && store_resource.purchase(
@@ -134,28 +103,6 @@ impl<'s> System<'s> for StoreSystem {
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["cash_register_bell"].clone(),
                 });
-
-                // change store icons
-                for (store_icon, sprite_render) in (&store_icons, &mut sprite_renders).join() {
-                    if buy_0_action && store_icon.inventory_index == 0 {
-                        *sprite_render = SpriteRender {
-                            sprite_sheet: spritesheets_resource.spritesheets["items"].clone(),
-                            sprite_number: 0,
-                        }
-                    }
-                    if buy_1_action && store_icon.inventory_index == 1 {
-                        *sprite_render = SpriteRender {
-                            sprite_sheet: spritesheets_resource.spritesheets["items"].clone(),
-                            sprite_number: 0,
-                        }
-                    }
-                    if buy_2_action && store_icon.inventory_index == 2 {
-                        *sprite_render = SpriteRender {
-                            sprite_sheet: spritesheets_resource.spritesheets["items"].clone(),
-                            sprite_number: 0,
-                        }
-                    }
-                }
             }
         }
     }
