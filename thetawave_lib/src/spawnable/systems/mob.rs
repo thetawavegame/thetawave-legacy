@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     events::{MobDestroyedEvent, PlayAudioEvent},
-    misc::components::HealthComponent,
+    misc::HealthComponent,
     spawn::resources::DropTablesResource,
     spawnable::{
         components::MobComponent,
@@ -40,12 +40,9 @@ impl<'s> System<'s> for MobBehaviorSystem {
     ) {
         for (mob_entity, _mob_component, mob_health) in (&*entities, &mut mobs, &mut healths).join()
         {
-            mob_health.constrain();
-
-            // conditions for despawning
-            if mob_health.value <= 0.0 {
-                mob_destroyed_event_channel.single_write(MobDestroyedEvent::new(mob_entity));
-            }
+            mob_health.health.constrain(|| {
+                mob_destroyed_event_channel.single_write(MobDestroyedEvent::new(mob_entity))
+            });
         }
     }
 }

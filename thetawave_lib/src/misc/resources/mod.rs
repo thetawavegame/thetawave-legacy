@@ -3,10 +3,8 @@
 use amethyst::renderer::palette::Srgba;
 use serde::{Deserialize, Serialize};
 
-mod defense;
 mod game_parameters;
 
-pub use self::defense::DefenseResource;
 pub use self::game_parameters::GameParametersResource;
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]

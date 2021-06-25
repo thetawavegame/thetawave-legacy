@@ -7,7 +7,8 @@ use crate::{
         SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT,
         SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
     },
-    misc::components::{AttractData, AttractorCategory, AttractorComponent, HealthComponent},
+    misc::components::{AttractData, AttractorCategory, AttractorComponent},
+    misc::HealthComponent,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     player::components::{AbilityDirection, BarrelRollAbilityComponent},
     player::resources::PlayersResource,
@@ -89,11 +90,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         ready: false,
     };
 
-    let health = HealthComponent {
-        value: SPACESHIP_HEALTH,
-        max_value: SPACESHIP_HEALTH,
-        armor: 0,
-    };
+    let health = HealthComponent::new(SPACESHIP_HEALTH);
 
     let barrel_roll_ability = BarrelRollAbilityComponent {
         execute_cooldown: SPACESHIP_BARREL_COOLDOWN,

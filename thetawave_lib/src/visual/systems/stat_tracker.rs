@@ -1,5 +1,5 @@
 use crate::{
-    misc::components::HealthComponent,
+    misc::HealthComponent,
     player::components::PlayerComponent,
     spawnable::resources::{ConsumablesResource, ItemsResource, SpawnableType},
     store::resources::StoreResource,
@@ -55,7 +55,7 @@ impl<'s> System<'s> for StatTrackerSystem {
 
         for (_player, health) in (&players, &healths).join() {
             if let Some(text) = ui_text.get_mut(tracked_stats.shields) {
-                text.text = format!("x{}", health.armor.to_string());
+                text.text = format!("x{}", health.health.get_armor().to_string());
             }
         }
 

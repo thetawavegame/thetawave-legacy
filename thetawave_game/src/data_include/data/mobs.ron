@@ -17,9 +17,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 100,
-                value: 100,
-                armor: 3,
+                health: (
+                    max_value: 100,
+                    value: 100,
+                    armor: 3,
+                ),
             ),
             hitbox_component: (
                 width: 18.0,
@@ -72,9 +74,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 60,
-                value: 60,
-                armor: 0,
+                health: (
+                    max_value: 60,
+                    value: 60,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 14.0,
@@ -153,9 +157,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 110,
-                value: 110,
-                armor: 0,
+                health: (
+                    max_value: 110,
+                    value: 110,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 14.0,
@@ -215,9 +221,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 220,
-                value: 220,
-                armor: 0,
+                health: (
+                    max_value: 220,
+                    value: 220,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 14.0,
@@ -296,9 +304,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 75,
-                value: 75,
-                armor: 0,
+                health: (
+                    max_value: 75,
+                    value: 75,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 22.0,
@@ -377,9 +387,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 75,
-                value: 75,
-                armor: 0,
+                health: (
+                    max_value: 75,
+                    value: 75,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 22.0,
@@ -440,9 +452,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 150,
-                value: 150,
-                armor: 0,
+                health: (
+                    max_value: 150,
+                    value: 150,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 15.0,
@@ -508,9 +522,11 @@
                 mob_type: Enemy(Missile),
             ),
             health_component: (
-                max_value: 50,
-                value: 50,
-                armor: 0,
+                health: (
+                    max_value: 50,
+                    value: 50,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 7.0,
@@ -571,9 +587,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 10000,
-                value: 10000,
-                armor: 0,
+                health: (
+                    max_value: 10000,
+                    value: 10000,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 48.0,
@@ -622,9 +640,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 2000,
-                value: 2000,
-                armor: 0,
+                health: (
+                    max_value: 2000,
+                    value: 2000,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 30.0,
@@ -673,9 +693,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 2000,
-                value: 2000,
-                armor: 0,
+                health: (
+                    max_value: 2000,
+                    value: 2000,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 28.0,
@@ -726,9 +748,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 2000,
-                value: 2000,
-                armor: 0,
+                health: (
+                    max_value: 2000,
+                    value: 2000,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 28.0,
@@ -779,9 +803,11 @@
                 collision_damage: 30.0,
             ),
             health_component: (
-                max_value: 2000,
-                value: 2000,
-                armor: 0,
+                health: (
+                    max_value: 2000,
+                    value: 2000,
+                    armor: 0,
+                ),
             ),
             hitbox_component: (
                 width: 20.0,

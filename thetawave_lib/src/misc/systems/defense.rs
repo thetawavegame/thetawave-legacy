@@ -1,4 +1,4 @@
-use crate::{events::MobReachedBottomEvent, misc::resources::DefenseResource};
+use crate::{events::MobReachedBottomEvent, misc::DefenseResource};
 use amethyst::{
     ecs::prelude::{System, WriteExpect},
     ecs::*,
@@ -29,9 +29,9 @@ impl<'s> System<'s> for DefenseSystem {
         for event in mob_reached_bottom_event_channel
             .read(self.mob_reached_bottom_event_reader.as_mut().unwrap())
         {
-            defense_resource.value -= event.damage;
+            defense_resource.defense.take_damage(event.damage);
         }
 
-        defense_resource.constrain();
+        defense_resource.defense.constrain(|| {});
     }
 }

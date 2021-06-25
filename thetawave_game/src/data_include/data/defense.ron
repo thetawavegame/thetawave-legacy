@@ -1,4 +1,7 @@
 (
-    max_defense: 500,
-    value: 500,
+    defense: (
+        max_value: 500,
+        value: 500,
+        armor: 0,
+    ),
 )

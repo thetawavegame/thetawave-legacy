@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     events::{ItemGetEvent, PlayAudioEvent},
-    misc::components::HealthComponent,
+    misc::HealthComponent,
     motion::components::Motion2DComponent,
     visual::resources::SpriteSheetsResource,
     weapons::components::{BlasterComponent, ManualFireComponent},
@@ -85,7 +85,7 @@ impl<'s> System<'s> for SpaceshipSystem {
                 });
             }
 
-            health.constrain();
+            health.health.constrain(|| {});
         }
     }
 }

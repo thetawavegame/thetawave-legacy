@@ -1,6 +1,5 @@
 use crate::{
-    misc::components::HealthComponent,
-    misc::resources::DefenseResource,
+    misc::{DefenseResource, HealthComponent},
     player::components::{BarrelRollAbilityComponent, PlayerComponent},
     store::resources::StoreResource,
     visual::resources::SpriteSheetsResource,
@@ -54,9 +53,11 @@ impl<'s> System<'s> for StatusBarSystem {
             match status_bar.status_type {
                 StatusType::Health => {
                     for (_player, health) in (&players, &healths).join() {
-                        if let Some(status_position) =
-                            status_bar.update_units_y(health.max_value, health.value, &entities)
-                        {
+                        if let Some(status_position) = status_bar.update_units_y(
+                            health.health.get_max_health_value(),
+                            health.health.get_health_value(),
+                            &entities,
+                        ) {
                             status_bar.status_unit_stack.push(spawn_status_unit(
                                 &entities,
                                 &sprite_resource,
@@ -70,8 +71,8 @@ impl<'s> System<'s> for StatusBarSystem {
 
                 StatusType::Defense => {
                     if let Some(status_position) = status_bar.update_units_y(
-                        defense_resource.max_defense,
-                        defense_resource.value,
+                        defense_resource.defense.get_max_health_value(),
+                        defense_resource.defense.get_health_value(),
                         &entities,
                     ) {
                         status_bar.status_unit_stack.push(spawn_status_unit(

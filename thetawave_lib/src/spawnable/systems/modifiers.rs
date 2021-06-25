@@ -1,7 +1,7 @@
 use crate::{
     events::{ConsumableGetEvent, ItemGetEvent},
-    misc::components::{AttractorCategory, AttractorComponent, HealthComponent},
-    misc::resources::DefenseResource,
+    misc::components::{AttractorCategory, AttractorComponent},
+    misc::{DefenseResource, HealthComponent},
     motion::components::Motion2DComponent,
     player::components::{BarrelRollAbilityComponent, PlayerComponent},
     spawnable::resources::{
@@ -193,11 +193,12 @@ pub fn apply_modifiers(
             }
 
             Modifier::MaximumHealth(val) => {
-                player_health.max_value += val;
+                let new_max_value = player_health.health.get_health_value() + val;
+                player_health.health.set_max_health(new_max_value);
             }
 
             Modifier::Health(val) => {
-                player_health.value += val;
+                player_health.health.heal(*val);
             }
 
             Modifier::ProjectileSize(val) => {
@@ -205,15 +206,16 @@ pub fn apply_modifiers(
             }
 
             Modifier::MaximumDefense(val) => {
-                defense_resource.max_defense += val;
+                let new_max_value = defense_resource.defense.get_health_value() + val;
+                defense_resource.defense.set_max_health(new_max_value);
             }
 
             Modifier::Defense(val) => {
-                defense_resource.value += val;
+                defense_resource.defense.heal(*val);
             }
 
             Modifier::Armor(val) => {
-                player_health.armor += val;
+                player_health.health.gain_armor(*val);
             }
 
             Modifier::Money(val) => {

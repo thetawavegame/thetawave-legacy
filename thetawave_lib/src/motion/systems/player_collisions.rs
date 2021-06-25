@@ -1,8 +1,9 @@
 use crate::{
     audio::Sounds,
     events::{ConsumableGetEvent, ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
-    misc::components::{BarrierComponent, HealthComponent},
+    misc::components::BarrierComponent,
     misc::resources::GameParametersResource,
+    misc::HealthComponent,
     motion::{
         components::Motion2DComponent,
         systems::{barrier_collision, immovable_collision, standard_collision},
@@ -80,7 +81,7 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
                 };
 
                 if !collision_damage_immune {
-                    spaceship_health.take_damage(mob.collision_damage);
+                    spaceship_health.health.take_damage(mob.collision_damage);
                 }
 
                 if let Some(collision_velocity) = event.collision_velocity {
@@ -184,7 +185,7 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
                                 &entities,
                                 &lazy_update,
                             );
-                            spaceship_health.take_damage(blast.damage);
+                            spaceship_health.health.take_damage(blast.damage);
                         }
                         _ => {}
                     }
@@ -362,7 +363,7 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
 
                 barrier_collision(player_motion, barrier);
 
-                player_health.value -= barrier.damage;
+                player_health.health.take_damage(barrier.damage);
 
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["force_field"].clone(),

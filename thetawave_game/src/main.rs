@@ -24,8 +24,8 @@ mod states;
 use states::MainGameState;
 use thetawave_lib::{
     audio::SoundsConfig,
-    misc::resources::DefenseResource,
     misc::resources::{DebugLinesConfig, GameParametersResource},
+    misc::DefenseResource,
     phases::resources::PhaseManagerResource,
     player::resources::PlayersResource,
     spawn::resources::{DropTablesResource, SpawnerResource},

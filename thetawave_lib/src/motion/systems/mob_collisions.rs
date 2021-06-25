@@ -1,8 +1,9 @@
 use crate::{
     audio::Sounds,
     events::{MobCollisionEvent, PlayAudioEvent},
-    misc::components::{BarrierComponent, HealthComponent},
+    misc::components::BarrierComponent,
     misc::resources::GameParametersResource,
+    misc::HealthComponent,
     motion::components::Motion2DComponent,
     motion::systems::{barrier_collision, immovable_collision, standard_collision},
     player::components::PlayerComponent,
@@ -79,11 +80,11 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
 
                 match mob.mob_type {
                     MobType::Enemy(EnemyType::Missile) => {
-                        mob_health.value = 0.0;
+                        mob_health.health.set_health(0.0);
                     }
 
                     _ => {
-                        mob_health.value -= player.collision_damage;
+                        mob_health.health.take_damage(player.collision_damage);
                     }
                 }
 
@@ -154,11 +155,13 @@ impl<'s> System<'s> for MobMobCollisionSystem {
 
                 match mob.mob_type {
                     MobType::Enemy(EnemyType::Missile) => {
-                        mob_health.value = 0.0;
+                        mob_health.health.set_health(0.0);
                     }
 
                     _ => {
-                        mob_health.value -= colliding_mob.collision_damage;
+                        mob_health
+                            .health
+                            .take_damage(colliding_mob.collision_damage);
                     }
                 }
 
@@ -260,7 +263,8 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
                             &lazy_update,
                         );
 
-                        mob_health.value -= blast.damage;
+                        mob_health.health.take_damage(blast.damage);
+
                         //TODO: apply poison to enemy health component from blast
                         //enemy.poison = blast.poison_damage;
                     }
@@ -329,7 +333,7 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
 
                             barrier_collision(mob_motion, barrier);
 
-                            mob_health.value -= barrier.damage;
+                            mob_health.health.take_damage(barrier.damage);
 
                             play_audio_channel.single_write(PlayAudioEvent {
                                 source: sounds.sound_effects["force_field"].clone(),

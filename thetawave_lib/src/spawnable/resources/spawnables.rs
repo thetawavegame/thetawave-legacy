@@ -1,5 +1,5 @@
 use crate::{
-    misc::components::HealthComponent,
+    misc::HealthComponent,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     spawn::components::{
         AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent,
