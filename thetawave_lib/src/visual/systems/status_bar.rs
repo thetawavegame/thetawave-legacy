@@ -1,7 +1,7 @@
 use crate::{
     misc::{DefenseResource, HealthComponent},
     player::components::{BarrelRollAbilityComponent, PlayerComponent},
-    store::resources::StoreResource,
+    store::StoreResource,
     visual::resources::SpriteSheetsResource,
     visual::{
         components::{StatusBarComponent, StatusType},
@@ -54,8 +54,8 @@ impl<'s> System<'s> for StatusBarSystem {
                 StatusType::Health => {
                     for (_player, health) in (&players, &healths).join() {
                         if let Some(status_position) = status_bar.update_units_y(
-                            health.health.get_max_health_value(),
-                            health.health.get_health_value(),
+                            health.health.get_max_health(),
+                            health.health.get_health(),
                             &entities,
                         ) {
                             status_bar.status_unit_stack.push(spawn_status_unit(
@@ -71,8 +71,8 @@ impl<'s> System<'s> for StatusBarSystem {
 
                 StatusType::Defense => {
                     if let Some(status_position) = status_bar.update_units_y(
-                        defense_resource.defense.get_max_health_value(),
-                        defense_resource.defense.get_health_value(),
+                        defense_resource.defense.get_max_health(),
+                        defense_resource.defense.get_health(),
                         &entities,
                     ) {
                         status_bar.status_unit_stack.push(spawn_status_unit(
@@ -106,8 +106,8 @@ impl<'s> System<'s> for StatusBarSystem {
 
                 StatusType::Restock => {
                     if let Some(status_position) = status_bar.update_units_x(
-                        store_resource.restock_period,
-                        store_resource.restock_period - store_resource.restock_timer,
+                        store_resource.timer.get_period(),
+                        store_resource.timer.get_time_left(),
                         &entities,
                     ) {
                         status_bar.status_unit_stack.push(spawn_status_unit(

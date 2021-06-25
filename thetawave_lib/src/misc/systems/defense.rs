@@ -31,7 +31,5 @@ impl<'s> System<'s> for DefenseSystem {
         {
             defense_resource.defense.take_damage(event.damage);
         }
-
-        defense_resource.defense.constrain(|| {});
     }
 }

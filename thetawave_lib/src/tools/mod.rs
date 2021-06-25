@@ -1,5 +1,6 @@
 mod math;
 mod random;
+mod timer;
 
 pub use self::{
     math::{
@@ -7,4 +8,5 @@ pub use self::{
         rotate_y, run_sat, sat_is_colliding, signed_modulo, Vector,
     },
     random::weighted_rng,
+    timer::Timer,
 };

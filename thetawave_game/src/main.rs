@@ -33,7 +33,7 @@ use thetawave_lib::{
         ConsumableModifiersResource, ConsumablesResource, EffectsResource, ItemModifiersResource,
         ItemsResource, MobsResource,
     },
-    store::resources::StoreResource,
+    store::{StoreConfig, StoreResource},
     visual::resources::SpriteSheetsConfig,
 };
 
@@ -95,8 +95,9 @@ fn main() -> amethyst::Result<()> {
         .expect("failed to load data file: players.ron");
     let phases = <PhaseManagerResource as Config>::load_bytes(phases)
         .expect("failed to load data file: phases.ron");
-    let store =
-        <StoreResource as Config>::load_bytes(store).expect("failed to load data file: store.ron");
+    let store = StoreResource::from(
+        <StoreConfig as Config>::load_bytes(store).expect("failed to load data file: store.ron"),
+    );
     let game_parameters = <GameParametersResource as Config>::load_bytes(game_parameters)
         .expect("failed to load data file: game_parameters.ron");
     let spawner = <SpawnerResource as Config>::load_bytes(spawner)

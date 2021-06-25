@@ -1,96 +1,116 @@
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 
+/// Manage health, damage, healing, etc.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Health {
-    max_value: f32,
-    value: f32,
+    /// Maximum health attainable
+    max_health: f32,
+    /// Current health value
+    health: f32,
+    /// Amount of armor
     armor: usize,
 }
 
 impl Health {
-    pub fn new(value: f32) -> Health {
+    /// Create a new health struct from a maximum health value
+    pub fn new(health: f32) -> Self {
         Health {
-            max_value: value,
-            value,
+            max_health: health,
+            health,
             armor: 0,
         }
     }
 
-    pub fn constrain<F>(&mut self, mut on_zero_health: F)
+    /// Check health is below zero
+    /// Execute `on_zero_health` if below zero
+    pub fn check<F>(&mut self, mut on_zero_health: F)
     where
         F: FnMut(),
     {
-        if self.value <= 0.0 {
+        if self.health <= 0.0 {
             on_zero_health();
-            self.value = 0.0;
-        } else if self.value > self.max_value {
-            self.value = self.max_value;
         }
     }
 
-    pub fn take_damage(&mut self, value: f32) {
+    /// Take damage
+    /// Remove armor first if available
+    pub fn take_damage(&mut self, damage: f32) {
         if self.armor == 0 {
-            self.value -= value;
+            self.health -= damage;
+            if self.health < 0.0 {
+                self.health = 0.0;
+            }
         } else {
             self.armor -= 1;
         }
     }
 
-    pub fn get_max_health_value(&self) -> f32 {
-        self.max_value
+    /// Get maximum health
+    pub fn get_max_health(&self) -> f32 {
+        self.max_health
     }
 
-    pub fn get_health_value(&self) -> f32 {
-        self.value
+    /// Get current health
+    pub fn get_health(&self) -> f32 {
+        self.health
     }
 
+    /// Get available armor count
     pub fn get_armor(&self) -> usize {
         self.armor
     }
 
-    pub fn set_health(&mut self, value: f32) {
-        if value > self.max_value {
+    /// Set health to value
+    pub fn set_health(&mut self, health: f32) {
+        if health > self.max_health {
             eprintln!(
                 "Attempting to set health value to value above maximum health!
             Setting to max value instead."
             );
-            self.value = self.max_value;
+            self.health = self.max_health;
         } else {
-            self.value = value;
+            self.health = health;
         }
     }
 
-    pub fn set_max_health(&mut self, value: f32) {
-        if value <= 0.0 {
+    /// Set maximum health to value
+    /// Constrain current health to be <= value
+    pub fn set_max_health(&mut self, max_health: f32) {
+        if max_health <= 0.0 {
             panic!("Attempted to set maximum health to value less than or equal to 0.0!");
         }
 
-        self.max_value = value;
+        self.max_health = max_health;
 
-        if self.value > self.max_value {
-            self.value = self.max_value;
+        if self.health > self.max_health {
+            self.health = self.max_health;
         }
     }
 
-    pub fn heal(&mut self, value: f32) {
-        if value < 0.0 {
+    /// Add to health
+    /// Stay under maximum health
+    pub fn heal(&mut self, health: f32) {
+        if health < 0.0 {
             panic!("Attempted to heal by negative value. Use take_damage function instead?");
         }
 
-        self.value += value;
-        if self.value > self.max_value {
-            self.value = self.max_value;
+        self.health += health;
+        if self.health > self.max_health {
+            self.health = self.max_health;
         }
     }
 
-    pub fn gain_armor(&mut self, value: usize) {
-        self.armor += value;
+    /// Add to armor
+    pub fn gain_armor(&mut self, armor: usize) {
+        self.armor += armor;
     }
 }
 
+/// Used for managing health of entities
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct HealthComponent {
+    /// Maximum health
     pub health: Health,
 }
 
@@ -99,9 +119,10 @@ impl Component for HealthComponent {
 }
 
 impl HealthComponent {
-    pub fn new(value: f32) -> HealthComponent {
+    /// Create a new health component from a health value
+    pub fn new(health: f32) -> HealthComponent {
         HealthComponent {
-            health: Health::new(value),
+            health: Health::new(health),
         }
     }
 }

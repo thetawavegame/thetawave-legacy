@@ -2,7 +2,7 @@ use crate::{
     misc::HealthComponent,
     player::components::PlayerComponent,
     spawnable::resources::{ConsumablesResource, ItemsResource, SpawnableType},
-    store::resources::StoreResource,
+    store::StoreResource,
 };
 use amethyst::{
     ecs::prelude::{Entity, Join, ReadExpect, ReadStorage, System, WriteStorage},

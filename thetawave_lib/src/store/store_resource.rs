@@ -2,6 +2,7 @@ use crate::{
     constants::{ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
     player::components::PlayerComponent,
     spawnable::resources::{ConsumablesResource, ItemsResource, SpawnableType},
+    tools::Timer,
     visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
@@ -10,21 +11,48 @@ use amethyst::{
 };
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
+use std::convert::From;
 
 pub type StockProbabilities = Vec<(SpawnableType, f32)>;
 
-#[derive(Clone, Debug, Default, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
+pub struct StoreConfig {
+    restock_period: f32,
+    stock: StockProbabilities,
+}
+
 pub struct StoreResource {
-    pub stock_probs: StockProbabilities,
-    pub restock_timer: f32,
-    pub restock_period: f32,
+    pub stock: StockProbabilities,
     pub inventory: Vec<Option<SpawnableType>>,
+    pub timer: Timer,
+}
+
+impl From<StoreConfig> for StoreResource {
+    fn from(config: StoreConfig) -> Self {
+        StoreResource::new(config.restock_period, config.stock)
+    }
 }
 
 impl StoreResource {
+    pub fn new(restock_period: f32, stock: StockProbabilities) -> Self {
+        StoreResource {
+            inventory: vec![None, None, None],
+            timer: Timer::new(restock_period),
+            stock,
+        }
+    }
+
+    pub fn update(&mut self, delta_time: f32) -> bool {
+        if self.timer.update(delta_time) {
+            self.choose_stock();
+            return true;
+        }
+        false
+    }
+
     fn choose_stock(&mut self) {
         self.inventory = vec![None, None, None];
-        let mut choose_pool = self.stock_probs.clone();
+        let mut choose_pool = self.stock.clone();
 
         // choose 3 items
         for i in 0..3 {
@@ -42,13 +70,13 @@ impl StoreResource {
                     self.inventory[i] = Some(entity_type.clone());
 
                     let entity_index = self
-                        .stock_probs
+                        .stock
                         .iter()
                         .position(|element| element == &(entity_type.clone(), value))
                         .unwrap();
 
                     if let SpawnableType::Item(_) = entity_type {
-                        self.stock_probs[entity_index].1 /= 2.0; // divide probability of item appearing in store by 2
+                        self.stock[entity_index].1 /= 2.0; // divide probability of item appearing in store by 2
                     }
 
                     break;
@@ -91,9 +119,9 @@ impl StoreResource {
                             lazy_update,
                         );
 
-                        for (i, e_type) in self.stock_probs.iter().enumerate() {
+                        for (i, e_type) in self.stock.iter().enumerate() {
                             if e_type.0 == *entity_type {
-                                self.stock_probs[i].1 = 0.0; //set probability of appearing again to 0
+                                self.stock[i].1 = 0.0; //set probability of appearing again to 0
                                 break;
                             }
                         }
@@ -130,17 +158,6 @@ impl StoreResource {
                 }
                 _ => panic!("Only items and consumables can be purchased in the store."),
             }
-        }
-        false
-    }
-
-    pub fn restock_when_ready(&mut self, dt: f32) -> bool {
-        if self.restock_timer > 0.0 {
-            self.restock_timer -= dt;
-        } else {
-            self.restock_timer = self.restock_period;
-            self.choose_stock();
-            return true;
         }
         false
     }

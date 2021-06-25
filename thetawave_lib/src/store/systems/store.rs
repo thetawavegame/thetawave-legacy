@@ -3,7 +3,7 @@ use crate::{
     events::PlayAudioEvent,
     player::components::PlayerComponent,
     spawnable::resources::{ConsumablesResource, ItemsResource, SpawnableType},
-    store::resources::StoreResource,
+    store::StoreResource,
     visual::components::StoreIconComponent,
     visual::resources::SpriteSheetsResource,
 };
@@ -61,7 +61,7 @@ impl<'s> System<'s> for StoreSystem {
         let buy_1_action = input.action_is_down("buy_1").unwrap();
         let buy_2_action = input.action_is_down("buy_2").unwrap();
 
-        if store_resource.restock_when_ready(time.delta_seconds()) {
+        if store_resource.update(time.delta_seconds()) {
             // change store icons
             for (store_icon, sprite_render) in (&store_icons, &mut sprite_renders).join() {
                 if let Some(SpawnableType::Item(item_type)) =

@@ -18,8 +18,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 100,
-                    value: 100,
+                    max_health: 100,
+                    health: 100,
                     armor: 3,
                 ),
             ),
@@ -75,8 +75,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 60,
-                    value: 60,
+                    max_health: 60,
+                    health: 60,
                     armor: 0,
                 ),
             ),
@@ -158,8 +158,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 110,
-                    value: 110,
+                    max_health: 110,
+                    health: 110,
                     armor: 0,
                 ),
             ),
@@ -222,8 +222,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 220,
-                    value: 220,
+                    max_health: 220,
+                    health: 220,
                     armor: 0,
                 ),
             ),
@@ -305,8 +305,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 75,
-                    value: 75,
+                    max_health: 75,
+                    health: 75,
                     armor: 0,
                 ),
             ),
@@ -388,8 +388,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 75,
-                    value: 75,
+                    max_health: 75,
+                    health: 75,
                     armor: 0,
                 ),
             ),
@@ -453,8 +453,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 150,
-                    value: 150,
+                    max_health: 150,
+                    health: 150,
                     armor: 0,
                 ),
             ),
@@ -523,8 +523,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 50,
-                    value: 50,
+                    max_health: 50,
+                    health: 50,
                     armor: 0,
                 ),
             ),
@@ -588,8 +588,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 10000,
-                    value: 10000,
+                    max_health: 10000,
+                    health: 10000,
                     armor: 0,
                 ),
             ),
@@ -641,8 +641,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 2000,
-                    value: 2000,
+                    max_health: 2000,
+                    health: 2000,
                     armor: 0,
                 ),
             ),
@@ -694,8 +694,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 2000,
-                    value: 2000,
+                    max_health: 2000,
+                    health: 2000,
                     armor: 0,
                 ),
             ),
@@ -749,8 +749,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 2000,
-                    value: 2000,
+                    max_health: 2000,
+                    health: 2000,
                     armor: 0,
                 ),
             ),
@@ -804,8 +804,8 @@
             ),
             health_component: (
                 health: (
-                    max_value: 2000,
-                    value: 2000,
+                    max_health: 2000,
+                    health: 2000,
                     armor: 0,
                 ),
             ),

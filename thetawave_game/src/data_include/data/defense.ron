@@ -1,7 +1,7 @@
 (
     defense: (
-        max_value: 500,
-        value: 500,
+        max_health: 500,
+        health: 500,
         armor: 0,
     ),
 )

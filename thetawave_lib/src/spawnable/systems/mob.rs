@@ -40,7 +40,7 @@ impl<'s> System<'s> for MobBehaviorSystem {
     ) {
         for (mob_entity, _mob_component, mob_health) in (&*entities, &mut mobs, &mut healths).join()
         {
-            mob_health.health.constrain(|| {
+            mob_health.health.check(|| {
                 mob_destroyed_event_channel.single_write(MobDestroyedEvent::new(mob_entity))
             });
         }
@@ -117,21 +117,22 @@ impl<'s> System<'s> for MobDestroyedSystem {
                 &lazy_update,
             );
 
-            if let mob_type = mob_component.mob_type.clone() {
-                if effects_resource
-                    .effect_entities
-                    .get(&EffectType::Giblets(mob_type.clone()))
-                    .is_some()
-                {
-                    effects_resource.spawn_effect(
-                        &EffectType::Giblets(mob_type),
-                        mob_transform.clone(),
-                        &spritesheets_resource,
-                        &entities,
-                        &lazy_update,
-                    );
-                }
+            let mob_type = &mob_component.mob_type;
+
+            if effects_resource
+                .effect_entities
+                .get(&EffectType::Giblets(mob_type.clone()))
+                .is_some()
+            {
+                effects_resource.spawn_effect(
+                    &EffectType::Giblets(mob_type.clone()),
+                    mob_transform.clone(),
+                    &spritesheets_resource,
+                    &entities,
+                    &lazy_update,
+                );
             }
+
             mob_component.drop_rolls.spawn(
                 mob_transform.clone(),
                 &drop_tables_resource,

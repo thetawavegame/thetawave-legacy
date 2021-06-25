@@ -492,7 +492,5 @@ fn move_mob(
                 motion_2d.move_up();
             }
         }
-
-        _ => {}
     }
 }

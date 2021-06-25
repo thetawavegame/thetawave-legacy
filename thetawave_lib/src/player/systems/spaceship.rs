@@ -1,7 +1,6 @@
 use crate::{
     audio::Sounds,
     events::{ItemGetEvent, PlayAudioEvent},
-    misc::HealthComponent,
     motion::components::Motion2DComponent,
     visual::resources::SpriteSheetsResource,
     weapons::components::{BlasterComponent, ManualFireComponent},
@@ -23,7 +22,6 @@ impl<'s> System<'s> for SpaceshipSystem {
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, Transform>,
-        WriteStorage<'s, HealthComponent>,
         WriteStorage<'s, Motion2DComponent>,
         ReadStorage<'s, BlasterComponent>,
         WriteStorage<'s, ManualFireComponent>,
@@ -48,7 +46,6 @@ impl<'s> System<'s> for SpaceshipSystem {
         (
             entities,
             mut transforms,
-            mut healths,
             mut motion2ds,
             blasters,
             mut manual_fires,
@@ -62,8 +59,7 @@ impl<'s> System<'s> for SpaceshipSystem {
         // collect input bools
         let shoot_action = input.action_is_down("shoot").unwrap();
 
-        for (health, transform, motion2d, blaster, manual_fire) in (
-            &mut healths,
+        for (transform, motion2d, blaster, manual_fire) in (
             &mut transforms,
             &mut motion2ds,
             &blasters,
@@ -84,8 +80,6 @@ impl<'s> System<'s> for SpaceshipSystem {
                     source: sounds.sound_effects["laser_blast"].clone(),
                 });
             }
-
-            health.health.constrain(|| {});
         }
     }
 }
