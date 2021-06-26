@@ -1,6 +1,9 @@
 //! `thetawave_lib` store module
 
 mod store_resource;
-pub mod systems;
+mod store_system;
 
-pub use self::store_resource::{StoreConfig, StoreResource};
+pub use self::{
+    store_resource::{StoreConfig, StoreResource},
+    store_system::StoreSystem,
+};

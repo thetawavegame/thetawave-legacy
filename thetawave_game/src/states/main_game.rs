@@ -40,7 +40,7 @@ use thetawave_lib::{
         systems::ModifiersSystem,
         systems::{MobBehaviorSystem, MobDestroyedSystem},
     },
-    store::systems::StoreSystem,
+    store::StoreSystem,
     visual::resources::{SpriteSheetsConfig, SpriteSheetsResource},
     visual::{
         entities::{
