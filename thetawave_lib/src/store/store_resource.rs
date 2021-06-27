@@ -1,7 +1,8 @@
 use crate::{
     constants::{ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
     player::components::PlayerComponent,
-    spawnable::resources::{ConsumablesResource, ItemsResource, SpawnableType},
+    spawnable::resources::{ConsumablesResource, ItemsResource},
+    spawnable::SpawnableType,
     tools::{weighted_rng, Timer},
     visual::resources::SpriteSheetsResource,
 };
@@ -190,6 +191,7 @@ impl StoreResource {
         }
     }
 
+    /// Execute purchase from store by player
     pub fn purchase(
         &mut self,
         inventory_index: usize,

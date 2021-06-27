@@ -1,4 +1,4 @@
-use crate::spawnable::resources::{ConsumableType, ItemType};
+use crate::spawnable::{ConsumableType, ItemType};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 

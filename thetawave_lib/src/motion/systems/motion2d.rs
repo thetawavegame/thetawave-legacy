@@ -6,7 +6,7 @@ use crate::{
     player::components::PlayerComponent,
     spawnable::{
         components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
-        resources::{AllyType, EnemyType, MobType, NeutralType},
+        AllyType, EnemyType, MobType, NeutralType,
     },
     tools::distance,
     weapons::BlastType,

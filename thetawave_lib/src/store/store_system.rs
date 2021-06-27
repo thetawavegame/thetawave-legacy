@@ -16,6 +16,8 @@ use amethyst::{
     shrev::EventChannel,
 };
 
+/// Handles store resource
+/// Updates and handles purchases by players
 pub struct StoreSystem;
 
 impl<'s> System<'s> for StoreSystem {
@@ -51,10 +53,12 @@ impl<'s> System<'s> for StoreSystem {
             sounds,
         ): Self::SystemData,
     ) {
+        // check for input
         let buy_0_action = input.action_is_down("buy_0").unwrap();
         let buy_1_action = input.action_is_down("buy_1").unwrap();
         let buy_2_action = input.action_is_down("buy_2").unwrap();
 
+        // update store
         store_resource.update(
             time.delta_seconds(),
             &spritesheets_resource,
@@ -100,6 +104,7 @@ impl<'s> System<'s> for StoreSystem {
                         &lazy_update,
                     ))
             {
+                // play purchase sound effect
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["cash_register_bell"].clone(),
                 });

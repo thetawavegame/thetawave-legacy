@@ -4,9 +4,8 @@ use crate::{
     misc::{DefenseResource, HealthComponent},
     motion::components::Motion2DComponent,
     player::components::{BarrelRollAbilityComponent, PlayerComponent},
-    spawnable::resources::{
-        ConsumableModifiersResource, ItemModifiersResource, Modifier, SpawnableType,
-    },
+    spawnable::resources::{ConsumableModifiersResource, ItemModifiersResource, Modifier},
+    spawnable::SpawnableType,
     weapons::components::{BlasterComponent, ManualFireComponent},
 };
 use amethyst::{

@@ -1,8 +1,8 @@
 use crate::{
     spawnable::resources::{
         spawn_spawnable, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
-        SpawnableType,
     },
+    spawnable::SpawnableType,
     tools::weighted_rng,
     visual::resources::SpriteSheetsResource,
 };

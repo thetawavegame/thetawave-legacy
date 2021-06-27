@@ -5,7 +5,7 @@ use crate::{
         AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent,
     },
     spawnable::components::{ConsumableComponent, ItemComponent, MobComponent},
-    spawnable::resources::{ConsumableType, EffectType, ItemType, MobType},
+    spawnable::{ConsumableType, EffectType, ItemType, MobType},
     visual::components::{AnimationComponent, FadeComponent},
     visual::resources::{SpriteRenderData, SpriteSheetsResource},
     weapons::components::{AutoFireComponent, BlasterComponent},

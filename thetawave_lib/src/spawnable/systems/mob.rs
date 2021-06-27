@@ -5,9 +5,8 @@ use crate::{
     spawn::resources::DropTablesResource,
     spawnable::{
         components::MobComponent,
-        resources::{
-            ConsumablesResource, EffectType, EffectsResource, ItemsResource, MobsResource,
-        },
+        resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+        EffectType,
     },
     visual::resources::SpriteSheetsResource,
 };

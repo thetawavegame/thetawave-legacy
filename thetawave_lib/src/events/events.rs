@@ -1,6 +1,6 @@
 use crate::{
     misc::components::{AttractData, AttractorCategory},
-    spawnable::resources::{ConsumableType, ItemType},
+    spawnable::{ConsumableType, ItemType},
 };
 use amethyst::{audio::SourceHandle, core::math::Vector2, ecs::prelude::Entity};
 use std::collections::HashMap;

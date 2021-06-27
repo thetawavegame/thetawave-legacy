@@ -8,9 +8,8 @@ use crate::{
     motion::systems::{barrier_collision, immovable_collision, standard_collision},
     player::components::PlayerComponent,
     spawnable::{
-        components::BlastComponent,
-        components::MobComponent,
-        resources::{EffectType, EffectsResource, EnemyType, MobType},
+        components::BlastComponent, components::MobComponent, resources::EffectsResource,
+        EffectType, EnemyType, MobType,
     },
     visual::resources::SpriteSheetsResource,
     weapons::BlastType,

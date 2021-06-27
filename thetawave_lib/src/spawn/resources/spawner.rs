@@ -3,8 +3,8 @@ use crate::{
     phases::resources::{InvasionFormationPool, InvasionRandomPool},
     spawnable::resources::{
         spawn_spawnable, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
-        SpawnableType,
     },
+    spawnable::SpawnableType,
     visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
