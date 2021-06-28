@@ -2,7 +2,7 @@ use crate::{
     audio::Sounds,
     events::PlayAudioEvent,
     player::components::PlayerComponent,
-    spawnable::resources::{ConsumablesResource, ItemsResource},
+    spawnable::{ConsumablesResource, ItemsResource},
     store::StoreResource,
     visual::resources::SpriteSheetsResource,
 };

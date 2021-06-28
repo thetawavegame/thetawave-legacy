@@ -29,7 +29,7 @@ use thetawave_lib::{
     phases::resources::PhaseManagerResource,
     player::resources::PlayersResource,
     spawn::resources::{DropTablesResource, SpawnerResource},
-    spawnable::resources::{
+    spawnable::{
         ConsumableModifiersResource, ConsumablesResource, EffectsResource, ItemModifiersResource,
         ItemsResource, MobsResource,
     },

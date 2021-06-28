@@ -1,15 +1,12 @@
 use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_SPAWN_OFFSET, SPAWNER_Y_OFFSET},
     phases::resources::{InvasionFormationPool, InvasionRandomPool},
-    spawnable::resources::{
-        spawn_spawnable, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
-    },
-    spawnable::SpawnableType,
+    spawnable::{spawn_spawnable, SpawnableResources, SpawnableType},
     visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::{math::Vector2, transform::Transform},
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    ecs::prelude::{Entities, LazyUpdate},
 };
 
 use rand::Rng;
@@ -40,13 +37,10 @@ impl Formation {
     /// Spawn all entities in formation at their positions
     pub fn spawn_formation(
         &self,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        mobs_resource: &ReadExpect<MobsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        effects_resource: &ReadExpect<EffectsResource>,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawnable_resources: &SpawnableResources,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) {
         for formation_spawnable in self.formation_spawnables.iter() {
             let mut spawn_transform = Transform::default();
@@ -59,11 +53,8 @@ impl Formation {
             spawn_spawnable(
                 &formation_spawnable.spawnable_type,
                 false,
-                spawn_transform,
-                consumables_resource,
-                mobs_resource,
-                items_resource,
-                effects_resource,
+                &spawn_transform,
+                spawnable_resources,
                 spritesheets_resource,
                 entities,
                 lazy_update,
@@ -126,13 +117,10 @@ impl SpawnerResource {
         &mut self,
         random_pool_type: &InvasionRandomPool,
         dt: f32,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        mobs_resource: &ReadExpect<MobsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        effects_resource: &ReadExpect<EffectsResource>,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawnable_resources: &SpawnableResources,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) {
         self.timer -= dt;
 
@@ -149,11 +137,8 @@ impl SpawnerResource {
                 spawn_spawnable(
                     spawnable_type,
                     false,
-                    spawn_transform,
-                    consumables_resource,
-                    mobs_resource,
-                    items_resource,
-                    effects_resource,
+                    &spawn_transform,
+                    spawnable_resources,
                     spritesheets_resource,
                     entities,
                     lazy_update,
@@ -188,23 +173,17 @@ impl SpawnerResource {
         &mut self,
         formation_pool_type: &InvasionFormationPool,
         dt: f32,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        mobs_resource: &ReadExpect<MobsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        effects_resource: &ReadExpect<EffectsResource>,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawnable_resources: &SpawnableResources,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) {
         self.timer -= dt;
 
         if self.timer <= 0.0 {
             let formation = self.choose_random_formation(formation_pool_type);
             formation.spawn_formation(
-                consumables_resource,
-                mobs_resource,
-                items_resource,
-                effects_resource,
+                spawnable_resources,
                 spritesheets_resource,
                 entities,
                 lazy_update,

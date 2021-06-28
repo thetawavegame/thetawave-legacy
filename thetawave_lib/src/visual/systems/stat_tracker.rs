@@ -1,8 +1,7 @@
 use crate::{
     misc::HealthComponent,
     player::components::PlayerComponent,
-    spawnable::resources::{ConsumablesResource, ItemsResource},
-    spawnable::SpawnableType,
+    spawnable::{ConsumablesResource, ItemsResource, SpawnableType},
     store::StoreResource,
 };
 use amethyst::{

@@ -1,14 +1,11 @@
 use crate::{
-    spawnable::resources::{
-        spawn_spawnable, ConsumablesResource, EffectsResource, ItemsResource, MobsResource,
-    },
-    spawnable::SpawnableType,
+    spawnable::{spawn_spawnable, SpawnableResources, SpawnableType},
     tools::weighted_rng,
     visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::{Entities, LazyUpdate, ReadExpect},
+    ecs::prelude::{Entities, LazyUpdate},
 };
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -36,15 +33,12 @@ impl DropRolls {
 
     pub fn spawn(
         &self,
-        spawn_transform: Transform,
-        drop_tables_resource: &ReadExpect<DropTablesResource>,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        mobs_resource: &ReadExpect<MobsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        effects_resource: &ReadExpect<EffectsResource>,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawn_transform: &Transform,
+        drop_tables_resource: &DropTablesResource,
+        spawnable_resources: &SpawnableResources,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) {
         for _ in 0..self.roll_count {
             // pick a drop table
@@ -53,11 +47,8 @@ impl DropRolls {
                 spawn_spawnable(
                     Self::choose_drop(&drop_tables_resource[drop_table]),
                     true,
-                    spawn_transform.clone(),
-                    consumables_resource,
-                    mobs_resource,
-                    items_resource,
-                    effects_resource,
+                    spawn_transform,
+                    spawnable_resources,
                     spritesheets_resource,
                     entities,
                     lazy_update,

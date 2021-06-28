@@ -4,8 +4,8 @@ use crate::{
     spawn::components::{
         AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent,
     },
-    spawnable::components::{ConsumableComponent, ItemComponent, MobComponent},
-    spawnable::{ConsumableType, EffectType, ItemType, MobType},
+    spawnable::components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
+    spawnable::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
     visual::components::{AnimationComponent, FadeComponent},
     visual::resources::{SpriteRenderData, SpriteSheetsResource},
     weapons::components::{AutoFireComponent, BlasterComponent},
@@ -36,10 +36,10 @@ impl ConsumablesResource {
         &self,
         consumable_type: &ConsumableType,
         is_drop: bool,
-        spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawn_transform: &Transform,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) {
         let consumable_data = &self.consumable_entities[consumable_type];
 
@@ -72,7 +72,7 @@ impl ConsumablesResource {
             .with(consumable_data.hitbox_component.clone())
             .with(consumable_data.consumable_component.clone())
             .with(motion2d_component)
-            .with(spawn_transform)
+            .with(spawn_transform.clone())
             .with(Transparent)
             .with(self.despawn_border_component.clone())
             .build();
@@ -100,10 +100,10 @@ impl ItemsResource {
         &self,
         item_type: &ItemType,
         is_drop: bool,
-        spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawn_transform: &Transform,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) {
         let item_data = &self.item_entities[item_type];
 
@@ -135,7 +135,7 @@ impl ItemsResource {
             .with(item_data.item_component.clone())
             .with(self.hitbox2d_component.clone())
             .with(motion2d_component)
-            .with(spawn_transform)
+            .with(spawn_transform.clone())
             .with(Transparent)
             .with(self.despawn_border_component.clone())
             .build();
@@ -158,10 +158,10 @@ impl MobsResource {
     pub fn spawn_mob(
         &self,
         mob_type: &MobType,
-        spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawn_transform: &Transform,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) -> Entity {
         let mob_data = &self.mob_entities[mob_type];
 
@@ -196,7 +196,7 @@ impl MobsResource {
             .with(motion2d_component)
             .with(mob_data.health_component.clone())
             .with(mob_data.despawn_component.clone())
-            .with(spawn_transform)
+            .with(spawn_transform.clone())
             .with(Transparent)
             .build();
 
@@ -251,10 +251,10 @@ impl EffectsResource {
     pub fn spawn_effect(
         &self,
         effect_type: &EffectType,
-        spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
+        spawn_transform: &Transform,
+        spritesheets_resource: &SpriteSheetsResource,
         entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        lazy_update: &LazyUpdate,
     ) {
         let effect_data = &self.effect_entities[effect_type];
 
@@ -419,4 +419,104 @@ pub struct EffectEntityData {
     pub animation_component: Option<AnimationComponent>,
     /// Optional fade component
     pub fade_component: Option<FadeComponent>,
+}
+
+/// Used for packing together all spawnable resource references
+pub struct SpawnableResources<'a> {
+    /// Reference to consumables resource
+    pub consumables_resource: &'a ConsumablesResource,
+    /// Reference to mobs resource
+    pub mobs_resource: &'a MobsResource,
+    /// Reference to items resource
+    pub items_resource: &'a ItemsResource,
+    /// Reference to effects resource
+    pub effects_resource: &'a EffectsResource,
+}
+
+/// Spawn any kind of spawnable entity
+pub fn spawn_spawnable(
+    spawnable_type: &SpawnableType,
+    is_drop: bool,
+    spawn_transform: &Transform,
+    spawnable_resources: &SpawnableResources,
+    spritesheets_resource: &SpriteSheetsResource,
+    entities: &Entities,
+    lazy_update: &LazyUpdate,
+) {
+    match spawnable_type {
+        SpawnableType::Consumable(consumable_type) => {
+            spawnable_resources.consumables_resource.spawn_consumable(
+                consumable_type,
+                is_drop,
+                spawn_transform,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Mob(mob_type) => {
+            spawnable_resources.mobs_resource.spawn_mob(
+                mob_type,
+                spawn_transform,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Item(item_type) => {
+            spawnable_resources.items_resource.spawn_item(
+                item_type,
+                is_drop,
+                spawn_transform,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+
+        SpawnableType::Effect(effect_type) => {
+            spawnable_resources.effects_resource.spawn_effect(
+                effect_type,
+                spawn_transform,
+                spritesheets_resource,
+                entities,
+                lazy_update,
+            );
+        }
+    }
+}
+
+/// Spawn blast entities
+pub fn spawn_blasts(
+    blast_count: usize,
+    blast_spacing: f32,
+    blast_sprite_render: SpriteRender,
+    blast_component: BlastComponent,
+    blast_hitbox: Hitbox2DComponent,
+    blast_motion2d: Motion2DComponent,
+    mut blast_transform: Transform,
+    entities: &Entities,
+    lazy_update: &ReadExpect<LazyUpdate>,
+) {
+    for _ in 0..blast_count {
+        lazy_update
+            .create_entity(entities)
+            .with(blast_component.clone())
+            .with(blast_hitbox.clone())
+            .with(blast_motion2d.clone())
+            .with(blast_sprite_render.clone())
+            .with(blast_transform.clone())
+            .with(Transparent)
+            .with(DespawnAtBorderComponent {
+                top_offset: Some(2.0),
+                bottom_offset: Some(-2.0),
+                left_offset: Some(-2.0),
+                right_offset: Some(2.0),
+            })
+            .build();
+
+        blast_transform.prepend_translation_x(blast_spacing);
+    }
 }

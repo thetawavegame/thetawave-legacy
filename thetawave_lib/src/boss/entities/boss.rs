@@ -6,8 +6,7 @@ use amethyst::{
 use crate::{
     boss::components::RepeaterComponent,
     constants,
-    spawnable::resources::MobsResource,
-    spawnable::{EnemyType, MobType},
+    spawnable::{EnemyType, MobType, MobsResource},
     visual::resources::SpriteSheetsResource,
 };
 use amethyst::prelude::Builder;
@@ -45,28 +44,28 @@ pub fn spawn_repeater(
 
     let body = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterBody),
-        body_transform,
+        &body_transform,
         spritesheets_resource,
         entities,
         lazy_update,
     );
     let head = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterHead),
-        head_transform,
+        &head_transform,
         spritesheets_resource,
         entities,
         lazy_update,
     );
     let right_shoulder = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterRightShoulder),
-        right_shoulder_transform,
+        &right_shoulder_transform,
         spritesheets_resource,
         entities,
         lazy_update,
     );
     let left_shoulder = mobs_resource.spawn_mob(
         &MobType::Enemy(EnemyType::RepeaterLeftShoulder),
-        left_shoulder_transform,
+        &left_shoulder_transform,
         spritesheets_resource,
         entities,
         lazy_update,

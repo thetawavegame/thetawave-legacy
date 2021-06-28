@@ -2,7 +2,9 @@ use crate::{
     boss::entities::spawn_repeater,
     phases::resources::{BossType, PhaseManagerResource, PhaseType},
     spawn::{components::AutoSpawnerComponent, resources::SpawnerResource},
-    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+    spawnable::{
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpawnableResources,
+    },
     visual::resources::SpriteSheetsResource,
 };
 use amethyst::{
@@ -47,15 +49,19 @@ impl<'s> System<'s> for SpawnerSystem {
             mobs_resource,
         ): Self::SystemData,
     ) {
+        let spawnable_resources = &SpawnableResources {
+            consumables_resource: &consumables_resource,
+            mobs_resource: &mobs_resource,
+            items_resource: &items_resource,
+            effects_resource: &effects_resource,
+        };
+
         match phase_manager.get_current_phase_type() {
             Some(PhaseType::InvasionRandom(random_pool_type)) => spawner_resource
                 .spawn_random_spawnable_when_ready(
                     &random_pool_type,
                     time.delta_seconds(),
-                    &consumables_resource,
-                    &mobs_resource,
-                    &items_resource,
-                    &effects_resource,
+                    spawnable_resources,
                     &spritesheets_resource,
                     &entities,
                     &lazy_update,
@@ -65,10 +71,7 @@ impl<'s> System<'s> for SpawnerSystem {
                 .spawn_random_formation_when_ready(
                     &&formation_pool_type,
                     time.delta_seconds(),
-                    &consumables_resource,
-                    &mobs_resource,
-                    &items_resource,
-                    &effects_resource,
+                    spawnable_resources,
                     &spritesheets_resource,
                     &entities,
                     &lazy_update,

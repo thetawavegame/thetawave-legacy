@@ -11,8 +11,7 @@ use crate::{
     player::components::{AbilityDirection, BarrelRollAbilityComponent},
     spawnable::{
         components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
-        resources::EffectsResource,
-        EffectType,
+        EffectType, EffectsResource,
     },
     visual::resources::SpriteSheetsResource,
     weapons::BlastType,
@@ -181,7 +180,7 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
 
                             effects_resource.spawn_effect(
                                 &EffectType::EnemyBlastExplosion,
-                                blast_transform.clone(),
+                                blast_transform,
                                 &sprite_resource,
                                 &entities,
                                 &lazy_update,

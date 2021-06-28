@@ -1,8 +1,7 @@
 use crate::{
     constants::{ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
     player::components::PlayerComponent,
-    spawnable::resources::{ConsumablesResource, ItemsResource},
-    spawnable::SpawnableType,
+    spawnable::{ConsumablesResource, ItemsResource, SpawnableType},
     tools::{weighted_rng, Timer},
     visual::resources::SpriteSheetsResource,
 };
@@ -198,10 +197,10 @@ impl StoreResource {
         entities: &Entities,
         player: &mut PlayerComponent,
         transform: &Transform,
-        items_resource: &ReadExpect<ItemsResource>,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        items_resource: &ItemsResource,
+        consumables_resource: &ConsumablesResource,
+        spritesheets_resource: &SpriteSheetsResource,
+        lazy_update: &LazyUpdate,
     ) -> bool {
         if let Some(entity_type) = self.inventory[inventory_index].clone() {
             // match item or consumable
@@ -224,7 +223,7 @@ impl StoreResource {
                         items_resource.spawn_item(
                             &item_type,
                             false,
-                            spawn_transform,
+                            &spawn_transform,
                             spritesheets_resource,
                             entities,
                             lazy_update,
@@ -267,7 +266,7 @@ impl StoreResource {
                         consumables_resource.spawn_consumable(
                             &consumable_type,
                             false,
-                            spawn_transform,
+                            &spawn_transform,
                             spritesheets_resource,
                             entities,
                             lazy_update,

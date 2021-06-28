@@ -4,9 +4,8 @@ use crate::{
     misc::HealthComponent,
     spawn::resources::DropTablesResource,
     spawnable::{
-        components::MobComponent,
-        resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
-        EffectType,
+        components::MobComponent, ConsumablesResource, EffectType, EffectsResource, ItemsResource,
+        MobsResource, SpawnableResources,
     },
     visual::resources::SpriteSheetsResource,
 };
@@ -100,6 +99,13 @@ impl<'s> System<'s> for MobDestroyedSystem {
             sounds,
         ): Self::SystemData,
     ) {
+        let spawnable_resources = &SpawnableResources {
+            consumables_resource: &consumables_resource,
+            mobs_resource: &mobs_resource,
+            items_resource: &items_resource,
+            effects_resource: &effects_resource,
+        };
+
         for event in mob_destroyed_event_channel.read(self.event_reader.as_mut().unwrap()) {
             let mob_transform = transforms.get(event.mob).unwrap();
             let mob_component = mobs.get(event.mob).unwrap();
@@ -110,7 +116,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
 
             effects_resource.spawn_effect(
                 &EffectType::MobExplosion,
-                mob_transform.clone(),
+                mob_transform,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -125,7 +131,7 @@ impl<'s> System<'s> for MobDestroyedSystem {
             {
                 effects_resource.spawn_effect(
                     &EffectType::Giblets(mob_type.clone()),
-                    mob_transform.clone(),
+                    mob_transform,
                     &spritesheets_resource,
                     &entities,
                     &lazy_update,
@@ -133,12 +139,9 @@ impl<'s> System<'s> for MobDestroyedSystem {
             }
 
             mob_component.drop_rolls.spawn(
-                mob_transform.clone(),
+                mob_transform,
                 &drop_tables_resource,
-                &consumables_resource,
-                &mobs_resource,
-                &items_resource,
-                &effects_resource,
+                spawnable_resources,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
