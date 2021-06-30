@@ -2,7 +2,7 @@ use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
     events::MobReachedBottomEvent,
     spawn::components::{DespawnAtBorderComponent, DespawnTimeLimitComponent},
-    spawnable::components::MobComponent,
+    spawnable::MobComponent,
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},

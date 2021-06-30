@@ -10,8 +10,8 @@ use crate::{
     },
     player::components::{AbilityDirection, BarrelRollAbilityComponent},
     spawnable::{
-        components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
-        EffectType, EffectsResource,
+        BlastComponent, ConsumableComponent, EffectType, EffectsResource, ItemComponent,
+        MobComponent,
     },
     visual::resources::SpriteSheetsResource,
     weapons::BlastType,

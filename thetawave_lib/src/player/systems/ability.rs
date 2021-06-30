@@ -3,7 +3,7 @@ use crate::{
     misc::components::BarrierComponent,
     motion::components::Motion2DComponent,
     player::components::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
-    spawnable::components::MobComponent,
+    spawnable::MobComponent,
 };
 use amethyst::{
     core::timing::Time,

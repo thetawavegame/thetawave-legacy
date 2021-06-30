@@ -4,7 +4,7 @@ use crate::{
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
     motion::components::{Hitbox2DComponent, Motion2DComponent},
-    spawnable::{components::BlastComponent, spawn_blasts},
+    spawnable::{spawn_blasts, BlastComponent},
     visual::resources::SpriteSheetsResource,
     weapons::BlastType,
 };

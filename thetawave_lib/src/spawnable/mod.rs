@@ -1,13 +1,17 @@
 //! `thetawave_lib` spawnable module
 
-pub mod components;
+mod components;
+mod mob_systems;
 mod modifier_resources;
+mod modifiers_system;
 mod spawnable_resources;
 mod spawnable_types;
-pub mod systems;
 
 pub use self::{
+    components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
+    mob_systems::{MobBehaviorSystem, MobDestroyedSystem},
     modifier_resources::{ConsumableModifiersResource, ItemModifiersResource, Modifier},
+    modifiers_system::ModifiersSystem,
     spawnable_resources::{
         spawn_blasts, spawn_spawnable, ConsumableEntityData, ConsumablesResource, EffectEntityData,
         EffectsResource, ItemEntityData, ItemsResource, MobEntityData, MobsResource,

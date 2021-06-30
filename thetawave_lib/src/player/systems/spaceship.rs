@@ -3,7 +3,7 @@ use crate::{
     events::{ItemGetEvent, PlayAudioEvent},
     motion::components::Motion2DComponent,
     visual::resources::SpriteSheetsResource,
-    weapons::components::{BlasterComponent, ManualFireComponent},
+    weapons::{BlasterComponent, ManualFireComponent},
 };
 use amethyst::{
     core::Transform,

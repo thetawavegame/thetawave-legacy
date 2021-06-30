@@ -20,6 +20,7 @@ use amethyst::{
 };
 
 /// Handles health component of mobs
+// TODO: remove and consolidate into health system
 pub struct MobBehaviorSystem;
 
 impl<'s> System<'s> for MobBehaviorSystem {

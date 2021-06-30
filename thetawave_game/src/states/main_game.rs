@@ -36,10 +36,7 @@ use thetawave_lib::{
     spawn::systems::{
         AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
     },
-    spawnable::{
-        systems::ModifiersSystem,
-        systems::{MobBehaviorSystem, MobDestroyedSystem},
-    },
+    spawnable::{MobBehaviorSystem, MobDestroyedSystem, ModifiersSystem},
     store::StoreSystem,
     visual::resources::{SpriteSheetsConfig, SpriteSheetsResource},
     visual::{
@@ -52,7 +49,7 @@ use thetawave_lib::{
             TrackedStats,
         },
     },
-    weapons::systems::{AutoFireSystem, ManualBlasterSystem},
+    weapons::{AutoFireSystem, ManualBlasterSystem},
 };
 
 use crate::states::PausedState;

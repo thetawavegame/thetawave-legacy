@@ -12,10 +12,7 @@ use crate::{
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     player::components::{AbilityDirection, BarrelRollAbilityComponent},
     player::resources::PlayersResource,
-    weapons::{
-        components::{BlasterComponent, ManualFireComponent},
-        BlastType,
-    },
+    weapons::{BlastType, BlasterComponent, ManualFireComponent},
 };
 use amethyst::{
     assets::Handle,

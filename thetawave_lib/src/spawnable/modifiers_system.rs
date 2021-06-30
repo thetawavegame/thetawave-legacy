@@ -5,7 +5,7 @@ use crate::{
     motion::components::Motion2DComponent,
     player::components::{BarrelRollAbilityComponent, PlayerComponent},
     spawnable::{ConsumableModifiersResource, ItemModifiersResource, Modifier, SpawnableType},
-    weapons::components::{BlasterComponent, ManualFireComponent},
+    weapons::{BlasterComponent, ManualFireComponent},
 };
 use amethyst::{
     ecs::*,

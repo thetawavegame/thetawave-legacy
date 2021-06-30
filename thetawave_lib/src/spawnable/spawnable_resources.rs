@@ -8,7 +8,7 @@ use crate::{
     spawnable::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
     visual::components::{AnimationComponent, FadeComponent},
     visual::resources::{SpriteRenderData, SpriteSheetsResource},
-    weapons::components::{AutoFireComponent, BlasterComponent},
+    weapons::{AutoFireComponent, BlasterComponent},
 };
 use amethyst::{
     core::{math::Vector2, transform::Transform, Parent},

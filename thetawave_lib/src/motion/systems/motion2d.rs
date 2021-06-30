@@ -5,14 +5,18 @@ use crate::{
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     player::components::PlayerComponent,
     spawnable::{
-        components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
-        AllyType, EnemyType, MobType, NeutralType,
+        AllyType, BlastComponent, ConsumableComponent, EnemyType, ItemComponent, MobComponent,
+        MobType, NeutralType,
     },
     tools::distance,
     weapons::BlastType,
 };
 use amethyst::{
-    core::{math::{Vector2, Vector3}, timing::Time, transform::Transform},
+    core::{
+        math::{Vector2, Vector3},
+        timing::Time,
+        transform::Transform,
+    },
     ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
     ecs::*,
     shrev::{EventChannel, ReaderId},
@@ -204,7 +208,7 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
                     if distance(
                         *transform.translation(),
                         Vector3::new(event.target_position.x, event.target_position.y, 0.0),
-                        true
+                        true,
                     ) < attract_data.radius
                     {
                         // accelerate towards attractor
@@ -271,7 +275,7 @@ impl<'s> System<'s> for ItemMotion2DSystem {
                     if distance(
                         *transform.translation(),
                         Vector3::new(event.target_position.x, event.target_position.y, 0.0),
-                        true
+                        true,
                     ) < attract_data.radius
                     {
                         // accelerate towards attractor

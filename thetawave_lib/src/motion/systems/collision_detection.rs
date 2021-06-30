@@ -4,7 +4,7 @@ use crate::{
     misc::resources::DebugLinesConfig,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     player::components::PlayerComponent,
-    spawnable::components::MobComponent,
+    spawnable::MobComponent,
 };
 use amethyst::{
     core::{
