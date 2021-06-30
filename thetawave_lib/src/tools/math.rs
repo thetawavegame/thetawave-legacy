@@ -1,6 +1,17 @@
-pub fn distance(x1: f32, x2: f32, y1: f32, y2: f32) -> f32 {
-    ((x1 - x2).powi(2) + (y1 - y2).powi(2)).sqrt()
+use amethyst::{
+    core::math::Vector3
+};
+
+pub fn distance(point_a: Vector3<f32>, point_b: Vector3<f32>, is_2d: bool) -> f32 {
+    let mut value = (point_a.x - point_b.x).powi(2) + (point_a.y - point_b.y).powi(2);
+
+    if !is_2d {
+        value += (point_a.z - point_b.z).powi(2);
+    }
+
+    value.sqrt()
 }
+
 pub fn signed_modulo(a: f32, n: f32) -> f32 {
     a - (a / n).floor() * n
 }
