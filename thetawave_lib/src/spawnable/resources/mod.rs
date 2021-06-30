@@ -3,7 +3,7 @@ use crate::{
     entities::SpawnableType,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     resources::SpriteSheetsResource,
-    spawn::components::DespawnAtBorderComponent,
+    spawn::components::{DespawnAtBorderComponent, DespawnTimeLimitComponent},
     spawnable::components::BlastComponent,
 };
 use amethyst::{
@@ -90,6 +90,7 @@ pub fn spawn_blasts(
     blast_component: BlastComponent,
     blast_hitbox: Hitbox2DComponent,
     blast_motion2d: Motion2DComponent,
+    despawn_time: f32,
     mut blast_transform: Transform,
     entities: &Entities,
     lazy_update: &ReadExpect<LazyUpdate>,
@@ -103,6 +104,10 @@ pub fn spawn_blasts(
             .with(blast_sprite_render.clone())
             .with(blast_transform.clone())
             .with(Transparent)
+            .with(DespawnTimeLimitComponent {
+                duration: despawn_time,
+            })
+            // Also despawn at the border to avoid tracking entities that left the screen
             .with(DespawnAtBorderComponent {
                 top_offset: Some(2.0),
                 bottom_offset: Some(-2.0),
