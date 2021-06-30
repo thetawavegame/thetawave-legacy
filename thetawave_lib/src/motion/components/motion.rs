@@ -1,6 +1,6 @@
 use crate::tools::{distance, signed_modulo};
 use amethyst::{
-    core::math::Vector2,
+    core::math::{Vector2, Vector3},
     ecs::prelude::{Component, DenseVecStorage},
 };
 use serde::{Deserialize, Serialize};
@@ -115,10 +115,9 @@ impl Motion2DComponent {
             }
 
             let distance = distance(
-                current_position.x,
-                target_position.x,
-                current_position.y,
-                target_position.y,
+                Vector3::new(current_position.x, current_position.y, 0.0),
+                Vector3::new(target_position.x, target_position.y, 0.0),
+                true,
             );
 
             self.velocity.x +=

@@ -138,6 +138,7 @@
                 crit_chance: 0.0,
                 size_multiplier: 1.0,
                 spacing: 7.0,
+                range: 200.0,
             )),
             autofire_component: Some((
                 period: 3.0,
@@ -285,6 +286,7 @@
                 crit_chance: 0.0,
                 size_multiplier: 1.0,
                 spacing: 7.0,
+                range: 300.0,
             )),
             autofire_component: Some((
                 period: 3.0,
@@ -368,6 +370,7 @@
                 crit_chance: 0.0,
                 size_multiplier: 1.0,
                 spacing: 7.0,
+                range: 300.0,
             )),
             autofire_component: Some((
                 period: 3.0,

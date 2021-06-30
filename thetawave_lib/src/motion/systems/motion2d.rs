@@ -12,7 +12,7 @@ use crate::{
     weapons::BlastType,
 };
 use amethyst::{
-    core::{math::Vector2, timing::Time, transform::Transform},
+    core::{math::{Vector2, Vector3}, timing::Time, transform::Transform},
     ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
     ecs::*,
     shrev::{EventChannel, ReaderId},
@@ -118,11 +118,11 @@ impl<'s> System<'s> for BlastMotion2DSystem {
                     // check if spawnable is in area of influence
                     // TODO simplify distance() to take just the transform and event data
                     // components
+
                     if distance(
-                        transform.translation().x,
-                        event.target_position.x,
-                        transform.translation().y,
-                        event.target_position.y,
+                        *transform.translation(),
+                        Vector3::new(event.target_position.x, event.target_position.y, 0.0),
+                        true,
                     ) < attract_data.radius
                     {
                         // accelerate towards attractor
@@ -202,10 +202,9 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
                 {
                     // check if spawnable is in area of influence
                     if distance(
-                        transform.translation().x,
-                        event.target_position.x,
-                        transform.translation().y,
-                        event.target_position.y,
+                        *transform.translation(),
+                        Vector3::new(event.target_position.x, event.target_position.y, 0.0),
+                        true
                     ) < attract_data.radius
                     {
                         // accelerate towards attractor
@@ -270,10 +269,9 @@ impl<'s> System<'s> for ItemMotion2DSystem {
                 {
                     // check if spawnable is in area of influence
                     if distance(
-                        transform.translation().x,
-                        event.target_position.x,
-                        transform.translation().y,
-                        event.target_position.y,
+                        *transform.translation(),
+                        Vector3::new(event.target_position.x, event.target_position.y, 0.0),
+                        true
                     ) < attract_data.radius
                     {
                         // accelerate towards attractor
@@ -343,15 +341,13 @@ impl<'s> System<'s> for MobTargetSystem {
                 for (_player, player_transform) in (&players, &transforms).join() {
                     if let Some(closest_position) = closest_player_position {
                         if distance(
-                            player_transform.translation().x,
-                            transform.translation().x,
-                            player_transform.translation().y,
-                            transform.translation().y,
+                            *player_transform.translation(),
+                            *transform.translation(),
+                            true,
                         ) < distance(
-                            closest_position.x,
-                            transform.translation().x,
-                            closest_position.y,
-                            transform.translation().y,
+                            Vector3::new(closest_position.x, closest_position.y, 0.0),
+                            *transform.translation(),
+                            true,
                         ) {
                             closest_player_position = Some(Vector2::new(
                                 player_transform.translation().x,

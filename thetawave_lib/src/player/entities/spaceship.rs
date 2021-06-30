@@ -82,6 +82,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         crit_chance: 0.0,
         size_multiplier: 1.0,
         spacing: 7.0,
+        range: 100.0,
     };
 
     let manual_fire = ManualFireComponent {

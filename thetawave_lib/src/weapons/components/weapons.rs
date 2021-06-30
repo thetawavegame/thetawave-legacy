@@ -46,6 +46,8 @@ pub struct BlasterComponent {
     pub size_multiplier: f32,
     /// Spacing between fired blasts (when count > 1)
     pub spacing: f32,
+    /// Range of the fired blast
+    pub range: f32,
 }
 
 impl Component for BlasterComponent {
@@ -157,6 +159,7 @@ impl BlasterComponent {
             blast_component,
             blast_hitbox,
             blast_motion2d,
+            self.range / self.shot_velocity.norm(),
             blast_transform,
             entities,
             lazy_update,
