@@ -141,9 +141,10 @@
                 range: 200.0,
             )),
             autofire_component: Some((
-                period: 3.0,
-                timer: 1.0,
-                weapon_type: Blast,
+                timer: (
+                    period: 3.0,
+                    countdown: 3.0,
+                ),
             )),
             mob_component: (
                 defense_damage: 50,
@@ -289,9 +290,10 @@
                 range: 300.0,
             )),
             autofire_component: Some((
-                period: 3.0,
-                timer: 1.0,
-                weapon_type: Blast,
+                timer: (
+                    period: 3.0,
+                    countdown: 3.0,
+                ),
             )),
             mob_component: (
                 defense_damage: 25,
@@ -373,9 +375,10 @@
                 range: 300.0,
             )),
             autofire_component: Some((
-                period: 3.0,
-                timer: 1.0,
-                weapon_type: Blast,
+                timer: (
+                    period: 3.0,
+                    countdown: 3.0,
+                ),
             )),
             mob_component: (
                 defense_damage: 25,

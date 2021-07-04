@@ -1,3 +1,6 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 /// Counts down a set amount of time then resets
 pub struct Timer {
     period: f32,
@@ -35,6 +38,10 @@ impl Timer {
     /// Returns the period of the timer
     pub fn get_period(&self) -> f32 {
         self.period
+    }
+
+    pub fn set_period(&mut self, period: f32) {
+        self.period = period;
     }
 
     /// Returns the difference between the period and countdown

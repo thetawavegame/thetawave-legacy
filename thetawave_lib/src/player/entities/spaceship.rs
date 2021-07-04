@@ -82,11 +82,7 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
         range: 100.0,
     };
 
-    let manual_fire = ManualFireComponent {
-        period: SPACESHIP_FIRE_SPEED,
-        timer: 0.0,
-        ready: false,
-    };
+    let manual_fire = ManualFireComponent::new(SPACESHIP_FIRE_SPEED);
 
     let health = HealthComponent::new(SPACESHIP_HEALTH);
 

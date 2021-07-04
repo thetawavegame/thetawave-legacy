@@ -5,6 +5,7 @@ use crate::{
     },
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     spawnable::{spawn_blasts, BlastComponent},
+    tools::Timer,
     visual::resources::SpriteSheetsResource,
     weapons::BlastType,
 };
@@ -170,27 +171,59 @@ impl BlasterComponent {
 /// Used for firing weapons periodically
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoFireComponent {
-    /// Time between firing blasts
-    pub period: f32,
-    /// Stores countdown time from period value
-    pub timer: f32,
+    timer: Timer,
 }
 
 impl Component for AutoFireComponent {
     type Storage = DenseVecStorage<Self>;
 }
 
+impl AutoFireComponent {
+    pub fn new(reload_period: f32) -> Self {
+        AutoFireComponent {
+            timer: Timer::new(reload_period),
+        }
+    }
+
+    pub fn update(&mut self, delta_time: f32) -> bool {
+        self.timer.update(delta_time)
+    }
+}
+
 /// Used for firing weapons with input
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ManualFireComponent {
-    /// Minimum time between firing blasts
-    pub period: f32,
-    /// Stores countdown time from period value
-    pub timer: f32,
+    /// Timer for managing reloading time
+    pub timer: Timer,
     /// Indicates whether weapon is ready to be fired
-    pub ready: bool,
+    pub is_loaded: bool,
 }
 
 impl Component for ManualFireComponent {
     type Storage = DenseVecStorage<Self>;
+}
+
+impl ManualFireComponent {
+    pub fn new(reload_period: f32) -> Self {
+        ManualFireComponent {
+            timer: Timer::new(reload_period),
+            is_loaded: true,
+        }
+    }
+
+    pub fn update(&mut self, delta_time: f32) {
+        if !self.is_loaded {
+            if self.timer.update(delta_time) {
+                self.is_loaded = true;
+            }
+        }
+    }
+
+    pub fn fire(&mut self) -> bool {
+        if self.is_loaded {
+            self.is_loaded = false;
+            return true;
+        }
+        false
+    }
 }

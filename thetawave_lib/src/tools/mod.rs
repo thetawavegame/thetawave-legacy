@@ -1,3 +1,5 @@
+//! `thetawave_lib` tools module
+
 mod math;
 mod random;
 mod timer;

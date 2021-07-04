@@ -156,7 +156,9 @@ pub fn apply_modifiers(
             }
 
             Modifier::ProjectileFirePeriod(val) => {
-                player_manual_fire.period += val;
+                player_manual_fire
+                    .timer
+                    .set_period(player_manual_fire.timer.get_period() + *val);
             }
 
             Modifier::ProjectileDamage(val) => {

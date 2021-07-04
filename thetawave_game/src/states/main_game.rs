@@ -32,7 +32,7 @@ use thetawave_lib::{
     },
     phases::systems::PhaseManagerSystem,
     player::entities::initialize_spaceship,
-    player::systems::{BarrelRollAbilitySystem, SpaceshipSystem},
+    player::systems::BarrelRollAbilitySystem,
     spawn::systems::{
         AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
     },
@@ -166,13 +166,8 @@ impl Default for MainGameState {
                     "defense_system",
                     &["spaceship_item_collision_system"],
                 )
-                .with(SpaceshipSystem::default(), "spaceship_system", &[])
                 .with(StoreSystem, "store_system", &[])
-                .with(
-                    StatTrackerSystem,
-                    "stat_tracker_system",
-                    &["store_system", "spaceship_system"],
-                )
+                .with(StatTrackerSystem, "stat_tracker_system", &["store_system"])
                 .with(AutoFireSystem, "autoblaster_system", &[])
                 .with(ManualBlasterSystem, "manualblaster_system", &[])
                 .with(

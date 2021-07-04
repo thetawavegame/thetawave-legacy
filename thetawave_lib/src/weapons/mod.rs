@@ -2,12 +2,12 @@
 
 use serde::{Deserialize, Serialize};
 
-mod components;
-mod systems;
+mod weapon_components;
+mod weapon_systems;
 
 pub use self::{
-    components::{AutoFireComponent, BlasterComponent, ManualFireComponent},
-    systems::{AutoFireSystem, ManualBlasterSystem},
+    weapon_components::{AutoFireComponent, BlasterComponent, ManualFireComponent},
+    weapon_systems::{AutoFireSystem, ManualBlasterSystem},
 };
 
 /// Used for determining sprite and applied statuses
