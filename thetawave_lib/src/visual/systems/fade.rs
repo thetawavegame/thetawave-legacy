@@ -1,4 +1,4 @@
-use crate::visual::components::FadeComponent;
+use crate::visual::FadeComponent;
 use amethyst::{
     ecs::prelude::{Join, System, WriteStorage},
     renderer::resources::Tint,
@@ -8,10 +8,8 @@ use amethyst::{
 pub struct FadeSystem;
 
 impl<'s> System<'s> for FadeSystem {
-    /// Data used by the system
     type SystemData = (WriteStorage<'s, Tint>, WriteStorage<'s, FadeComponent>);
 
-    /// Data used by the system
     fn run(&mut self, (mut tints, mut fades): Self::SystemData) {
         for (tint, fade) in (&mut tints, &mut fades).join() {
             if let Some(red_change) = &mut fade.red_change {

@@ -3,7 +3,7 @@ use crate::{
     player::components::PlayerComponent,
     spawnable::{ConsumablesResource, ItemsResource, SpawnableType},
     tools::{weighted_rng, Timer},
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
 };
 use amethyst::{
     core::{math::Vector3, transform::Transform},
@@ -91,15 +91,22 @@ impl StoreResource {
             // create the SpriteRender component
             let sprite_render = SpriteRender {
                 sprite_sheet: spritesheets_resource.spritesheets
-                    [&spawnable_type.get_spritesheet_name()].clone(),
+                    [&spawnable_type.get_spritesheet_name()]
+                    .clone(),
                 sprite_number: match spawnable_type {
                     SpawnableType::Consumable(consumable_type) => {
-                        consumables_resource.consumable_entities[&consumable_type].sprite_render_data.initial_index
-                    },
+                        consumables_resource.consumable_entities[&consumable_type]
+                            .sprite_render_data
+                            .initial_index
+                    }
                     SpawnableType::Item(item_type) => {
-                        items_resource.item_entities[&item_type].sprite_render_data.initial_index
-                    },
-                    _ => {panic!("Attempted to set icon to invalid Spawnable. Icons must be set to items or consumables.")}
+                        items_resource.item_entities[&item_type]
+                            .sprite_render_data
+                            .initial_index
+                    }
+                    _ => {
+                        panic!("Attempted to set icon to invalid Spawnable. Icons must be set to items or consumables.")
+                    }
                 },
             };
 

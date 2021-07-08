@@ -2,7 +2,7 @@ use crate::{
     audio::Sounds,
     events::PlayAudioEvent,
     motion::components::Motion2DComponent,
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
     weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };
 use amethyst::{
@@ -18,7 +18,6 @@ use amethyst::{
 pub struct AutoFireSystem;
 
 impl<'s> System<'s> for AutoFireSystem {
-    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         Read<'s, Time>,
@@ -30,7 +29,6 @@ impl<'s> System<'s> for AutoFireSystem {
         ReadExpect<'s, SpriteSheetsResource>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -64,7 +62,6 @@ impl<'s> System<'s> for AutoFireSystem {
 pub struct ManualBlasterSystem;
 
 impl<'s> System<'s> for ManualBlasterSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, Time>,
         WriteStorage<'s, ManualFireComponent>,
@@ -79,7 +76,6 @@ impl<'s> System<'s> for ManualBlasterSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (

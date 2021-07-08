@@ -1,7 +1,7 @@
 use crate::{
     spawnable::{spawn_spawnable, SpawnableResources, SpawnableType},
     tools::weighted_rng,
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
 };
 use amethyst::{
     core::transform::Transform,

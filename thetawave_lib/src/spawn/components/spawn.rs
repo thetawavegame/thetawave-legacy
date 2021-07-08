@@ -3,7 +3,7 @@ use crate::{
         ConsumableType, ConsumablesResource, EffectType, EffectsResource, ItemType, ItemsResource,
         MobType, MobsResource, SpawnableType,
     },
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
 };
 
 use amethyst::{

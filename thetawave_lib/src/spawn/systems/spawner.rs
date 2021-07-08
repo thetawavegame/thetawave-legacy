@@ -5,7 +5,7 @@ use crate::{
     spawnable::{
         ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpawnableResources,
     },
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},

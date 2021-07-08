@@ -4,20 +4,18 @@ use amethyst::{
     renderer::SpriteRender,
 };
 
-use crate::visual::components::{AnimationComponent, AnimationType};
+use crate::visual::{AnimationComponent, AnimationType};
 
 /// Handles animations
 pub struct AnimationSystem;
 
 impl<'s> System<'s> for AnimationSystem {
-    /// Data used by the system
     type SystemData = (
         WriteStorage<'s, SpriteRender>,
         WriteStorage<'s, AnimationComponent>,
         Read<'s, Time>,
     );
 
-    /// System game logic
     fn run(&mut self, (mut sprite_renders, mut animations, time): Self::SystemData) {
         for (sprite_render, ani) in (&mut sprite_renders, &mut animations).join() {
             // add the frame time to the elapsed time

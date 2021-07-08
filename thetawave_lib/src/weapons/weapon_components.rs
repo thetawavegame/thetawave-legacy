@@ -6,7 +6,7 @@ use crate::{
     motion::components::{Hitbox2DComponent, Motion2DComponent},
     spawnable::{spawn_blasts, BlastComponent},
     tools::Timer,
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
     weapons::BlastType,
 };
 
@@ -171,6 +171,7 @@ impl BlasterComponent {
 /// Used for firing weapons periodically
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AutoFireComponent {
+    /// Timer for managing reloading time
     timer: Timer,
 }
 
@@ -179,12 +180,14 @@ impl Component for AutoFireComponent {
 }
 
 impl AutoFireComponent {
+    /// Creates new instance of AutoFireComponent from a reload time period
     pub fn new(reload_period: f32) -> Self {
         AutoFireComponent {
             timer: Timer::new(reload_period),
         }
     }
 
+    /// Updates the timer
     pub fn update(&mut self, delta_time: f32) -> bool {
         self.timer.update(delta_time)
     }
@@ -204,6 +207,7 @@ impl Component for ManualFireComponent {
 }
 
 impl ManualFireComponent {
+    /// Creates new instance of ManualFireComponent from a reload time period
     pub fn new(reload_period: f32) -> Self {
         ManualFireComponent {
             timer: Timer::new(reload_period),
@@ -211,14 +215,16 @@ impl ManualFireComponent {
         }
     }
 
+    /// Updates timer if not loaded sets is_loaded on reset
     pub fn update(&mut self, delta_time: f32) {
-        if !self.is_loaded {
-            if self.timer.update(delta_time) {
-                self.is_loaded = true;
-            }
+        // update is only called if not loaded do to short circuiting if
+        if !self.is_loaded && self.timer.update(delta_time) {
+            self.is_loaded = true;
         }
     }
 
+    /// Sets loaded to false if loaded
+    /// Returns true on successful fire
     pub fn fire(&mut self) -> bool {
         if self.is_loaded {
             self.is_loaded = false;

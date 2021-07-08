@@ -6,8 +6,7 @@ use crate::{
     },
     spawnable::components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
     spawnable::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
-    visual::components::{AnimationComponent, FadeComponent},
-    visual::resources::{SpriteRenderData, SpriteSheetsResource},
+    visual::{AnimationComponent, FadeComponent, SpriteRenderData, SpriteSheetsResource},
     weapons::{AutoFireComponent, BlasterComponent},
 };
 use amethyst::{

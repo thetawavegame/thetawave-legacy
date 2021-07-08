@@ -4,7 +4,7 @@ use crate::{
     player::components::PlayerComponent,
     spawnable::{ConsumablesResource, ItemsResource},
     store::StoreResource,
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
 };
 use amethyst::{
     core::{timing::Time, Transform},

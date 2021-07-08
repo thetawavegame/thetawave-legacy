@@ -1,4 +1,4 @@
-use crate::visual::components::PlanetComponent;
+use crate::visual::PlanetComponent;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::math::Vector3,

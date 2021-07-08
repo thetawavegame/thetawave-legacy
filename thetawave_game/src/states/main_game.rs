@@ -38,16 +38,10 @@ use thetawave_lib::{
     },
     spawnable::{MobBehaviorSystem, MobDestroyedSystem, ModifiersSystem},
     store::StoreSystem,
-    visual::resources::{SpriteSheetsConfig, SpriteSheetsResource},
     visual::{
-        entities::{
-            initialize_background, initialize_planet, initialize_side_panels,
-            initialize_status_bars,
-        },
-        systems::{
-            AnimationSystem, FadeSystem, PlanetsSystem, StatTrackerSystem, StatusBarSystem,
-            TrackedStats,
-        },
+        initialize_background, initialize_planet, initialize_side_panels, initialize_status_bars,
+        AnimationSystem, FadeSystem, PlanetsSystem, SpriteSheetsConfig, SpriteSheetsResource,
+        StatTrackerSystem, StatusBarSystem, TrackedStats,
     },
     weapons::{AutoFireSystem, ManualBlasterSystem},
 };

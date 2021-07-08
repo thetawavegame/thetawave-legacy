@@ -13,7 +13,7 @@ use crate::{
         BlastComponent, ConsumableComponent, EffectType, EffectsResource, ItemComponent,
         MobComponent,
     },
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
     weapons::BlastType,
 };
 use amethyst::{

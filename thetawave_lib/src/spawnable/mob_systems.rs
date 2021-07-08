@@ -7,7 +7,7 @@ use crate::{
         components::MobComponent, ConsumablesResource, EffectType, EffectsResource, ItemsResource,
         MobsResource, SpawnableResources,
     },
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
 };
 use amethyst::{
     core::transform::Transform,

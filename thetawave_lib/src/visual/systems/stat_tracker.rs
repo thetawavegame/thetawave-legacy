@@ -23,7 +23,6 @@ pub struct TrackedStats {
 pub struct StatTrackerSystem;
 
 impl<'s> System<'s> for StatTrackerSystem {
-    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, HealthComponent>,
@@ -34,7 +33,6 @@ impl<'s> System<'s> for StatTrackerSystem {
         ReadExpect<'s, ConsumablesResource>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (

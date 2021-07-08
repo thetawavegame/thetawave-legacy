@@ -34,7 +34,7 @@ use thetawave_lib::{
         ItemsResource, MobsResource,
     },
     store::{StoreConfig, StoreResource},
-    visual::resources::SpriteSheetsConfig,
+    visual::SpriteSheetsConfig,
 };
 
 use amethyst::config::Config;

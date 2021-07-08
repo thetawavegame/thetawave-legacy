@@ -1,9 +1,12 @@
 use amethyst::core::Transform;
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
+/// Component for managing planets motion
 #[derive(Clone)]
 pub struct PlanetComponent {
+    /// Current angle of planet
     pub angle: f32,
+    /// Change in angle of planet per frame
     pub d_angle: f32,
 }
 
@@ -12,6 +15,7 @@ impl Component for PlanetComponent {
 }
 
 impl PlanetComponent {
+    /// Rotate the planet
     pub fn rotate(&mut self, transform: &mut Transform) {
         transform.set_rotation_euler(
             0.0,

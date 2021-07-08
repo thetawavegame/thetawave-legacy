@@ -7,7 +7,7 @@ use crate::{
     boss::components::RepeaterComponent,
     constants,
     spawnable::{EnemyType, MobType, MobsResource},
-    visual::resources::SpriteSheetsResource,
+    visual::SpriteSheetsResource,
 };
 use amethyst::prelude::Builder;
 

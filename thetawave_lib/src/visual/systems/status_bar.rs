@@ -2,11 +2,7 @@ use crate::{
     misc::{DefenseResource, HealthComponent},
     player::components::{BarrelRollAbilityComponent, PlayerComponent},
     store::StoreResource,
-    visual::resources::SpriteSheetsResource,
-    visual::{
-        components::{StatusBarComponent, StatusType},
-        entities::spawn_status_unit,
-    },
+    visual::{spawn_status_unit, SpriteSheetsResource, StatusBarComponent, StatusType},
 };
 use amethyst::ecs::prelude::{
     Entities, Join, LazyUpdate, ReadExpect, ReadStorage, System, WriteStorage,
@@ -21,7 +17,6 @@ const RESTOCK_SPRITE_INDEX: usize = 3;
 pub struct StatusBarSystem;
 
 impl<'s> System<'s> for StatusBarSystem {
-    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, StatusBarComponent>,
@@ -34,7 +29,6 @@ impl<'s> System<'s> for StatusBarSystem {
         ReadExpect<'s, LazyUpdate>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (
