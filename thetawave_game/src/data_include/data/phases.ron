@@ -45,6 +45,8 @@
     ],
     phase_idx: 0,
     current_tick: 0,
-    tick_timer: 1.0,
-    tick_length: 1.0,
+    phase_timer: (
+        period: 1.0,
+        countdown: 1.0,
+    ),
 )

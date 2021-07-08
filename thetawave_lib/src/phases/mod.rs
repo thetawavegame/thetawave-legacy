@@ -1,4 +1,11 @@
 //! `thetawave_lib` phases module
 
-pub mod resources;
-pub mod systems;
+mod phase_manager_system;
+mod phases;
+
+pub use self::{
+    phase_manager_system::PhaseManagerSystem,
+    phases::{
+        BossType, InvasionFormationPool, InvasionRandomPool, Phase, PhaseManagerResource, PhaseType,
+    },
+};

@@ -1,6 +1,6 @@
 use crate::{
     misc::{DefenseResource, HealthComponent},
-    player::components::{BarrelRollAbilityComponent, PlayerComponent},
+    player::{BarrelRollAbilityComponent, PlayerComponent},
     store::StoreResource,
     visual::{spawn_status_unit, SpriteSheetsResource, StatusBarComponent, StatusType},
 };
@@ -81,19 +81,20 @@ impl<'s> System<'s> for StatusBarSystem {
 
                 StatusType::Roll => {
                     for barrel_roll_ability in (&barrel_roll_abilities).join() {
-                        if let Some(status_position) = status_bar.update_units_x(
-                            barrel_roll_ability.execute_cooldown,
-                            barrel_roll_ability.execute_cooldown
-                                - barrel_roll_ability.execute_timer,
-                            &entities,
-                        ) {
-                            status_bar.status_unit_stack.push(spawn_status_unit(
+                        if !barrel_roll_ability.is_ready() {
+                            if let Some(status_position) = status_bar.update_units_x(
+                                barrel_roll_ability.execution_timer.get_period(),
+                                barrel_roll_ability.execution_timer.get_time_left(),
                                 &entities,
-                                &sprite_resource,
-                                ROLL_SPRITE_INDEX,
-                                status_position,
-                                &lazy_update,
-                            ));
+                            ) {
+                                status_bar.status_unit_stack.push(spawn_status_unit(
+                                    &entities,
+                                    &sprite_resource,
+                                    ROLL_SPRITE_INDEX,
+                                    status_position,
+                                    &lazy_update,
+                                ));
+                            }
                         }
                     }
                 }

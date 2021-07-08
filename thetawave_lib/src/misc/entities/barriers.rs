@@ -4,7 +4,7 @@ use crate::{
         SIDE_PANEL_Z,
     },
     misc::components::{BarrierComponent, PushDirection},
-    motion::components::Hitbox2DComponent,
+    motion::Hitbox2DComponent,
 };
 use amethyst::{
     core::{math::Vector2, transform::Transform},

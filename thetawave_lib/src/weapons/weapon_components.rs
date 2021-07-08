@@ -3,7 +3,7 @@ use crate::{
         BLAST_HITBOX_DIAMETER, BLAST_Z, CRIT_BLAST_SPRITE_INDEX, ENEMY_BLAST_SPRITE_INDEX,
         PLAYER_BLAST_SPRITE_INDEX, POISON_BLAST_SPRITE_INDEX,
     },
-    motion::components::{Hitbox2DComponent, Motion2DComponent},
+    motion::{Hitbox2DComponent, Motion2DComponent},
     spawnable::{spawn_blasts, BlastComponent},
     tools::Timer,
     visual::SpriteSheetsResource,

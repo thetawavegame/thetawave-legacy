@@ -1,6 +1,6 @@
 use crate::{
     misc::HealthComponent,
-    motion::components::{Hitbox2DComponent, Motion2DComponent},
+    motion::{Hitbox2DComponent, Motion2DComponent},
     spawn::{AutoSpawnerComponent, DespawnAtBorderComponent, DespawnTimeLimitComponent},
     spawnable::{
         BlastComponent, ConsumableComponent, ConsumableType, EffectType, ItemComponent, ItemType,

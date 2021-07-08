@@ -21,7 +21,7 @@ use thetawave_lib::{
     misc::entities::initialize_arena_barriers,
     misc::resources::DebugLinesConfig,
     misc::systems::{AttractorSystem, DefenseSystem},
-    motion::systems::{
+    motion::{
         BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
         ConsumableMotion2DSystem, ItemMotion2DSystem, MobArenaBorderCollisionSystem,
         MobBlastCollisionSystem, MobMobCollisionSystem, MobMotion2DSystem,
@@ -30,9 +30,8 @@ use thetawave_lib::{
         PlayerConsumableCollisionSystem, PlayerItemCollisionSystem, PlayerMobCollisionSystem,
         PlayerMotion2DSystem,
     },
-    phases::systems::PhaseManagerSystem,
-    player::entities::initialize_spaceship,
-    player::systems::BarrelRollAbilitySystem,
+    phases::PhaseManagerSystem,
+    player::{initialize_spaceship, BarrelRollAbilitySystem},
     spawn::{AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem},
     spawnable::{MobBehaviorSystem, MobDestroyedSystem, ModifiersSystem},
     store::StoreSystem,

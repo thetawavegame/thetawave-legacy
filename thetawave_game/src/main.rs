@@ -26,8 +26,8 @@ use thetawave_lib::{
     audio::SoundsConfig,
     misc::resources::{DebugLinesConfig, GameParametersResource},
     misc::DefenseResource,
-    phases::resources::PhaseManagerResource,
-    player::resources::PlayersResource,
+    phases::PhaseManagerResource,
+    player::PlayersResource,
     spawn::{DropTablesResource, SpawnerResource},
     spawnable::{
         ConsumableModifiersResource, ConsumablesResource, EffectsResource, ItemModifiersResource,

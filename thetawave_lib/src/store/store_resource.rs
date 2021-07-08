@@ -1,6 +1,6 @@
 use crate::{
     constants::{ARENA_MAX_Y, ITEM_SPAWN_Y_OFFSET},
-    player::components::PlayerComponent,
+    player::PlayerComponent,
     spawnable::{ConsumablesResource, ItemsResource, SpawnableType},
     tools::{weighted_rng, Timer},
     visual::SpriteSheetsResource,

@@ -1,6 +1,6 @@
 use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_SPAWN_OFFSET, SPAWNER_Y_OFFSET},
-    phases::resources::{InvasionFormationPool, InvasionRandomPool},
+    phases::{InvasionFormationPool, InvasionRandomPool},
     spawnable::{spawn_spawnable, SpawnableResources, SpawnableType},
     visual::SpriteSheetsResource,
 };

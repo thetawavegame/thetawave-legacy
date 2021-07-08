@@ -8,7 +8,7 @@ use crate::{
         components::Motion2DComponent,
         systems::{barrier_collision, immovable_collision, standard_collision},
     },
-    player::components::{AbilityDirection, BarrelRollAbilityComponent},
+    player::{AbilityDirection, BarrelRollAbilityComponent},
     spawnable::{
         BlastComponent, ConsumableComponent, EffectType, EffectsResource, ItemComponent,
         MobComponent,
@@ -25,12 +25,10 @@ use amethyst::{
 /// Handles collisions between players and mobs
 #[derive(Default)]
 pub struct PlayerMobCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerMobCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Read<'s, GameParametersResource>,
@@ -40,7 +38,6 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
         ReadStorage<'s, BarrelRollAbilityComponent>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -50,7 +47,6 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -71,7 +67,7 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
                 let collision_damage_immune = if let Some(barrel_roll_ability) =
                     barrel_roll_abilities.get(event.player_entity)
                 {
-                    if let AbilityDirection::None = barrel_roll_ability.action_direction {
+                    if let AbilityDirection::None = barrel_roll_ability.get_direction() {
                         false
                     } else {
                         barrel_roll_ability.steel_barrel
@@ -107,12 +103,10 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
 /// Handles collisions between players and blasts
 #[derive(Default)]
 pub struct PlayerBlastCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerBlastCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -125,7 +119,6 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
         ReadExpect<'s, LazyUpdate>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -135,7 +128,6 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -159,7 +151,7 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
                 let player_hittable = if let Some(barrel_roll_ability) =
                     barrel_roll_abilities.get(event.player_entity)
                 {
-                    if let AbilityDirection::None = barrel_roll_ability.action_direction {
+                    if let AbilityDirection::None = barrel_roll_ability.get_direction() {
                         true
                     } else {
                         false
@@ -198,12 +190,10 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
 /// Handles collisions between players and items
 #[derive(Default)]
 pub struct PlayerItemCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerItemCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -213,7 +203,6 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -223,7 +212,6 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -258,12 +246,10 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
 /// Handles collisions between players and consumables
 #[derive(Default)]
 pub struct PlayerConsumableCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerConsumableCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -273,7 +259,6 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    // Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -283,7 +268,6 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -318,12 +302,10 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
 /// Handles collisions between players and arena borders
 #[derive(Default)]
 pub struct PlayerArenaBorderCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         ReadStorage<'s, BarrierComponent>,
@@ -333,7 +315,6 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -343,7 +324,6 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (

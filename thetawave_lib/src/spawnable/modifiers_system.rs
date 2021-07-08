@@ -2,8 +2,8 @@ use crate::{
     events::{ConsumableGetEvent, ItemGetEvent},
     misc::components::{AttractorCategory, AttractorComponent},
     misc::{DefenseResource, HealthComponent},
-    motion::components::Motion2DComponent,
-    player::components::{BarrelRollAbilityComponent, PlayerComponent},
+    motion::Motion2DComponent,
+    player::{BarrelRollAbilityComponent, PlayerComponent},
     spawnable::{ConsumableModifiersResource, ItemModifiersResource, Modifier, SpawnableType},
     weapons::{BlasterComponent, ManualFireComponent},
 };
@@ -176,7 +176,9 @@ pub fn apply_modifiers(
             }
 
             Modifier::AbilityCooldown(val) => {
-                player_barrel_roll_ability.execute_cooldown += val;
+                player_barrel_roll_ability
+                    .execution_timer
+                    .set_period(player_barrel_roll_ability.execution_timer.get_period() + *val);
             }
 
             Modifier::Acceleration(val) => {

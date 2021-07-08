@@ -1,5 +1,5 @@
 use crate::{
-    motion::components::Motion2DComponent,
+    motion::Motion2DComponent,
     visual::{AnimationComponent, AnimationType, ColorChannelChange, FadeComponent},
 };
 use amethyst::{

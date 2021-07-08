@@ -1,7 +1,7 @@
 use crate::{
     events::PlayerCollisionEvent,
     misc::components::BarrierComponent,
-    motion::components::Motion2DComponent,
+    motion::Motion2DComponent,
     player::components::{AbilityDirection, BarrelRollAbilityComponent, CooldownAbility},
     spawnable::MobComponent,
 };
@@ -13,6 +13,7 @@ use amethyst::{
     shrev::{EventChannel, ReaderId},
 };
 
+/// Manages barrel roll ability
 #[derive(Default)]
 pub struct BarrelRollAbilitySystem {
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
@@ -67,12 +68,12 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
             }
 
             // change velocity if barrel rolling
-            match barrel_roll_ability.action_direction {
+            match barrel_roll_ability.get_direction() {
                 AbilityDirection::Left => {
-                    motion2d.velocity.x = -barrel_roll_ability.speed;
+                    motion2d.velocity.x = -barrel_roll_ability.get_speed();
                 }
                 AbilityDirection::Right => {
-                    motion2d.velocity.x = barrel_roll_ability.speed;
+                    motion2d.velocity.x = barrel_roll_ability.get_speed();
                 }
                 AbilityDirection::None => {}
             }

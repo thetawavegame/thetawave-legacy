@@ -9,8 +9,8 @@ use crate::{
     },
     misc::components::{AttractData, AttractorCategory, AttractorComponent},
     misc::HealthComponent,
-    motion::components::{Hitbox2DComponent, Motion2DComponent},
-    player::components::{AbilityDirection, BarrelRollAbilityComponent},
+    motion::{Hitbox2DComponent, Motion2DComponent},
+    player::components::BarrelRollAbilityComponent,
     player::resources::PlayersResource,
     weapons::{BlastType, BlasterComponent, ManualFireComponent},
 };
@@ -23,6 +23,7 @@ use amethyst::{
 };
 use std::collections::HashMap;
 
+/// Initialize the player
 pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
     let player = {
         let players_resource = world.read_resource::<PlayersResource>();
@@ -86,15 +87,11 @@ pub fn initialize_spaceship(world: &mut World, sprite_sheet_handle: Handle<Sprit
 
     let health = HealthComponent::new(SPACESHIP_HEALTH);
 
-    let barrel_roll_ability = BarrelRollAbilityComponent {
-        execute_cooldown: SPACESHIP_BARREL_COOLDOWN,
-        execute_timer: 0.0,
-        action_cooldown: SPACESHIP_BARREL_DURATION,
-        action_timer: 0.0,
-        action_direction: AbilityDirection::None,
-        speed: SPACESHIP_BARREL_SPEED,
-        steel_barrel: false,
-    };
+    let barrel_roll_ability = BarrelRollAbilityComponent::new(
+        SPACESHIP_BARREL_COOLDOWN,
+        SPACESHIP_BARREL_DURATION,
+        SPACESHIP_BARREL_SPEED,
+    );
 
     // Attach spawnables affected by the player's AttractorData component.
     let mut attracted_spawnables = HashMap::new();

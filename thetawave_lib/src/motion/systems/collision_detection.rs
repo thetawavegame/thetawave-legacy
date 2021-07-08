@@ -3,7 +3,7 @@ use crate::{
     misc::components::BarrierComponent,
     misc::resources::DebugLinesConfig,
     motion::components::{Hitbox2DComponent, Motion2DComponent},
-    player::components::PlayerComponent,
+    player::PlayerComponent,
     spawnable::MobComponent,
 };
 use amethyst::{
@@ -20,7 +20,6 @@ use amethyst::{
 pub struct CollisionDetectionSystem;
 
 impl<'s> System<'s> for CollisionDetectionSystem {
-    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         ReadStorage<'s, Hitbox2DComponent>,
@@ -30,7 +29,6 @@ impl<'s> System<'s> for CollisionDetectionSystem {
         Read<'s, DebugLinesConfig>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -78,12 +76,10 @@ impl<'s> System<'s> for CollisionDetectionSystem {
 /// Handles routing of collision data to specific event channels
 #[derive(Default)]
 pub struct CollisionHandlerSystem {
-    /// Reads from the collision event channel
     event_reader: Option<ReaderId<CollisionEvent>>,
 }
 
 impl<'s> System<'s> for CollisionHandlerSystem {
-    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, MobComponent>,
@@ -95,7 +91,6 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         Write<'s, EventChannel<ArenaBorderCollisionEvent>>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -105,7 +100,6 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (

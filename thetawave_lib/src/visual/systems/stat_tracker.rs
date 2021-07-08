@@ -1,6 +1,6 @@
 use crate::{
     misc::HealthComponent,
-    player::components::PlayerComponent,
+    player::PlayerComponent,
     spawnable::{ConsumablesResource, ItemsResource, SpawnableType},
     store::StoreResource,
 };

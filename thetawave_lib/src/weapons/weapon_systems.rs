@@ -1,7 +1,7 @@
 use crate::{
     audio::Sounds,
     events::PlayAudioEvent,
-    motion::components::Motion2DComponent,
+    motion::Motion2DComponent,
     visual::SpriteSheetsResource,
     weapons::{AutoFireComponent, BlasterComponent, ManualFireComponent},
 };
