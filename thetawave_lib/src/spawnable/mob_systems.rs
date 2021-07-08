@@ -2,7 +2,7 @@ use crate::{
     audio::Sounds,
     events::{MobDestroyedEvent, PlayAudioEvent},
     misc::HealthComponent,
-    spawn::resources::DropTablesResource,
+    spawn::DropTablesResource,
     spawnable::{
         components::MobComponent, ConsumablesResource, EffectType, EffectsResource, ItemsResource,
         MobsResource, SpawnableResources,
@@ -24,7 +24,6 @@ use amethyst::{
 pub struct MobBehaviorSystem;
 
 impl<'s> System<'s> for MobBehaviorSystem {
-    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, MobComponent>,
@@ -32,7 +31,6 @@ impl<'s> System<'s> for MobBehaviorSystem {
         Write<'s, EventChannel<MobDestroyedEvent>>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (entities, mut mobs, mut healths, mut mob_destroyed_event_channel): Self::SystemData,
@@ -54,7 +52,6 @@ pub struct MobDestroyedSystem {
 }
 
 impl<'s> System<'s> for MobDestroyedSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<MobDestroyedEvent>>,
         Entities<'s>,
@@ -71,7 +68,6 @@ impl<'s> System<'s> for MobDestroyedSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -81,7 +77,6 @@ impl<'s> System<'s> for MobDestroyedSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (

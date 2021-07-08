@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
 /// Counts down a set amount of time then resets
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Timer {
     period: f32,
     countdown: f32,

@@ -7,10 +7,8 @@ mod systems;
 
 pub use self::{
     components::{
-        animation::{AnimationComponent, AnimationType},
-        fade::{ColorChannelChange, FadeComponent},
-        planet::PlanetComponent,
-        status_bar::{StatusBarComponent, StatusType},
+        AnimationComponent, AnimationType, ColorChannelChange, FadeComponent, PlanetComponent,
+        StatusBarComponent, StatusType,
     },
     entities::{
         initialize_background, initialize_planet, initialize_side_panels, initialize_status_bars,

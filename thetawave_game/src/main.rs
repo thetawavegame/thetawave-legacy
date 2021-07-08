@@ -28,7 +28,7 @@ use thetawave_lib::{
     misc::DefenseResource,
     phases::resources::PhaseManagerResource,
     player::resources::PlayersResource,
-    spawn::resources::{DropTablesResource, SpawnerResource},
+    spawn::{DropTablesResource, SpawnerResource},
     spawnable::{
         ConsumableModifiersResource, ConsumablesResource, EffectsResource, ItemModifiersResource,
         ItemsResource, MobsResource,

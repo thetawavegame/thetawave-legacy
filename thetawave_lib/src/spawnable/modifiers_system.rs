@@ -23,7 +23,6 @@ pub struct ModifiersSystem {
 }
 
 impl<'s> System<'s> for ModifiersSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<ItemGetEvent>>,
         Read<'s, EventChannel<ConsumableGetEvent>>,
@@ -39,7 +38,6 @@ impl<'s> System<'s> for ModifiersSystem {
         WriteExpect<'s, DefenseResource>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.item_get_event_reader = Some(
@@ -54,7 +52,6 @@ impl<'s> System<'s> for ModifiersSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (

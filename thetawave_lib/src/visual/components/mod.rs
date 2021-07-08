@@ -1,6 +1,13 @@
 //! Components for managing visuals
 
-pub mod animation;
-pub mod fade;
-pub mod planet;
-pub mod status_bar;
+mod animation;
+mod fade;
+mod planet;
+mod status_bar;
+
+pub use self::{
+    animation::{AnimationComponent, AnimationType},
+    fade::{ColorChannelChange, FadeComponent},
+    planet::PlanetComponent,
+    status_bar::{StatusBarComponent, StatusType},
+};

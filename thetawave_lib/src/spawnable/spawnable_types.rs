@@ -14,10 +14,10 @@ impl SpawnableType {
     /// Get name of corresponding spritesheet
     pub fn get_spritesheet_name(&self) -> String {
         match self {
-            &Self::Consumable(_) => String::from("consumables"),
-            &Self::Effect(_) => String::from("effects"),
-            &Self::Item(_) => String::from("items"),
-            &Self::Mob(_) => String::from("mobs"),
+            Self::Consumable(_) => String::from("consumables"),
+            Self::Effect(_) => String::from("effects"),
+            Self::Item(_) => String::from("items"),
+            Self::Mob(_) => String::from("mobs"),
         }
     }
 }

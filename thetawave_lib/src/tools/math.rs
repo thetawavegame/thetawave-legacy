@@ -1,7 +1,6 @@
 use amethyst::core::math::Vector3;
 
 /// Calculates distance between two points
-// TODO: change Vector3 to Point3 (across entire project where appropriate)
 pub fn distance(point_a: Vector3<f32>, point_b: Vector3<f32>, is_2d: bool) -> f32 {
     let mut value = (point_a.x - point_b.x).powi(2) + (point_a.y - point_b.y).powi(2);
 

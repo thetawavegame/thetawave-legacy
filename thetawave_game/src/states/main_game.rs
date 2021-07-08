@@ -33,9 +33,7 @@ use thetawave_lib::{
     phases::systems::PhaseManagerSystem,
     player::entities::initialize_spaceship,
     player::systems::BarrelRollAbilitySystem,
-    spawn::systems::{
-        AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem,
-    },
+    spawn::{AutoSpawnerSystem, DespawnAtBorderSystem, DespawnTimeLimitSystem, SpawnerSystem},
     spawnable::{MobBehaviorSystem, MobDestroyedSystem, ModifiersSystem},
     store::StoreSystem,
     visual::{
