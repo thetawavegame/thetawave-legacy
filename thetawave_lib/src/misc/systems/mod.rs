@@ -1,6 +1,5 @@
 //! Miscellaneous systems
 
-mod attraction;
 mod defense;
 
-pub use self::{attraction::AttractorSystem, defense::DefenseSystem};
+pub use self::defense::DefenseSystem;

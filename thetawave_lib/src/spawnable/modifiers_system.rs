@@ -1,8 +1,7 @@
 use crate::{
     events::{ConsumableGetEvent, ItemGetEvent},
-    misc::components::{AttractorCategory, AttractorComponent},
     misc::{DefenseResource, HealthComponent},
-    motion::Motion2DComponent,
+    motion::{AttractorCategory, AttractorComponent, Motion2DComponent},
     player::{BarrelRollAbilityComponent, PlayerComponent},
     spawnable::{ConsumableModifiersResource, ItemModifiersResource, Modifier, SpawnableType},
     weapons::{BlasterComponent, ManualFireComponent},

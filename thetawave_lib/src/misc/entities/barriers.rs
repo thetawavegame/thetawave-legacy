@@ -12,6 +12,7 @@ use amethyst::{
     prelude::Builder,
 };
 
+/// Initialize border barriers for arena
 pub fn initialize_arena_barriers(world: &mut World) {
     let mut local_transform_left = Transform::default();
     local_transform_left.set_translation_xyz(

@@ -2,6 +2,7 @@ use crate::boss::components::RepeaterComponent;
 
 use amethyst::ecs::prelude::{Entities, Join, System, WriteStorage};
 
+/// Handles deletion of the boss
 pub struct BossSystem;
 
 impl<'s> System<'s> for BossSystem {

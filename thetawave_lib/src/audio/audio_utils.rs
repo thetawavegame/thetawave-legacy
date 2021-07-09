@@ -7,14 +7,17 @@ use amethyst::{
 
 use std::collections::HashMap;
 
+/// Maps string names to sounds (SourceHandles)
 pub struct Sounds {
     pub sound_effects: HashMap<String, SourceHandle>,
 }
 
+/// Load a sound effect
 fn load_audio_track(loader: &Loader, world: &World, file: &str) -> SourceHandle {
     loader.load(file, OggFormat, (), &world.read_resource())
 }
 
+/// Initialize sound effects
 pub fn initialize_audio(world: &mut World) {
     let sound_effects = {
         let loader = world.read_resource::<Loader>();
@@ -35,6 +38,7 @@ pub fn initialize_audio(world: &mut World) {
     world.insert(sound_effects);
 }
 
+/// Play a sound effect
 pub fn play_sfx(sound: &Handle<Source>, storage: &AssetStorage<Source>, output: Option<&Output>) {
     if let Some(ref output) = output.as_ref() {
         if let Some(sound) = storage.get(sound) {

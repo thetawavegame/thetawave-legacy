@@ -1,7 +1,7 @@
 use crate::{
     events::AttractionEvent,
-    misc::components::{AttractorCategory, AttractorComponent},
     misc::resources::DebugLinesConfig,
+    motion::{AttractorCategory, AttractorComponent},
 };
 use amethyst::{
     core::{math::Vector2, Transform},
@@ -10,7 +10,7 @@ use amethyst::{
     shrev::EventChannel,
 };
 
-// check for spawnables within range and send event to attract if they are
+/// Handles attraction of spawnaables within a range
 pub struct AttractorSystem;
 
 impl<'s> System<'s> for AttractorSystem {

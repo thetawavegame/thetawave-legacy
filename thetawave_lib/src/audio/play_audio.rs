@@ -7,6 +7,7 @@ use amethyst::{
     shrev::{EventChannel, ReaderId},
 };
 
+/// Handles execution of sound effects
 #[derive(Default)]
 pub struct PlayAudioSystem {
     event_reader: Option<ReaderId<PlayAudioEvent>>,

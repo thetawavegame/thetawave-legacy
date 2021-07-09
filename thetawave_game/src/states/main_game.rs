@@ -13,16 +13,16 @@ use std::{collections::HashMap, f32::consts::FRAC_PI_3};
 use thetawave_lib::{
     audio::initialize_audio,
     audio::PlayAudioSystem,
-    boss::systems::BossSystem,
+    boss::BossSystem,
     constants::{
         ARENA_HEIGHT, ARENA_MAX_X, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, CAMERA_X, CAMERA_Y,
         CAMERA_Z,
     },
     misc::entities::initialize_arena_barriers,
     misc::resources::DebugLinesConfig,
-    misc::systems::{AttractorSystem, DefenseSystem},
+    misc::systems::DefenseSystem,
     motion::{
-        BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
+        AttractorSystem, BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
         ConsumableMotion2DSystem, ItemMotion2DSystem, MobArenaBorderCollisionSystem,
         MobBlastCollisionSystem, MobMobCollisionSystem, MobMotion2DSystem,
         MobPlayerCollisionSystem, MobTargetSystem, Motion2DSystem,

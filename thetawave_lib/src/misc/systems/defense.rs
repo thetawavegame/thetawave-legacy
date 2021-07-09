@@ -5,6 +5,7 @@ use amethyst::{
     shrev::{EventChannel, ReaderId},
 };
 
+/// Handles defense objective
 #[derive(Default)]
 pub struct DefenseSystem {
     mob_reached_bottom_event_reader: Option<ReaderId<MobReachedBottomEvent>>,

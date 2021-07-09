@@ -11,6 +11,7 @@ use crate::{
 };
 use amethyst::prelude::Builder;
 
+/// Spawn a repeater boss
 pub fn spawn_repeater(
     spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
     mobs_resource: &ReadExpect<MobsResource>,

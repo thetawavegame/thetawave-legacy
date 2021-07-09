@@ -1,5 +1,7 @@
 //! `thetawave_lib` boss module
 
-pub mod components;
-pub mod entities;
-pub mod systems;
+mod components;
+mod entities;
+mod systems;
+
+pub use self::{components::RepeaterComponent, entities::spawn_repeater, systems::BossSystem};

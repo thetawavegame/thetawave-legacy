@@ -7,11 +7,11 @@ use crate::{
         SPACESHIP_DECELERATION_Y, SPACESHIP_FIRE_SPEED, SPACESHIP_HEALTH, SPACESHIP_HITBOX_HEIGHT,
         SPACESHIP_HITBOX_WIDTH, SPACESHIP_MAX_KNOCKBACK_SPEED, SPACESHIP_MAX_SPEED,
     },
-    misc::components::{AttractData, AttractorCategory, AttractorComponent},
     misc::HealthComponent,
-    motion::{Hitbox2DComponent, Motion2DComponent},
-    player::components::BarrelRollAbilityComponent,
-    player::resources::PlayersResource,
+    motion::{
+        AttractData, AttractorCategory, AttractorComponent, Hitbox2DComponent, Motion2DComponent,
+    },
+    player::{BarrelRollAbilityComponent, PlayersResource},
     weapons::{BlastType, BlasterComponent, ManualFireComponent},
 };
 use amethyst::{

@@ -6,6 +6,7 @@ use crate::{
 };
 use amethyst::core::math::Vector2;
 
+mod attraction;
 mod collision_detection;
 mod mob_collisions;
 mod motion2d;
@@ -13,6 +14,7 @@ mod player_collisions;
 mod player_motion2d;
 
 pub use self::{
+    attraction::AttractorSystem,
     collision_detection::{CollisionDetectionSystem, CollisionHandlerSystem},
     mob_collisions::{
         MobArenaBorderCollisionSystem, MobBlastCollisionSystem, MobMobCollisionSystem,

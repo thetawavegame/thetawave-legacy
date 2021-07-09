@@ -4,9 +4,11 @@ mod components;
 mod systems;
 
 pub use self::{
-    components::{Hitbox2DComponent, Motion2DComponent},
+    components::{
+        AttractData, AttractorCategory, AttractorComponent, Hitbox2DComponent, Motion2DComponent,
+    },
     systems::{
-        BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
+        AttractorSystem, BlastMotion2DSystem, CollisionDetectionSystem, CollisionHandlerSystem,
         ConsumableMotion2DSystem, ItemMotion2DSystem, MobArenaBorderCollisionSystem,
         MobBlastCollisionSystem, MobMobCollisionSystem, MobMotion2DSystem,
         MobPlayerCollisionSystem, MobTargetSystem, Motion2DSystem,
