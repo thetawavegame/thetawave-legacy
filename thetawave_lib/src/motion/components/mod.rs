@@ -1,6 +1,11 @@
 //! Components for managing motion of entities
 
+mod attraction;
 mod hitbox;
 mod motion;
 
-pub use self::{hitbox::Hitbox2DComponent, motion::Motion2DComponent};
+pub use self::{
+    attraction::{AttractData, AttractorCategory, AttractorComponent},
+    hitbox::Hitbox2DComponent,
+    motion::Motion2DComponent,
+};

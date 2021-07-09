@@ -1,6 +1,6 @@
 use crate::constants::STATUS_BAR_Z;
 use amethyst::{
-    core::math::Vector3,
+    core::math::{Vector2, Vector3},
     ecs::prelude::{Component, DenseVecStorage, Entities, Entity},
 };
 use std::{cmp::Ordering, vec::Vec};
@@ -17,11 +17,8 @@ pub enum StatusType {
 pub struct StatusBarComponent {
     /// Type of status bar
     pub status_type: StatusType,
-    // TODO: change to Vector2
-    /// X position
-    pub x_pos: f32,
-    /// Y position
-    pub y_pos: f32,
+    /// Position of the status bar
+    pub position: Vector2<f32>,
     /// Vector of status bar unit entities
     pub status_unit_stack: Vec<Entity>,
     /// Total unit capacity
@@ -45,14 +42,14 @@ impl StatusBarComponent {
 
         match status_unit_num.cmp(&self.status_unit_stack.len()) {
             Ordering::Greater => {
-                let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
-                self.x_pos += 1.0;
+                let status_position = Vector3::new(self.position.x, self.position.y, STATUS_BAR_Z);
+                self.position.x += 1.0;
                 Some(status_position)
             }
             Ordering::Less => {
                 if let Some(unit) = self.status_unit_stack.pop() {
                     entities.delete(unit).expect("unable to delete entity");
-                    self.x_pos -= 1.0;
+                    self.position.x -= 1.0;
                 }
                 None
             }
@@ -72,14 +69,14 @@ impl StatusBarComponent {
 
         match status_unit_num.cmp(&self.status_unit_stack.len()) {
             Ordering::Greater => {
-                let status_position = Vector3::new(self.x_pos, self.y_pos, STATUS_BAR_Z);
-                self.y_pos += 1.0;
+                let status_position = Vector3::new(self.position.x, self.position.y, STATUS_BAR_Z);
+                self.position.y += 1.0;
                 Some(status_position)
             }
             Ordering::Less => {
                 if let Some(unit) = self.status_unit_stack.pop() {
                     entities.delete(unit).expect("unable to delete entity");
-                    self.y_pos -= 1.0;
+                    self.position.y -= 1.0;
                 }
                 None
             }

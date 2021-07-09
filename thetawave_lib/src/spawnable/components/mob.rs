@@ -1,4 +1,4 @@
-use crate::{entities::MobType, resources::DropRolls};
+use crate::{spawn::DropRolls, spawnable::MobType};
 use amethyst::ecs::prelude::{Component, DenseVecStorage};
 use serde::{Deserialize, Serialize};
 

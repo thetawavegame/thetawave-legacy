@@ -1,4 +1,4 @@
-use crate::{components::PlayerComponent, motion::components::Motion2DComponent};
+use crate::{motion::components::Motion2DComponent, player::PlayerComponent};
 use amethyst::{
     ecs::{Join, Read, ReadStorage, System, WriteStorage},
     input::{InputHandler, StringBindings},
@@ -8,14 +8,12 @@ use amethyst::{
 pub struct PlayerMotion2DSystem;
 
 impl<'s> System<'s> for PlayerMotion2DSystem {
-    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         WriteStorage<'s, Motion2DComponent>,
         Read<'s, InputHandler<StringBindings>>,
     );
 
-    /// System game logic
     fn run(&mut self, (players, mut motion_2d_components, input): Self::SystemData) {
         let x_move = input.axis_value("player_x").unwrap() as f32;
         let y_move = input.axis_value("player_y").unwrap() as f32;

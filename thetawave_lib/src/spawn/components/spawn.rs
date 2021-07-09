@@ -1,7 +1,9 @@
 use crate::{
-    entities::{ConsumableType, EffectType, ItemType, MobType, SpawnableType},
-    resources::SpriteSheetsResource,
-    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+    spawnable::{
+        ConsumableType, ConsumablesResource, EffectType, EffectsResource, ItemType, ItemsResource,
+        MobType, MobsResource, SpawnableType,
+    },
+    visual::SpriteSheetsResource,
 };
 
 use amethyst::{
@@ -60,7 +62,7 @@ impl AutoSpawnerComponent {
                 SpawnableType::Mob(mob_type) => {
                     mobs_resource.spawn_mob(
                         &mob_type,
-                        adjusted_transform,
+                        &adjusted_transform,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -71,7 +73,7 @@ impl AutoSpawnerComponent {
                     consumables_resource.spawn_consumable(
                         &consumable_type,
                         false,
-                        adjusted_transform,
+                        &adjusted_transform,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -82,7 +84,7 @@ impl AutoSpawnerComponent {
                     items_resource.spawn_item(
                         &item_type,
                         false,
-                        adjusted_transform,
+                        &adjusted_transform,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -92,7 +94,7 @@ impl AutoSpawnerComponent {
                 SpawnableType::Effect(effect_type) => {
                     effects_resource.spawn_effect(
                         &effect_type,
-                        adjusted_transform,
+                        &adjusted_transform,
                         &spritesheets_resource,
                         &entities,
                         &lazy_update,
@@ -148,7 +150,7 @@ impl AutoMobSpawnerComponent {
             // call mob spawn function
             mobs_resource.spawn_mob(
                 &self.child_mob_type,
-                adjusted_transform,
+                &adjusted_transform,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -203,7 +205,7 @@ impl AutoConsumableSpawnerComponent {
             consumables_resource.spawn_consumable(
                 &self.child_consumable_type,
                 false,
-                adjusted_transform,
+                &adjusted_transform,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -258,7 +260,7 @@ impl AutoItemSpawnerComponent {
             items_resource.spawn_item(
                 &self.child_item_type,
                 false,
-                adjusted_transform,
+                &adjusted_transform,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,
@@ -312,7 +314,7 @@ impl AutoEffectSpawnerComponent {
             // call effect spawn function
             effects_resource.spawn_effect(
                 &self.child_effect_type,
-                adjusted_transform,
+                &adjusted_transform,
                 &spritesheets_resource,
                 &entities,
                 &lazy_update,

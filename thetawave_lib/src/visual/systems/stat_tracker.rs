@@ -1,8 +1,8 @@
 use crate::{
-    components::{HealthComponent, PlayerComponent},
-    entities::SpawnableType,
-    resources::StoreResource,
-    spawnable::resources::{ConsumablesResource, ItemsResource},
+    misc::HealthComponent,
+    player::PlayerComponent,
+    spawnable::{ConsumablesResource, ItemsResource, SpawnableType},
+    store::StoreResource,
 };
 use amethyst::{
     ecs::prelude::{Entity, Join, ReadExpect, ReadStorage, System, WriteStorage},
@@ -23,7 +23,6 @@ pub struct TrackedStats {
 pub struct StatTrackerSystem;
 
 impl<'s> System<'s> for StatTrackerSystem {
-    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, PlayerComponent>,
         ReadStorage<'s, HealthComponent>,
@@ -34,7 +33,6 @@ impl<'s> System<'s> for StatTrackerSystem {
         ReadExpect<'s, ConsumablesResource>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -55,7 +53,7 @@ impl<'s> System<'s> for StatTrackerSystem {
 
         for (_player, health) in (&players, &healths).join() {
             if let Some(text) = ui_text.get_mut(tracked_stats.shields) {
-                text.text = format!("x{}", health.armor.to_string());
+                text.text = format!("x{}", health.health.get_armor().to_string());
             }
         }
 

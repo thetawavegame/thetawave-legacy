@@ -1,14 +1,17 @@
 use crate::{
     audio::Sounds,
-    components::{BarrierComponent, HealthComponent, PlayerComponent},
-    entities::{EffectType, EnemyType, MobType},
     events::{MobCollisionEvent, PlayAudioEvent},
+    misc::components::BarrierComponent,
+    misc::resources::GameParametersResource,
+    misc::HealthComponent,
     motion::components::Motion2DComponent,
     motion::systems::{barrier_collision, immovable_collision, standard_collision},
-    resources::{GameParametersResource, SpriteSheetsResource},
-    spawnable::{components::BlastComponent, components::MobComponent, resources::EffectsResource},
+    player::PlayerComponent,
+    spawnable::{BlastComponent, EffectType, EffectsResource, EnemyType, MobComponent, MobType},
+    visual::SpriteSheetsResource,
     weapons::BlastType,
 };
+
 use amethyst::{
     core::transform::Transform,
     ecs::*,
@@ -19,12 +22,10 @@ use amethyst::{
 /// Handles collisions between mobs and players
 #[derive(Default)]
 pub struct MobPlayerCollisionSystem {
-    /// Reads from the mob collision event channel
     event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
 impl<'s> System<'s> for MobPlayerCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<MobCollisionEvent>>,
         Read<'s, GameParametersResource>,
@@ -36,7 +37,6 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -46,7 +46,6 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -73,11 +72,11 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
 
                 match mob.mob_type {
                     MobType::Enemy(EnemyType::Missile) => {
-                        mob_health.value = 0.0;
+                        mob_health.health.set_health(0.0);
                     }
 
                     _ => {
-                        mob_health.value -= player.collision_damage;
+                        mob_health.health.take_damage(player.collision_damage);
                     }
                 }
 
@@ -98,12 +97,10 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
 /// Handles collisions between mobs and other mobs
 #[derive(Default)]
 pub struct MobMobCollisionSystem {
-    /// Reads from the mob collision event channel
     event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
 impl<'s> System<'s> for MobMobCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<MobCollisionEvent>>,
         Read<'s, GameParametersResource>,
@@ -114,7 +111,6 @@ impl<'s> System<'s> for MobMobCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -124,7 +120,6 @@ impl<'s> System<'s> for MobMobCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -148,11 +143,13 @@ impl<'s> System<'s> for MobMobCollisionSystem {
 
                 match mob.mob_type {
                     MobType::Enemy(EnemyType::Missile) => {
-                        mob_health.value = 0.0;
+                        mob_health.health.set_health(0.0);
                     }
 
                     _ => {
-                        mob_health.value -= colliding_mob.collision_damage;
+                        mob_health
+                            .health
+                            .take_damage(colliding_mob.collision_damage);
                     }
                 }
 
@@ -181,12 +178,10 @@ impl<'s> System<'s> for MobMobCollisionSystem {
 /// Handles collisions between mobs and blasts
 #[derive(Default)]
 pub struct MobBlastCollisionSystem {
-    /// Reads from the mob collision event channel
     event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
 impl<'s> System<'s> for MobBlastCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<MobCollisionEvent>>,
         Entities<'s>,
@@ -200,7 +195,6 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -210,7 +204,6 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -248,13 +241,14 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
                                 BlastType::AllyPoison => &EffectType::PoisonBlastExplosion,
                                 _ => panic!("unreachable"),
                             },
-                            blast_transform.clone(),
+                            blast_transform,
                             &sprite_resource,
                             &entities,
                             &lazy_update,
                         );
 
-                        mob_health.value -= blast.damage;
+                        mob_health.health.take_damage(blast.damage);
+
                         //TODO: apply poison to enemy health component from blast
                         //enemy.poison = blast.poison_damage;
                     }
@@ -269,12 +263,10 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
 /// Handles collision between mobs and arena borders
 #[derive(Default)]
 pub struct MobArenaBorderCollisionSystem {
-    /// Reads from the mob collision event channel
     event_reader: Option<ReaderId<MobCollisionEvent>>,
 }
 
 impl<'s> System<'s> for MobArenaBorderCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<MobCollisionEvent>>,
         ReadStorage<'s, BarrierComponent>,
@@ -285,7 +277,6 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -295,7 +286,6 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -323,7 +313,7 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
 
                             barrier_collision(mob_motion, barrier);
 
-                            mob_health.value -= barrier.damage;
+                            mob_health.health.take_damage(barrier.damage);
 
                             play_audio_channel.single_write(PlayAudioEvent {
                                 source: sounds.sound_effects["force_field"].clone(),

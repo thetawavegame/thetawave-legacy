@@ -2,7 +2,7 @@ use crate::{
     constants::{ARENA_MAX_X, ARENA_MAX_Y, ARENA_MIN_X, ARENA_MIN_Y},
     events::MobReachedBottomEvent,
     spawn::components::{DespawnAtBorderComponent, DespawnTimeLimitComponent},
-    spawnable::components::MobComponent,
+    spawnable::MobComponent,
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},
@@ -15,7 +15,6 @@ use amethyst::{
 pub struct DespawnAtBorderSystem;
 
 impl<'s> System<'s> for DespawnAtBorderSystem {
-    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         ReadStorage<'s, DespawnAtBorderComponent>,
@@ -24,7 +23,6 @@ impl<'s> System<'s> for DespawnAtBorderSystem {
         Write<'s, EventChannel<MobReachedBottomEvent>>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (entities, despawn_borders, transforms, mobs, mut mob_reached_bottom_event_channel): Self::SystemData,
@@ -67,14 +65,12 @@ impl<'s> System<'s> for DespawnAtBorderSystem {
 pub struct DespawnTimeLimitSystem;
 
 impl<'s> System<'s> for DespawnTimeLimitSystem {
-    /// Data used by the system
     type SystemData = (
         Entities<'s>,
         WriteStorage<'s, DespawnTimeLimitComponent>,
         Read<'s, Time>,
     );
 
-    /// System game logic
     fn run(&mut self, (entities, mut timelimits, time): Self::SystemData) {
         for (timed_entity, time_component) in (&*entities, &mut timelimits).join() {
             if time_component.duration > 0.0 {

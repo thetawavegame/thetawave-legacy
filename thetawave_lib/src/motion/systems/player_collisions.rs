@@ -1,17 +1,19 @@
 use crate::{
     audio::Sounds,
-    components::{AbilityDirection, BarrelRollAbilityComponent, BarrierComponent, HealthComponent},
-    entities::EffectType,
     events::{ConsumableGetEvent, ItemGetEvent, PlayAudioEvent, PlayerCollisionEvent},
+    misc::components::BarrierComponent,
+    misc::resources::GameParametersResource,
+    misc::HealthComponent,
     motion::{
         components::Motion2DComponent,
         systems::{barrier_collision, immovable_collision, standard_collision},
     },
-    resources::{GameParametersResource, SpriteSheetsResource},
+    player::{AbilityDirection, BarrelRollAbilityComponent},
     spawnable::{
-        components::{BlastComponent, ConsumableComponent, ItemComponent, MobComponent},
-        resources::EffectsResource,
+        BlastComponent, ConsumableComponent, EffectType, EffectsResource, ItemComponent,
+        MobComponent,
     },
+    visual::SpriteSheetsResource,
     weapons::BlastType,
 };
 use amethyst::{
@@ -23,12 +25,10 @@ use amethyst::{
 /// Handles collisions between players and mobs
 #[derive(Default)]
 pub struct PlayerMobCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerMobCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Read<'s, GameParametersResource>,
@@ -38,7 +38,6 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
         ReadStorage<'s, BarrelRollAbilityComponent>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -48,7 +47,6 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -69,7 +67,7 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
                 let collision_damage_immune = if let Some(barrel_roll_ability) =
                     barrel_roll_abilities.get(event.player_entity)
                 {
-                    if let AbilityDirection::None = barrel_roll_ability.action_direction {
+                    if let AbilityDirection::None = barrel_roll_ability.get_direction() {
                         false
                     } else {
                         barrel_roll_ability.steel_barrel
@@ -79,7 +77,7 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
                 };
 
                 if !collision_damage_immune {
-                    spaceship_health.take_damage(mob.collision_damage);
+                    spaceship_health.health.take_damage(mob.collision_damage);
                 }
 
                 if let Some(collision_velocity) = event.collision_velocity {
@@ -105,12 +103,10 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
 /// Handles collisions between players and blasts
 #[derive(Default)]
 pub struct PlayerBlastCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerBlastCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -123,7 +119,6 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
         ReadExpect<'s, LazyUpdate>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -133,7 +128,6 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -157,7 +151,7 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
                 let player_hittable = if let Some(barrel_roll_ability) =
                     barrel_roll_abilities.get(event.player_entity)
                 {
-                    if let AbilityDirection::None = barrel_roll_ability.action_direction {
+                    if let AbilityDirection::None = barrel_roll_ability.get_direction() {
                         true
                     } else {
                         false
@@ -178,12 +172,12 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
 
                             effects_resource.spawn_effect(
                                 &EffectType::EnemyBlastExplosion,
-                                blast_transform.clone(),
+                                blast_transform,
                                 &sprite_resource,
                                 &entities,
                                 &lazy_update,
                             );
-                            spaceship_health.take_damage(blast.damage);
+                            spaceship_health.health.take_damage(blast.damage);
                         }
                         _ => {}
                     }
@@ -196,12 +190,10 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
 /// Handles collisions between players and items
 #[derive(Default)]
 pub struct PlayerItemCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerItemCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -211,7 +203,6 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -221,7 +212,6 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -256,12 +246,10 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
 /// Handles collisions between players and consumables
 #[derive(Default)]
 pub struct PlayerConsumableCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerConsumableCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         Entities<'s>,
@@ -271,7 +259,6 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    // Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -281,7 +268,6 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -316,12 +302,10 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
 /// Handles collisions between players and arena borders
 #[derive(Default)]
 pub struct PlayerArenaBorderCollisionSystem {
-    /// Reads from the player collision event channel
     event_reader: Option<ReaderId<PlayerCollisionEvent>>,
 }
 
 impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
-    /// Data used by the system
     type SystemData = (
         Read<'s, EventChannel<PlayerCollisionEvent>>,
         ReadStorage<'s, BarrierComponent>,
@@ -331,7 +315,6 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    /// Sets up event readers
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -341,7 +324,6 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
         );
     }
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -361,7 +343,7 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
 
                 barrier_collision(player_motion, barrier);
 
-                player_health.value -= barrier.damage;
+                player_health.health.take_damage(barrier.damage);
 
                 play_audio_channel.single_write(PlayAudioEvent {
                     source: sounds.sound_effects["force_field"].clone(),

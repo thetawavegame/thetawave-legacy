@@ -1,5 +1,5 @@
 (
-    stock_probs: [
+    stock: [
         (Item(SteelBarrel), 1.0),
         (Item(PlasmaBlasts), 1.0),
         (Item(HazardousReactor), 1.0),
@@ -19,11 +19,5 @@
         (Consumable(DefenseWrench), 1.0),
         (Consumable(Armor), 1.0),
     ],
-    restock_timer: 10.0,
     restock_period: 10.0,
-    inventory: [
-        None,
-        None,
-        None
-    ],
 )

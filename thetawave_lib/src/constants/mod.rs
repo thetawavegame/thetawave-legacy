@@ -1,3 +1,5 @@
+//! `thetawave_lib` constants module
+
 // game dimensions
 pub const GAME_WIDTH: f32 = 360.0;
 pub const GAME_HEIGHT: f32 = 270.0;

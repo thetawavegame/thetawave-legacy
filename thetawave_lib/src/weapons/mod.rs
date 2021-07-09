@@ -2,8 +2,13 @@
 
 use serde::{Deserialize, Serialize};
 
-pub mod components;
-pub mod systems;
+mod weapon_components;
+mod weapon_systems;
+
+pub use self::{
+    weapon_components::{AutoFireComponent, BlasterComponent, ManualFireComponent},
+    weapon_systems::{AutoFireSystem, ManualBlasterSystem},
+};
 
 /// Used for determining sprite and applied statuses
 #[derive(Clone, Debug, Serialize, Deserialize)]

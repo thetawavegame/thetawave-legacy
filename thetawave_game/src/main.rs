@@ -23,15 +23,18 @@ mod states;
 
 use states::MainGameState;
 use thetawave_lib::{
-    resources::{
-        DebugLinesConfig, DefenseResource, DropTablesResource, GameParametersResource,
-        PhaseManagerResource, PlayersResource, SoundsConfig, SpriteSheetsConfig, StoreResource,
-    },
-    spawn::resources::SpawnerResource,
-    spawnable::resources::{
+    audio::SoundsConfig,
+    misc::resources::{DebugLinesConfig, GameParametersResource},
+    misc::DefenseResource,
+    phases::PhaseManagerResource,
+    player::PlayersResource,
+    spawn::{DropTablesResource, SpawnerResource},
+    spawnable::{
         ConsumableModifiersResource, ConsumablesResource, EffectsResource, ItemModifiersResource,
         ItemsResource, MobsResource,
     },
+    store::{StoreConfig, StoreResource},
+    visual::SpriteSheetsConfig,
 };
 
 use amethyst::config::Config;
@@ -92,8 +95,9 @@ fn main() -> amethyst::Result<()> {
         .expect("failed to load data file: players.ron");
     let phases = <PhaseManagerResource as Config>::load_bytes(phases)
         .expect("failed to load data file: phases.ron");
-    let store =
-        <StoreResource as Config>::load_bytes(store).expect("failed to load data file: store.ron");
+    let store = StoreResource::from(
+        <StoreConfig as Config>::load_bytes(store).expect("failed to load data file: store.ron"),
+    );
     let game_parameters = <GameParametersResource as Config>::load_bytes(game_parameters)
         .expect("failed to load data file: game_parameters.ron");
     let spawner = <SpawnerResource as Config>::load_bytes(spawner)

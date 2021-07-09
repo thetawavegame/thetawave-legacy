@@ -1,8 +1,11 @@
 use crate::{
-    entities::spawn_repeater,
-    resources::{BossType, PhaseManagerResource, PhaseType, SpriteSheetsResource},
+    boss::spawn_repeater,
+    phases::{BossType, PhaseManagerResource, PhaseType},
     spawn::{components::AutoSpawnerComponent, resources::SpawnerResource},
-    spawnable::resources::{ConsumablesResource, EffectsResource, ItemsResource, MobsResource},
+    spawnable::{
+        ConsumablesResource, EffectsResource, ItemsResource, MobsResource, SpawnableResources,
+    },
+    visual::SpriteSheetsResource,
 };
 use amethyst::{
     core::{timing::Time, transform::Transform},
@@ -16,7 +19,6 @@ use amethyst::{
 pub struct SpawnerSystem;
 
 impl<'s> System<'s> for SpawnerSystem {
-    /// System game logic
     type SystemData = (
         Entities<'s>,
         Read<'s, Time>,
@@ -30,7 +32,6 @@ impl<'s> System<'s> for SpawnerSystem {
         ReadExpect<'s, MobsResource>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (
@@ -46,15 +47,19 @@ impl<'s> System<'s> for SpawnerSystem {
             mobs_resource,
         ): Self::SystemData,
     ) {
+        let spawnable_resources = &SpawnableResources {
+            consumables_resource: &consumables_resource,
+            mobs_resource: &mobs_resource,
+            items_resource: &items_resource,
+            effects_resource: &effects_resource,
+        };
+
         match phase_manager.get_current_phase_type() {
             Some(PhaseType::InvasionRandom(random_pool_type)) => spawner_resource
                 .spawn_random_spawnable_when_ready(
                     &random_pool_type,
                     time.delta_seconds(),
-                    &consumables_resource,
-                    &mobs_resource,
-                    &items_resource,
-                    &effects_resource,
+                    spawnable_resources,
                     &spritesheets_resource,
                     &entities,
                     &lazy_update,
@@ -64,10 +69,7 @@ impl<'s> System<'s> for SpawnerSystem {
                 .spawn_random_formation_when_ready(
                     &&formation_pool_type,
                     time.delta_seconds(),
-                    &consumables_resource,
-                    &mobs_resource,
-                    &items_resource,
-                    &effects_resource,
+                    spawnable_resources,
                     &spritesheets_resource,
                     &entities,
                     &lazy_update,
@@ -104,7 +106,6 @@ impl<'s> System<'s> for SpawnerSystem {
 pub struct AutoSpawnerSystem;
 
 impl<'s> System<'s> for AutoSpawnerSystem {
-    /// Data used by the system
     type SystemData = (
         ReadStorage<'s, Transform>,
         WriteStorage<'s, AutoSpawnerComponent>,
@@ -118,7 +119,6 @@ impl<'s> System<'s> for AutoSpawnerSystem {
         Entities<'s>,
     );
 
-    /// System game logic
     fn run(
         &mut self,
         (
