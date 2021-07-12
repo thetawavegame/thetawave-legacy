@@ -15,3 +15,4 @@ features = ["vulkan", "audio", "gltf"]
 amethyst_test = "0.15.3"
 serde = "1"
 rand = "0.6.5"
+float-cmp = "0.8.0"

@@ -84,7 +84,7 @@ impl<'s> System<'s> for StatusBarSystem {
                         if !barrel_roll_ability.is_ready() {
                             if let Some(status_position) = status_bar.update_units_x(
                                 barrel_roll_ability.execution_timer.get_period(),
-                                barrel_roll_ability.execution_timer.get_time_left(),
+                                barrel_roll_ability.execution_timer.get_time_passed(),
                                 &entities,
                             ) {
                                 status_bar.status_unit_stack.push(spawn_status_unit(
@@ -102,7 +102,7 @@ impl<'s> System<'s> for StatusBarSystem {
                 StatusType::Restock => {
                     if let Some(status_position) = status_bar.update_units_x(
                         store_resource.timer.get_period(),
-                        store_resource.timer.get_time_left(),
+                        store_resource.timer.get_time_passed(),
                         &entities,
                     ) {
                         status_bar.status_unit_stack.push(spawn_status_unit(
