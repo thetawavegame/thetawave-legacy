@@ -10,7 +10,7 @@ use amethyst::{
     shrev::EventChannel,
 };
 
-/// Handles attraction of spawnaables within a range
+/// Handles attraction of spawnables within a range
 pub struct AttractorSystem;
 
 impl<'s> System<'s> for AttractorSystem {

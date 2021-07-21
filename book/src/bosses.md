@@ -1,6 +1,6 @@
 # Bosses
 
-Bosses arrive at the end of a stage. Destory them to move on to the next stage.
+Bosses arrive at the end of a stage. Destroy them to move on to the next stage.
 
 |Name| |Description|
 |:---:|:---:|:---:|

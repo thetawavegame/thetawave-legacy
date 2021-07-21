@@ -1,6 +1,6 @@
 # Entities and their components
 
-The core of ECS is knowing that an entity is a collection of components. These
+The key to understanding ECS is knowing that an entity is a collection of components. These
 components provide bits of functionality to the entity that, when combined
 together, make it easier to conceptualize the expected behaviour of the entity.
 

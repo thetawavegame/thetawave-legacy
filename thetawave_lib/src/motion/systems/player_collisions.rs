@@ -38,15 +38,6 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
         ReadStorage<'s, BarrelRollAbilityComponent>,
     );
 
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
-                .register_reader(),
-        );
-    }
-
     fn run(
         &mut self,
         (
@@ -59,7 +50,7 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
         ): Self::SystemData,
     ) {
         for event in collision_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            // Is the player colliding with an mob entity?
+            // Is the player colliding with a mob entity?
             if let Some(mob) = mobs.get(event.colliding_entity) {
                 let spaceship_motion = motions.get_mut(event.player_entity).unwrap();
                 let spaceship_health = healths.get_mut(event.player_entity).unwrap();
@@ -98,6 +89,15 @@ impl<'s> System<'s> for PlayerMobCollisionSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles collisions between players and blasts
@@ -118,15 +118,6 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
         ReadExpect<'s, SpriteSheetsResource>,
         ReadExpect<'s, LazyUpdate>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -151,11 +142,7 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
                 let player_hittable = if let Some(barrel_roll_ability) =
                     barrel_roll_abilities.get(event.player_entity)
                 {
-                    if let AbilityDirection::None = barrel_roll_ability.get_direction() {
-                        true
-                    } else {
-                        false
-                    }
+                    matches!(barrel_roll_ability.get_direction(), AbilityDirection::None)
                 } else {
                     true
                 };
@@ -185,6 +172,15 @@ impl<'s> System<'s> for PlayerBlastCollisionSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles collisions between players and items
@@ -202,15 +198,6 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -241,6 +228,15 @@ impl<'s> System<'s> for PlayerItemCollisionSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles collisions between players and consumables
@@ -258,15 +254,6 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -297,6 +284,15 @@ impl<'s> System<'s> for PlayerConsumableCollisionSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles collisions between players and arena borders
@@ -314,15 +310,6 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -350,5 +337,14 @@ impl<'s> System<'s> for PlayerArenaBorderCollisionSystem {
                 });
             }
         }
+    }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
     }
 }

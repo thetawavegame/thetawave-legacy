@@ -30,15 +30,6 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
         ReadStorage<'s, BarrierComponent>,
     );
 
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
-                .register_reader(),
-        );
-    }
-
     fn run(
         &mut self,
         (
@@ -78,5 +69,14 @@ impl<'s> System<'s> for BarrelRollAbilitySystem {
                 AbilityDirection::None => {}
             }
         }
+    }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<PlayerCollisionEvent>>()
+                .register_reader(),
+        );
     }
 }

@@ -57,7 +57,7 @@ impl<'s> System<'s> for SpawnerSystem {
         match phase_manager.get_current_phase_type() {
             Some(PhaseType::InvasionRandom(random_pool_type)) => spawner_resource
                 .spawn_random_spawnable_when_ready(
-                    &random_pool_type,
+                    random_pool_type,
                     time.delta_seconds(),
                     spawnable_resources,
                     &spritesheets_resource,
@@ -67,7 +67,7 @@ impl<'s> System<'s> for SpawnerSystem {
 
             Some(PhaseType::InvasionFormation(formation_pool_type)) => spawner_resource
                 .spawn_random_formation_when_ready(
-                    &&formation_pool_type,
+                    formation_pool_type,
                     time.delta_seconds(),
                     spawnable_resources,
                     &spritesheets_resource,

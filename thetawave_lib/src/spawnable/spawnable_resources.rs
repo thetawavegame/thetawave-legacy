@@ -512,7 +512,7 @@ pub fn spawn_blasts(
             .with(DespawnTimeLimitComponent {
                 duration: despawn_time,
             })
-            // Also despawn at the border to avoid tracking entities that left the screen
+            // Also, despawn at the border to avoid tracking entities that left the screen
             .with(DespawnAtBorderComponent {
                 top_offset: Some(2.0),
                 bottom_offset: Some(-2.0),

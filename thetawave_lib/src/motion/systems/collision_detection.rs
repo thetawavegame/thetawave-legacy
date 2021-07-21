@@ -91,15 +91,6 @@ impl<'s> System<'s> for CollisionHandlerSystem {
         Write<'s, EventChannel<ArenaBorderCollisionEvent>>,
     );
 
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<CollisionEvent>>()
-                .register_reader(),
-        );
-    }
-
     fn run(
         &mut self,
         (
@@ -144,5 +135,14 @@ impl<'s> System<'s> for CollisionHandlerSystem {
                 ));
             }
         }
+    }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<CollisionEvent>>()
+                .register_reader(),
+        );
     }
 }

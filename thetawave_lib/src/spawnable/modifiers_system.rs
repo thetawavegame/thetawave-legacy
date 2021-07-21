@@ -37,20 +37,6 @@ impl<'s> System<'s> for ModifiersSystem {
         WriteExpect<'s, DefenseResource>,
     );
 
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.item_get_event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<ItemGetEvent>>()
-                .register_reader(),
-        );
-        self.consumable_get_event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<ConsumableGetEvent>>()
-                .register_reader(),
-        );
-    }
-
     fn run(
         &mut self,
         (
@@ -105,11 +91,25 @@ impl<'s> System<'s> for ModifiersSystem {
         // TODO: remove item effects for item remove event
         // for event in item_remove_event_channel...
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.item_get_event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<ItemGetEvent>>()
+                .register_reader(),
+        );
+        self.consumable_get_event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<ConsumableGetEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Apply modifier data to values throughout the game
 pub fn apply_modifiers(
-    modifiers: &Vec<Modifier>,
+    modifiers: &[Modifier],
     player_entity: Entity,
     spawnable_type: SpawnableType,
     barrel_roll_ability_components: &mut WriteStorage<BarrelRollAbilityComponent>,

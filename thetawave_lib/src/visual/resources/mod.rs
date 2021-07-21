@@ -11,7 +11,7 @@ pub struct SpriteRenderData {
     pub spritesheet: String,
 }
 
-/// Maps names of sprite sheets to sprite sheet handles
+/// Map names of sprite sheets to sprite sheet handles
 #[derive(Clone)]
 pub struct SpriteSheetsResource {
     pub spritesheets: HashMap<String, Handle<SpriteSheet>>,
@@ -24,5 +24,5 @@ pub struct SpriteSheetData {
     pub data: String,
 }
 
-/// Maps names of sprite sheets to SpriteSheetData
+/// Map names of sprite sheets to SpriteSheetData
 pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;

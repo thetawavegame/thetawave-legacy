@@ -1,6 +1,6 @@
 # Append Sprite to Spritesheet
 
-Once your item is designed and you have received feedback on your
+Once your item is designed, and you have received feedback on your
 submitted item issue, you can begin putting it in the game!
 
 Refer to the [Contributing Guidelines](/book/src/contributing.md) section for
