@@ -50,6 +50,7 @@ impl From<StoreConfig> for StoreResource {
 
 impl StoreResource {
     /// Create a new `StoreResource` from a restock period and stock of consumables and items
+    #[must_use]
     pub fn new(restock_period: f32, stock: StockProbabilities) -> Self {
         StoreResource {
             inventory: vec![None, None, None],

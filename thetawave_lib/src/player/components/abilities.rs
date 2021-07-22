@@ -102,6 +102,7 @@ impl CooldownAbility for BarrelRollAbilityComponent {
 
 impl BarrelRollAbilityComponent {
     /// Create a new instance of `BarrelRollAbilityComponent`
+    #[must_use]
     pub fn new(execution_period: f32, action_period: f32, speed: f32) -> Self {
         BarrelRollAbilityComponent {
             execution_timer: Timer::new(execution_period),
@@ -128,16 +129,19 @@ impl BarrelRollAbilityComponent {
     }
 
     /// Get current direction of ability
+    #[must_use]
     pub fn get_direction(&self) -> &AbilityDirection {
         &self.action_direction
     }
 
     /// Get weather ability is ready to execute
+    #[must_use]
     pub fn is_ready(&self) -> bool {
         self.is_ready
     }
 
     /// Get speed of the ability
+    #[must_use]
     pub fn get_speed(&self) -> f32 {
         self.speed
     }

@@ -2,7 +2,7 @@ use crate::{audio::play_sfx, events::PlayAudioEvent};
 use amethyst::{
     assets::AssetStorage,
     audio::{output::Output, Source},
-    ecs::*,
+    ecs::SystemData,
     ecs::{Read, System, World},
     shrev::{EventChannel, ReaderId},
 };

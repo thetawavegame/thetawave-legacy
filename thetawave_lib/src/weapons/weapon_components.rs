@@ -181,6 +181,7 @@ impl Component for AutoFireComponent {
 
 impl AutoFireComponent {
     /// Creates new instance of `AutoFireComponent` from a reload time period
+    #[must_use]
     pub fn new(reload_period: f32) -> Self {
         AutoFireComponent {
             timer: Timer::new(reload_period),
@@ -208,6 +209,7 @@ impl Component for ManualFireComponent {
 
 impl ManualFireComponent {
     /// Creates new instance of `ManualFireComponent` from a reload time period
+    #[must_use]
     pub fn new(reload_period: f32) -> Self {
         ManualFireComponent {
             timer: Timer::new(reload_period),

@@ -11,7 +11,7 @@ use amethyst::{
         math::{UnitQuaternion, Vector2},
         transform::Transform,
     },
-    ecs::*,
+    ecs::{Entities, Join, Read, ReadStorage, System, SystemData, World, Write},
     renderer::debug_drawing::DebugLines,
     shrev::{EventChannel, ReaderId},
 };

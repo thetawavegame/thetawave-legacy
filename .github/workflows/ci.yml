@@ -12,6 +12,9 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+  # Emit backtraces on panics.
+  RUST_BACKTRACE: full
 
 jobs:
   build:
@@ -32,7 +35,7 @@ jobs:
       if: contains(matrix.os, 'ubuntu')
 
     - name: Build
-      run: cargo build --features=fail-on-warnings --verbose
+      run: cargo build --verbose
 
     - name: Run tests
       run: cargo test --verbose

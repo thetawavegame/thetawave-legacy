@@ -13,6 +13,3 @@ features = ["vulkan", "audio", "gltf"]
 
 [dependencies]
 thetawave_lib = {path = "../thetawave_lib"}
-
-[features]
-fail-on-warnings = []

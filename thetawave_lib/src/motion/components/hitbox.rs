@@ -42,6 +42,7 @@ impl Hitbox2DComponent {
     }
 
     /// Check if the hitbox is colliding with another hitbox
+    #[must_use]
     pub fn is_colliding(
         &self,
         hitbox_b: &Hitbox2DComponent,

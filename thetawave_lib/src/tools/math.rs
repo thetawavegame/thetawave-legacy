@@ -1,6 +1,7 @@
 use amethyst::core::math::Vector3;
 
 /// Calculates distance between two points
+#[must_use]
 pub fn distance(point_a: Vector3<f32>, point_b: Vector3<f32>, is_2d: bool) -> f32 {
     let mut value = (point_a.x - point_b.x).powi(2) + (point_a.y - point_b.y).powi(2);
 
@@ -12,16 +13,19 @@ pub fn distance(point_a: Vector3<f32>, point_b: Vector3<f32>, is_2d: bool) -> f3
 }
 
 /// Calculate the signed modulo of two numbers
+#[must_use]
 pub fn signed_modulo(a: f32, n: f32) -> f32 {
     a - (a / n).floor() * n
 }
 
 /// Rotate x coordinate by an angle
+#[must_use]
 pub fn rotate_x(x: f32, y: f32, angle: f32) -> f32 {
     (x * angle.cos()) + (y * angle.sin())
 }
 
 /// Rotate y coordinate by an angle
+#[must_use]
 pub fn rotate_y(x: f32, y: f32, angle: f32) -> f32 {
     (-x * angle.sin()) + (y * angle.cos())
 }
@@ -57,11 +61,12 @@ SOFTWARE.
 pub struct Vector(pub f32, pub f32);
 
 /// Use separating axis theorem to check for collisions between two polygons
+#[must_use]
 pub fn sat_is_colliding(poly1: &[Vector], poly2: &[Vector], max_dist: &Option<f32>) -> bool {
     let estimated_dist = (poly1[1].0 - poly2[0].0).powi(2) + (poly1[1].1 - poly2[0].1).powi(2);
     match max_dist {
-        &Some(max_dist) if estimated_dist > max_dist.powi(2) => false,
-        &Some(_) | &None => run_sat(poly1, poly2),
+        Some(max_dist) if estimated_dist > max_dist.powi(2) => false,
+        Some(_) | None => run_sat(poly1, poly2),
     }
 }
 

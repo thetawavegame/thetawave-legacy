@@ -16,6 +16,7 @@ pub struct CollisionEvent {
 
 impl CollisionEvent {
     /// Create a new instance of `CollisionEvent`
+    #[must_use]
     pub fn new(entity_a: Entity, entity_b: Entity) -> CollisionEvent {
         CollisionEvent { entity_a, entity_b }
     }
@@ -30,6 +31,7 @@ pub struct MobDestroyedEvent {
 
 impl MobDestroyedEvent {
     /// Create a new instance of `MobDestroyedEvent`
+    #[must_use]
     pub fn new(mob: Entity) -> MobDestroyedEvent {
         MobDestroyedEvent { mob }
     }
@@ -50,6 +52,7 @@ pub struct PlayerCollisionEvent {
 
 impl PlayerCollisionEvent {
     /// Create a new instance of `PlayerCollisionEvent`
+    #[must_use]
     pub fn new(
         entity_a: Entity,
         entity_b: Entity,
@@ -80,6 +83,7 @@ pub struct MobCollisionEvent {
 
 impl MobCollisionEvent {
     /// Creates a new instance of `MobCollisionEvent`
+    #[must_use]
     pub fn new(
         entity_a: Entity,
         entity_b: Entity,
@@ -108,6 +112,7 @@ pub struct ArenaBorderCollisionEvent {
 
 impl ArenaBorderCollisionEvent {
     /// Creates a new instance of `ArenaBorderCollisionEvent`
+    #[must_use]
     pub fn new(
         entity_a: Entity,
         entity_b: Entity,
@@ -148,6 +153,7 @@ pub struct MobReachedBottomEvent {
 
 impl MobReachedBottomEvent {
     /// Create a new instance of `MobReachedBottomEvent`
+    #[must_use]
     pub fn new(damage: f32) -> MobReachedBottomEvent {
         MobReachedBottomEvent { damage }
     }
