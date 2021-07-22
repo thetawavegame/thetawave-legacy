@@ -48,9 +48,9 @@ impl DropRolls {
         &self,
         spawn_transform: &Transform,
         drop_tables_resource: &DropTablesResource,
-        spawnable_resources: &SpawnableResources,
+        spawnable_resources: &SpawnableResources<'_>,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
         for _ in 0..self.roll_count {

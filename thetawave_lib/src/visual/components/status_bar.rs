@@ -35,7 +35,7 @@ impl StatusBarComponent {
         &mut self,
         max_value: f32,
         current_value: f32,
-        entities: &Entities,
+        entities: &Entities<'_>,
     ) -> Option<Vector3<f32>> {
         let status_divisor = max_value / self.unit_limit;
         let status_unit_num = (current_value / status_divisor).ceil() as usize;
@@ -62,7 +62,7 @@ impl StatusBarComponent {
         &mut self,
         max_value: f32,
         current_value: f32,
-        entities: &Entities,
+        entities: &Entities<'_>,
     ) -> Option<Vector3<f32>> {
         let status_divisor = max_value / self.unit_limit;
         let status_unit_num = (current_value / status_divisor).ceil() as usize;

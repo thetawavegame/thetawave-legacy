@@ -112,14 +112,14 @@ pub fn apply_modifiers(
     modifiers: &[Modifier],
     player_entity: Entity,
     spawnable_type: SpawnableType,
-    barrel_roll_ability_components: &mut WriteStorage<BarrelRollAbilityComponent>,
-    health_components: &mut WriteStorage<HealthComponent>,
-    blaster_components: &mut WriteStorage<BlasterComponent>,
-    manual_fire_components: &mut WriteStorage<ManualFireComponent>,
-    motion_2d_components: &mut WriteStorage<Motion2DComponent>,
-    attractor_components: &mut WriteStorage<AttractorComponent>,
-    player_components: &mut WriteStorage<PlayerComponent>,
-    defense_resource: &mut WriteExpect<DefenseResource>,
+    barrel_roll_ability_components: &mut WriteStorage<'_, BarrelRollAbilityComponent>,
+    health_components: &mut WriteStorage<'_, HealthComponent>,
+    blaster_components: &mut WriteStorage<'_, BlasterComponent>,
+    manual_fire_components: &mut WriteStorage<'_, ManualFireComponent>,
+    motion_2d_components: &mut WriteStorage<'_, Motion2DComponent>,
+    attractor_components: &mut WriteStorage<'_, AttractorComponent>,
+    player_components: &mut WriteStorage<'_, PlayerComponent>,
+    defense_resource: &mut WriteExpect<'_, DefenseResource>,
 ) {
     let player_barrel_roll_ability = barrel_roll_ability_components
         .get_mut(player_entity)

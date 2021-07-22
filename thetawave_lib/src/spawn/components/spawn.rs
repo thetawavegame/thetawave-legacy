@@ -36,13 +36,13 @@ impl AutoSpawnerComponent {
         &mut self,
         delta_time: f32,
         spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        mobs_resource: &ReadExpect<MobsResource>,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        effects_resource: &ReadExpect<EffectsResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        mobs_resource: &ReadExpect<'_, MobsResource>,
+        consumables_resource: &ReadExpect<'_, ConsumablesResource>,
+        items_resource: &ReadExpect<'_, ItemsResource>,
+        effects_resource: &ReadExpect<'_, EffectsResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         // update timer
         self.timer -= delta_time;
@@ -129,10 +129,10 @@ impl AutoMobSpawnerComponent {
         &mut self,
         delta_time: f32,
         spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        mobs_resource: &ReadExpect<MobsResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        mobs_resource: &ReadExpect<'_, MobsResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         // update timer
         self.timer -= delta_time;
@@ -183,10 +183,10 @@ impl AutoConsumableSpawnerComponent {
         &mut self,
         delta_time: f32,
         spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        consumables_resource: &ReadExpect<'_, ConsumablesResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         // update timer
         self.timer -= delta_time;
@@ -238,10 +238,10 @@ impl AutoItemSpawnerComponent {
         &mut self,
         delta_time: f32,
         spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        items_resource: &ReadExpect<'_, ItemsResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         // update timer
         self.timer -= delta_time;
@@ -293,10 +293,10 @@ impl AutoEffectSpawnerComponent {
         &mut self,
         delta_time: f32,
         spawn_transform: Transform,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        effects_resource: &ReadExpect<EffectsResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        effects_resource: &ReadExpect<'_, EffectsResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         // update timer
         self.timer -= delta_time;

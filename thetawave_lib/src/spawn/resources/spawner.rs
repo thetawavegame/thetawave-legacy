@@ -37,9 +37,9 @@ impl Formation {
     /// Spawn all entities in formation at their positions
     pub fn spawn_formation(
         &self,
-        spawnable_resources: &SpawnableResources,
+        spawnable_resources: &SpawnableResources<'_>,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
         for formation_spawnable in self.formation_spawnables.iter() {
@@ -117,9 +117,9 @@ impl SpawnerResource {
         &mut self,
         random_pool_type: &InvasionRandomPool,
         dt: f32,
-        spawnable_resources: &SpawnableResources,
+        spawnable_resources: &SpawnableResources<'_>,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
         self.timer -= dt;
@@ -173,9 +173,9 @@ impl SpawnerResource {
         &mut self,
         formation_pool_type: &InvasionFormationPool,
         dt: f32,
-        spawnable_resources: &SpawnableResources,
+        spawnable_resources: &SpawnableResources<'_>,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
         self.timer -= dt;

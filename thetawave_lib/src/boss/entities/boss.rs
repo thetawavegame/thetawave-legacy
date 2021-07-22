@@ -13,10 +13,10 @@ use amethyst::prelude::Builder;
 
 /// Spawn a repeater boss
 pub fn spawn_repeater(
-    spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-    mobs_resource: &ReadExpect<MobsResource>,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
+    spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+    mobs_resource: &ReadExpect<'_, MobsResource>,
+    entities: &Entities<'_>,
+    lazy_update: &ReadExpect<'_, LazyUpdate>,
 ) {
     let mut body_transform = Transform::default();
     body_transform.set_translation(Vector3::new(

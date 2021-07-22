@@ -1,7 +1,5 @@
 #![cfg_attr(feature = "fail-on-warnings", deny(warnings))]
-
-extern crate amethyst;
-extern crate thetawave_lib;
+#![deny(rust_2018_idioms, rust_2018_compatibility)]
 
 use amethyst::{
     audio::AudioBundle,

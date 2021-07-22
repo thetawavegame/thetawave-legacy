@@ -65,7 +65,7 @@ impl StoreResource {
     }
 
     /// Remove icon entities
-    fn destroy_icon(&mut self, index: usize, entities: &Entities) {
+    fn destroy_icon(&mut self, index: usize, entities: &Entities<'_>) {
         if let Some(icon_entity) = self.icon_entities[index] {
             entities
                 .delete(icon_entity)
@@ -78,11 +78,11 @@ impl StoreResource {
     fn create_icon(
         &mut self,
         index: usize,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        items_resource: &ReadExpect<'_, ItemsResource>,
+        consumables_resource: &ReadExpect<'_, ConsumablesResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         if let Some(spawnable_type) = self.inventory[index].clone() {
             // remove the existing icon
@@ -130,11 +130,11 @@ impl StoreResource {
     pub fn update(
         &mut self,
         delta_time: f32,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        items_resource: &ReadExpect<'_, ItemsResource>,
+        consumables_resource: &ReadExpect<'_, ConsumablesResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         if self.timer.update(delta_time) {
             // choose stock if timer resets
@@ -151,11 +151,11 @@ impl StoreResource {
     /// Choose new inventory using `StockProbabilities`
     fn choose_stock(
         &mut self,
-        spritesheets_resource: &ReadExpect<SpriteSheetsResource>,
-        items_resource: &ReadExpect<ItemsResource>,
-        consumables_resource: &ReadExpect<ConsumablesResource>,
-        entities: &Entities,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        spritesheets_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        items_resource: &ReadExpect<'_, ItemsResource>,
+        consumables_resource: &ReadExpect<'_, ConsumablesResource>,
+        entities: &Entities<'_>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         self.inventory = vec![None, None, None];
         let mut choose_pool = self.stock.clone();
@@ -201,7 +201,7 @@ impl StoreResource {
     pub fn purchase(
         &mut self,
         inventory_index: usize,
-        entities: &Entities,
+        entities: &Entities<'_>,
         player: &mut PlayerComponent,
         transform: &Transform,
         items_resource: &ItemsResource,
