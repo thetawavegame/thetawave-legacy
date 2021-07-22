@@ -101,7 +101,7 @@ impl CooldownAbility for BarrelRollAbilityComponent {
 }
 
 impl BarrelRollAbilityComponent {
-    /// Create a new instance of BarrelRollAbilityComponent
+    /// Create a new instance of `BarrelRollAbilityComponent`
     pub fn new(execution_period: f32, action_period: f32, speed: f32) -> Self {
         BarrelRollAbilityComponent {
             execution_timer: Timer::new(execution_period),

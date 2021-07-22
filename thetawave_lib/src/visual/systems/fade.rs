@@ -4,7 +4,7 @@ use amethyst::{
     renderer::resources::Tint,
 };
 
-/// Handles fading of entities with a FadeComponent
+/// Handles fading of entities with a `FadeComponent`
 pub struct FadeSystem;
 
 impl<'s> System<'s> for FadeSystem {

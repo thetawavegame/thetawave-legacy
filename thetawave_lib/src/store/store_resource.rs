@@ -42,14 +42,14 @@ pub struct StoreResource {
 }
 
 impl From<StoreConfig> for StoreResource {
-    /// Converts StoreConfig to a StoreResource
+    /// Converts `StoreConfig` to a `StoreResource`
     fn from(config: StoreConfig) -> Self {
         StoreResource::new(config.restock_period, config.stock)
     }
 }
 
 impl StoreResource {
-    /// Create a new StoreResource from a restock period and stock of consumables and items
+    /// Create a new `StoreResource` from a restock period and stock of consumables and items
     pub fn new(restock_period: f32, stock: StockProbabilities) -> Self {
         StoreResource {
             inventory: vec![None, None, None],
@@ -148,7 +148,7 @@ impl StoreResource {
         }
     }
 
-    /// Choose new inventory using StockProbabilities
+    /// Choose new inventory using `StockProbabilities`
     fn choose_stock(
         &mut self,
         spritesheets_resource: &ReadExpect<SpriteSheetsResource>,

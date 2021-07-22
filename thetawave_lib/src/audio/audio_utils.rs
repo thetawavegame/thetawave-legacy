@@ -7,7 +7,7 @@ use amethyst::{
 
 use std::collections::HashMap;
 
-/// Maps string names to sounds (SourceHandles)
+/// Maps string names to sounds (`SourceHandles`)
 pub struct Sounds {
     pub sound_effects: HashMap<String, SourceHandle>,
 }
