@@ -61,9 +61,9 @@ impl BlasterComponent {
         &self,
         source_motion2d: &Motion2DComponent,
         source_transform: &Transform,
-        entities: &Entities,
-        sprite_resource: &ReadExpect<SpriteSheetsResource>,
-        lazy_update: &ReadExpect<LazyUpdate>,
+        entities: &Entities<'_>,
+        sprite_resource: &ReadExpect<'_, SpriteSheetsResource>,
+        lazy_update: &ReadExpect<'_, LazyUpdate>,
     ) {
         let fire_position = Vector3::new(
             source_transform.translation().x + self.offset.x,

@@ -1,3 +1,4 @@
+#![deny(rust_2018_idioms, rust_2018_compatibility)]
 pub mod audio;
 pub mod boss;
 pub mod constants;

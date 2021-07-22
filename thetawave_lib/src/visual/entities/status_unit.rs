@@ -7,11 +7,11 @@ use amethyst::{
 
 /// Spawn a status unit for a status bar
 pub fn spawn_status_unit(
-    entities: &Entities,
-    sprite_resource: &ReadExpect<SpriteSheetsResource>,
+    entities: &Entities<'_>,
+    sprite_resource: &ReadExpect<'_, SpriteSheetsResource>,
     sprite_number: usize,
     spawn_position: Vector3<f32>,
-    lazy_update: &ReadExpect<LazyUpdate>,
+    lazy_update: &ReadExpect<'_, LazyUpdate>,
 ) -> Entity {
     let status_unit_entity: Entity = entities.create();
 

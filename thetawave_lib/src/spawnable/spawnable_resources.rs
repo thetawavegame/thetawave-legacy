@@ -37,7 +37,7 @@ impl ConsumablesResource {
         is_drop: bool,
         spawn_transform: &Transform,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
         let consumable_data = &self.consumable_entities[consumable_type];
@@ -101,7 +101,7 @@ impl ItemsResource {
         is_drop: bool,
         spawn_transform: &Transform,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
         let item_data = &self.item_entities[item_type];
@@ -159,7 +159,7 @@ impl MobsResource {
         mob_type: &MobType,
         spawn_transform: &Transform,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) -> Entity {
         let mob_data = &self.mob_entities[mob_type];
@@ -252,7 +252,7 @@ impl EffectsResource {
         effect_type: &EffectType,
         spawn_transform: &Transform,
         spritesheets_resource: &SpriteSheetsResource,
-        entities: &Entities,
+        entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
         let effect_data = &self.effect_entities[effect_type];
@@ -437,9 +437,9 @@ pub fn spawn_spawnable(
     spawnable_type: &SpawnableType,
     is_drop: bool,
     spawn_transform: &Transform,
-    spawnable_resources: &SpawnableResources,
+    spawnable_resources: &SpawnableResources<'_>,
     spritesheets_resource: &SpriteSheetsResource,
-    entities: &Entities,
+    entities: &Entities<'_>,
     lazy_update: &LazyUpdate,
 ) {
     match spawnable_type {
@@ -497,8 +497,8 @@ pub fn spawn_blasts(
     blast_motion2d: Motion2DComponent,
     despawn_time: f32,
     mut blast_transform: Transform,
-    entities: &Entities,
-    lazy_update: &ReadExpect<LazyUpdate>,
+    entities: &Entities<'_>,
+    lazy_update: &ReadExpect<'_, LazyUpdate>,
 ) {
     for _ in 0..blast_count {
         lazy_update

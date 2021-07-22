@@ -95,8 +95,8 @@ impl<'s> System<'s> for StatTrackerSystem {
 /// Get the price of an item or consumable in the store
 fn inventory_price(
     inventory_entity: &Option<SpawnableType>,
-    items_resource: &ReadExpect<ItemsResource>,
-    consumables_resource: &ReadExpect<ConsumablesResource>,
+    items_resource: &ReadExpect<'_, ItemsResource>,
+    consumables_resource: &ReadExpect<'_, ConsumablesResource>,
 ) -> usize {
     match inventory_entity {
         Some(SpawnableType::Item(item_type)) => {
