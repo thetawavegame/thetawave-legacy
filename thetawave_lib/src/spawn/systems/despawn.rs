@@ -7,7 +7,7 @@ use crate::{
 use amethyst::{
     core::{timing::Time, transform::Transform},
     ecs::prelude::{Entities, Join, Read, ReadStorage, System, WriteStorage},
-    ecs::*,
+    ecs::Write,
     shrev::EventChannel,
 };
 

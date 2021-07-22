@@ -12,6 +12,7 @@ pub enum SpawnableType {
 
 impl SpawnableType {
     /// Get name of corresponding spritesheet
+    #[must_use]
     pub fn get_spritesheet_name(&self) -> String {
         match self {
             Self::Consumable(_) => String::from("consumables"),

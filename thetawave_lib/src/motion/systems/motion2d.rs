@@ -17,7 +17,7 @@ use amethyst::{
         transform::Transform,
     },
     ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
-    ecs::*,
+    ecs::{SystemData, World},
     shrev::{EventChannel, ReaderId},
 };
 
@@ -448,8 +448,7 @@ fn move_mob(
                 motion_2d.move_up();
             }
         }
-        MobType::Enemy(EnemyType::RepeaterRightShoulder)
-        | MobType::Enemy(EnemyType::RepeaterLeftShoulder) => {
+        MobType::Enemy(EnemyType::RepeaterRightShoulder | EnemyType::RepeaterLeftShoulder) => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                 motion_2d.move_down();
@@ -464,8 +463,7 @@ fn move_mob(
                 motion_2d.angular_velocity = -0.05;
             }
         }
-        MobType::Enemy(EnemyType::RepeaterRightArm)
-        | MobType::Enemy(EnemyType::RepeaterLeftArm) => {
+        MobType::Enemy(EnemyType::RepeaterRightArm | EnemyType::RepeaterLeftArm) => {
             // move down to position and then accelerate backwards
             if transform.translation().y > ARENA_MIN_Y + ARENA_HEIGHT - 32.0 {
                 motion_2d.move_down();

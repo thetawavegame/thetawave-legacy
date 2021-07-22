@@ -58,11 +58,13 @@ pub struct PhaseManagerResource {
 
 impl PhaseManagerResource {
     /// Get the current phase of the level
+    #[must_use]
     pub fn get_current_phase(&self) -> Option<&Phase> {
         self.phase_map.get(self.phase_idx)
     }
 
     /// Get the type of the current phase
+    #[must_use]
     pub fn get_current_phase_type(&self) -> Option<&PhaseType> {
         if let Some(phase) = self.get_current_phase() {
             Some(&phase.phase_type)

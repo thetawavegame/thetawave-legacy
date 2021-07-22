@@ -6,6 +6,7 @@ use amethyst::{
 };
 
 /// Spawn a status unit for a status bar
+#[must_use]
 pub fn spawn_status_unit(
     entities: &Entities<'_>,
     sprite_resource: &ReadExpect<'_, SpriteSheetsResource>,

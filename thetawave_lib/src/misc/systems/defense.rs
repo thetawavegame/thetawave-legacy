@@ -1,7 +1,7 @@
 use crate::{events::MobReachedBottomEvent, misc::DefenseResource};
 use amethyst::{
     ecs::prelude::{System, WriteExpect},
-    ecs::*,
+    ecs::{Read, SystemData, World},
     shrev::{EventChannel, ReaderId},
 };
 

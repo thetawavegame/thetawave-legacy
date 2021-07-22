@@ -1,4 +1,5 @@
-#![deny(rust_2018_idioms, rust_2018_compatibility)]
+#![deny(rust_2018_idioms, rust_2018_compatibility, future_incompatible, unused)]
+#![allow(clippy::module_inception)]
 pub mod audio;
 pub mod boss;
 pub mod constants;

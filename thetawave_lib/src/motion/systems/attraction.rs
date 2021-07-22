@@ -33,7 +33,7 @@ impl<'s> System<'s> for AttractorSystem {
             });
 
             if cfg!(debug_assertions) {
-                for (spawnable_category, attract_data) in attractor.attracted_spawnables.iter() {
+                for (spawnable_category, attract_data) in &attractor.attracted_spawnables {
                     // draw attractor ranges
                     debug_lines.draw_circle(
                         [

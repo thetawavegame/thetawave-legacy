@@ -1,5 +1,5 @@
-#![cfg_attr(feature = "fail-on-warnings", deny(warnings))]
-#![deny(rust_2018_idioms, rust_2018_compatibility)]
+#![deny(rust_2018_idioms, rust_2018_compatibility, future_incompatible, unused, clippy::all, clippy::pedantic)]
+#![allow(clippy::module_name_repetitions)]
 
 use amethyst::{
     audio::AudioBundle,
@@ -40,7 +40,7 @@ use amethyst::config::Config;
 use data_include::{generate_configs, load_include_data, IncludeData};
 
 fn main() -> amethyst::Result<()> {
-    amethyst::start_logger(Default::default());
+    amethyst::start_logger(amethyst::LoggerConfig::default());
 
     generate_configs();
 

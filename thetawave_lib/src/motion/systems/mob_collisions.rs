@@ -14,7 +14,7 @@ use crate::{
 
 use amethyst::{
     core::transform::Transform,
-    ecs::*,
+    ecs::{Entities, LazyUpdate, ReadExpect, ReadStorage, SystemData, Write, WriteStorage},
     ecs::{Read, System, World},
     shrev::{EventChannel, ReaderId},
 };

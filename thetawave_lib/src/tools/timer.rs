@@ -54,6 +54,7 @@ impl Timer {
     }
 
     /// Returns the period of the timer
+    #[must_use]
     pub fn get_period(&self) -> f32 {
         self.period
     }
@@ -67,6 +68,7 @@ impl Timer {
     }
 
     /// Returns the time passed since the last reset
+    #[must_use]
     pub fn get_time_passed(&self) -> f32 {
         self.period - self.countdown
     }

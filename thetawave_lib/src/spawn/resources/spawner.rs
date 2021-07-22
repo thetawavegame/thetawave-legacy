@@ -42,7 +42,7 @@ impl Formation {
         entities: &Entities<'_>,
         lazy_update: &LazyUpdate,
     ) {
-        for formation_spawnable in self.formation_spawnables.iter() {
+        for formation_spawnable in &self.formation_spawnables {
             let mut spawn_transform = Transform::default();
             spawn_transform.set_translation_xyz(
                 formation_spawnable.position.x,

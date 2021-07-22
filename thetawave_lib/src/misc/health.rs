@@ -120,6 +120,7 @@ impl Component for HealthComponent {
 
 impl HealthComponent {
     /// Create a new health component from a health value
+    #[must_use]
     pub fn new(health: f32) -> HealthComponent {
         HealthComponent {
             health: Health::new(health),
