@@ -232,6 +232,19 @@ impl SimpleState for MainGameState {
         self.is_paused = false;
     }
 
+    fn handle_event(
+        &mut self,
+        _data: StateData<'_, GameData<'_, '_>>,
+        event: StateEvent,
+    ) -> SimpleTrans {
+        if let StateEvent::Window(event) = &event {
+            if is_key_down(event, VirtualKeyCode::Escape) {
+                return Trans::Push(Box::new(PausedState));
+            }
+        }
+        Trans::None
+    }
+
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         self.dispatcher.dispatch(data.world);
 
@@ -244,19 +257,6 @@ impl SimpleState for MainGameState {
             self.pause_display = None;
         }
 
-        Trans::None
-    }
-
-    fn handle_event(
-        &mut self,
-        _data: StateData<'_, GameData<'_, '_>>,
-        event: StateEvent,
-    ) -> SimpleTrans {
-        if let StateEvent::Window(event) = &event {
-            if is_key_down(&event, VirtualKeyCode::Escape) {
-                return Trans::Push(Box::new(PausedState));
-            }
-        }
         Trans::None
     }
 }

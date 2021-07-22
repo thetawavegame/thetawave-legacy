@@ -4,7 +4,7 @@ use crate::player::components::PlayerComponent;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-/// Maps names of characters to character data
+/// Map names of characters to character data
 pub type PlayersResource = HashMap<String, PlayerEntityData>;
 
 /// Character data

@@ -12,7 +12,7 @@ pub enum AttractorCategory {
     Blast,
 }
 
-/// Data on how a entity category should be attracted
+/// Data on how an entity category should be attracted
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct AttractData {
     pub radius: f32,

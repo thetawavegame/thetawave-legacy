@@ -81,7 +81,7 @@ pub struct SpawnerResource {
     pub random_pools: HashMap<InvasionRandomPool, Vec<RandomSpawnable>>,
     /// Pools of formations to be spawned randomly
     pub formation_pools: HashMap<InvasionFormationPool, Vec<Formation>>,
-    /// Counts down time between spawns
+    /// Counts downtime between spawns
     pub timer: f32,
 }
 
@@ -106,7 +106,7 @@ impl SpawnerResource {
         for random_spawnable in random_pool.iter() {
             sum += random_spawnable.weight;
             if sum > pos {
-                return &random_spawnable;
+                return random_spawnable;
             }
         }
         unreachable!("Error in probabilities of random spawnable pool.");
@@ -162,7 +162,7 @@ impl SpawnerResource {
         for formation in formation_pool.iter() {
             sum += formation.weight;
             if sum > pos {
-                return &formation;
+                return formation;
             }
         }
         unreachable!("Error in probabilities of formation pool.");

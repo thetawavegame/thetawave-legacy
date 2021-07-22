@@ -46,7 +46,7 @@ pub fn standard_collision(
             motion_component.velocity.x = collision_velocity.x; // set the entity's velocity to the collision velocity
         } else {
             motion_component.velocity.x =
-                ((collision_velocity.x as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+                ((collision_velocity.x as i32).signum() as f32) * min_velocity; // Otherwise, set the entity's velocity to minimum velocity with the collision velocity's sign
         }
     }
     // Case 2: colliding velocity is 0
@@ -68,7 +68,7 @@ pub fn standard_collision(
             motion_component.velocity.x += collision_velocity.x; //add the collision velocity to the entity's velocity
         } else {
             motion_component.velocity.x =
-                ((collision_velocity.x as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+                ((collision_velocity.x as i32).signum() as f32) * min_velocity; // Otherwise, set the entity's velocity to minimum velocity with the collision velocity's sign
         }
     }
 
@@ -81,7 +81,7 @@ pub fn standard_collision(
             motion_component.velocity.y = collision_velocity.y; // set the entity's velocity to the collision velocity
         } else {
             motion_component.velocity.y =
-                ((collision_velocity.y as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+                ((collision_velocity.y as i32).signum() as f32) * min_velocity; // Otherwise, set the entity's velocity to minimum velocity with the collision velocity's sign
         }
     }
     // Case 2: colliding velocity is 0
@@ -103,7 +103,7 @@ pub fn standard_collision(
             motion_component.velocity.y += collision_velocity.y; //add the collision velocity to the entity's velocity
         } else {
             motion_component.velocity.y =
-                ((collision_velocity.y as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+                ((collision_velocity.y as i32).signum() as f32) * min_velocity; // Otherwise, set the entity's velocity to minimum velocity with the collision velocity's sign
         }
     }
 }
@@ -183,7 +183,7 @@ pub fn immovable_collision(
             motion_component.velocity.x += collision_velocity.x; //add the collision velocity to the entity's velocity
         } else {
             motion_component.velocity.x =
-                ((collision_velocity.x as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+                ((collision_velocity.x as i32).signum() as f32) * min_velocity; // Otherwise, set the entity's velocity to minimum velocity with the collision velocity's sign
         }
     }
 
@@ -222,7 +222,7 @@ pub fn immovable_collision(
             motion_component.velocity.y += collision_velocity.y; //add the collision velocity to the entity's velocity
         } else {
             motion_component.velocity.y =
-                ((collision_velocity.y as i32).signum() as f32) * min_velocity; // otherwise set the entity's velocity to minimum velocity with the collision velocity's sign
+                ((collision_velocity.y as i32).signum() as f32) * min_velocity; // Otherwise, set the entity's velocity to minimum velocity with the collision velocity's sign
         }
     }
 }

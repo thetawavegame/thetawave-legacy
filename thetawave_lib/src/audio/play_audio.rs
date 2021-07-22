@@ -20,6 +20,12 @@ impl<'s> System<'s> for PlayAudioSystem {
         Option<Read<'s, Output>>,
     );
 
+    fn run(&mut self, (play_audio_event_channel, storage, audio_output): Self::SystemData) {
+        for event in play_audio_event_channel.read(self.event_reader.as_mut().unwrap()) {
+            play_sfx(&event.source, &storage, audio_output.as_deref());
+        }
+    }
+
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.event_reader = Some(
@@ -27,11 +33,5 @@ impl<'s> System<'s> for PlayAudioSystem {
                 .fetch_mut::<EventChannel<PlayAudioEvent>>()
                 .register_reader(),
         );
-    }
-
-    fn run(&mut self, (play_audio_event_channel, storage, audio_output): Self::SystemData) {
-        for event in play_audio_event_channel.read(self.event_reader.as_mut().unwrap()) {
-            play_sfx(&event.source, &storage, audio_output.as_deref());
-        }
     }
 }

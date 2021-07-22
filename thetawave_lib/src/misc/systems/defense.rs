@@ -17,6 +17,14 @@ impl<'s> System<'s> for DefenseSystem {
         WriteExpect<'s, DefenseResource>,
     );
 
+    fn run(&mut self, (mob_reached_bottom_event_channel, mut defense_resource): Self::SystemData) {
+        for event in mob_reached_bottom_event_channel
+            .read(self.mob_reached_bottom_event_reader.as_mut().unwrap())
+        {
+            defense_resource.defense.take_damage(event.damage);
+        }
+    }
+
     fn setup(&mut self, world: &mut World) {
         Self::SystemData::setup(world);
         self.mob_reached_bottom_event_reader = Some(
@@ -24,13 +32,5 @@ impl<'s> System<'s> for DefenseSystem {
                 .fetch_mut::<EventChannel<MobReachedBottomEvent>>()
                 .register_reader(),
         );
-    }
-
-    fn run(&mut self, (mob_reached_bottom_event_channel, mut defense_resource): Self::SystemData) {
-        for event in mob_reached_bottom_event_channel
-            .read(self.mob_reached_bottom_event_reader.as_mut().unwrap())
-        {
-            defense_resource.defense.take_damage(event.damage);
-        }
     }
 }

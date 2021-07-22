@@ -28,7 +28,7 @@ pub struct StoreConfig {
 
 /// Resource for managing inventory and allowing players to purchase items and consumables
 pub struct StoreResource {
-    /// Items and consumables availabe for purchase
+    /// Items and consumables available for purchase
     pub inventory: Vec<Option<SpawnableType>>,
     /// Timer for managing restocking the store
     pub timer: Timer,
@@ -213,7 +213,7 @@ impl StoreResource {
             // match item or consumable
             match &entity_type {
                 SpawnableType::Item(item_type) => {
-                    let item_data = items_resource.item_entities[&item_type].clone();
+                    let item_data = items_resource.item_entities[item_type].clone();
 
                     // check if player has enough money
                     if player.money >= item_data.item_component.price {
@@ -228,7 +228,7 @@ impl StoreResource {
                         );
 
                         items_resource.spawn_item(
-                            &item_type,
+                            item_type,
                             false,
                             &spawn_transform,
                             spritesheets_resource,
@@ -256,7 +256,7 @@ impl StoreResource {
                 }
                 SpawnableType::Consumable(consumable_type) => {
                     let consumable_data =
-                        consumables_resource.consumable_entities[&consumable_type].clone();
+                        consumables_resource.consumable_entities[consumable_type].clone();
 
                     // check if player has enough money
                     if player.money >= consumable_data.consumable_component.price {
@@ -271,7 +271,7 @@ impl StoreResource {
                         );
 
                         consumables_resource.spawn_consumable(
-                            &consumable_type,
+                            consumable_type,
                             false,
                             &spawn_transform,
                             spritesheets_resource,

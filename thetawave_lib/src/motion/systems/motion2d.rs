@@ -89,15 +89,6 @@ impl<'s> System<'s> for BlastMotion2DSystem {
         Read<'s, EventChannel<AttractionEvent>>,
     );
 
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<AttractionEvent>>()
-                .register_reader(),
-        );
-    }
-
     fn run(
         &mut self,
         (mut motion_2ds, blasts, mut transforms, attraction_channel): Self::SystemData,
@@ -155,6 +146,15 @@ impl<'s> System<'s> for BlastMotion2DSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<AttractionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles motion of consumables
@@ -170,15 +170,6 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
         WriteStorage<'s, Transform>,
         Read<'s, EventChannel<AttractionEvent>>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<AttractionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -222,6 +213,15 @@ impl<'s> System<'s> for ConsumableMotion2DSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<AttractionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles motion of items
@@ -237,15 +237,6 @@ impl<'s> System<'s> for ItemMotion2DSystem {
         WriteStorage<'s, Transform>,
         Read<'s, EventChannel<AttractionEvent>>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<AttractionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -285,6 +276,15 @@ impl<'s> System<'s> for ItemMotion2DSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<AttractionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles motion of mobs
@@ -302,7 +302,7 @@ impl<'s> System<'s> for MobMotion2DSystem {
         for (mob, motion_2d, hitbox_2d, transform) in
             (&mobs, &mut motion_2ds, &mut hitbox_2ds, &mut transforms).join()
         {
-            move_mob(&mob, transform, motion_2d, hitbox_2d);
+            move_mob(mob, transform, motion_2d, hitbox_2d);
         }
     }
 }

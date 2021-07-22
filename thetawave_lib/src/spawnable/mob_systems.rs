@@ -68,15 +68,6 @@ impl<'s> System<'s> for MobDestroyedSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<MobDestroyedEvent>>()
-                .register_reader(),
-        );
-    }
-
     fn run(
         &mut self,
         (
@@ -145,5 +136,14 @@ impl<'s> System<'s> for MobDestroyedSystem {
 
             entities.delete(event.mob).expect("unable to delete entity");
         }
+    }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<MobDestroyedEvent>>()
+                .register_reader(),
+        );
     }
 }

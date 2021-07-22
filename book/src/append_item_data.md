@@ -12,7 +12,7 @@ An item entity requires seven components:
 - AnimationComponent (Optional)
 
 All of the components besides the `ItemComponent` and optional `AnimationComponent`
-are consistent through out all of the items, so they do not need to be specified
+are consistent throughout all of the items, so they do not need to be specified
 by you when adding a new item.
 
 The `ItemComponent` and optional `AnimationComponent` need to be specified in
@@ -68,7 +68,7 @@ your item should work! Here is the "Frequency Augmentor" item in action:
 ![frequency_augmentor_gif](./assets/frequency_augmentor.gif)
 
 This is the minimum amount of work that needs to be done to in order to add an item
-to the game. However you should continue reading this section if...
+to the game. However, you should continue reading this section if...
 
 - you want your item to have an animation.
 - you want to add an item that affects stats not listed in [Appendix A](./item_effects.md).

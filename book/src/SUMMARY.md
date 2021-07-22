@@ -9,7 +9,7 @@
   - [Enemies](./enemies.md)
   - [Allies](./allies.md)
   - [Bosses](./bosses.md)
-- [Contibuting code](./contributing.md)
+- [Contributing code](./contributing.md)
 
 <!--
 - [Architecture](./architecture.md)

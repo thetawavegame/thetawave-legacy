@@ -37,7 +37,7 @@ impl Component for Motion2DComponent {
 }
 
 impl Motion2DComponent {
-    /// Accelerate to to `speed` in -y direction, decelerate if velocity is greater than `speed`
+    /// Accelerate to `speed` in -y direction, decelerate if velocity is greater than `speed`
     pub fn move_down(&mut self) {
         if self.velocity.y.abs() < self.speed.y {
             self.velocity.y -= self.acceleration.y;
@@ -50,7 +50,7 @@ impl Motion2DComponent {
         }
     }
 
-    /// Accelerate to to `speed` in +y direction, decelerate if velocity is greater than `speed`
+    /// Accelerate to `speed` in +y direction, decelerate if velocity is greater than `speed`
     pub fn move_up(&mut self) {
         if self.velocity.y.abs() < self.speed.y {
             self.velocity.y += self.acceleration.y;

@@ -37,15 +37,6 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
         ReadExpect<'s, Sounds>,
     );
 
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<MobCollisionEvent>>()
-                .register_reader(),
-        );
-    }
-
     fn run(
         &mut self,
         (
@@ -92,6 +83,15 @@ impl<'s> System<'s> for MobPlayerCollisionSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles collisions between mobs and other mobs
@@ -110,15 +110,6 @@ impl<'s> System<'s> for MobMobCollisionSystem {
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<MobCollisionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -173,6 +164,15 @@ impl<'s> System<'s> for MobMobCollisionSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles collisions between mobs and blasts
@@ -194,15 +194,6 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<MobCollisionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -258,6 +249,15 @@ impl<'s> System<'s> for MobBlastCollisionSystem {
             }
         }
     }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
+                .register_reader(),
+        );
+    }
 }
 
 /// Handles collision between mobs and arena borders
@@ -276,15 +276,6 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
         Write<'s, EventChannel<PlayAudioEvent>>,
         ReadExpect<'s, Sounds>,
     );
-
-    fn setup(&mut self, world: &mut World) {
-        Self::SystemData::setup(world);
-        self.event_reader = Some(
-            world
-                .fetch_mut::<EventChannel<MobCollisionEvent>>()
-                .register_reader(),
-        );
-    }
 
     fn run(
         &mut self,
@@ -323,5 +314,14 @@ impl<'s> System<'s> for MobArenaBorderCollisionSystem {
                 }
             }
         }
+    }
+
+    fn setup(&mut self, world: &mut World) {
+        Self::SystemData::setup(world);
+        self.event_reader = Some(
+            world
+                .fetch_mut::<EventChannel<MobCollisionEvent>>()
+                .register_reader(),
+        );
     }
 }

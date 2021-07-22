@@ -22,7 +22,7 @@ to contributing [code](https://amethyst.github.io/theta-wave/contributing.html).
 
 ## Build and Run
 
-If you are on MacOS remove the `vulkan` feature in Cargo.toml and replace with `metal`.
+If you are on macOS remove the `vulkan` feature in Cargo.toml and replace with `metal`.
 
 To build and run: `cargo run --release`
 

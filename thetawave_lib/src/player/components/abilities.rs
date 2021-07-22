@@ -77,11 +77,6 @@ impl CooldownAbility for BarrelRollAbilityComponent {
         }
     }
 
-    fn end_action(&mut self) {
-        self.action_direction = AbilityDirection::None;
-        self.is_active = false
-    }
-
     fn execute_action(&mut self, input: &InputHandler<StringBindings>) {
         let barrel_left = input.action_is_down("barrel_left").unwrap();
         let barrel_right = input.action_is_down("barrel_right").unwrap();
@@ -97,6 +92,11 @@ impl CooldownAbility for BarrelRollAbilityComponent {
                 self.is_active = true;
             }
         }
+    }
+
+    fn end_action(&mut self) {
+        self.action_direction = AbilityDirection::None;
+        self.is_active = false
     }
 }
 

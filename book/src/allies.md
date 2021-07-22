@@ -1,6 +1,6 @@
 # Allies
 
-Allies provide a temporary objective. Make sure they survive and you will be rewarded.
+Allies provide a temporary objective. Make sure they survive, and you will be rewarded.
 
 |Name| |Description|
 |:---:|:---:|:---:|

@@ -217,7 +217,7 @@ impl ManualFireComponent {
 
     /// Updates timer if not loaded sets is_loaded on reset
     pub fn update(&mut self, delta_time: f32) {
-        // update is only called if not loaded do to short circuiting if
+        // update is only called if not loaded do to short-circuiting if
         if !self.is_loaded && self.timer.update(delta_time) {
             self.is_loaded = true;
         }

@@ -68,7 +68,7 @@ impl<'s> System<'s> for StoreSystem {
             &lazy_update,
         );
 
-        // purchase store inventory on input if availabe
+        // purchase store inventory on input if available
         for (character, transform) in (&mut players, &transforms).join() {
             if (buy_0_action
                 && store_resource.purchase(
