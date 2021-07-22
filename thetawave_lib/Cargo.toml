@@ -14,5 +14,5 @@ features = ["vulkan", "audio", "gltf"]
 [dependencies]
 amethyst_test = "0.15.3"
 serde = "1"
-rand = "0.6.5"
+rand = "0.8.4"
 float-cmp = "0.8.0"

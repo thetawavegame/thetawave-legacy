@@ -54,15 +54,15 @@ impl ConsumablesResource {
         if is_drop {
             if let Some(linear_motion) = consumable_data.random_initial_motion.linear {
                 motion2d_component.velocity.x =
-                    thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+                    thread_rng().gen_range(linear_motion.x.0..=linear_motion.x.1);
                 motion2d_component.velocity.y =
-                    thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+                    thread_rng().gen_range(linear_motion.y.0..=linear_motion.y.1);
             }
         }
 
         if let Some(angular_motion) = consumable_data.random_initial_motion.angular {
             motion2d_component.angular_velocity =
-                thread_rng().gen_range(angular_motion.0, angular_motion.1);
+                thread_rng().gen_range(angular_motion.0..=angular_motion.1);
         }
 
         lazy_update
@@ -118,14 +118,14 @@ impl ItemsResource {
         if is_drop {
             if let Some(linear_motion) = self.random_initial_motion.linear {
                 motion2d_component.velocity.x =
-                    thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+                    thread_rng().gen_range(linear_motion.x.0..=linear_motion.x.1);
                 motion2d_component.velocity.y =
-                    thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+                    thread_rng().gen_range(linear_motion.y.0..=linear_motion.y.1);
             }
         }
         if let Some(angular_motion) = self.random_initial_motion.angular {
             motion2d_component.angular_velocity =
-                thread_rng().gen_range(angular_motion.0, angular_motion.1);
+                thread_rng().gen_range(angular_motion.0..=angular_motion.1);
         }
 
         let item_entity = lazy_update
@@ -176,14 +176,14 @@ impl MobsResource {
         if let Some(random_initial_motion) = mob_data.random_initial_motion.clone() {
             if let Some(linear_motion) = random_initial_motion.linear {
                 motion2d_component.velocity.x =
-                    thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+                    thread_rng().gen_range(linear_motion.x.0..=linear_motion.x.1);
                 motion2d_component.velocity.y =
-                    thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+                    thread_rng().gen_range(linear_motion.y.0..=linear_motion.y.1);
             }
 
             if let Some(angular_motion) = random_initial_motion.angular {
                 motion2d_component.angular_velocity =
-                    thread_rng().gen_range(angular_motion.0, angular_motion.1);
+                    thread_rng().gen_range(angular_motion.0..=angular_motion.1);
             }
         }
 
@@ -286,14 +286,14 @@ impl EffectsResource {
                 if let Some(random_initial_motion) = effect_data.random_initial_motion.clone() {
                     if let Some(linear_motion) = random_initial_motion.linear {
                         motion2d_component.velocity.x =
-                            thread_rng().gen_range(linear_motion.x.0, linear_motion.x.1);
+                            thread_rng().gen_range(linear_motion.x.0..=linear_motion.x.1);
                         motion2d_component.velocity.y =
-                            thread_rng().gen_range(linear_motion.y.0, linear_motion.y.1);
+                            thread_rng().gen_range(linear_motion.y.0..=linear_motion.y.1);
                     }
 
                     if let Some(angular_motion) = random_initial_motion.angular {
                         motion2d_component.angular_velocity =
-                            thread_rng().gen_range(angular_motion.0, angular_motion.1);
+                            thread_rng().gen_range(angular_motion.0..=angular_motion.1);
                     }
                 }
                 lazy_update.insert(effect_entity, motion2d_component);
