@@ -24,5 +24,5 @@ pub struct SpriteSheetData {
     pub data: String,
 }
 
-/// Map names of sprite sheets to SpriteSheetData
+/// Map names of sprite sheets to `SpriteSheetData`
 pub type SpriteSheetsConfig = HashMap<String, SpriteSheetData>;

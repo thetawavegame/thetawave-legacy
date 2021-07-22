@@ -10,11 +10,11 @@ use amethyst::{
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-/// DropTableTypes mapped to DropProbabilities
+/// `DropTableTypes` mapped to `DropProbabilities`
 pub type DropTablesResource = HashMap<DropTableType, DropProbabilities>;
 /// Vector of spawnable types paired with random weights
 pub type DropProbabilities = Vec<(SpawnableType, f32)>;
-/// Vector of optional DropTableTypes paired with random weights
+/// Vector of optional `DropTableTypes` paired with random weights
 pub type RollProbabilities = Vec<(Option<DropTableType>, f32)>;
 
 /// Used for rolling for drops
@@ -37,7 +37,7 @@ impl DropRolls {
         &self.roll_probs[weighted_rng(probs)].0
     }
 
-    /// Choose a drop from drop table (DropProbabilities)
+    /// Choose a drop from drop table (`DropProbabilities`)
     fn choose_drop(drop_probs: &DropProbabilities) -> &SpawnableType {
         let probs = drop_probs.iter().map(|drop_prob| drop_prob.1).collect();
         &drop_probs[weighted_rng(probs)].0

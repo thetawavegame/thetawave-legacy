@@ -180,7 +180,7 @@ impl Component for AutoFireComponent {
 }
 
 impl AutoFireComponent {
-    /// Creates new instance of AutoFireComponent from a reload time period
+    /// Creates new instance of `AutoFireComponent` from a reload time period
     pub fn new(reload_period: f32) -> Self {
         AutoFireComponent {
             timer: Timer::new(reload_period),
@@ -207,7 +207,7 @@ impl Component for ManualFireComponent {
 }
 
 impl ManualFireComponent {
-    /// Creates new instance of ManualFireComponent from a reload time period
+    /// Creates new instance of `ManualFireComponent` from a reload time period
     pub fn new(reload_period: f32) -> Self {
         ManualFireComponent {
             timer: Timer::new(reload_period),
@@ -215,7 +215,7 @@ impl ManualFireComponent {
         }
     }
 
-    /// Updates timer if not loaded sets is_loaded on reset
+    /// Updates timer if not loaded sets `is_loaded` on reset
     pub fn update(&mut self, delta_time: f32) {
         // update is only called if not loaded do to short-circuiting if
         if !self.is_loaded && self.timer.update(delta_time) {

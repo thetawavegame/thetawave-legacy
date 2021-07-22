@@ -353,7 +353,7 @@ impl<'s> System<'s> for MobTargetSystem {
     }
 }
 
-/// Handle movement of mobs by MobType
+/// Handle movement of mobs by `MobType`
 fn move_mob(
     mob: &MobComponent,
     transform: &mut Transform,

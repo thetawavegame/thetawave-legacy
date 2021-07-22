@@ -4,7 +4,7 @@ use amethyst::{
     ecs::prelude::{Read, System, Write},
 };
 
-/// Updates the PhaseManager resource
+/// Updates the `PhaseManager` resource
 pub struct PhaseManagerSystem;
 
 impl<'s> System<'s> for PhaseManagerSystem {
